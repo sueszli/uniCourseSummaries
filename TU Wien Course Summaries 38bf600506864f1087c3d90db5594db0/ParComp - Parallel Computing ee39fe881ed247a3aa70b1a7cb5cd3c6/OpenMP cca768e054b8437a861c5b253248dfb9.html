@@ -1,0 +1,1365 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>OpenMP</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="cca768e0-54b8-437a-861c-5b253248dfb9" class="page sans"><header><h1 class="page-title">OpenMP</h1></header><div class="page-body"><p id="9d8bce0c-76c9-4c9f-a316-de5247dccf6a" class="">Perfect tutorial: <a href="https://www.openmp.org/wp-content/uploads/OpenMP-4.0-C.pdf">https://www.openmp.org/wp-content/uploads/OpenMP-4.0-C.pdf</a></p><p id="1404fa52-a76d-4732-8a3f-0d26daa8e41b" class="">
+</p><p id="2e18d8f7-c170-472a-b95b-55ef46c65562" class="">
+</p><nav id="e51c6702-4df6-4b9d-b4cb-18d45404057a" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a1c17c44-f379-4e94-9242-a829522d994e">Models</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28d4d790-4511-4896-ade4-f49c694ea633">Concepts</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#74108b83-abcf-4ed0-80ab-7a2dc4631c8d">Parallel region construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92526726-19be-448f-8995-50dd02e39ea1">Shared variables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c31378a3-1832-40ef-a695-505843787a27">Work sharing constructs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6cd506ec-da7b-470c-873a-fa5563f6d108">For-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ca868ec1-a855-4d04-9691-df5edea31f7a">SIMD-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#91fcc7df-9d62-4c8d-9b11-fb2a46860abd">Taskloop-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#17d507d4-8380-4e07-8049-3a8fb60457d7">Task-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5a741a92-21d7-44cf-a740-02262c4f6bbc">Sections-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1ceadd03-19a4-44c4-b170-4f16e3fc6f48">Single-construct</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cd20885b-6531-4f3c-a2a3-4d9b6e0c7990">Master-construct</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d2e2d329-ce00-41c9-9854-e675ab91e937">Synchronization constructs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51d6f8b8-448b-45b5-8e14-60dbf18cbab2">Performance</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d4e8260b-640c-4cc9-8ebe-a253d8cc04c2">Loop schedule clauses (of for-construct)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8f373740-15b5-43a1-9438-c4ff2d09c8a8">Performance of clauses</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49f18603-3fd4-4bf7-8e72-514403bcbd75">Loop carried dependencies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#acf55db9-dc03-442d-b23c-15a6862461dd">Reduction pattern</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3d8d5665-d650-4e9d-b857-76237151a1f3">Other clauses</a></div></nav><p id="cffbddcb-7dc9-48b7-88f0-bd1760472aa8" class="">
+</p><p id="ac03ed85-ff27-45b5-b543-36f00606ae00" class="">
+</p><p id="ec76663a-4310-4606-a783-e0f664e9d65e" class=""><mark class="highlight-blue">OpenMP</mark><div class="indented"><p id="241849ab-e011-4962-8beb-55fb37c3cdf5" class="">= Standard for data parallel, shared memory programming (parallel thread programming).</p><p id="4919e605-c544-4938-a0a7-190bfeaf97c7" class="">Uses pragma constructs.</p></div></p><p id="7c29148a-4209-44d5-ae89-cacc1c445748" class=""><mark class="highlight-blue">Pragma constructs</mark><div class="indented"><pre id="7ab3a2c4-1b83-4b51-9e5c-bb33e94fbaa8" class="code"><code>#pragma omp &lt;directive&gt; [clauses]</code></pre><p id="14cf1506-da39-41b6-928a-38c01640ed77" class="">Each directive / construct has clauses.</p><p id="20f23398-db10-44b2-a54d-bf7bc51f9977" class="">Clauses can modify, restrict, extend a construct.</p></div></p><p id="09261ca5-b60f-4d1c-8141-6fa2ba0bdd86" class="">
+</p><h1 id="a1c17c44-f379-4e94-9242-a829522d994e" class="">Models</h1><p id="6ff644da-45ea-4c5c-8e74-b4fac2338238" class=""><mark class="highlight-blue">OpenMP architecture model</mark><div class="indented"><p id="6491357b-840d-4b22-b151-e9c8d3cde998" class=""><em>Multi-core, fixed number of cores, multilevel cc-NUMA</em><div class="indented"><p id="9ec17815-3b7f-467a-bc7c-df1d52252093" class="">Naive, flat, shared memory model without cost model</p></div></p></div></p><figure id="20f5b946-e24f-4039-97f9-e620c6c7755a" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled.png"><img style="width:192px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled.png"/></a></figure><p id="0a32b98e-7b3e-4f32-8e3f-5359276a369a" class="">
+</p><p id="85e01a9e-94fa-46a3-a08c-f955ffabdc47" class=""><mark class="highlight-blue">OpenMP programming model</mark><div class="indented"><ol type="1" id="c1f1f87b-0370-4906-a9fe-4a091f94d7cb" class="numbered-list" start="1"><li>Parallelism through work-sharing (mostly implicit)<p id="ef3b0ef9-e1ab-4869-b686-8863727d39b9" class="">All threads execute same program (SPMD)</p></li></ol><ol type="1" id="e1892450-9940-4612-aea7-af3f165015b7" class="numbered-list" start="2"><li>Fork-join parallelism<p id="cc0c28b8-0f04-4a09-ac52-4eb80ec48451" class="">Master thread implicitly spawns threads through pragma-constructs - threads join at end of construct.</p></li></ol><ol type="1" id="25b31f7b-34b0-4b50-b0d1-734b22f7be9e" class="numbered-list" start="3"><li>Threads have unique id in construct</li></ol><ol type="1" id="c7152030-7bd2-4bc4-b3bd-55ad3c59bb50" class="numbered-list" start="4"><li>Number of threads can be &gt; number of processors/cores</li></ol><ol type="1" id="cc3b8541-f760-488d-89a5-c57b3279a4c4" class="numbered-list" start="5"><li>Threads intended to be executed in parallel</li></ol><ol type="1" id="d5ae60ee-1ecd-4ff9-86b6-41cd1a3b549e" class="numbered-list" start="6"><li>Constructs for sharing work across threads</li></ol><ol type="1" id="33419283-aaad-42ba-8bba-46ba61bdefb7" class="numbered-list" start="7"><li>Work expressed as loops and task graphs</li></ol><ol type="1" id="63a9184b-b0e4-4c07-9168-f6b0db0969e1" class="numbered-list" start="8"><li>Threads use shared variables (shared among all threads)</li></ol><ol type="1" id="d5ebd57e-5dd9-4dce-ae16-2aaf9e1e1c0f" class="numbered-list" start="9"><li>Threads use private variables</li></ol><ol type="1" id="92146fa3-b950-4ac5-8f89-1b6cfc439965" class="numbered-list" start="10"><li>Unprotected, parallel updates of shared variables lead to race conditions (bad practice)</li></ol><ol type="1" id="2a430d94-2d13-4222-abb7-87077696d400" class="numbered-list" start="11"><li>Synchronization constructs for preventing race conditions</li></ol></div></p><p id="229ebc87-83f2-45a9-a55e-e85813a3ba24" class="">
+</p><p id="3af634b2-5793-4478-aa35-d930108cb906" class="">
+</p><h1 id="28d4d790-4511-4896-ade4-f49c694ea633" class="">Concepts</h1><p id="eb3ac298-fe8f-46ad-80ca-daba051a5ad9" class=""><mark class="highlight-blue">Work</mark><div class="indented"><ul id="e5b46667-a475-40d8-8488-4d42a05dc1a7" class="bulleted-list"><li style="list-style-type:disc">Loops of independent iterations</li></ul><ul id="9d3cee53-178a-40f0-a572-971f58a34832" class="bulleted-list"><li style="list-style-type:disc">Task graphs</li></ul><ul id="9dbdfcb4-a462-44bd-9385-094cea8305f2" class="bulleted-list"><li style="list-style-type:disc">Finite sections of graph</li></ul></div></p><p id="e200f019-bc55-4b2d-834b-0771f9f9ab09" class="">
+</p><p id="880a47cb-d9ca-4b56-8cb5-fc81c7859728" class=""><mark class="highlight-blue">Master thread (sequential region)</mark><div class="indented"><p id="a03f805e-7cdd-4949-90a3-d8ac18962ae7" class="">contains shared variables.</p><p id="3f0110d5-d7c7-485c-8477-1e3325f8809f" class="">Before entering the master thread again (at the end of construct) there is an implicit barrier.</p></div></p><p id="07f30d38-8021-4197-bf1b-a8c05f3a1075" class=""><mark class="highlight-blue">Parallel region (parallel region)</mark><div class="indented"><p id="f6c0d1af-a121-45a3-93ef-af2f153ad51e" class="">are where work is shared among threads</p><p id="2bb988e5-d329-4393-a93e-831cf4107ce4" class="">contain private variables</p><p id="9fe9e939-c44a-47f4-b7a7-fe206a3c10fe" class="">can be nested.</p><p id="45f2b6ed-e277-49ac-b8f0-a8b38dc32cab" class=""><mark class="highlight-gray">Best practice: small number of successive parallel regions.</mark><div class="indented"><p id="8b8e5af9-ed73-4285-8d01-cd394de85b3a" class=""><mark class="highlight-gray">longest path length </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark></p><p id="436fdd0e-4b28-4bf9-8b11-bf140cfca9cb" class=""><mark class="highlight-gray">Load balance in regions </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>W</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(W/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">W</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></p></div></p></div></p><div id="849493f8-bbb7-410d-a392-379b57965886" class="column-list"><div id="7445a08d-791e-432b-828b-13ff30765824" style="width:25%" class="column"><figure id="2a1108eb-6f1f-4304-bb23-97055432d19b" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%201.png"><img style="width:120px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%201.png"/></a></figure></div><div id="68d68317-5f2b-4062-a785-96a2245f3706" style="width:75%" class="column"><figure id="49f019ba-ceea-4fa9-a26e-1e2d46abc77a" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%202.png"><img style="width:144px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%202.png"/></a></figure></div></div><p id="fd16b3be-fcdc-4b56-88b8-52943adea81e" class="">
+</p><p id="e7f2098a-01e8-4d91-85a3-f9e3f3cc61e4" class="">
+</p><h1 id="74108b83-abcf-4ed0-80ab-7a2dc4631c8d" class="">Parallel region construct</h1><p id="990dfce3-8dad-40fc-91eb-0a7adfc187b3" class=""><mark class="highlight-blue">Parallel region</mark><div class="indented"><ul id="9332e1fc-b5ba-41fc-b3c1-8f6aa12a4d8f" class="bulleted-list"><li style="list-style-type:disc">controls variable sharing, work sharing among activated threads</li></ul><ul id="2749fab1-62cb-4955-8889-ecde8c6ececb" class="bulleted-list"><li style="list-style-type:disc">Lets thread execute asynchronously, with own id<p id="1e850d8a-55b2-461f-968c-60df7e105137" class="">The structured block in construct executed by all threads.</p><p id="89c458b5-093d-43d6-87eb-05122b78ef88" class=""><mark class="highlight-gray">Master thread: </mark><mark class="highlight-gray"><code>thread_num=0</code></mark></p><p id="fb2e7da8-c226-4d6b-a690-b65389a07ebf" class=""><mark class="highlight-gray">It’s forbidden for a thread to jump into and out of parallel region.</mark></p></li></ul><ul id="18ef7914-6dd9-4977-9991-89740ac209ea" class="bulleted-list"><li style="list-style-type:disc">Ends with implicit barrier synchronization<p id="0af5f903-7a34-4cde-ba7f-856731ac89fc" class="">then only the master thread is active and memory is in consistent state (All updates to shared variables completed and visible).</p></li></ul><pre id="308e7d71-1436-4f8c-97bd-c373c1a344c1" class="code"><code>#pragma omp parallel [clause ...]
+&lt;structured block&gt;
+// implicit barrier</code></pre><hr id="04363c63-da11-4334-aa56-8e3cebac29f8"/><ul id="7b6b5e8c-57b9-46a8-ab77-8c8a9715a92b" class="toggle"><li><details open=""><summary>Example</summary><p id="0b29c32d-dee2-42f3-b091-b38e5f7652e8" class="">Iterations of loop must be independent (ie. matrix-vector multiplication)</p><pre id="b18b1ea6-5085-46e4-9d57-42ee6a684085" class="code"><code>for (i=0; i&lt;n; i++) {
+	a[i] = f(i);
+}</code></pre><pre id="e97c0fdb-8b9b-40a6-a7a6-284650ad23dc" class="code"><code>#pragma omp parallel {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre></details></li></ul><hr id="25c8c056-fbc6-4d9d-b7fe-102b8a0394a0"/><ul id="3137f910-0963-4931-9914-7d3b11d6d0fa" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="50e06a97-0a7c-434d-b005-f734c7f096bd" class="code"><code>// conditional clause
+if (scalar_expression)
+
+// controlling shared variables
+private (list)
+shared (list)
+default (shared | none)
+firstprivate (list)
+
+reduction(operator: list) // reduction clause
+copyin(list)
+num_threads(integer-expression)
+proc_bind(master | close | spread) // pinning</code></pre></details></li></ul></div></p><p id="53c73398-bc9d-418f-9b54-b5ec96fd704a" class="">
+</p><p id="f15c7c2c-ff8d-42f1-bcd7-fd8c556280d2" class=""><mark class="highlight-blue">conditional clause</mark><div class="indented"><p id="b640e211-2c6e-49e7-b91e-25562e105859" class="">Evaluated at run-time, limits number of threads.</p><pre id="3c5357bd-fe97-43e1-bd74-1ab6f3da4104" class="code"><code>#pragma omp parallel if (n&lt;=1000) num_threads(2) { ... }</code></pre><p id="b726bb9e-49e5-4f92-8033-323b7b80749e" class="">Here: If <mark class="highlight-gray"><code>(n&lt;=1000)</code></mark> then fixed number of threads for this region must be <mark class="highlight-gray"><code>num_threads(2)</code></mark> else the number of threads in parallel region will be 1.</p><ul id="b7069738-56c1-4b47-bcf5-234a4f87b061" class="toggle"><li><details open=""><summary>Example</summary><pre id="9a253d59-028a-4a61-b30a-8a8008da1687" class="code"><code>#pragma omp parallel if (n&lt;=1000) num_threads(2) {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+	
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre></details></li></ul></div></p><p id="5b1fb859-e1f5-481f-aa8d-08a6ed594905" class="">
+</p><p id="cb8ad4d5-9204-4fd3-adb9-ca90bb97f0c2" class=""><mark class="highlight-blue">Work sharing constructs (used inside parallel region)</mark><div class="indented"><p id="43bde097-7743-4c9a-a774-a50d00e6c20a" class="">Work sharing: implicit assignment of pieces of work to threads (scheduling)<div class="indented"><p id="d1f19a9c-5029-4d9f-84bf-f5ad3d6cade2" class=""><mark class="highlight-gray"><code>sections</code></mark>		Finite number of different tasks can be executed in parallel</p><p id="e18a3e0f-2b38-45f0-8328-a6f00aa8d5c5" class=""><mark class="highlight-gray"><code>single</code></mark>/<mark class="highlight-gray"><code>master</code></mark>	Some task should be executed only once</p><p id="4cad2759-48c5-4648-a3ea-9a47ad312865" class=""><mark class="highlight-gray"><code>for</code></mark>			Iteration space of loop of independent iterations divided across threads</p><p id="13fc6c6e-bf12-4543-a20f-c35b19b77986" class=""><mark class="highlight-gray"><code>task</code></mark> 			Task graphs</p></div></p><p id="391d54d3-761a-4bae-8c54-05ef2d24ccc9" class="">Synchronization<div class="indented"><p id="70fb0a6d-1407-4178-a34f-e86e50e71fef" class=""><mark class="highlight-gray"><code>barrier</code></mark>			thread cannot proceed before all other threads have reached the barrier</p></div></p></div></p><p id="42cd8933-738a-4f2b-b483-92493b9a454d" class="">
+</p><h2 id="92526726-19be-448f-8995-50dd02e39ea1" class="">Shared variables</h2><p id="d2708a28-5695-47f4-b421-b546a028c041" class=""><mark class="highlight-blue">Controlling shared variables</mark><div class="indented"><p id="e6220c87-c707-4597-982c-b19215715d20" class="">Shared variables = variables used from master thread, can cause race conditions.</p><p id="3096a78b-5762-4228-a30d-1e0193cbf771" class="">Can be controlled at entry to parallel region:<div class="indented"><p id="f86ad2f1-f36a-4dee-a12e-96d203493cdf" class="">If pointer declared <mark class="highlight-gray"><code>private</code></mark> a local copy of the pointer is created per thread before entering parallel section.</p><p id="7a28cb9f-35f4-4559-8896-30532f1f27cc" class="">It’s best practice to set <mark class="highlight-gray"><code>default(none)</code></mark></p></div></p><pre id="1b85204a-0d97-4876-a411-33866a58050a" class="code"><code>shared(&lt;list of vars&gt;)
+private(&lt;list of vars&gt;) // private but not initialized
+firstprivate(&lt;list of vars&gt;) // private and initialized in master
+
+default(shared) // (default mode)
+default(none) // sharing mode must be explicit for all shared variables</code></pre><ul id="79376b35-890c-4729-b33f-ac14cd7b4472" class="toggle"><li><details open=""><summary>Example</summary><p id="688798d8-31b3-4040-a0f6-a03bc94d219f" class=""><em>Not controlled</em><div class="indented"><pre id="635f4a56-40a8-4bfc-9bae-72a0bf67503a" class="code"><code>int *a;
+a = (int*)malloc(n*sizeof(a*)); // will be shared
+
+#pragma omp parallel {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre></div></p><p id="cf929387-e1ad-4bcd-b0b6-3fafbca6e6ee" class=""><em>Controlled</em><div class="indented"><pre id="96c40d40-86c7-4d54-869a-c3174d89dd14" class="code"><code>int a[200];
+
+#pragma omp parallel default(none) private(a) {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre></div></p></details></li></ul></div></p><p id="66133c0d-038f-4790-8eb4-e84c84fec6f4" class="">
+</p><p id="aa6b1990-e96b-40eb-b568-7e36c926b74b" class="">
+</p><h1 id="c31378a3-1832-40ef-a695-505843787a27" class="">Work sharing constructs</h1><h2 id="6cd506ec-da7b-470c-873a-fa5563f6d108" class="">For-construct</h2><p id="156095f9-04c2-41a0-aa54-5b96641e97f5" class=""><code><mark class="highlight-blue">for</mark></code><div class="indented"><p id="2fd81955-c011-4d23-894e-3734129e2435" class="">Data parallel loop scheduled (iteration space set) over available threads.<div class="indented"><p id="bc6f8a50-cde0-49a0-8e61-9acf25defb5a" class="">Implicit barrier at end of block.</p></div></p><pre id="2b6906ab-2d20-43af-bd61-c22d99cc3c50" class="code"><code>#pragma omp parallel {
+	#pragma omp for
+	for (i=0; i&lt;n; i++) {
+		// iterations split
+	} // implicit barrier
+}</code></pre><ul id="adf42bcd-9e9d-4b87-b4f8-fda85c74e37b" class="toggle"><li><details open=""><summary>Syntactic sugar: <mark class="highlight-gray"><code>#pragma omp parallel for</code></mark></summary><p id="272384b5-0cbf-47e8-a0ab-156836ec6fe1" class="">One can’t remove the second implicit barrier (see example below) because there is no <mark class="highlight-gray"><code>nowait</code></mark><mark class="highlight-gray"> </mark>clause for<mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>parallel</code></mark>.</p><pre id="aaf74e65-0b56-4426-a9d1-b06363b0d748" class="code"><code>#pragma omp parallel for {
+	for (i=0; i&lt;n; i++) {
+		// iterations split
+	}
+}</code></pre></details></li></ul><ul id="2bf613e0-c884-4039-a75e-b11920cc268e" class="toggle"><li><details open=""><summary>Loop must be in the standardized (canonical) form</summary><p id="74cf3c20-076d-4689-8e67-075883064549" class="">Illegal loops:</p><pre id="3e0ae67b-0480-4647-a06e-0334f5d7b5b0" class="code"><code>#pragma omp parallel for
+	for (;;) {
+		// C open loop
+	}</code></pre><pre id="abb4edfc-52db-4b3c-8387-c8cb37ba4365" class="code"><code>#pragma omp parallel for
+	for (i=0; i&lt;n; i++) {
+		if (exceptional(i)) break; // illegal
+		if (i%2==0) continue; // legal
+	}</code></pre><pre id="3a8a3f76-6075-4ea2-b9c2-9366e202918a" class="code"><code>#pragma omp parallel for
+	for (i=0; i&lt;n; i*=2) {
+		a[i] = …;
+	}</code></pre></details></li></ul><hr id="fa7e8aba-acc6-41e9-9535-db86a90bca36"/><ul id="c53d92cd-0b7c-4b9c-bae0-6c81f2df29fb" class="toggle"><li><details open=""><summary>Example: remove redundant implicit barrier</summary><pre id="b36f372e-760f-4328-911b-af48c41134b6" class="code"><code>#pragma omp parallel {
+	int i;
+	#pragma omp for
+		for (i=0; i&lt;n; i++) {
+			a[i] = f(i);
+		} // implicit barrier
+
+} // implicit barrier (again)</code></pre><pre id="1d6a7634-4cfe-40bc-b827-bf47ef439235" class="code"><code>#pragma omp parallel {
+	int i;
+	#pragma omp for nowait // remove redundant second barrier
+		for (i=0; i&lt;n; i++) {
+			a[i] = f(i);
+		}
+}</code></pre><p id="0385277c-f052-4a07-9582-67177475fe13" class="">
+</p></details></li></ul><ul id="0616e600-e30e-4412-9b9a-97ae4c5b1c7d" class="toggle"><li><details open=""><summary>Example: combined with single</summary><pre id="ebc1d2b7-bb6c-4484-9a3d-1127fff8cbf7" class="code"><code>#pragma omp parallel {
+	int i;
+	
+	#pragma omp single
+		readarray(b,n); // (executed once - then all threads have same view of b)
+		// implicit barrier here
+
+	#pragma omp for
+		for (i=0; i&lt;n; i++) {
+			a[i] = b[i];
+		}
+		// implicit barrier here
+	
+	#pragma omp single nowait
+		writearray(a,n);
+
+} // implicit barrier here</code></pre><p id="8f01b219-4e79-4b4c-bd3d-be8d5c33a057" class="">
+</p></details></li></ul><hr id="552026d2-0a83-4710-a522-d479ea9f28a1"/><ul id="37e0d333-3f1b-4812-911b-4db4381c3738" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="78788aa2-1e5e-45ce-beb4-b6ffcbe9f22a" class="code"><code>schedule (type [,chunk])
+ordered // don&#x27;t use
+private (list)
+firstprivate (list)
+lastprivate (list) // copies list back to global from last iteration
+shared (list)
+reduction (operator: list)
+collapse (n) // nested loops
+nowait // remove implicit barrier at end of construct</code></pre><p id="897624fa-4774-49c2-9777-8519f09e1232" class="">
+</p></details></li></ul></div></p><figure id="b52d71c8-1f33-4096-93b6-8f4efc810b09" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%203.png"><img style="width:192px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%203.png"/></a></figure><p id="5610e41d-d7a1-4e32-a7c8-9c634ad4c816" class="">
+</p><h2 id="ca868ec1-a855-4d04-9691-df5edea31f7a" class="">SIMD-construct</h2><p id="38b2aaf6-9023-4688-a6d4-9e2c7846cc66" class=""><code><mark class="highlight-blue">simd</mark></code><div class="indented"><p id="4dc8f2af-76c5-4ff8-8c33-0b931a4c74af" class="">Single instruction multiple data SIMD / vector parallelism:<div class="indented"><p id="e9c0df38-80aa-47e7-9714-03c8769d26bb" class="">Can be mapped to vector operations of hardware</p></div></p><pre id="a93e127c-3f49-4ce6-9e02-73957acdd0ad" class="code"><code>#pragma omp [for] simd {
+	for (i=0; i&lt;n; i++) {
+		// iterations split and vector operation
+	}
+}</code></pre><hr id="81ab754b-36a3-4544-aa8e-0a4f8a1996f6"/><ul id="838da09b-5def-4a5e-8da7-6cd1bda1a06d" class="toggle"><li><details open=""><summary>Example: Looping on vectors (arrays)</summary><pre id="9e147259-c8c7-45eb-aa7a-c1e312b76975" class="code"><code>double a[n], b[n], c[n];
+
+#pragma omp simd
+for (i=0; i&lt;n; i++) {
+	c[i] = a[i]+b[i];
+}</code></pre><pre id="74157292-e26d-40b5-81e6-96c1ccba6b3a" class="code"><code>double a[n], b[n], c[n];
+
+#pragma omp parallel for simd //
+for (i=0; i&lt;n; i++) {
+	c[i] = a[i]+b[i];
+}</code></pre><p id="b485e930-d035-4888-9a0c-aafe02f617f7" class="">
+</p></details></li></ul><hr id="81ce93bd-6817-4b69-b807-4f881044cae5"/><ul id="fb62fc6d-83cb-4634-84d4-4d89f0d3b9d2" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="c7dd9e6e-0ec5-415a-8358-d42b80e731e7" class="code"><code>safelen(length) // how much apart concurrent iterations are allowed to be
+simdlen(length)
+linear(list[ : linear-step])
+aligned(list[ : alignment])
+private(list)
+lastprivate(list)
+reduction(reduction-identifier : list)
+collapse(n)</code></pre></details></li></ul><p id="1756175f-8c56-449d-a312-512365497c9f" class="">
+</p></div></p><h2 id="91fcc7df-9d62-4c8d-9b11-fb2a46860abd" class="">Taskloop-construct</h2><p id="80ee2eb5-f682-4781-8fe2-f1629577e24f" class=""><code><mark class="highlight-blue">taskloop</mark></code><div class="indented"><p id="32b02276-76e6-4a8e-a8f3-0f28ceac0ca9" class="">Turns chunks of iterations into tasks - runtime decides schedule (can potentially improve).<div class="indented"><p id="96540a6f-50ea-4cc4-9843-4899f2a579c4" class="">Can’t use schedule clauses.</p></div></p><pre id="e929a89b-f2f4-4daa-8a4f-0cdd1b681f5e" class="code"><code>#pragma omp taskloop</code></pre><hr id="ccf7b624-ea95-4ba4-8cb4-632db1c9f5bb"/><ul id="41af1370-9460-492c-8303-06d8f51eec6e" class="toggle"><li><details open=""><summary>Example</summary><pre id="4d3d3cec-b921-4a93-bb1c-c8789e288cbe" class="code"><code>#pragma omp parallel
+	#pragma omp single nowait
+		#pragma omp taskloop collapse(2)
+			for (i=0; i&lt;m; i++) {
+				for (j=0; j&lt;n; j++) {
+					a[i][j] = i+j;
+				}
+			}</code></pre><p id="31df4437-6b69-4288-86ca-900512ae8159" class="">
+</p></details></li></ul><hr id="d4cb88ce-61e3-4830-a6fc-8d0c83a48a90"/><ul id="5f0090fd-61f1-4374-b634-5e5b479c15ca" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="aa60ac8b-61eb-4bf8-a6a3-48dc93ecd784" class="code"><code>if([ taskloop :] scalar-expr)
+shared(list)
+private(list)
+firstprivate(list)
+lastprivate(list)
+default(shared | none)
+grainsize(grain-size) // controls size and number of tasks
+num_tasks(num-tasks)
+collapse(n)
+final(scalar-expr)
+priority(priority-value)
+untied
+mergeable
+nogroup</code></pre></details></li></ul><p id="7df47120-b9f8-4427-92b3-da4fc6b6ab6d" class="">
+</p></div></p><h2 id="17d507d4-8380-4e07-8049-3a8fb60457d7" class="">Task-construct</h2><p id="2beff4f8-bb6e-4096-b329-cfd8a4081d04" class=""><code><mark class="highlight-blue">task</mark></code><div class="indented"><p id="a9d77896-feb5-48f1-9e99-5daad8f9d0c3" class="">Generates a DAG.<div class="indented"><p id="b0ca559b-bf7e-42a8-882e-d9bfc91558f4" class="">Code sections marked as <mark class="highlight-gray"><code>tasks</code></mark> can be suspended (deferred) and later be executed by any thread in the region (by any thread).</p><p id="bfd50b73-7dee-48e9-a28c-20aab798b1e0" class="">All tasks must be completed by end of parallel region.</p></div></p><hr id="3cedb0b9-6be1-49f9-b4c0-46018063a278"/><ul id="2420704a-0e37-44c1-8d5d-38e5a4afe500" class="toggle"><li><details open=""><summary>Example: Quicksort</summary><p id="e637f047-e5c5-4e5c-b420-cd003124bf00" class="">Quicksort calls are independent.<div class="indented"><p id="a320dece-116b-4470-a66b-181f15fd09d1" class="">We mark each call as a task and the runtime will spawn them dynamically.</p></div></p><pre id="1829c3c4-c86b-41d9-b13b-8b617e0d9100" class="code"><code>void QuickSort(int x[],int n) {
+	if (n&lt;=1) return;
+
+	pivot = choosepivot(x,n);
+	ix = partition(x,n,pivot);
+	
+	QuickSort(x,ix);
+	QuickSort(x+ix+1,n-1-ix);
+}</code></pre><pre id="77c8106d-901d-4a65-beda-11e910528e63" class="code"><code>int main(int argc, char *argv[]){
+	...
+	#pragma omp parallel {
+		#pragma omp single nowait
+			QuickSort(x,n);
+			// no implicit barrier
+	} // implicit barrier
+	return 0;
+}
+
+void QuickSort(int x[],int n) {
+	if (n&lt;=1) return;
+	
+	pivot = choosepivot(x,n);
+	ix = partition(x,n,pivot); // partition O(n)
+	
+	#pragma omp task shared(x)
+		QuickSort(x,ix);
+	#pragma omp task shared(x)
+		QuickSort(x+ix+1,n-1-ix);
+	//#taskwait &lt;- not needed here, because of implicit barrier (see above)
+}</code></pre><p id="9541588d-af81-4f87-abb6-a31e9cf3a014" class="">By using <mark class="highlight-gray"><code>single</code></mark> in <mark class="highlight-gray"><code>parallel</code></mark>, we first activate all threads and only use a single one to call the function.<div class="indented"><figure id="2453c59c-783a-466c-b0be-ac9cd0e0ee79" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%204.png"><img style="width:384px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%204.png"/></a></figure></div></p><p id="fbce2222-f4db-484f-b6c0-6b8a25995fc2" class="">We then wait for each task to finish independently based on DAG generated by OpenMP runtime-system.<div class="indented"><ul id="7ec58bfb-e5e8-4f6a-b970-5c847b622a4e" class="bulleted-list"><li style="list-style-type:disc">Total work over all tasks <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n \log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> → Asymptotically same as sequential QuickSort</li></ul><ul id="b01e2592-caa9-4e89-ae37-afa2ebd409a9" class="bulleted-list"><li style="list-style-type:disc">Recursion depth with optimal pivot selection: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="30a0bf2b-b1b6-416b-9909-23c2e8129b04" class="bulleted-list"><li style="list-style-type:disc">Work on critical path: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="3f68766a-5f97-4ba7-a47d-4c4fd2937361" class="bulleted-list"><li style="list-style-type:disc">Parallelism: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O((n \log n)/n) = O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">((</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>.<p id="d83042ae-4214-4193-8870-ae71e8517c84" class="">Bottleneck is the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> partition call.</p></li></ul></div></p><p id="1830a456-46dc-42f0-af22-d2f78dc0e8d0" class="">The QuickSort DAG is “strict” → randomized work-stealing is probably efficient.</p><p id="402a3f2c-845d-41a8-946b-6aa07dd2c616" class="">
+</p></details></li></ul><ul id="c7c1f8c0-4ad7-49e6-8f0b-9fec2d91b02b" class="toggle"><li><details open=""><summary>Example: Counting occurences in unordered array</summary><pre id="76dbda00-ac3e-41c5-aad8-f6671a451382" class="code"><code>int search(int x, int a[], int n) {
+	if (n==1) {
+		return (a[0]==x) ? 1 : 0;
+	
+	} else {
+		int s0, int s1;
+
+		#pragma omp task shared(s0,a)
+			s0 = search(x, a, n/2); // left half
+		#pragma omp task shared(s1,a)
+			s1 = search(x, a+n/2, n-n/2); // right half
+		#pragma omp taskwait
+			return s0+s1;
+
+	}
+}</code></pre><figure id="36e39b36-2e1f-4356-90ef-4eb03afe0762" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%205.png"><img style="width:432px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%205.png"/></a></figure><ul id="c504c753-f2ed-4c2f-bc72-78755d08072e" class="bulleted-list"><li style="list-style-type:disc">Total work in DAG <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex"> \small O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="d12ce91c-9c93-4962-8d71-40a1acfb9351" class="bulleted-list"><li style="list-style-type:disc">Recursion depth <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="bf0ef3ed-6ad0-41e3-b208-6d24cdfade3d" class="bulleted-list"><li style="list-style-type:disc">Work on critical path <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="89ad002c-25cc-41be-9123-e3d2452a2b40" class="bulleted-list"><li style="list-style-type:disc">Parallelism <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><p id="b9986d9a-d792-4142-b255-cea1bb23b6fe" class="">
+</p></details></li></ul><hr id="62057319-1e5b-44e3-9fb5-6c0bb28de6c2"/><ul id="37331600-ce6c-4fe1-98e9-f406d70e1dfc" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="a99bf8eb-8d93-4033-8959-4631c9856634" class="code"><code>if(scalar-expression)
+final(scalar-expression)
+untied
+default(shared | none)
+mergeable // used for small tasks (they might have too much overhead)
+private(list)
+firstprivate(list)
+shared(list)
+depend(dependence-type : list)
+priority(priority-value)</code></pre></details></li></ul></div></p><figure id="2a2f517f-2734-4b2f-846b-c27d8af2eeff" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%206.png"><img style="width:72px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%206.png"/></a></figure><p id="e705f6fd-80d4-48cc-b8aa-1a2cda9940e4" class="">
+</p><h2 id="5a741a92-21d7-44cf-a740-02262c4f6bbc" class="">Sections-construct</h2><p id="ffa17fc8-b623-475e-94de-2689f5ade86b" class=""><code><mark class="highlight-blue">sections</mark></code><div class="indented"><p id="18effe45-3fc9-4cbe-96ef-d30c63fc0ef7" class="">Finite set of sections assigned to threads (scheduled) and executed in parallel.<div class="indented"><p id="6e07b9dc-3636-44c4-a572-b1619567d140" class="">Scheduling = assigning sections to threads</p></div></p><pre id="0fe3e320-e2ff-4715-bce6-806bce1410f8" class="code"><code>#pragma omp parallel {
+	#pragma omp sections
+	#pragma omp section {
+		// A
+	}
+	#pragma omp section {
+		// B
+	}
+	// …
+}</code></pre><ul id="1fb41268-3e66-4c96-80ad-17c4e5356898" class="toggle"><li><details open=""><summary>Manual solution (inefficient)</summary><p id="6e661609-6814-499f-bf06-06bb90e19bca" class="">We explicitly assign a task to a thread.</p><pre id="72adb8ae-1e8f-4b69-8e3c-ed41f78024ed" class="code"><code>#pragma omp parallel
+if (omp_get_thread_num()==0) {
+	A(…); // do this
+} else if (omp_get_thread_num()==1) {
+	B(…); // do that
+} else {
+	…
+}</code></pre><p id="a1965998-4097-490f-abc3-30eea6b86cbe" class="">There can be more sections than threads, then we need scheduling (a thread executes more than one section).</p><p id="ce4da8a8-59f1-4c33-8655-7610d1461d6f" class="">
+</p></details></li></ul><ul id="810cfbf3-f426-4822-9d38-89d7777d4566" class="toggle"><li><details open=""><summary>Example: Loop with two independent tasks</summary><pre id="507b830f-dd0d-46b5-8eda-88eb2feec2b9" class="code"><code>int i;
+float a[N], b[N], c[N], d[N];
+for (i=0; i &lt; N; i++) {
+	a[i] = …;
+	b[i] = …;
+}
+
+// assignments to c,d are independent but both depend on a,b
+for (i=0; i &lt; N; i++) {
+	c[i] = a[i] + b[i];
+	d[i] = a[i] * b[i];
+}</code></pre><pre id="2e174e1a-5500-4532-9721-e20e80cf4cdf" class="code"><code>int i;
+float a[N], b[N], c[N], d[N];
+for (i=0; i &lt; N; i++) {
+	a[i] = …;
+	b[i] = …;
+}
+
+#pragma omp parallel default(none) shared(a,b,c,d) private(i) {
+	
+	#pragma omp sections nowait {
+		#pragma omp section // Task 1
+		for (i=0; i &lt; N; i++) c[i] = a[i] + b[i];
+		#pragma omp section // Task 2
+		for (i=0; i &lt; N; i++) d[i] = a[i] * b[i];
+	}
+}</code></pre><p id="52db2cfd-5e60-4b63-b856-4a8e48e57f51" class="">
+</p></details></li></ul><hr id="9bf95516-ff52-4ccf-b161-e6f8259d514c"/><ul id="b9cdc1f7-356d-4eff-ae1f-f3a69af2cf21" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="3b5bfa0a-a329-40e8-84ae-ed04fe582d3d" class="code"><code>private (list)
+firstprivate (list)
+lastprivate (list)
+reduction (operator: list)
+nowait // remove implicit barrier at end of construct</code></pre></details></li></ul></div></p><figure id="f25c989b-d320-46d7-8f7e-7b899b403114" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%207.png"><img style="width:144px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%207.png"/></a></figure><p id="3e9ec5e5-6f49-495b-8762-c7771c054a74" class="">
+</p><h2 id="1ceadd03-19a4-44c4-b170-4f16e3fc6f48" class="">Single-construct</h2><p id="e993cf92-9fad-445f-bdb5-7377cd2d3acc" class=""><code><mark class="highlight-blue">single</mark></code><div class="indented"><p id="48311707-6ec6-4d91-bc2a-5926fc7f6559" class="">Sequential code in parallel construct - only to be executed by a single thread.<div class="indented"><p id="321230a0-a2ec-4d1e-b71b-2afc711a2ba6" class="">No mutual exclusion.</p><p id="81f58677-4d28-4f4c-b114-abf4aed8cb7b" class="">Implicit barrier after block.</p></div></p><pre id="52d3ca4d-521b-4dff-a5f5-a0979c8d2dff" class="code"><code>#pragma omp parallel {
+	#pragma omp single {
+		// some thread
+	} // implicit barrier
+}</code></pre><ul id="586ffdf9-3ce3-43fa-bb36-4803b9c873b7" class="toggle"><li><details open=""><summary>Example</summary><pre id="1d7cb543-95c2-4b55-ad4c-92346568ea14" class="code"><code>#pragma omp parallel {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+
+	#pragma omp single
+		readarray(b, n);
+		// implicit barrier (all threads will have the same view)
+	
+	for (i=start; i&lt;end; i++) {
+		a[i] = b[i];
+	}
+
+	#pragma omp barrier
+
+	#pragma omp single nowait
+		printf(&quot;done.&quot;);
+
+} // implicit barrier</code></pre><p id="9b556789-9539-4f9e-be89-3974c349586e" class="">
+</p></details></li></ul><hr id="ec4abbaf-2809-434e-a2fc-386621500f1f"/><ul id="c06850fa-f4dc-4452-974c-8ffcd7c31727" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="b4379c77-6811-44af-a399-d23f811e94f8" class="code"><code>private (list)
+firstprivate (list)
+nowait // remove implicit barrier at end of construct</code></pre></details></li></ul></div></p><figure id="ac6a012f-8ed3-44f4-8488-baa79a683205" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%208.png"><img style="width:192px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%208.png"/></a></figure><p id="d1742fbb-406e-4186-9708-60bd0ba202c9" class="">
+</p><h2 id="cd20885b-6531-4f3c-a2a3-4d9b6e0c7990" class="">Master-construct</h2><p id="7c63d754-1cd7-48ff-8e8d-381e09e44df5" class=""><code><mark class="highlight-blue">master</mark></code><div class="indented"><p id="87f46513-8dfc-4278-835b-4c87c2aa043c" class="">Sequential code for master-thread in parallel construct.<div class="indented"><p id="2c47f2c8-fcd9-4041-9f9c-bb38bd0bb7ab" class="">No mutual exclusion, no barrier.</p></div></p><pre id="5cebcbb4-861e-454e-b1ea-697ca95d3fb0" class="code"><code>#pragma omp parallel {
+	#pragma omp master {
+		// master thread 0
+	}
+}</code></pre><ul id="c79ee035-7125-4e98-87d3-e29028001025" class="toggle"><li><details open=""><summary>Example</summary><pre id="83d63442-c218-407f-84a6-40ee520704fa" class="code"><code>#pragma omp parallel {
+	int i;
+	int block = n/omp_get_num_threads();
+	int start = omp_get_thread_num()*block;
+	int end = start+block;
+
+	#pragma omp master
+		readarray(b, n);
+	
+	// dangerous! no implicit barrier here
+	// threads won&#x27;t have the same view -&gt; race condition
+	
+	for (i=start; i&lt;end; i++) {
+		a[i] = b[i];
+	}
+
+	#pragma omp barrier
+
+	#pragma omp single
+		printf(&quot;done.&quot;);
+		// implicit barrier
+
+} // implicit barrier</code></pre><p id="2813427f-073d-4050-99f9-e07b7f94cbc5" class="">
+</p></details></li></ul><hr id="83ec8e43-91f4-4e90-a182-e39ecc103daf"/><ul id="b4ff8782-bbed-46ec-a9bb-857f181aaa14" class="toggle"><li><details open=""><summary>Clauses</summary><pre id="6a36ca1f-4a9a-401e-9dda-d548817fae32" class="code"><code>private (list)
+firstprivate (list)
+nowait // remove implicit barrier at end of construct</code></pre></details></li></ul></div></p><figure id="18534d21-9059-40fa-acf8-af35bff6870c" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%209.png"><img style="width:192px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%209.png"/></a></figure><p id="07c9225b-0079-42d6-b559-b18c0d99421b" class="">
+</p><p id="d2266a6d-18ae-421f-b4d9-258f8d176eb6" class="">
+</p><h1 id="d2e2d329-ce00-41c9-9854-e675ab91e937" class="">Synchronization constructs</h1><p id="ce3858a6-9fb4-4d22-96cb-323559443f5c" class=""><mark class="highlight-teal">Data-races </mark>should be avoided<div class="indented"><p id="c40d2e7d-a4cd-4f0d-9058-04487035d267" class="">Parallel threads update an <em>unprotected</em> shared variable so that the outcome of the program dependens on the relative order in which the threads perform their updates.</p><p id="130a61e0-ea60-46d3-aa2e-62b9b0a4cc58" class="">Compilers can not check whether programs have these race conditions.</p></div></p><p id="9e6cba72-c0bb-473e-a0c2-0eb3753fe737" class="">
+</p><p id="c38052c6-4936-44c9-a48c-6c5a5eab8852" class=""><code><mark class="highlight-blue">barrier</mark></code><div class="indented"><p id="e77bd210-68a7-4fb7-8a57-c6d92a60dfc8" class="">Semantically synchronizes threads.<div class="indented"><p id="e3d840c4-f0ca-4ca5-a948-9ad8311ae8c5" class="">Can cause deadlock if threads execute part of code that does not contain barrier.</p></div></p><pre id="011a5147-5f8d-46c5-8bdc-4078339196cc" class="code"><code>#pragma omp barrier</code></pre><hr id="576fe932-8723-4bbf-ab29-7a2cc81dcd48"/><ul id="5c649b03-e545-4566-a4c1-b8599dbe7a5c" class="toggle"><li><details open=""><summary>Example: Merging by coranking</summary><pre id="d8b75734-6b21-4d1f-ab04-c34ca531decd" class="code"><code>// global, read-only values A, B, n, m
+int j[p+1], k[p+1]; // allocate in advance
+j[p] = n; k[p] = m;
+
+#pragma omp parallel {
+	int i = omp_get_thread_num();
+	int p = omp_get_num_threads();
+
+	corank(i*(n+m)/p, A, n, &amp;j[i], B, m, &amp;k[i]);
+	
+	#pragma omp barrier
+
+	merge(
+		&amp;A[j[i]],j[i+1]-j[i],
+		&amp;B[k[i]],k[i+1]-k[i],
+		&amp;C[i*(n+m)/p]
+	);
+}</code></pre><pre id="724aa9d8-7a65-4dae-b7b5-975fe269e44a" class="code"><code>// global, read-only values A, B, n, m
+#pragma omp parallel {
+	int i = omp_get_thread_num();
+	int p = omp_get_num_threads();
+	int j1, k1, j2, k2;
+	
+	corank(i*(n+m)/p , A, n, &amp;j1, B, m, &amp;k1);
+	corank((i+1)*(n+m)/p, A, n, &amp;j2, B, m, &amp;k2);
+	
+	merge(
+		&amp;A[j1], j2-j1,
+		&amp;B[k1], k2-k1,
+		&amp;C[i*(n+m)/p]
+	);
+}</code></pre><p id="543257eb-2529-440a-917a-b8346ad063b3" class="">Trade-off: Explicit barrier saves one corank computation per thread.<div class="indented"><p id="d7931d76-ce52-4f1c-948a-c761384a8c34" class="">It depends on <mark class="highlight-gray"><code>n,m,p</code></mark><mark class="highlight-gray"> </mark>and characteristics of multi-core system which one is cheaper.</p></div></p></details></li></ul></div></p><p id="c1db5f51-976e-45c6-a12a-c4767775a17c" class="">
+</p><p id="4509f2f8-fb5d-46ac-89b3-f9f20bb7e133" class=""><code><mark class="highlight-blue">taskwait</mark></code><div class="indented"><p id="135437ed-3f55-4896-a990-b734586dbd07" class="">Used for <mark class="highlight-gray"><code>task</code></mark> construct</p><p id="a173f754-ad88-4b1a-b197-9e37cff52ca5" class="">Waits for completion of generated tasks (children), not transitively for all successor tasks<div class="indented"><p id="37653678-d4c5-4b3d-9f3e-00b3b2e4d072" class="">This optimizes fully strict DAGs</p></div></p><pre id="46170219-02a6-47bb-99d2-63da6c0a3843" class="code"><code>#pragma omp taskwait</code></pre></div></p><p id="368879c0-f037-496a-b7ba-faac5fb9f2b0" class="">
+</p><p id="ab88dfc7-314d-4cf9-bde1-35d718058018" class=""><code><mark class="highlight-blue">critical</mark></code><div class="indented"><p id="a675bc91-83c3-45c5-92cb-128a3d4a1429" class="">Used to mark a critical section.<div class="indented"><p id="0950d16e-0874-495c-a78b-55fb0db6658f" class="">Enforces <em>mutual exclusion</em> in code region (always at most 1 thread at a time).</p><p id="305e462f-77e4-4eba-816b-26991148966d" class="">Order with which threads enter critical section is not set.</p><p id="c20b6ad0-81f5-40ab-a237-37155a60f597" class="">Updates to shared variables won’t cause a race condition.</p></div></p><pre id="b37b389d-5239-4d44-953d-820645b4d0f2" class="code"><code>#pragma omp critical [(&lt;name&gt;)]</code></pre><hr id="0f442649-ca0e-4352-8a55-3bb86b3597b9"/><ul id="5f315d2f-86ce-4aa9-8cea-d070969f04c5" class="toggle"><li><details open=""><summary>Example: Counting accesses</summary><p id="67a23f8c-0b8b-4c54-bc07-aaffeb54de90" class="">Without mutual exclusion we would get a race condition.</p><pre id="a6cf94e9-3d1f-4bef-904a-277e525ca35f" class="code"><code>int t = 0;
+
+#pragma omp parallel shared(t)
+	#pragma omp critical
+		t++; &lt;-- possible race condition on increment
+	#pragma omp barrier
+	print(&quot;Threads so far %d of %d by %d\n&quot;, t, omp_get_num_threads(), omp_get_thread_num());</code></pre><p id="556b5f61-c36b-44b9-a299-935d6150c903" class="">
+</p></details></li></ul><ul id="ac5d8fad-1fbb-4d49-9082-b601a90230cf" class="toggle"><li><details open=""><summary>Example: min-max reductions</summary><p id="31e42b92-81cd-4aaa-9213-c3487a67b9d8" class="">Sequential algorithm<div class="indented"><pre id="a3e40af9-bd6b-4f30-b146-327954f9325e" class="code"><code>max = x[0]; min = x[0];
+for (i=1; i&lt;n; i++) {
+	if (x[i]&lt;min) min = x[i];
+	if (x[i]&gt;max) max = x[i];
+}</code></pre></div></p><p id="df661ec4-92c6-4433-be45-d664516cbe13" class="">Attempt at parallelization<div class="indented"><p id="69c2cef2-cd5c-4123-8bfc-91fed0e4ceca" class=""><mark class="highlight-gray"><code>min</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>max</code></mark><mark class="highlight-gray"> </mark>are different for each thread → race condition.</p><pre id="d9bf3e56-d0bd-4fdf-9cbf-fc557e4f5f06" class="code"><code>max = x[0]; min = x[0];
+
+#pragma omp parallel for
+for (i=1; i&lt;n; i++) {
+	if (x[i]&lt;min) min = x[i];  &lt;-- race condition on update of min
+	if (x[i]&gt;max) max = x[i];  &lt;-- race condition on update of max
+}</code></pre></div></p><p id="00b2d1a4-d744-4608-b7a6-fcab49ba5c24" class="">Solution 1) Reduction<div class="indented"><pre id="1e5de924-0973-4fb0-b334-f42ee62a49b3" class="code"><code>max = x[0]; min = x[0];
+
+#pragma omp parallel for reduction (min:min), reduction (max:max)
+for (i=1; i&lt;n; i++) {
+	if (x[i]&lt;min) min = x[i];
+	if (x[i]&gt;max) max = x[i];
+}</code></pre></div></p><p id="4a15f1ea-4c7f-44b9-838e-0f961fbca6fa" class="">Solution 2) Critical section<div class="indented"><p id="cc05cb8f-6d44-4d4d-8f1e-3332178a5425" class="">We check twice (recheck), in case the values change when we enter the if’s-body.</p><pre id="c85cbf07-0cd5-4928-82f0-12c24f97e319" class="code"><code>max = x[0]; min = x[0];
+
+#pragma omp parallel for
+for (i=1; i&lt;n; i++) {
+	if (x[i]&lt;min) {
+		#pragma omp critical(MIN)
+		if (x[i]&lt;min) min = x[i];
+	}
+	if (x[i]&gt;max) {
+		#pragma omp critical(MAX)
+		if (x[i]&gt;max) max = x[i];
+	}
+}</code></pre></div></p><p id="692bc2f3-1661-4891-aca7-f406d8c82532" class="">
+</p></details></li></ul></div></p><p id="10c8c967-8606-4108-88b2-ffc7557a4007" class="">
+</p><p id="7fdf831e-1178-4723-8754-891bbcbf3d3c" class=""><code><mark class="highlight-blue">opm_set_lock</mark></code><mark class="highlight-blue"> (lock library routines)</mark><div class="indented"><p id="43a4fc5e-0c83-4fa3-97d1-3a2218c32c31" class="">Same as pthreds mutex: Dynnamic lock.<div class="indented"><p id="fe93b7c8-8025-4ad0-9421-ebb4470d2afa" class="">Must be allocated/initialized and destroyed again.</p><p id="2f4cb640-f714-40fc-b5c0-4cb7cd5eddeb" class="">No guarantee for fairness.</p></div></p><ul id="067a094c-23f5-44c6-96e1-9b5a46c122e8" class="toggle"><li><details open=""><summary>Library</summary><pre id="69b9af2c-d7ce-43e5-b590-666320b0e959" class="code"><code>#include &lt;omp.h&gt;
+// set
+void omp_set_lock(omp_lock_t *lock);
+void omp_set_nest_lock(omp_nest_lock_t *lock);
+
+// unset
+void omp_unset_lock(omp_lock_t *lock);
+void omp_unset_nest_lock(omp_nest_lock_t *lock);
+
+// test
+int omp_test_lock(omp_lock_t *lock);
+int omp_test_nest_lock(omp_nest_lock_t *lock);</code></pre></details></li></ul></div></p><p id="3ba48439-baeb-481d-9802-97deee366480" class="">
+</p><p id="24678244-5ae5-4326-bfdd-db342af319f6" class=""><code><mark class="highlight-blue">atomic</mark></code><mark class="highlight-blue"> (atomic operations)</mark><div class="indented"><p id="4e4e431f-66b7-4ff8-b734-3e3ddbc5beab" class="">Concurrent and read-modify-write on shared variable in <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> (optimistically).<div class="indented"><p id="1916ebd5-2d88-4ca7-897f-e7d835c34bd4" class="">All updates on shared variable must be atomic.</p><p id="9109e978-d69e-46b4-ab44-bf687a83717f" class="">Atomic = Opeartion can not be interrupted by other threads and completes in finite (bounded) time.</p></div></p><pre id="a56df353-058d-4e81-ac24-11c2d5f718e4" class="code"><code>#pragma omp atomic [operation_type]</code></pre><ul id="ed901984-e0dd-40c3-8657-dc79c53efd2f" class="toggle"><li><details open=""><summary>Operations: Read, Write, Update, Capture (fetch and update)</summary><pre id="79b7db0c-9d08-4ee4-8be1-897266ff07ef" class="code"><code>#pragma omp atomic read
+pvar = svar; // read shared variable atomically
+
+#pragma omp atomic write
+svar = pvar; // write to shared variable atomically
+
+#pragma omp atomic capture
+&lt;expression statement&gt;
+
+#pragma omp atomic capture
+&lt;structured block&gt;
+
+#pragma omp atomic update
+&lt;expression statement&gt;</code></pre><ul id="7423f0f9-94fb-434a-b7e6-09cb068dd67f" class="toggle"><li><details open=""><summary><mark class="highlight-gray"><code>expression statement</code></mark></summary><p id="8f64ffda-5c44-4c08-b8c2-9dcd379dea9d" class=""><mark class="highlight-gray"><code>expr</code></mark><mark class="highlight-gray"> </mark>must also be evaluated atomically and must not have side effects. </p><figure id="cfb91958-4933-4b81-a9d0-dad67c93323a" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%2010.png"><img style="width:336px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%2010.png"/></a></figure><figure id="94b2156e-1673-4742-b6e9-a5f132a6a4f7" class="image"><a href="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%2011.png"><img style="width:336px" src="OpenMP%20cca768e054b8437a861c5b253248dfb9/Untitled%2011.png"/></a></figure><p id="3328011b-02cf-4e44-bdd9-cc7f2e9773d6" class="">
+</p></details></li></ul><ul id="93a87d3e-b715-4a92-8963-e6bd1d331e2b" class="toggle"><li><details open=""><summary><mark class="highlight-gray"><code>structured block</code></mark></summary><ol type="1" id="b6693e95-a528-4e41-833b-f4f5a1dca49f" class="numbered-list" start="1"><li>Read of shared variable</li></ol><ol type="1" id="2109a19b-4536-4ba7-8fa4-b1c0b99a3922" class="numbered-list" start="2"><li>Update with one of the built in operators of the OpenMP standard.</li></ol><p id="1a1fe5a0-334d-43cd-9423-4df4c308458e" class="">
+</p></details></li></ul></details></li></ul><hr id="b7e70b0b-f9cf-4e5c-9e95-561957af72c4"/><ul id="485a9792-ea13-41f4-a236-8169180eadfc" class="toggle"><li><details open=""><summary>Example: Counting accesses</summary><p id="0263e4cc-8ab5-4920-9106-f8a10d19f600" class="">This solution is better than a critical section (see above).</p><pre id="ea8862a3-aebe-4140-98e5-bea8ff61e586" class="code"><code>int t = 0;
+
+#pragma omp parallel shared(t)
+	#pragma atomic update
+		t++; &lt;-- possible race condition on increment
+	#pragma omp barrier
+	print(&quot;Threads so far %d of %d by %d\n&quot;, t, omp_get_num_threads(), omp_get_thread_num());
+</code></pre><pre id="937f34f0-eaa2-4c71-a234-ef6396dfab63" class="code"><code>int t, i;
+t = 0;
+
+#pragma omp parallel shared(t) private (i)
+	#pragma atomic capture
+		i = t++; &lt;-- possible race condition on increment
+	#pragma omp barrier
+	print(&quot;Threads so far %d of %d by %d\n&quot;, i, omp_get_num_threads(), omp_get_thread_num());
+	</code></pre></details></li></ul></div></p><p id="0e49b665-4948-4e54-9d42-1a2b2fbca950" class="">
+</p><h2 id="51d6f8b8-448b-45b5-8e14-60dbf18cbab2" class="">Performance</h2><p id="e6dd0fbd-6a52-4a0a-a885-3540c3b4f298" class=""><mark class="highlight-blue">Performance comparison</mark><div class="indented"><p id="1d24ab75-de87-47ba-b5bf-faa3df22a47e" class=""><mark class="highlight-teal">Critical section, lock</mark><div class="indented"><p id="9069de55-930a-4994-b52e-2f690900e6d3" class="">Slow - causes overhead for locking/mutual exclusion.</p><p id="eb74722a-e8f3-40c2-a7d5-a9fcf9890426" class="">Can lead to serialization if too many threads must wait (amdahl).</p></div></p><p id="d8e095d8-2d97-4ec9-8420-17fae07198db" class=""><mark class="highlight-teal">Atomic operation</mark><div class="indented"><p id="595e6832-f407-4cd3-ace8-4e04449bf051" class="">Usually much faster than critical sections, threads dont affect eachother’s progress if supported by hardware.</p><p id="b085477b-cb53-4227-884c-7731a51f5c34" class="">Possibly slow because of expensive traffic on memory system (if hardware must invalidate cache lines).</p></div></p></div></p><p id="7187c5a3-36af-40e8-ad36-6592b4d3f1cc" class="">
+</p><p id="62bbe5f6-58f3-4d17-b975-a2e5c178b83a" class="">
+</p><h1 id="d4e8260b-640c-4cc9-8ebe-a253d8cc04c2" class="">Loop schedule clauses (of for-construct)</h1><p id="c5035237-0308-4557-827d-ad5e46a408a4" class="">Clauses used for scheduling in <em>for-construct</em>.</p><p id="acb38494-893e-4b37-a024-bfe4ae3c2bf2" class="">
+</p><p id="aa4245cb-130f-436e-97c2-4b7bdc3ae53f" class=""><mark class="highlight-blue">Loop scheduling</mark><div class="indented"><p id="8da829e0-8069-4a51-8639-2322f3e24e48" class="">Assigning loop iterations (ie. indices of array) to threads.</p><p id="e8246a82-eeed-491e-82bf-2e31f8442f0c" class="">By default:<div class="indented"><p id="d2758629-75a7-4abd-8380-b84b5f56ccb9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> 	= number of threads</p><p id="efe7d371-f57e-4675-8e89-de415821e9e7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> 	= number of iterations (iteration space)</p><p id="8a3364e6-c89c-45cb-8916-56d9b833f6c1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n/ p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span>	= chunk, block size (assigned to each thread)<div class="indented"><p id="907ada55-be77-441b-8206-822ac5ff38c1" class="">the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span>th chunk is: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>0</mn><mo>≤</mo><mi>i</mi><mo>&lt;</mo><mo stretchy="false">⌈</mo><mi>n</mi><mi mathvariant="normal">/</mi><mrow><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">h</mi><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">z</mi><mi mathvariant="monospace">e</mi></mrow><mo stretchy="false">⌉</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small 0 \leq  i &lt; \lceil n/ \tt{chunksize} \rceil</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.702369em;vertical-align:-0.12237300000000001em;"></span><span class="mord sizing reset-size6 size5">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.628758em;vertical-align:-0.035190000000000006em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">⌈</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathtt">chunksize</span></span><span class="mclose">⌉</span></span></span></span></span></span><span>﻿</span></span></p></div></p></div></p><hr id="5206c2d3-c5b4-443d-9997-d848a9091b11"/><p id="25e1d33a-81d2-4e49-b3c0-463cb9ea3297" class="">The schedule (chunk size, assignment of chunks to threads) can be set via schedule clauses.</p><p id="9009e7c3-26e6-4004-bcd9-ec99431df505" class="">Schedule can have huge impact on performance (false sharing, work per iteration, data structure access pattern, ...)</p></div></p><p id="962a2a29-7e6e-40df-84f5-449b7a2b5c79" class="">
+</p><p id="99b305bc-cc31-447c-86e9-2542711b435a" class=""><mark class="highlight-blue">Schedule clauses</mark><div class="indented"><pre id="d557f52e-c18a-4b1e-94ac-e718fb724599" class="code"><code>#pragma omp parallel for schedule(…,&lt;chunksize&gt;)
+	for (j=0; j&lt;n; j++) {
+		...
+	}</code></pre><p id="4d4cf5a6-34c0-4ab0-9725-16f2ff8b1c22" class=""><mark class="highlight-gray"><code>schedule(</code></mark><code>static</code><mark class="highlight-gray"><code> [, chunksize])</code></mark><mark class="highlight-gray"> - static, fixed assignment</mark><div class="indented"><p id="1906f6c4-8b85-4c5c-9a18-631f4f8be386" class=""><mark class="highlight-gray">chunksize argument is optional (default: </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">)</mark><div class="indented"><p id="f5101a2e-13ea-425f-bdb5-06fa6cebb3d3" class=""><mark class="highlight-gray"><em> Using </em></mark><mark class="highlight-gray"><em><code>chunksize = 1</code></em></mark><mark class="highlight-gray"><em> would cause false sharing </em></mark></p></div></p><p id="7651a2f3-015d-48a3-99f4-409a6e2cb44c" class="">Like round robin: thread <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span> executes chunk <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">(</mo><mi>i</mi><mtext> </mtext><mo lspace="0.22em" rspace="0.22em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow></mo><mtext> </mtext><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small (i \bmod p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace sizing reset-size6 size5" style="margin-right:0.05555555555555555em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace sizing reset-size6 size5" style="margin-right:0.05555555555555555em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span><div class="indented"><ul id="ec3c7097-c5c6-48fd-8164-6ef913e56638" class="toggle"><li><details open=""><summary>Example: Matrix-vector multiplication</summary><p id="2af396b6-caf1-41a8-a0fe-71b2b8c45334" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mover accent="true"><mi>y</mi><mo>⃗</mo></mover><mo>=</mo><mi>X</mi><mo>⋅</mo><mover accent="true"><mi>a</mi><mo>⃗</mo></mover></mstyle></mrow><annotation encoding="application/x-tex">\small \vec y = X \cdot \vec a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.817596em;vertical-align:-0.174996em;"></span><span class="mord accent sizing reset-size6 size5"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.6426em;vertical-align:0em;"></span><span class="mord accent sizing reset-size6 size5"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord mathnormal">a</span></span><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="1d068481-cd04-45c5-9dbd-1e09f683b454" class="">Default loop schedule is static with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> chunks.</p><pre id="b2530cce-dbeb-41c4-80f6-28afbf58f85b" class="code"><code>#pragma parallel for
+for (i=0; i&lt;n; i++) {
+	y[i] = 0;
+
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre><p id="454d221d-f7fa-4a72-b25c-6416464f3bfd" class="">If written out explicitly:</p><pre id="35223fb8-9234-490b-9745-0a0183aac222" class="code"><code>#pragma parallel for schedule(static)
+for (i=0; i&lt;n; i++) {
+	y[i] = 0;
+	
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre><p id="24fd48ed-134a-4d27-ba70-8be16014f8ee" class="">
+</p></details></li></ul></div></p></div></p><hr id="614401c2-f755-451b-ac4d-e16d799e823e"/><p id="9407a642-e333-48b1-93d8-306df3efbc2b" class=""><mark class="highlight-gray"><code>schedule(</code></mark><code>dynamic</code><mark class="highlight-gray"><code> [, chunksize])</code></mark><mark class="highlight-gray"> - dynamic assignment</mark><div class="indented"><p id="31ea0471-2bd3-4380-b4ab-05b1331402e5" class=""><mark class="highlight-gray">chunksize argument is optional (default: 1)</mark></p><p id="af567879-f309-4797-8514-785c518a5ea2" class="">assignment as threads become free and request work<div class="indented"><ul id="370cfc38-6ccd-41a0-a10e-2ec555790f2c" class="toggle"><li><details open=""><summary>can be implemented as work-pool</summary><p id="064aa25c-c8b3-4926-aa83-9831750c9cb6" class="">Thread <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>t</mi></mstyle></mrow><annotation encoding="application/x-tex">\small t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.553572em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">t</span></span></span></span></span><span>﻿</span></span> where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>0</mn><mo>≤</mo><mi>t</mi><mo>&lt;</mo><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 0≤t&lt;p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.702369em;vertical-align:-0.12237300000000001em;"></span><span class="mord sizing reset-size6 size5">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.588762em;vertical-align:-0.035190000000000006em;"></span><span class="mord mathnormal sizing reset-size6 size5">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span>: <mark class="highlight-gray"><code>i</code></mark><mark class="highlight-gray"> </mark>is the chunk iteration start</p><pre id="c789a25a-df6c-41aa-86b3-18463f233445" class="code"><code>do {
+	start = fetch_and_add(&amp;i, chunksize); // atomic instruction
+	if (start&gt;=n) break;
+	end = min(start+chunksize,n);
+
+	for (j = start; j&lt;end; j++) {
+		// execute chunk
+	}
+
+} while (1);</code></pre><p id="09d00220-fa5d-4be2-94aa-e1643b10857c" class="">
+</p></details></li></ul></div></p></div></p><hr id="bff55172-9f53-4411-ae78-0c1a944efa0e"/><p id="73c187fc-9e1c-461e-9ab7-8e24848f32c3" class=""><mark class="highlight-gray"><code>schedule(</code></mark><code>guided</code><mark class="highlight-gray"><code> [, chunksize])</code></mark><mark class="highlight-gray"> - guided assignment</mark><div class="indented"><p id="60925673-0740-4742-b247-a9fc5cabf4e1" class=""><mark class="highlight-gray">chunksize argument is optional (default: 1)</mark></p><p id="2aeff577-4eb6-4565-8ef5-aa253fd54ad9" class="">same dynamic assignment, but chunksize is dynamic aswell:<div class="indented"><p id="d6054a45-5692-4732-a30f-d0a3f7689f0f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="monospace">chunksize</mtext><mo>:</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mtext mathvariant="monospace">chunksize</mtext><mo separator="true">,</mo><mtext> </mtext><mo stretchy="false">(</mo><mo>∑</mo><mtext>open and unassigned iterations</mtext><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \texttt{chunksize} :=\max(\texttt{chunksize},~(\sum\text{open and unassigned iterations})/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">chunksize</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">:=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9000090000000001em;vertical-align:-0.22500900000000001em;"></span><span class="mop sizing reset-size6 size5">max</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">chunksize</span></span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mop op-symbol small-op sizing reset-size6 size5" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">open and unassigned iterations</span></span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="d3a9471b-e503-4e54-8ed3-3cc89167e16c" class="">possibly better load balance<div class="indented"><p id="1e3d1964-db3d-4ce7-a042-e4f1402830e7" class="">Idea: if <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span> iterations are still left when thread <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span> grabs next chunk, then the best chunk size if all threads at that point would take a chunk would be <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span>.</p></div></p></div></p><hr id="202d31da-1bd1-4b23-b5be-8c929f463a91"/><p id="e04dac33-7046-489e-b73a-96213c4db63b" class=""><mark class="highlight-gray"><code>schedule(</code></mark><code>auto</code><mark class="highlight-gray"><code>)</code></mark><mark class="highlight-gray"> - automatic assignment</mark><div class="indented"><p id="d5cadbe1-a31f-452f-be5a-befc8bdb5fc2" class="">schedule chosen by compiler or on runtime</p></div></p><hr id="42f62d7b-4da4-4c2c-ac5f-8bf98b4a04bc"/><p id="f5a05afb-bd70-465c-a1d0-40d88ff00858" class=""><mark class="highlight-gray"><code>schedule(</code></mark><code>runtime</code><mark class="highlight-gray"><code>)</code></mark><mark class="highlight-gray"> - assignment on runtime</mark><div class="indented"><p id="32fc00b4-0759-4ff4-b182-8a7a2a472777" class="">schedule chosen by runtime and environment</p></div></p></div></p><p id="f1bb22c0-e2f5-4992-806f-8e2e92d8f8e7" class="">
+</p><h2 id="8f373740-15b5-43a1-9438-c4ff2d09c8a8" class="">Performance of clauses</h2><p id="7668f91c-6b13-4214-a42d-1f4f15dac0db" class=""><mark class="highlight-blue">Performance</mark><div class="indented"><p id="1e7144b7-a9ad-46db-be23-37a9db30aaaf" class="">Assume large <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span>, smaller <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span>:</p><p id="d30d22da-36b9-4c56-8ba2-70b7ae7c2b22" class="">If <mark class="highlight-gray"><code>chunksize</code></mark><mark class="highlight-gray"> </mark>small → scheduling overhead<div class="indented"><p id="77166f2b-9c77-48eb-998e-a887ec5c2b7b" class="">threads must handle &gt;1 chunks:<div class="indented"><ul id="d9e4627e-a609-4e71-8dea-3b2490d3a138" class="bulleted-list"><li style="list-style-type:disc">smaller overhead for static schedule: only div and mod operations</li></ul><ul id="423cff36-18f1-4eaf-a991-50ab545ad581" class="bulleted-list"><li style="list-style-type:disc">larger overhead for dynamic and guided schedule: atomic operation or worse</li></ul></div></p></div></p><p id="abe74558-029d-4f1a-a220-714decb4fb0c" class="">If <mark class="highlight-gray"><code>chunksize</code></mark><mark class="highlight-gray"> </mark>large → load imbalance<div class="indented"><p id="7032b6ed-3fe6-4457-b7bd-6e2a606be3d8" class="">some chunks have significantly more work than others</p></div></p></div></p><p id="a1841437-09ab-47e0-949e-e1bf95d6fdab" class=""><mark class="highlight-blue">Conculsion</mark><div class="indented"><p id="8791a16a-8463-4269-8475-5ba65790cec6" class=""><mark class="highlight-gray"><em>reminder: a chunk consists of multiple iterations</em></mark></p><ul id="fe06fe72-f060-466f-a68b-96d1e4998dda" class="bulleted-list"><li style="list-style-type:disc">equal work per chunk → static schedule<p id="d01deb97-439e-4cd8-9702-a18b9f35b1dd" class="">unequal work per chunk → dynamic, guided schedule</p></li></ul><ul id="72ae82af-0271-484b-8586-4e8dbb13c9f2" class="bulleted-list"><li style="list-style-type:disc">equal work per iteration → large chunksize<p id="79b87e8b-c7d6-42a4-9026-de20cc1f015b" class="">unequal work per iteration → small chunksize</p></li></ul><hr id="5c3b9e85-0530-456d-a6df-b54bb09e6178"/><ul id="da393f4b-bc9e-4391-9e2f-0ddc9077124b" class="toggle"><li><details open=""><summary>Example: loop with condition</summary><pre id="3eff8d5c-9a16-4eb6-8a8f-a7d47b184260" class="code"><code>#pragma parallel for &lt;schedule&gt;
+for (i=0; i&lt;n; i++) {
+	if (condition(i,b,c)) a[i] = f(a[i],b[i]);
+}</code></pre><ol type="a" id="522ab7fd-2c21-41b2-9b10-c8586b7149ce" class="numbered-list" start="1"><li><mark class="highlight-gray"><code>condition()</code></mark><mark class="highlight-gray"> </mark>holds often<p id="054a8797-cb16-4645-8f48-4b8736e0551d" class="">loop has high spatial locality.</p><p id="fed04a59-7e9b-4cfb-b983-1f1b1c257624" class="">static schedule.</p><p id="639e2c78-3c65-4664-a0fa-e429b5aaf922" class=""><mark class="highlight-gray"><code>chunksize</code></mark><mark class="highlight-gray"> </mark>should be a multiple of the cache-line size to avoid false sharing.</p></li></ol><ol type="a" id="bebf5f79-2a12-47ab-850f-e18547e0949f" class="numbered-list" start="2"><li><mark class="highlight-gray"><code>condition()</code></mark> holds rarely and inpredictably<p id="6b5f3b26-8b0c-4852-acba-e24777ebd403" class="">dynamic, guided schedule.</p><p id="0a24cc56-9ea2-4710-938c-8dd6d809eb24" class=""><mark class="highlight-gray"><code>chunksize</code></mark><mark class="highlight-gray"> </mark>should be small.</p><p id="e7ce6ea2-f321-4fe8-83ec-02e93b07639a" class="">
+</p></li></ol></details></li></ul></div></p><p id="38ae1ae9-7a0f-495c-8dd6-a19d869f8beb" class="">
+</p><p id="1c20223c-367b-448d-9050-440052cbbb01" class="">
+</p><h1 id="49f18603-3fd4-4bf7-8e72-514403bcbd75" class="">Loop carried dependencies</h1><p id="cb4d61ae-6b8d-473e-9aa0-3ee61ab16fac" class=""><mark class="highlight-blue">Correctness, Independence (principle of OpenMP)</mark><div class="indented"><p id="43b370bb-0dbc-4f33-80b4-906290b7f575" class="">It is assumed that parallel regions contain code that can be <em>safely</em> executed in parallel and is <em>independent</em>.</p><p id="f8861a0d-b7df-480e-88b0-03a0369c722b" class=""><mark class="highlight-gray">Some special types of dependencies are supported by OpenMP (reduction pattern).</mark></p><p id="37d3c102-b99c-4c81-b2b2-eb8c0950cd2b" class="">Compiler and runtime can not check everything.</p><ul id="5e685c48-97e6-49d1-ba36-057248841b78" class="bulleted-list"><li style="list-style-type:disc">Safety			no concurrent updates to shared variables</li></ul><ul id="41da4bad-1a2f-4632-bea8-18791d091acc" class="bulleted-list"><li style="list-style-type:disc">Independence		update to shared variable in region can’t effect other regions<p id="c445f3b0-fc8b-41a6-9b22-8961cffa7991" class=""><mark class="highlight-gray">				(no race conditions)</mark></p></li></ul></div></p><p id="7fa23436-c3d0-41e5-851a-e04c09b3b722" class="">
+</p><p id="1d257da2-71d5-4850-86e4-1b044ecf6e0f" class=""><mark class="highlight-blue">Loop carried dependencies</mark><div class="indented"><p id="e08249cd-f599-4b09-b65f-864beddfc32d" class="">Loops are parallelizable if iterations are independent <mark class="highlight-gray">(has to be checked by programmer)</mark>:<div class="indented"><ul id="75039d96-2c83-4fe2-a22d-e884123bfd45" class="bulleted-list"><li style="list-style-type:disc">Array updates only</li></ul><ul id="31765c76-1ece-4981-ba18-6efc5c6f1d23" class="bulleted-list"><li style="list-style-type:disc">Each element updated in ≤ 1 iteration</li></ul><ul id="ab3ae110-4300-4c03-bc02-f6e626aa1cf5" class="bulleted-list"><li style="list-style-type:disc">Iterations dont read elements assigned by another iteration</li></ul></div></p><p id="beb13a58-9b4f-4b84-b716-4a2e6c50178e" class="">Some types of dependencies can be resolved, some must be avoided with different algorithms (ie. flow dependency).</p><hr id="eb228c5a-2c89-487f-b211-6abb4dd7a164"/><ul id="fe8dfc45-8769-4098-ab4c-0da74c2ba340" class="toggle"><li><details open=""><summary>Example: Dependency within in same iteration (allowed)</summary><pre id="91e99156-a72d-4a96-baeb-d8f753c1f31d" class="code"><code>#pragma omp parallel for
+for (i=0; i&lt;n; i++) {
+	a[i] = f(i);
+	b[i] = g(i);
+	c[i] = a[i]+b[i]; // dependency
+}</code></pre><pre id="88a5635e-8a01-4fb2-8a80-f07f4c2cfefa" class="code"><code>#pragma omp parallel for nowait
+	for (i=0; i&lt;n; i++) a[i] = f(i);
+#pragma omp parallel for
+	for (i=0; i&lt;n; i++) b[i] = g(i);
+	// implicit barrier (so a and b have correct values)
+#pragma omp parallel for
+	for (i=0; i&lt;n; i++) c[i] = a[i]+b[i];
+	// implicit barrier</code></pre><p id="b37bcc02-0b23-4cbf-a24b-6f4e4ada8a5f" class="">
+</p></details></li></ul><ul id="b9d3d6eb-1ef1-4a92-9ec4-bde3be2e0a9a" class="toggle"><li><details open=""><summary>Example: Loop carried dependencies (can be resolved)</summary><pre id="bd7e94f9-3052-4ce8-a48a-a39549000df2" class="code"><code>for (i=0; i&lt;n-k; i++) {
+	a[i] = a[i] + a[i+k];
+}</code></pre><p id="cd47a099-b990-4725-8683-8761e7a49103" class="">Eliminated with temporary variables</p><pre id="cb14f4a6-4f7c-4fbe-b388-b4d287259fad" class="code"><code>#pragma omp parallel for firstprivate(k)
+for (i=0; i&lt;n-k; i++) {
+	aa[i] = a[i] + a[i+k]; // stored in temporary array
+}
+// swap a, aa (when finished)
+tmp = a; a = aa; aa = tmp;</code></pre><p id="bfc5539f-09fb-46a9-9d3a-170e7a8ddd8a" class="">
+</p></details></li></ul></div></p><p id="f33c31fc-7e8d-431b-b92a-ab7a03a95862" class="">
+</p><h2 id="acf55db9-dc03-442d-b23c-15a6862461dd" class="">Reduction pattern</h2><p id="b6418834-d1e5-4540-acbb-e32cf1a90919" class=""><mark class="highlight-blue">Reduction pattern</mark><div class="indented"><p id="b94fb844-83df-43dd-8282-19ae446f270c" class="">global reduction variable referenced in each iteration to perform an associative operation.</p><p id="fa5fcd33-8d83-40c4-bf7a-5696f32e7146" class="">Can cause data races (because we access the shared variable).</p><pre id="33210781-509a-40a1-8884-caa791285216" class="code"><code>for (i=k; i&lt;n; i++) sum = sum+a[i];</code></pre><p id="0533cd85-e2d3-4294-9e9a-a6239f820ca3" class="">Can be handled in 4 different ways:<div class="indented"><ul id="ad043a10-5666-4d55-8f4a-84306045c1b5" class="toggle"><li><details open=""><summary><em>Parallel thinking</em>: Reduction clause (good performance)</summary><pre id="185a4a31-baba-4e32-add0-cf8f0aeb28df" class="code"><code>#pragma omp parallel for reduction(+,sum)
+for (i=k; i&lt;n; i++) sum = sum+a[i];</code></pre></details></li></ul><ul id="f87a19d1-2494-42d0-a465-3be340fb9991" class="toggle"><li><details open=""><summary><em>Sequential thinking</em>: Ordered clause (bad performance)</summary><p id="a10a25e6-ee06-49bf-ac5b-1e0a1940f320" class="">Probably close to sequential loop but also has overhead.</p><pre id="9945f0d8-060c-43b4-9bc2-5db145891928" class="code"><code>#pragma omp parallel for ordered
+for (i=k; i&lt;n; i++) {
+	#pragma omp ordered
+	sum = sum+a[i];
+}</code></pre></details></li></ul><ul id="2df5258b-5a37-4664-a71a-5ba53be9a393" class="toggle"><li><details open=""><summary><em>Concurrent thinking</em>: Critical section (or dynamic locks)</summary><p id="560327ef-d55f-4ab5-83b3-0c32ade4684b" class="">Could have reasonable performance if work in parallel region would be significantly larger.</p><p id="3448b023-d29c-4817-86d1-7f8d89e22041" class="">Correct only if operator + is commutative.</p><pre id="77fd0480-36c6-4962-b843-b3c09c49bad6" class="code"><code>#pragma omp parallel for
+for (i=k; i&lt;n; i++) {
+	#pragma omp critical
+	sum = sum+a[i];
+}</code></pre></details></li></ul><ul id="f9923915-6560-499b-a166-e7510a6f897d" class="toggle"><li><details open=""><summary><em>Delegating to hardware</em>: Atomic operations</summary><p id="1e7853d1-abcb-4d38-b56a-1c93c2cc8b1e" class="">Correct only if operator + is commutative.</p><pre id="dff28755-e348-49ef-8154-1746b024a97e" class="code"><code>#pragma omp parallel for
+for (i=k; i&lt;n; i++) {
+	#pragma omp atomic update
+	sum = sum+a[i];
+}</code></pre></details></li></ul></div></p></div></p><p id="f6284ced-ac44-490d-a67d-c0a67bac592c" class="">
+</p><p id="7bef126a-6fbf-4751-8231-5790e6bdd45a" class="">
+</p><h1 id="3d8d5665-d650-4e9d-b857-76237151a1f3" class="">Other clauses</h1><p id="e033dd5c-cff7-4aca-a7cc-4b16fca61195" class="">List of clauses used in different constructs.</p><p id="941c89c4-18fa-4437-b62f-e03bfe83752b" class="">
+</p><p id="b03506f3-95bd-4bf7-9c11-b1656fa07e47" class=""><code><mark class="highlight-blue">lastprivate(a)</mark></code><div class="indented"><p id="6ae63468-afcb-44dc-850c-de401ee153f9" class="">Stores value of <mark class="highlight-gray"><code>a</code></mark><mark class="highlight-gray"> </mark>from last iteration back to pointer.</p><hr id="ef84ed36-b914-4536-b144-477c4eacd598"/><ul id="85161841-7848-49d3-bae8-ec7960ee1a63" class="toggle"><li><details open=""><summary>Example: getting last value</summary><pre id="84eb3811-956c-44e6-81c6-1629baa6dc70" class="code"><code>int t; // global
+
+#pragma omp parallel for lastprivate(t) // private copies of t
+for (i=0; i&lt;n; i++) {
+	if (event(i)) t = i;
+	else t = -1;
+}
+// now t is index of last event or -1</code></pre></details></li></ul></div></p><p id="967f60a1-0677-4568-b476-6cc2a801174c" class="">
+</p><p id="108e24fd-cccd-47a5-bc3f-cf5f48330264" class=""><code><mark class="highlight-blue">collapse</mark></code><div class="indented"><p id="8a4fb00c-ad31-48e3-8048-7cb9295ca7fd" class="">Collapses nested loops</p><hr id="42a07d15-6dda-484c-ad2d-f22036cd242f"/><ul id="7e2b8ffd-a151-49fe-ac85-923e589df665" class="toggle"><li><details open=""><summary>Example: Initializing matrix</summary><pre id="1754b17c-b71a-4636-80ea-9d8e042bfdbb" class="code"><code>for (i=0; i&lt;n; i++) {
+	for (j=0; j&lt;m; j++) {
+		x[i][j] = f(i,j); // thread safe but time depends on i, j
+	}
+}</code></pre><p id="3d46ff25-6d93-48ef-9fff-db8dbaf3ec92" class="">Choosing which loop should be the inner or outer loop depends on:<div class="indented"><ul id="d4802976-1a39-4c63-91eb-34ea4bfb1ccd" class="bulleted-list"><li style="list-style-type:disc">size of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mo separator="true">,</mo><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n,m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span>		larger should be outer loop</li></ul><ul id="241d898e-08f4-452e-aa3f-5f2d64ea8eac" class="bulleted-list"><li style="list-style-type:disc">work of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>f</mi><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small f(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05724em;">j</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>	</li></ul></div></p><p id="1e955b36-5a3e-48b3-961e-99b4e7413a7f" class="">
+</p><pre id="83f4a1d1-5dcf-4453-81d8-ae3afd494a23" class="code"><code>#pragma omp parallel for collapse(2)
+for (i=0; i&lt;n; i++) {
+	for (j=0; j&lt;m; j++) {
+		x[i][j] = f(i,j); // thread safe but time depends on i, j
+	}
+}</code></pre><p id="918e3825-cb4c-48ff-bcdd-df565cc1a9b7" class="">Using clause to collapse nested loops:<div class="indented"><p id="d40be3e3-22e8-49f6-8d89-5913455bd075" class="">Two loops are handled as one with iteration space <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mo>⋅</mo><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n \cdot m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.400005em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span></p><ul id="46daabe2-7b20-40a8-8016-619c0af3a08a" class="toggle"><li><details open=""><summary>Transformation of compiler</summary><pre id="a58e1ef8-3761-45fc-b95d-7d8fcc373f4a" class="code"><code>#pragma omp parallel for
+for (ij=0; ij&lt;n*m; ij++) {
+	i = ij/m;
+	j = ij%m;
+	x[i][j] = f(i,j);
+}</code></pre></details></li></ul><p id="703feec1-9472-4ad3-a2d9-e412b27bb20e" class="">Schedule is then easier to find.</p></div></p></details></li></ul></div></p><p id="fbd1264a-f238-4904-a05f-876df8ef2567" class="">
+</p><p id="04649dc2-dd24-44b2-8043-8b20ee7996b4" class=""><code><mark class="highlight-blue">reduction</mark></code><div class="indented"><p id="d64a9667-3fec-418b-9c4a-03ab1b5d9273" class=""><mark class="highlight-gray"><code>reduction(&lt;operator&gt;:&lt;variable list&gt;)</code></mark></p><hr id="e37f912f-fa17-4fbe-83c3-3081069fd013"/><ul id="2fc6c319-1c61-445e-a801-5313634179ce" class="toggle"><li><details open=""><summary>Example: Sum</summary><pre id="14d848a8-1647-4f61-b69b-43660838ef90" class="code"><code>for (i=0; i&lt;n; i++) sum = sum+a[i];</code></pre><pre id="f932cced-c7fd-4a85-8b7a-34d22d805334" class="code"><code>sum = 0;
+
+#pragma omp parallel for reduction(+: sum)
+for (i=0; i&lt;n; i++) sum = sum+a[i];</code></pre><p id="994fdf7c-a751-4aa8-b89d-d30a636d6318" class="">
+</p></details></li></ul><ul id="eec7482f-8e8f-4812-aded-f3f7720ded2b" class="toggle"><li><details open=""><summary>Example: Sum with conditional</summary><pre id="9f835ef7-d8a5-4f95-88fd-be147ecb204c" class="code"><code>#pragma omp parallel shared(a) private(i) {
+	#pragma omp master
+	a = 0;
+
+	#pragma omp barrier // To avoid race condition
+	
+	#pragma omp for reduction(+:a)
+	for (i = 0; i&lt;100; i++) {
+		if (i%2==0) a += i;
+	}
+	
+	#pragma omp single
+	printf (&quot;Sum is %d\n&quot;, a);
+}</code></pre></details></li></ul><ul id="b772987c-0a2a-4a06-9aaf-324265cfcc3a" class="toggle"><li><details open=""><summary>Example: All possible operations</summary><p id="58ac6179-1797-471f-b58f-aa234cf66913" class="">Possible operators: <mark class="highlight-gray"><code>+</code></mark>, <mark class="highlight-gray"><code>*</code></mark>, <mark class="highlight-gray"><code>-</code></mark>, <mark class="highlight-gray"><code>&amp;</code></mark>, <mark class="highlight-gray"><code>|</code></mark>, <mark class="highlight-gray"><code>^</code></mark>, <mark class="highlight-gray"><code>&amp;&amp;</code></mark>, <mark class="highlight-gray"><code>||</code></mark>, <mark class="highlight-gray"><code>min</code></mark>, <mark class="highlight-gray"><code>max</code></mark></p><pre id="d440a8bc-9656-49da-ad8c-6caa1afad871" class="code"><code>int i, b, c;
+float a, d;
+a = 0.0;
+b = 0;
+c = y[0];
+d = x[0];
+
+#pragma omp parallel for private(i) shared(x, y, n) \ 
+	reduction(+:a) reduction(^:b) \
+	reduction(min:c) reduction(max:d)
+for (i=0; i&lt;n; i++) {
+	a += x[i];
+	b ^= y[i];
+	if (c &gt; y[i]) c = y[i]; // min/max expression
+	d = fmaxf(d,x[i]); // min/max
+}</code></pre><p id="95dc955f-f9b3-4b90-97a6-c1af358ce764" class="">
+</p></details></li></ul></div></p><p id="43e1a935-aca6-43cf-9b6f-0877abe534d0" class="">
+</p><p id="dbc3be12-5752-4bf3-8657-b654dc9a6899" class=""><code><mark class="highlight-blue">depend</mark></code><mark class="highlight-blue"> (used for </mark><code><mark class="highlight-blue">task</mark></code><mark class="highlight-blue"> construct)</mark><div class="indented"><p id="72445e29-5a6b-426e-93c7-3b97ddaa87b8" class="">Define dependencies for tasks.<div class="indented"><p id="1bb4f4e2-3ace-43b0-b91c-a1078519898e" class="">Changes order in which they are executed in DAG.</p><p id="3c8c64b1-3196-46ef-84bf-073033691346" class="">Tasks get deferred until dependencies are satisfied</p></div></p><hr id="e66e4c20-fbf9-43bf-9ec7-000890647c5e"/><p id="6134440b-64f0-424e-b37e-a72d14b2d851" class=""><mark class="highlight-gray"><code>depend(in: x,y,z)</code></mark> 	task depends on tasks that return x,y,z</p><p id="f5dc64f4-f0df-4b5b-a5a0-44b2f2e75129" class=""><mark class="highlight-gray"><code>depend(out: x,z)</code></mark>		tasks that take x,z as arguments depend on this task</p><p id="56d798ce-e238-40cb-9cb0-ac825d9bae40" class=""><mark class="highlight-gray"><code>depend(inout: y)</code></mark> 		task depends on tasks that return y or take it as their argument</p></div></p><p id="441bb593-0c8c-49f5-abf0-d028118ef24c" class="">
+</p><p id="ea30f9ed-e88e-4651-be6a-07ae38d03860" class=""><code><mark class="highlight-blue">priority</mark></code><mark class="highlight-blue"> (used for </mark><code><mark class="highlight-blue">task</mark></code><mark class="highlight-blue"> construct)</mark><div class="indented"><p id="c88ce5dd-f6e5-4254-87e1-f993d492a71b" class="">Define priority for tasks (with integer)<div class="indented"><p id="5838b582-730c-466c-af19-5b5ce01b7e22" class="">Changes order in which they are executed in DAG (no guarantee - just a hint for runtime).</p></div></p></div></p><p id="fb931b4b-a12f-426b-b5c1-c5c489117d55" class="">
+</p><p id="e740b36d-af45-4c8e-9e78-215a96c62bd7" class=""><code><mark class="highlight-blue">ordered</mark></code><mark class="highlight-blue"> (try to avoid)</mark><div class="indented"><p id="baa6eb5a-ae65-40f2-a10c-5cfb19461b69" class="">Used to resolve loop carried dependencies by requiring a region to be iterated in <em>sequential order</em>.</p><p id="f47d1b61-ee50-477d-957c-81280739fceb" class="">Most likely results in no parallelization (slow down through serialization).</p><hr id="6a468fa4-024b-469a-a97a-5268457113d8"/><ul id="9f53f0b4-b9c6-414b-958d-ecc34857ea02" class="toggle"><li><details open=""><summary>Example: Find primes</summary><p id="f6f337fb-e1f9-4697-94b7-78b7ff4eda52" class="">Sequential implementaion - <mark class="highlight-gray">Sieve-of-Erathostenes</mark>:<div class="indented"><p id="e082e57e-195e-41d5-aab2-c47f6bbacdab" class="">Finds all primes by crossing out multiples of each newly found prime.</p><p id="50689d36-756f-4152-ad47-5f5c7ca664f2" class="">Return found primes in increasing order in <mark class="highlight-gray"><code>prime</code></mark> array.</p><p id="13361db3-4a1a-40a1-bfd2-630445465af0" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>W</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo>⋅</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small W(n) \in O(n \cdot \log (\log n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">W</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">))</span></span></span></span></span><span>﻿</span></span> <mark class="highlight-gray">called “pseudo polynomial”</mark></p></div></p><pre id="0503afce-d277-4c00-a77a-cdf8aa32a8f7" class="code"><code>for (i=2; i&lt;n; i++) {
+	mark[i] = true; // all prime?
+}
+
+for (i=2; i*i&lt;n; i++) { // i&lt;√n
+	if (mark[i]) { // prime
+
+		for (j=i*i; j&lt;n; j+=i) {
+			mark[j] = false; // not
+		}
+	}
+}
+
+k = 0; // collect those still marked
+for (i=2; i&lt;n; i++) {
+	if (mark[i]) prime[k++] = i;
+}</code></pre><p id="67be9b6b-d79b-409a-96dd-18a05cdba273" class="">Parallel implementation:<div class="indented"><p id="3145c9a2-09b2-41af-9f97-a38b31285768" class="">We can’t just parallelize all loops - there is a dependency in the last loop.</p><p id="efc1ecc7-3019-440e-a409-4d7fdbe011d5" class=""><mark class="highlight-red">ILLEGAL: </mark>Each thread increments the shared variable <mark class="highlight-gray"><code>k</code></mark>.</p></div></p><pre id="f1306fe0-f8f2-4347-ab22-777eef7f5247" class="code"><code>#pragma omp parallel for
+for (i=2; i&lt;n; i++) mark[i] = true;
+
+for (i=2; i*i&lt;n; i++) {
+	if (mark[i]) {
+
+		#pragma omp parallel for
+		for (j=i*i; j&lt;n; j+=i) {
+			mark[j] = false;
+		}
+	}
+}
+
+k = 0;
+#pragma omp parallel for
+for (i=2; i&lt;n; i++) {
+	if (mark[i]) prime[k++] = i; // &lt;-- ILLEGAL
+}</code></pre><p id="055f3fa2-a6d1-422f-827f-fb43cefa3d26" class="">Possible solutions:<div class="indented"><p id="27d2d788-929e-4fd4-8240-68a465cb5b29" class="">Removing the parallel for-construct altogether.</p><ul id="59222160-a76f-49b4-a7b7-1b2a1cdf0777" class="toggle"><li><details open=""><summary>Enforcing sequential order in parallel region with <mark class="highlight-gray"><code>order</code></mark><mark class="highlight-gray"> </mark>(inefficient)</summary><pre id="4ae16770-e745-4d04-961b-6803082224ac" class="code"><code>#pragma omp parallel for
+for (i=2; i&lt;n; i++) mark[i] = true;
+
+for (i=2; i*i&lt;n; i++) {
+	if (mark[i]) {
+
+		#pragma omp parallel for
+		for (j=i*i; j&lt;n; j+=i) {
+			mark[j] = false;
+		}
+	}
+}
+
+k = 0;
+#pragma omp parallel for ordered
+for (i=2; i&lt;n; i++) {
+	#pragma omp ordered
+	if (mark[i]) prime[k++] = i;
+}</code></pre></details></li></ul><ul id="6d110f34-c85f-4354-8607-76c393ed3792" class="toggle"><li><details open=""><summary>Index computation in parallel <mark class="highlight-gray">= Array compaction </mark>(efficient)</summary><p id="862b01b1-0439-4b05-b339-24e9b4fc7dab" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Tpar</mtext><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>p</mi><mo>+</mo><msqrt><mi>n</mi></msqrt><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Tpar}(p,n) = O((n \log \log n)/p + \sqrt n) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Tpar</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">((</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9452520000000001em;vertical-align:-0.225em;"></span><span class="mord sqrt sizing reset-size6 size5"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="padding-left:0.833em;">n</span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><pre id="0a35a8dd-e3db-47a8-abb2-49e4a1210a2b" class="code"><code>#pragma omp parallel for
+for (i=2; i&lt;n; i++) mark[i] = true;
+
+for (i=2; i*i&lt;n; i++) {
+	if (mark[i]) {
+
+		#pragma omp parallel for
+		for (j=i*i; j&lt;n; j+=i) {
+			mark[j] = false;
+		}
+	}
+}
+
+// array compaction
+k = 0;
+kix[0] = 0;
+kix[1] = 0;
+#pragma omp parallel for
+for (i=2; i&lt;n; i++) {
+	kix[i] = (mark[i]) ? 1 : 0;
+}	
+Exscan(kix,n); // exclusive prefix-sums
+
+#pragma omp parallel for
+for (i=2; i&lt;n; i++) {
+	if (mark[i]) prime[kix[i]] = i;
+}</code></pre></details></li></ul></div></p></details></li></ul></div></p></div></article></body></html>

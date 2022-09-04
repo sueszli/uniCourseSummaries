@@ -1,0 +1,757 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Query</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="66cb876f-bc65-402a-af60-a21735339159" class="page sans"><header><h1 class="page-title">Query</h1></header><div class="page-body"><p id="5a5e4ddc-1082-490d-98e0-1b662e307a1e" class=""><mark class="highlight-gray">Üben auf </mark><mark class="highlight-gray"><a href="https://sqlbolt.com/">https://sqlbolt.com/</a></mark></p><figure id="f88a2394-632f-48c0-8eec-710c9f2362eb" class="link-to-page"><a href="Query%2066cb876fbc65402aaf60a21735339159/Allquantor%20erstellen%20f88a2394632f48c08eec710c9f2362eb.html"><span class="icon">📎</span>Allquantor erstellen</a></figure><p id="dfdc1c91-829f-41a5-b404-e4b07c365045" class="">
+</p><p id="faa9820e-3b96-4e03-8ae5-00a17139f219" class="">Arbeitet auf Tabellen, nicht Tupel-Mengen, deshalb Duplikate möglich und es hat eine Implizite Ordnung.</p><p id="52a8528c-4428-43e4-997b-85a0e4797a52" class="">
+</p><p id="83ac0fa9-3770-416f-8ee6-36cc1bb57da4" class="">
+</p><nav id="d27b8a73-3d47-4779-bb0e-486fa78eb907" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#55c58f2e-498e-4743-adeb-580bcf4f9c41">Basics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e9295871-f0e1-48a2-bf0f-fda3873c02cb">Group by</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#09298ce5-e49f-4ba4-b34e-623bc7315819">Nested Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e725529-bbaa-431b-834e-6ea945f10445">Umgang mit null</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3236b6ad-d86b-4f78-93ca-4e821fa5d4de">Syntactic Sugar</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e97ab25a-f80c-4b06-bf19-7869f19f878d">Joins</a></div></nav><p id="52a6c6e6-dca3-4916-a552-005f7ff1bfac" class="">
+</p><p id="b132deea-0614-4eb5-8246-f195ad0c7b18" class="">
+</p><h1 id="55c58f2e-498e-4743-adeb-580bcf4f9c41" class="">Basics</h1><pre id="b202c918-b9e4-4f5f-a312-4bd8827c397e" class="code"><code>SELECT &lt;attr&gt; as a1,  &lt;attr&gt; as a2, ... 
+FROM &lt;tables...&gt;
+WHERE &lt;conditions&gt;
+ORDER BY &lt;attr1&gt; desc, &lt;attr2&gt; asc;</code></pre><p id="c3643a72-5509-49a7-a36c-f90567a3bc0e" class="">Bei mehreren Tables wird Kreuzprodukt gebildet.<div class="indented"><p id="b98dfedf-930d-4af2-ba4c-c1b9e5820756" class="">Bei jeder Anfrage kann andere Ordnung auftauchen.</p><p id="13261ce7-5e06-4876-bf30-26c735c2effa" class="">Sortieren nach <mark class="highlight-gray"><code>attr1</code></mark><mark class="highlight-gray"> </mark>und wenn gleich dann nach <mark class="highlight-gray"><code>attr2</code></mark>.</p></div></p><p id="9638e0d2-7b01-49a3-beeb-678fea469a61" class="">
+</p><p id="5e47e1e2-8f44-47df-87ca-fed3db9b1b18" class=""><mark class="highlight-blue">Ausführungsreihenfolge</mark><div class="indented"><ol type="1" id="9b53908b-eebe-4655-9698-e7280b20cd68" class="numbered-list" start="1"><li><mark class="highlight-gray"><code>FROM</code></mark><mark class="highlight-gray"> </mark>erstellt Kreuzprodukt</li></ol><ol type="1" id="c1967422-773a-477c-b8d9-145f8587783f" class="numbered-list" start="2"><li><mark class="highlight-gray"><code>WHERE</code></mark><mark class="highlight-gray"> </mark>checkt Bedingung</li></ol><ol type="1" id="6a53a95a-6369-472c-a36d-1f7998c033c0" class="numbered-list" start="3"><li><mark class="highlight-gray"><code>ORDER BY</code></mark> ändert die beliebige Reihenfolge die beim Ausführen entstanden ist</li></ol><ol type="1" id="14351298-9919-4dec-92d9-af4dbc95b843" class="numbered-list" start="4"><li><mark class="highlight-gray"><code>SELECT</code></mark><mark class="highlight-gray"> </mark>wählt gewählte Attribute</li></ol><p id="b41113a5-a4c8-412c-ba40-5d123417da1c" class="">Dehalb kann man auf Spalten zugreifen die man am Ende nicht ausgewählt hat.</p></div></p><p id="18b82e95-3432-4a9b-9542-b266aae842d4" class="">
+</p><p id="872d19bf-ada6-414c-97a9-d3a7f2b35ee0" class=""><mark class="highlight-blue">Mengenoperationen</mark><div class="indented"><p id="394b6b68-3379-42a5-b85a-1d8071df74a4" class="">Ohne Duplikate	<code>UNION</code>		<code>INTERSECT</code>		<code>EXCEPT</code> <mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>MINUS</code></mark><mark class="highlight-gray"> in Oracle)</mark></p><p id="ef2fa043-9869-4846-9187-86130a5d75aa" class="">Mit Duplikate		<code>UNION ALL</code>	<code>INTERSECT ALL</code>	<code>EXCEPT ALL</code></p></div></p><figure id="abcef087-d417-4540-a3c9-7d3182e837c6" class="image"><a href="Query%2066cb876fbc65402aaf60a21735339159/Untitled.png"><img style="width:384px" src="Query%2066cb876fbc65402aaf60a21735339159/Untitled.png"/></a></figure><p id="b8180377-c2dc-475e-9f26-b51aac460cee" class="">
+</p><p id="85c8eb6e-7722-45f2-bfbb-6ca83904c2b9" class=""><mark class="highlight-blue">Aggregatfunktionen</mark><div class="indented"><p id="3a67631a-041a-4857-9a85-8275a9bd45f2" class=""><code>avg()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>count()</code></p></div></p><p id="167105d5-8ced-4a39-994a-e032bf95da41" class="">
+</p><p id="1814e310-3dec-42f3-81e6-4700d2c71012" class="">
+</p><p id="42c3e5de-3adf-4cd0-aca9-33a843affc18" class="">
+</p><p id="1f662adb-4b8e-43f9-b7e3-f3d01ba67cb3" class="">
+</p><p id="1c822752-ac58-485e-b27e-160239d338be" class="">
+</p><h1 id="e9295871-f0e1-48a2-bf0f-fda3873c02cb" class="">Group by</h1><p id="8c77c8d8-14dc-4100-8e00-ae60bc0a2dfc" class="">Pro Gruppe <em>ein einziges </em>Tupel erstellt.</p><p id="59652f30-f332-4ad3-b383-a997e421ff08" class="">Duplikate werden entfernt.</p><pre id="59538bab-1e5b-412a-9368-f395be62b9a8" class="code"><code>SELECT &lt;attr1&gt;, &lt;attr2&gt;, sum(attr3) ... &lt;attrn&gt;
+FROM &lt;tables...&gt;
+WHERE &lt;conditions&gt;
+GROUP BY &lt;attr1&gt;, &lt;attr2&gt;, &lt;attr3&gt; ... &lt;attrn&gt;
+HAVING &lt;conditions&gt;</code></pre><p id="50814821-f04a-4d20-ad05-c0562f08c421" class="">
+</p><ol type="1" id="8bad8f4a-97b0-4479-9bcc-278c6e78ec48" class="numbered-list" start="1"><li>Alle Attribute aus <code>SELECT</code> müssen auch in <code>GROUP BY</code> sein,<p id="26a1f88b-c72b-471f-91db-a3898469582a" class="">außer sie werden in einer aggregierenden Funktion benutzt.</p><ul id="b298c068-7ea3-4280-b0a8-725bd32dd945" class="block-color-gray toggle"><li><details open=""><summary><mark class="highlight-gray">Grund</mark></summary><pre id="df180ddf-5ae8-4ead-9e64-c77cd313942a" class="code"><code>     Pets
+----------------
+A    B    C
+----------------
+Cat   10   False
+Dog   25   True
+Dog   20   False
+Cat   5    False</code></pre><pre id="e6c3fc06-d8d1-45d2-af68-26fa122d7a33" class="code"><code>SELECT A, B
+FROM Pets
+GROUP BY A</code></pre><p id="8fd58533-93c6-49d5-99d6-31ab44c7a432" class="">Was sollte jetzt bei B ausgegeben werden in <code>SELECT</code>?</p><p id="9ab5dca4-68d9-4e45-a940-43eb6772c2d6" class="">
+</p></details></li></ul></li></ol><ol type="1" id="bdd00a35-e6b9-4377-8611-1e212b13ad59" class="numbered-list" start="2"><li>Wenn aggregierende Funktion in <code>SELECT</code> mit anderen Attributen → <code>GROUP BY</code> benutzen.<p id="d7800a77-8ad8-4448-996e-942bd821d3eb" class="">Dann müssen sie auch in <code>GROUP BY</code> benutzt werden.</p><ul id="c7dbf664-4695-4fb6-aa1b-b715bd6a3554" class="block-color-gray toggle"><li><details open=""><summary><mark class="highlight-gray">Beispiel</mark></summary><p id="b9bab8ad-ac4c-4638-9d2b-155775661161" class=""><mark class="highlight-gray"><code>Student ( MatrNr , Name , Semester )</code></mark></p><p id="3eb4918d-650b-4a6a-8459-cccedf5dc756" class="">Angenommen wir suchen alle Namen von Studierenden die am längsten studieren</p><pre id="4821e992-9de8-4b7e-aca8-dd3441d7bbe1" class="code"><code>select Name, max(Semester)
+from Student;</code></pre><pre id="4e15139a-ff94-48f2-8826-1f0e61385dc2" class="code"><code>select Name, max(Semester)
+from Student
+group by Name;</code></pre><pre id="efe82b8f-46ae-4e25-825e-dea57f52fffa" class="code"><code>select Name
+from Student
+		where Semester = (select max(Semester) from Student);</code></pre><p id="9f60656a-203e-48d7-9c6c-94a703f73035" class="">
+</p></details></li></ul></li></ol><p id="8dface12-a602-409a-a448-dfd22945b94f" class="">
+</p><p id="0ccee76d-82f4-4e5e-9b3d-98d5d2347da6" class="">
+</p><p id="b7a0aeaa-dbf5-4306-80be-317ed4a77d4d" class="">
+</p><p id="031774c4-d442-4d61-b8d5-0779e8bb68a1" class="">
+</p><p id="3281bd27-aeaf-4fe4-b1c3-772a230ba56a" class="">
+</p><h1 id="09298ce5-e49f-4ba4-b34e-623bc7315819" class="">Nested Queries</h1><p id="a516e464-2da4-44ec-a21e-5b682266f52a" class="">Skalare retournieren in <mark class="highlight-gray"><code>SELECT</code></mark>, <mark class="highlight-gray"><code>WHERE</code></mark></p><p id="9c2b17ca-103b-4412-8a5b-5f0ea66cc713" class="">Tabellen retournieren in <mark class="highlight-gray"><code>FROM</code></mark></p><p id="ca2b01b2-4613-44a9-9d56-07cfb634b7df" class="">
+</p><p id="f552eee0-9845-46b2-b949-9d041fbf6137" class=""><mark class="highlight-blue">Mengenvergleiche</mark><div class="indented"><p id="8c8b7de4-dd0e-4e16-bf9d-03a849ab069e" class=""><code>IN</code>, <code>NOT IN</code>		<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∈</mo><mo separator="true">,</mo><mo>∉</mo></mrow><annotation encoding="application/x-tex">\in, \not \in </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span></span></span></span><span>﻿</span></span>  </p><p id="4fa7fcf4-1b74-49c7-96c5-6d65e99da4db" class=""><code>ANY</code>, <code>ALL</code>		vergleich mit allen Werten einer Tabelle, zb durch <mark class="highlight-gray"><code>&gt;= any ageTable.age</code></mark></p><p id="78697659-f7f1-4adb-a021-ee0e4cd98a34" class=""><code>EXISTS</code>			<mark class="highlight-gray"><code>!isEmpty()</code></mark><mark class="highlight-gray"> solche queries nennt man &quot;Existenziell quantifizierte Anfragen&quot; </mark></p></div></p><p id="23ce0dcc-208b-4de3-a8e0-7bf4aca4032a" class="">
+</p><p id="a60660c4-020b-48c3-9c6e-511221c22c37" class="">
+</p><p id="12ec873c-7f89-46e3-89a2-53605be1aac3" class="">
+</p><p id="43a60781-5be6-4894-94da-cfd8468df11a" class="">
+</p><p id="b1b2660f-b5bf-48ef-9566-835a3ad789af" class="">
+</p><p id="d3359155-c9a6-46f4-b47b-e7183cab8698" class="">
+</p><h1 id="9e725529-bbaa-431b-834e-6ea945f10445" class="">Umgang mit null</h1><p id="22a1e15c-e5f8-433c-870c-54b178aa0785" class=""><mark class="highlight-blue">Prüfen</mark><div class="indented"><p id="7e5ff0c4-dc53-4342-88b0-6ac9492d93fe" class=""><code>IS NULL</code>, <code>IS NOT NULL</code></p></div></p><p id="7fcf6bd3-d0f3-4e88-a182-19696e96b153" class="">
+</p><p id="613fcb28-71da-4e8b-a433-d96e2ec5386d" class=""><mark class="highlight-blue">Count</mark><div class="indented"><p id="38806eec-0aac-485d-aac7-f6910767c968" class=""><code>count(*)</code>			Zählt alle Tupel</p><p id="a7c1c4ad-3e29-401a-841a-a32139490d19" class=""><code>count(att)</code>			Zählt alle ≠ null</p><p id="c1e3a02a-4c4a-4390-8aa7-cb6e33e128ab" class=""><code>count(distinct att)</code>	Zählt alle ≠ null</p></div></p><p id="1d09ae3c-4ab0-4778-82c5-f6d01efc3da0" class="">
+</p><p id="fc5f54ab-5cb8-4303-8f62-01b6ec62a9fd" class=""><mark class="highlight-blue">Arithmetische Ausdrücke</mark><div class="indented"><p id="731307b5-9e2d-4e92-9cdb-c4c09a6704a4" class="">Wenn irgendein Operant null ist → immer null</p></div></p><p id="35883fb8-e614-478b-a84d-f56ef7b90d6f" class="">
+</p><p id="986c8fdc-5952-42d0-9ae4-2d91ccb3fd5a" class=""><mark class="highlight-blue">Vergleichsoperatoren</mark><div class="indented"><p id="fe7f2236-1571-48ec-9f12-d16c0044f885" class="">Dreiwertige Logik in SQL: true, false, unknown</p><p id="7b18ea9a-1f61-4338-a558-b7672df1deda" class="">Wenn irgendein Operant null ist → immer unknown</p></div></p><p id="53137e37-433e-4ad7-98f9-ee044a0e6350" class="">
+</p><p id="ab742968-1813-4cf4-9b76-0a69d027ffde" class="">
+</p><p id="184b68fe-d883-4947-82c6-f6c7abfe13d8" class="">
+</p><p id="7626fd3a-95ab-4c38-8e65-1bc5fbf869e9" class="">
+</p><p id="b4e8e988-64d4-4d21-9803-13f69b4507c5" class="">
+</p><h1 id="3236b6ad-d86b-4f78-93ca-4e821fa5d4de" class="">Syntactic Sugar</h1><p id="06c8e981-dd86-4732-be25-dff49d033ea2" class=""><mark class="highlight-blue">Between, in</mark><div class="indented"><pre id="4a2c52b5-c1e4-45ab-9e94-e09d8b2a9188" class="code"><code>select * from StudentIn
+where Semester &gt;= 1 and Semester &lt;= 4;</code></pre><pre id="1336fa23-d280-44e4-91f3-aa24d394f739" class="code"><code>select * from StudentIn
+where Semester between 1 and 4;</code></pre><pre id="5b0c38ed-575c-4d86-996a-61666bdf87f9" class="code"><code>select * from StudentIn
+where Semester in (1 ,2 ,3 ,4); --konstante Liste</code></pre></div></p><p id="581b23cc-24c3-40ea-baee-fffce29d4e5c" class="">
+</p><p id="71eab359-e933-4b80-b9e0-234c57ebda84" class=""><mark class="highlight-blue">Zeichenketten Wildcards</mark><div class="indented"><p id="39b37c5c-816d-407e-9163-51cdd54b565d" class=""><code>like</code> <div class="indented"><p id="0de9239b-b366-46ca-a572-23727e413eba" class=""><code>_</code> 	genau 1 Zeichen</p><p id="23578522-d000-472c-813a-fb302657a3be" class=""><code>%</code> 	beliebig viele (oder gar kein) Zeichen</p></div></p><pre id="95ba7e23-dca4-4931-83e2-ec8be883a07d" class="code"><code>select distinct MatrNr
+from Vorlesung v, hören h
+where h.VorlNr = v.VorlNr and v.Titel like &#x27;%thik%&#x27;;</code></pre></div></p><p id="75748b80-5102-4b86-aa75-82275108c4f7" class="">
+</p><p id="5155ed7f-cc33-4a1a-92ab-4d83031e25e8" class=""><mark class="highlight-blue">Case</mark><div class="indented"><pre id="0a40d5ea-4ab4-47bc-b506-e5508afbbc8e" class="code"><code>select MatrNr , ( case when Note &lt; 1.5 then &#x27;S1&#x27;
+											 when Note &lt; 2.5 then &#x27;U2&#x27;
+											 when Note &lt; 3.5 then &#x27;B3&#x27;
+								 			 when Note &lt; 4.5 then &#x27;G4&#x27;
+								 			 else &#x27;N5&#x27; end )
+from prüfen ;</code></pre></div></p><p id="94d7483f-5ba4-4343-93c2-fed901b9bb63" class="">
+</p><p id="15af5892-c4a6-4a96-a847-fcb6ced9ff2e" class=""><mark class="highlight-blue">coalesce</mark><div class="indented"><p id="49b16ebe-71d6-4f4f-86ec-56f9a928124b" class=""><code>coalesce(val , -1)</code> → Wenn val null ist, dann gebe -1 aus.</p><p id="51b4952b-a7b2-4306-a97c-df00c4519d9f" class="">kann auch mit cases gelöst werden</p></div></p><p id="ddeddcb2-56df-4f1b-8a9e-5fbff71464a2" class="">
+</p><p id="46ce01cd-6b88-45ae-8669-23892fa84402" class=""><mark class="highlight-blue">concat</mark><div class="indented"><pre id="7e566dea-22fb-4cb3-9b4d-16516cbf6bff" class="code"><code>select Vorname + Nachname from Person;
+select Vorname || Nachname from Person;
+select concat(Vorname, Nachname) from Person; </code></pre></div></p><p id="f3f998e8-258c-41f4-ac49-640fec37af53" class="">
+</p><p id="713566ba-77e3-442c-bfb1-c35cdfc188d1" class="">
+</p><h2 id="e97ab25a-f80c-4b06-bf19-7869f19f878d" class="">Joins</h2><p id="e177feab-9aaa-4967-87d7-8c4dee812a29" class="">Zwischen Table namen:<div class="indented"><p id="9c469d63-5b73-40c1-aaab-90b9312eef66" class=""><code>cross join</code>					Kreuzprodukt (kann Beistrich ersetzen)</p><p id="33f39b92-ea8a-4469-a645-c2ac70224fb9" class=""><code>natural join</code> 				natürlicher Join</p><p id="84622208-8a25-492d-8a34-14b88a80bea7" class=""><code>[inner] join</code>					Theta-Join (oder inner join) → natürlicher Join mit Selektion</p><p id="b6fa8192-6400-4d96-9a8a-da2ebb78fa38" class=""><code>(left|right|full) outer join</code>	äußerer Join</p></div></p><p id="b833f42e-884c-4f2f-8cf3-743446fcd533" class="">
+</p><p id="ff15533a-2aed-4e27-bf69-13fa09996143" class=""><mark class="highlight-blue">Cross Join</mark><div class="indented"><pre id="341cff51-8986-45d5-994e-c96e06db821a" class="code"><code>select * from ProfessorIn, Vorlesung;</code></pre><pre id="e0b44bd1-63ef-4299-8b12-f24ea275ea12" class="code"><code>select * from ProfessorIn cross join Vorlesung;</code></pre></div></p><p id="3047ac07-0f87-4932-83c4-f9c255bd389d" class="">
+</p><p id="5a5f618f-f17b-436e-9445-702c93136301" class=""><mark class="highlight-blue">Natural join</mark><div class="indented"><p id="b3c59f64-09f5-4eb9-b582-e3797db5ca65" class="">Nur Tupel aufgehoben die an den gleichen Spalten den gleichen Wert haben</p><pre id="a2b23568-26b4-4af2-998a-05e3b2da5496" class="code"><code>select StudentIn.MatrNr, Name, Titel
+from StudentIn, hören, Vorlesung
+where StudentIn.MatrNr = hören.MatrNr and hören.VorlNr = Vorlesung.VorlNr;</code></pre><pre id="bf102fba-4b1a-41fa-9c1e-2ab161c4eb56" class="code"><code>select MatrNr, Name, Titel
+from StudentIn natural join hören natural join Vorlesung;</code></pre></div></p><p id="61584355-cdca-4bbf-9d76-fdf5f8dd218c" class="">
+</p><p id="1aab5de4-df98-4e0a-a670-38587bc5bafb" class=""><mark class="highlight-blue">Inner Join</mark><div class="indented"><p id="eb8e662b-d4c1-4211-b7bd-90a2c42f493f" class="">&quot;Inner&quot; ist optional</p><p id="4ff6464b-a492-407c-892e-6ea25c2c1493" class="">Natural join mit zusätzlicher condition.</p><pre id="bc0e8a8b-1b1a-45e1-9352-782c18280994" class="code"><code>select Name, Titel
+from ProfessorIn, Vorlesung
+where PersNr = gelesenVon and Titel = &#x27;Mäeutik&#x27;;</code></pre><pre id="2e50ac6b-917e-47cd-b4cb-39a45978d5b2" class="code"><code>select Name, Titel
+from ProfessorIn join Vorlesung on PersNr = gelesenVon
+where Titel = &#x27;Mäeutik&#x27;;</code></pre><p id="dec9d88a-55a1-4344-ac0f-fcda84b3b4e6" class="">
+</p></div></p><p id="d7dc885f-04c5-4ccf-85f6-ab7d8c2a2d6c" class=""><mark class="highlight-blue">(Left, right, full) Join</mark><div class="indented"><p id="7e7b83a3-1fe4-4b27-a31b-362336f82afe" class="">Kann zusätzliche condition haben</p><p id="b2c90b72-6fbb-4228-9034-6b816022af06" class="">Kann null Werte erzeugen</p><pre id="60463e85-1e79-49ad-9802-a1a8a7e2779b" class="code"><code>select s.MatrNr, s.Name, p.VorlNr, p.Note
+from StudentIn s left outer join prüfen p
+on s.MatrNr = p.MatrNr;</code></pre></div></p></div></article></body></html>

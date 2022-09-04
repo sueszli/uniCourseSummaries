@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Technik und Werkzeuge</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e43149f1-2984-4748-82ec-e0be7b1c86d8" class="page sans"><header><h1 class="page-title">Technik und Werkzeuge</h1></header><div class="page-body"><ul id="7a9af736-8775-45e1-984e-b8ff7b80ec1e" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was sind die Unterschiede zwischen zentralen/verteilten Source Code Managern SCM? Nennen Sie jeweils Vor- und Nachteile</span></summary><p id="258ea236-5ad3-4d27-9e3d-7bb6be0d28a5" class="">
+</p><p id="ea016e51-ae11-442f-9945-395fa40e40d2" class=""><span style="border-bottom:0.05em solid">Verteilt (Dezentral)</span><div class="indented"><p id="e340f008-3eb1-4ff8-834f-7749a1294e78" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+ </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> auf mehreren Rechnern verteilt, dadurch sicherer<div class="indented"><p id="8dc4639c-ab4a-4235-bd13-a52108cbb1f4" class="">es gibt meistens eine „Main-Repository“ mit dem sich die Clients regelmäßig synchronisieren (pull, push, fetch, pull-request, etc.)</p></div></p><p id="6e554bfc-c5e2-40f9-bbe8-33df461b7762" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+ </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> lokal arbeiten möglich.<div class="indented"><p id="5f3e8caf-9423-4998-8ef6-50259da271a5" class="">Repository geklont und lokal auf jedem Client gespeichert, alle Operationen können lokal ausgeführt werden.</p></div></p><p id="c9e7709b-ba78-4368-8004-bd866bb0f701" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> große Menge an Daten beim klonen auf dem Client gespeichert</p><p id="ff2951c8-d011-4d90-8dbc-20302987766e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+ </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> schnelleres commiten, merge conflicts bei push oder pull</p><p id="16c816f8-80ae-46fe-a37b-632690f709b7" class="">
+</p><p id="d72eab09-f212-47dd-b911-70ab1648aa14" class="block-color-gray"><span style="border-bottom:0.05em solid">Arbeitsablauf Git</span></p><ol type="1" id="4dcc05e6-5f0e-4bf8-8f2e-88570ae0a82c" class="block-color-gray numbered-list" start="1"><li>Kopie des Haupt-Repository (klonen) → nur 1x im gesamten Arbeitsablauf</li></ol><ol type="1" id="44bb9814-d8ec-4863-bd6b-934beb85e9fa" class="block-color-gray numbered-list" start="2"><li>Lokale Änderungen</li></ol><ol type="1" id="520f4a5b-beb8-4dc2-ad8e-7c45c13d8138" class="block-color-gray numbered-list" start="3"><li>Lokale Commits → keine konflikte, deshalb lokal commiten oft möglich</li></ol><ol type="1" id="34e0b01d-0078-4226-a076-927a6aa4cdcc" class="block-color-gray numbered-list" start="4"><li>Merge → konflikte lösen<p id="3b97f58e-e3ee-46fc-85eb-c24ad0d1ce5a" class="">Push</p><p id="a883ee97-7011-4b48-8bad-4ee37567c915" class="">Pull Request (requesting main branch to pull)</p></li></ol><p id="f9530d62-ed11-402b-a130-d5000db74244" class="">
+</p></div></p><p id="a60a299e-62fc-4c3d-bd1f-949f94fae434" class=""><span style="border-bottom:0.05em solid">Zentral</span><div class="indented"><p id="eeedb763-528f-4965-a50f-c9db65cfadf1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> source code nur auf einem Rechner mit dem ständig über einem Server abgeglichen wird.<div class="indented"><p id="6caad698-e481-4bea-844d-068ff63b30be" class="">Der Server ist ein „Single Point of Failure“ und ein Flaschenhals.</p><p id="026f7d13-dd26-42c1-aae0-318231320504" class="">Operationen dauern lange (hohe Auslastung, Netzwerkverkehr).</p></div></p><p id="e230018d-4692-4eae-9192-d575844b6994" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> arbeit lokal nicht möglich </p><p id="e4ee8b4f-c345-4a1d-b816-41132094901d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> clients brauchen keine lokalen versionen, brauchen weniger Speicherplatz</p><p id="096cd773-1b22-42f4-812d-088da14ac11c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> commiten langsamer da merge conflicts von commiter behoben werden müssen</p></div></p><p id="83d78a2f-3015-46a1-850b-c1972962f75f" class=""><div class="indented"><p id="77428def-d817-4e38-96fc-6fbcbbd80e61" class="block-color-gray"><span style="border-bottom:0.05em solid">Arbeitsablauf Subversion SVN</span></p><ol type="1" id="e757d621-6bc4-4b2a-aed5-780cc8c96c39" class="block-color-gray numbered-list" start="1"><li>Update</li></ol><ol type="1" id="001aabee-d328-49d5-8ed0-8a24cba637cd" class="block-color-gray numbered-list" start="2"><li>Lokale Änderungen</li></ol><ol type="1" id="0596d0d6-1bb1-4340-9e81-b8668ec7d34d" class="block-color-gray numbered-list" start="3"><li>Update → Man kann hier stecken bleiben und ständig updaten müssen<p id="723a2471-61b4-4113-9db1-99edfb01d98d" class="">Änderungen remote und lokal</p><p id="a38821c1-c46e-48ee-9287-a7ce9ea17866" class="">Merge → konflikte lokal lösen</p></li></ol><ol type="1" id="c2f8a445-4a9a-4bd2-b822-482b0d78a134" class="block-color-gray numbered-list" start="4"><li>Commit</li></ol></div></p></details></li></ul><p id="e5d32a14-ad63-48af-a634-54c98f816e10" class="">
+</p><ul id="610edc63-ac03-43a5-960d-faa5bf5db615" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Beschreiben Sie Inversion of Control (IOC)</span></summary><p id="ec8d399a-899f-4306-aec9-d9b3afe43f62" class="">Umkehrung des Kontrollflusses mit einem <em>Hook</em>.<div class="indented"><p id="1f0d290d-f610-4890-9d80-f6beb801dd04" class="">Viele Varianten.</p><p id="12904b9b-8e57-4a4d-a302-91be2e7d010e" class="">Hollywood Prinzip: &quot;Dont call us, well call you&quot;</p></div></p><p id="d783d4e4-a089-42c0-80f2-ee6abf04be5a" class="">
+</p><p id="b6c15634-a61c-4837-a10a-f0982f9af21a" class="">Dependency Injection DI<div class="indented"><p id="b2dfc1bc-4bbc-46f9-85e2-aa85d0492b34" class="">Abhängigkeiten werden von einem Container verwaltet, die Komponenten wissen nichts
+darüber → Die Abhängigkeiten werden injiziert.</p><p id="fd282ed4-af91-4248-9f47-38a0ffe58091" class="">Eine der vielen Arten von IoC.</p><p id="78a2b948-ddc2-4cde-a1bd-7a3c5acb481e" class="">Konzept: <div class="indented"><p id="588a95a6-3634-40be-9c77-61c7ee48f337" class="">Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p><p id="fa587b07-262f-4c90-8383-2fb7ce9d5324" class="">Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p></div></p><p id="f63ca213-f7ca-4189-bcbf-b97b983023b3" class="">
+</p><p id="b8ff6966-708b-402a-8f4b-a89f03bdbe7e" class="">Implementierung:<div class="indented"><p id="b5fddbe4-1657-481e-9f31-e04333c75a77" class="">Eine Komponente wird über einem Pointer / einer Referenz aufgerufen die urprünglich nicht initialisiert ist.</p><p id="1d724482-a53e-4e90-ac1e-4f416351eeeb" class="">Kann mit Konstruktor, Setter, Annotation initialisiert werden.</p></div></p><p id="5c9e21a1-3ae6-4e4a-8807-9f7f53f78a1f" class="">
+</p><p id="39fa5fe2-cfe3-458c-bc72-228c13829b4f" class="">Vorteile:<div class="indented"><ul id="7dd3b06b-b031-403e-af51-65d29681e45a" class="bulleted-list"><li style="list-style-type:disc">Hohe Wiederverwendbarkeit</li></ul><ul id="e38152a3-eb3f-43e4-a075-e594f51f8711" class="bulleted-list"><li style="list-style-type:disc">Einfaches Austauschen einer Implementierung</li></ul><ul id="c7926db8-f126-4052-bc91-dcea6088b1fb" class="bulleted-list"><li style="list-style-type:disc">Verwalten von verschiedenen Konfigurationen (dev vs. prod)</li></ul><ul id="5be772d2-dd98-4d1b-ac42-e13a4d1aef13" class="bulleted-list"><li style="list-style-type:disc">Automatisiertes „verdrahten“, weniger Boilerplate-Code benötigt.</li></ul><ul id="8941a81b-2de6-4b43-a240-dcb5e0a35ae5" class="bulleted-list"><li style="list-style-type:disc">Verteilung von Aufgaben</li></ul></div></p><p id="38ce4152-e548-450c-96f2-4f803deaecb9" class="">
+</p><p id="ade57649-a161-4270-bad9-969ce960698d" class="">zB in Java Spring-Framework benutzt</p></div></p></details></li></ul><p id="79e4b2bb-6567-4501-aca9-0d7631c8a905" class="">
+</p><ul id="85de1a34-2ae1-4ba3-ab21-4854d2c979b4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was sind die Aufgaben eines Sourcecode Management Systems (SCM)? Beschreiben Sie den Arbeitsablauf, wie bei verteilten SCM Systemen mit Konflikten umgegangen wird!</span></summary><ul id="a94236aa-edf6-41d5-bd1e-83f18169ec00" class="bulleted-list"><li style="list-style-type:disc">parallele Projektentwicklung auf mehreren Zweigen</li></ul><ul id="3bf47f18-7884-46b8-91e9-e57d717736dd" class="bulleted-list"><li style="list-style-type:disc">transparente Änderungen</li></ul><ul id="4e9f77db-26e1-4563-98ca-942f3b09fbc4" class="bulleted-list"><li style="list-style-type:disc">nachvollziehbare Entwicklungsgeschichte</li></ul><ul id="40991e31-f606-46be-b252-d14287296793" class="bulleted-list"><li style="list-style-type:disc">Zugriff auf ältere Versionen</li></ul><p id="c1b666e1-b32c-4a31-8693-e8bc2cbdb375" class="">
+</p><p id="728b313b-a81b-4d0d-bd1c-dc8e415870c1" class="block-color-gray"><span style="border-bottom:0.05em solid">Arbeitsablauf Git</span></p><ol type="1" id="90e3506d-8894-4378-bef7-eed24609de0c" class="block-color-gray numbered-list" start="1"><li>Kopie des Haupt-Repository (klonen) → nur 1x im gesamten Arbeitsablauf</li></ol><ol type="1" id="6d8b1f8e-3764-4ef8-8c5d-0a495909da42" class="block-color-gray numbered-list" start="2"><li>Lokale Änderungen</li></ol><ol type="1" id="b231e5f7-5d73-4485-9b64-c00a316fc442" class="block-color-gray numbered-list" start="3"><li>Lokale Commits → keine konflikte, deshalb lokal commiten oft möglich</li></ol><ol type="1" id="59d3bf2e-4a71-4d23-81c0-b49f08a81a84" class="block-color-gray numbered-list" start="4"><li>Merge → konflikte lösen<p id="13bc8295-2548-4456-870d-059199603967" class="">Push</p><p id="44472cf3-639f-4b28-956e-972559f5658d" class="">Pull Request (requesting main branch to pull)</p></li></ol><p id="f4a69162-ce24-47ee-8fe5-4ee219d9350f" class="">
+</p><p id="704ee693-3ce4-4e7c-8311-2734b427a5d6" class="block-color-gray"><span style="border-bottom:0.05em solid">Arbeitsablauf Subversion SVN</span></p><ol type="1" id="9afc07ac-cf8f-47a8-a2cc-2feadd03908d" class="block-color-gray numbered-list" start="1"><li>Update</li></ol><ol type="1" id="f569a768-a2d0-4324-92fe-47fb1dc534ea" class="block-color-gray numbered-list" start="2"><li>Lokale Änderungen</li></ol><ol type="1" id="0588b443-1664-44a4-9526-b7a76d8e496b" class="block-color-gray numbered-list" start="3"><li>Update → Man kann hier stecken bleiben und ständig updaten müssen<p id="fde81840-78cf-4b84-81c8-7e8fdf6bb267" class="">Änderungen remote und lokal</p><p id="c4564458-6010-4bde-8af8-1eaced6e221d" class="">Merge → konflikte lokal lösen</p></li></ol><ol type="1" id="84126936-8ec4-47a1-abae-4091ba092957" class="block-color-gray numbered-list" start="4"><li>Commit</li></ol></details></li></ul><p id="c959a423-8761-46de-9f82-eefe809101d7" class="">
+</p><ul id="91e2bba2-fd77-4f49-9755-e54c4f3fcd10" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was sind typische Herausforderungen bei global verteilten Entwicklungsteams? Welche Art von Kommunikation kommt hier hauptsächlich zum Einsatz? Nennen Sie hierfür vier verschiedene Beispiele.</span></summary><ul id="70ed0240-bd01-446e-9d01-83dadfbf9c59" class="bulleted-list"><li style="list-style-type:disc">Große geographische distanzen → Kein Face-2-Face, Austauschen von Handzeichnungen erschwert</li></ul><ul id="da9d333d-1e92-4211-bd2b-3c55b5282e18" class="bulleted-list"><li style="list-style-type:disc">Verschiedene Arbeitszeiten</li></ul><ul id="8ad3cd84-a022-4f24-9722-b6975f158349" class="bulleted-list"><li style="list-style-type:disc">Verschiedene Zeitzonen</li></ul><p id="0fb7f71c-5743-4c44-a2d0-590b5c556e4b" class="">
+</p><p id="42a4c374-55fa-433d-a56f-b751b71b4e7f" class="">=&gt; asynchrone Kommunikation</p><ul id="0ce218dd-6599-44b4-9d33-46638b6240b2" class="bulleted-list"><li style="list-style-type:disc">Email</li></ul><ul id="59037b7c-2eb4-485e-a27c-a00b5714b0ad" class="bulleted-list"><li style="list-style-type:disc">Wiki, CMS</li></ul><ul id="a9dac471-308c-4596-984e-c624b784731b" class="bulleted-list"><li style="list-style-type:disc">Mailingliste/Forum</li></ul><ul id="5e5e86cc-4f8d-42c0-9dd6-581e6483bf6d" class="bulleted-list"><li style="list-style-type:disc">Issue-Tracker</li></ul></details></li></ul><p id="e1948623-208f-4d65-842a-fce5c1d45b1f" class="">
+</p></div></article></body></html>

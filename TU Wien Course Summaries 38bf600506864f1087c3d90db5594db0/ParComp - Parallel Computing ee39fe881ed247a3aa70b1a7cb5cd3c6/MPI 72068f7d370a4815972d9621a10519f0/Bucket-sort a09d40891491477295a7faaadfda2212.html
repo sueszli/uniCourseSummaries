@@ -1,0 +1,716 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Bucket-sort</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a09d4089-1491-4772-95a7-faaadfda2212" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">Bucket-sort</h1></header><div class="page-body"><p id="2fe96d50-5755-41a7-8c87-b0d4961e0c24" class="">
+</p><nav id="11d72351-d460-410a-8452-d077790cdf5f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d54d3ba3-d93f-4dcc-915c-a9c6ce078b00">Sequential algorithm</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5399a986-7b1e-401c-babc-c75f3c042d09">Parallel algorithm</a></div></nav><p id="2e0468ba-51c1-49a4-8c58-a3e25861eed2" class="">
+</p><h1 id="d54d3ba3-d93f-4dcc-915c-a9c6ce078b00" class="">Sequential algorithm</h1><p id="836bc329-0efa-46de-bd93-5cd80ab6b284" class=""><em><mark class="highlight-gray">Explanation: </mark></em><em><mark class="highlight-gray"><a href="https://www.youtube.com/watch?v=ELrhrrCjDOA">https://www.youtube.com/watch?v=ELrhrrCjDOA</a></mark></em></p><p id="4068dbc3-e316-429b-aff3-932126c9e250" class="">Given: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> integers in range <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mi>R</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mstyle></mrow><annotation encoding="application/x-tex">\small [0, R-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">[</span><span class="mord sizing reset-size6 size5">0</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">]</span></span></span></span></span><span>﻿</span></span> stored in array <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>A</mi></mstyle></mrow><annotation encoding="application/x-tex">\small A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">A</span></span></span></span></span><span>﻿</span></span>.</p><p id="8ac921d5-3a19-483c-98d1-8e6487b89e48" class="">
+</p><ol type="1" id="15ebe9ce-25ee-462b-95e5-c84325c54b5c" class="numbered-list" start="1"><li>Count number of elements of each “key” (magnitude)<pre id="03006f0b-6bc4-4a02-a82e-299d804f3f53" class="code"><code>for (i=0; i&lt;R; i++) bucket[i] = 0; // initialize range
+for (i=0; i&lt;n; i++) bucket[A[i]]++; // count occurences of each value in range</code></pre><p id="194d09bc-f1fb-4969-a4d6-d6171611cb46" class="">
+</p></li></ol><ol type="1" id="8390056f-c99f-409c-b69e-46f53fbde7ab" class="numbered-list" start="2"><li>Compute start index of each bucket with exclusive prefix-sums<ul id="ca3fc8cd-75d2-4748-912f-7ad859b48851" class="block-color-gray toggle"><li><details open=""><summary>Implementation</summary><pre id="c560ed35-3d6b-4c1e-b8ff-3990dbf22314" class="code"><code>for (i=1; i&lt;R; i++) bucket[i] += bucket[i-1]; // add previous value to this one 
+// shift all entries to right
+for (i=R-1; i&gt;0; i--) bucket[i] = bucket[i-1];
+bucket[0] = 0;</code></pre></details></li></ul><pre id="e926f2f9-be93-4a1f-838b-28a774de010f" class="code"><code>Exscan(bucket);</code></pre><p id="0126bc54-d7a0-48ff-a1bf-04a7ff7fd47d" class="">
+</p></li></ol><ol type="1" id="03c07cad-7879-4aac-8f97-df7fc99327ce" class="numbered-list" start="3"><li>Put sorted <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>A</mi></mstyle></mrow><annotation encoding="application/x-tex">\small A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">A</span></span></span></span></span><span>﻿</span></span> into <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>B</mi></mstyle></mrow><annotation encoding="application/x-tex">\small B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span><pre id="7c04c7ef-e32c-4e23-b1d1-9e2fafc3b404" class="code"><code>for (i=0; i&lt;n; i++) {
+	int tmp = bucket[A[i]]; // value in prefixed bucket
+	B[tmp] = A[i];
+}</code></pre><p id="0c23f30d-c3a1-46f1-88fd-1be902d6c8f7" class="">Now <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>B</mi></mstyle></mrow><annotation encoding="application/x-tex">\small B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> contains the sorted list.</p><p id="7c2fab37-0387-4cc8-ab45-ebe400dac2dc" class="">
+</p></li></ol><ol type="1" id="98fa6ab8-7cae-4a93-aaf8-ea1afd533e33" class="block-color-gray numbered-list" start="4"><li>Finally: copy <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>B</mi></mstyle></mrow><annotation encoding="application/x-tex">\small B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> back to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>A</mi></mstyle></mrow><annotation encoding="application/x-tex">\small A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">A</span></span></span></span></span><span>﻿</span></span> if necessary</li></ol><p id="b4a9ba53-9dcf-48e8-9787-d995c10a0866" class="">
+</p><p id="1b1c2fb7-89cd-402a-989b-c632787128ac" class="">Analysis<div class="indented"><p id="70faa9be-1d71-46fc-9272-53017f389990" class="">This implementation is stable (relative order of elements is preserved).</p></div></p><p id="487493e7-d079-4a7a-9971-dbfe054acbef" class="">
+</p><p id="abc7ffc2-21ce-4863-ae51-9e7202025761" class="">
+</p><h1 id="5399a986-7b1e-401c-babc-c75f3c042d09" class="">Parallel algorithm</h1><p id="8deb3c79-631c-4183-abd4-ecf1fbb9dcfa" class="">Works just as above, but we do the counting and <mark class="highlight-gray"><code>Exscan</code></mark> part distributedly.</p><figure id="ccca19fa-9915-485e-900b-1c22f3fdea43" class="image"><a href="Bucket-sort%20a09d40891491477295a7faaadfda2212/Untitled.png"><img style="width:240px" src="Bucket-sort%20a09d40891491477295a7faaadfda2212/Untitled.png"/></a></figure><p id="5655a3ba-65f6-4d11-8d4e-690dcd2a4139" class="">
+</p><p id="41ed49f4-0574-471a-959b-0747618db7d7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> integers distributed evenly across <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> processes</p><p id="f6d433f4-b37d-4111-b616-43a134e5dc8b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi><mo>=</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m = n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> per process</p><p id="cb22969b-9360-4cab-a61b-9f359e8b6516" class="">
+</p><ol type="1" id="42fb2cc5-816b-4d6b-8fb1-fbe4a04b9c49" class="numbered-list" start="1"><li>Find occurences of elements and store them in <mark class="highlight-gray"><code>B</code></mark><mark class="highlight-gray"> (previously called </mark><code><mark class="highlight-gray">bucket</mark></code><mark class="highlight-gray">)</mark><p id="09dff2c8-12fa-4b55-bbf0-88420ebb7061" class="">
+</p></li></ol><ol type="1" id="49398c6a-14b9-44bd-b436-11095239a358" class="numbered-list" start="2"><li>Call <mark class="highlight-gray"><code>Allreduce</code></mark><p id="e38c7b27-d609-42bb-b0fd-7c4006f028e5" class=""><em><mark class="highlight-gray">can be optimized by using </mark></em><em><code><mark class="highlight-gray"><mark class="highlight-gray">MPI_BCast</mark></mark></code></em></p><pre id="2b41f397-888c-48dd-8e9e-5fc053f0af1e" class="code"><code>MPI_Allreduce(
+	B, // local array with number of occurences
+	AllB, // distributed array with number of occurences (of all processes) 
+	R, // size equal to R (range)
+	MPI_INT, MPI_SUM, // addition
+	comm
+);</code></pre><p id="b0a35276-363c-43c6-a4c3-31d29c8f36a9" class="">Now vector<mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>AllB</code></mark> contains the sizes of all buckets over all processes (stored in all processes).</p><p id="e9e74880-cb2a-452f-ae80-644f7ebf0f66" class="">
+</p></li></ol><ol type="1" id="8d05e58e-b7f5-4e17-b9a3-54839a1e9312" class="numbered-list" start="3"><li>Call <mark class="highlight-gray"><code>Exscan(B)</code></mark><mark class="highlight-gray"> (distributedly)</mark><pre id="cfd7fc6e-3d5e-47e2-abd6-694250d32156" class="code"><code>MPI_Exscan(
+	B, // local array with number of occurences
+	RelB, // output
+	R, // size equal to R (range) 
+	MPI_INT, MPI_SUM, // addition
+	comm
+);</code></pre><p id="00c99611-153d-47ca-af7f-0e55f6877eb3" class=""><mark class="highlight-gray"><code>RelB</code></mark><mark class="highlight-gray"> </mark>is the relative position of every ranks elements in their buckets.<div class="indented"><p id="39e3add7-4528-4030-bfe4-bea779004d23" class="">It is different in every process and is calculated distributedly.</p></div></p><p id="74cc1952-16d0-4cc6-a10f-9c4665012e8f" class="">
+</p></li></ol><ol type="1" id="c47ec444-db6c-4d4d-a4ab-e63b76f6d0bc" class="numbered-list" start="4"><li>Call <mark class="highlight-gray"><code>Exscan(AllB)</code></mark><mark class="highlight-gray"> (locally)</mark><pre id="e52a4028-96b4-41ef-8f5e-2fa60c2e612b" class="code"><code>Exscan(AllB)</code></pre><p id="bd4d8070-a03d-40dc-a4ab-37257c35af8f" class=""><mark class="highlight-gray"><code>j&#x27;</code></mark> = number of local elements with key <mark class="highlight-gray"><code>A[j]</code></mark> before <mark class="highlight-gray"><code>j</code></mark></p><p id="7d0c0a4e-0157-42a6-8056-6917333b5e88" class="">Local element <mark class="highlight-gray"><code>A[j]</code></mark> needs to go to position <mark class="highlight-gray"><code>AllB[A[j]]+RelB[A[j]]+j&#x27;</code></mark> (for <mark class="highlight-gray"><code>A[j]&gt;0</code></mark>).</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="25e01a92-9c1d-4460-9c04-29d99cd53766"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Now we have the required data to sort the total array and only have to redistribute the data.</div></figure><p id="04314dbc-5670-4913-9f37-dd45e4c34e93" class="">
+</p></li></ol><ol type="1" id="25815f71-0239-4f71-87de-aa9d1eb4c27d" class="numbered-list" start="5"><li>Compute number of elements to be sent to each process: <mark class="highlight-gray"><code>sendelts[i]</code></mark> with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">;</mo><mtext> </mtext><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mstyle></mrow><annotation encoding="application/x-tex">\small i\in [0;~p-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.628758em;vertical-align:-0.035190000000000006em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">[</span><span class="mord sizing reset-size6 size5">0</span><span class="mpunct sizing reset-size6 size5">;</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">]</span></span></span></span></span><span>﻿</span></span><p id="04b370e9-0569-436f-88d3-c04995097827" class="">
+</p></li></ol><ol type="1" id="90608d66-b1b1-4ba1-b40d-178f4506ef29" class="numbered-list" start="6"><li>Call <mark class="highlight-gray"><code>Alltoall</code></mark><p id="dc3fe607-59d4-40a6-bbe7-c7656ad0f48e" class="">all → all (make data of all processes available to eachother)</p><p id="2e8b2621-e75d-4835-93f2-4ebefab971bd" class=""><em>This opeartion transposes the data.</em></p><pre id="7bdee840-02eb-447f-a6d3-0ee291a64974" class="code"><code>MPI_Alltoall(
+	sendelts,	1, MPI_INT, // send
+	recvelts,	1, MPI_INT, // receive
+	comm
+);</code></pre><p id="816e6069-fb08-4832-a28e-4a53f2078f56" class="">
+</p></li></ol><ol type="1" id="f9c39df1-0f2c-48ca-875b-9565d97d30c4" class="numbered-list" start="7"><li>Call <mark class="highlight-gray"><code>Alltoallv</code></mark><p id="61681990-b1ad-41d0-935a-0f4f3b8b7062" class="">Transpose again</p><pre id="14580990-d53e-4ee3-9396-ccf2c1111ce0" class="code"><code>MPI_Alltoallv(
+	A,sendelts,sdispls,MPI_INT, // send
+	C,recvelts, // receive
+	…,comm
+);</code></pre><p id="2faceff7-d1f0-4f85-99dc-89961b37868a" class="">
+</p></li></ol><ol type="1" id="dcff28db-edb0-4346-8aec-b3cec1e4b3aa" class="numbered-list" start="8"><li>Finally: Reorder elements from <mark class="highlight-gray"><code>C</code></mark> back to <mark class="highlight-gray"><code>A</code></mark></li></ol><p id="7ffacaff-81c1-496c-8893-d615eefe06fa" class="">
+</p><p id="f3d91c4a-7aa0-401b-aa0b-00102f9055db" class="">If Analysis<div class="indented"><p id="5e88c080-cbfb-401e-9680-ee1811ad7e3c" class="">If the implementation is stable then it is “Radixsort”</p></div></p><p id="65abebf0-fa9d-49a8-b251-a3aa30c4e627" class="">
+</p></div></article></body></html>

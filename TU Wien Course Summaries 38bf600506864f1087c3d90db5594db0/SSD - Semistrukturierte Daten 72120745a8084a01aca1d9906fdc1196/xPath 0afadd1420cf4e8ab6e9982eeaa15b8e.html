@@ -1,0 +1,699 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>xPath</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0afadd14-20cf-4e8a-b6e9-982eeaa15b8e" class="page sans"><header><h1 class="page-title">xPath</h1></header><div class="page-body"><figure id="abadefd7-a684-46fa-bf10-8849ac5d98d8"><div class="source"><a href="xPath%200afadd1420cf4e8ab6e9982eeaa15b8e/6-XPath_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c8a2e112-75b8-4acc-a530-4f7009df9d44/6-XPath_(1).pdf</a></div></figure><figure id="e4b36d0e-bb9a-49ab-a02e-4fe1a048b7d9"><div class="source"><a href="xPath%200afadd1420cf4e8ab6e9982eeaa15b8e/6-XPath-examples_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/59e096a9-6ddc-4c10-95f4-4756beab9026/6-XPath-examples_(1).pdf</a></div></figure><p id="e8e85141-47c1-4c10-8344-2e30ac328adc" class="">
+</p><p id="48e2f1ea-9173-45a8-8537-fc3eeeb4c1f2" class="">
+</p><nav id="76eecdf2-9cfd-4ac5-a7f7-ae2a57a81c1b" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c466ee59-f731-418c-8e0f-cb62d5c4a70a">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5d4adfe9-19b9-4764-a9d5-314f4a472f1c">Location Paths</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b27572d-f873-4b0e-b613-3439e20a79e4">Axis</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#85864c37-00cb-43af-8da8-3465d00c490d">Node-Test</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f812b9db-1f26-4305-91af-e4a2ee4f9cbb">Predicate</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1f3d2a75-e5a3-4bf9-aceb-0690e5ce287e">Syntactic Sugar</a></div></nav><p id="79b72e82-21af-4fa7-b3ee-1d1241184fcc" class="">
+</p><p id="a4be11c1-3036-4cc4-aab1-4d152f79befd" class="">
+</p><h1 id="c466ee59-f731-418c-8e0f-cb62d5c4a70a" class="">Definition</h1><p id="5be22139-4ab0-40c2-b55b-61ad6a4afd95" class=""><mark class="highlight-blue">XPath</mark><div class="indented"><p id="abad85b8-b952-4d5a-b642-59e5a4f715a9" class="">W3C standard: query language for XML</p><p id="debb2c09-37ee-4475-b8cc-36bd6d1d8c22" class="">Documents as tree with 7 kinds of nodes:<div class="indented"><p id="452f7301-896a-4f40-abf6-fe3595b4d0aa" class="">- Document node
+- Element node
+- Attribute node
+- Text node
+- Namespace node
+- Processing-instruction node
+- Comment node</p></div></p></div></p><p id="108b2620-b094-4e07-a2fa-ac300b33508e" class="">
+</p><p id="ff254a29-133a-42a3-8ec0-c04a0659374b" class="">
+</p><h1 id="5d4adfe9-19b9-4764-a9d5-314f4a472f1c" class="">Location Paths</h1><p id="834b572f-6303-48be-9c43-6d5cf1a3cefe" class=""><mark class="highlight-blue">Location Path</mark><div class="indented"><p id="d3b690c7-2029-4618-bbf1-cd02469a69ea" class=""><em>location steps </em>to a node, each seperated by <mark class="highlight-gray"><code>/</code></mark>:</p><pre id="b85df362-867d-47b7-866a-8cde577c51ea" class="code"><code>axis :: node_test [predicate-1] [predicate-2] ... </code></pre><p id="f0f1bddd-7677-49f7-80cf-660825c28a8b" class=""><mark class="highlight-gray"><code>axis</code></mark>		relationship</p><p id="dc1f1835-dd17-4fd8-91f3-f261a2786073" class=""><mark class="highlight-gray"><code>node_test</code></mark>	type of node</p><p id="cc8b53b8-d1d8-4f31-97c1-47f3219cf94d" class=""><mark class="highlight-gray"><code>predicate</code></mark>	filter <mark class="highlight-gray">(can be 0 or more)</mark></p></div></p><p id="243e6690-c497-4d7d-8fea-d2eabc07bcc0" class="">
+</p><h2 id="2b27572d-f873-4b0e-b613-3439e20a79e4" class="">Axis</h2><p id="162cfa49-5027-4784-986b-d3965f804cfe" class=""><em>Unless specified, we always select nodes and not attributes, namespaces.</em></p><p id="29e98165-9db3-4a16-9203-57efde28ffb9" class=""><code><mark class="highlight-gray">self</mark></code>				selects origin</p><p id="35cd6008-c8dd-4ff5-bc16-d96c94a03425" class=""><mark class="highlight-gray"><code>attribute</code></mark>			selects attributes for that element (but not the defined namespace)</p><p id="605299a8-4884-4e75-adf2-2830ef61eb81" class=""><mark class="highlight-gray"><code>namespace</code></mark>			selects namespace defined for that element</p><hr id="7f36fa09-4e78-452f-bd6e-eb94f26a999f"/><p id="5d073fc4-0310-4b6d-b663-d0c61e48052c" class=""><mark class="highlight-gray"><code>child</code></mark>				selects all children</p><p id="8145e271-7ef8-40eb-ab83-076e29b0b2ad" class=""><mark class="highlight-gray"><code>descendant</code></mark>			selects all decendants</p><p id="f677240f-872f-4b4e-8d21-95b58619fa90" class=""><mark class="highlight-gray"><code>descendant-or-self</code></mark>	selects all decendants and self</p><hr id="201a986f-6510-4237-b327-de4aede0956d"/><p id="93cab05e-a65b-4887-8ae9-706d391d3df5" class=""><mark class="highlight-gray"><code>parent</code></mark>				selects parent (can only be a single node in tree)</p><p id="261a5c67-e086-4f63-ae1e-41718bacf169" class=""><code><mark class="highlight-gray">ancestor</mark></code>			selects all ancestors</p><p id="693ce643-248c-4802-8263-725af3009ff9" class=""><mark class="highlight-gray"><code>ancestor-or-self</code></mark>		selects all ancestors and self</p><hr id="6c5ae8f8-2d12-475a-856b-b15989319e52"/><p id="5510981c-b9b9-4a5e-9cd5-4c9c081062b9" class=""><code><mark class="highlight-gray">following</mark></code>			selects all following (= below the element in the XML document)</p><p id="50f1f57d-62b9-4090-97d1-e2554617ebc5" class=""><code><mark class="highlight-gray">following-sibling</mark></code>		selects all following but without their children and grandchildren ...</p><hr id="8b6f1c0c-d3df-4dc2-a569-b465688ce57f"/><p id="3e0bf133-9035-4293-9fb4-cb4e41ce4260" class=""><code><mark class="highlight-gray">preceding</mark></code>			reverse of “following” (= above the element in the XML document)</p><p id="d32fa5fb-e149-477f-8ec4-eefc58117223" class=""><code><mark class="highlight-gray">preceding-sibling</mark></code>		reverse of “following-sibling” (no grandchildren ...)</p><p id="04f12720-d216-492d-aea6-fd8f8e33dd32" class="">
+</p><h2 id="85864c37-00cb-43af-8da8-3465d00c490d" class="">Node-Test</h2><p id="a900aaf8-7c26-4bcb-957b-4c343411f451" class=""><code><mark class="highlight-gray">::node()</mark></code>			selects all nodes independent of axis<div class="indented"><p id="deb2b73a-76d3-49b8-bbe5-6c7ace3e54aa" class=""><code><mark class="highlight-gray">::</mark></code><em><code><mark class="highlight-gray">name</mark></code></em>				selects nodes with the “<em>name</em>”, based on axis</p></div></p><p id="ee140627-9d85-4ab5-9730-35bc87d35128" class=""><code><mark class="highlight-gray">::text()</mark></code>			selects text</p><p id="791c6cb7-3432-4a42-877d-3d646a9b8575" class=""><mark class="highlight-gray"><code>::*</code></mark>				selects all nodes based on axis</p><p id="ec1e18d7-afb4-4103-9f69-8bf0c7b550f9" class="">
+</p><h2 id="f812b9db-1f26-4305-91af-e4a2ee4f9cbb" class="">Predicate</h2><p id="7c10c155-e72f-4ae9-b34f-5119f9dc20b3" class="">Predicates are XPath expressions and they filter initial list of nodes (applied from left to right).</p><p id="577931ce-7305-4166-b24f-71a9db07707b" class=""><mark class="highlight-blue">General XPath expressions</mark><div class="indented"><p id="10908f3b-ae35-4923-95fc-0d71c12534fd" class="">Location paths <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊂</mo></mrow><annotation encoding="application/x-tex">\subset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">⊂</span></span></span></span></span><span>﻿</span></span> XPath expressions<div class="indented"><p id="69edb6b8-0779-4a92-8080-e2e17772dc91" class="">Location paths return: 		node sets</p><p id="b602ea20-5fa9-4a3f-a9d0-4a68d9813a31" class="">XPath expressions return: 	number, string, boolean, node-sets</p></div></p></div></p><p id="01451871-548b-4ef2-bd4c-49a54545c906" class="">
+</p><p id="b6d5f93d-6d4b-471c-9ee5-4bed50f5893e" class=""><mark class="highlight-blue">XPath operators</mark></p><figure id="8a002194-b6ff-49fb-ba44-245703521d6c" class="image"><a href="xPath%200afadd1420cf4e8ab6e9982eeaa15b8e/Untitled.png"><img style="width:240px" src="xPath%200afadd1420cf4e8ab6e9982eeaa15b8e/Untitled.png"/></a></figure><p id="9333d0c1-1d0b-43ab-9c89-8d111e47a350" class="">
+</p><p id="98f96088-a192-4dc4-b471-c293f3b56e9e" class="">
+</p><h1 id="1f3d2a75-e5a3-4bf9-aceb-0690e5ce287e" class="">Syntactic Sugar</h1><p id="82cdcccb-4248-4b3f-a719-44ca5cee5ceb" class="">Syntactic sugar (Abbreviated Syntax) for shorter expressions.</p><p id="bfa51249-a680-4fe4-99cd-96fac8067915" class=""><mark class="highlight-gray"><code>/descendant-or-self::node()/</code></mark>		<mark class="highlight-gray"><code>//</code></mark></p><p id="1e1475f7-f7ab-4729-af99-e23526ee3491" class=""><code><mark class="highlight-gray">self::node()</mark></code>						<mark class="highlight-gray"><code>.</code></mark></p><p id="83e340d1-d16c-4409-8498-9e9fff7ec886" class=""><mark class="highlight-gray"><code>parent::node()</code></mark>					<mark class="highlight-gray"><code>..</code></mark></p><p id="f116523d-a9ca-4359-99d3-9f55d08a3cd8" class=""><mark class="highlight-gray"><code>child::</code></mark>							<mark class="highlight-gray">nothing</mark></p><p id="9b061545-33f6-41de-8a0b-39a380d04108" class=""><mark class="highlight-gray"><code>attribute::</code></mark>						<mark class="highlight-gray"><code>@</code></mark></p><p id="41d2e8db-0ab3-4f1b-9b1c-7bfa81583a71" class=""><mark class="highlight-gray"><code>position() = n</code></mark>					<mark class="highlight-gray"><code>n</code></mark></p><p id="7379b5f3-5242-4252-b627-ab11c07a164c" class="">
+</p><ul id="9b76dd63-212e-42fa-ba3f-295cf7b5154e" class="toggle"><li><details open=""><summary>Examples of usage</summary><pre id="4e6058a5-e44a-411b-a7f7-f676a9f50f09" class="code"><code>/child::courses/child::course[attribute::semester]
+/courses/child::course[attribute::semester]
+/courses/course[attribute::semester]
+/courses/course[@semester]</code></pre><pre id="99f13185-b3c6-45a8-88af-765a3f4a8b0c" class="code"><code>/child::courses/child::course[position() = 1][attribute::semester = &quot;Summer&quot;]
+/courses/child::course[position() = 1][attribute::semester = &quot;Summer&quot;]
+/courses/course[position() = 1][attribute::semester = &quot;Summer&quot;]
+/courses/course[1][attribute::semester = &quot;Summer&quot;]
+/courses/course[1][@semester = &quot;Summer&quot;]</code></pre><pre id="6647d5b7-ab7c-409c-97fe-dbc2a92c306f" class="code"><code>/descendant-or-self::node()/child::course[position() = 1][attribute::semester = &quot;Summer&quot;]
+//child::course[position() = 1][attribute::semester = &quot;Summer&quot;]
+//course[position() = 1][attribute::semester = &quot;Summer&quot;]
+//course[1][attribute::semester = &quot;Summer&quot;]
+//course[1][@semester = &quot;Summer&quot;]</code></pre><p id="d665b75b-948d-4e1e-97d7-fb5575884239" class="">(all equivalent)</p></details></li></ul></div></article></body></html>

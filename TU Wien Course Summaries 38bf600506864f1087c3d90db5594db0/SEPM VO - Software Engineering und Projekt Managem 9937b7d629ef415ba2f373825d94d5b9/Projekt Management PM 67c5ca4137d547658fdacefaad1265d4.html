@@ -1,0 +1,692 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Projekt Management PM</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="67c5ca41-37d5-4765-8fda-cefaad1265d4" class="page sans"><header><h1 class="page-title">Projekt Management PM</h1></header><div class="page-body"><nav id="213b01c4-74fe-45d0-aabf-12ab6acb0fab" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#40bcf036-434c-4cc5-b715-968685ba34cb">Definitionen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#236f763a-d6e9-42fe-9a20-da986c4955b6">Projektmanagement</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5f30018e-d819-432f-be63-a40d6d1280b4">Projektplanung</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#40454ba7-6021-4e6b-819b-8c353a315f63">Anforderungen, Stakeholder</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6e5b5e25-575c-4572-8755-a3378eeeed0a">Risikomanagement</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#25ff92fd-85b6-4fe8-928d-f74f0f822530">Rollenverteilung</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a3123f74-82ba-4f80-ba8d-c864b84c482d">Phasen im Projektmanagement</a></div></nav><h2 id="40bcf036-434c-4cc5-b715-968685ba34cb" class="">Definitionen</h2><p id="395eecb0-0668-4282-9309-f0e40cb57dfc" class=""><span style="border-bottom:0.05em solid">Tagesgeschäft</span><div class="indented"><p id="12cf3ce1-a649-489e-9f87-8fab5664b76a" class="">tägliche Arbeit mit festem Ablauf</p><p id="95e0afa6-5a9f-4afc-bb1d-20dab9f55305" class="">
+</p></div></p><p id="714faaec-7433-40d3-93f7-1e62bbc48e66" class=""><span style="border-bottom:0.05em solid">Projekt</span><div class="indented"><p id="beafd932-8bb2-43fe-ba33-71cd87610a9a" class="">Termine		einmalig, mit Zeitrahmen</p><p id="54d69b00-0acf-4f18-b9c2-2f18ffa88bb3" class="">Ressourcen	Personal, Geld, Sachmittel</p><p id="433f1fb9-7195-40e1-b26e-b3dd42c939bf" class="">Leistung		Aufgabe / erwartetes Ergebnis mit Funktionen, Qualität, Leistung</p></div></p><figure id="8b3c007f-beb0-47af-adde-c34fe2d81fc9" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled.png"><img style="width:240px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled.png"/></a></figure><p id="3af03758-922d-4049-b55f-20b0c7f24b48" class=""><span style="border-bottom:0.05em solid">Projekt-Kennzeichen</span><div class="indented"><ol type="1" id="26b5f130-5f50-4785-b47b-f39583ce8425" class="numbered-list" start="1"><li>Abgrenzbarkeit von: Aufgabe, Ergebnis, Ressourceneinsatz, Zeitrahmen</li></ol><ol type="1" id="b400e3ee-c104-4ddc-a01c-e82eb20097f3" class="numbered-list" start="2"><li>Komplexität der Aufgabe</li></ol><ol type="1" id="eee4a4da-ef3e-4cf4-83fa-9236c4591997" class="numbered-list" start="3"><li>Einmaligkeit der Aufgabe</li></ol></div></p><p id="4a6642e0-03d3-4f46-9ffd-4f067661973c" class="">
+</p><p id="685dd4a3-bfba-4d9f-843f-bdfa88808673" class=""><span style="border-bottom:0.05em solid">Projekt-Arten / Typen</span><div class="indented"><p id="b5d4e31f-958f-4471-ae7f-c587995efcbf" class="">a) Wartungsprojekt</p><p id="51bcd280-0279-4bd4-ae2b-61613fd79ccc" class="">b) Migrationsprojekt</p><p id="5a98ee03-6c66-4dd2-afce-5a9d347df2f0" class="">c) Projekt mit öffentlichen Ausschreibungen <mark class="highlight-gray">(Bewerber geben ein Angebot ab)</mark></p><p id="fecc714c-d729-4020-a67e-f16ac299eee2" class="">d) Neuentwicklung <mark class="highlight-gray">(Klassisches Entwicklungsprojekt)</mark></p><p id="a2af8626-cbc9-46c2-84d9-6adb60ee6f9a" class="">e) Anpassung / Erweiterung einer bestehenden Lösung <mark class="highlight-gray">(Konfiguration eines zugekauften Produkts)</mark></p></div></p><p id="be6eac2d-57a0-4ee1-ab99-73324ba4efec" class="">
+</p><p id="90a22f8f-0fa5-44aa-bdf0-04f26ee08c43" class=""><span style="border-bottom:0.05em solid">Management</span><div class="indented"><p id="4fa68487-8327-434c-912b-40e112d7fa60" class="">&quot;Getting things done by people&quot;</p></div></p><p id="fbb84f58-0f1f-44b5-8ed4-67e21a09e11f" class="">
+</p><p id="bb56d02e-713a-45ee-b127-1f06685af513" class=""><span style="border-bottom:0.05em solid">Projektmanagement</span><div class="indented"><p id="7e4bd80d-c42c-4fce-9f1e-d775ce7dcf0d" class="">&quot;Getting the project done&quot;</p><p id="d7901d2a-416c-4bad-b912-fd9dbc6b2e6a" class="">planerische, steuernde Aufgaben eines Projekts in Anlehnung an ein konkretes Vorgehensmodell.</p><p id="ae914225-f6ea-4de2-a1c5-ef9b703a36d4" class="">Organisation der zu erstellenden Artefakte zu einem definierten Zeitpunkt, Überprüfung (Qualitätssicherung), Ressourcenplanung, Risikomanagement</p><p id="bac07f6e-beef-4862-804f-5be0c876c9df" class="">Projektleitung</p><p id="ab7dccfd-29a0-433d-b7fc-f116f6ffd448" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Organisation</p><p id="a2f7a9de-79bd-46a4-9c70-d93a89536ceb" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Projektinflation (Management wo nicht nötig, bei kleinen Projekten)</p></div></p><p id="c41e6cbc-cbf2-43bc-94e5-7b798eb1554f" class="">
+</p><h2 id="236f763a-d6e9-42fe-9a20-da986c4955b6" class="">Projektmanagement</h2><p id="026bf168-9c22-42ce-b492-31beda38b1c5" class=""><span style="border-bottom:0.05em solid">Aufgaben des Projektleiters</span><div class="indented"><ol type="1" id="26f9e394-0589-4551-808a-6f29cc6aa42d" class="numbered-list" start="1"><li>Projektablauf – was ist zu tun? (Start, Verfolgung, Abschluss)</li></ol><ol type="1" id="c276f12d-697c-48b2-a1fa-7b578a8d2e94" class="numbered-list" start="2"><li>Arbeitsstruktur – wer ist wofür zuständig?</li></ol><ol type="1" id="d68b94dd-054a-46ce-8b33-6427b2b019ac" class="numbered-list" start="3"><li>Informationswesen – wer informiert wen, worüber, wann, wie?</li></ol><p id="346c37fd-8b4c-457e-9234-bad0221fe63b" class="">Sowie:<div class="indented"><ul id="c5f4c946-8523-49cd-85d4-dbc9aaac57e6" class="bulleted-list"><li style="list-style-type:disc">Aufgabenstellung definieren</li></ul><ul id="38fc4703-849a-4156-b218-4d4770723afe" class="bulleted-list"><li style="list-style-type:disc">Risikomanagement</li></ul><ul id="ec54ca83-7940-4c46-9376-9bfd8d61f39a" class="bulleted-list"><li style="list-style-type:disc">Projektplanung, Team organisieren, Aufgaben verteilen</li></ul><ul id="6425613a-4af3-4477-8610-31ba68946e8c" class="bulleted-list"><li style="list-style-type:disc">Fortschritt kontrollieren, soll-ist Vergleich, eingreifen</li></ul><ul id="7a4f460a-372e-4e43-80ce-4e2b0ddee4a6" class="bulleted-list"><li style="list-style-type:disc">...</li></ul></div></p></div></p><p id="10d1a6ba-06f1-4424-ab45-0250dc8d60db" class="">
+</p><p id="7860def9-b612-49e6-946e-989b9e32769d" class=""><span style="border-bottom:0.05em solid">Beziehung zwischen Personal-Einsatz und Projekt-Laufzeit</span><div class="indented"><p id="d6f55f48-8344-48f4-b957-fb0d1c5dcddd" class="">Teilbarkeit der Aufgaben ist beschränkt<div class="indented"><p id="23e6d375-5d9b-421e-849d-3036c737182c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Personal <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span></span><span>﻿</span></span> <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Dauer</p><p id="ced2b832-b41f-4e3f-8f20-e207820c6fea" class="">Grund:</p><ol type="1" id="7faefbbf-8e8c-407e-a683-58ac7f155e02" class="numbered-list" start="1"><li>Ziel: Projektlaufzeit kürzen</li></ol><ol type="1" id="3daff3a6-c1d3-4866-b410-00605d5bb5f8" class="numbered-list" start="2"><li>Mehr Mitarbeiter</li></ol><ol type="1" id="9827959d-96d6-42e4-908c-201ceb2bd488" class="numbered-list" start="3"><li>Mehr Kommunikation / Koordination / Dokumentation</li></ol><ol type="1" id="3238a0b7-4cfd-404c-a2e1-2f5bac6ca9ea" class="numbered-list" start="4"><li>Geringere Produktivität, Mehr Aufwand</li></ol></div></p></div></p><p id="2d3ff9a5-384b-4a16-9f13-397c872ac994" class="">
+</p><p id="198346b9-637c-4f70-8d24-e454bdb59415" class=""><span style="border-bottom:0.05em solid">Teufelsquadrat</span><div class="indented"><p id="a0b9c6aa-1395-4dd2-af4c-847d46fc2a29" class="">Jeder Parameter erniedrigt andere</p><ol type="1" id="76e97137-77c3-461b-8bc8-66ba9e834956" class="numbered-list" start="1"><li>Hohe Qualität (Wartbarkeit, Brauchbarkeit)</li></ol><ol type="1" id="5a57ae67-4b1a-49b6-9b34-c932cd8eff3c" class="numbered-list" start="2"><li>Hohe Quantität (Viele Feature)</li></ol><ol type="1" id="6634a32c-40bf-4ac3-b655-7e578f02a095" class="numbered-list" start="3"><li>Geringe Kosten</li></ol><ol type="1" id="73e7965e-8074-461c-aad5-d9374c8580fe" class="numbered-list" start="4"><li>Kurze Entwicklungsdauer</li></ol></div></p><p id="25b831d3-2429-40a3-9626-f35b204ffd0f" class="">
+</p><h2 id="5f30018e-d819-432f-be63-a40d6d1280b4" class="">Projektplanung</h2><p id="3798dccc-b172-457a-a7d1-b697379a27b6" class=""><span style="border-bottom:0.05em solid">Grundlagen</span><div class="indented"><ol type="1" id="d7decac3-0db7-4c9c-a767-7372e0d3cb6b" class="numbered-list" start="1"><li>Vorgaben vom Kunden<ul id="fd89f784-9ac2-4df9-ac3b-0bc6c96889e3" class="bulleted-list"><li style="list-style-type:disc">Aufgabenstellung (Anforderungen)</li></ul><ul id="4e34fc4e-e8e5-4191-93d4-d8d1d476727f" class="bulleted-list"><li style="list-style-type:disc">Budget (Zeit und Kosten-Rahmen)</li></ul></li></ol><ol type="1" id="cb88e798-73b4-45d5-abab-a5c41610f615" class="numbered-list" start="2"><li>Realisierungskonzept</li></ol><ol type="1" id="95533023-7b56-4403-bea0-e67e51cadd56" class="numbered-list" start="3"><li>Verfügbare Ressourcen des Auftragsnehmers<ul id="b08b34c2-356d-4222-86a9-512303c0bf77" class="bulleted-list"><li style="list-style-type:disc">Know-how / Erfahrung</li></ul><ul id="8e5b7764-baf8-4157-a39b-126c351945ee" class="bulleted-list"><li style="list-style-type:disc">Budget (wie viel man verdienen möchte)</li></ul><ul id="d4330d60-8f55-4953-9237-978c80c8e7ef" class="bulleted-list"><li style="list-style-type:disc">Termindruck (Auslastung mit anderen Projekten)</li></ul></li></ol></div></p><p id="fc3ed31d-6d93-4717-aede-12780f4acf5a" class="">
+</p><p id="376260af-2977-4a28-acfd-5f8c815b579f" class=""><span style="border-bottom:0.05em solid">Projektstart: Von der Idee bis zum Kick-off</span><div class="indented"><ol type="1" id="c632c92c-e30b-4190-bf52-3dc5cf95e733" class="numbered-list" start="1"><li>Idee oder Auftrag</li></ol><ol type="1" id="d80b7b97-133e-435d-8cfd-9c2320b99b05" class="numbered-list" start="2"><li>Projekt-Initiative / Projekt-Initiierung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Ist das eine gute Idee?<p id="107d0968-6da9-475e-b86d-68c78e1fad64" class="block-color-gray">Markt-Analyse, Vor-Studien, Projektumfeldanalyse<div class="indented"><p id="48f81036-f7bd-4238-af36-aeca5df8ac57" class="">Was ist es für ein Projekt? Was soll es leisten? Welche Risiken?</p><p id="d02dd31c-0d51-4a39-a3bb-9e64eef3488e" class="">Die Vorarbeit kann ein eigenständiges Projekt sein.</p><p id="05f0869d-1519-4054-a177-4af9779ea89c" class="">Je innovativer die Idee, desto weniger weiß man am Anfang darüber.</p></div></p><p id="72054716-668f-4262-995c-7b9f772f151d" class="block-color-gray">Grobe Planung, Planungsgespräche</p><p id="188696a6-c354-4686-b78c-673387a84ce0" class="block-color-gray">Diskussion der Idee, Wahl der Projektleitung und des Teams</p></li></ol><ol type="1" id="e50f6d68-8a57-4de2-a3d4-92290d92e547" class="numbered-list" start="3"><li>Projektziel <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Konkrete Planung<ul id="b29a6087-4439-4eb3-905d-6ffb6bcc3425" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Angebot / Auftragserteilung → Gültiger Projektplan</li></ul><ul id="cc371df8-7849-4c70-9fb2-d3ca045b2d60" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Meilensteine / Phasen </li></ul></li></ol><ol type="1" id="281d33b1-42e7-4740-896e-85ccd77b8849" class="numbered-list" start="4"><li>Projektantrag an Investoren</li></ol><ol type="1" id="03505986-172e-483d-9857-11c9365f0a53" class="numbered-list" start="5"><li>Kick-off nach Erhalt der Genehmigung + Projektauftrag</li></ol></div></p><figure id="2751d190-a7ff-43eb-b088-ed6a1e68a557" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%201.png"><img style="width:384px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%201.png"/></a></figure><p id="ebc301fd-7027-46d5-b0be-745f0c145213" class="">
+</p><p id="af397521-8389-4fb9-b2c7-14109cd2e856" class=""><span style="border-bottom:0.05em solid">Spielraum für Veränderungen in Planung</span><div class="indented"><p id="a4422325-e0b2-46c1-9f1e-28c802dfee36" class="">Sich verändernde Rahmenbedingungen sind normal, man muss mit Veränderung rechnen.</p><p id="9bbaab1c-28b8-423d-a0bc-aab3b619d6d8" class="">Priorisieren, Planungszyklen kürzen, anpassen</p></div></p><p id="6099ebe4-96a0-46e6-9d30-5023d539d2f1" class="">
+</p><p id="b97544f9-b73b-43d7-9013-75e8cce1174c" class=""><span style="border-bottom:0.05em solid">Projektvorschlag</span><div class="indented"><p id="ae5ea5ff-9d2a-482c-abad-62ec10760c75" class="">Wird den Entscheidern gegeben</p><ul id="cf0c5b68-15ab-47dc-926b-fa36cf26b90e" class="toggle"><li><details open=""><summary>Beinhaltet</summary><ul id="82bcea59-e5fe-466d-b9ac-0c803d492129" class="bulleted-list"><li style="list-style-type:disc">Projektbezeichnung</li></ul><ul id="deebad1e-c53c-4bd1-931d-140c26c6f3ed" class="bulleted-list"><li style="list-style-type:disc">Ziele, Abgrenzung, Anforderungen, Features</li></ul><ul id="ee8e48eb-3add-4c76-93ba-f320f87e7b80" class="bulleted-list"><li style="list-style-type:disc">Aufwand, Domänenmodell</li></ul><ul id="64ad97c7-d669-4c2e-90d9-d22064d4bd20" class="bulleted-list"><li style="list-style-type:disc">Rollen (Entwickler, Leiter, Architekt, Tester)</li></ul><ul id="239e95d9-a874-4150-ae1f-139cd29c3c45" class="bulleted-list"><li style="list-style-type:disc">Typ des Projekts (z.B.: Neuentwicklung, Migration, Wartung, etc.)</li></ul><ul id="9471ace2-a125-4b85-b325-d3301edeb2f7" class="bulleted-list"><li style="list-style-type:disc">Zielgruppe</li></ul><ul id="43bb88ce-ccae-4378-97aa-af46d2794026" class="bulleted-list"><li style="list-style-type:disc">Ziele und Nicht-Ziele</li></ul></details></li></ul></div></p><p id="5a5b6bec-eb6b-4903-a04d-40f8ef6bcbde" class="">
+</p><p id="3f01497e-6eee-4bb2-92e7-80308933fd65" class=""><span style="border-bottom:0.05em solid">Projektbeauftragung (Projektbeschreibung, Projektantrag, Projekterklärung, Projektdefinition)</span><div class="indented"><p id="986efea7-d552-4225-9550-3569a528cec0" class="">Schriftliche (Ziel)vereinbarung zwischen Auftraggeber und Auftragnehmer).</p><p id="bd5187f9-8f60-42b1-8f0e-63ead17c4501" class="">Voraussetzung dafür ist die Ausarbeitung eines Projektvorschlags.</p><ul id="d2211d56-c9f2-4248-8965-7b4e6fe97a94" class="toggle"><li><details open=""><summary>Beinhaltet</summary><ul id="4547a34c-ade5-4713-bed7-d9a0a10bdb64" class="bulleted-list"><li style="list-style-type:disc">Projektname</li></ul><ul id="b40b8d7b-d04d-4e77-b9b7-9bcef25016df" class="bulleted-list"><li style="list-style-type:disc">Projektbeschreibung</li></ul><ul id="e5a15c9b-239e-452b-8453-8dbfc182222c" class="bulleted-list"><li style="list-style-type:disc">Rollen und Verantwortlichkeiten</li></ul><ul id="d0596b08-a5a3-432e-ad47-427f7e33e403" class="bulleted-list"><li style="list-style-type:disc">Ziele, Abgrenzung</li></ul><ul id="6fecb638-bc0c-45db-a8bc-8ce258bbf898" class="bulleted-list"><li style="list-style-type:disc">Projektplan (Zeit- und Kostenplan), Komponentendiagramm</li></ul><ul id="d2d41de3-fe9f-4a87-aaa2-df4f1dd26141" class="bulleted-list"><li style="list-style-type:disc">Umfeld- und Risikoanalyse</li></ul><ul id="67e382ee-46ca-4707-8be6-1ae35ef26b50" class="bulleted-list"><li style="list-style-type:disc">Wiederverwendung von Komponenten, Technologiewahl</li></ul><ul id="5d765a80-7e9d-415a-8ee9-ea97203fe61b" class="bulleted-list"><li style="list-style-type:disc">Lieferumfang und Abnahme</li></ul><ul id="a1177454-c933-4e78-af88-42ad7a1ec8f2" class="bulleted-list"><li style="list-style-type:disc">Nichtfunktionale Anforderungen (Skalierbarkeit, Performanz oder Verfügbarkeit)</li></ul><ul id="1e04b827-59a2-4011-98b8-2e7314736663" class="bulleted-list"><li style="list-style-type:disc">Arbeitsstruktur</li></ul><ul id="09fb553a-5f5c-42e3-83a9-4d6d421bce6c" class="bulleted-list"><li style="list-style-type:disc">Informationswesen</li></ul></details></li></ul></div></p><p id="cbef76ee-1620-4e1c-9801-3ffafc182db3" class="">
+</p><h2 id="40454ba7-6021-4e6b-819b-8c353a315f63" class="">Anforderungen, Stakeholder</h2><p id="e365e473-5c14-498d-8d52-daf1e2b7472a" class="">Stakeholder und ihr Einfluss auf Anforderungen:</p><ul id="0784d6aa-bcfa-47d4-87fb-107b1ae6d4b8" class="bulleted-list"><li style="list-style-type:disc">Kunde<p id="90aee805-d43d-4b47-8b06-0b043d5a3ad2" class="block-color-gray">Hat die eigentliche Idee / Bedürfnis die durch das zu entwickelnde Produkt abgedeckt werden soll.</p></li></ul><ul id="c4d54116-20aa-4bb0-a79c-567a747b8751" class="bulleted-list"><li style="list-style-type:disc">Entwickler<p id="e2b5cfbc-67c1-47f5-9291-c2b7e78ea051" class="block-color-gray">Wissen über technische (Un-)Möglichkeiten.</p><p id="5a68d164-1deb-477e-bbc4-56c072556faa" class="block-color-gray">Sie müssen die Vorstellung des Kunden technisch Bewerten, Beschreiben und Verwirklichen.</p></li></ul><ul id="dbc33dc7-d7ee-48e0-8a81-291ef82cce42" class="bulleted-list"><li style="list-style-type:disc">Betreiber (Abteilung für Betriebs und Wartungsphase des Projekts)<p id="e210ed91-f05f-44cb-8593-89f4bc700459" class="block-color-gray">Will einen reibungslosen Betrieb, einfache Wartung.</p></li></ul><ul id="ae43112b-2643-4e57-a1eb-75312b751c14" class="bulleted-list"><li style="list-style-type:disc">Management<p id="e6211167-fcd9-4917-85d1-bfbc6f5a868d" class="block-color-gray">Ressourcenvergabe und Zeitplan.</p></li></ul><ul id="fee0a68a-c70e-4d76-b842-3f28c8332e84" class="bulleted-list"><li style="list-style-type:disc">Konkurrent vom Kunden<p id="ccdb9b42-4fe5-45bd-8c44-80669611b57a" class="block-color-gray">Kunde will sich von der Konkurrenz abheben, um am Markt zu bestehen.</p></li></ul><p id="fc6ec7d6-48c6-463a-ab33-2ce395133fdf" class="">
+</p><h2 id="6e5b5e25-575c-4572-8755-a3378eeeed0a" class="">Risikomanagement</h2><p id="62bdb325-9f65-4051-bc98-49bf6c7ea162" class=""><span style="border-bottom:0.05em solid">Risikoarten</span><div class="indented"><ul id="8735d65f-1f22-473f-894d-5c2ee1829ab4" class="bulleted-list"><li style="list-style-type:disc">Produktqualität: Produkt nicht brauchbar / wartbar</li></ul><ul id="a40fc04d-065e-484c-b557-55195f943b4a" class="bulleted-list"><li style="list-style-type:disc">Projektabwicklung: Budget nicht eingehalten</li></ul></div></p><p id="94aacd1a-c69b-4888-9c8e-becb09ca8d53" class="">
+</p><p id="e78dda40-0345-47c2-87bc-aba22a0e4e97" class=""><span style="border-bottom:0.05em solid">Ursachen</span></p><p id="de3540e2-80e0-4cea-85d5-6cfde44667d9" class="">Mangelhafte<div class="indented"><ul id="d68299a5-7444-4a44-a56c-8d46f3ec2e08" class="bulleted-list"><li style="list-style-type:disc">Anforderungen<p id="1db49286-aa8a-4f7e-be2b-3de054f4da32" class="">Unklar / zu gering </p></li></ul><ul id="5864400d-81a4-4726-8959-4b024764cf08" class="bulleted-list"><li style="list-style-type:disc">Umsetzung der Anforderungen<p id="ae55f829-d0a3-4e71-9127-21f495073cda" class="">Nicht verstanden, schlechte Implementierung, Ressourcenmangel</p></li></ul><ul id="0cc8bc36-0b49-469e-bd96-8385b3185cb9" class="bulleted-list"><li style="list-style-type:disc">Projektmanagement<p id="a440bd33-06a1-4fce-9db5-8128be777fc6" class="">Zu wenig Kommunikation, Budget falsch eingeteilt, Ressourcenmangel (Verfügbarkeit, Qualifikation, Erfahrung)</p></li></ul></div></p><p id="84e8d6d3-55c3-4075-997b-230169d5536e" class="">
+</p><p id="4d41951e-25ca-4282-a8df-09426e6260e7" class=""><span style="border-bottom:0.05em solid">Risiko-Analyse</span><div class="indented"><p id="ce15beb0-2c0f-4aeb-b9fb-7c81ab30a373" class="">Quellen</p><ul id="24577758-3232-446b-8b99-719e076d5234" class="bulleted-list"><li style="list-style-type:disc">Aus Aufgabenstellung: Abhängigkeit zu APIs, ...</li></ul><ul id="4878304b-81cb-4bbd-a49b-6a415c9b2e6b" class="bulleted-list"><li style="list-style-type:disc">Generelle Risiken: Personalausfall, ...</li></ul><p id="e0562630-9cea-4231-9092-6e31b6897f03" class="">Eintrittswahrscheinlichkeit</p><p id="fda0c5c0-6e8d-4820-b5ee-d56174a40e86" class="">Schadenspotential</p></div></p><p id="c16fc09f-c7aa-4513-8895-d49417a9801b" class="">
+</p><p id="38108b97-244a-41bf-ba83-e1c921d7ad86" class=""><span style="border-bottom:0.05em solid">Risiko-Management</span><div class="indented"><p id="75913335-243a-4bf9-942b-3a7ef02402d9" class="">Mögliche Mehrkosten berechnen und einplanen</p><p id="7f3e9c43-465d-44be-bd74-3c389ce53909" class="">Planung von Maßnahmen</p><ul id="3e583e03-66c9-403a-8e10-3f26c7e5dec3" class="bulleted-list"><li style="list-style-type:disc">Vorbeugung - risiko Reduzieren</li></ul><ul id="71395f32-509d-4452-8de9-cb47816c8cfe" class="bulleted-list"><li style="list-style-type:disc">Abhilfe - Folgen lindern (zb Versicherung)</li></ul></div></p><p id="a26ecf29-66a0-49c6-ab94-43aea4c51e05" class="">
+</p><h2 id="25ff92fd-85b6-4fe8-928d-f74f0f822530" class="">Rollenverteilung</h2><ul id="bbdc8ded-5754-48e0-8e45-2c839378df64" class="bulleted-list"><li style="list-style-type:disc">Auftraggeber</li></ul><ul id="9404d40f-90f9-4edd-898f-2a135bab5a70" class="bulleted-list"><li style="list-style-type:disc">Auftragnehmer (Entwicklerteam unter Projektleiter)</li></ul><ul id="60ff38fa-5f66-42cf-95d5-11c57ff28095" class="bulleted-list"><li style="list-style-type:disc">Projektleiter / Teamkoordinator</li></ul><ul id="d30c70ce-b894-4735-abf9-8c3d30a8d2f7" class="bulleted-list"><li style="list-style-type:disc">Entwicklerteam<ul id="8d27e004-5d04-4ac9-8599-ad2c88f6ece2" class="bulleted-list"><li style="list-style-type:circle">Software-Architekt</li></ul><ul id="747c6462-caa6-4bc1-a540-001ad6e73be5" class="bulleted-list"><li style="list-style-type:circle">Dokumenten-Beauftragter</li></ul><ul id="967fc513-5eb1-4930-8bb1-dcdd6e0654e3" class="bulleted-list"><li style="list-style-type:circle">Test-Beauftragter</li></ul><ul id="597b3194-8567-4d0f-b263-a081da1578fa" class="bulleted-list"><li style="list-style-type:circle">Stellvertreter</li></ul><p id="22e04570-319d-480a-aa2b-132763562ee8" class="">
+</p></li></ul><h2 id="a3123f74-82ba-4f80-ba8d-c864b84c482d" class="">Phasen im Projektmanagement</h2><ol type="1" id="df2d67f0-27b6-453f-8751-5560abe4995e" class="numbered-list" start="1"><li>Projekt-Definition<p id="58b7f21f-743a-48db-8648-2da2c165ab01" class="">Projekt-Idee → Projekt-Vorschlag → Projekt-Auftrag (Vertrag) → Projekt-Start (Kick-off)</p></li></ol><ol type="1" id="b5da4d4f-a8a2-4e73-b659-5aa784c61c7d" class="numbered-list" start="2"><li>Projekt-Planung</li></ol><ol type="1" id="69cfe2c2-9ca0-4965-9102-9ddc8cf1ebbd" class="numbered-list" start="3"><li>Projekt-Verfolgung, Steuerung</li></ol><ol type="1" id="d019b395-49de-410e-a628-8c44bfbe7f29" class="numbered-list" start="4"><li>Projekt-Abschluss</li></ol><p id="4dd24ef7-91e7-43c6-82b7-fa03acd4881a" class="">
+</p><p id="f5865cbd-52c4-4381-91c4-c03b03cd7080" class=""><span style="border-bottom:0.05em solid">Planung</span><div class="indented"><p id="8dc44915-ad7d-437a-bab8-e707bc33207a" class="">Netzplan: PERT-Diagramm<div class="indented"><figure id="3d36d4b2-e93b-4e9d-b499-d908fda5a9d2" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%202.png"><img style="width:144px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%202.png"/></a></figure></div></p><p id="41638ca0-3cbb-4a49-b695-206f751e9f5c" class="">Balken-Diagramm: GANTT-Diagramm<div class="indented"><figure id="76e61ab1-1a8e-4ca1-9f3b-162e63e30bac" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%203.png"><img style="width:132px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%203.png"/></a></figure></div></p></div></p><p id="c449f322-dbd4-4a26-9ebd-4d2cbdc44786" class="">
+</p><p id="70ed9abd-565f-41d7-a6f5-0cdd29e5796b" class=""><span style="border-bottom:0.05em solid">Projektsteuerung: Soll-Ist-Vergleich mit Meilensteinen</span><div class="indented"><p id="3e76d039-51e4-4a1b-980f-89fe06ad1a94" class="">Meilensteintrendanalyse (MTA)<div class="indented"><figure id="25a27737-af67-4517-b4d3-7bc8df1f5ae5" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%204.png"><img style="width:192px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%204.png"/></a></figure><figure id="af0ebe12-eb6f-4115-b6a0-eb485f5da2a7" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%205.png"><img style="width:192px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%205.png"/></a></figure><p id="2a0fd236-285f-4ce3-8c4f-5de28b804923" class="">Burn-down-Chart<div class="indented"><p id="0aa9a346-d764-4d0b-b6ba-c68e21045f2c" class="">Immer neue Schätzungen des Abschlusses basierend auf aktueller Geschwindigkeit bei jedem daily scrum.</p><figure id="a4a4c193-6dfa-4236-a107-af6d4ed49565" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%206.png"><img style="width:192px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%206.png"/></a></figure></div></p></div></p><p id="7a17d06d-c5a8-483b-9d5d-3a640ce0c678" class="">
+</p><h2 id="2121feba-ea74-4fc5-a35b-18a3c78aa3f6" class="block-color-gray">Projektumsetzung mit Verfahrensmodellen (Überblick)</h2><p id="60f864a7-b192-411b-948c-71ff7baa0ca1" class="block-color-gray"><span style="border-bottom:0.05em solid">Das Problem am sequentielle Softwareentwicklung (Wasserfallmodell)</span><div class="indented"><p id="e7785e2d-41df-4f25-9f43-014e5e667d3f" class="">Je innovativer desto weniger weiß man am Anfang, desto weniger kann man planen.</p><p id="7510754d-6016-4dee-b954-795e68bf42db" class="">Kann sich nicht an <em>dynamisch </em>an Anforderungen anpassen (Kunde, Markt, ...)</p><p id="4c96401c-155b-4ca2-853e-7ab173a713df" class="">Man müsste alle Stufen zurück wenn an einem früheren Punkt ein Fehler gefunden wurde.</p></div></p><p id="ded9d38f-2e14-43bd-8258-d789a37aa840" class="block-color-gray">
+</p><p id="0c43a3a4-43eb-4fda-b921-e8d70243f5bb" class="block-color-gray"><span style="border-bottom:0.05em solid">Iterative Softwareentwicklung: Flexible Reaktion auf Änderungen</span><div class="indented"><p id="c5370dd6-57c7-4d7a-93a1-721219b84c51" class="">Kurze Iterationen (fixe Dauer), inkrementelle releases - Kontinuierliche Entwicklung</p><p id="b265e534-8fdb-4556-a062-df968f34a71d" class="">Anderes Management: <em>Timebox-Management</em></p></div></p></div></p><figure id="9ed3d1e6-13db-478b-a8f8-40d4853d6d7b" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%207.png"><img style="width:240px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%207.png"/></a></figure><figure id="cfde46cd-dece-436c-8cb7-bb1139cda0f3" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%208.png"><img style="width:240px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%208.png"/></a></figure><figure id="9af76e40-e18c-440e-80ed-ef30cd8e1e91" class="image"><a href="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%209.png"><img style="width:240px" src="Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%209.png"/></a></figure></div></article></body></html>

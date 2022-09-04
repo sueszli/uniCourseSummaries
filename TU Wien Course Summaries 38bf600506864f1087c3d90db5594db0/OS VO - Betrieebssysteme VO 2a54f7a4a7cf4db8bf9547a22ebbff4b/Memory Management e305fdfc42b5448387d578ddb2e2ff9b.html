@@ -1,0 +1,726 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Memory Management</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e305fdfc-42b5-4483-87d5-78ddb2e2ff9b" class="page sans"><header><h1 class="page-title">Memory Management</h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="46365b26-dcab-4885-b3db-4ae93392cfc2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Mit Speicher, physischer Speicher ist Hauptspeicher gemeint<ul id="65d75618-5003-4dc3-af19-85aa27694f46" class="block-color-gray toggle"><li><details open=""><summary>Detailiert: <mark class="highlight-gray">Primärspeicher vs. Sekundärspeicher</mark></summary><p id="cfc703a1-cee6-47cc-9c0a-afb89fb9a165" class=""><a href="https://www.elektronik-kompendium.de/sites/com/1812051.htm">Speicherarchitektur</a></p><ol type="1" id="0f61eef4-4134-4fe2-b207-97a800ae4262" class="numbered-list" start="1"><li>Primärspeicher <mark class="highlight-gray">/ Hauptspeicher - kurz: Speicher</mark><p id="58cb5226-1ba8-405d-8aad-3445b4d8a4da" class="">Register, Caches, Arbeitsspeicher <mark class="highlight-gray">(RAM)</mark></p></li></ol><ol type="1" id="8b33e074-2d99-45cf-b3d3-8b82e75eaa4f" class="numbered-list" start="2"><li>Sekundärspeicher<p id="e765cb4d-5446-4ec4-8b54-b314b3d97878" class="">Festplatten, CDs, DVDs</p></li></ol></details></li></ul></div></figure><p id="aa7f0b31-2d14-4755-b324-e3e0f8a5c7f7" class="">
+</p><nav id="dccc50b2-b595-464f-86e8-1db23b25d303" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e4037f7b-d41f-49c5-b639-90a867376f09">Partitioning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5aa1e704-1baf-4def-97e6-d00c44540750">1) Fixed Partitioning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bbdb5fed-b91b-4186-ac7f-c2bd1fd13ce6">2) Dynamic Partitioning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c3d028d0-80f6-4057-9efe-004510a802a2">3) Buddy System</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bc7a6bdf-ee53-462f-b83c-042df18635cf">__________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#67f87765-941c-47f9-a5d7-aca911490a13">Relocation - Logische Adressierung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6282f38c-06e9-4d5e-a65f-dd0a9f25d7a2">Einfache Addressübersetzung</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8a54e490-4f60-47bc-a7d0-1a75ea101661">__________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8eb22dcc-8838-4f8c-8576-336e0b4a5048">Relocation - Virtual memory management</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d2a6aeed-d683-499b-a697-9c59434c4800">1) Segmentierung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ce61631c-d54b-449a-b3a3-cfc403cc08a2">2) Paging</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8ac9dd45-45f9-4939-bc2e-748543dc5537">Multilevel Page Tables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#eb899822-1abd-48e1-a215-8f714a3f4259">Inverted Page Table IPT</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92983141-0698-4e8a-adb7-a7661511d5cf">Translation Lookaside Buffer TLB</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f7125847-aaf1-44d1-8f0e-fef631326e81">Fetch policy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e55cab94-5ef2-463b-96b9-bdff05b3a1c1">Replace policy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0419b685-9a1f-4aa8-82ed-7b2dfdde1d64">Working Set Strategie</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e1704e8c-ce2e-4643-862c-6c1019fc9de5">Protection</a></div></nav><p id="d5d84d1d-e43a-400a-86af-db03fd8f784b" class="">
+</p><p id="7007d455-d3af-4862-8c55-c6c035c10d1e" class=""><mark class="highlight-blue">Speicherverwaltung / Memory Management</mark></p><p id="5666af5e-ab81-4389-accb-6c5276687a46" class="">Das OS wird zuerst in den Hauptspeicher eingefügt und stellt dann Prozessen Speicher zur verfügung.</p><p id="32c20f94-054b-4585-92bf-268ba17dc4f6" class="">Wir wollen Speicher effektiv aufteilen und verwalten:<div class="indented"><p id="d3816184-58eb-4825-a160-2f2c053f7bd4" class="">Partitioning <mark class="highlight-gray">- Speicheraufteilung auf Prozesse</mark></p><p id="66b4b7a4-d06a-46ec-b398-4a56292a14f0" class="">Positioning <mark class="highlight-gray">(= Allocation + Relocation) - Speichern von Code und Daten, Virtual-Memory Management</mark></p><p id="07bef224-e87f-46ab-b6bc-55b8e40de79d" class="">Protection <mark class="highlight-gray">- Speicherschutz</mark></p><p id="15a02510-d17e-42b7-b27a-e3ddccd8161c" class="">Sharing<mark class="highlight-gray"> - gemeinsamer Zugriff mit mutual exclusion</mark></p><p id="66fa40d6-9015-459c-9942-0949b2adadf2" class="">Performance <mark class="highlight-gray">- schnelle, effektive logische und physikalische Organisation </mark></p></div></p><p id="9d4b540a-5b67-4c1a-8c0c-f9a9b4424dfb" class="">
+</p><h1 id="e4037f7b-d41f-49c5-b639-90a867376f09" class="">Partitioning</h1><p id="87b5ed65-3871-4843-b3db-00cc653fb230" class="">Haupt-Speicher-Aufteilung auf Prozesse.</p><p id="32ac54c0-5d46-45bb-8102-d96da1d3dd63" class="">Prozesse beinhalten Programm und Daten, Kontext.</p><p id="d6599374-e142-47f6-9304-01b1cc715d4e" class="">OS wird immer zuerst eingefügt.</p><p id="f85d6c7f-cd26-4fba-a666-3bba9cdd2490" class="">
+</p><p id="d222a7a6-14c4-4a84-81bb-2790dbb739be" class="">Zu wenig Speicherplatz:</p><p id="96faf502-4b87-4310-afc5-1c8b550c3239" class=""><mark class="highlight-blue">Swapping / Auslagern von Prozessen		</mark>vorrübergehend auf Sekundärspeicher auslagern.</p><p id="9f98aef2-8203-46e9-91cb-66b8774c1328" class=""><mark class="highlight-blue">Overlays / Überladen von Programmen		</mark>Programm Anteile im Primär- oder Sekundärspeicher.</p><p id="836e6efd-2ae4-4eeb-91fe-2775b2d07f1b" class="">
+</p><p id="4b994647-fb4f-4b39-b40c-a3a8083a0cea" class="">Speicherplatz wird nicht effizient ausgenützt:</p><p id="8671a0ac-5b21-4946-9bb5-730c385d1702" class=""><mark class="highlight-blue">Fragmentierung			</mark>Teile des Speichers bleiben ungenützt.</p><p id="b77e12ed-2fc0-4e7c-8f04-d5694e9e6b1c" class=""><mark class="highlight-blue">Interne Fragmentierung		</mark>Ungenützter Speicherplatz innerhalb einer Partition.</p><p id="62538463-517b-4aad-9f8d-bd8a6bc6ec54" class=""><mark class="highlight-blue">Externe Fragmentierung		</mark>Zerstückelung des Speicherbereichs außerhalb der Partitionen.</p><p id="c97eba30-04ff-4b72-9b5b-c1f9985aff27" class="">						Löst sich mit <mark class="highlight-blue">compaction </mark>(Zusammenschieben, teure Operation).</p><p id="5b2c59f6-6b00-4ee2-a242-139f76585adf" class="">
+</p><h2 id="5aa1e704-1baf-4def-97e6-d00c44540750" class="">1) Fixed Partitioning</h2><p id="780a9215-142f-4d5b-9d67-0c64e97cefa5" class="">Statisch		Partitionen mit fix vordefinierten Größe.</p><p id="f3ca7ac5-6a8e-4a31-b869-7f3b7b1783a6" class="">Problem		Speichernutzung ineffizient, interne Fragmentierung</p><p id="865f51b8-a79d-430e-a909-927e2251866d" class="">
+</p><p id="37636fd3-83e5-4038-8b60-0766d8c188a0" class=""><mark class="highlight-blue">Gleiche Partitions-Größen</mark><div class="indented"><p id="8a18100a-86bf-4964-91a5-b92df159d5ae" class="">Es ist bei gleicher Partitionsgröße egal wie man sie mit Prozessen belegt.</p><p id="d3335ab7-d4e1-4fac-97c6-919ed6b59f1c" class="">Programm kann zu groß für Partition sein obwohl Speicher leer</p><p id="fb3a5b76-cdea-4caa-b101-71b94f316738" class="">Ineffizient - kleines Programm kann gesamte Partition blockieren</p><p id="1dc6f3e7-327d-4292-b6b1-c56c1aacad22" class="">Interne Fragmentierung</p></div></p><p id="804a8219-b458-4ffa-9d5d-a60e4edd4836" class="">
+</p><p id="1683b3e9-4cf4-497d-a3f1-0739dba61349" class=""><mark class="highlight-blue">Unterschiedliche Partitions-Größen</mark><div class="indented"><p id="8620952f-1acf-4e02-817a-e18c99ce9bae" class="">Wir wollen Partitionen optimal belegen.</p><p id="deac7394-d2ac-4b4f-8e3a-7d44d8536eaf" class="">Eine Queue für jede Partition<div class="indented"><p id="b80ca6c0-bfec-4d18-ba48-2264741583b0" class="">Partitionen nach Größe sortiert. Je nach Größe, kommt Prozess in eine andere Queue.</p><p id="ea3e9caa-751c-4c4c-87a7-e080989d639c" class="">Problem: kleine Prozesse können in Warteschlange sein obwohl größere Partitionen leer sind.</p></div></p><p id="f9d6ae1d-8979-4f2b-8656-632d94f3a59e" class="">Eine Queue für alle Partitionen<div class="indented"><p id="62573c9f-3ac1-4367-b35c-06bf1eb94efc" class="">Nimmt kleinstmöglichste Partition</p></div></p><p id="092eafcf-41b7-44e3-92bb-f93524225f96" class="">
+</p></div></p><h2 id="bbdb5fed-b91b-4186-ac7f-c2bd1fd13ce6" class="">2) Dynamic Partitioning</h2><p id="7b89a913-1949-4d15-b266-e0a663703823" class="">Dynamisch	Partitionen mit variabler Länge und Anzahl.</p><p id="b4d57e51-eeee-433d-86a6-b509d795e828" class="">Problem		Externe Fragmentierung</p><p id="cb1b0348-2db4-41e4-852a-83c34ad132ad" class="">
+</p><p id="9b114607-d5e6-432d-8c5e-260a7dd4dc0b" class="">Weist jedem Prozess eine Partition zu die exakt so groß ist. <div class="indented"><p id="d26e94e1-965f-41e0-9c67-3c22548f4711" class="">Für die ersten Prozesse optimal, danach haben &quot;Löcher&quot; ohne Partition und wieder fixe Größen.</p></div></p><p id="aab5fa5a-8eaa-47ea-98ff-b3f714ac06c0" class="">
+</p><p id="b3a7e9d8-7735-45d2-ad2a-2f3324aa2417" class=""><mark class="highlight-blue">Placement Stategien beim Einfügen</mark></p><p id="49dad336-3af4-4ec2-aba5-5de58290f4da" class="">Auswahl der Partition in die ein Prozess eingefügt werden soll:<div class="indented"><p id="73a0ddd2-325d-4d73-a05c-0190222fd562" class="">Best fit - Geringste Platzverschwendung / Geringster Verschnitt</p><p id="92415f3a-8688-4182-b76a-f1af77695f66" class="">First fit - erste freie Partition von oben</p><p id="2822f61b-5d2d-4603-b91c-74310cfb8f92" class="">Next fit - wie first fit, fängt aber von der letzten freien Stelle wo eingefügt wurde an</p></div></p><p id="abd65f40-5b90-40ee-b3e6-ebf6710f9bc9" class="">
+</p><h2 id="c3d028d0-80f6-4057-9efe-004510a802a2" class="">3) Buddy System</h2><p id="1164f6dd-dbf2-42d6-8286-3855dacc37e7" class=""><mark class="highlight-gray">Fixed und dynamic partitioning sind nicht mehr in Benutzung.</mark></p><p id="885f6cf0-4dc3-40ec-8f97-e066ffdb007d" class="">Versucht Schwächen von statischer und dynamischer Partitionierung auszugleichen:<div class="indented"><p id="b3e7e513-2f2a-4ff9-b779-27f02929bac8" class="">konfigurierbare Größen</p><p id="f5699d9d-46d9-4780-bee4-edb741215417" class="">Größenvergabe nur mit Zweierpotenzen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> wobei für <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span></span><span>﻿</span></span> Schranken angegeben werden.</p><p id="c9e41e7b-8213-4b6f-a9c0-dca694c3b316" class="">Buddy = Speicher-Block</p></div></p><p id="a5bc3b14-2a85-40d1-af54-eed1012a9588" class="">
+</p><p id="6e0e2a93-74c4-42e8-a7e0-edd9fd0d1394" class=""><mark class="highlight-blue">Ablauf: Anforderung von Blockgröße </mark><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span></mark></p><ol type="1" id="6bae5aff-2670-4189-8c34-ebdecbfa9261" class="numbered-list" start="1"><li>Suche nach Block mit <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span></span><span>﻿</span></span> für die Schranken <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>U</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>&lt;</mo><mi>S</mi><mo>≤</mo><msup><mn>2</mn><mi>U</mi></msup></mrow><annotation encoding="application/x-tex">2^{U-1} &lt; S \leq 2^U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.880431em;vertical-align:-0.0391em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>.<p id="06b72432-2b2d-455a-84ee-5136c7641563" class=""><mark class="highlight-gray">Sucht nach kleinstem bestehenden passenden Block.</mark></p><p id="6b89856a-280c-4b10-aba7-0aa27342cd50" class=""><mark class="highlight-gray">Am Anfang ist der gesamte Speicher ein großer Block.</mark></p></li></ol><ol type="1" id="6fb01454-39e4-45c4-a811-59507517f5e1" class="numbered-list" start="2"><li>Falls nicht gefunden, zerteile nächstgrößeren Block in <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></span><span>﻿</span></span> kleinere (so lange bis gefunden).<p id="b922da8b-dfdb-426a-abee-a93c17a31781" class=""><mark class="highlight-gray">Zerkleinert größere Blöcke.</mark></p><p id="690c2b54-ffa4-4911-9ce5-415652e05dd5" class=""><mark class="highlight-gray">zB angenommen wir finden </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mrow><mi>U</mi><mo>+</mo><mn>2</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{U+2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">U</span><span class="mbin mtight">+</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> dann zerteilen wir den Block </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> mal herunter.</mark></p></li></ol><p id="36ddafd2-b0a0-4c9c-9256-ef080d514f80" class="">Nach dem Löschen: Vereine benachbarte Blöcke die nicht belegt wurden.</p><figure id="824eb6bc-21fc-467a-8364-c90aa566db38" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled.png"><img style="width:132px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled.png"/></a></figure><h1 id="bc7a6bdf-ee53-462f-b83c-042df18635cf" class="">__________</h1><h1 id="67f87765-941c-47f9-a5d7-aca911490a13" class="">Relocation - Logische Adressierung</h1><p id="f7dbd069-5a74-420b-9493-1c934c1070ee" class="">Referenzen auf physikalischen Speicher müssen veränderbar sein.</p><p id="7e41ea97-b5f7-4073-9e1a-e84630150c05" class="">Wir wollen Daten im Speicher verschieben können (= dynamisch positionieren) da wir andere absolute Adressen haben bei<div class="indented"><p id="857da8fa-5155-4497-b0b9-9b877a44e5d2" class="">zB Swapping, Compaction - wenn Prozess wieder ins Speicher geholt wird</p><p id="39d33e7e-1c0e-44a2-9ec5-312f1287fa68" class="">Programmausführung auf unterschiedlichen Rechnern mit unterschiedlichen Speicherbelegungen.</p></div></p><p id="a03f6d0b-0fd0-4c4e-8a5c-7995a208190c" class="">
+</p><p id="163b8010-3403-4b47-8556-d9de7ffe80e5" class=""><mark class="highlight-blue">Addressübersetzung</mark><div class="indented"><p id="dcafb0e8-2292-4e44-a9a4-8be18e76c87a" class="">Zur Laufzeit: logische und relative Adressen aus Programm <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> absolute Adressen.</p><p id="3a02e987-1751-4df6-89f6-7d80fe46a1da" class=""><mark class="highlight-yellow_background">Memory Management Unit</mark><mark class="highlight-blue"> </mark>(Hardware) und Page-table / Segment-table unterstützen Übersetzung.</p></div></p><p id="2d22999d-a554-453a-84d0-9425c93c57d8" class=""><mark class="highlight-blue">Physische (absolute) Adresse</mark><div class="indented"><p id="ee19f72f-585d-44c2-9ce7-e226190aa23a" class="">Nicht veränderbar - Absolute Position in Hauptspeicher</p></div></p><p id="11206e56-4f63-4b79-ba7b-735abf0f7c1a" class=""><mark class="highlight-blue">Logische Adresse</mark><div class="indented"><p id="bd762198-5d38-49f9-9302-295c6473741d" class="">Veränderbare Variablenzuweisung.</p><p id="438f2b42-673b-4785-a2aa-e46ed078aed8" class="">Pointer zu Position im Speicher - unabhängig von Speicherorganisation.</p></div></p><p id="622ab057-f9a9-4ed5-98dd-357947f85a10" class=""><mark class="highlight-blue">Relative Adresse</mark><div class="indented"><p id="dea58c77-c43f-4e2a-9a3d-b49f59ed31a0" class="">Position relativ zur logischen Adresse.</p></div></p><p id="0d0f446e-0f9d-4818-bc35-139c235781ce" class="">
+</p><h2 id="6282f38c-06e9-4d5e-a65f-dd0a9f25d7a2" class="">Einfache Addressübersetzung</h2><p id="5492c856-b81f-4c87-b39c-5e8ec9443e7b" class="">Erfolgt bei jedem Speicherzugriff durch Hardware.</p><p id="bfb39d6f-4a68-4d40-9ca4-37d120f6a410" class="">Wir speichern 2 wichtige physische Addressen</p><p id="bb065162-1750-46e6-808c-09dd78fb1027" class=""><mark class="highlight-blue">Base Register</mark>		Programm-Anfang: Zeigt auf Start-Adresse vom laufenden Prozesses</p><p id="f0caf452-0152-4af0-88ba-e54cde8bd99c" class=""><mark class="highlight-blue">Bound Register</mark>	Programm-Ende: damit wir nur auf gültige Addressbereiche zugreifen</p><p id="568cccba-7275-48d4-ba39-dde08ff7832b" class="">Umsetzung:<div class="indented"><ol type="1" id="15dc1954-1054-4e5e-87a3-16a04125cb56" class="numbered-list" start="1"><li>Übersetzte absolute Addresse = Startaddresse + Relative Addresse als Offset </li></ol><ol type="1" id="40633689-520f-4deb-8be5-d1ca39111d36" class="numbered-list" start="2"><li>Danach vergleich mit Boundregister damit Addressbereich / Bound nicht überschritten wird</li></ol></div></p><figure id="3e25621a-2fae-4413-b9ab-6695ad63119b" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%201.png"><img style="width:192px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%201.png"/></a></figure><h1 id="8a54e490-4f60-47bc-a7d0-1a75ea101661" class="">__________</h1><h1 id="8eb22dcc-8838-4f8c-8576-336e0b4a5048" class="">Relocation - Virtual memory management</h1><p id="9721a36f-c502-4638-8b1d-c4b145a59a53" class=""><mark class="highlight-blue">Virtual Memory</mark></p><p id="97fdf7af-3096-42b6-8eac-194a0a0f050e" class="">Wir abstrahieren darüber welcher Anteil vom Prozess im Hauptspeicher ist.</p><p id="67fe9e85-99a2-407f-aedd-c734dfdda4f3" class="">Wir übernehmen nur notwendige Frames vom Prozess ins Hauptspeicher.</p><p id="a6e01dea-fddc-41ea-bc71-0cce34481913" class="">Logischer Addressraum kann viel größer sein als der physischer Addressraum. <div class="indented"><p id="0c793671-e885-48a8-8603-241025a0d588" class="">mehr Speicherplatz, Parallelität </p><p id="d7d6fdfc-ca28-4f30-adbc-328ff1fb2a84" class="">Ausführung von Prozessen die viel größer sind als der Speicherplatz</p></div></p><p id="0b8316e7-fb5a-4347-b3f7-f1f24a663d53" class="">Anteil von Prozess Frames / Segmente im Sekundärspeicher heißt virtual memory.<div class="indented"><p id="505556d7-d615-4a0a-8798-669d3b542027" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mrow><mtext mathvariant="sans-serif">Logical</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Memory</mtext></mrow><mo>→</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.3600em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext mathvariant="sans-serif">Physical</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Memory</mtext><mtext> </mtext><mstyle mathcolor="grey"><mtext mathvariant="sans-serif">(im</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Hauptspeicher)</mtext></mstyle></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext mathvariant="sans-serif">Virtual</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Memory</mtext><mtext> </mtext><mstyle mathcolor="grey"><mtext mathvariant="sans-serif">(im</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Sekund</mtext><mover accent="true"><mtext mathvariant="sans-serif">a</mtext><mo>¨</mo></mover><mtext mathvariant="sans-serif">rspeicher)</mtext></mstyle></mrow></mstyle></mtd></mtr></mtable></mrow></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small{
+
+\textsf{Logical Memory} 
+
+\rarr
+
+\begin{cases}
+\textsf{Physical Memory \textcolor{grey}{(im Hauptspeicher)}} \\
+\textsf{Virtual Memory \textcolor{grey}{(im Sekundärspeicher)}} 
+\end{cases}
+
+}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.5919999999999996em;vertical-align:-1.071em;"></span><span class="mord sizing reset-size6 size5"><span class="mord text"><span class="mord textsf">Logical Memory</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="minner"><span class="mopen sizing reset-size5 size6 delimcenter" style="top:0.024999999999999994em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord text"><span class="mord textsf">Physical Memory </span><span class="mord textsf" style="color:grey;">(im Hauptspeicher)</span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord text"><span class="mord textsf">Virtual Memory </span><span class="mord textsf" style="color:grey;">(im Sekund</span><span class="mord accent" style="color:grey;"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.69281em;"><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord textsf" style="color:grey;">a</span></span><span style="top:-2.91344em;"><span class="pstrut" style="height:2.9em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord textsf" style="color:grey;">¨</span></span></span></span></span></span></span><span class="mord textsf" style="color:grey;">rspeicher)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size5 size6"></span></span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="f70510f6-fc55-47dc-8a01-d59948aad375" class="">
+</p><p id="26bfc7fd-d4cf-4e26-8748-b256957710c0" class=""><mark class="highlight-blue">Resident Set</mark><div class="indented"><p id="0ef5e7e6-b639-40c8-acfb-55f7fc3216c3" class="">Anteil vom Prozess im Hauptspeicher.</p><p id="166b4f28-193d-4de1-b5c9-429112e7f18c" class="">Fixed Allocation	Bei Prozesserstellung fixe Anzahl an Frames zugewiesen </p><p id="ca3de41e-d269-491c-9102-7eac3d165af8" class="">Variable Allocation	Allokiierten Frames können sich während Prozesslebensdauer noch ändern</p></div></p><p id="6514d16e-74c8-4a87-bc53-ab966c678004" class=""><mark class="highlight-blue">Page Fault (Exception Handling)</mark><div class="indented"><p id="3f56301a-6192-4480-badb-184b78a746ea" class="">Adresse nicht im Hauptspeicher gefunden - Suche im Sekundärspeicher (<mark class="highlight-blue">Demand Paging</mark>).</p></div></p><p id="16c16129-ddf2-4065-a964-f5173d2bee6e" class=""><mark class="highlight-blue">Thrashing</mark><div class="indented"><p id="9aaf4f0d-0bc8-4047-9116-611bf9781527" class="">Management beansprucht mehr Ressourcen als Prozesse.</p><p id="ce8b936a-b110-4ed2-af7b-8bc42c3dbf81" class="">zB zu viele Page faults da Resident set zu klein<div class="indented"><p id="82f3ecca-08ae-4fd2-b7b3-544918400e58" class="">Prozessor muss sehr oft vom Sekunderspeicher laden (IO Operation).</p></div></p><p id="e7d33ad4-dbea-4489-adfc-5b6ad585c589" class="">Lösung: Swapping von Prozessen, Resident set vergrößern</p></div></p><p id="fa85c49a-5638-481d-9fdc-551f3e42e4fc" class="">
+</p><h2 id="d2a6aeed-d683-499b-a697-9c59434c4800" class="">1) Segmentierung</h2><p id="14f94838-b51e-4faa-9f1b-3cac84f503c0" class="">Wir wollen nicht gesamtes Programm für Prozess in Hauptspeicher laden sondern Segmente davon definieren die dann in den Partitionen eingefügt werden.</p><p id="f123a3ad-03ae-42e8-a50b-d6a1119052a7" class="">Es kann zu Fragmentierung kommen.</p><p id="6f06f943-c56b-4a28-abb6-f21a008b26fb" class="">
+</p><p id="180164a1-af53-45d4-b99e-16e581c55903" class=""><mark class="highlight-blue">Segment 			</mark>Programm-Block mit beliebiger Länge die zusammengehörenden Code und Daten enthält.</p><p id="15e33ba1-bf8b-463c-a233-257e654ec9d3" class=""><mark class="highlight-blue">Segment-Tabelle	</mark>Enthält Segmentlänge und Start (Base der physischen Adresse).</p><p id="b5f4ac2f-9528-489b-8d3e-17a43b8c14a1" class="">
+</p><p id="81e5c3f9-ca52-45fa-9b05-a0abbef6573e" class=""><mark class="highlight-blue">Adressübersetzung mit Segment-tabelle</mark></p><p id="bbb02906-f094-4f6d-8672-068eaff67757" class="">Logische Addresse besteht aus Offset und Segmentnummer (= Index aus Segmenttabelle)</p><div id="fbd52c59-07c1-4aba-9b78-7a72c5ffb571" class="column-list"><div id="8b1253ee-c5e6-4ad3-83cb-a46d72471a14" style="width:81.25%" class="column"><pre id="311478ff-0f7e-4832-a433-bfe23f11a764" class="code"><code>Logische Addresse: ( Segment-Index | Offset )
+                            ↓ 
+         Segment table: ( Length | Base )
+                                     ↓  
+        Physische Addresse: Base + Offset </code></pre></div><div id="1beb775b-19f8-4543-8696-f92768bbe412" style="width:18.749999999999996%" class="column"><figure id="2f43125f-300a-40fb-aca1-22585d30b5c3" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%202.png"><img style="width:336px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%202.png"/></a></figure></div></div><p id="d7fc95e2-cb54-41f1-a193-68b73ec8cf2f" class="">
+</p><h2 id="ce61631c-d54b-449a-b3a3-cfc403cc08a2" class="">2) Paging</h2><p id="1a5d8cd5-d284-4947-8e2e-f81fb7442f0b" class="">Effizienter als Segmentierung</p><p id="b6e63a1b-e79d-4d2e-ae75-a19c066212da" class="">
+</p><p id="fa81fb35-1e52-4366-b8f3-a2202f172057" class=""><mark class="highlight-blue">Page Frame</mark><div class="indented"><p id="235bb42e-fa5e-4b5c-bc66-e8a9e2ba6463" class="">Arbeitsspeicher im Vorherein in gleich große Frames unterteilt.</p><p id="85c66905-e3f8-4211-955f-d1c43bc25dae" class="">Relativ klein verglichen mit Segmenten.</p><p id="16f4f1e1-e25f-498b-8640-b1596828d1d5" class="">In der Free Frame List stehen alle freien Frames im Speicher </p></div></p><p id="2be10dd9-6ebb-4012-b0f6-b077e2aeebd8" class=""><mark class="highlight-blue">Page</mark><div class="indented"><p id="001bc3a7-4390-4a79-9ab9-8dbeb92de851" class="">Logische Addressbereiche in gleich große Pages unterteilt.</p><p id="92967b0a-ac2c-4f7a-9500-390d3dc55f94" class="">Pages werden zur Laufzeit in Frames hineingeladen <mark class="highlight-gray">(wobei der Frame dann Lücken haben kann)</mark>.</p><p id="88b17ea0-e450-4be6-be37-2aaa129d2828" class="">Pages und Frames sind gleich lang (Größe in Zweierpotenzen) </p></div></p><p id="44346295-b2d7-4312-8d98-4f4907c4013e" class=""><mark class="highlight-blue">Page-table</mark><div class="indented"><p id="61beca20-e426-47d5-a898-9b9a26f4e75a" class="">Page table um für jede Page eines Prozesses die Position im Frame zu finden. <mark class="highlight-gray">Alle bits stehen für booleans.</mark></p><p id="863cd545-cf71-41bd-949f-a8c921ea7988" class="">Present Bit		Seite im Hauptspeicher?</p><p id="22d52d51-1a32-4c52-8b37-f3b2f21f5f5d" class="">Frame Number	pointer zu Frame</p><p id="72d0856e-c6d4-4bc4-901a-28763351c87a" class="">Modified Bit		Seite seit dem letzten Load verändert? <mark class="highlight-gray">(Konsistenz mit festplatte)</mark></p><p id="508dcda5-5a68-4d9c-8309-69acf03b538f" class="">Control Bits		r/w, kernel/user <mark class="highlight-gray">(für protection, security)</mark>, locking <mark class="highlight-gray">(nicht entfernen)</mark></p></div></p><p id="5ddea73f-e530-4ffd-be51-6acd974bbdb6" class="">
+</p><p id="e459535d-96d7-4e64-a771-8fff1b11fd3f" class=""><mark class="highlight-blue">Adressübersetzung</mark></p><p id="ec2b306e-cff1-4985-8453-de6c288e83ec" class="">Compiler, Linker muss nichts über Unterteilung nichts wissen - passiert durch Paging-Hardware</p><div id="a80875cf-a41a-4570-84d6-0290ce82717d" class="column-list"><div id="420b1614-0cb8-4c29-8aa4-93b1fee99f6d" style="width:81.25%" class="column"><pre id="5932f955-5147-4a80-b2cb-bf6869f2852c" class="code"><code>Logischer Addressbereich         Physischer Addressbereich
+( Page Number | Offset )          ( Frame Number | Offset )
+          |                              ↑
+   index  └──────────────────────────────┘ table entry
+							       Page Table</code></pre></div><div id="e8bbd653-f6d3-44af-98b8-a4ff4f08cafb" style="width:18.750000000000004%" class="column"><figure id="fedfe945-0fed-4bc8-bdd9-72ce871d425b" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%203.png"><img style="width:120px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%203.png"/></a></figure></div></div><p id="44bd2116-804e-4ce6-8b7a-83e937f68297" class="">Eintrag in page table wird gefunden indem mit dem pointer welche die page table base enthält addiert wird.</p><p id="136aac9a-16a7-46fc-b1c1-db11b5b183ad" class="">
+</p><h2 id="8ac9dd45-45f9-4939-bc2e-748543dc5537" class="">Multilevel Page Tables</h2><div id="17751a23-12c2-4e76-9fd9-a900a5d3d7e9" class="column-list"><div id="a6785031-11fd-4346-9a03-bf8df98bc31f" style="width:81.25%" class="column"><p id="f87a3c9b-60ae-44e8-9d77-c5c73c89dc16" class="">Die page-table der Prozesse selbst muss im Arbeitsspeicher sein - Kann mit der Zeit sehr groß werden.</p><p id="2ff4b388-39f5-4b6f-8ac5-7c6a6f2fed10" class="">Page-table wird selbst in pages unterteilt, die in der root-page-table nachgeschlagen werden.</p><p id="bd5d477f-5224-47ba-806d-78571a1f3ae2" class="">Ineffizient: 2 Speicherzugriffe vor jedem eigentlichen Speicherzugriff.</p><p id="a8ed47fd-a4be-4067-8af6-9857dfce78db" class="">
+</p></div><div id="9ee8d304-99a4-4fd1-a8bc-5d794eca4cb8" style="width:18.75%" class="column"><figure id="b131f9fc-6a63-4ecd-989c-2a59f470c6c6" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%204.png"><img style="width:336px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%204.png"/></a></figure></div></div><h2 id="eb899822-1abd-48e1-a215-8f714a3f4259" class="">Inverted Page Table IPT</h2><div id="6521f15c-c803-456d-a699-03106bc5738a" class="column-list"><div id="7110ac8b-80b9-487d-99cd-e29c25702dba" style="width:81.25%" class="column"><p id="7188270f-387f-43ae-81f1-1f0c90aeafd8" class="">Platz sparen indem sich Prozesse eine große Tabelle teilen</p><p id="6f894e61-11f0-49fd-b36d-4ef31bdb0592" class="">Keine page-table pro Prozess sondern eine große page-table für alle Prozesse im Arbeitsspeicher.</p><p id="13054e12-65ce-4f8b-8abd-4308cca4a3af" class="">Suche durch assoziativen Suchalgorithmus oder Hashing mit Hardware.</p><p id="194db9b1-d08f-4bbd-8341-ac488dd4fee5" class="">
+</p></div><div id="8d41ffcb-3338-4822-8d7e-df98e45a23b0" style="width:18.750000000000004%" class="column"><figure id="e8f6a031-81df-4e3f-bfea-7c5fbf736579" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%205.png"><img style="width:336px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%205.png"/></a></figure></div></div><h2 id="92983141-0698-4e8a-adb7-a7661511d5cf" class="">Translation Lookaside Buffer TLB</h2><div id="39cbf9eb-46ea-40d3-a018-df4901b28650" class="column-list"><div id="6e338b38-3847-4d29-bfcd-c352bcc14eec" style="width:81.25%" class="column"><p id="f15748c7-9b7d-4bdf-bc7f-0cabbd2ef6eb" class="">Um zu vermeiden dass 2 physikalische Speichezugriffe notwendig sind (page table, daten lesen).</p><p id="6a33bb9e-9c1e-4af7-aa79-7d2c7ea48bb3" class="">Cache <em>in der CPU</em> für die Einträge der page-table auf die zuletzt zugegriffen wurde.<div class="indented"><p id="9fc1c143-e39e-4bf7-a464-325f82c55b1d" class="">Assoziativer Zugriff beim Suchen (sofort zugreifbar).</p><p id="8e83a962-e622-4106-80d7-44bbfa0cb555" class="">TLB wird bei jedem context switch gelöscht. </p><p id="a6dd6778-0f64-43c1-9d3b-e635a0e56923" class="">Bei TLB-miss wird Cache erweitert.</p></div></p><p id="03943333-a39f-4cc1-9360-4df89702750e" class="">Effizient wegen Lokalitätsprinzip.</p><p id="30a1ac36-eabc-4253-9d06-76c70f406bfe" class="">
+</p></div><div id="e0adc2ac-3a69-47db-8f2a-14dddca8370c" style="width:18.750000000000004%" class="column"><figure id="bc6a3fbe-614e-4a23-aa03-563d2edee148" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%206.png"><img style="width:384px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%206.png"/></a></figure></div></div><h2 id="f7125847-aaf1-44d1-8f0e-fef631326e81" class="">Fetch policy</h2><p id="16073086-04ab-4af9-84dc-1db1047b5562" class="">Wann kommen Seiten in den Hauptspeicher? <mark class="highlight-gray">Ähnlich wie: Pre-Cleaning vs. Demand Cleaning</mark></p><p id="aa357204-65a9-4df3-8045-416576347288" class="">Demand Paging	laden bei Bedarf (viele Page faults am Anfang)</p><p id="cbfdbc9b-b553-44ca-b51d-e6ed4374e66c" class="">Prepaging		lädt mehr im Voraus (Lokalitätsprinzip) - viele Seiten nicht benötigt</p><p id="c344f9ab-10ee-43a8-8f55-ba503f07629e" class="">
+</p><h2 id="e55cab94-5ef2-463b-96b9-bdff05b3a1c1" class="">Replace policy</h2><p id="ad495436-1f69-4eb1-b665-1003bee57093" class="">Welche pages werden ersetzt wenn eine neue ins Hauptspeicher geladen wird? </p><p id="c858c6cc-5530-4f0b-86d2-f043cf019bb6" class="">local replacement		Austauschstrategie auf Seiten des gleichen Prozesses</p><p id="1e2257e0-6d69-4511-a02d-4a625b4674c5" class="">global replacement		Austauschstrategie auf alle Seiten des Hauptspeichers</p><p id="15410c3b-cc83-4c8c-9b5e-bc4d8d558ca4" class="">
+</p><p id="b836235f-a276-429b-a2c1-acd9c8e063ac" class="">Austausch-Strategien</p><ul id="cdb56474-2dbd-49e6-b8a7-34357994671e" class="toggle"><li><details open=""><summary><mark class="highlight-blue">OPT Policy (optimal)</mark></summary><p id="c8140a96-993b-4503-812d-bed4a169f0a1" class="">Optimale Strategie nicht implementierbar sondern als Maßstab für andere Strategien.</p><p id="54a67d21-7ebb-4e1d-9099-f794a1aa6a47" class="">Wählt die Page die am spätesten referenziert wird.</p><p id="6777614b-3460-4c5c-acb7-6112e471f234" class="">Minimale #page-faults</p><p id="0a681ef4-7865-4f7d-8ce7-1b6b4eaadfcf" class="">
+</p></details></li></ul><ul id="c8779878-cc2b-41bc-b0b2-00603f97e721" class="toggle"><li><details open=""><summary><mark class="highlight-blue">LRU Policy (last recently used)</mark></summary><p id="15577cea-127a-49f1-be16-ee27b51bcd43" class="">Ersetzt die Seite die am längsten nicht benützt worden ist.<div class="indented"><p id="dc37e9aa-4ee3-427b-82b8-449c2a2ac68e" class="">Nutzt zeitliche Lokalität, sehr nahe zur optimaler strategie</p></div></p><p id="78b53b64-85e2-4504-bdba-7c4ae1b13919" class="">Viel overhead, viel zum Protokollieren, aufwendig zu Implementieren:<div class="indented"><p id="4b3a8acd-f4fc-47bc-a513-c0d69512b25d" class="">Speichern der Zugriffszeiten + Suche</p><p id="cd62cb16-5792-4874-b8d7-378638b7ef48" class="">
+</p></div></p></details></li></ul><ul id="14088ea1-1375-48c5-bb4d-cb7265e08ac1" class="toggle"><li><details open=""><summary><mark class="highlight-blue">FIFO Policy</mark></summary><p id="bb57b160-0e24-4966-9a73-78cc14d9e21a" class="">Ersetzt die älteste Seite (die zuerst geladen wurde).<div class="indented"><p id="684666b1-08bd-4623-8803-17d29b3ea4b2" class="">Einfach zu implementieren: Pointer welcher zyklisch die page-frames iteriert</p></div></p><p id="6299bfc4-cc32-4342-9c4d-09aa47c94836" class="">Keine Information über Frequenz der Verwendung der Seite</p><p id="37628faf-38a6-4887-abcc-b6e1536cb081" class="">Deutlich mehr #page-faults</p><p id="9b14890b-f739-43a5-9ebe-89c0673f8f10" class="">
+</p></details></li></ul><ul id="c855d64d-e358-445d-b8c2-b2765f4fef93" class="toggle"><li><details open=""><summary><mark class="highlight-blue">Clock Policy</mark></summary><p id="634b8041-e20a-4729-8cb0-ed5dc0f90bf4" class="">Ringpuffer aus Seiten die für Austausch in Frage kommen.</p><p id="a8ec7cb2-ccd0-4e04-9689-84806d87c0d5" class="">Jede Seite hat ein used-bit (welche sagt ob neulich auf sie zugegriffen wurde oder nicht).</p><p id="250f52b0-cd57-4c61-85f2-4b2374568c07" class="">Nicht viel mehr page-faults als LRU.</p><p id="826987da-5ebf-4368-b265-0d5022f7fb5f" class="">
+</p><p id="82113cb6-a9fb-4e87-8228-4a97f029cb65" class="">Pointer wird am Anfang zufällig gesetzt.</p><ol type="1" id="cbda3310-3d29-474c-8466-3fe01155a1ce" class="numbered-list" start="1"><li>Es wird nach 0 gesucht und alle 1-Einträge dazwischen werden geflipped.</li></ol><ol type="1" id="c4515634-4547-4c0f-9aac-06238d462760" class="numbered-list" start="2"><li>Nachdem 0 gefunden wurde, wird die Seite ersetzt und der Bit auf 1 gesetzt</li></ol><ol type="1" id="fc59c93b-f35c-4083-929b-c4ebbf50a900" class="numbered-list" start="3"><li>Danach wird der pointer auf die nächste Position gestellt bis zur nächste Suche.</li></ol><figure id="d3d8d2c4-5745-4a2a-80c6-4f5935d18ee5" class="image"><a href="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%207.png"><img style="width:192px" src="Memory%20Management%20e305fdfc42b5448387d578ddb2e2ff9b/Untitled%207.png"/></a></figure><p id="7b924655-7f89-4a15-b8bb-8426ced402a5" class=""><mark class="highlight-gray">In diesem Szenario, wird in der darauf erneut folgenden Replacement, gleich die page ersetzt auf die der pointer das letzte Mal gezeigt hat, weil dort eine 0 steht und das bit auf 1 geflipped.</mark></p></details></li></ul><p id="d6bab2fb-93af-4fa7-ba06-d42c4a28e290" class="">
+</p><h2 id="0419b685-9a1f-4aa8-82ed-7b2dfdde1d64" class="">Working Set Strategie</h2><p id="a481543f-dfb6-44c2-9716-5df4402f0067" class="">Zur Bestimmung der richtigen Größe des Resident-Sets <div class="indented"><p id="10b40efe-42dc-47f0-8dd9-3c2d35bc03d0" class="">zu wenige Frames: viele Page-Faults</p><p id="033817b7-46b6-431e-a753-11c7cf12df6f" class="">zu viele Frames: weniger Arbeitsspeicher verfügbar, geringere Parallelität</p></div></p><p id="e78290d7-f3d1-4a13-8577-c6d4b8c9cf12" class=""><mark class="highlight-blue">Working Set von einem Prozess</mark></p><p id="cecc3d9c-b090-4ca1-b36e-309b29ef9428" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo stretchy="false">(</mo><mi>D</mi><mo separator="true">,</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">W(D,t) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> = Set an pages, auf die <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span><span>﻿</span></span> virtuelle Zeiteinheiten vor Zeitpunkt <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span></span><span>﻿</span></span> zugegriffen wurde.</p><p id="27b73cb7-0677-47cc-a4ce-e0ad53c18dbc" class=""><mark class="highlight-gray">Virtuelle Zeiteinheiten: Nur Zeitfortschreitung im Prozess - zB preemptions nicht betrachtet.</mark></p><p id="f7b11dbe-89ed-4f0e-bb18-3a14aeb67e85" class="">Eigenschaften:<div class="indented"><p id="f583346e-61c5-415a-a19f-4aae10438822" class="">wächst am Anfang schnell</p><p id="6b35f8d4-7bee-4307-acc2-74987b5f4b6f" class="">stabilisiert sich mit Prozessausführung</p><p id="d0cee45e-683d-45dd-addd-7ecd1cf013c5" class="">wächst wieder wenn wir anderen Prozess ausführen</p></div></p><p id="db597b95-e557-41c5-bde5-3cdf7be421fa" class="">
+</p><p id="5610ea6e-d2d3-4f63-92b1-340e7dc5bf24" class=""><mark class="highlight-blue">Anwendung</mark></p><p id="05fc6da7-05bb-41bd-94f2-6d477900207c" class="">Wir checken periodisch das Working Set für alle Prozesse.</p><p id="b40eda6b-e89e-48ac-8487-6d7786e9f136" class="">Resident Set <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊃</mo></mrow><annotation encoding="application/x-tex">\supset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">⊃</span></span></span></span></span><span>﻿</span></span> Working Set<div class="indented"><p id="0c8de92f-28bf-413f-a21d-044b054d739a" class="">Gib Speicher Frei.</p><p id="086ab301-ed2e-4074-af6f-059252d0fa61" class="">Lösche pages die nicht im Working Set sind.</p></div></p><p id="9271cb98-68a5-4944-845b-340c9858cd0d" class="">Resident Set <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊂</mo></mrow><annotation encoding="application/x-tex">\sub</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">⊂</span></span></span></span></span><span>﻿</span></span> Working Set<div class="indented"><p id="1dce7d42-fecf-4852-ad8b-963a17080f00" class="">Allokiiere fehlende Frames aus Sekundärspeicher, durch Swapping anderer Prozesse</p></div></p><p id="ba2e464a-b7de-471c-86a2-6c6c1ab02870" class="">
+</p><p id="980a5d81-e137-4820-a04e-698ca77b866d" class=""><mark class="highlight-blue">Eigenschaften</mark></p><p id="44f7bb1e-c8bd-4791-9615-a875b5779204" class="">Overhead: Zusätzliches Logging und Ordnen von Seitenreferenzen</p><p id="a383d32a-6704-4149-a814-11cd43c0cd18" class="">Optimales <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span></span></span></span></span><span>﻿</span></span> variiert und ist zur Laufzeit unbekannt</p><p id="812f384f-dcbf-4681-ba77-09355b382663" class="">Best Practice<div class="indented"><p id="897369a5-d7b6-4deb-b446-44dc8867ab29" class="">Beobachtung der #page-faults statt working-set pro Zeitintervall (für einzelne Prozesse) mit einem vordefinierten threshold.</p><p id="2416cb7f-5907-46af-933b-f524596e6416" class="">Bei threshhold-Überschreitung bin ich im thrashing und suspend das Prozess.</p></div></p><p id="ec510918-6783-45ec-baa9-e00f23473925" class="">
+</p><h2 id="e1704e8c-ce2e-4643-862c-6c1019fc9de5" class="">Protection</h2><p id="f1a87075-64ee-430a-9a30-93e3d2bc43f5" class="">Speicherschutz: Prozesse sollen nur auf die eigenen Seiten zugreifen können.</p><p id="63e08203-ff9e-4728-89b3-f102964022cb" class=""><mark class="highlight-blue">Virtueller Addressraum als Schutz</mark><div class="indented"><p id="b6427c87-b695-4c47-8d98-44a9d6e71e4a" class="">Adressen die protected sind, werden in Page-Table nicht eingetragen, dadurch page-fault.</p></div></p><p id="95fc677a-761d-4d2d-bae1-e62989d51d25" class=""><mark class="highlight-blue">Protection Keys</mark><div class="indented"><p id="2bb2009d-980e-400d-a657-2dde308a0786" class="">Variante 1 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> key-pair für Prozess und Frame im Speicher<div class="indented"><p id="f134fe92-7552-4f02-bbe1-60d48850b3c0" class="">Bei Speicherzugriff müssen keys gleich sein</p></div></p><p id="4aac2843-381a-4e8a-b490-55d4a65ab4e9" class="">Variante 2 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">- </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> key-pair für Prozess und TLB<div class="indented"><p id="2c703e8d-ba71-42d6-839c-1561c80fbc74" class="">TLB ein key pro Eintrag</p><p id="d3b88b27-d37d-43d7-bb42-f09448b716cf" class="">Jeder Prozess hat eine Menge von keys Registers</p><p id="10955301-4055-4970-8030-a06e4dc82025" class="">Bei Speicherzugriff müssen keys gleich sein</p></div></p></div></p><p id="9d5e6a56-359f-4a4e-b9c9-788cc9e924c7" class="">
+</p><p id="ff3ba7d9-c7fd-4355-a920-0e40e05751d7" class="">
+</p></div></article></body></html>

@@ -1,0 +1,974 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>JavaScript</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8c562dd4-d7ab-4a4e-bab4-83647697b2ba" class="page sans"><header><h1 class="page-title">JavaScript</h1></header><div class="page-body"><p id="41aab3ef-27f0-414d-8313-e9e6d3bd9e33" class="">Live Demo: <a href="https://www.youtube.com/watch?v=BrQKM_uaZKE">https://www.youtube.com/watch?v=BrQKM_uaZKE</a></p><p id="8b8401da-398a-45b8-ac6d-f2a17112aa83" class="">Github Repo: <a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo">https://github.com/web-engineering-tuwien/recipe-search-live-demo</a></p><p id="7b8721a3-c5c0-450d-87e8-b985e8282c70" class="">
+</p><p id="6b06fa1a-c6c0-4368-8a14-d381b6a91642" class=""><a href="https://javascript.info/">https://javascript.info/</a><div class="indented"><p id="2a2e4548-1a51-481a-8410-2f6748fcbc0d" class=""><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference</a></p></div></p><p id="ded5205a-d563-4c55-a2fe-d01679b1f44f" class="block-color-gray"><a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials">https://developer.mozilla.org/en-US/docs/Web/Tutorials#javascript-tutorials</a></p><p id="87cd33db-387d-40aa-8e55-b0c0a9763458" class="block-color-gray"><a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/?messages=success%5B0%5D%3Dflash.signin-success">https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures</a></p><p id="edbc4f23-434b-4daf-ba1e-77994b26dec5" class="block-color-gray"><a href="https://eloquentjavascript.net/">https://eloquentjavascript.net/</a></p><p id="119456c2-3ce7-4b09-a637-f703146a6cdb" class="">
+</p><hr id="c094760c-2ba6-46b5-9fba-23f9bca2e2e2"/><p id="89c143a1-8696-4807-b149-2581a2ccda48" class="">
+</p><nav id="5165d2a7-c685-4bd4-b559-76507bcb724e" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0c8766a4-249f-4b62-a293-1daba8bee1e1">JavaScript</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49207600-8927-45eb-8319-62969489d0e1">Embedding into HTML</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#52e66ac3-0e4b-4a3c-bbe8-65a3022b886b">Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07ae77f4-a155-4f9b-8127-f8ddfe3ac6c6">Browser and Document APIs </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b46b58f-16c6-41a4-a8fc-97b7a2dd5adc">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d59cfb9f-fc7f-4044-ade6-da1886d81027">Browser Object Model BOM (window)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ddaf1de5-8509-4b17-bb52-a12e66dc9a28">Storage (Local Storage, Cookies)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cf5cda7e-1da3-4a58-97d7-c07e86c4bd15">Document Object Model DOM</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ef9af16f-d56b-4e9e-b64d-002950973256">Accessibility</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b5fb274f-51c1-4038-9281-3bdd8a550e54">Event-Driven Programming</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2717e224-a9b6-4c9c-86e1-8003e4531b30">DOM Event Types</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3ed624d0-124a-4418-b776-0163d3861fa8">Asynchronous Programming</a></div></nav><p id="e02cdf13-039d-4142-a476-63f0a889a8ed" class="">
+</p><h1 id="0c8766a4-249f-4b62-a293-1daba8bee1e1" class="">JavaScript</h1><p id="7227a32b-8946-4af9-83df-5aff87c1b226" class="">interpreted scripting language.</p><p id="2e0040b1-ab7c-49c4-b0db-5427741da89e" class="">Standardized as ECMAScript language in the ECMA-262<div class="indented"><p id="8f2a8bf9-08e0-4e2b-8097-1dd8c57acef9" class=""><mark class="highlight-gray">Other ECMAScript implementations: JScript, ActionScript, QtScript, …</mark></p></div></p><p id="921a06f2-0d51-4a23-a6b7-104656c063ee" class="">In this course: EXMAScript 6</p><h1 id="49207600-8927-45eb-8319-62969489d0e1" class="">Embedding into HTML</h1><p id="41e5d9a1-7039-4272-9924-145942e64b33" class="">External<div class="indented"><p id="16f36fff-3d27-4dc9-91d4-598057cde567" class="">linking to an external JavaScript file in &lt;head&gt;<div class="indented"><p id="19fba960-1004-479b-96f9-0cf781493308" class="block-color-gray"><code>defer</code> = asynchronous loading</p><p id="58d3d17d-e25f-4859-a91d-c5a916c57e53" class="block-color-gray">It will <em>defer (= delay) </em>loading the JS until the page load is completed.</p></div></p><pre id="62658dae-6ce1-4631-b4e2-da9f2a59007c" class="code"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;foo.js&quot; defer&gt; &lt;/script&gt;</code></pre></div></p><p id="e662e991-7e7d-4ef9-a28a-0183f3e41d8f" class="">Internal<div class="indented"><p id="fe945baf-f17b-4283-a88b-cd913f628fd1" class="">In &lt;body&gt; or &lt;head&gt;</p><p id="7571f669-9a51-496c-83ec-fa0cad15021c" class=""><code>type=&quot;module&quot;</code> is <code>defer</code> by default</p><pre id="cd8277e7-9f4d-414e-b90e-5a415ece69ad" class="code"><code>&lt;script type=&quot;module&quot;&gt;
+		statement;	
+		statement;
+		...
+&lt;/script&gt;</code></pre><pre id="46703de4-5beb-472d-a68b-aaf2e262f40b" class="code"><code>&lt;script type=&quot;text/javascript&quot;&gt;
+		statement;	
+		statement;
+		...
+&lt;/script&gt;</code></pre></div></p><p id="4774670a-eabc-419d-b877-37478dc6135a" class="">As event handlers<div class="indented"><pre id="386292f9-a8ff-475b-8ab2-b15f0eb3e4bb" class="code"><code>&lt;a href=&quot;http://www.bar.com&quot; onmouseover=&quot;alert(&#x27;hi&#x27;);&quot;&gt;</code></pre></div></p><p id="1b8f606e-5e0d-4a74-89b1-cb0348dc955b" class="">Pseudo-URLs in links<div class="indented"><pre id="87f40cc6-cb0e-47e7-a46f-ca5b2e04cb5b" class="code"><code>&lt;a href=&quot;javascript:alert(&#x27;You clicked&#x27;);&quot;&gt;Click me&lt;/a&gt;</code></pre></div></p><p id="cb6b13eb-3a78-4bb4-8d06-18c378121caa" class="">
+</p><h1 id="52e66ac3-0e4b-4a3c-bbe8-65a3022b886b" class="">Syntax</h1><ul id="54a0b7f7-29d8-425f-ace8-987d2212b276" class="toggle"><li><details open=""><summary>Key words for declaration, Scoping</summary><p id="27c4fe45-3a1e-4b71-a1a5-633f908e12aa" class=""><mark class="highlight-teal">Function-scope:</mark> <code>var</code>  → try to avoid</p><ul id="d254e469-60af-4de3-8e5d-03f285f110f0" class="bulleted-list"><li style="list-style-type:disc">will only live in the function or the outer scope that it was called in</li></ul><ul id="a64ffb51-95b3-47ef-a8db-3e98e9d049f3" class="bulleted-list"><li style="list-style-type:disc">Function scopes can nest with nested functions</li></ul><ul id="2cf412e1-1ff8-4447-81c0-386a10f8c8ec" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">hoisting</mark>: optimzing code before executing it within the virtual machine → During the hoisting process all <code>var</code> variables get <em>declared</em> in the beginning of every function without being <em>initialized</em>.<p id="0f0a988d-cd2c-44f5-8418-fbc4d074733d" class="">Therefore accessing / reading an previously un-initialized variable with <code>var</code> won´t cause an issue and is accessible everywhere within the function. → This makes code prone to error.</p></li></ul><p id="e5c04032-e2b7-4ce9-b3d2-128c246e9ba4" class=""><mark class="highlight-teal">Block-scope: </mark><code>let</code>, <code>const</code></p><ul id="9bff6164-b2f1-446b-ade3-a2d14eebe594" class="bulleted-list"><li style="list-style-type:disc">will only exist within its block (just like Java)</li></ul><ul id="04f3460c-e927-4339-8d86-197222c38441" class="bulleted-list"><li style="list-style-type:disc">const identifiers cannot change → improves memory efficiency. Useful for objects and functions that shouldn´t change.</li></ul><p id="c1a13f00-368d-4c89-9061-4c036d0e2b40" class=""><mark class="highlight-teal">Global Scope:</mark> no keyword</p><ul id="094318fa-bc86-4dd6-8121-ac1df2b92ddf" class="bulleted-list"><li style="list-style-type:disc">Variables are global by default if no keyword is used</li></ul><p id="68c9cf3b-1e2f-4a95-b122-2bbe8dba8355" class="">
+</p></details></li></ul><ul id="555de197-b8fd-4f4c-ad3a-22d5bcd9700f" class="toggle"><li><details open=""><summary>Variables, Data types</summary><p id="cc467bc9-f8ec-49a0-8d9f-f2f9edb3fe07" class="">There are 8 basic data types in JavaScript.</p><ul id="1c0b3141-8afa-4b6b-91f3-5f19fe6002a1" class="bulleted-list"><li style="list-style-type:disc"><code>number</code> for numbers of any kind: integer or floating-point</li></ul><ul id="56b40b21-945e-40e2-bc6b-b88db7c1db49" class="bulleted-list"><li style="list-style-type:disc"><code>bigint</code> is for integer numbers of arbitrary length.</li></ul><ul id="23b1cde3-1bb8-43c1-bcb6-6e41019ed37d" class="bulleted-list"><li style="list-style-type:disc"><code>string</code> for strings. A string may have zero or more characters, there’s no separate single-character type.</li></ul><ul id="2062c623-1b68-47d3-9c76-395dc07e82bd" class="bulleted-list"><li style="list-style-type:disc"><code>boolean</code> for <code>true</code>/<code>false</code>.</li></ul><ul id="a54b1c2d-23b1-4ec1-8c9e-e0d020b9fa58" class="bulleted-list"><li style="list-style-type:disc"><code>null</code> for unknown values – a standalone type that has a single value <code>null</code>.</li></ul><ul id="e1e87059-1b0b-4e15-b746-706c9279a64d" class="bulleted-list"><li style="list-style-type:disc"><code>undefined</code> for unassigned values – a standalone type that has a single value <code>undefined</code>.</li></ul><ul id="6324fff2-ea7d-4dff-a961-9e69a60158e9" class="bulleted-list"><li style="list-style-type:disc"><code>object</code> for more complex data structures.</li></ul><ul id="f5c2845b-3e4d-4d7b-a0c9-893a8f248d60" class="bulleted-list"><li style="list-style-type:disc"><code>symbol</code> for unique identifiers.</li></ul><p id="fcb4d4a4-0af6-455c-bfe0-7658dee9bd4f" class="">The <code>typeof</code> operator allows us to see which type is stored in a variable.</p><ul id="516344bb-7106-4261-94c1-2a74d93e3f71" class="bulleted-list"><li style="list-style-type:disc">Two forms: <code>typeof x</code> or <code>typeof(x)</code>.</li></ul><ul id="8d95ec38-9abf-4be8-b152-3a5625932f92" class="bulleted-list"><li style="list-style-type:disc">Returns a string with the name of the type, like <code>&quot;string&quot;</code>.</li></ul><ul id="8dffcac9-0591-4431-8781-755cb1e0af0f" class="bulleted-list"><li style="list-style-type:disc">For <code>null</code> returns <code>&quot;object&quot;</code> – this is an error in the language, it’s not actually an object.</li></ul><hr id="2abe0c5c-c608-43db-b162-07433d217f55"/><p id="7d687971-7147-485b-93af-e045e72b1930" class="">Type conversions:<div class="indented"><figure id="7a100c32-0152-418c-a2d4-31134bb0b503" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled.png"><img style="width:432px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled.png"/></a></figure></div></p><p id="be7f03bf-7ebf-4261-86a8-c3473eadff6f" class="">
+</p></details></li></ul><ul id="601bdce6-3566-4f89-926a-d923211098ec" class="toggle"><li><details open=""><summary>Strings, Template Literals</summary><p id="ba3e838b-9832-4073-a872-d9caea25a47b" class="">Strings: (“…”, ‘…’)</p><ul id="5c927f7b-0925-4d4b-932e-ae704e5cdf2c" class="bulleted-list"><li style="list-style-type:disc">Backslash escapes (\)	
+String concatenation with + operator:  &quot;Dear	&quot; + <a href="http://s1.name">s1.name</a> + &quot;, thank you for…” </li></ul><p id="7d43b0d2-04aa-4451-b65f-4301d12f933b" class="">JavaScript Template Literals (Replaces concatenation operations)</p><ul id="4daf6e08-34e9-4530-8a00-36c0891c7f7f" class="bulleted-list"><li style="list-style-type:disc">Use backquote (`) as delimiter</li></ul><ul id="3218d0eb-5f31-49e4-966c-5676b4c9fe85" class="bulleted-list"><li style="list-style-type:disc">Can span multiple lines (new line included in the string)</li></ul><ul id="1a590dfc-9121-4c2c-9b8e-da2a21ba827f" class="bulleted-list"><li style="list-style-type:disc">Can have embedded expressions → ${expression} — computes expression and replaces it
+with string value<pre id="8c46e7ea-7583-4769-ac98-72d1f799cb78" class="code"><code>message	=	`Dear	${student.name}, Your	GPA, ${gpa(student)},
+	is lower	than	the	average: ${averageGPA}`</code></pre></li></ul><p id="fa2864e5-2743-4542-9383-f15e7aeba631" class="">
+</p></details></li></ul><ul id="352b3924-35d5-45d4-8aab-917586b2b46b" class="toggle"><li><details open=""><summary>Operators</summary><ul id="d29ad606-9818-4919-b38b-05e4627930f9" class="bulleted-list"><li style="list-style-type:disc">Numerical operators: +,-,*,/,++,--,%	</li></ul><ul id="3a36e673-7de4-4d35-ab94-d7c9e347a758" class="bulleted-list"><li style="list-style-type:disc">Comparison operators:	&gt;,&gt;=,&lt;,&lt;=,==,!=,===,!==<p id="11e8c6ac-d12b-4aac-908a-5bf2dd21c021" class="">Two kinds of comparison operators</p><pre id="26d06ce8-620b-4f08-8f01-214e9f709540" class="code code-wrap"><code>console.log(&quot;1&quot; == 1); // true - compares content
+console.log(&quot;1&quot; === 1); // false - compares type + content</code></pre><p id="e5b3d72f-c190-4c11-ade1-bfaaafbdc2a9" class="">
+</p></li></ul></details></li></ul><ul id="27dd5e16-e633-41c5-97a5-c8149e72cf71" class="toggle"><li><details open=""><summary>Functions, Callbacks</summary><p id="143057d8-3dc2-4541-b3aa-b12e14d57548" class="">Declared with keyword <code>function</code>:</p><ul id="d5a0e4f0-48b3-45d8-82d3-a6f3d58786d4" class="bulleted-list"><li style="list-style-type:disc">Functions are first-class citizens, can be passed as parameters, can return other functions<ul id="c210d7f8-a73f-4baf-a4d7-07a1c5ec98c4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Callbacks (= higher order functions)</span></summary><p id="a2e51668-95c5-4947-a1d3-94a3c9cb434e" class="">Here is a quick example:</p><pre id="83513e3c-d245-4b6c-8f5e-61d67afeb9e7" class="code code-wrap"><code>function greeting(name) {
+  alert(&#x27;Hello &#x27; + name);
+}
+
+function processUserInput(callback) {
+  var name = prompt(&#x27;Please enter your name.&#x27;);
+  callback(name);
+}
+
+processUserInput(greeting);</code></pre><p id="7a2ce840-78ee-4662-bc99-ff8e55cb3e72" class="">The above example is a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Synchronous">synchronous</a> callback, as it is executed immediately.</p><p id="bfe2f73a-bd7d-4374-8336-2b35d9cd2089" class="">Note, however, that callbacks are often used to continue code execution after an <a href="https://developer.mozilla.org/en-US/docs/Glossary/Asynchronous">asynchronous</a> (In other words, actions that we initiate now, but they finish later) operation has completed — these are called asynchronous callbacks.</p><p id="e29e2664-a593-4edf-ac0b-8988317fd38d" class="">For instance, one such function is the setTimeout function.</p><p id="e49b86d0-45a3-4393-a768-4bc703d2ce17" class="">
+</p></details></li></ul><ul id="e3028737-3f85-406c-9215-db506022e692" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Callback Hell / Pyramid of Doom</span></summary><p id="e8fe71b6-5364-46de-8887-1e464f8ee49f" class="">In a “callback-based” style of asynchronous programming. A function that does something asynchronously (at a later point in time) should provide a <em>callback argument</em> (usually an anonymous function) where we put the function to run after it’s complete.</p><p id="89dcce9b-c0ca-4533-b5f7-6dd125eb750a" class="">As calls become more nested, the code becomes deeper and increasingly more difficult to manage. That’s sometimes called “callback hell” or “pyramid of doom”:<div class="indented"><figure id="349274ef-720b-4f75-b3c8-ffe5ef17562b" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%201.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%201.png"/></a></figure></div></p><p id="6bab6c37-a14d-4adb-acfc-8210adaf7c6f" class="">(Here the loadScript function executes the anonymous function that is its second parameter if script was loaded successfully → the goal is to load a series of scripts sequentially)</p><ul id="4d0fcfb5-88f3-4a5d-a32e-2327aa4fa413" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Callback Hell example</span></summary><p id="43fcf927-8eb5-4eff-93ba-8dd49155104a" class="">Take a look at the function <code>loadScript(src)</code>, that loads a script with the given <code>src</code>:</p><pre id="ec922ad6-5a73-4daf-91f4-5a03c16c2089" class="code"><code>function loadScript(src) {
+  // creates &lt;script src=&quot;…&quot;&gt; with given src
+  // this causes the script with given src to start loading and run when complete
+  let script = document.createElement(&#x27;script&#x27;); 
+  script.src = src; 
+  document.head.append(script);
+}</code></pre><p id="a9d3e92c-6864-4470-bced-db7ddf746b1a" class="">We can use this function like this:</p><pre id="42bff2dd-ff02-40da-9289-f93453bd2d13" class="code"><code>loadScript(&#x27;/my/script.js&#x27;);</code></pre><p id="e7b3b4d0-6a90-4170-8fae-d46d35cbbea5" class="">The script is executed “asynchronously”, as it starts loading now, but runs later, when the function has already finished. If there’s any code below <code>loadScript(src)</code>, it doesn’t wait until the script loading finishes.</p><p id="a6431140-2688-421e-aef4-900893a7682a" class="">Let’s say we need to use the new script as soon as it loads. It declares new functions, and we want to run them.</p><p id="6abe5458-fd4a-414e-a0d8-3be9093ca5a5" class="">
+</p><p id="c558f049-4013-4687-b54c-8256aa5dcd57" class="">Let’s add a <code>callback</code> function as a second argument to <code>loadScript</code> that should execute when the script loads:</p><pre id="83f8b58b-4dfa-4016-b7b3-402a1d8655a3" class="code"><code>function loadScript(src, callback) {
+  let script = document.createElement(&#x27;script&#x27;);
+  script.src = src;
+
+  script.onload = () =&gt; callback(script);
+
+  document.head.append(script);
+} </code></pre><p id="058c85e0-c9c3-4f8d-9ec6-6942bd87f145" class="">Now: <span style="border-bottom:0.05em solid">How can we load two scripts sequentially: the first one, and then the second one after it (with error handling)?</span></p><p id="d9ccf47d-67fc-435a-84a0-0884ab5e60ff" class="">
+</p><hr id="217a66bd-99ef-46a6-a8c9-3d9c36538e76"/><p id="4e0d7f4b-66df-43d8-9f4b-f6c4dbdafbd1" class="">
+</p><p id="4f888cd8-7c5a-4cda-8f0b-8cd22f10ea3c" class="">Here’s an improved version of <code>loadScript</code> that tracks loading errors:</p><pre id="71ef2518-dd53-4f17-b5dc-8af00b5697a0" class="code"><code>function loadScript(src, callback) {
+  let script = document.createElement(&#x27;script&#x27;);
+  script.src = src;
+
+  script.onload = () =&gt; callback(null, script);
+  script.onerror = () =&gt; callback(new Error(`Script load error for ${src}`));
+
+  document.head.append(script);
+} </code></pre><p id="b7645f7c-6b02-42c9-9ba4-99e1f812cc84" class="">It calls <code>callback(null, script)</code> for successful load and <code>callback(error)</code> otherwise.</p><p id="dc38f6ee-e8f4-425d-8298-021b29f7632e" class="">To use the loadScript function:</p><pre id="61a7fcac-ba02-44f0-92a7-5e3253f08c3c" class="code"><code>loadScript(&#x27;/my/script.js&#x27;, function(error, script) { //anonymous function that takes 2 params
+  if (error) {
+    // handle error
+  } else {
+    // script loaded successfully
+  }
+}); </code></pre><p id="6eed96d6-3782-4bba-a147-ac78e22ad8f7" class="">
+</p><hr id="fb409727-a305-462c-afde-a30420c565c0"/><p id="ffa389cb-20bf-4eb6-9fb8-283f747a046f" class="">
+</p><p id="9b75b03b-c7f6-43aa-be69-3f2db168bf48" class="">From the first look, it’s a viable way of asynchronous coding. And indeed it is. For one or maybe two nested calls it looks fine.</p><p id="7d77790a-80cf-46a9-b757-e518ca8392de" class="">But for multiple asynchronous actions that follow one after another we’ll have code like this:</p><pre id="6497fc90-937e-47b8-9bfa-ba5633b0c36f" class="code"><code>loadScript(&#x27;1.js&#x27;, function(error, script) {
+
+  if (error) {
+    handleError(error);
+  } else {
+    // ...
+    loadScript(&#x27;2.js&#x27;, function(error, script) {
+      if (error) {
+        handleError(error);
+      } else {
+        // ...
+        loadScript(&#x27;3.js&#x27;, function(error, script) {
+          if (error) {
+            handleError(error);
+          } else {
+            // ...continue after all scripts are loaded (*)}
+        });
+
+      }
+    });
+  }
+}); </code></pre><p id="29a01f6b-8fb3-404b-ab4e-91ec571116b8" class="">In the code above:<div class="indented"><ol type="1" id="51f21386-deb6-4a61-a167-31b21a0a9747" class="numbered-list" start="1"><li>We load <code>1.js</code>, then if there’s no error.</li></ol><ol type="1" id="916c565b-c3d5-4c62-8d30-8ac4d365a329" class="numbered-list" start="2"><li>We load <code>2.js</code>, then if there’s no error.</li></ol><ol type="1" id="cae76009-233d-4aa8-8c27-b9206405e612" class="numbered-list" start="3"><li>We load <code>3.js</code>, then if there’s no error – do something else <code>(*)</code>.</li></ol></div></p><p id="b2308693-05a5-4f23-a0a9-86a3dda30ef8" class="">That’s sometimes called “callback hell” or “pyramid of doom.”</p><p id="0d1f44ac-a1d3-408b-bdf5-636191b3eae8" class="">There are some solutions but none of them really solve the problem.</p><p id="53155f05-ebfd-4c8d-a2d4-30b9c5551c71" class="">Luckily, there are other ways to avoid such pyramids. One of the best ways is to use “promises”.</p></details></li></ul><p id="d798551f-ab2d-4d11-ac43-c48ae6e2e0e5" class="">
+</p></details></li></ul></li></ul><ul id="3fd992fa-18c5-4c1c-9a0d-b94d602826a3" class="bulleted-list"><li style="list-style-type:disc">Function call only matched by name, not parameters → no overloading</li></ul><ul id="513b6d3b-bb4b-4e8f-b740-aadc78ef103c" class="bulleted-list"><li style="list-style-type:disc">Missing parameters replaced by undefined, Additionally passed parameters are ignored</li></ul><ul id="26b07c55-a067-441b-9be0-d738f38fc433" class="bulleted-list"><li style="list-style-type:disc">Since ES6: <em>Optional parameters</em> by specifying<em> default</em><pre id="306bcb3d-0c9d-4ec4-8ff4-69df5f0e46a6" class="code"><code>function	topGrade(student,	threshold=1.5) {
+			return	gpa(student)	&lt;=	threshold;
+}</code></pre></li></ul><p id="9bffc01e-aa70-42ab-baed-9c48cdcdcca3" class="">
+</p><p id="3776e9b4-91bc-4ca1-a310-84fe3a84c004" class=""><span style="border-bottom:0.05em solid">Other function concepts:</span><div class="indented"><ul id="a2b8277a-9941-4189-8282-a900df705c09" class="toggle"><li><details open=""><summary>Anonymous functions (= lambda expressions)</summary><p id="bcf989c2-1ba2-4a9f-8ae4-297c2678a4a7" class="">Named function:<div class="indented"><pre id="15f3d640-a11a-457a-8177-b01fdb67d104" class="code code-wrap"><code>function greet(name){ return &quot;Hello&quot;; }</code></pre></div></p><p id="1364bdc4-67dd-4825-babc-73b0a5031cad" class="">Anonymous function: without a name,  <div class="indented"><pre id="72c30e86-42a6-4141-926f-d3448280c1e3" class="code code-wrap"><code>var greet = function(name){ return &quot;Hello&quot;;}</code></pre></div></p><p id="6cf58019-6728-4558-b693-37963430539c" class="">
+</p></details></li></ul><ul id="e31193a7-101e-4c1e-9e36-b74cbc650345" class="toggle"><li><details open=""><summary>Arrow Functions</summary><p id="55ef7823-7a18-482f-904f-bdbfaf606f2f" class="">Their behavior are the same as of a function. They are <em>anonymous functions</em> with a special syntax. (syntactic sugar)</p><p id="719de618-64cb-458e-9f7d-67da28bb98c8" class="">
+</p><p id="1606ab41-33df-4675-86bc-1648ee045e95" class="">To define an arrow function, we use the <code>() =&gt; {}</code> structure as follows:</p><pre id="aad27563-709f-4691-b47a-f105d522cac9" class="code code-wrap"><code>const greet = (name) =&gt; { return &quot;Hello &quot; + name + &quot;!&quot;; }
+console.log(greet(&quot;Eric&quot;));      // prints out Hello Eric!</code></pre><p id="e4d60a8b-9ff7-43b4-b540-ef86944b81c0" class="">In this function, the <code>name</code> argument to the <code>greet</code> function is used inside the function to construct a new string and return it using the <code>return</code> statement.</p><p id="e714441f-091e-4549-8d03-4d6fc1d9b10e" class="">In case that the function only receives one argument, we can omit the parenthesis:</p><pre id="4f99a538-275b-409b-9d52-725a48d0a784" class="code code-wrap"><code>const greet = name =&gt; { return &quot;Hello &quot; + name + &quot;!&quot;; }
+console.log(greet(&quot;Eric&quot;));      // prints out Hello Eric!</code></pre><p id="e309ef7a-ed0c-4c5f-b330-fbdbfb0fcad1" class="">And, in case that we want to do a explicit return of the function and we have only one line of code, we can avoid the <code>return</code> statement and omit brackets too:</p><pre id="4ffd8b20-2f23-4802-83c3-833a37af9b8a" class="code code-wrap"><code>const greet = name =&gt; &quot;Hello &quot; + name + &quot;!&quot;;
+console.log(greet(&quot;Eric&quot;));      // prints out Hello Eric!</code></pre><p id="26f73b06-4237-4bca-a908-a6013ad8e959" class="">Using an arrow as a callback compared to a normal function:</p><pre id="e1831796-f184-465f-b2bd-987e996faddf" class="code code-wrap"><code>let numbers = [3, 5, 8, 9, 2];
+
+// Old way
+function multiplyByTwo(number){ 
+	return number * 2;
+}
+console.log(numbers.map(multiplyByTwo));    // prints out: 6, 10, 16, 18, 4
+
+// Using ES6 arrow functions
+const multiplyByTwo = number =&gt; number * 2;
+console.log(numbers.map(multiplyByTwo));     // prints out: 6, 10, 16, 18, 4
+</code></pre><p id="85b6da54-eef0-4179-990b-dc398a956580" class="">
+</p></details></li></ul><p id="93e7dc21-71b1-4be6-a944-78f53c79d734" class="">Also:</p><ul id="a809adb0-7114-405a-9370-85635adf347d" class="bulleted-list"><li style="list-style-type:disc">Arrow functions don’t have their own <code>this</code> or <code>super</code>, so they transparently fit into the surrounding context. - That makes them very useful in some cases.</li></ul></div></p><p id="2c3e3a94-8656-47f8-88ce-740710940fc0" class="">
+</p></details></li></ul><ul id="d461dd5e-ce12-488a-82ce-f3104625059c" class="toggle"><li><details open=""><summary>Objects</summary><pre id="ee5ab8ca-72bd-4580-9f54-f17f1b7b4acc" class="code"><code>var	student	= new	Object();
+student.nr	= &#x27;e11912007&#x27;;
+student.name	= &#x27;A	Student&#x27;;
+student.age	= 19;
+student.hasSTEOP	= true;
+student	= {	nr	: &#x27;e120...&#x27;,
+						name	: &#x27;A	Student&#x27;,
+						age	: 19,
+						hasSTEOP	: true	};</code></pre><p id="ad6f75fb-9469-4305-8560-2ee0837558af" class="">Objects have no underlying class → (Almost) everything is an object!! Objects are associative arrays.</p><ul id="01077798-c4ac-4e30-a735-5700f49d2cb8" class="bulleted-list"><li style="list-style-type:disc">key = property, value = value</li></ul><ul id="a6b94a52-0d3c-4da6-8d37-6280bfa26606" class="bulleted-list"><li style="list-style-type:disc">Added when value assigned</li></ul><ul id="7b04162f-3651-4ea6-9e19-ee7021807e84" class="bulleted-list"><li style="list-style-type:disc">Support dynamically adding/deleting values</li></ul><p id="c19ac45a-f308-4962-9624-95c79b3904b4" class="">
+</p><ul id="5a7fa9b7-ba79-423d-96eb-72bd3383e915" class="toggle"><li><details open=""><summary>JSON - JavaScript Object Notation</summary><p id="5667aae3-996d-4cca-accd-f6e667d2c5a6" class="">The <a href="http://en.wikipedia.org/wiki/JSON">JSON</a> (JavaScript Object Notation) is a general format to represent values and objects. It is described as in <a href="http://tools.ietf.org/html/rfc4627">RFC 4627</a> standard. Initially it was made for JavaScript, but many other languages have libraries to handle it as well. So it’s easy to use JSON for data exchange when the client uses JavaScript and the server is written on Ruby/PHP/Java/....</p><p id="8a677dc0-43d1-407d-8ba8-1ddbff1f9717" class="">JavaScript provides methods:</p><ul id="efcac056-f4d2-4080-93c7-96b1745dc0c8" class="bulleted-list"><li style="list-style-type:disc"><code>JSON.stringify</code> to convert objects into JSON.</li></ul><ul id="2727f10e-3183-41c1-80c3-3b2133f4179c" class="bulleted-list"><li style="list-style-type:disc"><code>JSON.parse</code> to convert JSON back into an object.</li></ul><p id="a9902c1c-5117-4833-abaa-a542545b288a" class="">Limitations: Cannot de/serialize JS <em>functions</em> → JSON can not transfer data that contains functions</p><p id="e26dd715-520d-4a28-918a-482eefae89ca" class="">
+</p></details></li></ul></details></li></ul><ul id="aeabc498-2849-4bed-8f12-30efefbc094b" class="toggle"><li><details open=""><summary>Classes</summary><p id="5941798b-563b-4fe6-8a52-c4a44e9db480" class=""><strong>operator &quot;new&quot;</strong><div class="indented"><p id="d473cb5c-277d-454b-80aa-cc291f973a9c" class="">The regular <code>{...}</code> syntax allows to create one object. But often we need to create many similar objects, like multiple users or menu items and so on.</p><p id="f7090c64-5843-42f4-840e-f14d98430c9c" class="">That can be done using constructor functions and the <code>&quot;new&quot;</code> operator.</p></div></p><p id="12695ff3-f452-4c6a-9b10-c7bed37c3b8a" class="">
+</p><p id="d28cd0eb-89a1-44fe-b95c-0cf0d871cc2a" class=""><strong>Constructor function</strong><div class="indented"><ol type="1" id="8ae3eb89-491c-42bc-887d-1eb7e2543409" class="numbered-list" start="1"><li>They are named with capital letter first.</li></ol><ol type="1" id="c83d7b64-ddb0-48b6-b35a-3c01c02464e7" class="numbered-list" start="2"><li>They should be executed only with <code>&quot;new&quot;</code> operator.<pre id="7ee319cc-f8c1-4439-aaed-be2272b80332" class="code"><code>function User(name) {
+  this.name = name;
+  this.isAdmin = false;
+}
+
+let user = new User(&quot;Jack&quot;);</code></pre><p id="b458c839-bc93-44fb-8df6-cacefcc8f02d" class="">
+</p><p id="5bb4d5f2-9c6e-47eb-9854-1b2c2b5b717c" class="">When a function is executed with <code>new</code>, it does the following steps:<div class="indented"><ol type="1" id="8029b963-e5af-4757-bd10-f38603dda097" class="numbered-list" start="1"><li>A new empty object is created and assigned to <code>this</code>.</li></ol><ol type="1" id="e66c6307-afad-4966-a992-e981271b398f" class="numbered-list" start="2"><li>The function body executes. Usually it modifies <code>this</code>, adds new properties to it.</li></ol><ol type="1" id="dca7d77a-1f92-468a-a53d-590703bba19b" class="numbered-list" start="3"><li>The value of <code>this</code> is returned.</li></ol></div></p><p id="8736d80a-8d50-422c-806b-03d112e0cf4a" class="">
+</p><p id="2a487862-7230-4897-94af-37ed40c79087" class="">In other words, new User(...) does something like:</p><pre id="7b7954e3-bb6d-4ad7-9941-974cbf66345d" class="code"><code>function User(name) {
+  // this = {};  (implicitly)
+
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (implicitly)
+}</code></pre></li></ol></div></p><p id="20dd8d7a-d1ed-4077-8dbd-d5342844e25c" class="">
+</p><p id="0b564491-a9e9-47ab-b584-1482a114760a" class=""><strong>The more advanced OOP syntax</strong><div class="indented"><p id="a9ef5b70-64ea-44b0-944b-09d7443b6ba5" class="">The basic class syntax looks like this:</p><pre id="f2a3a5ce-ffc2-42c7-9889-c29103ffdb1b" class="code"><code>class MyClass {
+  prop = value; // property
+
+  constructor(...) { // constructor
+    // ...
+  }
+
+  method(...) {} // method
+
+  get something(...) {} // getter method
+  set something(...) {} // setter method
+
+  [Symbol.iterator]() {} // method with computed name (symbol here)
+  // ...
+} </code></pre><p id="b686fed1-8339-4847-bf10-83329833063d" class=""><code>MyClass</code> is <mark class="highlight-teal">technically a function</mark> (<mark class="highlight-teal">the one that we provide as </mark><mark class="highlight-teal"><code>constructor</code></mark>), while methods, getters and setters are not. They are written to the <code>.prototype</code>.</p><p id="469adc67-eee4-41e9-8ea0-8bb726032016" class="">The <code>constructor()</code> method is called automatically by <code>new</code>, so we can initialize the object there.</p></div></p><p id="e9ab3def-617c-4ce8-80e2-2fae9c7a586d" class="">
+</p></details></li></ul><ul id="19f28bd4-aebb-440b-b3c8-233bf6a059a3" class="toggle"><li><details open=""><summary>Arrays</summary><p id="132bd50e-97b6-4e29-bb4f-1fec90a9c112" class="">Heterogenous Lists</p><ul id="9104d0c5-ceef-41e9-a802-5a71fd5c8313" class="bulleted-list"><li style="list-style-type:disc">Add/remove elements on start/end with: push/pop/shift/unshift	</li></ul><ul id="41cfce18-9f28-4dce-970e-511535f04ea9" class="bulleted-list"><li style="list-style-type:disc">Sort array: sort/reverse</li></ul><ul id="b24e3753-6b3e-49b4-9c5e-16c048732833" class="bulleted-list"><li style="list-style-type:disc">can be concatenated with concat</li></ul><ul id="5786b81d-b3fc-4b83-b67a-d0759645884a" class="bulleted-list"><li style="list-style-type:disc">String conversion with join<figure id="a56e06dd-bffe-43a6-99df-aea23df8aea4" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%202.png"><img style="width:240px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%202.png"/></a></figure></li></ul><p id="2990c6e5-0343-401f-b369-fedf122ac8a6" class="">
+</p></details></li></ul><ul id="abdc55bb-5c58-4a64-a878-b2f5e6297f8f" class="toggle"><li><details open=""><summary>Functions as Objects</summary><p id="a5fa750f-99b2-4c7e-9895-2998d6c57a0d" class="">Functions are objects too: they can have properties and methods</p><ul id="a2bd80b3-7947-4b17-9601-a88f28252c5b" class="bulleted-list"><li style="list-style-type:disc">Difference to pure objects: They can be called and can return a value</li></ul><ul id="0de249b7-eb0d-49bb-a51d-fe80359c9331" class="bulleted-list"><li style="list-style-type:disc">Definition assigned as properties (use <code>new</code> and <code>this</code>)<pre id="179e0c9d-7fef-4f12-b838-f379fb489980" class="code"><code>function	Student(nr,	name,	age,	hasSteop) {
+			this.nr	=	nr;
+			this.name	=	name;
+			this.age	=	age;
+			this.hasSteop	=	hasSteop;
+			
+			this.finishSteop	=	function() {
+					this.hasSteop	= true;
+			}
+}
+var	jc	= new	Student(&#x27;e0828…&#x27;,‘Jurgen	Cito&#x27;,	29,	false);
+jc.finishSteop();</code></pre><p id="daf9dd07-82f7-4d07-b21c-524e59367227" class="">ES6 Class is syntactic sugar for functions as objects:</p><pre id="012ccd5f-43a9-411a-b66c-4681d48a4245" class="code"><code>class	Student	{
+			constructor(nr,	name,	age,	hasSteop)	{
+				this.nr	=	nr;
+				this.name	=	name;
+				this.age	=	age;
+				this.hasSteop	=	hasSteop;
+			}	
+				
+			finishSteop()	{
+					this.hasSteop	= true;
+			}
+}
+var	jc	= new	Student(&#x27;e0828…&#x27;, ‘Jurgen	Cito&#x27;,	29,	false);
+jc.finishSteop();
+//Student	{	nr:	&#x27;e0828112&#x27;,	name:	&#x27;Jurgen	Cito&#x27;,	age:	29,	hasSteop:	true	}
+//typeof(jc) === &#x27;object&#x27;</code></pre><p id="5da6dd17-6081-4346-a21c-92f659edae0a" class="">
+</p></li></ul></details></li></ul><ul id="8b363fe1-de46-472f-9869-35b7310eb427" class="toggle"><li><details open=""><summary>Events</summary><div><pre id="46a848fa-770a-4679-89f7-9c254fe7946a" class="code"><code>&lt;div onclick=&quot;alert(&#x27;Hello&#x27;);&quot; /&gt;</code></pre></div><div><p id="b92ad9dd-2fc3-42a9-bfd3-24745ce18794" class="">
+</p></div><div><p id="e1e57760-f5cf-4950-aaac-8f9656058519" class="">
+</p></div><div><p id="07fb8e25-7350-4c8d-bc62-33428004c5f1" class="">
+</p></div><ul id="5a20f94b-3887-4672-824a-7f6edb8327c8" class="toggle"><li><details open=""><summary>Pop-up Boxes</summary><p id="c8b9a77e-3e6a-45b7-b3e1-76a23e636c3d" class="">Confirm boxes will return &quot;true&quot; if ok is selected, and return &quot;false&quot; if cancel is selected. Alert boxes will not return anything. Prompt boxes will return whatever is in the text box. (Note: prompt boxes also have an optional second parameter, which is the text that will already be in the text box.)</p><pre id="70b16fcd-80e8-4053-bc6c-3826825d4ade" class="code code-wrap"><code>confirm(&quot;Hi!&quot;);
+prompt(&quot;Bye!&quot;);
+alert(&quot;Hello&quot;);</code></pre></details></li></ul><div><p id="32d730f9-8854-4421-b693-cf5d95928c78" class="">
+</p></div><div><p id="a8820bbb-1628-4652-8011-d60d01724a30" class="">
+</p></div><p id="302ad0d3-8568-4047-af90-62a2a962b060" class="">
+</p><p id="14e66a90-2e29-41d6-bf2c-fea9bf35326d" class="">Event callback attached to HTML elements.<div class="indented"><pre id="2c59ea85-e6b2-4a0a-8e04-d1968cbc971d" class="code"><code>&lt;button	onclick=&quot;alert(&#x27;Test!&#x27;)&quot;&gt;
+			Test	me!
+&lt;/button&gt;</code></pre><pre id="0c6bb260-940d-4f3e-9afe-927ace21e665" class="code"><code>let	button	=	document.getElementsByTagName(“button&quot;)[0] header.click();	//Execute	predefined	event
+header.onclick =	function(){alert(&#x27;Clicked!&#x27;);}	//Set	event	listener	-	only	one	listener	supported
+let	func =	function()	{alert(&#x27;Clicked!&#x27;);}
+header.addEventListener(“click&quot;,	func)	
+header.removeEventListener(“click&quot;,	func)</code></pre></div></p><p id="b2b02a6e-d605-4167-9ed4-fdd41579a4f3" class="">Event types<div class="indented"><figure id="b6638a8d-1f68-4801-bb7b-d1b425c0d7c0" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%203.png"><img style="width:432px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%203.png"/></a></figure></div></p><p id="dc425919-0d22-4304-a184-1d69d598e0f6" class="">
+</p></details></li></ul><ul id="55ab9004-4981-469b-a747-e02888f58f34" class="toggle"><li><details open=""><summary>Modules</summary><p id="04903666-b0fa-46bc-aff3-6ff1f66a20df" class=""><a href="https://www.samanthaming.com/tidbits/79-module-cheatsheet/">https://www.samanthaming.com/tidbits/79-module-cheatsheet/</a><div class="indented"><figure id="939c88c8-a2b7-442a-86cf-594d9942e316" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%204.png"><img style="width:336px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%204.png"/></a></figure></div></p><p id="8e97dc95-7670-4565-85b1-d5d33e194ad6" class="">Establish namespace in separate module files: Ability to create named export or default exports<div class="indented"><p id="a08c06f5-2f54-49eb-93bd-4a34d2b133d4" class="">Rule: One module per file, one file per module</p></div></p><p id="3e5cab35-cfa1-410b-8fad-a96f54c93706" class="">Export specific elements:<div class="indented"><pre id="701deafd-2f4f-4f28-9812-caec4b7dac39" class="code"><code>export function gpa(student) {…}          //EITHER THIS WAY
+function gpa (student) {…}; export gpa;   //OR THIS WAY</code></pre></div></p><p id="ae7fbeb0-ca86-496a-97f8-8b7cdd893fdc" class="">Import in other files:<div class="indented"><pre id="b31bb571-439a-460c-b195-6b92e728f815" class="code"><code>import	*	as	Student	from	‘./student.js&#x27;;
+s	=	{…};	s.gpa	=	Student.gpa(s);	//&lt;- now gpa is in the Student namespace
+
+import	{	gpa	}	from	‘./student.js’;
+s	=	{…};	s.gpa	=	gpa(s); //&lt;- now gpa can be accessed directly</code></pre></div></p><p id="5fdfbd26-5bea-45fd-b2fd-3e76e7fafabe" class="">
+</p></details></li></ul><ul id="85f3c67f-334c-46bc-a1a5-bafd2082ac24" class="toggle"><li><details open=""><summary><mark class="highlight-teal">Promises</mark></summary><p id="ab7975e2-24bb-42d8-9efa-a9bb99700b18" class="block-color-gray">Analogy: <div class="indented"><p id="ad6b2052-1ce5-4a70-bcab-a00f88ce4723" class="">Fans have subscribed the mailing subscription list of a singer so that they get instantly notified once the next album becomes becomes available or if something goes wrong.</p></div></p><p id="854d58b3-6473-4264-883c-0d578979aad6" class="">Components:<div class="indented"><ol type="1" id="28ae3e6f-cf16-4aae-bdb5-e7d76bef1bcd" class="numbered-list" start="1"><li>A “producing code” that does something and takes time. For instance, some code that loads the data over a network. <mark class="highlight-gray">That’s a “singer”.</mark></li></ol><ol type="1" id="6b2f1a42-9459-446d-b798-609ca1291840" class="numbered-list" start="2"><li>A “consuming code” that wants the result of the “producing code” once it’s ready. Many functions may need that result. <mark class="highlight-gray">These are the “fans”.</mark></li></ol><ol type="1" id="5a1c80c9-e14c-4624-adca-7475a67bae5a" class="numbered-list" start="3"><li>A <em>promise</em> is a special JavaScript object that links the “producing code” and the “consuming code” together. The “producing code” takes whatever time it needs to produce the promised result, and the “promise” makes that result available to all of the subscribed code when it’s ready. <mark class="highlight-gray">This is the “subscription list”.</mark></li></ol></div></p><p id="3916c6d8-1290-4b40-8642-0a7950b99eab" class="">
+</p><p id="9f0afffa-5eb9-4164-b8d2-78121eadd7b8" class="">The constructor syntax for a <mark class="highlight-teal">promise object</mark> is:</p><pre id="9e8af10a-3848-4153-81c1-7f8eb578f071" class="code"><code>let promise = new Promise(/*executor(resolve, reject)*/); </code></pre><pre id="038f1899-9a85-469b-a0d2-1b4be0884fe2" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  // executor (the producing code)
+}); </code></pre><p id="8fb3c7cd-d19b-415c-9b0e-97f562cdf288" class="">The executor runs automatically and attempts to perform a job. When it is finished with the attempt it calls<div class="indented"><p id="bb6eaeb8-c164-42b2-89ad-2398805e65fa" class=""><code>resolve</code> if it was successful</p><p id="9cf980c4-ad91-4b35-a8aa-2f69169a2a89" class=""><code>reject</code> if there was an error. </p></div></p><p id="b5580d5b-8b1a-4fd4-b461-97f59ffc8839" class="">
+</p><p id="e48703bd-3877-4f31-b5c7-027142a297d4" class="">The <mark class="highlight-gray"><code>promise</code></mark><mark class="highlight-gray"> </mark>object returned by the <mark class="highlight-gray"><code>new Promise</code></mark><mark class="highlight-gray"> </mark>has 2 internal properties:<div class="indented"><ol type="1" id="ae857406-0706-406c-923d-6a0351b33031" class="numbered-list" start="1"><li><code>state</code><ul id="2b03e3a5-ebde-4bfe-a85c-22e77f83f34e" class="bulleted-list"><li style="list-style-type:disc">initially <code>&quot;pending&quot;</code> </li></ul><ul id="aa55c024-ed09-4556-b94e-fde0a88a5b85" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;fulfilled&quot;</code> when <code>resolve</code> is called by the executor</li></ul><ul id="e7cd1d77-cbf5-435e-8567-840ef98fd005" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;rejected&quot;</code> when <code>reject</code> is called by the executor</li></ul></li></ol><ol type="1" id="3117bb2b-9e6c-4c9c-bd0e-979f0ca826f8" class="numbered-list" start="2"><li><code>result</code><ul id="9fc9fbbb-9ca7-4799-821a-b7e3fbd21e40" class="bulleted-list"><li style="list-style-type:disc">initially <code>undefined</code></li></ul><ul id="eba203e2-cc5a-458b-a6ba-0bcdf24abbdf" class="bulleted-list"><li style="list-style-type:disc"><code>value</code> when <code>resolve(value)</code> is called by the executor</li></ul><ul id="2828799d-bfc0-4352-bf13-221443064db5" class="bulleted-list"><li style="list-style-type:disc"><code>error</code> when <code>reject(error)</code> is called by the executor</li></ul></li></ol></div></p><p id="9b1eb7fd-2f89-4309-845f-3865e09dd7ad" class="">
+</p><figure id="12ea21f5-916a-4ec7-9939-d4b39b03c855" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%205.png"><img style="width:336px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%205.png"/></a></figure><p id="18374bd4-42df-42bc-a13f-7480c43892b3" class="">
+</p><p id="ca0e552d-14cb-426e-ba58-afe4acb9d83f" class="">Example: Successful<div class="indented"><pre id="8135dfb2-1ef1-404f-bce6-01c6def12192" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  setTimeout(() =&gt; resolve(&quot;done&quot;), 1000); //&quot;done&quot; is the result
+}); </code></pre><p id="f017b3dd-9a00-4224-a863-a7650b199d69" class="">After one second of “processing” the executor calls <code>resolve(&quot;done&quot;)</code> to produce the result. This changes the state of the <code>promise</code> object:<div class="indented"><figure id="c4129c2a-8598-4f39-be5d-13289b7e820c" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%206.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%206.png"/></a></figure></div></p></div></p><p id="49ebe84d-b9bf-461e-bba0-330bff57b84f" class="">
+</p><p id="c6e16f5d-e9ac-4e4b-95e4-dab3037751eb" class="">Example: Unsuccessful<div class="indented"><pre id="84474d56-0e91-42a1-ac8d-3fec08aadaaf" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  setTimeout(() =&gt; reject(new Error(&quot;Whoops!&quot;)), 1000); //&quot;whoops&quot; is the error statement
+}); </code></pre><p id="8772ed1c-18c9-4915-bd72-9eba8103d0ed" class="">But it is recommended to use Error objects (or objects that inherit from Error).</p><p id="7df94ff3-60f6-4235-ab1d-aa9fffa44d17" class="">The call to reject(...) moves the promise object to &quot;rejected&quot; state:<div class="indented"><figure id="1947a16a-4719-4259-ad1f-323ab4a542ca" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%207.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%207.png"/></a></figure></div></p></div></p><p id="2b586c1c-67e4-47d1-87ea-38a07f635cc7" class="">
+</p></details></li></ul><ul id="477649d5-e614-40c3-adcc-135866ae5c0f" class="toggle"><li><details open=""><summary><mark class="highlight-teal">Consumers: then, catch, finally</mark></summary><p id="c8b8a099-de4b-4718-af03-dc01cd6360d0" class="">A Promise object serves as a link between the executor (the “producing code” or “singer”) and the consuming functions (the “fans”), which will receive the result or error.</p><p id="5e9156ef-ffa7-4cb8-b5e7-e9c06d86a197" class="">Consuming functions can be registered (subscribed) using methods .then, .catch and .finally.</p><p id="6996bf98-b681-45a8-8a3c-c19abb0040fe" class="">
+</p><p id="de715ce1-7c34-4ad0-992a-92e62b481f93" class=""><code>.then</code><div class="indented"><pre id="09d03dca-ea34-49be-806f-387d7bc6b848" class="code"><code>promise.then(
+  function(result) { ... }, //RESOLVE FUNCTION
+  function(error) { ... } //REJECT FUNCTION
+); </code></pre><p id="d89fdb71-57ce-4c63-9d25-b8095ede419b" class="">Can also be called with only a single parameter (resolve function).</p><p id="87a3c698-0618-4786-bbb6-e1e8df48cd7b" class="">
+</p></div></p><p id="216cebde-6e0f-4d6e-acf4-3722c75877f4" class=""><code>.catch</code><div class="indented"><p id="c0883466-ad97-477f-809e-cfdfac981ab1" class="">The call <code>.catch(f)</code> is a complete analog of <code>.then(null, f)</code>, it’s just a shorthand.</p></div></p><p id="a8e3aeb0-e61f-4528-bee1-af088561677b" class="">
+</p><p id="50c759cb-4f9d-4af7-a6a8-36c653ba11d5" class=""><code>.finally</code><div class="indented"><p id="91ec7dfd-1d93-46f1-9eee-4d38bb7d88c5" class="">The call <code>.finally(f)</code> is similar to <code>.then(f, f)</code> in the sense that f always runs when the promise is settled: be it resolve or reject.</p><p id="d0b26101-4eae-4fb3-beb1-1da8f0d3190a" class="">
+</p></div></p></details></li></ul><ul id="3411b66e-ae95-4464-8822-c2ba1773f2a3" class="toggle"><li><details open=""><summary><mark class="highlight-teal">async/await</mark></summary><p id="ac901bce-e46e-4598-a07e-2e9338eff6d4" class="">The async/await pattern: allows an asynchronous, non-blocking function to be structured in a way similar to an ordinary synchronous function.</p><p id="188d9a62-ae50-40e7-b123-4917b9c4cbe3" class="">
+</p><p id="28be16d6-0f65-486b-9aba-83f513f02e93" class=""><code>await</code> can only be used from inside an <code>async</code> function.</p><p id="c9384674-7348-4816-8be3-ec89d9ea2110" class=""><code>await</code> expressions make promise-returning functions behave as though they&#x27;re synchronous <em>by suspending execution </em>until the returned promise is fulfilled or rejected.</p><p id="f982cbaa-6856-43ad-b836-9507ccdccac3" class="">It literally <mark class="highlight-teal">suspends the function execution until the promise settles</mark>, and then resumes it with the promise result as the return value.</p><p id="a5827d46-8ac3-4ee9-a966-5fa46b61af19" class="">
+</p><p id="07575429-0ebf-4c70-a201-347f64501324" class="">Here&#x27;s an example:<div class="indented"><p id="0e497786-77cf-4a3f-86a5-7eb1d3fdadb2" class=""><mark class="highlight-gray"><code>resolveAfter2Seconds()</code></mark><mark class="highlight-gray"> </mark>returns a promise but the <mark class="highlight-gray"><code>result</code></mark> variable only stores the result of the promise:<div class="indented"><ul id="598ac458-2da8-4de8-9b19-1fc36e3d3755" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>value</code></mark><mark class="highlight-gray"> </mark>when <mark class="highlight-gray"><code>resolve(value)</code></mark></li></ul><ul id="f3c3b705-d721-4495-a508-4779af32136b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>error</code></mark><mark class="highlight-gray"> </mark>when <mark class="highlight-gray"><code>reject(error)</code></mark> </li></ul></div></p></div></p><pre id="a17c512b-be8e-4865-ad0c-13ed7eae57cd" class="code"><code>function resolveAfter2Seconds() {
+  return new Promise( resolve =&gt; { //executor function 
+    setTimeout(() =&gt; { resolve(&#x27;resolved&#x27;); }, 2000); //resolve function
+  });
+}
+
+async function asyncCall() {
+  console.log(&#x27;calling&#x27;);
+  const result = await resolveAfter2Seconds();
+  console.log(result);
+  // expected output: &quot;resolved&quot;
+}
+
+asyncCall();</code></pre><p id="7895fb61-0e9a-49a9-8d5b-b6434152a435" class="">
+</p><p id="f82a41b0-81c3-4254-95f0-69d7679e4005" class=""><code>Async</code> functions always return a promise.</p><p id="0d9af7ec-c21f-452e-91fc-b7878ce1419b" class="">If the return value of an async function is not explicitly a promise, it will be implicitly wrapped in a promise.</p><p id="d669f2a0-c94a-4ec9-8f3e-d3014b02327f" class="">For example, the following:<div class="indented"><pre id="03ae3cf1-b893-41ad-bf0a-abbd4896fab4" class="code code-wrap"><code>async function foo() {
+   return 1
+}</code></pre></div></p><p id="9634a2ba-1d9d-4c56-8d61-8559ac563624" class="">...is similar to:<div class="indented"><pre id="79699c64-8799-4d9a-ba70-9b6eb4024851" class="code code-wrap"><code>function foo() {
+   return Promise.resolve(1)
+}</code></pre></div></p></details></li></ul><p id="b479585e-5e86-4e99-b7b0-b457736eb937" class="">
+</p><p id="3069d716-a46c-4962-ab1a-66dd2df40dc6" class="">Inheritance</p><ul id="ff82e058-6f86-4341-bd30-783069b7cb14" class="toggle"><li><details open=""><summary>Object Prototypes, Prototypal inheritance</summary><p id="72eb0b97-56b1-416b-bc8f-8540008c625c" class="">In JavaScript, objects have a special hidden property <code>[[Prototype]]</code>, that is either null or references another object. That object is called “a prototype”.</p><p id="a15ad55d-8bfb-4c53-a24b-d36c988d11ce" class="">The property <code>[[Prototype]]</code> is internal and hidden, but there are many ways to set it.<div class="indented"><p id="6bf4f33d-9dbd-40e5-99ce-d1d18bfb5c6c" class="">One of them is to use the special name <code>__proto__</code>, like this:<div class="indented"><p id="f444c3e2-bc42-4b3f-910a-941e8a53f801" class="">Now if we read a property from <code>rabbit</code>, and it’s missing, JavaScript will automatically take it from <code>animal</code>.</p><p id="8169e83d-aee4-40f1-a4b3-9af5fedb09d7" class="">For instance:</p><pre id="55310758-0369-4ee8-bf3f-cc6f60d7b861" class="code"><code>let animal = {
+  eats: true
+};
+let rabbit = {
+  jumps: true
+};
+
+rabbit.__proto__ = animal; // we can find both properties in rabbit now:
+alert( rabbit.eats ); // true 
+alert( rabbit.jumps );  </code></pre></div></p></div></p><p id="72b89958-c6c1-4d19-9b48-50c73dd9cdd1" class="">
+</p><p id="1df69cf0-b273-4712-ba79-105c9b25ce8c" class="">All objects have a prototype</p><ul id="bd424701-aba7-4ac4-b38b-24497035ea17" class="bulleted-list"><li style="list-style-type:disc">All prototype are objects, any object can be a prototype</li></ul><ul id="eec8336a-6a91-4f7f-8a3b-9a5d57b4a7b2" class="bulleted-list"><li style="list-style-type:disc">Objects inherit properties and methods from prototype</li></ul><ul id="b90f0c25-2267-4e23-8b45-e8a71b885302" class="bulleted-list"><li style="list-style-type:disc">Object.prototype is top of the prototype chain (its prototype is null) (similar to Object.class in Java)<pre id="e6384f4b-8d49-4c18-920d-009541f13971" class="code"><code>var aStudent	=	{	nr	: &#x27;e120...&#x27;,	...	};				//	aStudent		-&gt;	Object.prototype
+var students	=	[	aStudent,	...	];								//	students		-&gt;	Array.prototype			-&gt;	Object.prototpye
+var	jc	= new	Student(&#x27;e08…&#x27;, ...);							  //	aStudent	  -&gt;	Student.prototype		-&gt;	Object.prototype
+function	print() {	...	};												//	print				-&gt;	Function.prototype	-&gt;	Object.prototype</code></pre></li></ul><p id="9e0ecd26-801f-446f-8de6-a239c5286bcd" class="">Existing prototypes can be extended at any time: its called &quot;monkey-patching&quot; and should be avoided!<div class="indented"><pre id="067e8ed6-7865-4ccc-998b-8cc6c0800a17" class="code"><code>String.prototype.distance	=	function() {	...	};			//	monkey	patching</code></pre></div></p><p id="74e37c01-b358-4dd1-99c4-3538589faccd" class="">
+</p></details></li></ul><ul id="62d4b81b-1ad7-403d-bc71-2ddb2c0896f8" class="toggle"><li><details open=""><summary>Class inheritance</summary><p id="2d9c1b54-cb28-4a3a-9201-a2c76d11cf47" class="">To extend a class: <code>class Child </code><strong><code>extends</code></strong><code> Parent</code>:</p><p id="94848d7a-e70e-408f-aa63-b6884c6adde1" class="">That means <code>Child.prototype.__proto__</code> will be <code>Parent.prototype</code>, so methods are inherited.</p></details></li></ul><p id="d3f1dc45-cebe-409f-9e7b-05947126c968" class="">
+</p><h1 id="07ae77f4-a155-4f9b-8127-f8ddfe3ac6c6" class="">Browser and Document APIs </h1><p id="a17228bf-798b-4785-af99-7066c1547cc6" class="">Standard Library/Common APIs</p><p id="66b2c54b-624d-40b3-aa8b-cef08141bb9c" class="">
+</p><h2 id="1b46b58f-16c6-41a4-a8fc-97b7a2dd5adc" class="">Overview</h2><p id="21fc632e-5df7-4b2f-af4c-add35b23a643" class="">Overview: There’s a root object called window.<div class="indented"><figure id="61d709b9-7b4e-4821-b942-8beab18ba4d6" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%208.png"><img style="width:108px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%208.png"/></a></figure><p id="0a692396-8389-419c-be11-edef4cad0e22" class="">
+</p></div></p><p id="c288e2cf-502a-4357-9749-72d7dba7979f" class="">APIs accessible through Javascript.</p><p id="7029bcbe-bb2f-47ba-a684-0656cb5c0922" class="">Browser Object Model BOM → interact with browser<div class="indented"><p id="2679d05d-2528-4dc2-b3eb-7c26510b610d" class="block-color-gray"><mark class="highlight-gray"><code>Window</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>Frames</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>History</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>Location</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>Navigator</code></mark><mark class="highlight-gray"> </mark>(browser type &amp; version), ...</p><p id="7812650a-1fed-40a1-a554-c127e77039f5" class="block-color-gray">Storage (Local Storage, Cookies)</p></div></p><p id="83cb7646-87bc-4399-a0e5-179901aafe84" class="">Document Object Model DOM → interact with HTML page<div class="indented"><p id="db0c6454-a6f5-449c-abd9-3d7671daa8a0" class="block-color-gray">Properties: <mark class="highlight-gray"><code>document.forms</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>document.links</code></mark>, …</p><p id="f6f3d4a9-214f-4455-9eba-7eead1d13cc8" class="block-color-gray">Methods: <mark class="highlight-gray"><code>document.createElement</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>document.getElementsByTagName</code></mark>, …</p></div></p><p id="7feacd1e-0d4e-4163-9fa6-ade0dc5495bb" class="">
+</p><h2 id="d59cfb9f-fc7f-4044-ade6-da1886d81027" class="">Browser Object Model BOM (window)</h2><p id="8e410167-c475-40d1-8c50-a050820aaa36" class="">Allows access to browser objects. → Not standardized but very similar in most browsers.<div class="indented"><p id="9ede45da-a0a4-4280-837c-3c1ba71bfe41" class="">
+</p><p id="229be973-0b3c-4fba-b706-6e56c67f2266" class=""><strong>Object			Property and Methods</strong></p><hr id="726420ce-280a-4c41-aa5e-350800797ec5"/><p id="7063920a-2ff3-4eb2-829c-eb59790c9173" class="">window			Other global objects, open(), close(), moveTo(), resizeTo()</p><p id="d4cd74db-1a6a-4ae9-887c-c20c1f7c9328" class="">screen			width, height, colorDepth, pixelDepth, …</p><p id="c61e045a-0f67-47c1-9aeb-18f2217e7086" class="">location			hostname, pathname, port, protocol, assign(), …</p><p id="a1dc5078-c1bc-4326-8593-b6d3ac1cb4b3" class="">history			back(), forward()</p><p id="0fcc76ce-a99c-4193-8340-59387f81761e" class="">navigator			userAgent, platform, systemLanguage, …</p><p id="14dc71a6-c389-4fb9-8ff2-0c2d84e80072" class="">document		body, forms, write(), close(), getElementById(), …</p><p id="420d014c-6250-4414-b65c-ed86bba972f3" class="">Popup Boxes		alert(), confirm(), prompt()</p><p id="3a0858c6-9411-4280-850d-cc30149af636" class="">Timing			setInterval(func,time,p1,…), setTimeout(func,time)</p><p id="0d10997d-0f79-481f-b624-6c83cd1723b3" class="">
+</p></div></p><h2 id="ddaf1de5-8509-4b17-bb52-a12e66dc9a28" class="">Storage (Local Storage, Cookies)</h2><p id="155f7f73-faf7-4374-b13a-4e3bc6a55d64" class=""><span style="border-bottom:0.05em solid">Cookies</span><div class="indented"><p id="7fe4cfc4-0031-4087-8e07-e525ec7728d4" class="">Cookies are sent with every single request.</p><p id="97f7f6ac-02a8-4fb5-a017-337280b74ca9" class="">String/value pairs, Semicolon separated.</p><pre id="83deedee-0dfa-46f4-93fe-3e07f1c29e9c" class="code"><code>document.cookie	=	&quot;name=Jane Doe; nr=1234567;	expires=&quot; + date.toGMTString()</code></pre></div></p><p id="3fa75bbf-60ee-425a-a16d-9daf54c59d56" class="">
+</p><p id="1e8b6890-a0bc-402d-b6ab-ce7f6240ce91" class=""><span style="border-bottom:0.05em solid">Web Storage</span><div class="indented"><p id="f90da435-617e-4055-9236-01b3ebb7f08e" class="">Data that the user is required to store (as key / value pairs)</p><p id="3e54dce7-7c43-49ee-986e-cf66114f5889" class="">Browser defines storage quota.</p><p id="574f9b0c-aaaa-420f-90bf-41ee28e4d697" class="">Both storage objects provide same methods and properties:<div class="indented"><ul id="3520698e-a571-41f8-96e7-d5aa6d755e46" class="bulleted-list"><li style="list-style-type:disc"><code>setItem(key, value)</code> – store key/value pair.</li></ul><ul id="43f96919-62a7-4d1b-9fde-b5f7ba2a4af3" class="bulleted-list"><li style="list-style-type:disc"><code>getItem(key)</code> – get the value by key.</li></ul><ul id="a53792aa-ca4e-4f55-b985-4b38e6d5fb87" class="bulleted-list"><li style="list-style-type:disc"><code>removeItem(key)</code> – remove the key with its value.</li></ul><ul id="ddd5d259-1ef0-4101-89e0-014766bcd923" class="bulleted-list"><li style="list-style-type:disc"><code>clear()</code> – delete everything.</li></ul><ul id="946d35f0-f0ad-49e3-91b7-e9ca57c24a62" class="bulleted-list"><li style="list-style-type:disc"><code>key(index)</code> – get the key on a given position.</li></ul><ul id="aed99b2e-5737-4cc9-a4b9-e5d8903b01d4" class="bulleted-list"><li style="list-style-type:disc"><code>length</code> – the number of stored items.</li></ul></div></p><p id="ba9a9186-9aa6-4099-ba0b-5f7fcc8d0ebe" class="">
+</p><ol type="1" id="ecde3a97-7148-44e0-9289-3756a2dc505d" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Local Storage</span><mark class="highlight-gray"> (</mark><mark class="highlight-gray"><code>window.localStorage</code></mark><mark class="highlight-gray">)</mark><p id="35bc0f19-2aca-4583-bc5a-cbf9497de6b4" class="">	stored in users browser without any expiration date.</p><p id="85605c75-c889-48e2-bd5d-3538a758bd8d" class="">	In comparison to Cookies: more secure, larger, not transferred (stays local)</p></li></ol><ol type="1" id="d3c7343f-ff53-43d7-8a8e-8548687f7a02" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Session Storage</span><mark class="highlight-gray"> (</mark><mark class="highlight-gray"><code>window.sessionStorage</code></mark><mark class="highlight-gray">)</mark><p id="bcd5e743-7ed5-450d-a429-2c8965d5735e" class="">	Data is destroyed when tab/browser is closed.</p><p id="45b7a9ed-5b6d-48c8-b4d5-ce753329daed" class="">
+</p></li></ol></div></p><h2 id="cf5cda7e-1da3-4a58-97d7-c07e86c4bd15" class="">Document Object Model DOM</h2><p id="29956522-289c-4f45-8664-50ec57196983" class="">For HTML, XHTML, XML</p><p id="ae8faf95-579e-4682-afc1-6eb1307e64fd" class="">HTML elements as objects with properties, methods and events - DOM tree nodes.</p><p id="f6c17c73-ebe2-4ded-aef5-eebfab834ff7" class="">The <code>document</code> object is the trees root.</p><figure id="507cd113-a418-4196-9e21-63a7e0a857b1" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%209.png"><img style="width:120px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%209.png"/></a></figure><p id="81c96995-da51-4c5c-aaf0-4fbc4563f5a5" class="">Everything in the html file becomes a node:<div class="indented"><p id="af2f41dc-014f-48e2-824b-fa5eaefacd10" class="">text nodes (spaces and <em>\n </em> are stored as seperate nodes), comment nodes ...</p></div></p><p id="aa8795d4-24a0-4f94-a59b-9696fa7454b7" class="">
+</p><p id="fc3389ce-fa8a-4faf-a0ed-08d5f89b7960" class=""><span style="border-bottom:0.05em solid">Getting nodes</span><div class="indented"><p id="2ab149fb-e323-4318-a8bb-55280c3127bf" class="">ID, tag name, class name, Document properties</p><pre id="7ecb199c-11ee-459e-bbe4-be04912b399e" class="code"><code>let	title	=	document.getElementById(&quot;title&quot;);
+let	links	=	document.getElementsByTagName(&quot;a&quot;);
+let	greens	=	document.getElementsByClassName(&quot;green&quot;);
+let	imgs	=	document.images;
+let	firstParaBox	=	document.querySelector(“p.box”);
+let	allBoxes	=	document.querySelectorAll(“p.box,div.box”);</code></pre></div></p><p id="6e1fad81-531e-4788-88e7-1d3b186d5569" class="">
+</p><p id="ccf7ff14-8b58-40da-bda5-654dc8cbfc81" class=""><span style="border-bottom:0.05em solid">Reading properties</span><div class="indented"><pre id="972237b4-ba3c-4755-a8c6-b12c7cae705e" class="code"><code>&lt;UL id=&quot;t1&quot;&gt;
+	&lt;LI&gt;Item 1&lt;/LI&gt;
+&lt;/UL&gt;</code></pre><pre id="add0e37a-71b5-435f-a0ec-aa1cfefe486d" class="code"><code>document.getElementById(&#x27;t1&#x27;).nodeName
+ // -&gt; returns &#x27;UL&#x27;
+document.getElementById(&#x27;t1&#x27;).getAttribute(&#x27;id&#x27;)
+ // -&gt; returns &#x27;t1&#x27;
+document.getElementById(&#x27;t1&#x27;).innerHTML
+ // -&gt; returns &#x27;&lt;li&gt;Item 1&lt;/li&gt;&#x27;
+document.getElementById(&#x27;t1&#x27;).children[0].nodeName
+ // -&gt; returns &#x27;LI&#x27;
+document.getElementById(&#x27;t1&#x27;).children[0].innerText
+ // -&gt; returns &#x27;Item 1&#x27;</code></pre></div></p><p id="ca69860e-2766-4064-ad69-e6c3947fc55a" class="">
+</p><p id="30ee0c04-9a7f-4167-bec9-610bad949838" class=""><span style="border-bottom:0.05em solid">Manipulating nodes</span><div class="indented"><ul id="4fee8223-df41-4291-91ac-f809dea657dc" class="bulleted-list"><li style="list-style-type:disc">Content (innerHTML)</li></ul><ul id="0f9107a7-de2d-493b-8c7b-290302166403" class="bulleted-list"><li style="list-style-type:disc">Element attributes</li></ul><ul id="2a07ddab-b03d-484b-bb3e-152468450d9e" class="bulleted-list"><li style="list-style-type:disc">Element style</li></ul><ul id="44402af0-5519-4a23-917e-99ace7acc635" class="bulleted-list"><li style="list-style-type:disc">Element class (<code>className</code>, <code>classList</code>)</li></ul><pre id="c89f7247-273d-4e41-b365-82a9c47bfce5" class="code"><code>title.innerHTML	= &quot;newTitle&quot;;
+links[0].href	= &quot;http://...&quot;;
+links[0].setAttribute(&quot;href&quot;,…)
+greens[0].style.color	= “red&quot;;
+greens[0].className	=	“red&quot;
+greens[0].classList.add(“dangerzone”)</code></pre></div></p><p id="70363f73-f0eb-487a-83d0-5529aef97302" class="">
+</p><p id="38474733-f4ae-483e-a8c5-0db9c6aeea7e" class=""><span style="border-bottom:0.05em solid">Adding nodes</span><div class="indented"><p id="750e5fe4-4293-465d-a3dd-3005d20a2cc2" class="">Create, append, remove, …</p><pre id="e5c1a84e-f8a3-4ebe-a2c3-48599347a898" class="code"><code>let	header	=	document.createElement(&quot;h2&quot;);
+let	text	=	document.createTextNode(&quot;SubTitle&quot;);
+header.appendChild(text);
+document.removeChild(title);
+document.replaceChild(title, header);</code></pre></div></p><p id="393e6176-3bc2-47dd-8ef4-082e49ad5fe2" class="">
+</p><p id="939f24e8-c78c-475f-acb7-81b4ec89283a" class=""><span style="border-bottom:0.05em solid">Adding Event Handlers</span><div class="indented"><pre id="cfe592a0-9c8a-4642-a247-9acdd521e51a" class="code"><code>let list = document.getElementById(&#x27;t1&#x27;);
+list.addEventListener(&#x27;click&#x27;, (event) =&gt; {
+ alert(`Clicked: ${event.target.innerText}`);
+});</code></pre></div></p><p id="79e39c6a-00d2-42e1-8b6d-39f279a7a363" class="">
+</p><p id="a8e29d5e-f12d-4eef-9b61-0a8dd5c79459" class=""><span style="border-bottom:0.05em solid">Traversal of nodes</span><div class="indented"><p id="32aa97fb-2cdf-4d7b-8651-773915482766" class="">parentElement, nextElementSibling, previousElementSibling, childNodes</p></div></p><figure id="950a699e-6691-46c3-8a20-c1d601787295" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%2010.png"><img style="width:144px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%2010.png"/></a></figure><p id="699ff254-eb00-48fc-9661-5f0326a89605" class="">
+</p><h1 id="ef9af16f-d56b-4e9e-b64d-002950973256" class="">Accessibility</h1><p id="e77756f4-6d21-45d7-a658-57a33715c75d" class=""><span style="border-bottom:0.05em solid">DOM Updates</span><div class="indented"><p id="d0404539-7dbc-4530-9499-d64e71425edd" class="">Changing / updating the DOM frequently<div class="indented"><p id="89b08923-0acc-4a12-a252-5c3618da5266" class="">can confuse screen readers</p><p id="68cf0d88-7942-4b8e-8cd9-e0037ca36ac4" class="">not be visible in high magnification</p></div></p><p id="aabe9b1d-0d80-42c8-8ccb-0d9d5cdf4cdc" class="">Updates may come too fast</p></div></p><p id="9184c39c-652f-4bdc-8d02-3936f6acc313" class="">
+</p><p id="8b92821b-9837-41c6-8c6b-070db2ea31d1" class=""><span style="border-bottom:0.05em solid">Guidelines - Accessible Rich Internet Applications (ARIA)</span><div class="indented"><p id="a5c8afdb-896d-444d-a8ca-781f9e4e3c91" class="">If the content updates more than 5 seconds, provide ability to pause, stop, or hide them</p><p id="03cddc20-3850-4d02-8dc3-d03bbbb434ba" class="">Inform users of changes: Setting focus, Highlight, Alert, Live Region (ARIA Term)</p><p id="9a4a7565-e2a6-44cb-af08-a1144c73a561" class="">Communicate to user that page is dynamic</p><p id="ac946cdf-14c0-4fc4-a462-f9a9cb196e90" class="">Provide static HTML page alternatives</p></div></p><p id="a3e26004-42ce-44b4-904e-97d257befa93" class="">
+</p><h1 id="b5fb274f-51c1-4038-9281-3bdd8a550e54" class="">Event-Driven Programming</h1><ul id="6ea66e48-991d-417b-b658-bfc84f5af2b4" class="bulleted-list"><li style="list-style-type:disc">Flow of the program is determined by responding to user actions called events</li></ul><ul id="14f72db9-b3be-4d48-b8c8-096509522380" class="bulleted-list"><li style="list-style-type:disc">Writing programs driven by user events</li></ul><pre id="6d683338-7422-4e29-aa5f-24834be2a7e7" class="code"><code>&lt;img src=&quot;...&quot; alt=&quot;...&quot; onclick=&quot;alert(&#x27;Hello&#x27;);&quot; /&gt;</code></pre><pre id="93412686-9f77-4d78-acfd-2e54ff0c8c5b" class="code"><code>let	button = document.getElementsByTagName(&quot;button&quot;)[0]
+header.click();	//Execute	predefined event
+header.onclick = function(){alert(&#x27;Clicked!&#x27;);}	//Set	event	listener
+
+let	func = function() {alert(&#x27;Clicked!&#x27;);}
+header.addEventListener(&quot;click&quot;, func);
+header.removeEventListener(&quot;click&quot;,	func);</code></pre><p id="5cc878dd-cfab-4ea2-b0e2-4a111cf3b841" class="">
+</p><h2 id="2717e224-a9b6-4c9c-86e1-8003e4531b30" class="">DOM Event Types</h2><p id="7ee5ab04-1dd6-4506-b0f9-7da0a1f1cb40" class=""><strong>Event					Description</strong></p><hr id="8f26cf2d-7b0f-450d-8b92-054f88f9fa23"/><p id="bacba41e-3b25-4ee0-94bc-2a820a81dc65" class="">load,unload				User enters/leaves page</p><p id="eaf4ddc0-d810-4ff0-98e0-9ae51a656378" class="">change					Form input field changes</p><p id="7b60f8db-a781-4783-aeed-2c0fddf19407" class="">focus/blur				User focuses/unfocuses an input field</p><p id="07cf98e9-ce40-4f3a-9e83-4a602a2bd198" class="">Submit					Form is submitted</p><p id="1bdc722c-8b88-4f55-bb0f-93e9172f5ca6" class="">mouseover, mouseout		Mouse enters/leaves region</p><p id="7f5a7c2f-3d1a-435d-b49b-537d4ec1ec94" class="">mousedown/mouseup/click 	Mouse click events</p><p id="6d593360-caff-4b99-a0de-02977fba9b1e" class="">keydown/keyup/keypress	Keyboard events</p><p id="b05bb4bc-9308-4a2b-9d6f-9c3da4e754e9" class="">drag						User drags an element</p><p id="3ea9000e-2f75-49b6-b8f6-67874c0fe08c" class="">
+</p><h1 id="3ed624d0-124a-4418-b776-0163d3861fa8" class="">Asynchronous Programming</h1><p id="79d4f58e-2020-479e-bfc4-cb87ee3b1851" class="">Asynchronous Programming ≠ Multithreading</p><p id="a36c4505-0ec2-425d-9649-f4ddb69e3da0" class="">Waiting for actions to finish is implicit in the synchronous model, while it is explicit, under our control, in the asynchronous one.</p><figure id="564eedfc-d7b8-48cb-be71-db6f3a2b68d5" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%2011.png"><img style="width:336px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%2011.png"/></a></figure><p id="eb3db09f-48d7-40f7-802c-4a0bbb22fd62" class=""><em>Sending Asynchronous Requests</em> with Callbacks and Promises (like HTTP Fetch)</p><p id="cafb2bbe-8203-4ce3-9285-39e187c14cfe" class="">
+</p></div></article></body></html>

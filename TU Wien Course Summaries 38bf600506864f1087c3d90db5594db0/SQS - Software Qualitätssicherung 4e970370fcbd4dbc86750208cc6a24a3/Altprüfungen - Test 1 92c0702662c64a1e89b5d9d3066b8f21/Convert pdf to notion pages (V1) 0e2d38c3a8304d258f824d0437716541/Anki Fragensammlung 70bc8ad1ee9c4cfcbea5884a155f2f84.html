@@ -1,0 +1,770 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Anki Fragensammlung</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="70bc8ad1-ee9c-4cfc-bea5-884a155f2f84" class="page sans"><header><h1 class="page-title">Anki Fragensammlung</h1></header><div class="page-body"><figure id="1e54270d-f641-4ebf-a7f6-d2eeb0c27c34"><div class="source"><a href="../All%20vowi%20documents%20(V0)%20a8977f0b736340edb51a2a95df5004b8/SQS.apkg">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/39fe2793-d013-450c-930f-4088654b7023/SQS.apkg</a></div></figure><p id="4da58b2f-cc6e-4e61-ab47-3343361a23cf" class="">
+</p><p id="010a306d-6617-45bf-8f66-08db691316fb" class="">Wo liegen die Unterschiede zwischen Qualitätsmanagement und Qualitätssicherung?<div class="indented"><p id="fff97e38-94a2-4561-b430-9a0b9b170aa6" class="">Qualitätssicherung (QS) besteht in der Durchführung von Verifikation und Validierung in jeder Phase der Software-Herstellung.</p><p id="1107579d-a772-487b-b55d-9b970c4a1281" class="">Qualitätsmanagement ist die Menge aller Aktivitäten, Vorgehensweisen, Techniken und Hilfsmittel, die sicherstellen, dass ein Software-Produkt vordefinierte Standards erreicht oder übertrifft.</p></div></p><p id="fe85d556-01e8-4eba-af52-246137fb4ea0" class="">
+</p><p id="9f433fa9-9901-4fc6-8b05-a35f0c9c8437" class="">Was ist ein Review?<div class="indented"><p id="26d51916-8c2f-45f7-91c5-6d725a1ffe5e" class="">„Ein Review ist ein [..] formal geplanter und strukturierter Analyse- und Bewertungsprozess, in dem Projektergebnisse einem Team von Gutachtern präsentiert und von diesen kommentiert oder genehmigt werden.“ [IEEE Std 610, Wallmüller 2001]</p></div></p><p id="c4b89234-b984-4c0b-b6f3-a6c35709f0eb" class="">
+</p><p id="fe890c8b-c780-4083-bbb8-05bbc9bf5f2c" class="">4 Arten von Test-Doubles nennen<div class="indented"><p id="8fdb40de-2278-44d9-b29d-66c813fa936e" class="">Dummy, Fake, Stub, Mock</p></div></p><p id="dde93c8c-ad76-4528-810f-c5f5e4250824" class="">
+</p><p id="476dd246-98f3-49ea-9642-3c440cd827e6" class="">Welche Vorteile bringen Test-Doubles beim Testen im Bezug auf Qualitätssicherung?<div class="indented"><p id="f8b853fd-ffaf-4093-8e89-77bff0e61716" class="">Reduktion von Komplexität</p><p id="71f6679c-1299-4eb1-9247-cff2cfe188b6" class="">Reduktion von Abhängigkeiten zu anderen Systemteilen</p><p id="73e4fec5-e6d7-488e-a39e-be1e19908b59" class="">Isoliertes Testen einzelner Komponenten</p><p id="49723695-f46d-47d7-9dde-e05d91873e34" class="">Indirekte Steuerung der zu testenden Komponente</p><p id="dae64fd1-289f-4f50-bd48-856cf9acf751" class="">Kontrolle nicht deterministischer Werte (z.B. Datum/Zeit)</p><p id="239ea946-6c76-49e5-a8c0-76ec2618ef13" class="">Reduktion der Ausführungszeit</p></div></p><p id="648359f4-5c30-41e3-8bc9-6dfa9b888b46" class="">
+</p><p id="8b309622-62cb-4f45-b2c3-07f8c32d5eec" class="">&quot;Was ist ein Test Double?”<div class="indented"><p id="ea8b5074-0445-479d-9630-0ed5a4473bdc" class="">Generischer Begriff für den Austausch einer realen Komponente des Systems durch eine alternative, meist simplifizierte Implementierung für Testzwecke.</p></div></p><p id="2209c916-3a9c-491a-931e-fa52741a291c" class="">
+</p><p id="dfdff697-6d7a-4d9d-9eed-fa33eeb103b1" class="">Welches sind die Phasen im Testprozess?<div class="indented"><p id="08579432-ad7d-474d-9c18-b891c9a50f0f" class="">Planung &amp; Steuerung (Vorbereitung)</p><p id="094bf6af-c5c8-4b64-a5a3-63949f01d852" class="">Analyse / Design (Spezifikation)</p><p id="8fb7b009-f688-4a2d-9117-0a9131b801e4" class="">Realisierung und Durchführung (Testläufe)</p><p id="3aa3aa50-02d9-4d57-8639-0c95bf4d7ec6" class="">Auswertung und Bericht (Testergebnisse)</p><p id="8d365fba-e9db-4f39-bbd8-9a058e727f88" class="">Abschluss (z.B. Archivierung).</p></div></p><p id="07d5e800-9996-4399-b1d9-29bf8d399448" class="">
+</p><p id="77260561-a865-47c3-adb1-dc435961b91b" class="">&quot;Was ist Software-Qualität?<div class="indented"><p id="dc8ec924-d4c8-4440-930a-6b68afd04a5f" class="">Die Beschaffenheit einer Einheit bezüglich ihrer Eignung festgelegte oder vorausgesetzte Erfordernisse erfüllen.</p></div></p><p id="0c8b22ea-8957-458e-9591-6f254df81cb1" class="">
+</p><p id="b4d5b0cb-36b4-4448-a116-c84e962b6ef4" class="">Welche Möglichkeiten gibt es, Software-Qualität sicherzustellen?<div class="indented"><p id="eed7814e-3bf8-44dc-b2ed-0512662c4637" class="">Konstruktive Qualitätsmaßnahmen:<div class="indented"><p id="c6a1f913-0e55-4485-a906-4d5e5cd5d827" class="">Technische Maßnahmen, z.B. Verwendung von Prinzipien, Methoden und Werkzeugen der Softwareentwicklung</p><p id="48dbbe8c-3bc2-4fa7-98eb-51d89e731a12" class="">Organisatorische Maßnahmen, z.B. Verwendung von Vorgehensmodellen</p><p id="2d0c244c-fc91-4f25-8099-c7a102d764c5" class="">Menschliche Maßnahmen, z.B. Schulung der Projektmitarbeiter.</p></div></p><p id="159637bc-5811-4217-b0af-6eec92cd931a" class="">Analytische Qualitätsmaßnahmen:<div class="indented"><p id="fba44ca8-6e20-45af-837b-a868c267c66c" class="">Prüfung und Bewertung der Qualität eines Produktes</p><p id="aa057ba5-f995-4464-9028-d9b5c70e6178" class="">Statische Prüfungen, z.B. Reviews, Inspektionen, Audits</p><p id="7201f266-888d-472b-836a-7b2202818de5" class="">Dynamische Prüfungen, z.B. Software Tests</p></div></p></div></p><p id="fbccc6b4-7c0c-41cb-90d1-d072753104d0" class="">
+</p><p id="ebbad4dd-7653-4e36-88bc-0dca6f6f7646" class="">&quot; Was sind die Ziele von Refactoring? &quot;<div class="indented"><p id="76921f25-5637-4183-a2fa-0efca2d2d44e" class="">Steigerung der Code-Qualität, speziell Verbesserung der internen Struktur des Codes hinsichtlich Lesbarkeit Verständlichkeit Komplexität Architektur/Design</p></div></p><p id="aea5361c-6f32-4ada-94a1-8a4af85dd10f" class="">
+</p><p id="273804dd-eceb-41bf-8e8b-272e142ea343" class="">&quot; Review von (Projekt-)Anforderungen &quot;<div class="indented"><p id="2e1ee29d-a60c-4db9-ba15-855657ab5451" class="">Reviews überprüfen die Korrektheit und Konsistenz von Artefakten an wohldefinierten Punkten des Entwicklungsprozesses.<div class="indented"><p id="2232ebd8-9315-49f6-bf4e-3d320fd25907" class="">Review der Anforderungen nach Änderungen gegen die Projektbeschreibung</p><p id="152e6416-c992-4f7b-9f16-2303935ee3d3" class="">Review später hergestellter Dokumente gegen die aktuell gültigen Anforderungen</p></div></p><p id="48fbd0ad-9b91-4145-a2ee-acfb37ee87d1" class="">Rückverfolgbarkeit der Anforderungen</p><p id="897312da-1295-4c13-a55e-5f9a80924d47" class="">Anforderungen nach Kriterien einteilen: Funktional, nichtfunktional, testbar, verständlich</p><p id="c806e3fc-77e1-468c-841f-2033e3d0a24a" class="">Erstrebenswert ist eine klare, knappe Beschreibung, welche umsetzbar ist</p><p id="38bc74e7-08e5-4d73-80b0-c6b4a1e61c21" class="">Erstrebenswerte Kriterien aufzeichnen: Konsistenz, Vollständigkeit</p><p id="a7bfbdbd-6d2c-4bf4-8aef-49860a14d7d5" class="">Beispiel Review Issue: &quot;Spezifikation des Fehlerfalls ist notwendig um der Projektbeschreibung zu genügen&quot;</p></div></p><p id="1c88bb4d-913e-4b2b-9109-31a7b48cf0b2" class="">
+</p><p id="71efcf19-b3b4-4f3c-ab43-4e58a66d35c9" class="">&quot;Nennen Sie 3 Prinzipien des Qualitätsmanagements und erklären Sie diese.&quot;<div class="indented"><p id="32981799-60de-4567-8874-d2bf794e27ad" class="">Konkrete operationalisierbare Qualitätsmerkmale.</p><p id="d4b71375-86f2-47ad-a540-e5f5c98c121b" class="">Produkt- und projektabhängige Qualitätsplanung.</p><p id="b8afd169-40aa-4356-9924-f6c971f9bc7f" class="">Unabhängigkeit bei Qualitätsprüfungen.</p><p id="21b80300-86c6-4087-9b8a-1dde555772d1" class="">Mehraugenkontrolle bei Qualitätsprüfungen.</p><p id="73646db8-4ad0-4aa4-a984-0fa75cd297c4" class="">Frühzeitige Entdeckung und Behebung von Fehlern und Mängeln.</p><p id="e9999081-3426-4df6-9c0d-08e2eb3a5970" class="">Bewertungen der eingesetzten Qualitätsmaßnahmen.</p><p id="fe71c575-4b20-41b0-b721-d5e1f92717cd" class="">Organisation in Form von Qualitätsmanagementsystemen, z.B. ISO 9001, CMM(I), SPICE (ISO 15504) u.ä. Rückkopplung der Ergebnisse der Qualitätsprüfungen.</p><p id="9e221027-2ae2-4dcc-82e1-46f6e138af14" class="">Prinzip der ständigen Verbesserung von Produkten und Prozessen</p></div></p><p id="71816c8d-10e5-4521-a650-5339677b8cc7" class="">
+</p><p id="fef2392c-08cb-4375-9ef0-d9e96388a864" class="">&quot;Welche Aufgaben hat Continuous Integration?&quot;<div class="indented"><p id="993af09c-0b1a-4a1d-969a-4d4cc805af40" class="">Kontinuierliches und automatisiertes Bauen der Anwendung</p><p id="479187a9-b532-4265-b106-cbee17625bcb" class="">Automatisierte Testausführung</p><p id="3713bea3-4c80-41e1-a001-9807458853e8" class="">Automatisierte Berechnung von Metriken (z.B. Testabdeckung)</p><p id="235008aa-6548-4131-bbf5-9bd64a990bbf" class="">Liefert einen aktuellen Status zur Qualität des Produkts</p></div></p><p id="e1145ede-f547-4c85-a124-b500353b5755" class="">
+</p><p id="98c498a0-bff7-4e01-9f20-821704e3a1f6" class="">FURPS<div class="indented"><p id="3916d78d-528e-43c9-9f3b-c5adc26a3353" class="">Zwei Merkmale für Functionality<div class="indented"><p id="90eb8584-7878-4e17-a25b-5b5025adbb74" class="">Features, Fähigkeiten, Sicherheitsvorrichtungen</p></div></p><p id="4cdfe2cf-97e2-40ea-aa64-600f84c93fab" class="">Zwei Merkmale für Usability<div class="indented"><p id="22663ef0-7db1-4191-9916-02a72179f1c0" class="">Menschliche Faktoren, Hilfe, Dokumentation</p></div></p><p id="04cd4e18-a35e-48f7-a667-4c928084e031" class="">Zwei Merkmale für Reliability<div class="indented"><p id="e9384155-97b0-4f90-9a51-ec73b7e8506d" class="">Häufigkeit eines Ausfalls, Vorhersehbarkeit, Wiederherstellbarkeit</p></div></p><p id="2949a355-4094-4f69-93e5-effb0dbaf4f0" class="">Zwei Merkmale für Performance<div class="indented"><p id="f52c6c14-9c94-485c-9b8e-07f745a7bc84" class="">Antwortzeiten, Durchsatz, Genauigkeit</p></div></p><p id="c489a70c-03a2-4aa2-b0b4-4c29f2fa26a3" class="">Zwei Merkmale für Supportability<div class="indented"><p id="0f90e53d-bfa0-4ea5-a5a6-13ab600ce82d" class="">Anpassungsfähigkeit, Wartung, Konfigurationen</p></div></p></div></p><p id="ea8e2332-e464-4a61-a9c7-9edd23447918" class="">
+</p><p id="43d15c61-6819-40ab-8d36-70101756ecfb" class="">Ziele von (technischen) Reviews <div class="indented"><p id="31ab2e7c-6b27-452b-b7bf-c27e461d47dd" class="">Stärken und Schwächen des Prüfobjektes identifizieren</p><p id="b763ab8b-5778-46ca-a85c-79f42b8e1aa8" class="">Entwicklungsprozess verbessern</p></div></p><p id="e0da5cd5-8fd2-4697-964e-9cecb6ef8dd8" class="">Ziele von Inspektionen<div class="indented"><p id="727749ec-e13d-42f8-aa99-cd7d4a28557d" class="">Schwere Defekte im Prüfobjekt identifizieren</p><p id="2edfcea0-1259-4536-9225-a620bd4788e8" class="">Entwicklungsprozess verbessern</p><p id="3dc3e619-deb4-4765-bd15-b6e774706e2a" class="">Metriken ermitteln</p></div></p><p id="bea9b6dc-1d20-457f-ac17-64e4a7c027f5" class="">Ziele von Code-Walkthrough<div class="indented"><p id="e1179797-8fbf-49ed-92d7-0e3bc0634706" class="">Defekte und Probleme des Prüfobjektes identifizieren</p><p id="be9cdc44-90fe-4e60-b4cb-04c62f6b4e40" class="">Ausbildung von Benutzern und Mitarbeitern</p></div></p><p id="4619fd53-db91-4dac-8152-14cc75591470" class="">
+</p><p id="c174ecf1-15fc-45f5-8815-05a60f526e79" class="">Merkmale eines Black-Box-Tests?<div class="indented"><p id="89e482a4-af2b-477d-9d35-e58b2bfa806a" class="">Basiert auf Spezifikation.</p><p id="61748ea6-368e-4778-a081-b124b3cb8a5a" class="">Wissen über innere Struktur wird ignoriert.</p><p id="ed51fd2c-9df8-41ca-b589-5575fb139216" class="">Daten-getriebener Test.</p><p id="e1b91fbe-1f7f-4fbf-ac1f-559e66fe3488" class="">Input-Output-getriebene Tests.</p><p id="b25b3bc8-3862-48ee-8c87-78929fd7f1c8" class="">Anforderungsüberdeckung.</p><p id="3abf4e9c-7eb3-4dad-929a-cb32a7300636" class="">Partitionierung (Äquivalenzklassen) der Eingabe-Daten</p></div></p><p id="8d466770-e5e2-4b49-b4a5-624633ebc041" class="">&quot; Merkmale eines White-Box-Tests? &quot;<div class="indented"><p id="a7ae5f4f-7610-4e51-bf6f-5aca8ee7fd25" class="">Basiert auf der Struktur von Code bzw. SE Modellen.</p><p id="07d9c2ff-46ee-4ec8-8e01-1f45f6967158" class="">Wissen über innere Struktur notwendig.</p><p id="dcd4bd2c-a345-4046-930f-8b5209bb5fcb" class="">Logik-getriebene Tests.</p><p id="ba5d7ffa-08fb-48d9-8e7f-7e3d6887d850" class="">Überdeckung von Knoten, Kanten, Pfaden.</p><p id="bebd039a-7d66-474d-b440-2f145b472a14" class="">Partitionierung (Äquivalenzklassen) von Daten für Bedingungsauswertung</p></div></p><p id="fd53f2d4-0fae-40cd-ab0b-448939fb2648" class="">
+</p><p id="2ac2adba-53f2-4b93-bd11-64eaf87909f2" class="">&quot; Was ist ein Modultest? &quot;<div class="indented"><p id="f48da42e-271b-412a-8ddd-bd78988ee2a9" class="">Komponententest, Unittests</p><p id="4fd57a51-ce5d-43ac-8727-e796b8188cc4" class="">Ziel: Aufspürung von Fehlern in der Implementierung.</p><p id="0a0b4d0e-5311-4224-8c77-62aa95a40842" class="">Module werden jeweils einzeln gegen ihre Spezifikation getestet: Übergabe von Daten, Prüfung des Outputs.</p><p id="64ac99e5-f269-49c8-a87c-995efd17b77e" class="">Modultests erlauben eine genaue Lokalisierung und frühe Erkennung von Implementierungsfehlern.</p><p id="1c866bc0-ce2a-418d-b4c1-3a3f5e8740d9" class="">Modultests können bei größeren Systemen sehr aufwendig werden; daher ist bei größeren Tests besonderer Wert auf strukturiertes Vorgehen und Dokumentation des tatsächlichen Vorgehens zu legen.</p></div></p><p id="8c320cf5-5e23-488e-9270-230eeeceb29b" class="">
+</p><p id="99d44f95-ed65-452b-85bd-d9e9adffbe6b" class="">&quot; Was ist ein Integrationstest? Welche Strategien gibt es dafür? &quot;<div class="indented"><p id="d5f9f0eb-f3c7-4ed0-a437-3ac97ac639c6" class="">Ziel: Test der Interaktion zwischen Modulen.</p><p id="7fb1f7b6-c6c1-4107-86d3-68dc37803452" class="">Zusammenführung von Modulen zu größeren Strukturen (Häufig durch Entwickler).</p><p id="5407536b-5c80-4fa8-83c8-95f2166c6dd5" class="">Integrationsstrategien: „Big-Bang“, Top-Down, Bottom-Up, Build-Integration.</p><p id="92819fe4-0ca2-484f-bb8e-2def5d5ed9bd" class="">Build-Integration und Integrationstest sind – sofern möglich – zu bevorzugen.</p></div></p><p id="00ba95d8-50bb-4fa2-9223-5f38aa2965d6" class="">
+</p><p id="a44de3f3-9928-4803-afb7-b11be4be95cb" class="">&quot;Was ist ein Regressionstest?<div class="indented"><p id="6b662935-6e24-4133-94b9-98dc5f54eb81" class="">Test nach Durchführung von Änderungen</p></div></p><p id="212ff2b1-cda0-4af4-92df-c3a14b8f9f53" class="">
+</p><p id="241649bd-85c0-4a22-9da4-ae9477487f34" class="">Was ist ein Systemtest?&quot;<div class="indented"><p id="3464f171-f947-4127-9f58-fc56bd187373" class="">Ziel: Test des Gesamtsystems gegen die Anforderungsanalyse bzw. den System-Entwurf.</p><p id="becd4658-519f-4a5b-8b65-61f20b602ef9" class="">Validierung bzw. Verifikation.</p></div></p><p id="f0f0f30e-0dbb-4b53-ba5a-42464ec40867" class="">
+</p><p id="ef8e3f7a-6791-42b1-84f8-90b5d4752dc0" class="">&quot; Was ist ein Akzeptanztest? &quot;<div class="indented"><p id="5b8f895a-3a1a-47ab-9e06-ac070e98dd6f" class="">Ziel: Validierung des Systems gegen die Kundenanforderungen.</p><p id="e59c6341-8fcb-4c9d-b8db-658f3b93dd9c" class="">Vom Kunden durchgeführter Systemtest, meist mit einer Submenge an Testfällen aus dem Systemtest.</p></div></p><p id="cbf00eaf-b5dc-4a7c-82b9-0c9e27318092" class="">
+</p><p id="4a5d0f6b-13bd-4b62-a202-58c82d121987" class="">&quot; Welche Arten von Testüberdeckung gibt es?<div class="indented"><ul id="4e5e70be-7f7d-4e74-b5a8-1157d40e6a5f" class="bulleted-list"><li style="list-style-type:disc">Anweisungsüberdeckung</li></ul><ul id="7207106b-c830-47ec-8b2c-f6de2e85e482" class="bulleted-list"><li style="list-style-type:disc">Zweigüberdeckungstest</li></ul><ul id="3e6f1a9b-47b8-4a68-8488-8a9b7319b5a2" class="bulleted-list"><li style="list-style-type:disc">Pfadüberdeckungstest</li></ul><ul id="acecdbcc-f428-4662-934b-9a8dc0453bee" class="bulleted-list"><li style="list-style-type:disc">Bedingungsüberdeckungstest</li></ul></div></p><p id="fc21bd11-579e-4ff3-9c03-9773ac7547ca" class="">
+</p><p id="84c0e3bd-a2ae-446a-b126-c7ed370618d2" class="">Was ist Anweisungsüberdeckung?<div class="indented"><p id="62905c80-711f-4d25-81d9-05ded2b06928" class="">Statement Coverage</p><p id="ee696e18-b249-4cf9-b6e5-b96770958bd8" class="">Ziel: jede Anweisung muss mind. einmal durchlaufen werden.</p><p id="c5ca897a-41a6-46ed-96eb-b17f3db2eb32" class="">Vollständige Anweisungsüberdeckung liegt vor, wenn sämtliche Anweisungen mindestens einmal durchlaufen werden.</p><p id="a4151358-1666-41f7-8046-27d764112cfa" class="">Zeigt ob toter Code existiert / Anweisungen, die niemals durchlaufen werden können</p><p id="6d2ffb3c-89f4-4060-88c8-f9d262033db9" class="">Zu schwaches Kriterium für sinnvolle Testdurchführung</p></div></p><p id="d819de20-c497-4988-9911-22b573c306b9" class="">
+</p><p id="bcd4e187-1ffc-4df2-987d-5a5dcd5d878e" class="">&quot; Was ist das Ziel der Zweigüberdeckung? Was zeigt sie? Wobei hilft sie? &quot;<div class="indented"><p id="a6d63975-5c28-47d5-b6b0-0f4af31d95d1" class="">Ziel: Jede Kante muss mind. einmal durchlaufen werden</p><p id="97f1c104-2f99-4ff5-8989-fdc9cf0a254b" class="">Zeigt nicht ausführbare Programmzweige auf</p><p id="7c1b6145-81d8-46e4-abe5-85926717fe9c" class="">Hilft oft durchlaufene Programmteile gezielt zu optimieren</p></div></p><p id="f3f7e035-d154-4b54-9c02-4d16c83b50ff" class="">
+</p><p id="18534b6b-c297-4e8b-ad8e-502d92c861d7" class="">&quot; Wie unterscheiden sich Zweig und Anweisungsüberdeckung?<div class="indented"><p id="91351e01-bc36-4d23-a8ea-23dce633bb4a" class="">Im Gegensatz zum Anweisungsüberdeckungstest muss jede Entscheidung mindestens einmal true und false annehmen</p></div></p><p id="7508e630-b7bc-4b61-a9ed-4ee1f049979b" class="">
+</p><p id="14bb78ad-77f7-415a-835d-135c7c24d465" class="">Was sind die Probleme der Zweigüberdeckung? &quot;<div class="indented"><p id="87e577bc-8d67-43b5-b714-eb8744053f7d" class="">Problematik: Unzureichender Test von Schleifen</p><p id="2efc7831-fd4d-4764-be34-a4f22b0d2efb" class="">Komplexe Logik in Statements wird nicht berücksichtigt</p><p id="40914030-a4a9-472a-9b04-04ad284490e8" class="">&quot; Grafik für Zweigüberdeckung &quot;</p></div></p><p id="e0bbc591-6fc0-4a57-83b7-f3f6ad66dc43" class="">
+</p><p id="24054dae-7ea1-45e6-838a-6567de2763ed" class="">Englisch für Pfadüberdeckung<div class="indented"><p id="ac8952ae-b446-4c2a-b916-d1ceef94745f" class="">Path Coverage</p><p id="f54d5c42-9d68-4d83-a195-15ec17b92989" class="">
+</p></div></p><p id="54190343-9b1e-4baa-a066-2bb2b89b223c" class="">Ziel der Pfadüberdeckung<div class="indented"><p id="5b996935-25d8-4519-812d-a6358a43280a" class="">Ziel: Abdeckung aller Pfade von Start- bis Endknoten</p></div></p><p id="bc1db08f-f01b-4a27-80ac-94666e4cad5e" class="">
+</p><p id="780a68c1-1976-4e86-b837-879b6197732a" class="">Probleme der Pfadüberdeckung<div class="indented"><p id="b39f651f-b46e-43c1-8565-fd26541fde82" class="">&quot; Für komplexe Softwaremodule meist nicht durchführbar</p><p id="22a85e2a-ab6f-4e0c-bfdc-34b42f34e46e" class="">Unendlich hohe Anzahl von Pfaden Schleifen bieten extrem viele Pfade</p></div></p><p id="da2bee8b-2de9-49d1-8439-f2299253fff6" class="">
+</p><p id="c60be2ed-20a8-4421-b63a-dac87a161413" class="">Englisch für Bedingungsüberdeckung<div class="indented"><p id="09ac097a-e58b-45a3-bf83-e64ec789e250" class="">Condition Coverage</p></div></p><p id="a2bad3a3-0261-4469-bb70-c9b97c3c7bfa" class="">
+</p><p id="b9729adf-4937-49ac-a04f-44e4464aeff6" class="">Ziel der Bedingungsüberdeckung<div class="indented"><p id="e79a12da-2a4b-49fa-94e5-4d8e364e580f" class="">Überprüfung zusammengesetzter Entscheidungen, Teilentscheidungen</p></div></p><p id="a172b9c0-49a4-473e-9cf1-5f47c0b9b733" class="">
+</p><p id="e5dfc951-efb2-48a5-ac69-4d887008c068" class="">Was ist ein einfacher Bedingungsüberdeckungstest?<div class="indented"><p id="5f2a279c-b712-44ad-a40a-c88fddddb7db" class="">Fordert den Test aller atomaren Teilentscheidungen gegen Wahr und Falsch.</p></div></p><p id="7fb8f15a-bdb3-456b-b9c1-d5af19d55308" class="">
+</p><p id="55ad0eb1-970b-4a4e-8e68-470b8845710a" class="">Was ist ein mehrfacher Bedingungsüberdeckungstest?<div class="indented"><p id="1acec0f8-46b8-4d5c-a577-c084e7656c24" class="">Fordert den Test aller Wahrheitswertekombinationen der atomaren Teilentscheidungen (aufwendig)</p></div></p><p id="ce735e84-5ad0-4b7c-b12a-9eedf30afdfe" class="">
+</p><p id="8d4c617e-fcdc-4e76-81ab-32622bb61b1f" class="">Zwei Beispiele für einfachen Bedingungsüberdeckungstest<div class="indented"><ul id="55d2919f-6ecb-4590-a77f-6c70c5c5546d" class="bulleted-list"><li style="list-style-type:disc">Testfall 1: A = false, B = false, C = false, D = false</li></ul><ul id="8e4fe4b2-cb4c-40a0-97b4-3bb2bb64d531" class="bulleted-list"><li style="list-style-type:disc">Testfall 2: A = true, B = true, C = true, D = true</li></ul></div></p><p id="c57a2237-8d4c-4ab2-a148-ac8a4fe43710" class="">
+</p><p id="17bf5ef0-f308-4720-8c3a-d08aa3312380" class="">Wie viele Testfälle gibt es bei einem mehrfachen Bedingungsüberdeckungstest mit 4 Variablen?<div class="indented"><p id="fcaf6992-ea88-4d40-8f57-9726f550828c" class="">2^4=16</p></div></p><p id="5a1a0ac1-4375-4cfa-b982-a9025cb33622" class="">
+</p><p id="7eaf7052-a056-43c8-b8e3-e9c64e840734" class="">&quot;&quot; Welche Reviews gehören im V-Modell zu welchen Tests? &quot;&quot; </p><p id="df41eddd-9f25-4d3f-a5db-dbb9571d4e8a" class="">
+</p><p id="00f37c52-c791-4f42-a7ab-08728db04470" class="">Teilnehmer eines (technischen) Reviews<div class="indented"><p id="d78e1bbf-c071-4c8e-b445-e1d4a43a75f4" class="">Moderator, Autor, Gutachter, Protokollführer</p></div></p><p id="3f96a7ec-4cb5-4d4b-96ce-02332ead406a" class="">
+</p><p id="baaf13d7-c8e6-48cf-977b-a6a9293991d3" class="">Charakteristika eines Reviews &quot;<div class="indented"><p id="ba67c504-fd4c-4479-b8a2-f3e558f58123" class="">Ausgebildeter Moderator</p><p id="a2913046-d0dd-45f8-a516-ab540b8879a5" class="">Prüfteam gibt Empfehlung an Manager</p></div></p><p id="a0c90bec-a879-4907-926c-004ec073fc12" class="">
+</p><p id="8b42856e-3281-441a-8e32-c5314894b203" class="">&quot; Ziele einer Inspektion &quot;<div class="indented"><p id="33dea5d2-fdf8-4681-a024-eaca36b25cb6" class="">Schwere Defekte im Prüfobjekt identifizieren Entwicklungsprozess verbessern</p><p id="dfdeff8f-1497-45ac-8845-e0b3af4e24ba" class="">Metriken ermitteln</p></div></p><p id="fb10b7cc-add0-4246-ac06-d90b951e8486" class="">
+</p><p id="3379a07f-5be6-42cc-8b9a-e7e844a27677" class="">&quot; Teilnehmer einer Inspektion<div class="indented"><p id="6a23fa18-7752-4d8f-9303-c8d01e10312c" class="">Moderator, Autor, Gutachter, Protokollführer, (Vorleser)</p></div></p><p id="c6e65fc2-7317-4dc0-9bc3-62b4e13b5097" class="">
+</p><p id="36501f36-5d2b-4e28-9e70-96684a4f57ef" class="">Charakteristika einer Inspektion &quot;<div class="indented"><p id="5c6621a9-baec-4abc-9379-fbf2bc9bbdc6" class="">Ausgebildeter Moderator</p><p id="36964a01-2e1b-498a-8267-40329ac990b4" class="">Prüfobjekt wird vom Vorleser Absatz für Absatz vorgetragen</p><p id="92b92df6-3650-4714-af98-745dbee62f8c" class="">Moderator gibt Freigabe</p></div></p><p id="a02bca93-43c9-4acb-abc1-e274f7c8aa3b" class="">
+</p><p id="84d951c0-0ec4-4d4d-a9ff-9cb4c7768bc6" class="">&quot; Ziele eines Code Walk-Through &quot;<div class="indented"><p id="ecf6682b-0606-408e-be71-c8b5158331a8" class="">Defekte und Probleme des Prüfobjektes identifizieren Ausbildung von Benutzern und Mitarbeitern</p></div></p><p id="63b14edd-c3d8-4e0f-bfb7-edf7e39b1a49" class="">
+</p><p id="bf1d4de2-c688-415e-bacb-d63e9a72c0ec" class="">&quot; Teilnehmer eines Code Walk-Through<div class="indented"><p id="9ea44015-ae6b-407e-b61f-02d185deaa6f" class="">Autor (=Moderator)</p><p id="5a816a1e-6872-4f35-8845-61f68a028c31" class="">Gutachter</p></div></p><p id="db237e8f-0c04-446c-be76-16de4c8afd16" class="">
+</p><p id="204ad6cd-b102-4dd0-ae05-db07bec4e824" class="">Charakteristika eines Code Walk-Through<div class="indented"><p id="40a110a4-67ae-4b0b-844c-e0531496e2c9" class="">&quot; Prüfobjekt wird vom Autor ablauforientiert vorgetragen</p><p id="63081085-4a5f-48ac-923c-711d961487c2" class="">Autor entscheidet</p></div></p><p id="3f3aad79-d9b5-4ea9-b458-b8ae3e5aa42e" class="">Welche Dinge müssen für ein Review geplant werden?<div class="indented"><p id="98bc8ee1-15d4-466c-8b11-292a45748a02" class="">Objekt, Prüfziele, Auslösekriterien (Einstiegskriterien), Teilnehmer, Ort, Zeit.</p></div></p><p id="7c3c3b48-9e0a-4948-ae01-83a5068c0d40" class="">
+</p><p id="cddbe16a-4408-43a6-9ae2-cd88b762843d" class="">&quot; Grafik für Ablauf einer Review &quot;&quot;<div class="indented"><p id="adafa2eb-7dce-4169-bb57-5c7ae8d28727" class="">Vorbesprechung einer Review<div class="indented"><p id="8c0e71d9-4ab2-4d2a-ba6b-82892453a8bb" class="">Vorstellung des Prüfobjekts bei komplexen und neuen Produkten Durchführung einer Review</p></div></p><p id="cd48527e-0217-4219-8bb3-7318d350c8dd" class="">Gemeinsames Lesen.<div class="indented"><p id="9dfa621d-d98f-424e-a368-191c15d2ae6b" class="">Aufzeichnung von Mängeln.</p><p id="fd0cdabd-d46e-4f24-8504-390214d076a5" class="">Während des Reviews sollen Mängel entdeckt, nicht korrigiert werden</p></div></p><p id="6b314877-d8fa-4fff-8ada-4087e9a9a076" class="">Nachbearbeitung einer Review<div class="indented"><p id="6fe06a6c-0f70-429d-a25a-11f372c1bd8c" class="">In der Nachbearbeitung werden dokumentierte Mängel korrigiert und in der Bewertung überprüft.</p></div></p><p id="64a72feb-ce65-4d45-8004-6480bed477ea" class="">Typische Reviewdauer 2h</p></div></p><p id="716eb86f-6090-439d-a36f-1d5baed5beef" class="">
+</p><p id="1400ae94-18e1-4d98-b50a-4381bbfe1f48" class="">Beispiele für Nicht-Ziele von Refactoring &quot;<div class="indented"><p id="7f5ef4f0-55e7-44fc-acc9-495191165802" class="">Keine Änderung des sichtbaren Verhaltens Keine neue Funktionalität</p><p id="942ab67c-2016-461d-9cbc-804f8ce1e82e" class="">Keine Behebung von Fehlern</p><p id="cd5c6e54-4aa2-460a-8f29-35d4e883e439" class="">Keine Änderungen, die nicht das Ziel haben, die Lesbarkeit bzw. Verständlichkeit des Codes zu verbessern, z.B. Performance Verbesserungen</p></div></p><p id="16afd221-8aac-434c-9fb4-93a274980ca2" class="">
+</p><p id="e1d04ef9-d720-49b7-92b7-72028f99a691" class="">&quot; Welche Kategorien von Anforderungen gibts es?<div class="indented"><p id="ea906103-0114-4be1-9acf-7e4586d0eaa1" class="">FURPS: Functional, Usability, Reliability, Performance, Supportability</p></div></p><p id="67eb5342-e1d1-40ad-8219-532083628eeb" class="">
+</p><p id="51eadff8-3834-44ff-ac48-0d89f70e4078" class="">Was beschreiben funktionale Anforderungen? Welche Form haben sie?<div class="indented"><p id="e3d85023-6274-4345-94b9-91504bfa3d00" class="">Sie beschreiben was das System tut, um Mehrwert für die Stakeholder zu liefern.</p><p id="9accee6c-9834-456d-9871-4697e3831e63" class="">Sie haben typischerweise folgende Form: Das System kann Funktion X ausführen.</p></div></p><p id="0811a35f-c885-4dc5-8e1c-002824e69c36" class="">
+</p><p id="d652cd76-2976-4381-a1d2-fb5cab3b6fb9" class="">Was sind nichtfunktionale Anforderungen? &quot;<div class="indented"><p id="6542c5f8-9703-471a-8588-3ca9b064c6ae" class="">&quot;&quot;Qualitätsanforderungen&quot;&quot; (wie „gut“)</p><p id="05c15260-a9ca-4db4-842d-93c48ab61919" class="">
+</p></div></p><p id="709dfc74-9bda-4b1c-9ea8-5d9dab2b2e3a" class="">Erwünschte Charakteristika des Systems &quot; UML-Sichten auf Softwarestrukturen &quot;<div class="indented"><p id="b89547d1-fc20-4f5d-8e77-a8feea5148c0" class="">Konzeptionelle Sicht<div class="indented"><p id="c5957635-951b-48eb-ac1f-b8f0ce0ae361" class="">Gibt eine Übersicht über den zu untersuchenden Problembereich, z.B. Domänenmodell.</p></div></p><p id="d1cf7302-f6c4-4167-8d75-afc52ff0df60" class="">Spezifizierende Sicht<div class="indented"><p id="ad7a208f-0d8e-4864-9ecd-e33fb5d2d2b2" class="">Hier betrachten wir Software-Schnittstellen (keine Implementierungen, z.B. Komponentendiagramm).</p></div></p><p id="1d3e9087-da97-4853-9ebf-9935bf18e789" class="">Implementierende Sicht<div class="indented"><p id="b9c023ef-3ab0-4f58-97a4-4afcc3e3189a" class="">Bei dieser Sichtweise beobachten wir Klassen und legen die Grundlage für die Implementierung. Dies ist vermutlich die am häufigsten eingenommene Betrachtungsweise, z.B. Klassendiagramm.</p></div></p></div></p><p id="f16c5037-6c0c-42e9-8949-62541e7f0d76" class="">
+</p><p id="aca99437-4c54-43d0-a1b3-2cacb8c69f61" class="">&quot; What is crowdsourcing?<div class="indented"><p id="978001da-c70b-467e-9226-53f24338f06f" class="">“The act of undertaking any external software engineering tasks by an undefined, potentially large group of online workers in an open call format.” (Mao et al., 2016)</p></div></p><p id="3d033397-9bd3-4946-af2e-d719e5e6980c" class="">
+</p><p id="d7e4c783-fbfb-4557-8abb-71d180fb4051" class="">Welche Arten von Reviews mit Kunden gibt es?<div class="indented"><p id="8b797b0e-ee30-4e65-8ae8-174a9bf4d4a0" class="">SRR, PDR, CDR, IPR</p><p id="e994cbae-6ece-44d7-ab57-61824f7d5a55" class="">Welche Reviews ohne Kunden gibts es?</p><p id="14f7eaa5-59e3-4c4b-b92e-8e7bde41c51d" class="">MR, Inspection, Code Walkthrough, Technical Review</p></div></p><p id="4c0222e3-1213-40f3-83d2-93dcdbc6fa29" class="">
+</p><p id="1fa8c563-faf5-43ad-8de6-73da11a9c5a2" class="">Was sind Inspektionen?<div class="indented"><p id="99db2736-0f71-4c70-973b-7ecd807f01aa" class="">Inspektionen sind spezielle Reviews, die speziell in frühen Phasen der Softwareentwicklung angewandt werden können.</p><p id="4cf1a528-75d7-43c8-9483-d3f937b03a5a" class="">Inspektionen sind formale, effiziente und wirtschaftliche Methoden um Fehler im Design und Code zu finden.</p></div></p><p id="0b190348-6998-42ae-8c20-3646f29f0cb1" class="">
+</p><p id="b477a84d-f4a5-4c4c-afcf-0d72dbd243b1" class="">Was ermöglichen Inspektionen?<div class="indented"><p id="e8f12b2b-d677-42ab-86c3-7934acbb4b1c" class="">Inspektionen ermöglichen eine systematische und strukturierte Fehlererkennung.</p></div></p><p id="e7b6c49d-76ee-4ee8-9763-eb837a297a99" class="">
+</p><p id="ac8a3a57-55ce-43b8-aab8-0bc6b529a01b" class="">Welches ist die wichtigste Anwendung für Inspektionen?<div class="indented"><p id="109e2078-b2fe-4f4d-b57c-a3c16e9cea10" class="">Fehlerfindung in Anforderungs- und Designdokumenten</p></div></p><p id="94b9963a-cc42-41db-9114-5d610f779b0e" class="">
+</p><p id="da81ebd1-88b1-414e-b2a1-d5e4d14171b2" class="">Welche Lesetechniken gibt es?<div class="indented"><p id="c389ff0b-836c-4c9d-b665-8ff0edf4080b" class="">Ad hoc, Checklistenbasiert, Szenariobasiert, Perspektivenbasiert, Fehlerbasiert</p></div></p><p id="6ddf10d5-c8d1-4386-a634-04bc37715cdb" class="">
+</p><p id="c485fb41-b27b-4434-81f3-7241d2fd3a61" class="">Was kennzeichnet checklistenbasiertes Lesen? &quot;<div class="indented"><p id="e67aa752-e39f-4dbd-8551-41609fd950a4" class="">Vordefinierte Fragestellungen die sequentiell auf das zu untersuchende Objekt angewandt werden.</p><p id="d07e496a-dadd-4b6a-bc9a-57dba226b920" class="">Die Checklisten sind auf zu findende Fehlertypen, Fehlerorte (Design, Code) usw. abgestimmt.</p><p id="0f80ce0f-8468-4798-8938-08bfe324b5c1" class="">In der Praxis meist generische Checklisten + Projektspezifische Erweiterungen.</p><p id="19459fa2-4ee8-4501-874b-ae4d2013ae12" class="">Einfache Anwendbarkeit durch Inspektoren.</p></div></p><p id="7eba1f25-1e93-4d09-aacb-504e792bf335" class="">
+</p><p id="956b95b8-489f-4ad2-a5b0-bc0d5b086f43" class="">&quot; Perspektivenbasiertes Lesen &quot;<div class="indented"><p id="e80285cd-fd86-4361-8950-4fe3dbbd84e1" class="">Fehlersuche aus verschiedenen Perspektiven: User, Tester, Entwickler. Zielsetzung: Unterschiedliche Fehler aus individuellen Sichten finden.</p><p id="cb611e45-b525-4eff-8e4a-2a084bfcfa5d" class="">Erfordert entsprechende Fachspezialisten.</p></div></p><p id="bffd0807-8003-412c-b7ae-9fd672748c08" class="">
+</p><p id="a07163cd-c649-45ab-8bae-622fac386af9" class="">&quot; Welche Perspektiven gibt es beim perspektivenbasierten Lesen?<div class="indented"><p id="493179c5-bb3e-412c-83fc-0b1c9a7009e4" class="">User, Tester, Entwickler Usage-based Reading</p></div></p><p id="907ba21b-fcfe-46fa-a762-b7988cfc6502" class="">
+</p><p id="5349829d-4df6-4f3c-b8e4-9ccc25f41a1a" class="">&quot;Best-Practice Inspection<div class="indented"><p id="ecf1a7df-d41c-46d9-87e1-2f6333f9da37" class="">Typischerweise existieren Szenarien (z.B. Use Cases)</p><p id="7ac6c745-84c9-4a01-bd05-75cff809cabc" class="">Priorisierung von Anwendungsfällen durch Fachleute.</p><p id="e816c6d1-bfb0-43f1-a219-f3881698a369" class="">Zielsetzung: Fehler in wichtigen Anwendungsfällen zuerst finden.</p></div></p><p id="c8fb37c7-30e5-4b3d-ad16-af6ef7942f69" class="">
+</p><p id="f0734e3e-0e2c-44e4-a434-1cf207fed72f" class="">&quot; Ablauf eines Usage-Based Reading Reviews &quot;<div class="indented"><ol type="1" id="9c4c8b7b-ddad-4793-8c11-464cfe0ad9c4" class="numbered-list" start="1"><li>Auswahl des wichtigsten Anwendungsfalls</li></ol><ol type="1" id="a294368e-1020-4d56-a252-64ea4a4d0376" class="numbered-list" start="2"><li>Überprüfung der relevanten Teile, die diesen Anwendungsfall beschreiben</li></ol><ol type="1" id="854d553d-dd2b-4042-81bc-953ef5d9f740" class="numbered-list" start="3"><li>Reporting von Mängeln und Fehlern</li></ol><ol type="1" id="f326aa87-1136-4269-9963-db61b400dcb3" class="numbered-list" start="4"><li>Auswahl des nächsten Anwendungsfalls</li></ol></div></p><p id="204793c2-cd61-40e6-825b-4202e0116924" class="">
+</p><ol type="1" id="ef653dfc-5681-4134-81f9-681e97573d6d" class="numbered-list" start="1"><li>&quot; Nutzen von Inspektionen &quot;<p id="580360d3-1d18-4237-b212-428611c274e9" class="">Einsparungen durch frühes Finden und Entfernen von Fehlern.</p><p id="459d71e7-c011-4ffb-bd82-aba0ec1f911b" class="">Genauere Informationen über das Produkt und den Entwicklungsprozess zur Planung der Aktivitäten und Ressourcen (PM und QM).</p><p id="569e000d-6108-4fdb-ae28-161de2528d34" class="">Beurteilungsgrundlage für die Produktqualität (z.B. durch Restfehlerschätzungen).</p><p id="c16fd65c-7f5e-441c-ac79-d32127680c27" class="">Besseres Produktwissen der Inspektoren.</p><p id="e155730e-53b1-4866-9965-b0e9a509506f" class="">Gemeinsame Sicht des Inspektionsteams auf das Produkt. Inspektion als Lerninstrument für neue Teammitglieder.</p></li></ol><p id="6d2c4385-c874-436d-b571-ff0b70b85b93" class="">
+</p><p id="ddedbf1d-3353-4587-a559-88741ffce0e3" class="">&quot; Was ist Qualitätsmanagement?<div class="indented"><p id="05e86bce-ce3c-41ed-bb5b-5a7d9a301302" class="">Qualitätsmanagement ist die Menge aller Aktivitäten, Vorgehensweisen, Techniken und Hilfsmittel, die sicherstellen, daß ein Software-Produkt vordefinierte Standards erreicht oder übertrifft.</p></div></p><p id="aa370033-88b6-435f-bd55-b989d4cd9332" class="">
+</p><p id="7b9271be-70ee-43b4-ab86-26bb98994f4d" class="">Woraus besteht Qualitätssicherung?<div class="indented"><p id="c2596622-78d5-40c6-a586-3a4fc71cab02" class="">Qualitätssicherung (QS) besteht in der Durchführung von Verifikation und Validierung in jeder Phase der Software- Herstellung.</p></div></p><p id="d300471e-d567-49a7-a790-5ffad4132563" class="">
+</p><p id="87cf25ad-57de-4abe-b5a0-512ae62411f9" class="">Wo im V- Modell sind Tests anzufinden?</p><p id="5e5c9734-154f-4c0c-b41d-d4be29571577" class="">
+</p><p id="35adfc57-ecd9-4ff1-88ea-2e869bb8d303" class="">&quot;&quot; Welches sind die Schritte im TDD?&quot;<div class="indented"><ol type="1" id="83ad530a-b7b4-4892-9628-7e1e64194bb2" class="numbered-list" start="1"><li>Think: Auswahl der zu implementierenden Anforderungen. Spezifikation der Testfälle.</li></ol><ol type="1" id="d87265ed-53ba-4c9d-8577-bcc943dc49d9" class="numbered-list" start="2"><li>Red: Implementierung und Ausführung der Testfälle. Alle Tests müssen fehlschlagen.</li></ol><ol type="1" id="6c1e6884-198c-42df-96f8-c594c6bda4ac" class="numbered-list" start="3"><li>Green: Implementierung der Komponenten und Klassen und Ausführung der Testfälle. Testfall erfolgreich -&gt; weiter bei Schritt 4. Testfall schlägt fehlt -&gt; weiter bei Schritt 3.</li></ol><ol type="1" id="ec924604-b0e9-4351-a8cc-38df31e10ab2" class="numbered-list" start="4"><li>Refactor:Änderung und Optimierung der Implementierung ohne Änderung der Funktionalität; Ausführung der Testfälle. Testfälle dürfen nicht fehlschlagen. Auswahl der nächsten Anforderung (Schritt 1)</li></ol></div></p><p id="60661540-4245-441a-a07c-5be927cccb36" class="">
+</p><p id="5d835dbf-04c7-49fa-9de7-dfc1ade3f96e" class="">&quot; Ist jeder Testfall, jeder Fehler, jede Anforderung gleich viel „wert“?<div class="indented"><p id="45805b84-aa31-4814-870f-653aefd2fc3a" class="">Nein. Beispiel: 10 unterschiedliche Bezahlverfahren einer Online-Plattform, wobei 80% des Umsatzes immer über dasselbe Verfahren abgewickelt wird. ⇒ Value-Based Testing</p><p id="4d3edf46-d104-4a03-be4c-bebf8e8e1ff1" class="">Requirements-Based testing ⇒ Welche Anforderungen bringen dem Kunden den meisten nutzen?</p><p id="404d6be1-4364-4bab-b2ff-8e644f572e13" class="">Risk-Based testing ⇒ Welche Risiken gefährden diesen Nutzen?</p><p id="074bde8e-87d9-4948-b6a6-13a46cfc05ea" class="">Test case selection techniques ⇒ Welche Testfälle addressieren dieses Risiko?</p></div></p><p id="743e97c6-210c-4571-b475-1adb9ac891b4" class="">
+</p><p id="eb60e06b-5037-4149-bae8-cd6522eaeb8c" class="">Welche Frage stellt die Verifikation?<div class="indented"><p id="241adf82-14a8-491e-bdca-6d87fb399db1" class="">„Bauen wir das Produkt richtig?“</p><p id="b0cb3902-aaff-419d-b738-c95175969910" class="">Umsetzung im Vergleich zur Spezifikation in vorangegangenen Phasen.</p><p id="09778888-b93d-41b9-8ee6-47d221a8c10d" class="">Test der Umsetzung gegen die Spezifikation.</p></div></p><p id="4d62a4e7-1131-4c9c-b913-b72ba602ae60" class="">
+</p><p id="5362c08e-9cef-4995-be0e-12c6ca68dc55" class="">Welche Fragen stellt die Validierung?<div class="indented"><p id="99844910-ef7d-4461-8018-13d207f9faae" class="">„Bauen wir das richtige Produkt?“</p><p id="dee57789-2ba0-460b-84fb-20b00747f913" class="">Entspricht die Lösung und damit die Spezifikation dem, was der Kunde erwartet?</p><p id="ce9a2b72-218b-4ce9-bfbd-089f95eabf87" class="">Test der Umsetzung gegen die Nutzeranforderungen.</p></div></p><p id="d97a43c6-80bb-48ca-b534-1304cad422d3" class="">
+</p><p id="ad791933-4360-4d04-8047-378daf4c16a2" class="">Was versteht man nach Myers unter Software Testen?<div class="indented"><p id="0b2b21e3-fc43-436b-a7f7-d881f37381b4" class="">„Testen ist das Ausführen eines Programms, mit der Absicht, Fehler zu finden.“ (Myers, 1979)</p></div></p><p id="d8b58a59-1eb0-4f40-b41b-b38b64f7bd1a" class="">
+</p><p id="87575776-e187-4867-845d-e8ad25aab38f" class="">Was ist ein Fehler laut Verifikation?<div class="indented"><p id="003e365c-4f73-4836-b168-a015fac8c482" class="">„Ein Fehler ist eine Abweichung zwischen einem Programm und dessen Spezifikation“ (Kaner et al, 1999)</p></div></p><p id="ffbfe89c-f1f4-4f62-ae84-785c04bc3ec2" class="">
+</p><p id="6d1962f8-3727-4ec1-9fcc-22ba1294e182" class="">Was ist ein Fehler laut Validierung?<div class="indented"><p id="052ffee5-1016-4460-ac33-018f79a0a9f8" class="">„Ein Software- Fehler liegt vor, wenn ein Programm nicht das tut, was ein Endbenutzer vernünftigerweise erwartet.“ (Myers, 1979)</p></div></p><p id="154a8ee2-081f-4b5c-b568-82a8b9facc23" class="">
+</p><p id="82ba7433-082f-476e-8841-628cc1a8c1a3" class="">Wie unterscheidet sich Testen von Debugging?<div class="indented"><p id="17f82fc6-4861-4ff8-aae6-99652c1b9873" class="">Testen beschäftigt sich nicht mit der Lokalisierung von Fehlerstellen und dessen Entfernung (vgl. Debugging)</p></div></p><p id="43edddb0-2848-4011-b854-d1edf89b225f" class="">
+</p><p id="46402d77-b166-456f-960b-809c19627730" class="">Kann durch Tests Fehlerfreiheit nachgewiesen werden?<div class="indented"><p id="a8be40e4-9267-45f4-ac27-841adc395070" class="">Nein (vgl. Formaler Korrektheitsbeweis).</p></div></p><p id="5dc0c144-b7ed-4009-8809-5405d12b8854" class="">
+</p><p id="f527b07c-da22-4d5f-a7cf-2442fe22ea29" class="">Welches sind die Phasen im PDCA-Zyklus? &quot;<div class="indented"><p id="7c76872f-d856-4711-abbe-d45be1e62409" class="">Plan: Planen der nächsten Iteration des SPI-Zyklus basierende auf aktuellen Erfahrungswerten (inkl. Zielsetzung)</p><p id="6ce2d2a7-1f6a-4534-9f74-ebe8c35bf1b1" class="">Do: Durchführen der geplanten Aktivität (Task, Projekt usw)</p><p id="1a83873f-ed56-4c18-9948-d078241ba201" class="">Check: Überprüfung der Produkt- und Prozessergebnisse (z.B. durch Messung)</p><p id="8d4a91a2-c1c1-42f6-a3b6-40fcfda4ef20" class="">Act: Analyse der Ergebnisse als Feedback für den nächsten SPI Zyklus. Verbesserung der Erfolgsfaktoren, Vermeidung von Wiederholungsfehlern, Beseitigen von Schwachstellen usw.</p><p id="7a91a8d6-07f5-4647-851f-72c37632aad4" class="">SPI = Software Process Improvement</p></div></p><p id="e30ed73f-34ba-49c0-b08b-3e384ec34794" class="">
+</p><p id="66895be7-18da-497a-9a12-e3cb49ce53f8" class="">&quot; Welche Ebenen gibts im PDCA-Zyklus?<div class="indented"><p id="4d428ae4-80f0-4cb2-86b5-254e7fea47b0" class="">Arbeitspakete (work space, task level)</p><p id="1915bc94-10ad-48ee-b668-a592ef96ce20" class="">Projektebene</p><p id="204cc370-b336-4acf-8a09-7206ab213712" class="">Unternehmensebene (Management, Qualitätsmanagement)</p></div></p><p id="65d89eca-2daf-41cc-a4f5-3444a39af7ac" class="">
+</p><p id="59d63424-cda2-467b-8e97-fb1b2abcefe3" class="">Was ist der Unterschied zwischen Qualitätsmanagement und Qualitätssicherung?<div class="indented"><p id="3d2d985e-12c8-4c66-9182-75696841b210" class="">Qualitätssicherung ist Verifikation und Validierung.</p><p id="6400d534-2762-4b45-a0a7-a036a9bee4ac" class="">Qualitätsmanagement eine größere Menge von Möglichkeiten um vordefinierte Standards zu erreichen.</p></div></p><p id="783f5ba2-b517-4663-97f6-763a5f29a902" class="">
+</p><p id="963500f1-9510-4bf9-b9db-ba0fd66b0e70" class="">Wie werden Black Box Tests in agilen Umgebungen verwendet?<div class="indented"><p id="ad30f63f-b3cd-461e-8c1b-9f2f81b4ddc7" class="">Entwickler programmieren auf Grundlage der User-Stories und Abnahmekriterien.</p><p id="1281a5f1-d300-4f62-8ce4-512ec2b191f9" class="">ZEITGLEICH entwickeln Tester Tests auf denselben Grundlagen.</p><p id="d366e082-7d8f-4ccc-8b46-d35ea758f36e" class="">Dabei sind alle Black-Box Verfahren wie Äquivalenzklassenbildung, Grenzwertanalyse, Entscheidungstabellen und Zustandsbasierte Tests möglich.</p></div></p><p id="e7a17e89-7700-4880-ba76-9bc0f2b14b46" class="">
+</p><p id="edea514d-2c59-4d04-9e86-1b98905fa66b" class="">Ein Beispiel für verhaltensgetriebene Entwicklung (Behaviour Driven Development)<div class="indented"><p id="f0c4fa84-9f5e-485a-a1ba-40c55b92e086" class="">&quot;Given the &quot;&quot;Unregistered User has navigated to the &quot;&quot;register&quot;&quot; page</p><p id="8a4283dc-48ec-455c-b83e-3f61b1df338e" class="">When entering &quot;&quot;newuser&quot;&quot; in the &quot;&quot;Username&quot;&quot; field And entering &quot;&quot;abc&quot;&quot; in the &quot;&quot;Password&quot;&quot; field</p><p id="a2ff262c-5a85-4961-9e6e-17e8c6f25b44" class="">And pressing the &quot;&quot;Register&quot;&quot; button</p><p id="f6f2571f-9332-4c5c-83c9-47426c6656cf" class="">Then the text &quot;&quot;Thank you for Registering&quot;&quot; should appear on page And the URL should end with &quot;&quot;use/accountPage&quot;&quot;</p></div></p><p id="004ef2a2-4146-44fe-9650-4685556b3e90" class="">
+</p><p id="0d3576ba-bcdb-40a5-955d-101a9cc548db" class="">&quot; Welche Stufen von Akzeptanzkriterien gibt es? - Wie sehen Beispiele für Testdaten bei Akzeptanzkriterien aus? &quot;<div class="indented"><p id="517ca10f-bbe4-4471-b4a3-04062fd6ea90" class="">Beispiel für eine Bedingung bzw. Anforderung (Condition of Satisfaction)<div class="indented"><p id="8605594b-6ce8-4240-bede-62c2e9f4b87f" class="">beim Login Passwörter dürfen nicht knackbar sein Beispielhafte</p></div></p><p id="84b04106-819d-4da2-a87f-2828aa134310" class="">Akzeptanzkriterien (Acceptance Criteria) für das Passwort in einer Registrierung.<div class="indented"><p id="e304c835-7a1d-4733-a547-2cbf64b4bdae" class="">&quot;Definition für &quot;&quot;nicht einfach knackbar&quot;&quot; aus Condition of Satisfaction: Min 8. Zeichen, nur alphanumerisch, mind. eine Zahl, ...</p></div></p><p id="ac17d4dd-6948-42be-804d-bb2e195884b0" class="">
+</p></div></p><p id="ee331ed0-d710-4373-b5cf-38087cdd01d8" class="">&quot; Teufelsquadrat nach Sneed &quot;<div class="indented"><p id="9ab2bbaa-5541-483e-a340-83026f7c25a6" class="">Die Fläche des Quadrats ändert sich nicht.</p><p id="a80603d6-5a7d-4019-8209-a4db02ba6f47" class="">Erhöhung der Qualität und Senkung der Entwicklungsdauer</p><p id="d78473ae-ffe9-4336-8be6-8688a8b5049d" class="">funktioniert nur durch Reduktion des Umfangs und/oder Erhöhung der Entwicklungskosten &quot;</p></div></p><p id="c1650693-292c-443f-8e9d-301647356116" class="">
+</p><p id="88c091e4-73ef-4b4d-8b1b-439546b0facf" class="">Integration von QS in RUP &quot;<div class="indented"><p id="673bb82d-ad36-43fc-b6bd-05a63de0075f" class="">QS mit zugeordneten Rollen ist ständiger Begleiter während des gesamten Projektverlaufs. Review bei allen Meilensteinen.</p><p id="8e30dd95-5d1f-46b4-9bdf-4998f570352f" class="">Eigene „Test Discipline“</p></div></p><p id="06e5b1a1-ba58-41f3-a485-cd786b6be99d" class="">
+</p><p id="fcf8b07a-6124-4921-a31e-d7fba646b727" class="">&quot; Wie ist QS im V-Modell XT integriert? &quot;<div class="indented"><p id="3ed6baca-9bda-40d9-8f8e-67b3c6c05fe8" class="">QS ist als eigenständiger Vorgehensbaustein realisiert.</p><p id="328b625c-f661-4307-9a99-f1fedb54fe4e" class="">Dieser Vorgehensbaustein ist ein verpflichtender Bestandteil aller Projekttypen.</p><p id="1a80d9f2-93e0-43b8-b3ae-4707b487c865" class="">Der Projekttyp „Einführung und Wartung eines organisationsspezifischen Vorgehensmodells“ beinhaltet den Gedanken der ständigen Verbesserung &quot;</p></div></p><p id="30f0f8aa-d2e9-4812-8e13-8089ac14bdfd" class="">
+</p><p id="e518d81c-830a-481a-becc-98bb97e34372" class="">Wie ist QS in agilen Entwicklungsprozessen integriert? &quot;<div class="indented"><p id="2fe5b1db-b9e3-4151-a940-b6b0e0ba86aa" class="">Reviews und Tests als fixer Bestandteil der Sprints.</p><p id="71a47930-aaab-45ff-a5c9-94ed4bebeb36" class="">Test-Driven Development</p></div></p><p id="b5f61bfc-c933-4f86-94eb-0740b84e8452" class="">
+</p><p id="e952fc7e-c38f-401b-9018-f567fa9d5595" class="">&quot; Welche Typen von Messungen gibt es? &quot;<div class="indented"><p id="271aa31b-3ad6-49fe-93ba-4edaa01e3134" class="">Direkte vs. indirekte Messungen:</p><p id="ef134cd6-ef7f-4c7e-865c-4aa4365a8859" class="">Objektive vs. Subjektive Messungen</p><p id="ace9668f-68d7-4b0c-8df7-48b4aaf36a97" class="">Quantitative vs. Qualitative Daten</p></div></p><p id="da9f2b65-325a-4de5-ae56-0285fc7d5938" class="">
+</p><p id="1cb70d2b-0c55-4bf6-9dc4-ee5fd7911dd3" class="">&quot; Was ist eine direkte Messung?<div class="indented"><p id="e8e011b1-1caf-43df-b1d5-6c414410359f" class="">Wertermittlung direkt beim zu untersuchenden Objekt (z.B. Dauer, Aufwand einer Aufgabe) Was ist indirekte Messung?</p><p id="15599c60-60b9-4230-a5a8-7cf2cd5122bd" class="">Ermittlung von Messwerten aus direkten Messungen (z.B. Effizienz einer Fehlererkennungsmethode = Anzahl der gefundenen Fehler pro Zeiteinheit)</p></div></p><p id="7391b709-7a3c-42f3-9f12-46dc2241476a" class="">
+</p><p id="327d9a84-2adc-4472-b091-b31a8a1e49c3" class="">Was kann objektiv gemessen werden?<div class="indented"><p id="c4196614-d990-4d2f-80b1-bbeed77d108d" class="">LoC, Auslieferungsdatum, Aufwand usw.</p></div></p><p id="46dcd6b5-8d1a-48a8-a37d-c457279f6714" class="">
+</p><p id="b0deebf1-07b6-4e75-b147-90be06c4c4a2" class="">Was wird subjektiv gemessen?<div class="indented"><p id="30bcd39c-7ee1-4619-87d2-e9387f79f192" class="">Messergebnisse basierend auf der individuellen Sichtweise des Betrachters, z.B. Fragebögen zur Erfassung der Kundenzufriedenheit.</p></div></p><p id="210b39a0-d606-492c-b5d7-5b1d6777fcf8" class="">
+</p><p id="c7d6f4f2-385e-4642-a5c3-f31b3607adbb" class="">Was sind quantitative Daten?<div class="indented"><p id="80b892ab-d84c-4d45-a7d7-8cb55b9853a4" class="">Daten als konkrete Zahlenwerte (z.B. für statistische Auswertungen) Was sind qualitative Daten?</p><p id="df2e7008-3dbc-4dbe-a517-6cf17f24ab9b" class="">Visualisierte Informationen (Text, Bilder), z.B. durch Interviews, Interpretationen</p></div></p><p id="3f4dff5e-f36b-4ef4-991f-6842577d28f4" class="">
+</p><p id="3a49fb62-255d-46cc-9341-d450a6da9207" class="">Was sind Äquivalenzklassen?<div class="indented"><p id="0acfc5f5-2dae-4d39-b411-092c9154dec3" class="">Zerlegung einer Menge von Daten (Input oder Output) in Untermengen (Klassen), die äquivalente Ergebnisse oder Auswirkungen produzieren.</p></div></p><p id="fa811544-7ef2-4526-b2d7-13eb3ec6e54c" class="">
+</p><p id="2ad69c4c-36b2-4d4d-a626-13c0b2b4f26e" class="">Welche Methoden zur Qualitätssicherung gibt es? &quot;<div class="indented"><p id="29498244-1680-4c18-893b-118138ae676d" class="">Organisatorische Methoden<div class="indented"><p id="6dc1f9ca-c48e-45d1-9fbd-2e3218af4cfb" class="">Schaffen notwendige Infrastruktur Definieren und steuern den Qualitätsprozess</p></div></p><p id="78e325a6-d564-41e2-ba4d-34d13cd2a506" class="">Dynamische Methoden<div class="indented"><p id="7627a1fb-e02f-4de7-ad3e-385e77fde46d" class="">Die Software bzw. Teile davon müssen ausführbar sein z.B. Testen</p></div></p><p id="3084cd4a-aa9a-4530-8484-f6e3e682b3c2" class="">Statische Methoden<div class="indented"><p id="fa3f1d88-b238-4f1f-9dbf-43b7784af9ed" class="">Die Software muss nicht ausführbar bzw. integriert sein</p><p id="f2217e2b-6448-4b63-9597-dbbbf08f230f" class="">Fokus auf die interne Struktur</p><p id="05d03218-8a16-4e1c-9e68-c378d87521a4" class="">z.B. toolgestützte Code Analysen</p><p id="3bb8a1f1-0da3-4701-ba5a-21859e9d1fed" class="">z.B. Code Reviews</p></div></p></div></p><p id="24ec87a0-821a-47da-b42d-2c6c6ad7c7e9" class="">
+</p><p id="86685302-2556-4522-8d42-ffd66506c398" class="">Was ist ein Dummy-Objekt?<div class="indented"><p id="4c7c92d0-74c7-49c2-92bd-3daa6414ab7e" class="">Platzhalter ohne Funktionalität</p><p id="a37e09d4-e94b-47f8-8172-9d61717a826c" class="">Dient als „leerer“ Methoden Parameter</p><p id="f1f91942-c325-4a97-8270-0d048391b6b5" class="">Wird in die Komponente gereicht, jedoch nicht verwendet</p></div></p><p id="5c1382b0-ea00-4a8d-abb4-e4d580b93261" class="">
+</p><p id="07112c66-12fd-4760-9739-5051ad8075c4" class="">Was ist ein Fake-Objekt? &quot;<div class="indented"><p id="09b9417a-204c-4f67-ab1f-94d518589b38" class="">Ausführbare Implementierung</p><p id="bb9064c6-b050-4b2b-8934-aab1038f708f" class="">Dient jedoch nicht zur Steuerung/Überprüfung des Testobjekts</p><p id="95a765b5-06e1-441f-8cc0-2d08d4c8cc0f" class="">Einsatzzwecke:<div class="indented"><p id="7a9a6174-45f1-49e7-9719-35d5f66acba4" class="">Reale Implementierung zu langsam</p><p id="678df476-bd0c-4b9f-85d3-18e70c5ee1f3" class="">Reale Implementierung nicht verfügbar</p></div></p><p id="b78bd5b1-0cb2-4f72-94ff-3fd696a15c1c" class="">Beispiele:<div class="indented"><p id="325ff0bc-fb19-4440-9d45-ac1f0951951f" class="">Simulation einer Datenquelle</p><p id="8e0fe3b9-a2bd-431d-b43e-8cd4961604be" class="">In-Memory Datenbank</p></div></p></div></p><p id="3b37274a-5aa5-459d-9c7e-e1496f63d3a6" class="">
+</p><p id="c1d15bb6-9884-4def-9c2c-2072cc2a1890" class="">&quot; Was ist ein Stub? &quot;<div class="indented"><p id="8aeebea5-f203-45bd-a4ca-a12dfcbd472d" class="">Ausführbare Implementierung</p><p id="a7788150-0378-41dd-a562-18841d63172a" class="">Liefert vordefinierte Werte/Exceptions an den Aufrufer</p><p id="7d3359c7-d08b-47fd-8202-dbab4f664d1e" class="">Ermöglicht indirekt die Steuerung der zu testenden Komponente</p><p id="75d793d4-a853-4671-9287-07d0e3600269" class="">Steuerung, welcher Pfad in der zu testenden Komponente durchlaufen wird</p><p id="7a9892ba-1a59-4c90-aa7f-7ca13258fa88" class="">Erlaubt dadurch das Testen von Pfaden in der Komponente, die von außen nicht beeinflusst werden könnten</p></div></p><p id="83eb1b0f-235b-4cad-9af4-6e087f41d11e" class="">
+</p><p id="a7893a7a-8e0c-4c3e-9eb0-ed3743cf9312" class="">&quot; Was ist ein Mock? &quot;<div class="indented"><p id="1487a65f-8089-4c43-92b7-5fa982159b7f" class="">Ausführbare Implementierung</p><p id="b0f05c70-9673-4766-a581-06d6ceb885d2" class="">Liefert vordefinierte Werte/Exceptions an den Aufrufer</p><p id="9be6422b-9184-4f20-ad56-709d505f6af1" class="">Im Gegensatz zum Stub werden die an den Mock übergebenen Parameter überprüft und sind somit Teil des Tests</p><p id="ba3d8952-d48a-4cc3-88a5-834aa1b12c94" class="">Ein Mock erkennt, wenn unerwartete Werte eingehen</p><p id="6c79638a-5647-47f2-a490-571f943da319" class="">Direkte Verwendung von Assertions</p><p id="1be03f3d-87ae-4f47-8f0e-3f9f765740fa" class="">Auslösen von Exceptions</p></div></p><p id="f79a65b3-3a32-49fd-965d-8401e27c9ad3" class="">
+</p><p id="c986188e-3fce-4053-bc29-9c2f017b4256" class="">&quot; Welches Arten von Tools zur Qualitätssicherung gibt es? Plus Beispiel &quot;<div class="indented"><p id="17e24094-a93f-4e47-9cda-8d912e26564e" class="">Tools zur Überprüfung der Testabdeckung<div class="indented"><p id="0e41779a-d512-4790-872e-201b093cf8ee" class="">Clover Cobertura JaCoCo</p></div></p><p id="35183273-f353-4e42-b7bb-a79db7c0ae4d" class="">Tools zur Überprüfung von Coding Standards<div class="indented"><p id="98a83394-37e1-4f85-8615-ecfc98a01981" class="">Checkstyle, IDE, z.B. IntelliJ</p></div></p><p id="b303af00-b897-4130-8e34-2aedf4105735" class="">Tools zum Finden von Fehler Patterns<div class="indented"><p id="a89ce7de-9b31-4328-9b99-100f339f7f23" class="">FindBugs, SonarLint</p></div></p></div></p><p id="7057418f-306e-409b-a485-715bf6a7d40f" class="">
+</p><p id="b75469c3-c178-4cd1-997f-ce7be41a66d8" class="">&quot; Welche Ziele hat Testautomatisierung? &quot;<div class="indented"><p id="5bd41e07-0559-4c8f-a4a4-636e01a341c6" class="">Wiederkehrende/repetitive manuelle Tätigkeiten reduzieren</p><p id="a28e5d60-6fe9-43ca-b991-efe67e313b8a" class="">Hohe Anzahl an Tests in angemessener Zeit ausführen</p><p id="0f8a9134-de71-4671-b92e-7c50f567290e" class="">Tests durchführen, die man nicht manuell durchführen kann (z.B. Last-Tests)</p><p id="ead0c5ae-f880-422e-adee-fd25c76cc3ac" class="">Automatisch Reports der Testergebnisse generieren</p><p id="df588141-01bf-4669-b831-fb5d427b3228" class="">Die Effizienz des Testens zu steigern</p></div></p><p id="0f0cfc31-4fab-4bfe-b6eb-3a1864822301" class="">
+</p><p id="7112052c-eed3-40c3-a163-622eda830c1a" class="">Welches sind die Einflussfaktoren bei der Software-Entwicklung?<div class="indented"><p id="f63ab093-f5ce-4372-9d9a-16ca902e5991" class="">Genau jene aus dem Teufelsquadrat! Qualität, Quantität, Entwicklungsdauer, Kosten</p></div></p><p id="141ed727-2c2f-4270-b9d7-02dbb6c8707a" class="">Welches sind die Schritte im Spiralmodell? &quot;<div class="indented"><ol type="1" id="6a271b18-785b-4f3c-b003-0cdb931e496a" class="numbered-list" start="1"><li>Kick-off: Bestimme Ziele und Alternativen</li></ol><ol type="1" id="0e0568c8-c803-44f2-811d-073a4542e291" class="numbered-list" start="2"><li>Einschätzung der Risiken der Alternativen</li></ol><ol type="1" id="7e3239c2-3159-4b12-9c37-b24521beb812" class="numbered-list" start="3"><li>Entwicklung und Test</li></ol><ol type="1" id="5f4a7135-ce8c-4c87-91a5-88f36e3cf00e" class="numbered-list" start="4"><li>Plan der nächsten Phase; weiter bei 1.</li></ol></div></p><p id="f43e2be7-1105-48d0-8efd-36d57cb625ec" class="">
+</p><p id="dd8cdde2-391d-49cc-86ea-b21497e90525" class="">&quot; Welche Leistungen bietet eine QS-Stelle für ein Projekt? &quot;<div class="indented"><p id="29eb9af7-cf33-44af-8d92-a5aa1cf700cd" class="">Qualitätsplanung als Teil der Projektplanung.</p><p id="19f30891-56b3-4e80-a29b-76553b471573" class="">Herstellen lokaler Standards auf Projekt- und Organisationsebene.</p><p id="75618b6c-7967-4745-b608-1fb049b376b2" class="">Review zentraler Projektdokumente.</p><p id="51007b21-39a2-41bc-9864-40a5bd469fc8" class="">Organisieren von Reviews: Ausbildung, Planung, Durchführung, Verbesserungsvorschläge.</p><p id="58304c21-cdb3-4703-96a2-27f09a9cad8b" class="">Unterstützung bei Personalauswahl und Software-Zukauf.</p><p id="47718a09-e03d-49a5-a2f6-2b4aef4c77ad" class="">Vorbereitung und Auswertung von Produkttests</p></div></p><p id="6501b229-6f9d-43d0-b9c9-761a6a8660f5" class="">
+</p><p id="efe0a2f6-0d6f-45f9-a5e0-95f64ac9ce7a" class="">&quot; Wie ist ein Testfall aufgebaut? &quot;<div class="indented"><p id="9f2985bd-0eed-4cf1-a12b-ed82657e7863" class="">Ein Testfall besteht aus einer Menge (V, E, A, R)</p><p id="5bfafc7a-a8ff-4d4a-87bf-40be314f6b9f" class="">V: Vorbedingungen(z.B. System-oder DB-Zustände). E: Eingabewerte.</p><p id="3a67289d-8e07-40dc-93ea-dee3a1903104" class="">A: Aktionenzur Eingabe der Werte.</p><p id="1fe40b86-5c81-4fd2-899e-65d6d93131d9" class="">R: erwartete Ergebnisse</p></div></p><p id="57c6dcdd-1f54-49e9-b5b1-06fb306f2438" class="">
+</p><p id="34b4af6d-46a2-45e1-91ed-f9632d5a035d" class="">&quot; Wann ist ein Test erfolgreich? Was soll er andernfalls anbieten?<div class="indented"><p id="56ce5286-ec0f-4123-b477-ac2bc190122a" class="">Ein Test ist erfolgreich, wenn er einen Fehler gefunden hat.</p><p id="9da01409-e2be-4582-84e7-23e2b554e69e" class="">Tests, die keinen Fehler aufdecken, sollen bessere Information über die Produktqualität liefern (systematische Testüberdeckung!).</p><p id="3c582d6c-9a38-4432-985d-a4e41e066f95" class="">
+</p></div></p></div></article></body></html>

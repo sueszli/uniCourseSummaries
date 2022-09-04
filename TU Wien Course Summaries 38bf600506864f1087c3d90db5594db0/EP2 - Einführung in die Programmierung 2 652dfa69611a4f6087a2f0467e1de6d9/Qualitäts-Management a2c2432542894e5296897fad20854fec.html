@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Qualitäts-Management</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a2c24325-4289-4e52-9689-7fad20854fec" class="page sans"><header><h1 class="page-title">Qualitäts-Management</h1></header><div class="page-body"><h1 id="70cc94eb-a057-466e-aee2-6e5a91a3b4e6" class="">Programmverstehen / statische Analysetechniken</h1><p id="117cc74d-f298-4ff7-b591-fd4bbcd6bca7" class="">Statisches Programmverstehen ist eine Fähigkeit die sich mit der Zeit verbessert: (Reihenfolge = Fortschritt)</p><ol type="1" id="4df8fc45-1740-4798-9328-e08aef231159" class="numbered-list" start="1"><li>Syntax und Grammatik verstehen</li></ol><ol type="1" id="9b737edf-ccef-4c90-b820-f6eac7b72056" class="numbered-list" start="2"><li>Ablauf nachvollziehen können</li></ol><ol type="1" id="b6e0ffa9-c381-46ad-ad38-f641a20f441e" class="numbered-list" start="3"><li>Statisches Verstehen beim Lesen</li></ol><p id="c61cdde4-80d9-4fd5-b1fc-b8185ebe7553" class="">
+</p><h1 id="5b2c1323-53e7-4551-8608-d0ddf6f543d6" class=""><strong>Design-by-Contract </strong></h1><p id="04f4b849-5535-4ed9-8a8e-231de853e547" class="">Eignet sich nicht für Beweisführungen, Kommentare die Bedingungen für Methoden festlegen.<div class="indented"><p id="c2b0ee31-f97d-455d-b0b6-c98548b1ced1" class="">Objekte → „Server“</p><p id="34995a31-7e91-41ff-9d75-eac4cc3636ee" class="">Methoden → „Service“</p><p id="fac8c7a0-0bcd-40be-a5a9-7263cde79291" class="">Methoden die Output beanspruchen → „Client“</p></div></p><p id="23824a15-4fb6-4ddb-abd1-e28ce33d026c" class="">Verträge zwischen Client und Server sind Zusicherungen (die meist als Kommentare) geschrieben sind.</p><p id="be5373d6-5aee-410e-8cd5-e06496635aae" class="">Die Verantwortlichen für Bedingungen<div class="indented"><ul id="1d154324-e550-47bc-8d52-2ec37cf3a4f0" class="bulleted-list"><li style="list-style-type:disc">Precondition - Client</li></ul><ul id="726b6656-ceb7-4320-b02e-a93143097eaa" class="bulleted-list"><li style="list-style-type:disc">Invariant - Server</li></ul><ul id="aa41250d-c90b-4d10-8b2c-4f2ec9acab95" class="bulleted-list"><li style="list-style-type:disc">Postcondition - Service</li></ul></div></p><p id="8d57e66d-68b4-46d0-bb28-0e93c91cee2e" class="">
+</p><figure id="0c01bae8-acf7-4243-81fa-54d45b801487" class="image"><a href="Qualita%CC%88ts-Management%20a2c2432542894e5296897fad20854fec/Untitled.png"><img style="width:480px" src="Qualita%CC%88ts-Management%20a2c2432542894e5296897fad20854fec/Untitled.png"/></a></figure><p id="867e6f7d-8bb3-44d9-978a-cf3b25d20f68" class="">
+</p><h1 id="e3448e18-61e9-4740-b193-0eabf69748cf" class="">Hoare-Kalkül (Hoare Tripel)</h1><p id="28cbe6bc-97dd-4e38-afa4-afdc3dbccdef" class="">Eignet sich für Beweisführungen. Bedingungen für spezifische Programmsegmente.</p><p id="a9dcc9d4-5cc8-40f4-b0fd-8ad8f77d9f32" class="">Struktur: {V} S {N}<div class="indented"><p id="b15ed019-1b63-4b4e-bc7b-27714d81be5d" class="">Vorbedingung                       { x = 1 ; y = 2 }</p><p id="69daa4b3-9c4f-4aeb-89a2-178f1d404a81" class="">Programmsegment                 x = y</p><p id="d1f1a634-ee77-4984-a376-b2322c24c938" class="">Nachbedingung                    { x = 2 ; y = 2 }</p></div></p><p id="9c7c302b-6249-4515-b630-4241ba1181a5" class="">Lässt sich hintereinander ausführen und verketten und damit partielle Korrektheit des Programmes beweisen.<div class="indented"><p id="632607df-121d-47f3-975a-116055b69d0e" class="">Methode A:           {V} S1 {X}</p><p id="274ccc2f-8345-448c-9a61-24bb39ec0195" class="">Methode B:           {V} S2 {N}</p><p id="2aaf0e43-38b4-4bfb-a91d-2875403ae4b9" class="">Verkettung:            {V} S1 S2 {N}</p></div></p><p id="3a5f5fcd-08a4-4236-9cbf-56d5a5bcb1de" class="">Lässt sich im Interpreter mit assert Anweisungen formulieren</p><p id="a3226894-37aa-4a8b-84af-9701bd77bd60" class="">Wenn assert() nicht zutrifft wird die AssertionError Exception geworfen<strong></strong></p><p id="cb48e039-81a8-4de3-ab25-bd1eb3b7242e" class="">
+</p><h1 id="86a6d09f-263f-4b2a-96f8-b52106ad645b" class=""><strong>Testen und Verbessern</strong></h1><p id="3946186f-d09e-4143-9011-252f7c6daaea" class=""><span style="border-bottom:0.05em solid">Black-Box-Tests</span>: unabhängig von Implementierung, von Anwendung hergeleitet</p><p id="8c67b166-62b3-4a12-9180-9bb0eb9b6f5e" class=""><span style="border-bottom:0.05em solid">White-Box-Tests</span>: vom Implementierung abgeleitet</p><p id="1f31d4ee-b9d8-48c7-a439-e9420c2a8826" class=""><span style="border-bottom:0.05em solid">Grey-Box-Tests</span>: Testfälle vor Implementierung als Spezifikation festgelegt (Zwischending zwischen Blackbox und Whitebox)</p><p id="abc40773-f402-4125-9142-b486708e1637" class="">
+</p><p id="2813f96b-543e-4f82-a972-203b1487d1af" class="">Weitere Tests:<div class="indented"><ul id="50e4d0c1-7d82-47f6-983b-129526e84812" class="bulleted-list"><li style="list-style-type:disc">Regressions-Test (automatisiert)</li></ul><ul id="67bec25a-6e2e-4af7-91c2-feae8ca376e9" class="bulleted-list"><li style="list-style-type:disc">Code-Review</li></ul><ul id="ff07b98b-3e96-4780-9d37-5cca81f12467" class="bulleted-list"><li style="list-style-type:disc">Sicherheitstest (Pentest)</li></ul><ul id="0ae2f855-1196-497c-81f9-16c5bb34a12e" class="bulleted-list"><li style="list-style-type:disc">Belastungstest (Stresstest, Crashtest)</li></ul><ul id="46ce2723-0dad-44fc-8c91-8735f1e4eb0f" class="bulleted-list"><li style="list-style-type:disc">Benutzeroberflächentest</li></ul></div></p><p id="c4cd3538-2181-4241-8099-5d85e20b56de" class="">
+</p><p id="0f6d9712-456b-4224-b362-cf13475c7b6a" class="">Hilfsmittel zum Finden von Fehlerursachen:<div class="indented"><ul id="7b419cc6-9730-44ce-b603-341dddb2433f" class="bulleted-list"><li style="list-style-type:disc">Code-Review</li></ul><ul id="50b9878e-c9ef-4e92-a0bc-9acb1b510827" class="bulleted-list"><li style="list-style-type:disc">Debugger</li></ul><ul id="9bb8033f-3124-4936-9152-7c65fe200999" class="bulleted-list"><li style="list-style-type:disc">Log-Dateien, Traces</li></ul><ul id="6b6f4840-a0af-4fb4-9ea3-c5da91a83180" class="bulleted-list"><li style="list-style-type:disc">Einbeziehen von Entwicklern, Experten, Nutzern</li></ul></div></p><p id="55a07cef-344f-488d-99b2-5812ae5e4a45" class="">
+</p><p id="7dcb1c3d-4e1f-4296-b984-0e486ad614d6" class="">Mehrstufiges Testen:<div class="indented"><ol type="1" id="5807e594-8e15-4504-9840-4ae4ce795093" class="numbered-list" start="1"><li>Modul- bzw. Komponententest</li></ol><ol type="1" id="0cc50753-7c7d-418b-b8ed-a200ecd09c6d" class="numbered-list" start="2"><li>Schnittstellentest</li></ol><ol type="1" id="6aaecf10-923b-4da0-819b-a6158639a285" class="numbered-list" start="3"><li>Integrationstest</li></ol><ol type="1" id="b6f9ed61-1a89-42ba-aff5-ba8f463470cf" class="numbered-list" start="4"><li>Systemtest (auch Abnahmetest)</li></ol></div></p><p id="85a63b90-79f3-4fb4-83b5-53b6855856e9" class="">
+</p><h1 id="4b33fb64-120b-4f03-99bd-aad96de670a4" class=""><strong>Qualität und Optimierung</strong></h1><p id="7b889b1f-29fc-4f4b-8afd-b1f9988a7d27" class="">Definition von Qualität:<div class="indented"><ul id="00276a86-b8a0-4120-8d67-5bfbe06deb93" class="bulleted-list"><li style="list-style-type:disc">Brauchbar (Aufgabenerfüllung, Bedienbarkeit, Konfigurierbarkeit, Attraktivität)</li></ul><ul id="6ccf44d0-1586-4c96-9554-ca99be112c73" class="bulleted-list"><li style="list-style-type:disc">zuverlässig und sicher</li></ul><ul id="fd5f70f2-8587-48ce-ad99-3f169c1ef421" class="bulleted-list"><li style="list-style-type:disc">effizient</li></ul><ul id="66295ea0-d40f-488b-9f20-db1ce7d2daea" class="bulleted-list"><li style="list-style-type:disc">wartbar</li></ul></div></p><p id="5a2ef541-dfb0-46a5-8b4d-c9ec6d184c77" class="">
+</p><p id="54f4564c-e367-47f2-b9f2-891f88271916" class="">Qualität verbessern:<div class="indented"><ul id="79276e90-999d-423b-93f8-2b2f387359d0" class="bulleted-list"><li style="list-style-type:disc">Qualitätsbewusstsein</li></ul><ul id="2a63cc1b-6b77-4931-9af8-ff4c14999103" class="bulleted-list"><li style="list-style-type:disc">Anforderungsanalyse</li></ul><ul id="6ff456ec-89bb-4854-9fad-a8ce80db3eec" class="bulleted-list"><li style="list-style-type:disc">ständige Kontrolle</li></ul><ul id="eb9d6ebb-8acb-4675-a442-fd5a2bc3c222" class="bulleted-list"><li style="list-style-type:disc">Besprechungen</li></ul><ul id="499ab9e0-06f9-42f9-bf6d-ab82717d3b0c" class="bulleted-list"><li style="list-style-type:disc">Analyse-Werkzeuge</li></ul><ul id="850f4bc7-59bc-42f0-8163-2366fbd63be8" class="bulleted-list"><li style="list-style-type:disc">formale Beweise</li></ul><ul id="38fa12fb-782b-4089-80c0-2f20a2a1b4ee" class="bulleted-list"><li style="list-style-type:disc">aufeinander Verlassen</li></ul><ul id="ede97026-74a1-4bdb-938f-f717e841fd17" class="bulleted-list"><li style="list-style-type:disc">Qualitätsmanagement</li></ul></div></p></div></article></body></html>

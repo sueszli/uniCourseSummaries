@@ -1,0 +1,918 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Test 1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3a5fb94b-b666-4a63-8014-7cddf4aa1e65" class="page sans"><header><h1 class="page-title">Test 1</h1></header><div class="page-body"><figure id="a87594f4-1923-43ec-9e4d-f269726c4141"><div class="source"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/TU_Wien-Web_Engineering_VU_(Cito)_-_A1-Online-Test-Questions_2020-03-30.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dd399707-6edf-4ae0-88ce-b2d915bc2671/TU_Wien-Web_Engineering_VU_(Cito)_-_A1-Online-Test-Questions_2020-03-30.pdf</a></div></figure><p id="1e813ab3-849d-469a-80fc-eacb67972836" class="block-color-gray">
+</p><ul id="d56c5d28-9d82-4bf0-82f8-65fc64a98cf0" class="block-color-gray toggle"><li><details open=""><summary>You send an HTTP POST request with a JSON payload to a web server and receive a
+response. What can you tell from the headers of the response, which are given below?</summary><pre id="01f41e15-8388-4b05-8c13-3492c652c854" class="code"><code>HTTP/1.1 200 OK
+Date: Mon, 30 Mar 2020 13:00:42 GMT
+Server: nginx
+Set-Cookie: sessionId=e8bb43229de9
+Content-Type: application/json;
+Content-Length: 232 </code></pre><p id="a5bbde90-e11e-46af-a274-707d6cb6c400" class="">
+</p><p id="fa272f9c-5831-49fd-b4b0-cf24537a8fbd" class="">Protocol Version: HTTP 1.1</p><p id="0a3185ef-980a-4cea-b1c9-773e4ea7bda2" class="">Status Code: Success, OK</p><p id="fd029694-8ef5-41b2-99f7-85bc8a9a6336" class="">Date: Mon, 30 Mar 2020 13:00:42 GMT</p><p id="286d55c4-ce06-499c-a2a8-df5f3af9cf55" class="">Server: nginx</p><p id="441eb87c-42db-4eb5-8e91-2d3838c6338c" class="">Server Sets cookie: with a specific ID that we will attach to each request from now on</p><p id="51de2b75-fd98-495f-aa58-9085f3b564c2" class="">Content-Type: Body contains data in JavaScript Object Notation JSON</p><p id="b6f38c54-4ac3-41df-8721-4344790666ef" class="">Content-Length: The length in decimal number of octets / bytes.
+</p></details></li></ul><p id="6b18a780-01d0-47c3-a610-758fd2f5d2e2" class="block-color-gray">
+</p><ul id="262746f7-d222-48b0-bcee-feb42a9aac84" class="block-color-gray toggle"><li><details open=""><summary>You are given the vague description to design a URL for a secure HTTP resource available on
+port 5000: it should serve a path to users, query a username, and target the profile fragment
+within the resource.
+Which of the following URLs is the most compatible with this description?</summary><p id="e07aca27-9cda-4e44-ae97-dc8ecdfa68cb" class="">
+</p><p id="a93cad2c-0295-4d27-9b21-f7347958c516" class="">Probably something like:</p><p id="dca73f6c-f4da-45fa-bc6c-5cf7d473f1d7" class=""><code>&lt;scheme&gt;://[&lt;user&gt;[:&lt;password&gt;]@]&lt;server&gt;[:&lt;port&gt;]/[&lt;path&gt;][?&lt;query&gt;][#&lt;fragment&gt;]</code></p><p id="c46db01f-272e-4205-9b38-25205a25355f" class=""><mark class="highlight-gray"><code>https://coolSite.com:5000/userPath?username=coolName#profile</code></mark><mark class="highlight-gray"> </mark></p></details></li></ul><p id="89ab5ce3-cfaf-435f-98a1-8c66d8088d32" class="block-color-gray">
+</p><ul id="db35f263-b4d9-456d-bf1f-75222bae9cc8" class="block-color-gray toggle"><li><details open=""><summary>You want to send an idempotent HTTP request with a message body. Which method can you
+use?</summary><p id="288d398f-d2c2-4742-afda-c28658894a6d" class="">
+</p><p id="9f4e3bb1-2233-4389-904e-7992911d58b0" class="">Same effect even with multiple executions (idempoptent): PUT, DELETE</p><p id="d0443676-ffd3-4357-aa5d-7484fe1a3298" class="">But DELETE does not have a message body.</p></details></li></ul><p id="a7f143b2-e284-469c-9a17-8b6373c54b12" class="block-color-gray">
+</p><ul id="3bbb3fff-2815-448d-9326-059392f4ff2e" class="block-color-gray toggle"><li><details open=""><summary>You are navigating to a large HTML document which includes three CSS files and ten images.
+How does your browser react?</summary><p id="b5664773-ac1b-43b2-9097-d4447e1fed24" class="">
+</p><p id="b9e4b910-618a-40b6-81f8-c428aeb94049" class="">The browser fetches the content on the website through HTTP requests to the servers that the resource URLs lead to.</p><p id="79f87bfb-06e3-4a9e-a6fb-f9e2e234831c" class="">
+</p><p id="5cad736c-4533-40b9-a0dd-bbf016df3a1e" class="">One process will not wait for the previous one to finish completely - will try to display contents as soon as possible.</p><p id="a0f67f4a-c190-44fe-b99d-ee197823468d" class="">Continuous Resource Fetching.</p><p id="3646d03c-5c68-4747-8dc3-aeeaf277777e" class="">
+</p><p id="717b9fcd-9818-4517-b858-4bd2e4857e55" class="">Process<div class="indented"><ol type="1" id="fb8eb5dc-c423-4fd7-ac99-afdd3f80a82a" class="numbered-list" start="1"><li>Construct Document Object Model (DOM) from parsing the HTML document</li></ol><ol type="1" id="456d270e-260e-4e84-91ca-a2f278194973" class="numbered-list" start="2"><li>Construct Render Tree from CSS and HTML</li></ol><ol type="1" id="5fb13917-f354-464a-a7b7-9ce3a8782180" class="numbered-list" start="3"><li>Layout process (recursive): attaches coordinates to each node</li></ol><ol type="1" id="2513d4c5-60f0-4436-8173-b5ab4739b422" class="numbered-list" start="4"><li>Painting each node from the render tree using the UI backend</li></ol></div></p></details></li></ul><p id="73e1834d-8789-4e25-9809-f9c9d6924656" class="block-color-gray">
+</p><ul id="965aad93-ccb3-43f2-b036-8da64ed49638" class="block-color-gray toggle"><li><details open=""><summary>What is wrong with the following HTML structure?</summary><pre id="f6a055ec-baa2-433d-9ae6-e76344f77eda" class="code"><code>&lt;section class=&quot;important label&quot;&gt;
+	&lt;strong style=&quot;border-bottom: 1px solid black;&quot;&gt;
+		&lt;h2&gt;Important Announcement&lt;/h2&gt;
+	&lt;/strong&gt;
+&lt;section&gt;
+	 &lt;em&gt;Beware:&lt;/em&gt; of all the wrong things in this HTML.
+&lt;/section&gt;
+&lt;/section&gt;</code></pre><p id="54dd99d0-7732-4605-82af-43241e10b057" class="">
+</p><ol type="1" id="638562b5-03eb-4dc4-a49f-b96f46b7c55d" class="numbered-list" start="1"><li>&lt;/section&gt; tags are nested</li></ol><ol type="1" id="0e2c7bd2-1b1d-4313-ad42-91b4f94e5757" class="numbered-list" start="2"><li>h2 can not get &lt;strong&gt; this way</li></ol></details></li></ul><p id="7d332042-f4ce-4589-b57b-8d1695927adc" class="">
+</p><ul id="89e63dba-3473-43b0-b52f-1a9dd2638f3a" class="block-color-gray toggle"><li><details open=""><summary>You want to display an image on your website. The image on your server has a resolution of a
+12000x12000 pixels, but you only need 200x200 pixels. Initially, you write the following code</summary><pre id="045dc750-c6ad-4d48-b4eb-aae4a86e04c1" class="code"><code>&lt;img src=&quot;img_12000_12000.jpg width=&quot;200&quot;&gt;.</code></pre><p id="49a0f327-c649-4b63-87c6-f2437d7d0343" class="">Which of the following statements best describes what the browser is doing?</p><p id="3d55340e-3d95-434d-97bc-18d07dede610" class="">
+</p><p id="257c0ce0-e4f0-4e13-ae57-1bfac4013d72" class="">Causing a syntax error because the source is defined as: <code>src=&quot;img_12000_12000.jpg width=&quot;</code></p><p id="7df71bdd-c77f-446c-a234-097eaaa04345" class="">To scale an image one needs css or js:</p><pre id="5ea8c99d-db85-4b34-8857-ccfb78d62d8b" class="code"><code>&lt;img src=&quot;img_12000_12000.jpg&quot; width=&quot;200&quot; alt=&quot;Description&quot;&gt;
+&lt;img src=&quot;img_12000_12000.jpg&quot; style=&quot;width: 200px;&quot; alt=&quot;Description&quot;&gt;</code></pre><p id="86561890-5567-411e-b9b9-54ed9e000bbf" class="">
+</p><p id="22590fea-afc2-4420-a299-987fb452db53" class="">Alternatively we could fetch the enitre picture and scale it in the frontend with:</p><p id="5fdc16f3-c888-4388-b83b-135247f0d38f" class=""><span style="border-bottom:0.05em solid">Responsive and adaptive images</span><div class="indented"><p id="89f90c91-e563-4902-a8a5-d30b79a145c7" class="">Fetch respective image, size or version (additional download!)</p><p id="fd42b27b-f45d-4931-94f6-728b063e6e34" class="">Use JavaScript, CSS media queries, and/or HTML5 markup</p><pre id="ebbdcd8b-9c0d-4029-896b-1565006b6fa2" class="code"><code>&lt;picture&gt;	
+		&lt;source	src=&quot;pic-mobile.jpg&quot;	media=&quot;(max-width: 200px)&quot;	/&gt;
+		&lt;source	src=&quot;pic-desktop.jpg&quot;	/&gt;
+		&lt;img src=&quot;default.png&quot;	/&gt;	&lt;!-- User Agent not supporting picture element --&gt;
+&lt;/picture&gt;</code></pre><pre id="b293b7fc-2576-4ca4-9ba4-f79af7dd52ba" class="code"><code>&lt;img src=&quot;img_12000_12000.jpg&quot; style=&quot;
+	@media	(max-width:	200px) { width: 200px; }
+&quot;&gt;</code></pre><pre id="a2b5f183-5860-452d-a7af-b801777c6045" class="code"><code>&lt;img srcset=&quot;img-200w.jpg 200w,
+             img-12000w.jpg 12000w&quot;
+     sizes=&quot;(max-width: 200px) 200x, 12000px&quot;
+     src=&quot;img-12000w.jpg&quot;
+     alt=&quot;Description&quot;&gt;</code></pre></div></p></details></li></ul><p id="085a2b4b-74c6-4473-8867-b165fd1d5cae" class="">
+</p><ul id="5e71db32-5a20-40a0-95df-8ef9ecb47de8" class="block-color-gray toggle"><li><details open=""><summary>You are reviewing code for an HTML form. While the markup looks the way it should in the
+browser, you can see how it could create accessibility issues. Which of the following changes
+are best suited to improve accessibility?</summary><pre id="327f0358-dfbd-4bc6-b94a-59b9027a6125" class="code"><code>&lt;form action=&quot;/login&quot;&gt;
+	&lt;b&gt;Login&lt;/b&gt;
+	&lt;br&gt;
+
+	&lt;table&gt;
+		&lt;tr&gt;
+			&lt;td&gt;
+				Username&lt;br&gt;
+				Password
+			&lt;/td&gt;
+		
+			&lt;td&gt;
+				&lt;input name=&quot;field_1&quot;&gt;&lt;br&gt;
+				&lt;input name=&quot;field_2&quot;&gt;&lt;br&gt;
+				&lt;input type=&quot;submit&quot; value=&quot;Login&quot;&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/table&gt;
+
+&lt;/form&gt;</code></pre><p id="c8b3aa6e-bce5-46c9-a44c-7f3585a985f4" class="">
+</p><figure id="04a8bcb8-d7e3-491d-a8d6-b18b091e71f6" class="image"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled.png"><img style="width:338px" src="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled.png"/></a></figure><ol type="1" id="0bcdb966-3b5b-48b1-9f72-bea5eca79c1f" class="numbered-list" start="1"><li>No semantics of &quot;Login&quot; → Only increased size</li></ol><ol type="1" id="f367510e-f5e4-49b6-b81b-1646b98518a5" class="numbered-list" start="2"><li>Screen Reader Linearization →  (no logical) binding of label and field - Where do I fill in what?</li></ol><pre id="ddf32e49-2bb7-4e6a-8dd6-bff637a13f11" class="code"><code>&lt;head&gt;
+	&lt;h1&gt;Login&lt;/h1&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;form action=&quot;/login&quot;&gt;
+		&lt;p&gt;
+			&lt;label for=&quot;userName&quot;&gt;Username:&lt;/label&gt;
+			&lt;input type=&quot;text&quot; id=&quot;userName&quot; name=&quot;userName&quot;/&gt;
+		&lt;/p&gt;
+
+		&lt;p&gt;
+			&lt;label for=&quot;password&quot;&gt;Password&lt;/label&gt;
+			&lt;input type=&quot;text&quot; id=&quot;password&quot; name=&quot;password&quot;/&gt;
+		&lt;/p&gt;
+
+		&lt;p&gt;
+			&lt;input type=&quot;submit&quot; value=&quot;Submit the form&quot; name=&quot;action&quot;/&gt;
+		&lt;/p&gt;
+	&lt;/form&gt;
+&lt;/body&gt;</code></pre><p id="5ced80d3-bbda-41e9-9961-b1b4e6b1c445" class="">
+</p><figure id="387a5f1a-1883-44cd-9c04-d72c57dcdbdd" class="image"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%201.png"><img style="width:240px" src="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%201.png"/></a></figure></details></li></ul><p id="000ea14f-ba3d-4125-951a-491ab126f6c3" class="">
+</p><ul id="e7bc0cc5-65f8-405b-aa47-bc484d3f7fd6" class="block-color-gray toggle"><li><details open=""><summary>Which of the following selectors would you use to target the HTML element (and only that
+element) highlighted in bold below?</summary><pre id="db3b6f94-08dd-4120-bf11-2b22b21b4a71" class="code"><code>&lt;section id=&quot;siblingSec&quot; class=&quot;sibling&quot;&gt;
+	&lt;h2&gt;Style my sibling&lt;/h2&gt;
+
+	&lt;p class=&quot;sibling&quot;&gt;
+		&lt;div class=&quot;listContainer&quot; id=&quot;firstContainer&quot;&gt;
+			&lt;ul class=&quot;bigList&quot;&gt;
+				&lt;li&gt;First&lt;/li&gt;
+				&lt;li&gt;Second&lt;/li&gt;
+			&lt;/ul&gt;
+			&lt;div&gt;
+				&lt;ul class=&quot;bigList&quot;&gt;
+					&lt;li&gt;Third&lt;/li&gt;
+					&lt;li&gt;Forth&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/p&gt;
+
+	&lt;div&gt;
+		&lt;p class=&quot;sibling&quot;&gt;
+			&lt;ul class=&quot;bigList&quot;&gt;
+				&lt;li&gt;First&lt;/li&gt;
+				&lt;li&gt;Second&lt;/li&gt;
+			&lt;/ul&gt;
+			&lt;div class=&quot;listContainer&quot;&gt;
+				&lt;ul class=&quot;bigList&quot;&gt;
+					&lt;li&gt;Last&lt;/li&gt;
+					&lt;li&gt;Actually Last&lt;/li&gt;
+				&lt;/ul&gt;
+			&lt;/div&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+
+&lt;/section&gt;</code></pre><p id="5720ead4-1551-46de-b6d2-1658a772d3dd" class=""><a href="https://jsfiddle.net/r26y3et1/4/">https://jsfiddle.net/r26y3et1/4/</a></p><p id="b3772e11-16c8-4c89-ac5a-cb9832a797a7" class="">
+</p><p id="2fbd6fb9-69cb-495c-938f-195aa2f97682" class="">The selector to choose that Item:<div class="indented"><ol type="1" id="0cb83926-ecbf-4693-b04d-157301aa35d3" class="numbered-list" start="1"><li>choose a div with  id=&quot;firstContainer&quot;</li></ol><ol type="1" id="327c4ae3-e934-4349-8b8b-ce98f516226a" class="numbered-list" start="2"><li>then choose the second child that is a div</li></ol><ol type="1" id="e58d33e5-1937-4b93-a8e2-b701bc75d774" class="numbered-list" start="3"><li>and then its only child, which is a ul</li></ol></div></p><p id="959a4578-13cc-4109-b8b8-c5185bcfd75f" class="">
+</p><pre id="9d252465-a004-4fd8-8abe-cfcafa9ae9e3" class="code"><code>div#firstContainer div ul{
+	...
+}</code></pre></details></li></ul><p id="6452ce60-1b8d-4f8c-b36d-cd3e0b93cde3" class="">
+</p><ul id="65e19a72-9ea6-4fba-8011-ed03f0b90896" class="block-color-gray toggle"><li><details open=""><summary>Which of the following CSS declarations is most likely to result in the following rendering in the
+browser given this markup/style declaration:</summary><pre id="fe50ec27-f657-421a-9ee2-3258f41e9d0f" class="code"><code>&lt;div style=&quot;border: 4px solid black;&quot;&gt;
+	&lt;div id=&quot;outer&quot;&gt;
+		&lt;span id=&quot;inner&quot; style=&quot;font-size: 2em;&quot;&gt;Some text&lt;/span&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre><p id="50012e69-c943-4a35-bb4c-c78b9249403b" class="">
+</p><figure id="1cd4a7e3-ca40-4766-9a5a-1f32cb96a50c" class="image"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%202.png"><img style="width:494px" src="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%202.png"/></a></figure></details></li></ul><p id="7c8b4156-78e6-4f1a-a2e1-3b7bf61e3d58" class="">
+</p><ul id="e927735c-a1b8-4223-9424-bc022a955eb6" class="block-color-gray toggle"><li><details open=""><summary>Which one of the following HTML elements have we heard about in the lecture that is used to
+link to an external CSS stylesheet for integration into HTML?</summary><p id="3e35cfea-6655-4916-8d55-4806c18c5790" class="">
+</p><p id="14ec9c1b-c692-4cb6-a43c-76ffcdbda3c0" class="">Integration into HTML<div class="indented"><p id="a54e63e7-ef87-4d4a-adad-98768645bb0e" class="">External (prefered)<div class="indented"><p id="41d71e84-655e-472b-a9d2-1d5bdc1be3d6" class="">linking to an external CSS file in <code>&lt;head&gt;</code></p><p id="11b06266-787b-476b-8c18-8e0613bcbc80" class="">local link: <code>&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</code></p><p id="160ba8c3-3d89-44ee-944b-7593e314e1b3" class="">If semantics used correctly in HTML: <code>&lt;link&gt;</code> to external website</p></div></p><p id="44d52af3-c19a-46c9-b379-01448619d82e" class="">
+</p><p id="bc2836d9-9aaa-4f64-b76a-38a32ea6e9af" class="">Internal<div class="indented"><p id="21b69a01-d73b-46ca-a40c-df9d4098dbfc" class=""><code>&lt;style&gt;</code> in <code>&lt;head&gt;</code></p><p id="8b26fde8-1b1c-4d21-aea5-7148f9a93ce1" class="">overwrites any external CSS</p></div></p><p id="c64fc3ec-5c34-4698-9f5c-2a108d659ded" class="">
+</p><p id="98f8d947-211e-4625-a2d2-9f7558274a11" class="">Inline<div class="indented"><p id="2d8e9000-8b75-437b-ad50-4d597491f48a" class="">In HTML elements <code>&lt;tagname style=&quot;property:value;&quot;&gt;content&lt;/tagname&gt;</code></p></div></p></div></p></details></li></ul><p id="d86a8510-255e-4bb8-8ab7-5be40c3fd80a" class="">
+</p><ul id="2ac0b5e4-1a54-4291-bb8a-69b323df980e" class="block-color-gray toggle"><li><details open=""><summary>Which one of the following CSS properties for the selector section#content do you think is mostlikely to have produced this output in the browser? The HTML for the relevant part of the page is given as follows:</summary><pre id="748d70f0-6148-4799-8cc2-8de6b728455d" class="code"><code>&lt;section id=&quot;content&quot;&gt;
+ &lt;div&gt;Cats&lt;/div&gt;
+ &lt;div&gt;Dogs&lt;/div&gt;
+ &lt;div&gt;Tigers&lt;/div&gt;
+ &lt;div&gt;Tortoises&lt;/div&gt;
+ &lt;div&gt;Ducks&lt;/div&gt;
+ &lt;div&gt;Pumas&lt;/div&gt;
+ &lt;div&gt;Hyenas&lt;/div&gt;
+ &lt;div&gt;Pigs&lt;/div&gt;
+ &lt;div&gt;Cows&lt;/div&gt;
+ &lt;div&gt;Foxes&lt;/div&gt;
+ &lt;div&gt;Wolfs&lt;/div&gt;
+ &lt;div&gt;Bison&lt;/div&gt;
+&lt;/section&gt;</code></pre><pre id="b2010c61-c77a-4eb9-b884-72d5d89078a0" class="code"><code>section#content div {
+ padding: 10px;
+ margin: 4px;
+ border: 1px solid black;
+ width: 100px;
+ height: 40px;
+}</code></pre><p id="a7bbdd54-96c4-4eba-ae4f-0d5064006a81" class=""><a href="https://jsfiddle.net/ertk8L0y/1/">https://jsfiddle.net/ertk8L0y/1/</a></p><p id="abe46805-3db6-4f39-a28e-4b5b52d88f4f" class="">
+</p><p id="563eebb5-20ff-44f8-af6f-e623b0174535" class="">chooses section with id = &quot;content&quot; and div as is child</p><p id="a989546d-3456-42a5-b3a0-eac0fd6b6852" class=""><em>therefore all children of this section</em></p></details></li></ul><p id="1cadb10c-79c6-4068-8422-98bbd69374b1" class="">
+</p><ul id="df9a24b0-6727-4bdf-9fae-5b9c7ae9e1ca" class="block-color-gray toggle"><li><details open=""><summary>You are given this CSS code and have to figure out which of the following resulting CSS rules
+are true for the element <code>&lt;h1 class=&quot;alarm&quot;&gt;...&lt;/h1&gt;</code> on a device with 300px width.</summary><pre id="a7918dce-0f04-404e-b6b6-b31faccfae78" class="code"><code>h1 {
+ --alarm-color: darkred;
+}
+
+h1.alarm { 
+ font-size: 2em;
+ color: var(--alarm-color, red);
+}
+
+@media only screen and (max-width: 400px) { 
+ h1.alarm {
+ font-size: 1em;
+ }
+}</code></pre><p id="7dbc862e-a465-43be-99d6-dba6c5d9cc01" class="">
+</p><p id="fd9823dc-e403-421c-aec2-c355a39d8ea4" class="">because the screen has &lt; 400 pixel <code>h1</code> and <code>h1.alarm</code> apply. </p></details></li></ul><p id="60fa7881-dae7-46b0-b3f8-3750b8f56800" class="">
+</p><ul id="a1ff7247-9b94-4326-bb90-69585d5a066b" class="block-color-gray toggle"><li><details open=""><summary>You are given the following HTML and JavaScript code. What is the browser output if you enter
+100 into the input?</summary><pre id="80d223b0-fc44-43d2-9621-53c89f6793e8" class="code"><code>&lt;label for=&quot;speed&quot;&gt;Speed (km/h)&lt;/label&gt;
+&lt;input type=&quot;text&quot; id=&quot;speed&quot;&gt;
+&lt;div&gt;
+	Speed &lt;span id=&quot;output&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre><pre id="7d4824fe-6d67-4c78-a6f3-74605b2eeceb" class="code"><code>var el = document.getElementById(&#x27;speed&#x27;)
+
+// Beware that event.toElement.value returns a string
+el.addEventListener(&#x27;change&#x27;, event =&gt;
+	addSpeedClassification(document.getElementById(&#x27;speed&#x27;).value)); &lt;-- only 1 argument
+
+
+function addSpeedClassification(speed, classification) { &lt;-- classification = undefined
+	const output = document.getElementById(&#x27;output&#x27;);
+	
+	// reset markup
+	output.innerHTML = &#x27;&#x27;;
+	output.border = &#x27;none&#x27;;
+	
+	if(isSpeedLimit(speed, [30, 50, 100, 130])) { //if speed == one of limits
+		output.style.border = &#x27;4px dashed red&#x27;;
+	}
+	
+	if(!classification) { //!undefined is equal to true (implicit type conversion)
+		classification = {
+			text: {&#x27;slow&#x27; : 50, &#x27;normal&#x27; : 90, &#x27;fast&#x27; : 130},
+			overText: &#x27;too fast&#x27;
+		}
+	}
+	
+	let classificationOutputText; //determines in which range speed is
+	for(let key in classification.text) {
+		if(speed &lt;= classification.text[key]) {
+			classificationOutputText = key;
+		}
+	}
+	
+	if(!classificationOutputText) { //if speed &gt; 130
+		classificationOutputText = classification.overText;
+	}
+	
+	const strongText = document.createElement(&#x27;strong&#x27;);
+	strongText.innerText = `${speed} (${classificationOutputText})`;
+	output.appendChild(strongText);
+}
+
+
+function isSpeedLimit(speed, limits=[15, 40, 90]) {
+	for(let limit of limits) {
+		if(speed == limit) {
+			return true;
+		}
+	}
+	return false;
+}</code></pre><p id="45dcc4cf-48e7-4989-bf8d-dce1c0cd9ffc" class=""><a href="https://jsfiddle.net/q5y60knb/1/">https://jsfiddle.net/q5y60knb/1/</a></p><p id="7c2f9410-fead-4777-8d7d-ce6f35f930bf" class="">
+</p><figure id="d189cf12-0279-4f39-8c69-40f2ea07d37d" class="image"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%203.png"><img style="width:276px" src="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%203.png"/></a></figure><figure id="c25bf84d-1d6f-464d-810c-e1af830dd7fe" class="image"><a href="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%204.png"><img style="width:291px" src="Test%201%203a5fb94bb6664a6380147cddf4aa1e65/Untitled%204.png"/></a></figure><p id="a21de03f-c0bf-4d4c-a7e3-79e5448c5416" class="">
+</p></details></li></ul><p id="291888a0-4945-4bfc-bb4d-ccd2cb32106a" class="">
+</p><ul id="97980fff-61ee-42e8-afdd-bc20987dae00" class="block-color-gray toggle"><li><details open=""><summary>What are promises in JavaScript?</summary><p id="375db167-8d81-4a3a-969c-4c5725ff6191" class="block-color-gray">Analogy: <div class="indented"><p id="851af33f-6dd3-4331-82ca-d579b5209c1d" class="">Fans have subscribed the mailing subscription list of a singer so that they get instantly notified once the next album becomes becomes available or if something goes wrong.</p></div></p><p id="27d458c5-09f0-49b7-8786-a827c76b8ec9" class="">Components:<div class="indented"><ol type="1" id="479d3f35-b77d-4bb4-bf63-cbf4866fe490" class="numbered-list" start="1"><li>A “producing code” that does something and takes time. For instance, some code that loads the data over a network. <mark class="highlight-gray">That’s a “singer”.</mark></li></ol><ol type="1" id="e91e459f-6947-4a47-8614-460cc8d01981" class="numbered-list" start="2"><li>A “consuming code” that wants the result of the “producing code” once it’s ready. Many functions may need that result. <mark class="highlight-gray">These are the “fans”.</mark></li></ol><ol type="1" id="ceeef67d-8798-4a5d-b9ba-8754b759037f" class="numbered-list" start="3"><li>A <em>promise</em> is a special JavaScript object that links the “producing code” and the “consuming code” together. The “producing code” takes whatever time it needs to produce the promised result, and the “promise” makes that result available to all of the subscribed code when it’s ready. <mark class="highlight-gray">This is the “subscription list”.</mark></li></ol></div></p><p id="9ddbde03-eaac-4ea6-8363-b24b5a483f3f" class="">
+</p><p id="3ec8bfbf-759e-49f5-bc22-b56355db99f2" class="">The constructor syntax for a <mark class="highlight-teal">promise object</mark> is:</p><pre id="3551a3cd-4dc5-49e7-996e-c32fb1c6be5e" class="code"><code>let promise = new Promise(/*executor(resolve, reject)*/); </code></pre><pre id="a84a001a-b90c-4718-9beb-28b234bc000e" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  // executor (the producing code)
+}); </code></pre><p id="06ad37c8-e883-4d67-8bdf-18ab83d84127" class="">The executor runs automatically and attempts to perform a job. When it is finished with the attempt it calls<div class="indented"><p id="5263c0a2-c020-46ea-842c-a9d025766583" class=""><code>resolve</code> if it was successful</p><p id="b039b263-1eb4-4c99-b9b2-85dd752700b4" class=""><code>reject</code> if there was an error. </p></div></p><p id="5271ecd6-587d-46c0-8865-71b40ed7eafb" class="">
+</p><p id="3e00eb2c-bc15-4e79-9f22-85c0d61bf207" class="">The <mark class="highlight-gray"><code>promise</code></mark><mark class="highlight-gray"> </mark>object returned by the <mark class="highlight-gray"><code>new Promise</code></mark><mark class="highlight-gray"> </mark>has 2 internal properties:<div class="indented"><ol type="1" id="48c09f49-394c-488f-8077-9beac32a630a" class="numbered-list" start="1"><li><code>state</code><ul id="38c42c6a-9c69-4cdf-b718-b6e357361485" class="bulleted-list"><li style="list-style-type:disc">initially <code>&quot;pending&quot;</code> </li></ul><ul id="c6ef5547-a974-4689-aad0-2bf7b488b290" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;fulfilled&quot;</code> when <code>resolve</code> is called by the executor</li></ul><ul id="c369b32f-f9b1-4e0a-a223-9fd92a15e081" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;rejected&quot;</code> when <code>reject</code> is called by the executor</li></ul></li></ol><ol type="1" id="7c3f4d72-c43a-41a8-938f-2d8105ca2a93" class="numbered-list" start="2"><li><code>result</code><ul id="5bb70a08-87d0-4131-a868-62b59a9c4718" class="bulleted-list"><li style="list-style-type:disc">initially <code>undefined</code></li></ul><ul id="215ee891-e62d-4212-95eb-fe9c41e64903" class="bulleted-list"><li style="list-style-type:disc"><code>value</code> when <code>resolve(value)</code> is called by the executor</li></ul><ul id="6544ec37-e649-464a-bae6-604b167ede45" class="bulleted-list"><li style="list-style-type:disc"><code>error</code> when <code>reject(error)</code> is called by the executor</li></ul></li></ol></div></p><p id="64e50020-9d67-481d-bc7b-531a307c0a85" class="">
+</p><figure id="474925f8-493a-4966-8f95-2ada1cc63d32" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%205.png"><img style="width:336px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%205.png"/></a></figure><p id="20680f13-7ceb-44ad-9713-9fdf14046cdc" class="">
+</p><p id="60b90818-154d-48c9-9e55-1442d177270d" class="">Example: Successful<div class="indented"><pre id="b3faf824-a1f5-4534-847d-5728445c319e" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  setTimeout(() =&gt; resolve(&quot;done&quot;), 1000); //&quot;done&quot; is the result
+}); </code></pre><p id="5c6f403e-7f71-4f82-bf1b-04e10f4626a6" class="">After one second of “processing” the executor calls <code>resolve(&quot;done&quot;)</code> to produce the result. This changes the state of the <code>promise</code> object:<div class="indented"><figure id="dff45515-ccba-4139-a014-b5f9e0a4ecf0" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%206.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%206.png"/></a></figure></div></p></div></p><p id="24e90991-fea3-496c-90fe-a50bf3e7e9ae" class="">
+</p><p id="6c9b0f76-151b-4dc1-9d60-b6d8b915e65b" class="">Example: Unsuccessful<div class="indented"><pre id="f748b46b-ce69-4481-834f-6d9e031b9ee9" class="code"><code>let promise = new Promise(function(resolve, reject) {
+  setTimeout(() =&gt; reject(new Error(&quot;Whoops!&quot;)), 1000); //&quot;whoops&quot; is the error statement
+}); </code></pre><p id="40055ae8-1013-418f-ac73-dd2aa2c891d0" class="">But it is recommended to use Error objects (or objects that inherit from Error).</p><p id="bf486ca0-13c0-468a-93ba-fac71bb21093" class="">The call to reject(...) moves the promise object to &quot;rejected&quot; state:<div class="indented"><figure id="255d00dd-418d-4dad-973f-afb51aa4b6ae" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%207.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%207.png"/></a></figure></div></p></div></p></details></li></ul><p id="73c80c04-7a43-4399-977c-b6e08b75ce54" class="">
+</p><ul id="4c278592-17a4-487d-9535-c12c1362f533" class="block-color-gray toggle"><li><details open=""><summary>Why are promises a solution to &quot;callback hell&quot; in JavaScript?</summary><p id="9c139d12-b959-4a2d-806b-a747bd385ebd" class="">In a “callback-based” style of asynchronous programming. A function that does something asynchronously (at a later point in time) should provide a <em>callback argument</em> (usually an anonymous function) where we put the function to run after it’s complete.</p><p id="269e77e2-7985-43af-bef5-ee6e11da4381" class="">As calls become more nested, the code becomes deeper and increasingly more difficult to manage. That’s sometimes called “callback hell” or “pyramid of doom”:<div class="indented"><figure id="325def87-4c50-47d4-9f62-c9de3370a322" class="image"><a href="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%201.png"><img style="width:384px" src="JavaScript%208c562dd4d7ab4a4ebab483647697b2ba/Untitled%201.png"/></a></figure></div></p><p id="683868a4-1050-4521-977d-a40d483fa7bc" class="">(Here the loadScript function executes the anonymous function that is its second parameter if script was loaded successfully → the goal is to load a series of scripts sequentially)</p><p id="19a6b689-a5ce-4774-b521-e30a75adc666" class="">
+</p><p id="38e20915-e1e5-4816-b715-5cce3b4f3f4c" class="">With promises one can use <mark class="highlight-teal">Consumers: then, catch, finally</mark></p></details></li></ul><p id="32a6000a-c6ab-4c88-b59f-0f8fb98bdb94" class="">
+</p></div></article></body></html>

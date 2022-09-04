@@ -1,0 +1,687 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Software Engineering SE</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8a181332-d118-4e8e-9f9f-e4184a922ebf" class="page sans"><header><h1 class="page-title">Software Engineering SE</h1></header><div class="page-body"><p id="d227b516-ff93-4006-a1a0-64e35ebdc2a4" class=""><span style="border-bottom:0.05em solid">Software</span><div class="indented"><p id="fbcbb5fa-1567-466f-91de-57ffcc9724ec" class="">Source Code</p><p id="d292e999-3b86-45fa-83a9-f0ffb6dfd1d3" class="">
+</p></div></p><p id="6ac4220f-a729-4334-bef4-3058489796d7" class=""><span style="border-bottom:0.05em solid">Software Engineering</span><div class="indented"><p id="219aedcf-b121-48e8-bb43-526fb674fdeb" class="">systematische ingenierursmäßige Herstellung von Software nach dem &quot;best-practice&quot;</p><p id="cc9beb3c-6df6-4898-90fc-5219e2bccc56" class="">Qualitätsmaßstäbe wie in klassischen Ingenieurs-Disziplinen für große und komplexe Projekte</p><p id="f5788f47-6907-4d4f-be75-ff9fa5462d57" class="">&quot;no surprise software&quot; - vorhersehbares Verhalten</p><p id="2dd08a51-b9b2-4787-9550-1e8d871a2669" class="">
+</p><p id="34ac26a6-9482-4494-8b09-1d7424f15ceb" class="">Unterscheidung durch:<div class="indented"><ol type="1" id="653374c4-0386-4884-abee-84c38f3eb5e0" class="numbered-list" start="1"><li>Projektdauer</li></ol><ol type="1" id="79beb24a-5d34-40c3-b2bb-7e2ba349fc25" class="numbered-list" start="2"><li>Projektgröße</li></ol><ol type="1" id="35f13af6-40df-4993-833a-04fcb8ab2849" class="numbered-list" start="3"><li>Anwendungsdomäne</li></ol><ol type="1" id="819c33bd-ff3e-456b-a112-ec7fafa9551e" class="numbered-list" start="4"><li>Projektkomplexität</li></ol></div></p><p id="6daab3f5-4f4d-4210-b3a8-9d0cb2f8980b" class="">
+</p><p id="9a25a187-e89b-4313-b9f0-2fb95fec6f60" class="">Größe von Software Projekten:<div class="indented"><p id="8b8680ee-f3ac-4882-ba50-56e698d5b632" class="">Klein	1-2 Personen, Anwendung und Datenbank am selben Rechner</p><p id="48dab70b-dbde-4429-a85a-99bab285f057" class="">Mittel	3-20 Personen, Anwendung und Datenbank auf  unterschiedlichen Rechnern</p><p id="84a80aff-951b-4275-9677-006aec39acbd" class="">Groß	&gt;20 Personen, international, verteilte Anwendung</p></div></p><p id="b70a00a9-4884-4221-a220-5a2ce5ac511d" class=""><div class="indented"><p id="00b4b295-46b3-4113-9b0d-13c445facc3a" class="">Große Software Projekte sind schwierig:<div class="indented"><figure id="ac524ec8-61b0-4a52-8223-eaa251eb49cf" class="image"><a href="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled.png"><img style="width:384px" src="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled.png"/></a></figure></div></p></div></p></div></p><p id="e017b78f-e01b-4d22-9548-caa93b5c29bc" class="">
+</p><p id="e00984bc-cb67-4a38-89d3-7b51a354d7ca" class=""><span style="border-bottom:0.05em solid">Projekt-Arten</span><div class="indented"><p id="fac0f62f-2fa5-4765-84ea-da25afd54228" class="">a) Wartungsprojekt</p><p id="39f46292-3c0f-4478-855c-b7ae9b98ae9e" class="">b) Migrationsprojekt</p><p id="668cb03d-a143-4038-be83-5f555023fac3" class="">c) Projekt mit öffentlichen Ausschreibungen</p><p id="8a9a1a17-5846-49ac-8311-752364034587" class="">d) Klassische Software-Entwicklungsprojekte</p><p id="fcf51c21-a468-41eb-bc46-bfc41456dd30" class="">
+</p></div></p><p id="f4b226e0-0970-4e46-b5ca-5404180d2d69" class=""><span style="border-bottom:0.05em solid">Produkt-Komplexität</span><div class="indented"><p id="f58cbed9-0af4-46eb-a9eb-812b72e8d337" class="">Anzahl der Komponenten, Code-Zeilen</p><p id="2b072ecb-6ac8-4930-a046-585afdcfd097" class="">Größe, Domäne, Qualifikation des Teams, &quot;cutting-edge-technologies&quot; die nicht erprobt sind.<div class="indented"><p id="3f759bee-47d7-4496-b8ed-073f827cfb93" class="block-color-gray">Anwendungs-Domäne / Problem-Domäne (ein Fachgebiet, ein Wissensgebiet) macht den größten Unterschied</p></div></p></div></p><p id="f2a7ad07-80bb-49db-ad61-47061fced946" class="">
+</p><h2 id="af2544ed-57ca-4c60-a956-5b13827ca840" class="">Qualitätsmanagement</h2><ul id="2621fb05-c243-43a9-be2c-b7876a845fed" class="bulleted-list"><li style="list-style-type:disc">Formale Methoden		<mark class="highlight-gray">Verifikation, bessere Programmiersprachen</mark></li></ul><ul id="cb387dd5-ec1c-42a3-ac4d-2e9d41f4aa4a" class="bulleted-list"><li style="list-style-type:disc">Prozessverbesserung	<mark class="highlight-gray">Produkte, Prozesse, Vorgehensmodell</mark></li></ul><ul id="e9efb925-1da4-4a6d-b467-1606371afecb" class="bulleted-list"><li style="list-style-type:disc">Personen				<mark class="highlight-gray">Training, Motivation, Kultur für gute Arbeit</mark></li></ul><p id="20eaaf5a-67f9-4423-a26e-397dbd3ef309" class="">
+</p><p id="95c78554-6eee-4aaf-8710-d144bab10c9e" class=""><span style="border-bottom:0.05em solid">Capability Maturity Model Integrated CMMI</span><div class="indented"><p id="3f761805-2b22-44e7-acff-201a9b61c7ba" class="">Norm für Bemessung der Software Engineering Qualität.</p><p id="3704550b-956f-48d7-9217-883fa88f73a8" class="">Reifegrade der Software Entwicklung - Welches Ausmaß an Management existiert?</p><ol type="1" id="b502c1fe-0bb4-4179-be25-3e7ad5dd4299" class="numbered-list" start="1"><li>Level: ad hoc processes - Initial<p id="b63a9b65-e7da-474a-a515-99ec9c2023d5" class=""><mark class="highlight-gray">Sourcecode. Software nicht mehrfach anwendbar, nur für eine spezifische Aufgabe.</mark></p></li></ol><ol type="1" id="eb067573-2fe4-4505-b923-4055b8a2b8bd" class="numbered-list" start="2"><li>Level: basic project management - Managed<p id="3df0e3c5-c7b2-43a7-b458-1401dc4449c2" class=""><mark class="highlight-gray">Wiederholbare anwendung mit Quality Assurance</mark></p></li></ol><ol type="1" id="9cba5c9b-63d7-439f-b49b-91595d6279f2" class="numbered-list" start="3"><li>Level: process definition - Defined<p id="22ef1d22-9471-46b0-8e69-58ca6eadbc3a" class=""><mark class="highlight-gray">Das Level dass die meisten Unternehmen erreichen möchten</mark></p></li></ol><ol type="1" id="75223f3a-a3d9-4cb0-a875-91ac54ec07f4" class="numbered-list" start="4"><li>Level: process measurement - Quantitatively managed</li></ol><ol type="1" id="b2b41cbb-4828-4869-9a86-11d5fa4d4c60" class="numbered-list" start="5"><li>Level: process control - Optimizing</li></ol></div></p><p id="e8d64b90-d8ea-4acc-8893-42c864a1f536" class="">
+</p><h2 id="7523a2e3-2e32-4a94-a366-0b2816863620" class="">Projekt-Typen</h2><p id="60e8da07-f898-4315-8a5c-eee45570c4af" class="block-color-gray"><span style="border-bottom:0.05em solid">Komponenten eines Software Systems</span><div class="indented"><p id="32028811-68e5-4ea5-9cfd-73cef29894d7" class="">UI - User Interface (Benutzer Schnittstelle)</p><p id="ea5e1f2e-fbb5-4bb1-af0a-01a58e9773d3" class="">APP - Application (Anwendung, Geschäftslogik)</p><p id="ad324a51-697f-4cbd-9fc0-4f00aec7b4f8" class="">OS - Operating System (Betriebssytem)</p></div></p><p id="78b43526-9e66-4cb9-b13f-faa19d2ffe5b" class="">
+</p><p id="f4c4acb7-1bcd-4887-894d-9cda50f3c5a3" class=""><span style="border-bottom:0.05em solid">Produkt-Typen / Projekt-Typen</span><div class="indented"><p id="36efee33-bb05-4043-b8c0-3d3a3dde43ab" class="">Bestimmt Schwerpunkt der Komponenten-Entwicklung </p></div></p><figure id="25ae4fb1-a692-46c5-adf7-c774ff699acb" class="image"><a href="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%201.png"><img style="width:432px" src="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%201.png"/></a></figure><p id="405a60d4-2163-4eab-a90a-9bdf2d328987" class="">
+</p><h2 id="06471365-477d-4216-bc79-968546d824ec" class="">Design-Strategien - Software kaufen vs. selber entwickeln</h2><p id="5e3f757b-de77-43f4-bf4c-5365a704c1ab" class="">Kaufen, wenn …<div class="indented"><p id="1cae5dab-478b-41a4-bff9-5b028151b2a1" class="">Anforderungen existieren</p><p id="b605247b-7a5b-412b-b7a1-c9bfc8f0fc15" class="">Anpassung leicht möglich ist (ausführliche Dokumentation + Support)</p><p id="64e3ae92-c56a-4358-b59d-d1192de3c052" class="">billiger als Eigenentwicklung.</p><p id="53f0abc7-6f52-4efd-9b3b-32db49e685a8" class="">Risiko minimieren</p></div></p><figure id="e0f4d1df-e899-4e15-b197-5af1f4e15887" class="image"><a href="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%202.png"><img style="width:336px" src="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%202.png"/></a></figure><p id="d514b9e1-24b3-48df-acdc-b04b7babc03e" class="">
+</p><p id="d39976d9-60c4-4f29-a291-fbd6b9507266" class=""><span style="border-bottom:0.05em solid">Kommerzielle Software vs. Eingebettete Systemen</span></p><p id="9750397a-3d36-4e32-88d5-4aa40d5efc12" class="">Kaufen oder selbst Entwickeln?<div class="indented"><p id="4037ae3c-4b7c-4f63-9b68-239e384dd895" class="">Kaufen nicht billiger!</p></div></p><figure id="e83016bf-5555-4a83-9bab-db8581213acc" class="image"><a href="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%203.png"><img style="width:336px" src="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%203.png"/></a></figure><p id="4269af0c-ce43-4b6a-9aec-88c88a3f8e20" class="">
+</p><h2 id="1885b786-91c0-41f9-b24d-f6e3486186b9" class="">Risikofaktoren</h2><ol type="1" id="742cd5db-e890-4546-8624-b2f458ba22ca" class="numbered-list" start="1"><li>Unvollständige Anforderungen, Anwender nicht involviert</li></ol><ol type="1" id="ecbecc7e-8503-4952-9590-ce3608a19403" class="numbered-list" start="2"><li>Budget nicht ausreichend, Unrealistische Zeit- und Kostenpläne</li></ol><ol type="1" id="7b4deb35-252d-4b49-b8c4-d226cf5a653d" class="numbered-list" start="3"><li>Keine Management Unterstützung, keine Planung</li></ol><ol type="1" id="1233c04a-2f37-4911-8f5b-9551ca2f0b65" class="numbered-list" start="4"><li>Häufige Änderung der Anforderungen</li></ol><ol type="1" id="1e9bb885-b11b-4395-8972-90cb1ee524f9" class="numbered-list" start="5"><li>Qualitätsmängel bei extern vergebenen Komponenten / Aufgaben</li></ol><ol type="1" id="1f4bbb72-beb1-4b0d-9f18-49fb2fa5f7e0" class="numbered-list" start="6"><li>Projekt wird nicht mehr benötigt (wenn Produktion zu lange dauert)</li></ol><p id="cdc180ab-fa97-4a2a-9938-6023f8677df6" class="">
+</p><h2 id="fb411eff-a4d5-4cec-a3af-e4304dccb3bb" class="">Strukturierung des Entwicklungsprozesses</h2><p id="940c52f3-fc4f-439c-9ee7-e74f3d02d5b7" class="">Beispiel: Online Shop / Katalog an dem man bestellen kann, Produkte in ein Warenkorb legt und verschickt</p><p id="df754a2f-9a95-40c7-b028-9811059891fc" class="">
+</p><p id="9553c8a8-1718-422b-937f-83b8017aa07b" class=""><span style="border-bottom:0.05em solid">Produktbaumstruktur (PBS)</span> </p><figure id="e9c791ef-6edd-44cd-b3fd-cbd41eadc5a6" class="image"><a href="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%204.png"><img style="width:336px" src="Software%20Engineering%20SE%208a181332d1184e8e9f9fe4184a922ebf/Untitled%204.png"/></a></figure><p id="66ad99ad-6a2d-45fe-b8da-ef9a07a88cbd" class="">
+</p><h2 id="6c206a01-9b7a-41bd-85c0-149c4a0914eb" class="">Anforderungen verfolgen</h2><p id="e472827d-1370-4b18-852f-907a39cf894f" class="">Überstimmen Anforderungen mit dem was Kunde will?<div class="indented"><p id="6bde62ce-02e3-4f81-adce-e8742a118533" class="">Früh Prototyp machen → validieren (vergleichen mit Anforderungen)</p></div></p><p id="9222130d-07e2-483b-97ba-007756527dc8" class="">
+</p><p id="f6fbdb3b-5f18-4f0f-ad36-a1bf014c7aed" class="">Eigenschaften von Anforderungen:<div class="indented"><p id="d3310318-f6d0-49e6-8d1f-32b536317485" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Gültigkeit, Konsistenz, Vollständigkeit, Realismus</p><p id="26fd225b-79ed-4cdb-98c9-f7b1c5e9b5e3" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Überprüfbarkeit, Verständlichkeit, Verfolgbarkeit, Anpassbarkeit</p></div></p><p id="2dc94893-7c15-4d86-b3b8-b66986ebc82a" class="">
+</p><p id="e5ad0077-b50c-48c2-9dcd-29e2608e9383" class=""><span style="border-bottom:0.05em solid">Priorisierung und Kontrolle</span><div class="indented"><ol type="1" id="28c78421-9d59-4ec7-8dec-253f66c057dd" class="numbered-list" start="1"><li>Value-driven requirements<p id="f14e3520-3a67-483e-9790-fb4629277c3f" class="">Geschäftsfall-Analyse</p></li></ol><ol type="1" id="9341277e-89b3-4290-bb7b-c67e58de17b6" class="numbered-list" start="2"><li>Shared-vision-driven requirements<p id="be4fa897-af22-4c6c-b77e-52a74dcf5629" class="">Stakeholder bewerten ständig Anforderungen </p></li></ol><ol type="1" id="4500e467-1f76-4e68-933d-ac8cf181c65c" class="numbered-list" start="3"><li>change-driven requirements<p id="4ddcc0e1-3170-47a8-8e14-a7f85b068182" class="">Skalierbarkeit</p></li></ol><ol type="1" id="72f58a46-d3aa-4135-b41a-ca178761dc27" class="numbered-list" start="4"><li>risk-driven requirements<p id="258d7848-92fb-4042-a193-6d7bdc143dcd" class="">Detailiertheit</p></li></ol></div></p><p id="78327ef3-6223-40ad-95ce-f39d57afc356" class="">
+</p></div></article></body></html>

@@ -1,0 +1,689 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Scheduling</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ecebbde7-70c4-498d-9e96-7e937026ae6c" class="page sans"><header><h1 class="page-title">Scheduling</h1></header><div class="page-body"><nav id="867099ab-5ea6-4bf8-970b-17720f72e679" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c7cd4359-29df-476c-9d00-5472c9157bf2">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f592f83c-2d3c-497d-9931-01b8523267aa">Scheduling Arten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6f010f67-23f5-4161-b847-85638814502c">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79eae468-e52d-41e0-8194-4f6dc5ecc5fe">Scheduling Strategien</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#33c21a96-d375-43da-aae1-61b0d70f3162">Priorisierung von Prozessen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9daa304d-4a8a-4c9b-a4dc-fa40450691a3">1) First Come First Served FCFC</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e4e8c414-fc63-4329-9a68-047330ee35b4">2) Round Robin RR / Time Slicing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2e713159-104d-4fcc-9aaa-51aa4d01a3d1">3) Shortest Process Next SPN</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#189a21af-073e-49cf-82ed-47ac8310f28c">4) Shortest Remaining Time SRT</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#453aee9f-39a5-4156-918d-4aeaa2b3724c">5) Highest Response Ratio Next HRRN</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#61fd7421-7d01-4b26-a5a2-e79854d581dc">6) Feedback Scheduling FS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#90449163-b4b0-406a-a938-e750bd9132a9">Echtzeitscheduling / Real-Time Scheduling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cfc44420-e53c-483b-9f1c-048720c07eca">7) Earliest Deadline First EDF</a></div></nav><h1 id="c7cd4359-29df-476c-9d00-5472c9157bf2" class="">Definition</h1><p id="4cec160c-c861-47e1-b937-b04ffc19794f" class=""><mark class="highlight-blue">Scheduling</mark></p><p id="f9271b2e-9ec7-4b65-badd-f6f8f48f8569" class="">Abarbeitungsreihenfolge bestimmen <mark class="highlight-gray">- Zuteilung der CPU-Zeit an Prozesse</mark></p><p id="6092472a-c0fb-46a0-9d46-aed3661bdf31" class="">Optimierungsziele / Scheduling Kriterien:</p><div id="6c693aa0-dc8d-400c-84c0-a85a21d88212" class="column-list"><div id="cdc426bb-73b8-416c-a87e-8568ae61f020" style="width:50%" class="column"><p id="ac1851c5-3c47-4ab1-8b27-fba18b81efe2" class=""><mark class="highlight-blue">User-Oriented</mark></p><p id="e3ecf17a-0dd1-4ec0-826f-43c24fbc6f6a" class="">Response Time</p><p id="34e40647-f92c-494e-acdc-fc34cf63a867" class="">Turnaround Time</p><p id="20c01999-c2b0-4bb6-9715-8ed0bfb809fa" class="">Meeting Deadlines</p><hr id="9f3a8624-f4be-42cf-b9ad-338266a7ada0"/><p id="3ce1fa32-422c-49cc-86cf-fca9682c04e0" class="">Predictability</p></div><div id="263c8e21-09ca-4475-a439-dddce86b88e0" style="width:50%" class="column"><p id="8d0b57a9-2b83-480b-bc60-d3b0f2b77c0e" class=""><mark class="highlight-blue">System-Oriented</mark></p><p id="3a51b433-ea05-4dcd-b1a3-b7f2a2095aee" class="">Throughput</p><p id="1d299abf-c645-4832-945e-db9aa454081e" class="">Procesor Utilization</p><p id="82ab02a2-dc89-48ff-a82a-ecae034f831c" class="">
+</p><hr id="086741c1-671a-4a84-8dc8-d0a1378d304e"/><p id="a30cf66e-61c8-454a-83a3-3b972a1359b8" class="">Fairness</p><p id="3f80673b-d4d0-49fa-ab14-5f5fe917ad2a" class="">Resource Balance</p><p id="e8e636d0-8151-4117-9d2a-a19402274ff5" class="">Priorities</p></div></div><p id="2ee82419-482c-4ff4-884f-bd3698810808" class=""><mark class="highlight-gray">Alles über der Linie bezieht sich auf Performance.</mark></p><p id="b8e23177-1abb-4e9a-babd-a08d87d5cf35" class=""><mark class="highlight-gray">Die Ziele können einander widersprechen: zB Fairness und Einhaltung von Deadlines</mark></p><p id="77352e3f-2c38-4d6b-b6b4-fd5c0be3ce54" class="">
+</p><p id="b770f278-afb4-4675-9a4a-59214398eef9" class=""><mark class="highlight-blue">Begriffe</mark></p><p id="d470fd0b-d0f7-498f-a393-35f77c23221c" class="">Response Time		Zeit zwischen Eintritt in <mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> </mark>und erster Instruktion auf CPU</p><p id="46ce7fe1-8795-46f0-bae8-ea31ff4fb00c" class="">Turnaround Time		Zeit zwischen Eintritt in <mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> </mark>und Abschluss</p><p id="4f1ea789-09b4-427d-b302-f6e8ee9e6dc8" class="">Normalized Turn.Time	Turn around time dividiert durch service time <mark class="highlight-gray">(= % Wartezeit)</mark> </p><p id="5d25e8a5-f818-48db-8016-c78083c8ed93" class="">Throughput			Duschsatz: Anzahl der abgeschlossenen Prozesse per Zeiteinheit</p><p id="d1990719-3131-4e2d-8ec4-7c45fe540110" class="">Processor Utilization	Prozessorauslastung</p><p id="395fde81-4471-48f5-bbb1-04eb27612e96" class="">Fairness				Verhältnis von Warte-Zeit zu CPU-Zeit</p><p id="7f2600f5-5ed2-4bb8-a62c-3edd58f16d85" class="">
+</p><h2 id="f592f83c-2d3c-497d-9931-01b8523267aa" class="">Scheduling Arten</h2><figure id="b2adfe1c-431a-4173-be22-0dbe73b22af1" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled.png"><img style="width:240px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled.png"/></a></figure><p id="184dd2e2-2f3a-44e5-be2c-5ed6a9103175" class=""><mark class="highlight-blue">Long-term-scheduling</mark><div class="indented"><p id="8ac71d94-9187-43d4-8f5f-ef1cf85f9840" class=""><mark class="highlight-gray"><code>new</code></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mtext> </mtext><mo stretchy="false">?</mo><mo>→</mo></mrow><annotation encoding="application/x-tex">-~?\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace nobreak"> </span><span class="mclose">?</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> </mark></p><p id="e410e2ff-2051-4eda-bec6-96f8ad40d276" class="">Kreierung von Prozessen (hinzufügen zu <mark class="highlight-gray"><code>new</code></mark>)</p><p id="7b2b35f6-4b84-41cc-8ec4-438bbba5f324" class="">Grad der Parallelität, CPU-IO-Anteil bestimmen</p></div></p><p id="1e24d225-6ca0-41da-aca2-213831333fe5" class=""><mark class="highlight-blue">Medium-term-scheduling</mark><div class="indented"><p id="3b27af4e-372c-4b3a-9d83-6a0951445d94" class=""><mark class="highlight-gray"><code>new</code></mark><mark class="highlight-gray"> / </mark><mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> / </mark><mark class="highlight-gray"><code>running</code></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mtext> </mtext><mo stretchy="false">?</mo><mo>→</mo></mrow><annotation encoding="application/x-tex">-~?\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace nobreak"> </span><span class="mclose">?</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>ready-suspend</code></mark><mark class="highlight-gray"> / </mark><code><mark class="highlight-gray">blocked-suspend</mark></code><mark class="highlight-gray"> </mark></p><p id="82f368a2-fcf9-4859-bdae-6ccb4b88b6cc" class="">Zuständig für Swapping</p><p id="2e4c0b20-2bce-40d8-b889-011e3a03487b" class="">Welche Prozesse sollen suspendiert / ausgelagert werden wenn die Resourcen knapp werden?</p></div></p><p id="e6064cba-3d67-4f25-af5b-c3ab5df76ff2" class=""><mark class="highlight-blue">Short-term-scheduling </mark><mark class="highlight-gray">= Dispatching</mark><div class="indented"><p id="098e15cc-bbd7-44a4-9488-a4efab57a56e" class=""><mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mtext> </mtext><mo stretchy="false">?</mo><mo>→</mo></mrow><annotation encoding="application/x-tex">-~?\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mspace nobreak"> </span><span class="mclose">?</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>running</code></mark><mark class="highlight-gray"> auf der CPU</mark></p><p id="7824a619-1a95-4680-90f5-5c3f694a0616" class="">Wird mit Priorisierung genutzt.</p><p id="8f635793-cb29-4314-969d-ec92a3d7b5de" class="">Dispatcher wird bei einem process switch aktiviert: <div class="indented"><ul id="b8e8593b-54db-4eea-a794-16fec8823b54" class="bulleted-list"><li style="list-style-type:disc">System Calls</li></ul><ul id="c93965ff-c74f-44b8-ada5-71ef6d6784a2" class="bulleted-list"><li style="list-style-type:disc">Traps</li></ul><ul id="607db092-0a32-43b0-8ec2-89c8e5d9f679" class="bulleted-list"><li style="list-style-type:disc">Interrupt: IO Interrupt, Clock Interrupt (spezieller interrupt)</li></ul><ul id="0e1cc196-c7e1-4203-9bb9-640fa09a30d4" class="bulleted-list"><li style="list-style-type:disc">Signale</li></ul></div></p></div></p><h1 id="6f010f67-23f5-4161-b847-85638814502c" class="">____________</h1><h1 id="79eae468-e52d-41e0-8194-4f6dc5ecc5fe" class="">Scheduling Strategien</h1><p id="0ff61055-c5c1-493e-9ebf-9241e9958214" class="">In der Praxis werden mehrere Strategien kombiniert und an verschiedenen Zeiten verwendet.</p><p id="4863c4be-ed50-4c46-b135-8f72ef60e369" class="">Wir behandeln hier short-term-scheduling.</p><p id="03ebd4da-4025-4638-8404-84991106279c" class="">
+</p><p id="d8d26dfa-09d4-4224-90fc-35f9a35a0404" class=""><mark class="highlight-blue">Selection function</mark></p><p id="0edd2b8d-08d0-405d-8abd-89bcf6ce3152" class="">Funktion zB basierend auf:<div class="indented"><p id="0d9f80cf-50d9-4b2d-b8f5-5acd92f1042e" class="">Arrival Time<mark class="highlight-gray"> / Ankunftszeit</mark></p><p id="c4d8938f-562b-40b6-85d0-aed177cbfd24" class="">Elapsed time <mark class="highlight-gray">/ bisherige Ausführungszeit - wie lang ist Prozess schon im System</mark></p><p id="81019d3f-1145-4eec-8d50-126cc7ad49a6" class="">Service Time / Burst time / CPU Time / <mark class="highlight-gray">Gesamte Abarbeitungszeit / Gesamte Ausführungszeit</mark> </p><p id="de489cb6-9de2-4cda-acef-bc505ce308d8" class="">Deadline der Fertigstellung</p><p id="d0478c08-a1a6-45b7-8684-c6d7f498b2aa" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>…</mo></mrow><annotation encoding="application/x-tex">\dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.12em;vertical-align:0em;"></span><span class="minner">…</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="ac3cc5ed-42d5-4c20-acbf-4f83266a139d" class=""><mark class="highlight-blue">Decision mode</mark><div class="indented"><p id="2231cdb0-6a79-40d7-b190-b1e3011d870c" class="">Non-preemptive	Wie bei traditionellen batch-OS, keine externe Unterbrechung durch OS</p><p id="3fcbd1e8-607e-4eaf-a66c-3246e4efb690" class="">Preemptive		OS kann Prozess unterbrechen</p></div></p><p id="e97de3cc-fb09-40c2-8348-dafc23767a23" class="">
+</p><h2 id="33c21a96-d375-43da-aae1-61b0d70f3162" class="">Priorisierung von Prozessen</h2><p id="3eec127b-020e-44d8-a796-4b589df8706e" class=""><mark class="highlight-gray">(Allgemeine Implementierung)</mark></p><div id="9153fe38-28ba-4bf7-9ef1-8be091e08696" class="column-list"><div id="3b83eace-6026-408b-84ac-5019b0e7fdb8" style="width:75%" class="column"><p id="42b97504-b4ea-4a72-acab-7e14ffd3c9ca" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span> Ready-Queue-Index = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Priorität.</p><p id="207d1288-4117-41e7-9df2-e5e77a8e571e" class="">2 Wege aus CPU: Prozesse preempten oder vollständig ausführen.</p><p id="22d17e19-f0f1-4411-8c42-6d82319ff5c1" class="">Starvation möglich.<div class="indented"><p id="326bc844-5abe-4a29-98f1-46d588362c76" class="">Lösung: Verweildauer in Queue beschränken.</p></div></p></div><div id="d98d2027-4d81-48ad-8eff-b2f63f73f7fa" style="width:25%" class="column"><figure id="c71beba0-4f12-4394-8984-18b548e61f56" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%201.png"><img style="width:192px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%201.png"/></a></figure></div></div><p id="17368f2a-09a9-471e-8a1b-58dfb6bd567b" class="">
+</p><hr id="6807c437-b616-4bfb-b334-9d40999027e6"/><h2 id="9daa304d-4a8a-4c9b-a4dc-fa40450691a3" class="">1) First Come First Served FCFC</h2><p id="0194d665-8ad0-4a2e-8fe5-cc2f5adf61ee" class="">Selection Function		First Arrival Time<mark class="highlight-gray"> / Ankunftszeit</mark></p><p id="0970352f-709f-4c7a-968b-b4be7cfc5fb4" class="">Decision Mode		Non-Preemptive</p><figure id="0f8cda6b-f244-471d-ad4c-e10c55a7c314" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%202.png"><img style="width:288px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%202.png"/></a></figure><figure id="04d2b0a4-0969-4190-9e9d-7db31b508552" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%203.png"><img style="width:240px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%203.png"/></a><figcaption>Task-Set für Beispiele</figcaption></figure><p id="584081db-25fb-4479-92ce-89a02e469a72" class=""><mark class="highlight-blue">Problem: Schlechte Auslastung</mark></p><p id="c26c6700-9958-4df4-a7ba-4cbab8a7ef64" class="">Begünstigt lange Prozesse<div class="indented"><p id="a85592bf-fc57-49cb-9d56-f979634c36ac" class="">Durchschnittliche haben kurze und lange Prozesse gleich lange Wartezeiten (normalized turnaround time) in der Queue, aber lange Prozesse erhalten mehr CPU Zeit, da sie nicht unterbrochen werden.</p></div></p><p id="a7aee0de-2924-4365-8697-b3fc844b024b" class="">Begünstigt CPU-intensive Prozesse<div class="indented"><p id="a7d2b208-0b04-4e21-a2ea-92abceddf56f" class="">Monopolisierung wenn ohne IO</p><p id="59f25294-bdaf-4d0e-a056-b7b96331184f" class="">IO-System wird nicht parallel zur CPU benutzt </p><p id="6291fa35-0c9b-464d-b26b-206515af5c03" class="">Schlechte Interaktivität</p><p id="2bccf516-14f4-46ed-a1da-bd2e03de863e" class="">
+</p></div></p><hr id="7c946293-f73d-4a8a-8aac-1f8d3bc4fba9"/><h2 id="e4e8c414-fc63-4329-9a68-047330ee35b4" class="">2) Round Robin RR / Time Slicing</h2><p id="9796c5ca-024d-4629-9b44-c7f3c0fd31ff" class="">Selection function		First Arrival Time<mark class="highlight-gray"> / Ankunftszeit</mark></p><p id="1540ae76-12ab-475d-a68e-e4fa02825b04" class="">Decision mode		Preemptive</p><figure id="62c844ed-1198-4f64-aa95-094b58d8544f" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%204.png"><img style="width:288px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%204.png"/></a></figure><p id="d9ff6a69-48d9-40e1-a3c9-07363c2bf081" class="">
+</p><p id="4f8b1cd5-46b1-40d9-8f55-c7975c3c5af4" class=""><mark class="highlight-blue">Implementierung</mark><div class="indented"><p id="426321b6-33bd-4801-a412-f41624231b03" class="">Clock interrupt: Gleich lange Zeitscheiben zyklisch an Prozesse vergeben.<div class="indented"><p id="0fef2a7a-d8e7-407a-afac-35f8c8a5a87f" class="">Zyklisch: nach interrupt wieder in die ready-queue gestellt.</p></div></p><p id="13ab1998-89c3-4153-a1ea-2082d47ca32a" class="">Clock interrupt darf nicht ins gewicht fallen sonst zu viel Overhead<div class="indented"><p id="38b88b97-eda4-4761-9297-ffb051d7b7b0" class="">Zeitscheibenlänge <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span></span><span>﻿</span></span> Clock Interruption time <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> scheduling switch time</p><p id="b622beba-cc2f-4ab7-b690-b9271522cfa9" class="">und bisschen länger als eine typische Interaktion sein.</p></div></p></div></p><p id="cd805228-7b58-4603-91fb-108c0c0705f3" class=""><mark class="highlight-blue">Problem</mark><div class="indented"><p id="b57a6b28-7bf1-4fe4-a12d-2d2601afaf2b" class="">Keine gute Response Time bei Interaktiven Prozessen</p><p id="393da914-80e7-4469-8b33-37347fb9352d" class="">IO-Intensive Prozesse benachteiligt, da diese die Zeitscheiben nicht voll ausnutzen</p></div></p><p id="c743ca00-5cb4-4467-ac02-782083cf9f82" class=""><mark class="highlight-blue">Lösung</mark><div class="indented"><p id="8f8aa2b1-68c6-4ccf-a066-736fd34e0b8c" class="">Virtual Round Robin - mit Auxiliary Queue</p><p id="eea1c249-9646-477c-99df-60b38b51354f" class="">IO Operationen in Hilfs-Queue werden priorisiert</p></div></p><figure id="04b6ee69-48ea-47a7-832a-b704a873a423" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%205.png"><img style="width:192px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%205.png"/></a></figure><p id="030cc75b-e8dd-4f3d-b658-9d91cc444d8f" class="">
+</p><hr id="f9b6bf02-0a08-4ff0-8820-c8727880389c"/><h2 id="2e713159-104d-4fcc-9aaa-51aa4d01a3d1" class="">3) Shortest Process Next SPN</h2><p id="eb98a689-97b2-488c-87df-74da6b0df9b5" class="">Selection Function		Shortest estimated Service-Time first <mark class="highlight-gray">/ Gesamte Abarbeitungszeit</mark></p><p id="22e702ad-0423-4366-b3a5-f8f12318b6c6" class="">Decision Mode		Non-Preemptive</p><figure id="bd9db79a-b154-481f-bee1-d862dcc387e7" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%206.png"><img style="width:288px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%206.png"/></a></figure><p id="b1c7615b-f540-45f2-8e30-a2f03a1be384" class=""><mark class="highlight-blue">Vorteil</mark><div class="indented"><p id="531d0c68-93a1-41db-9324-c8b80e1f9e8d" class="">Mehr fairness als FCFS.</p></div></p><p id="c8e8f80e-e124-4584-9217-032ac85b564f" class=""><mark class="highlight-blue">Probleme</mark><div class="indented"><p id="04c4a381-befd-4aca-aded-be74a9d0b19d" class="">Reine Abschätzung der Abarbeitungszeiten (Bevor Prozess überhaupt gestartet ist)</p><p id="aead777c-ad02-45c0-937d-296b8531caa9" class="">Wenn estimated service time zu lange, kann es zu starvation führen </p><p id="d7b2bd7a-8721-4d0a-8627-8c062c0342fe" class="">Response Time kann ganz unterschiedlich sein</p><p id="0f0f8150-b8c1-4370-a99f-f6a32f990911" class="">Langer Prozess, der früh ankommt wenn es keine kürzeren gibt und keine IO-Interrupts hat kann CPU monopolisieren</p><p id="a1e9ee27-9d49-4442-bec4-7e554abf93f3" class="">Nicht für interaktive Prozesse geeignet</p></div></p><p id="3dc63ec2-b863-41ff-8502-b948c926dbce" class="">
+</p><hr id="29ba6d43-dbe5-4e6b-9201-93c73b0223b1"/><h2 id="189a21af-073e-49cf-82ed-47ac8310f28c" class="">4) Shortest Remaining Time SRT</h2><p id="0f487d54-8db1-46cc-aa7d-994240708ce7" class="">Selection Function		Shortest Remaining Time (= Service Time - Elapsed time)</p><p id="efc9c6dc-ed2a-4191-aadc-8ddbe67eac22" class="">Decision Mode		Preemptive</p><p id="870b8476-cd48-486f-a49b-2ab6a8f6925b" class="">
+</p><p id="aa3d1d14-0546-44ef-a5f8-11e193113e56" class=""><mark class="highlight-blue">Implementierung</mark><div class="indented"><p id="afae0d12-fc51-4ae0-a555-dbf2b24e90fd" class="">Sobald ein neuer Prozess in queue gestellt wird, wird aktueller Prozess interrupted.</p><p id="dc6e7208-e12d-49c6-bd71-2ad6963fb889" class="">Dann wird Prozess mit shortest remaining time until completion gewählt.</p></div></p><p id="743bdd4b-967e-4ddd-ba42-c589474884cc" class=""><mark class="highlight-blue">Vorteil</mark><div class="indented"><p id="1f47a8ac-4772-49ca-9f35-874f13f6aa75" class="">Mehr fairness als FCFS.</p><p id="116df1c6-9169-4537-b6b1-bc690b2d868a" class="">Weniger Interrupts als RR</p></div></p><p id="f32fdb3d-1deb-4591-8f4f-7fe69fb89f77" class=""><mark class="highlight-blue">Nachteil</mark><div class="indented"><p id="fdc730cd-804c-4c4c-b093-09562b302bac" class="">Overhead: Protokollieren elapsed time notwendig</p><p id="7818226b-d0c8-4684-8df1-57c685f2ae5b" class="">Benachteiligt lange Prozesse - Starvation möglich</p><p id="46f77188-667e-4074-887c-6f58cd9e471c" class="">
+</p></div></p><hr id="0d532dc9-cfff-4b91-9f51-14edf0f18986"/><h2 id="453aee9f-39a5-4156-918d-4aeaa2b3724c" class="">5) Highest Response Ratio Next HRRN</h2><p id="ac1d2c64-81e1-4bd4-b6c0-291f1f6d7e57" class="">Selection Function<div class="indented"><p id="4cef9354-1519-42fb-9ece-dac14667558e" class=""><mark class="highlight-gray">Versucht kurze Prozesse zu priorisieren aber nicht zu starvation bei langen Prozessen zu führen.</mark></p><p id="c4c3d712-0571-4602-85e5-507647e9cde4" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">arg max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mfrac><mtext mathvariant="sans-serif">w+s</mtext><mtext mathvariant="sans-serif">s</mtext></mfrac><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">arg max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mfrac><mtext mathvariant="sans-serif">w</mtext><mtext mathvariant="sans-serif">s</mtext></mfrac><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\argmax(\frac{\textsf{w+s}}{\textsf{s}}) = \argmax(\frac{\textsf{w}}{\textsf{s}}+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1473309999999999em;vertical-align:-0.345em;"></span><span class="mop"><span class="mord mathrm" style="margin-right:0.01389em;">arg</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathrm">max</span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.802331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">w+s</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.095em;vertical-align:-0.345em;"></span><span class="mop"><span class="mord mathrm" style="margin-right:0.01389em;">arg</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathrm">max</span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7051080000000001em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">w</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="95439046-4850-4fa0-911c-05461801f714" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="sans-serif">w</mtext></mrow><annotation encoding="application/x-tex">\textsf w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textsf">w</span></span></span></span></span></span><span>﻿</span></span>		gesamte bisherige Wartezeit des Prozesses im System</p><p id="a7e4e339-c53f-486b-bbbb-b5d1a5d6aa94" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="sans-serif">s</mtext></mrow><annotation encoding="application/x-tex">\textsf s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textsf">s</span></span></span></span></span></span><span>﻿</span></span>		abgeschätzte Abarbeitungszeit (service time)</p><p id="b829432d-daba-4751-8373-7acf53a72b7f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mtext mathvariant="sans-serif">w</mtext><mo>+</mo><mtext mathvariant="sans-serif">s</mtext></mrow><mtext mathvariant="sans-serif">s</mtext></mfrac></mrow><annotation encoding="application/x-tex">\frac{\textsf w+ \textsf s}{\textsf s}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1473309999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.802331em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">w</span></span><span class="mbin mtight">+</span><span class="mord text mtight"><span class="mord textsf mtight">s</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>		response ratio (RR)</p></div></p><p id="208eaa13-abbc-41c2-bae0-fc489c2b7d64" class=""><mark class="highlight-gray">Das bedeutet: </mark><div class="indented"><ul id="6e04c136-e603-419e-abd2-50ed64687c82" class="block-color-gray bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Kurze Prozesse erzeugen eine große Zahl durch kleine Werte im Nenner</mark></li></ul><ul id="7908fc26-c2d0-4cad-ab60-b5cc4abf3fed" class="block-color-gray bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray">Prozesse die lange genug gewartet haben kommen irgendwann auch dran</mark><p id="0256647a-a421-471a-8b60-83afc65d410c" class=""><mark class="highlight-gray">Es wird jener Prozess ausgewählt, die in Relation zur eingeschätzten Abarbeitungszeit am längsten bisher gewartet hat.</mark></p></li></ul></div></p></div></p><p id="16f050a8-c2f8-4f73-b6c8-0ea77826d1a0" class="">Decision Mode<div class="indented"><p id="298a9787-228a-43b5-88df-47769c80b536" class="">Non-Preemptive</p></div></p><p id="e61eaacf-f590-4d25-b0fd-dd9bcc6c867a" class="">
+</p><p id="db19f184-7756-4f6b-bcdc-2a01571d0958" class=""><mark class="highlight-blue">Vorteil	</mark>keine Starvation von langen Prozessen und kürzere Prozesse fair behandelt </p><p id="4c748317-b43a-4063-94ef-a52546e58491" class=""><mark class="highlight-blue">Nachteil	</mark>Reine Abschätzung der Abarbeitungszeit</p><p id="4674994a-e3e7-40ba-8db3-eaac8d847f95" class="">
+</p><hr id="2c99f244-7336-4b4f-b439-28644c5c63a5"/><h2 id="61fd7421-7d01-4b26-a5a2-e79854d581dc" class="">6) Feedback Scheduling FS</h2><p id="b3282ed6-a3ec-4dd9-9d78-177274d6f0ae" class="">Selection Function<div class="indented"><p id="f392959c-a819-45eb-90c5-d1a44c19ec9d" class=""><mark class="highlight-gray">Versucht ohne im Voraus abgeschätze Abarbeitungszeit auszukommen und kurze Prozesse zu bevorzugen.</mark></p><p id="bd401dda-5dd6-4bd8-aa4c-72ccdefaeb3c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Elapsed Time = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span> Priorität, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Zeitscheiben</p><p id="08b796ba-2679-4782-88a2-918273f8f39f" class=""><mark class="highlight-gray">Wobei Priorität mit queues implementiert</mark></p><p id="78add559-8df1-4069-9c4a-75b364b78807" class="">Am Anfang starten alle Prozesse mit hoher Priorität und erhalten kurze Zeitscheiben.</p><p id="201d8d3e-ef1a-4c91-a549-d81b6d2ac3f6" class="">Je mehr von ihnen ausgeführt wird (insgesamt mehr bei längeren Prozessen):<div class="indented"><ul id="c3bdb479-2b7b-4a90-a4f8-69b1ac77d592" class="bulleted-list"><li style="list-style-type:disc">desto unwichtiger werden sie</li></ul><ul id="d637d0de-7f99-4d21-8279-d64d885b6cee" class="bulleted-list"><li style="list-style-type:disc">desto länger werden sie auf einmal ausgeführt</li></ul></div></p><p id="bfa7f1a5-759c-4352-8c44-349d74ce6063" class="">Dadurch haben kurze Prozesse höhere Priorität.</p></div></p><p id="0053f00a-ba3c-4f6f-aa12-88fc0877c183" class="">Decision Mode<div class="indented"><p id="6dcdeeb2-8341-490e-aaac-d0b2cda05647" class="">Preemptive</p></div></p><figure id="f56ab021-a9f9-49ab-8dd1-c9996a477ba9" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%207.png"><img style="width:192px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%207.png"/></a></figure><p id="c3698071-6796-4e09-9f4d-684d9bc110d4" class=""><mark class="highlight-blue">Vorteil	</mark>keine Abschätzung der Abarbeitungszeit im Voraus notwendig</p><p id="9500579b-1a4b-4a47-ac3e-d98e16b1c83b" class=""><mark class="highlight-blue">Problem	</mark>Starvation von langen Prozessen möglich</p><p id="259cf9ac-5592-463c-81d0-71bb02d6dabb" class=""><mark class="highlight-blue">Lösung	</mark>Anheben der Priorität nach bestimmter Zeit</p><p id="ccac332b-b211-40bf-99c2-f98bd5452958" class="">
+</p><hr id="2814487e-a4d5-4e76-96f4-880b59987b55"/><h1 id="90449163-b4b0-406a-a938-e750bd9132a9" class="">Echtzeitscheduling / Real-Time Scheduling</h1><p id="d35a574a-fa55-4fdc-b1ba-ca5af7135ad1" class="">Applikation / Anwendung hat Menge an Deadlines <mark class="highlight-gray">(soft vs. hard / critical)</mark>.</p><p id="4bb7c9dd-7df4-4411-b935-93f43c499155" class="">Es geht nicht um Performance / dass alles möglichst schnell abgearbeitet wird sondern Einhalten von critical Deadlines.</p><ul id="f233504a-e82f-4ccb-8afe-242d2a6313c9" class="bulleted-list"><li style="list-style-type:disc">Prozesse oft periodisch</li></ul><ul id="e7cedcbc-ef33-4156-b8ed-0fb0795c5202" class="bulleted-list"><li style="list-style-type:disc">Die meisten scheduler sind preemptive</li></ul><ul id="d8c35b00-38ef-4dc7-80d4-630ed5249050" class="bulleted-list"><li style="list-style-type:disc">statische vs. dynamische Prioritäten</li></ul><p id="a314002e-f5a5-49af-9598-82ad7d9002c0" class="">
+</p><h2 id="cfc44420-e53c-483b-9f1c-048720c07eca" class="">7) Earliest Deadline First EDF</h2><p id="20d6e944-8d70-4b3d-aad2-29119ad484dc" class="">Selection Function		Earliest Completion Deadline first</p><p id="c6502f08-645f-4e95-aa19-521da819896b" class="">Decision Mode		Preemptive</p><p id="cfd9f949-046a-479a-87ac-8ca2f239341c" class="">
+</p><p id="5d1da2a7-15b9-46e3-831b-b59a4f7e5f54" class=""><mark class="highlight-blue">Eigenschaften</mark><div class="indented"><p id="09a7e665-1e27-41ad-a458-d532b6e07614" class="">Optimaler Scheduler: Beweisbar optimal darin # der deadline misses zu minimieren.</p><p id="37758227-cbb8-4c41-b26f-a85599766929" class="">Setzt statische Deadlines und gleichzeitiges Eintreffen von einander unabhängiger Tasks voraus.</p><p id="3ef455d0-8b00-4cee-aa61-bce5f0574e05" class="">Deadlines müssen sortiert werden.</p></div></p><p id="1b4f6aab-31a7-4150-b53d-06b2c3a4efe1" class="">
+</p><p id="ccaf171b-fc60-49d0-93cc-4a773e3655cc" class=""><mark class="highlight-blue">Schedulability Test</mark></p><p id="ec2e3840-dfbd-40dc-a96a-a5079dd90d76" class="">Statisch vor Nutzung testen ob Tasks rechtzeitig beendet werden können<div class="indented"><p id="954747da-c4ab-49f2-aa51-028c05b64ceb" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">T_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>	Periodendauer <mark class="highlight-gray">alle unsere Tasks sind periodisch.</mark></p><p id="0e55b162-c962-41e4-9aa3-44cb2b415800" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">C_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>	Ausführungszeit (müssen wir im Voraus wissen)</p><p id="45e2d23c-707d-4e87-8909-89388f2e41a5" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span>	Index für Prozess</p></div></p><p id="1e43e940-475a-4b80-a571-c7cbe52de083" class="">Es muss gelten: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><mfrac><msub><mi>C</mi><mi>i</mi></msub><msub><mi>T</mi><mi>i</mi></msub></mfrac><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum_i \frac{C_i}{T_i} \leq 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3335309999999998em;vertical-align:-0.44509999999999994em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16195399999999993em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884309999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.07153em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44509999999999994em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="058a36fc-ef80-4039-ad67-d2456a3d537c" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msub><mi>C</mi><mi>i</mi></msub><msub><mi>T</mi><mi>i</mi></msub></mfrac></mrow><annotation encoding="application/x-tex">\frac{C_i}{T_i} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3335309999999998em;vertical-align:-0.44509999999999994em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884309999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.07153em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.44509999999999994em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">	CPU-Auslastung durch einen Task (in einer Periode)</mark></p><p id="e5c768aa-5254-4b44-914d-e5791786c742" class="">Das bedeutet Gesamt-CPU-Auslastung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo><mn>100</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">\leq 100\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">100%</span></span></span></span></span><span>﻿</span></span> für alle Tasks</p></div></p><p id="9feb97bb-4463-431d-b1dc-ccf0a0b1dd19" class="">
+</p><p id="5d8fe0ae-ff2c-4b10-9a28-256bf70b96e0" class=""><mark class="highlight-blue">Beispiel mit fixen Prioritäten</mark></p><p id="79586587-b806-4307-905b-189a4fc035d7" class=""><mark class="highlight-gray">Wichtig: hier vernachlässigen wir scheduling overhead</mark></p><figure id="b8599580-e796-49c1-b155-ed4afbe0af5d" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%208.png"><img style="width:384px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%208.png"/></a><figcaption>Arrival and Execution Times + Deadlines</figcaption></figure><p id="0e841e4e-a889-49db-9a1b-4460f31bdbbc" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span></span><span>﻿</span></span> und <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> sind tasks die periodisch auftreten <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>A</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>A</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><msub><mi>A</mi><mi>n</mi></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><mo stretchy="false">(</mo><msub><mi>B</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>B</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><msub><mi>B</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(A_1, A_2, \dots A_n),~(B_1, B_2, \dots B_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> und immer dieselbe execution time und arrival time haben.</p><figure id="c9ede5f0-191c-490f-8e60-ae64961fee6c" class="image"><a href="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%209.png"><img style="width:384px" src="Scheduling%20ecebbde770c4498d9e967e937026ae6c/Untitled%209.png"/></a><figcaption>Fixed / dynamic priorization</figcaption></figure><p id="edee292f-47ef-4337-b45c-3a04fda50d2d" class="">Statische Prioritätsvergabe			priorisierung von <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal">A</span></span></span></span></span><span>﻿</span></span> oder <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> - Deadlines nicht eingehalten</p><p id="38d6be15-870f-42bc-a5ca-c14d341ec203" class="">Dynamische Prioritätsvergabe (EDF)	alle Deadlines eingehalten.</p><p id="eba05f39-a57d-48af-90a9-63d3385932d7" class="">
+</p></div></article></body></html>

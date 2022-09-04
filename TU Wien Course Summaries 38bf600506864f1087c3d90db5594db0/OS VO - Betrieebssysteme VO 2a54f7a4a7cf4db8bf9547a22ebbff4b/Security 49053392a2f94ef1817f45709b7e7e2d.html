@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Security</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="49053392-a2f9-4ef1-817f-45709b7e7e2d" class="page sans"><header><h1 class="page-title">Security</h1></header><div class="page-body"><figure id="b920d6b2-40f1-4f95-9c3c-0f0578dc0406" class="link-to-page"><a href="../IntroSec%20-%20Introduction%20to%20Security%20b920d6b240f14f959c3c0f0578dc0406.html"><span class="icon">🔒</span>IntroSec - Introduction to Security</a></figure><nav id="14582608-b211-452b-9903-ee7553361b66" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#64e183c0-2584-40a5-9988-b0699557afe0">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9d34d035-62da-440a-aa2d-e775ad8318ad">Goal vs. Threat</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#550ca8ed-05bc-4112-b4b6-7a21ad395b79">Attacks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5460a8a6-845e-47b8-bbeb-301fa6a009e7">Malware</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#14738629-2219-4064-aab2-a7dcd85d6532">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1e9bfce2-0bd1-4c45-aad8-4e5ce9f571e4">Password Authentication</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#393f16b3-3173-4dfd-a3c2-0e298b8eaf11">Access Control</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4c4c61d9-f982-45e7-ac8a-66824c4f2132">Protection Domains</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2b04b33a-abe6-4bc1-bc3a-bded01db844e">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49e6e972-63a0-4f46-a585-a9d80fc23e04">Bell and LaPadula’s Model</a></div></nav><h1 id="64e183c0-2584-40a5-9988-b0699557afe0" class="">Definition</h1><p id="d38dccec-ed0a-4ba5-913f-ca55c9725718" class=""><mark class="highlight-blue">Security</mark></p><p id="18e9e7ef-24b9-424a-bbe7-21f4c1c74cf0" class="">&quot;Strategien, Vorkehrungen und Tools zur gewährleistung von Security-Objectives bei Daten und Services einer Organisation.&quot;</p><p id="511c8c71-21b4-4f08-a671-025b745f2b32" class="">
+</p><p id="42ed14f4-60e8-4d54-9723-de255de5296a" class=""><mark class="highlight-blue">Design Principles</mark></p><p id="d5c775d5-667e-479a-b81a-c87052df9f1e" class="">Open design			Avoid security by obscurity, system should be secure even if open source</p><p id="9fa0d164-cfe2-4030-bef3-edd96b50ca52" class="">Least privilege			(= authority to access a resource) for every component and user</p><p id="f6a1ce87-c6a3-44ac-86cf-7e2556a1b35c" class="">Simplicity				(= Economy of Mechanisms) easier to analyze</p><p id="ba864ee3-3465-49fe-958d-27255933f90e" class="">Usability				(= acceptability) secure mechanisms must be easy to use</p><p id="678ad616-74ff-4b91-8d4f-cb0b299b077a" class="">Complete Mediation	impossible to bypass access enforcement mechanisms</p><p id="7a410389-110f-4b56-ad25-8ab381e732e3" class="">
+</p><p id="5988ba93-b5e3-4bb4-8eb9-3abd0c318453" class=""><mark class="highlight-blue">Cryptography</mark></p><p id="e36cb34d-cd20-4147-b5ea-587d4fd0d246" class="">In geschlossenen Systemen: (theoretisch fehlerfreies) Betriebssystem kann Sender und Empfänger von interprocess communication IPC kontrollieren.</p><p id="60ecffce-724d-4712-9a54-1d6e4d4e6e07" class="">In offenen Systemen notwendig.</p><p id="08b11648-ee94-49b2-9bd2-0595c23320b2" class="">
+</p><h2 id="9d34d035-62da-440a-aa2d-e775ad8318ad" class="">Goal vs. Threat</h2><p id="7ce48049-158b-4a87-908a-67919d53a817" class=""><mark class="highlight-blue">Security Objectives (CIA-Triad)</mark></p><p id="ede6a7a0-f549-4de0-98d4-e3ddf44afb8a" class="">Confidentiality	<mark class="highlight-teal">	</mark>Secrecy, read-access only to authorized users</p><p id="c08a9030-b89d-488e-85af-6bff027496bd" class="">Integrity			Data only modified when authorized / System behaves as expected</p><p id="7c199ae6-82dd-42e9-8c71-8c76cd4273a1" class="">Availability		of data and services</p><p id="758d22cc-52a9-417e-ae36-55d416d9647e" class="">
+</p><p id="f67be5cb-4969-4a38-b949-3b7844a09a24" class=""><mark class="highlight-blue">Threat</mark></p><p id="6943171b-e708-4bcf-93d7-4e3830d7a719" class="">Vulnerability of that can be exploited. If carried out it is an attack.</p><p id="9fb06d13-5eb4-415a-8d2d-44442fd55179" class="">passive			intercepting without affecting system</p><p id="13f1a3a4-7d5d-4384-8dc9-eeed3af6d317" class="">active			modifying data, interrupting service</p><p id="5e019c4f-c69b-400a-ac3b-ed12fb85b588" class="">insider			from someone inside the security perimeter</p><p id="76a25bbe-67a7-425d-aad0-7fc54b9139ae" class="">outsider			from outsider, unauthorized user</p><hr id="23620be8-25df-497f-84ed-9ce5e44ce0aa"/><p id="56bac9d5-7b43-417e-bdea-ee61080e8016" class="">Interception		unauthorized read-access</p><p id="8ac0515a-b726-4ca0-abf5-a84c6ab52710" class="">Modification 		modification or generation of data, Theft of Service (unauthorized usage)</p><p id="2e350ce1-70de-4c0f-a4cf-688ef0e005c2" class="">Interruption		of a Service through destruction, overloading, ...</p><p id="68ca0358-3eee-4ba5-b677-1f2c50f97817" class="">
+</p><p id="4cb30d64-64db-4d87-bdca-762281be437b" class=""><mark class="highlight-blue">Goal				Vulnerability		Threat</mark></p><hr id="ce3bb049-68b5-4cc9-bb09-446382945004"/><p id="b94f4ba6-391e-4481-8b81-edee4dc422ad" class="">Confidentiality		Leaky			Exposure / Interception <mark class="highlight-gray">(passive)</mark>			</p><p id="778be903-594a-446a-80ec-43628ac882f7" class="">Integrity			Corrupted		Modification / Fabrication <mark class="highlight-gray">(active)		</mark></p><p id="29ab4832-585b-42ae-9be7-6495a419a21c" class="">Availability		Unavailable		Denial of Service / Interruption<mark class="highlight-gray"> (active)</mark></p><p id="1b685e11-2811-4515-9534-1861c7b9e828" class="">
+</p><h2 id="550ca8ed-05bc-4112-b4b6-7a21ad395b79" class="">Attacks</h2><p id="3027a68a-3dc6-4941-938f-65d2f93da4ae" class=""><mark class="highlight-blue">Attacker / Intruder / Adversary</mark></p><p id="43b6da57-a522-4ca4-9d2d-bbdf7edd2b4f" class="">Erhöhung der Privilegien für Systemzugang</p><p id="801016c0-9e9f-4151-a7ce-806d0a656bb2" class="">Ausnützung einer Sicherheitslücke, Passwörter finden</p><p id="7339a123-ac4f-4126-af51-18a941d950e6" class="">
+</p><p id="7adf0a26-f0e6-4b7d-80bc-337c9a0f5b21" class=""><mark class="highlight-blue">Common Attacks</mark></p><p id="f066b809-340f-4cf6-bf14-246bfbcf8935" class="">Threat, carried out by an intruder = attack.</p><ul id="6dd1ec27-b249-46fc-b0a9-be7ce5efac8d" class="bulleted-list"><li style="list-style-type:disc">Accessing and reading memory</li></ul><ul id="46e8ce9f-3567-4f17-b063-f1c0dc5db9fc" class="bulleted-list"><li style="list-style-type:disc">Unauthorized System Calls</li></ul><ul id="3e236d2b-cb68-457f-8462-f8935027ece9" class="bulleted-list"><li style="list-style-type:disc">Authorized calls with unauthorized parameters</li></ul><ul id="f76c61fd-4da4-4011-8fbe-f4036fb96e02" class="bulleted-list"><li style="list-style-type:disc">Using escape keys <mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>DEL</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>BREAK</code></mark><mark class="highlight-gray">, ...)</mark></li></ul><ul id="49c1c3d5-db28-4291-b42b-3d8624eb330e" class="bulleted-list"><li style="list-style-type:disc">Socaial engineering, phishing, black-mailing</li></ul><p id="e9a79ebc-86fd-433e-9a5f-0c5b5e07e783" class="">zB Stack/Buffer Overflow Attack<div class="indented"><p id="61be6f50-c0f0-419b-aeb0-58aa43f3f316" class="">Buffer überschreiben, return adresse zu Stack-Anfang überschreiben wo NoOps und anschließend der Exploit-Code steht.</p></div></p><p id="0bf7eaef-b0cb-470d-9f92-7cfc0a2343f4" class="">
+</p><p id="e92122a3-191b-431b-88d7-9569ff627ca4" class=""><mark class="highlight-blue">Intrusion Detection</mark></p><p id="bd334092-20a0-4616-bb99-71ab5cbe2750" class="">Threshold detection	zB Anzahl der Loginversuche</p><p id="8629d894-36d1-4b50-8137-e78079b38068" class="">Anomaly Detection		Heuristiken um Anomalien zu finden (nicht verlässlich)</p><p id="58741c3f-f4e2-4e79-90f3-e23ee23de13f" class="">Zugriffsmustern		vergleichen mit &quot;typischen&quot; Zugriffsmustern von Accounts/Benutzern</p><p id="5d14362f-a3d5-4c62-b828-0206addddbf2" class="">Audit records			Logging von Operationen, Involvierte, Aktion, Resource Usage, Zeit, ...</p><p id="1ceb4bde-3c50-4051-bb24-c26538e4da0f" class="">
+</p><h2 id="5460a8a6-845e-47b8-bbeb-301fa6a009e7" class="">Malware</h2><p id="c2edca20-0cc7-4f68-ae02-b1e13c34437d" class=""><mark class="highlight-blue">Virus			</mark>repliziert sich selbst, zB Key Logger oder DOS durch Ressourcenblockierung </p><p id="17c9dcb5-2128-460c-be93-04972ebd4b9f" class=""><mark class="highlight-blue">Worm 			</mark>repliziert und verschickt sich selbst in einem Netz zB via mail, remote login</p><p id="e43bfd05-9683-40b9-bed1-3b6e2f6b4d92" class=""><mark class="highlight-blue">Trojan Horse		</mark>versteckter Code in vermeintlich gutem Programm</p><p id="8bfb30ee-9227-4fed-aef3-91ab84f251a5" class=""><mark class="highlight-blue">Logic Bomb		</mark>Aktiviert sich selbst bei bestimmter Bedingung, zb Zeitablauf</p><p id="8664d54c-5a50-40ba-b8df-6164c1dd8f8b" class=""><mark class="highlight-blue">Trapdoor			</mark>Geheimer weg Zugriffskontrolle zu bypassen</p><p id="929dcc77-d3f7-4f33-988c-325fda7614a1" class=""><mark class="highlight-blue">Port Scan			</mark>automatisierter Port scan, scripts für common vulnerabilities ausführen</p><p id="5c6f44bc-ee79-4cda-a1a7-ce32201b961d" class=""><mark class="highlight-blue">Denial of Service	</mark>Überlastung eines Rechners</p><p id="b402f7d7-34e6-47b5-ab25-facdeb30b19f" class=""><mark class="highlight-blue">DDoS			</mark>Distributed Denial of Service, gleichzeitig mit mehreren Rechnern</p><h1 id="14738629-2219-4064-aab2-a7dcd85d6532" class="">____________</h1><h1 id="1e9bfce2-0bd1-4c45-aad8-4e5ce9f571e4" class="">Password Authentication</h1><p id="0252a956-2504-4d48-be31-9eedb75a228c" class=""><mark class="highlight-blue">Salt</mark></p><p id="5612d9f1-cdec-46a7-8d1b-06c98fe2a7df" class="">Speicherplatz beschränkt, aber wir wollen möglichst viele Zeichenkombinationen</p><p id="f6358389-c753-4382-84d7-08d66ae2922a" class="">Es wird unverschlüsselt der hash <mark class="highlight-gray"><code>h(salt ++ password)</code></mark><mark class="highlight-gray"> </mark>gespeichert.</p><p id="ee5cd2d2-9691-417f-80de-bcc2265218be" class="">
+</p><p id="4e356f1b-9fd6-4ba0-86de-5afb6477bad2" class=""><mark class="highlight-blue">Countermeasures against Dictionary Attacks</mark></p><ul id="1eaa9c20-804d-41b2-a6a9-261c2327e31c" class="bulleted-list"><li style="list-style-type:disc">One-time Password <mark class="highlight-gray">(transaction authentication number TAN)</mark></li></ul><ul id="5166c8c6-c462-451d-9299-6ffe4457c36e" class="bulleted-list"><li style="list-style-type:disc">Zeitablauf von Passwörtern</li></ul><ul id="9b06a2b9-4135-433c-abc1-9a4f65ab3a7c" class="bulleted-list"><li style="list-style-type:disc">Challenge Response Protokolle (Verschlüsselung)</li></ul><ul id="576e037d-6628-4d27-97b0-a03897ef3d0f" class="bulleted-list"><li style="list-style-type:disc">timeout between guesses, locking account</li></ul><ul id="99f7ce86-1fab-49c1-8821-42cf021e3718" class="bulleted-list"><li style="list-style-type:disc">Logging, showing last time user logged in</li></ul><p id="8096841f-9804-4aa0-ba61-7c1b5cdb9058" class="">
+</p><h1 id="393f16b3-3173-4dfd-a3c2-0e298b8eaf11" class="">Access Control</h1><p id="ff202aae-da7f-4677-ac52-86a07b420193" class="">Protection in OS: Zugriffkontrolle von user / user processes.</p><p id="139bf059-1b91-458c-9cc7-ca166a273dee" class=""><mark class="highlight-blue">Identification			</mark>the ID you claim to have</p><p id="4ad531b6-b9b9-404c-9641-f87b547e6b96" class=""><mark class="highlight-blue">Authentication		</mark>proving your ID, <mark class="highlight-gray">to get a premission, get authrorized</mark></p><p id="152e94a6-cf1b-4cc9-823c-23f0a1daa371" class=""><mark class="highlight-blue">Authenticity			</mark>successful authentication</p><p id="13b9ba10-b1fe-4638-af63-e68588d84a6a" class=""><mark class="highlight-blue">Credentials			</mark>evidence used to prove your ID</p><p id="8842ead9-758e-4b28-8974-7b65427ca388" class="">
+</p><p id="4b1764e5-18f6-4d54-8a7d-6baa67ace55e" class=""><mark class="highlight-blue">Accountability			</mark>ability to trace actions back to entities in a system (requires traceability)</p><p id="fbaf1c00-48b6-44fd-a7f3-b992557a3831" class="">					Protokollierung in Security Audit records.</p><figure id="436dccb0-01a6-48b5-ae65-7c49dac21552" class="image"><a href="Security%2049053392a2f94ef1817f45709b7e7e2d/Untitled.png"><img style="width:384px" src="Security%2049053392a2f94ef1817f45709b7e7e2d/Untitled.png"/></a><figcaption>Security Architecture</figcaption></figure><p id="cb84db62-9d41-46e9-a817-9feb5752b6e2" class=""><mark class="highlight-blue">Mechanismus			</mark>Implementierung in OS, sichert Policy-Einhaltung zB mit Access Matrix </p><p id="ea08a038-5fc1-4b23-8270-e5345ef74e87" class=""><mark class="highlight-blue">(Security-)</mark> <mark class="highlight-blue">Policy		</mark>von Benutzer bestimmt</p><p id="3d6ab075-7e24-40d4-a3c5-2956343e5afe" class="">
+</p><h2 id="4c4c61d9-f982-45e7-ac8a-66824c4f2132" class="">Protection Domains</h2><p id="626b13b3-d913-4ea6-a02c-fa9da29ace6c" class=""><mark class="highlight-blue">Role / Group / Domain Based Access Control</mark></p><p id="4f4acf2c-ef1b-4489-a701-a5449001622c" class="">Role = Set of users <mark class="highlight-gray">(like Administrator, PowerUser, Users, Guest)</mark></p><p id="f46305f5-82ce-41ca-a2cb-66c1f79f8a03" class="">Each role has its own domain = set of access-rights <mark class="highlight-gray">(pairs of objects, rights)</mark></p><p id="afddd010-d392-42be-af4c-10ff3fd360b2" class="">In unix the domain / role of each process is defined through IDs <mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>UID</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>GID</code></mark><mark class="highlight-gray">)</mark>.</p><figure id="f9483abd-fae2-4ed1-ad3a-ff34efea19f2" class="image"><a href="Security%2049053392a2f94ef1817f45709b7e7e2d/Untitled%201.png"><img style="width:384px" src="Security%2049053392a2f94ef1817f45709b7e7e2d/Untitled%201.png"/></a></figure><p id="7065cacb-5e09-496b-89c0-7bbf2f92cd89" class="">
+</p><p id="59517e6b-dda7-4b8a-b4ef-4645a569b2d3" class=""><mark class="highlight-blue">Access Control Matrix</mark></p><p id="edd9c033-6486-448e-b3ac-c73c4d7ed03e" class="">(Domain <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span></span><span>﻿</span></span> Object) <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> Access rights <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∈</mo></mrow><annotation encoding="application/x-tex">\in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span></span></span></span><span>﻿</span></span> <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo></mrow><annotation encoding="application/x-tex">\{</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span></span></span></span></span><span>﻿</span></span>read, write, execute<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">}</span></span></span></span></span><span>﻿</span></span></p><p id="d225f4e4-22d9-4aa3-a22b-506b25d55e38" class="">
+</p><p id="ffaaec83-bf0b-4b9b-b8c4-dd6be3becf07" class=""><mark class="highlight-blue">Dynamic Protection</mark></p><p id="e72454aa-6524-4b5a-a2ed-4ad4e75bed2a" class="">Allows changing access rights in matrix</p><p id="2a4f5eb5-308d-47ba-97e4-749ab1f0442f" class="">Has special access rights for owner</p><p id="67c7cd74-37d7-4726-b25b-c3e9a21050bd" class="">Transfer: changing the role / domain of a process allowed<div class="indented"><p id="edad771d-cd85-4de7-a895-c2ca523962d0" class=""><mark class="highlight-gray">Transfer security policy stored in (Object </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> Object) </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> Transfer rights </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∈</mo></mrow><annotation encoding="application/x-tex">\in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo></mrow><annotation encoding="application/x-tex">\{</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">change, dont change</mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">}</span></span></span></span></span><span>﻿</span></span></mark></p></div></p><p id="048bb3e5-ef7b-47ac-96c5-6cbc61024fcd" class="">
+</p><div id="a9b311d8-6a1a-4080-8dab-773859bf071a" class="column-list"><div id="7651eff7-c345-4d27-b3aa-7d0f0eb31303" style="width:50%" class="column"><p id="2952690c-bc17-4f65-987c-63d8f17e03d5" class=""><mark class="highlight-blue">Access Control List ACL </mark><mark class="highlight-gray">(object centered)</mark></p><p id="859f2937-c824-4dd6-937c-1bd4ff331bf9" class="">list: subjects access rights of each file</p><ul id="2af32fd5-6388-40e8-9f2b-963b03664740" class="bulleted-list"><li style="list-style-type:disc">identification required</li></ul><ul id="beaa4d27-48d1-4102-8cb2-65b6f0e129cc" class="bulleted-list"><li style="list-style-type:disc">delegation: asking admin to add node </li></ul><ul id="e4ce4a40-74d3-4bb3-af54-e17f3aadd011" class="bulleted-list"><li style="list-style-type:disc">revocation: modifying nodes (easy)</li></ul></div><div id="f76fbb29-9c47-4844-9a27-ac3ad6aba70f" style="width:50%" class="column"><p id="815996d3-7bac-4999-9340-48971437a528" class=""><mark class="highlight-blue">Token / Capability List</mark><mark class="highlight-teal"> </mark><mark class="highlight-gray">(subject centered)</mark></p><p id="3d085e8d-5331-48a6-9624-dfd8cc8f5b5b" class="">list: unforgable tokens of each process</p><ul id="20fe99ac-c48e-4594-866a-8535d93b894d" class="bulleted-list"><li style="list-style-type:disc">identification not required </li></ul><ul id="6d9877b6-229c-4923-be37-827c570fb545" class="bulleted-list"><li style="list-style-type:disc">delegation: passing token (easy)</li></ul><ul id="54c935cd-0336-4897-ae72-cac20e817b81" class="bulleted-list"><li style="list-style-type:disc">revocation: only with extra bookkeeping</li></ul></div></div><p id="4f2e5405-e122-491e-8ad7-184645c482f6" class="">
+</p><p id="2bed067a-a747-4373-9d83-42a0247680cf" class=""><mark class="highlight-blue">Lock-Key System</mark></p><p id="d34c951a-833a-4c98-9ecc-064a7d19d774" class="">Each object has an unforgable set of locks (bit-patterns).</p><p id="fc44822d-8ee1-4b75-a091-39955bfd50df" class="">Each domain has an unforgable set of keys (bit-patterns).</p><p id="ce185cd2-b9e8-4172-972d-814dc95c6cd8" class="">The key of the process&#x27; domain must match with that of the object.</p><h1 id="2b04b33a-abe6-4bc1-bc3a-bded01db844e" class="">____________</h1><h1 id="49e6e972-63a0-4f46-a585-a9d80fc23e04" class="">Bell and LaPadula’s Model</h1><p id="699cfd27-84c1-4084-bc58-03aef7343a19" class="">Rules for Information-Flow</p><p id="6c55cc84-8853-4d0a-b72b-5bb7c7b307f9" class="">Security Classification <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">SC</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span></span></span></span></span><span>﻿</span></span> Hierarchie für Subjects und Objects <mark class="highlight-gray">(zB top secret, secret, public)</mark></p><p id="e697c22b-948a-4b11-ad5e-31538ce9f102" class="">Goal: Data Confidentiality <mark class="highlight-gray">(not leaking classified information to unclassified files)</mark></p><p id="c8c1c431-9d21-4f02-96c9-e186850b7104" class="">
+</p><p id="29a44a4b-828b-4107-a827-706deda23fed" class=""><mark class="highlight-blue">Actions: Operationen von Subjects auf Objects:</mark></p><p id="b50dbb38-71e4-4581-a378-a6936e4ae8ee" class="">read-only 	no modifications</p><p id="f2e65c1b-e0fb-4565-a40b-cfad0a93b524" class="">append		writing without reading</p><p id="3011a6af-e2e6-4466-b909-88e211e33e14" class="">execute		without reading or writing</p><p id="2b12579e-5e36-4929-a091-e1fe45f62de9" class="">read-write</p><p id="874d92f8-eae8-48a2-a7d6-cccd25035895" class="">
+</p><p id="4c7cd4f0-2cbb-4dce-99ad-9994441b67d0" class=""><mark class="highlight-blue">Security Axioms</mark></p><ol type="1" id="98d93381-3fec-4b1f-a8ff-6835b178f905" class="numbered-list" start="1"><li>Simple security property<p id="ae405d27-7c56-4047-be3c-a15700ffb6a4" class=""><mark class="highlight-blue">Read			</mark><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>≥</mo><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>O</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">SC(S) \geq SC(O)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>	<mark class="highlight-gray">&quot;no read up&quot;</mark></p></li></ol><ol type="1" id="47aea90d-10e4-4b01-b5f0-6af9bae49f7e" class="numbered-list" start="2"><li>The *property (star property)<p id="a6be80be-72a1-4e0d-99db-26f5ef4c9596" class=""><mark class="highlight-blue">Append			</mark><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>≤</mo><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>O</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">SC(S) \leq SC(O)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 	<mark class="highlight-gray">&quot;no write down&quot;</mark></p><p id="7cf97b9c-5816-47b5-bb4e-dc551ab0a7b5" class=""><mark class="highlight-blue">Read und Write	</mark><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>O</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">SC(S) = SC(O)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p></li></ol><p id="eb1fb1c5-865e-437c-9106-c5f8deb65b62" class="">
+</p><p id="01b67e15-4d6c-4d40-bb32-cdce898ef7f0" class=""><mark class="highlight-blue">Beispiel</mark></p><p id="a2087394-9b84-46ae-91b5-d9b91286a252" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><msub><mi>O</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>≤</mo><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>≤</mo><mi>S</mi><mi>C</mi><mo stretchy="false">(</mo><msub><mi>O</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">SC(O_1) \leq SC(S) \leq SC(O_2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">SC</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="2c138112-9f3e-4e8b-b6a6-d6367dd6cb6e" class="">Bedeutet Subject <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></span><span>﻿</span></span> kann Object <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>O</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">O_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> lesen und <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>O</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">O_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> schreiben </p><p id="1f1909b2-27e9-4506-bc9e-0e0af499c427" class="">
+</p></div></article></body></html>

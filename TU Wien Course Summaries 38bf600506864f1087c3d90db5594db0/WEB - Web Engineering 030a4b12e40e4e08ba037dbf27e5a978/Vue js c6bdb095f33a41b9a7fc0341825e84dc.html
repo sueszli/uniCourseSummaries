@@ -1,0 +1,871 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Vue.js</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c6bdb095-f33a-41b9-a7fc-0341825e84dc" class="page sans"><header><h1 class="page-title">Vue.js</h1></header><div class="page-body"><p id="6694f604-4fd9-4681-989b-3cdc77ec1719" class=""><a href="https://vuejs.org/v2/guide/">https://vuejs.org/v2/guide/</a></p><hr id="6a681754-a4ea-4170-8a94-bf1de871ecdc"/><p id="12f54bef-34f3-43ef-9f98-04fa517ce6f9" class=""><a href="https://www.youtube.com/watch?v=gbw8dyJT9AI">https://www.youtube.com/watch?v=gbw8dyJT9AI</a><div class="indented"><p id="38eeb2a7-675e-40a6-abdc-1fdc1004aa66" class=""><a href="https://github.com/web-engineering-tuwien/recipe-search-live-demo/tree/vue">https://github.com/web-engineering-tuwien/recipe-search-live-demo/tree/vue</a></p></div></p><p id="ba4d32dc-373d-4dc6-92c2-d83458721d1c" class=""><a href="https://www.youtube.com/watch?v=Wy9q22isx3U">https://www.youtube.com/watch?v=Wy9q22isx3U</a></p><p id="2fa9192d-ec7f-41f1-b044-43e844943b77" class="">
+</p><nav id="d52cb48b-afb3-411b-b13e-0143be512e61" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bca3ad8d-806a-4f05-881e-03267977cf57">Concepts </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bf5cfccb-42e0-4899-b721-a68cc645ebb1">Vue.js</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fb253028-4f07-41ff-996c-2031461e9c95">Components</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#045b066c-58a1-404d-b5ee-f33f17008c6d">One-Way Binding <code>v-bind</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#05e041cf-1e8e-4db9-91e4-3197a6ca051e">Two-Way Binding <code>v-model</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#750f1f23-7df6-434b-9e73-fbbe985a9755">Computed Properties</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5910f339-b80f-4d57-ab97-a2a0750649fc">Conditional rendering in Templates <code>v-if</code>, <code>v-else</code>, <code>v-else-if</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#02bae224-b107-4497-805e-6a811257f4e0">Bounded loops <code>v-for</code>, <code>v-bind:key</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4a273786-96cf-47de-bdcc-dfff9062bed5">Events and Methods <code>v-on, @event_name</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a555b58b-2efa-4f45-8409-0ed203b14cf3">Custom Events <code>this.$emit(event_name, &#x27;data&#x27;)</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fdca3b59-d8e9-46ed-ba65-e2df1e96a344">Lifecycle Hooks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb5eba53-4fc8-4333-b5a9-93d956619b7a">State Management (Vuex)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f12dac51-6db0-4fe3-bd96-4b556d133153">Routing / Navigation</a></div></nav><h1 id="bca3ad8d-806a-4f05-881e-03267977cf57" class="">Concepts </h1><p id="5cb43a34-310b-4d5a-baec-228ecf19ae01" class=""><mark class="highlight-teal">declarative</mark><div class="indented"><p id="9cf951b0-72e8-4997-b538-045d51f4115e" class="">Using templates instead of imperatively defining DOM changes command by command.</p><p id="5a35abb5-f5a9-43b6-b9f7-1f2637cf6d28" class="">Using binding to define relationships between DOM and data.</p></div></p><p id="c1dfcd1e-1e95-4fd8-ae77-37ce64ff01e4" class=""><mark class="highlight-teal">reactive</mark><div class="indented"><p id="2a57ba6e-de79-4fb4-aee1-332c28bb0c02" class="">Reacting to user input changes / events.</p></div></p><p id="b71c3f25-d236-415b-af24-5a874dc9282c" class=""><mark class="highlight-teal">MVVM</mark><div class="indented"><p id="bd3cef79-8417-459c-a32e-4566c7c69c18" class="">stands for:</p><ul id="857d8eae-6b25-42dd-816c-c20fcca01486" class="bulleted-list"><li style="list-style-type:disc">Model (Data)			Plain JavaScript Objects</li></ul><ul id="529d9e74-d2ac-4334-bc71-c4e1d15b74fc" class="bulleted-list"><li style="list-style-type:disc">ViewModel (Logic)		Vue → Keeps View and Model in synch</li></ul><ul id="98ceec64-9400-4f90-b72b-1c009d982b99" class="bulleted-list"><li style="list-style-type:disc">View (DOM) 			Output / Design</li></ul></div></p><p id="16230af6-d82f-41b2-b172-70d52c6dd654" class=""><mark class="highlight-teal">Front-End vs. Back-End Templating</mark><div class="indented"><p id="b6766c87-ae17-4380-ae52-0ac5c6d7b997" class=""><mark class="highlight-gray">Templating = seperating View and ViewModel.</mark></p><p id="b2567439-3af8-4305-95a2-7115810a6c80" class="">Backend templates work through request - response:<div class="indented"><ol type="1" id="3b4f1ff5-3c40-4efc-a696-5d774df009e5" class="numbered-list" start="1"><li>Backend receives request</li></ol><ol type="1" id="dd2cdfe1-90fc-4c27-98a0-04d117f436d6" class="numbered-list" start="2"><li>retrieves / computes data</li></ol><ol type="1" id="f1847220-6a64-4374-8afa-c1db12b69f21" class="numbered-list" start="3"><li>generates HTML file</li></ol></div></p><p id="093551dd-3f7e-4156-94c3-c50194f12878" class="">Frontend templates are reactive (work through binding):<div class="indented"><p id="7afe1080-8247-4c83-8c22-6fbf01870db4" class="">Model changes (triggered by user or backend) <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Value changes <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> DOM update</p></div></p></div></p><p id="832b7727-a244-4895-b952-c4d207a29b24" class=""><mark class="highlight-teal">single page application</mark><div class="indented"><p id="e9aa8f96-2462-4588-bd04-0d73fd1f46eb" class="">A single fetch from backend</p><p id="474d1f98-f4ca-4620-b40a-9a3a5e9d7285" class="">
+</p></div></p><h1 id="bf5cfccb-42e0-4899-b721-a68cc645ebb1" class="">Vue.js</h1><p id="ad21bfb1-b43d-416a-bd08-e814ea972300" class="">Vue.js is a JavaScript Framework.</p><ul id="fcd53d76-de0e-4cd4-a64e-60498af4fbbf" class="toggle"><li><details open=""><summary>CLI commands</summary><p id="bb156560-176b-456d-a1ae-28bbdf8572f5" class=""><a href="https://cli.vuejs.org/guide/">https://cli.vuejs.org/guide/</a></p><p id="a4573c82-bb42-49e0-b7ed-31c784f21616" class="">
+</p><p id="4f95743f-c913-4edf-ad78-4391431d367d" class="">Create project<div class="indented"><p id="a5d1351c-d7b2-4c6d-8791-92b219dc8e18" class=""><mark class="highlight-gray"><code>vue create &lt;projectName&gt;</code></mark></p><p id="c523d450-e3eb-4e2a-83d5-286ce983e377" class=""><mark class="highlight-gray"><code>vue ui</code></mark><mark class="highlight-gray"> → graphical ui</mark></p></div></p><p id="8b82868f-d2af-4227-b85b-b1c75781b5d0" class="">
+</p><p id="25b93b39-2c50-4b65-8acf-4fb621320433" class="">Project setup<div class="indented"><p id="e48d1232-6720-4ed1-bb28-7c6256c66e08" class=""><mark class="highlight-gray"><code>npm install</code></mark></p></div></p><p id="ac0f35bc-b4d0-4092-9f5d-f2a1a5bedae7" class="">Compiles and hot-reloads for development<div class="indented"><p id="9c07f033-3fd2-45f4-8681-032eea11482b" class=""><mark class="highlight-gray"><code>npm run serve</code></mark></p></div></p><p id="b6a20696-35f7-46e7-9038-0bc2126484c0" class="">Compiles and minifies for production<div class="indented"><p id="eec4c959-7add-4ea7-b9e4-2da77b91a747" class=""><mark class="highlight-gray"><code>npm run build</code></mark></p></div></p><p id="8c2c3ce1-528a-4043-b398-0ab58c61f63f" class="">Lints and fixes files<div class="indented"><p id="3df4c486-42ff-47d7-923a-8991e056ee82" class=""><mark class="highlight-gray"><code>npm run lint</code></mark></p></div></p></details></li></ul><p id="e6e95c61-7c4c-442f-adc9-9f6f22e8efcf" class="">
+</p><p id="4b963d0d-228a-42f9-9c95-bdde4f7a0fa4" class="">Ways to import</p><ul id="a6d8a75a-a7fd-4738-977c-5dd8f3a71988" class="toggle"><li><details open=""><summary><mark class="highlight-teal">As library - directly in html</mark></summary><pre id="9b9011df-1409-4c84-a038-ba1a43718bac" class="code"><code>&lt;script	src=&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;	
+		Hello, {{ course }}	    &lt;- View
+&lt;/div&gt;	
+
+&lt;script&gt;	
+		var	app	=	new Vue({	    &lt;- ViewModel 
+				el:	&#x27;#app&#x27;,	
+				data:	{	            &lt;- Model
+					course:	&#x27;Web Engineering&#x27;
+				}	
+		})													
+&lt;/script&gt;</code></pre></details></li></ul><ul id="0daf16b1-f932-43e2-9a8a-d8e17fb90247" class="toggle"><li><details open=""><summary><mark class="highlight-teal">As javascript framework</mark></summary><p id="5f725687-2b92-4475-bd1d-29b96cbab558" class="">Components are organized in <code>.vue</code> Files (transpiled to JavaScript in build process).</p><pre id="ed9c16a7-b555-4750-993d-30bb020b659e" class="code"><code>&lt;template&gt;	
+		&lt;div id=&quot;app&quot;&gt;	
+				Hello, {{ course }}	
+		&lt;/div&gt;	
+&lt;/template&gt;
+
+&lt;script&gt;	
+		export default	{	
+				name: &#x27;App&#x27;,	
+				data: function() { &lt;- Model is a function because this is a component	
+						return {	
+						  course: &#x27;Web Engineering&#x27;
+						}	
+				},	
+		}	
+&lt;/script&gt;	
+
+&lt;style&gt;	
+		#app	{	
+				font-family:	Arial;	
+				color:	#2c3e50;	
+		}	
+&lt;/style&gt;</code></pre></details></li></ul><p id="03057d04-a3ee-4af1-96aa-b407f035a63a" class="">
+</p><h2 id="fb253028-4f07-41ff-996c-2031461e9c95" class="">Components</h2><p id="1db0570c-1acf-4b24-bbb7-d6c086545809" class="">Consist of<div class="indented"><p id="a528e089-63af-4bdd-bcb0-bbe5edba9c49" class=""><mark class="highlight-gray"><code>&lt;template&gt;</code></mark>		HTML code, declares binding</p><p id="b9c19758-e1eb-49c2-95a2-06b0dd285a2b" class=""><mark class="highlight-gray"><code>&lt;script&gt;</code></mark>		Behaviour of ViewModel</p><p id="eafa49dd-a797-4d03-b584-36b525972973" class=""><mark class="highlight-gray"><code>&lt;style&gt;</code></mark>			scoped style, bound to this component</p></div></p><p id="a1e5f1bd-2bde-4f12-a34b-d4f17ec8bcd1" class="">
+</p><p id="127ad13a-a271-4051-9fd5-61e4e352c863" class="">The script consists of<div class="indented"><p id="00b2c9aa-8145-4bdc-819c-450ddfa91de0" class=""><mark class="highlight-gray"><code>props</code></mark><mark class="highlight-gray">			</mark>Constructor of this component</p><p id="7e78b170-5fc7-497d-a664-2ab42c39c010" class=""><mark class="highlight-gray"><code>computed</code></mark><mark class="highlight-gray">		</mark>Computed values</p><p id="437fb380-2782-47ec-bd8e-f10ff97ac22a" class=""><mark class="highlight-gray"><code>component</code></mark><mark class="highlight-gray">		</mark>registered sub components of this template</p><p id="c0916efc-8162-4795-809f-6d96c6b90c57" class=""><mark class="highlight-gray"><code>methods</code></mark><mark class="highlight-gray">			</mark>functions for event handling</p><p id="d637966c-024e-46d5-854d-c64b9ff31fbe" class=""><mark class="highlight-gray"><code>mounted,...</code></mark><mark class="highlight-gray">		</mark>life cycle methods</p></div></p><p id="30935662-ef81-4800-8ae6-946c1a0bf3ab" class="">
+</p><h2 id="045b066c-58a1-404d-b5ee-f33f17008c6d" class="">One-Way Binding <code>v-bind</code></h2><p id="5fdaaeef-0a3e-4965-a103-260caaf87c45" class="">Interpolation Syntax 	<mark class="highlight-gray"><code>{{ data }}</code></mark></p><p id="a7328593-2193-4ef8-9f75-57a574f328f4" class="">As attribute			<mark class="highlight-gray"><code>&lt;img v-bind:src=&quot;standardImage&quot;&gt;</code></mark></p><p id="1f499792-8c34-4cae-bfd1-1940afd6e36b" class="">					<mark class="highlight-gray"><code>&lt;img :src=&quot;standardImage&quot;&gt;</code></mark><mark class="highlight-gray"> (syntactic sugar)</mark></p><pre id="eb1cb819-189c-46f0-b34f-dea9695914d7" class="code"><code>&lt;template&gt;
+		&lt;article&gt;
+				&lt;h2&gt;{{recipe.title}}&lt;/h2&gt;
+				...
+				&lt;img :src=&quot;standardImage&quot;&gt;		
+		&lt;/article&gt;		
+&lt;/template&gt;
+&lt;script&gt;	
+		export	default	{	
+				name: &quot;RecipeItem&quot;,	
+				props: {
+						recipe: {	
+								title: String,	
+								thumbnail: String,	
+								url: String,	
+								ingredients: Array	
+						}	
+				},
+				data: function() {
+						return	{	
+								standardImage	:	
+										&quot;standard.jpg&quot;
+						}	
+				}	
+		}	
+&lt;/script&gt;</code></pre><h2 id="05e041cf-1e8e-4db9-91e4-3197a6ca051e" class="">Two-Way Binding <code>v-model</code></h2><p id="8a25f4e1-cd03-4f68-8f83-ebced0d84ce7" class=""><mark class="highlight-gray">Not possible for properties, direct binding to parent causes maintainability issues</mark></p><p id="280c5158-7acf-4349-9c98-95aeae5b2dfe" class="">The same as one way binding + emitting events.</p><p id="8464d206-d0ba-4534-abbb-93497f5617ca" class="">As attribute			<mark class="highlight-gray"><code>&lt;input v-model=&quot;ingredientInput&quot;&gt;</code></mark></p><pre id="ca248d58-3bea-408a-ae26-1167ba41dc21" class="code"><code>&lt;template&gt;	
+		&lt;section id=&quot;search&quot;&gt;
+			&lt;form	…&gt;
+					&lt;label for=&quot;ingredients&quot;&gt;
+									Ingredients
+					&lt;/label&gt;
+					&lt;input v-model=&quot;ingredientInput&quot;
+							type=&quot;text&quot; name=&quot;ingredients&quot; /&gt;
+					&lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+			&lt;/form&gt;
+		&lt;/section&gt;
+		...
+&lt;/template&gt;</code></pre><h2 id="750f1f23-7df6-434b-9e73-fbbe985a9755" class="">Computed Properties</h2><p id="d8cbce9b-7da1-4a68-bcf0-a52de0fdbbce" class="">Derived properties from model (data).</p><p id="b2235371-4349-4dbe-ab11-6d875f8a0591" class="">Should only<div class="indented"><ul id="a929944b-1a47-4d19-a899-1a0d9dfad722" class="bulleted-list"><li style="list-style-type:disc">contain simple operations</li></ul><ul id="66c31366-f995-4344-833d-d16bf7930200" class="bulleted-list"><li style="list-style-type:disc">be synchronous (will be cache, lazy reevaluated)</li></ul></div></p><pre id="30da8e56-23ac-4c88-a1cd-3a3b133dff56" class="code"><code>&lt;template&gt;
+		&lt;article&gt;
+				&lt;h2&gt;{{recipe.title}}&lt;/h2&gt;
+				...
+				How	many?	{{ ingredientCount }}!		
+		&lt;/article&gt;		
+&lt;/template&gt;
+
+&lt;script&gt;	
+		export default	{	
+				name: &quot;RecipeItem&quot;,	
+				props: {	
+						recipe:	{	
+								title: String,	
+								thumbnail: String,	
+								url: String,	
+								ingredients: Array	
+						}	
+				},
+				computed : {
+						ingredientCount : () =&gt; {	
+								return this.ingredients.length;
+						}
+				}	
+		}	
+&lt;/script&gt;</code></pre><p id="0df593af-17c2-4347-b906-90379f9fa00d" class="">
+</p><p id="55ce4622-e38f-4c9d-b8a0-5beae14faa15" class="">Requires getters and setters for two way binding:</p><pre id="d18bc068-cc90-4da2-b336-ae799493701d" class="code"><code>computed	:	{	
+		ingredients	:	{	
+				get: function() {	
+						return this.ingredientInput.split(&#x27;,&#x27;);	
+				},	
+				set: function(ingredients) {	
+						this.ingredientInput = ingredients.join(&#x27;,&#x27;);	
+				}	
+		}	
+}</code></pre><h2 id="5910f339-b80f-4d57-ab97-a2a0750649fc" class="">Conditional rendering in Templates <code>v-if</code>, <code>v-else</code>, <code>v-else-if</code></h2><pre id="8d4a1902-4675-460f-af32-519a295197da" class="code"><code>&lt;template&gt;
+		&lt;article&gt;
+				&lt;h2&gt;{{recipe.title}}&lt;/h2&gt;
+				&lt;div&gt;
+						&lt;div&gt;
+						&lt;img v-if=&quot;recipe.thumbnail&quot;
+								:src=&quot;recipe.thumbnail&quot;&gt;
+						&lt;img v-else :src=&quot;standardImage&quot;&gt;
+						&lt;template v-if=&quot;recipe.url&quot;&gt;
+								&amp;rarr;
+								&lt;a :href=&quot;recipe.url&quot;&gt;
+										Full Recipe
+								&lt;/a&gt;
+						&lt;/template&gt;
+				&lt;/div&gt;
+		&lt;/article&gt;
+&lt;/template&gt;</code></pre><h2 id="02bae224-b107-4497-805e-6a811257f4e0" class="">Bounded loops <code>v-for</code>, <code>v-bind:key</code></h2><p id="9d8eb700-35e0-4afc-a103-9824313a7285" class=""><mark class="highlight-gray">Index is provided by iterator if needed </mark><mark class="highlight-gray"><code>&lt;li v-for=&quot;(item, idx) in items&quot; :key=&quot;idx&quot;&gt;</code></mark></p><pre id="0960c953-75d5-4f19-889e-c2576fa87d17" class="code"><code>&lt;template&gt;
+		...
+		&lt;h3&gt;Ingredients&lt;/h3&gt;
+		&lt;ul class=&quot;ingredients&quot;&gt;
+				&lt;li v-for=&quot;ingredient	in	recipe.ingredients&quot; :key=&quot;ingredient.name&gt; &lt;- key must be unique!
+						{{ ingredient }}	
+				&lt;/li&gt;
+		&lt;/ul&gt;
+		...
+&lt;/template&gt;</code></pre><h2 id="4a273786-96cf-47de-bdcc-dfff9062bed5" class="">Events and Methods <code>v-on, @event_name</code></h2><p id="6b9bd4f0-8180-4d03-8e67-b82ddf7565a0" class="">Reacting to DOM events and adding <mark class="highlight-teal">event listeners</mark>.<div class="indented"><p id="6d764c0c-7c56-4935-b301-38215e1a95cb" class="block-color-gray"><mark class="highlight-gray"><code>&lt;button v-on:click=&quot;recipeSearch()&quot;&gt;</code></mark></p><p id="bdbc5a08-89ca-47a7-a79b-f9d373bbd0e8" class="block-color-gray"><mark class="highlight-gray"><code>&lt;button @click=&quot;alert(&#x27;Hello!&#x27;)&quot;&gt;</code></mark><mark class="highlight-gray"> (syntactic sugar)</mark></p></div></p><p id="4219c185-2409-4a97-91b6-a303dc7e882d" class="">Event modifiers<div class="indented"><p id="1b276c81-2c67-498a-a563-7d969409e0e1" class="">postfixes that change behaviour</p><p id="203a881b-76b7-434d-8d7c-cc3896a36e1b" class="">ie: <mark class="highlight-gray"><code>v-on:submit.prevent</code></mark></p></div></p><p id="8385c121-f5eb-482b-a516-7d24cc53560b" class="">Most used events: <mark class="highlight-gray"><code>onChange</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>onInput</code></mark></p><pre id="3ba58f6c-9079-48ea-917b-74a15d6c3c97" class="code"><code>&lt;template&gt;
+		&lt;div id=&quot;recipeSearch&quot;&gt;
+
+				&lt;section id=&quot;search&quot;&gt;
+						&lt;form role=&quot;search&quot; v-on:submit.prevent=&quot;recipeSearch()&quot;&gt; &lt;- prevent default behaviour
+								&lt;label for=&quot;ingredients&quot;&gt;Ingredients&lt;/label&gt;
+								&lt;input v-model=&quot;ingredientInput&quot; type=&quot;text&quot; name=&quot;ingredients&quot;/&gt;
+								&lt;button type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+						&lt;/form&gt;
+				&lt;/section&gt;
+
+				&lt;section id=&quot;results&quot;&gt;																					
+						&lt;recipe-item v-for=&quot;(recipe, index) in recipes&quot; :key=&quot;index&quot; :recipe=&quot;recipe&quot;/&gt;
+				&lt;/section&gt;
+
+		&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;	
+		export default {	
+				...					
+				methods	:	{	
+						recipeSearch : async function() {	
+								this.recipes = ...
+						}			
+				}
+				...
+		}	
+&lt;/script&gt;</code></pre><p id="ae579e06-45cd-428f-a367-6640367009d3" class="">
+</p><h2 id="a555b58b-2efa-4f45-8409-0ed203b14cf3" class="">Custom Events <code>this.$emit(event_name, &#x27;data&#x27;)</code></h2><p id="2c43a57d-e171-4458-9158-ce3588a3a23c" class="">get emitted with <mark class="highlight-gray"><code>this.$emit(&#x27;ingredientAdd&#x27;)</code></mark></p><p id="28991b88-7bc3-4e1d-8e54-8d6784e95b60" class="">Can be used to send data to parents.</p><pre id="7d5db1d6-8eea-437a-b4e1-aae905b710a3" class="code"><code>&lt;recipe-item v-on:ingredientAdd=&quot;addIngredientToSearch&quot;/&gt;</code></pre><pre id="2725da18-110a-42c8-9bdb-dc7bcb8fcf6f" class="code"><code>&lt;recipe-item @ingredientAdd=&quot;addIngredientToSearch&quot;
+					v-for=&quot;(recipe,	index) in recipes&quot; :key=&quot;index&quot;
+					:recipe=&quot;recipe&quot; /&gt;</code></pre><pre id="b840982f-64ac-425a-8297-128b36533c21" class="code"><code>&lt;template&gt;
+...
+		&lt;h3&gt;Ingredients&lt;/h3&gt;
+		&lt;ul class=&quot;ingredients&quot;&gt;
+				&lt;li @click=&quot;addIngredient(ingredient)&quot;	
+							 v-for=&quot;ingredient	in	recipe.ingredients&quot;
+								:key=&quot;ingredient.name&quot;&gt;
+						{{ ingredient }}	
+				&lt;/li&gt;
+		&lt;/ul&gt;
+...
+&lt;/template&gt;
+&lt;script&gt;	
+...
+		methods	:	{	
+				addIngredient	:	function(ingredient)	{	
+							this.$emit(&quot;ingredientAdd&quot;,	ingredient);	
+				}	
+		}
+...
+&lt;/script&gt;</code></pre><p id="d4d516d9-2fa1-4ebc-836b-3d340de7bf79" class="">
+</p><h2 id="fdca3b59-d8e9-46ed-ba65-e2df1e96a344" class="">Lifecycle Hooks</h2><p id="e00f5d15-9e89-44be-94c3-329602b18aac" class="">Only two hooks important for this Lecture:</p><ol type="1" id="481b4a6c-3c8d-40a9-b30b-25e402bff19a" class="numbered-list" start="1"><li><mark class="highlight-gray"><code>mounted()</code></mark><ul id="48b9e2b3-474e-4b9a-849f-e3cfbeaf873a" class="bulleted-list"><li style="list-style-type:disc">after DOM has been fully rendered for component (but maybe not all child components!)</li></ul></li></ol><ol type="1" id="5e3b1d64-c1a9-428e-9ea1-db12e25c94fe" class="numbered-list" start="2"><li><mark class="highlight-gray"><code>created()</code></mark><ul id="e7f88947-c8f2-4ef5-98de-b325d4de8194" class="bulleted-list"><li style="list-style-type:disc">before DOM has been loaded</li></ul><ul id="a6a6732f-832e-45ad-8726-db0f3bdad8b1" class="bulleted-list"><li style="list-style-type:disc">access to data, computed properties, methods, etc</li></ul><ul id="04bdc09f-0c49-4128-95e1-7f75d6207113" class="bulleted-list"><li style="list-style-type:disc">Used to trigger actions like fetching data from backends</li></ul></li></ol><p id="5cb2595b-2e92-4cd6-b9ba-1cfce848b3f1" class="">
+</p><h2 id="bb5eba53-4fc8-4333-b5a9-93d956619b7a" class="">State Management (Vuex)</h2><p id="53840650-557d-4b9d-82a9-f07005d92cae" class=""><mark class="highlight-gray">Uses </mark><mark class="highlight-gray"><code>Vuex</code></mark><mark class="highlight-gray"> library. </mark><mark class="highlight-gray"><a href="https://vuex.vuejs.org/">https://vuex.vuejs.org/</a></mark></p><p id="fb553189-ebe4-4fc0-9049-891108965f2a" class="">Managing a shared global state between all components.</p><p id="cbd869cb-61b2-4531-b9fd-c51daa80bcc2" class="">No direct access to global state:</p><ol type="1" id="f9bd2d18-57f3-4a11-a97b-087003f63252" class="numbered-list" start="1"><li>Committing Mutations: <mark class="highlight-gray">(Synchronous functions)</mark><p id="d7831cc5-1f74-432f-a387-940f709f120d" class="">	ie. calling <code>store.commit(&#x27;increment&#x27;)</code> triggers a predefined increment mutation.</p></li></ol><ol type="1" id="0aa81dd7-48ee-4df3-adbe-b07c32dfc6e9" class="numbered-list" start="2"><li>Actions: <mark class="highlight-gray">(Can be Asynchronous)</mark><p id="36932e16-3ecb-439b-b5a0-8ccf8d06a1e6" class="">	Can be read in components <code>this.$store.dispatch(&#x27;incrementCart&#x27;)</code></p></li></ol><p id="55fa66b8-6bc4-4997-b033-90a32a6550a7" class="">
+</p><h2 id="f12dac51-6db0-4fe3-bd96-4b556d133153" class="">Routing / Navigation</h2><p id="a0cf52f1-88c8-4c7b-b5c5-11efab10c449" class="">For single page applications.</p><p id="91162e96-40d9-4759-a8cd-612b4fca66b2" class="">URL fragments allow linking while on the same browser page: <mark class="highlight-gray"><code>www.example.com/#/coolStuff</code></mark></p><pre id="f709b039-5208-4f66-96c8-3a8e7a70b43c" class="code"><code>const routes = [
+ { path: &#x27;/&#x27;, redirect: &#x27;/search&#x27;},
+ { path: &#x27;/search&#x27;, component: Search},
+ { path: &#x27;/cart&#x27;, component: Cart},
+ { path: &#x27;/checkout&#x27;, component: Checkout},
+ { path: &#x27;/config/:artworkId&#x27;, component: Config, props: true },
+ { path: &#x27;*&#x27;, component: PageNotFound},
+]</code></pre><p id="7641f8e8-e24a-4769-ace3-ace67f0111fa" class="">
+</p></div></article></body></html>

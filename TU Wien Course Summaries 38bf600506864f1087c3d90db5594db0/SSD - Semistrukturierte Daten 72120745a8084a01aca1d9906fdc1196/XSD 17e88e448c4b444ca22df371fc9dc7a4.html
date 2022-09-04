@@ -1,0 +1,855 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>XSD</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="17e88e44-8c4b-444c-a22d-f371fc9dc7a4" class="page sans"><header><h1 class="page-title">XSD</h1></header><div class="page-body"><figure id="796721e3-7224-470a-905a-49db4f578896" class="link-to-page"><a href="XSD%2017e88e448c4b444ca22df371fc9dc7a4/Examples%20796721e37224470a905a49db4f578896.html"><span class="icon">📎</span>Examples</a></figure><p id="80fda08d-4786-483f-897a-4a0f835ac4f9" class="">
+</p><nav id="66956f25-6b5e-4e79-98d8-eca3c6b329de" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3f2aa73c-28c1-4bf8-9a15-c1741846d867">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4853f3da-4c53-4bda-96cd-7289033d9519">Simple Types</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ff9586e2-0762-4079-9cbf-e3b328981160">Simple elements</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4ce88d44-6c16-4fc7-bf64-f037e4e7f268">Facets / Restrictions of simple elements</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9dcb927c-9c60-44b1-a63d-13af8de85818">Complex Types</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#00b53653-867a-4b6f-9e0f-d3bf5a3b59cd">Complex Elements</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1be0106d-dab1-478a-9e53-1d8ec7b8617c">Attributes</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#431a0d86-8045-4a3d-bfd1-ae38e1f8e497">Order</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2c8c467c-a1a1-4053-847d-d2181e25957f">Occurrence</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23447ded-8ac8-4ffa-a471-4695aa6dbadf">Extending other types</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1a26e961-59fb-4277-9a6d-b95bcba390aa">Keys and References</a></div></nav><p id="c67cdd0f-ddbb-415f-9db9-04d60fb6bb30" class="">
+</p><p id="a920704a-0be5-4a5b-93d9-b86c84eb0aa9" class="">
+</p><h1 id="3f2aa73c-28c1-4bf8-9a15-c1741846d867" class="">Definition</h1><p id="bfe080c2-df0a-472f-8934-16d87e5e4f44" class=""><mark class="highlight-blue">XSD</mark><div class="indented"><p id="d63f4723-601e-456b-bbf8-e58dcabc9f19" class="">= XML Schema Definition</p><p id="7437ca5f-1698-446f-a831-bc39e7eee033" class="">more expressive than DTDs</p><p id="1a511176-825c-499d-b426-388a4dd593c4" class="">same syntax as XML</p></div></p><ul id="db682bb6-6ef3-488e-8833-8ac86ebb4c63" class="toggle"><li><details open=""><summary>example</summary><pre id="727039fc-5126-4639-a826-1f6a40c0d42f" class="code"><code>&lt;person&gt;
+	&lt;fullname&gt; Mantas Šimkus &lt;/fullname&gt;
+	&lt;tel&gt; 18441 &lt;/tel&gt;
+&lt;/person&gt;</code></pre><pre id="70cc323a-620a-42f7-a522-07cbe334ff6e" class="code"><code>&lt;!ELEMENT person (fullname, tel)&gt;
+&lt;!ELEMENT fullname (#PCDATA)&gt;
+&lt;!ELEMENT tel (#PCDATA)&gt;</code></pre><pre id="06e1448a-593b-4197-8f69-e9196853b942" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsd:schema xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt; &lt;!--xsd as namespace-prefix--&gt;
+	&lt;xsd:element name=&quot;person&quot;&gt;
+		&lt;xsd:complexType&gt;
+			&lt;xsd:sequence&gt;
+				&lt;xsd:element name=&quot;fullname&quot; type=&quot;xsd:string&quot;/&gt;
+				&lt;xsd:element name=&quot;tel&quot; type=&quot;xsd:positiveInteger&quot;/&gt;
+			&lt;/xsd:sequence&gt;
+		&lt;/xsd:complexType&gt;
+	&lt;/xsd:element&gt;
+&lt;/xsd:schema&gt;</code></pre></details></li></ul><p id="972b46c3-668f-4658-bb09-f240aeedcc43" class="">
+</p><p id="a67cb61c-fdea-4e24-9966-3cd854d0dd1c" class=""><mark class="highlight-blue">Declaring the XSD</mark><div class="indented"><p id="c86707bf-2235-4f60-a9af-3235d5812abe" class="">Referencing the XSD in the XML declaration</p><ul id="264fc489-e808-4b86-befb-e4550de1b9d0" class="toggle"><li><details open=""><summary><mark class="highlight-gray"><code>xsi:schemaLocation</code></mark></summary><p id="7232af1d-ea3c-4665-8bd8-396229b81952" class="">list of pairs: (namespace URI + schema URL)</p><p id="f24370df-ddb2-4544-89fd-b35ed46a2a64" class="">schema validates elements and attributes in namespace</p><pre id="4994c762-31e1-4b04-8f9b-16c26fa8d035" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;person xmlns=&quot;http://www.example.com&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://www.example.com person.xsd&quot;&gt;
+
+	&lt;name&gt; Alice &lt;/name&gt;
+&lt;/person&gt;</code></pre></details></li></ul><ul id="56123fdd-58c1-415b-97c2-efb70dd568b1" class="toggle"><li><details open=""><summary><mark class="highlight-gray"><code>xsi:noNamespaceSchemaLocation</code></mark></summary><p id="932569ef-5a1a-4458-a00b-53bfc6f98809" class="">schema only validates elements that are not in any namespace</p><pre id="759b6076-22e7-4fb3-8600-1ca3a36c586b" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;person
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:noNamespaceSchemaLocation=&quot;person.xsd&quot;&gt;
+
+	&lt;name&gt; Alice &lt;/name&gt;
+&lt;/person&gt;</code></pre></details></li></ul></div></p><p id="c393757e-3612-4099-9405-e738ef986592" class="">
+</p><p id="827b73c3-434b-44d0-acd4-b574069bf8ad" class=""><mark class="highlight-blue">Root element</mark><div class="indented"><p id="edd6955b-3cbb-41b6-b65a-97b2c0623dde" class=""><mark class="highlight-gray"><code>xsd:schema</code></mark><mark class="highlight-gray"> </mark>→<mark class="highlight-gray"> </mark>only once in root of every XSD-schema document</p><p id="ba4589b4-ddbf-4df5-bfaf-9d1b18527c70" class="">other elements are in its namespace</p><p id="09814768-b56e-4ddc-b47b-1a4f3458af98" class="">usually used with prefixes <mark class="highlight-gray"><code>xsd:</code></mark><mark class="highlight-gray"> </mark>or <mark class="highlight-gray"><code>xs:</code></mark></p></div></p><p id="8d1c3884-8211-4238-b1d3-3aca0db73d74" class="">
+</p><p id="b8e3b1a0-0d2d-4378-9ce3-fb1095ca9464" class=""><mark class="highlight-blue">Global elements</mark><div class="indented"><p id="556f4e02-db83-4bea-b8ea-e95da820bd9d" class=""><mark class="highlight-gray"><code>xsd:element</code></mark><mark class="highlight-gray"> </mark>→<mark class="highlight-gray"> </mark>children of root element</p><p id="1b95fb5b-e1c8-4660-ba9e-e0efb5ec8ba2" class="">can be the root in an “instance”-XSD-document.</p></div></p><p id="255960fb-048d-4f64-95ef-395c1840d48d" class="">
+</p><p id="3dbe970b-3496-4aad-a0c9-9cc33be81860" class="">
+</p><p id="b46b411c-b8da-4fb7-ba00-e5dea110b5c5" class="">
+</p><p id="679576a1-4688-45b2-b8e5-a6c5a5666f2b" class="">
+</p><p id="0ef14d87-0a83-46b7-a9b6-62177fea423e" class="">
+</p><h1 id="4853f3da-4c53-4bda-96cd-7289033d9519" class="">Simple Types</h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a2955eea-d6bb-473a-bba7-b7da9ddc9437"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Similar to primitive data types</div></figure><h2 id="ff9586e2-0762-4079-9cbf-e3b328981160" class="">Simple elements</h2><p id="1b1c8b40-555a-4436-83fb-c421d0360710" class=""><mark class="highlight-blue">Element types</mark><div class="indented"><p id="684311eb-8d9f-4d16-8b60-86c0bb5f8a5f" class=""><code><mark class="highlight-gray">&lt;xsd:element </mark></code><code>name=&quot;elementName&quot;</code><code><mark class="highlight-gray"> </mark></code><code>type=&quot;elementType&quot;</code><code><mark class="highlight-gray">&gt;</mark></code></p><p id="37e4e353-2634-4e31-9b2f-a8d9777d3de4" class="">possible element types:<div class="indented"><p id="a17cde20-9db0-4360-9d49-1202d34cc855" class=""><mark class="highlight-gray"><code>xsd:boolean</code></mark><mark class="highlight-gray">				</mark>true, false, 0, 1</p><p id="eb6b3904-e814-4f13-90e3-4106ca3fa1fd" class=""><mark class="highlight-gray"><code>xsd:string</code></mark><mark class="highlight-gray">				</mark>can also be empty</p><p id="e63077dd-f6c9-4c14-aad0-92497d13427a" class=""><mark class="highlight-gray"><code>xsd:date</code></mark><mark class="highlight-gray">				</mark>YYYY-MM-DD<mark class="highlight-teal">+(or -)</mark>HH:MM</p><p id="eac1d0f4-0509-48d3-956e-2a000ac4da53" class=""><mark class="highlight-gray"><code>xsd:integer</code></mark><mark class="highlight-gray">				</mark>arbitrary size</p><p id="a5f833a3-1a27-4516-bb9c-9b821d0279bf" class=""><mark class="highlight-gray"><code>xsd:int</code></mark><mark class="highlight-gray"> 					</mark>4-byte integer</p><p id="74fada04-99bd-45d1-b8c4-bd2843775cb8" class=""><mark class="highlight-gray"><code>xsd:positiveInteger</code></mark><mark class="highlight-gray">		</mark>≥ 1</p><p id="2d5acbd8-35c1-486e-a556-35be41b019c6" class=""><mark class="highlight-gray"><code>xsd:nonNegativeInteger</code></mark><mark class="highlight-gray">	</mark>≥ 0</p><p id="d8e47f58-38cf-4224-adf7-c61f29d1b593" class=""><mark class="highlight-gray"><code>xsd:negativeInteger</code></mark><mark class="highlight-gray">		</mark>&lt; 0</p><p id="b55b7432-606e-4e58-8400-be86d5e84042" class=""><mark class="highlight-gray"><code>xsd:nonPositiveInteger</code></mark><mark class="highlight-gray">	</mark>≤ 0</p><p id="248a0e56-ba9c-4aa5-8449-0b969cece639" class=""><mark class="highlight-gray"><code>xsd:time</code></mark></p><p id="e638b312-17a8-4209-addf-0ff5b189b1f8" class=""><mark class="highlight-gray"><code>xsd:decimal</code></mark></p><p id="97b9a6d6-10ea-4be8-961a-f89af8f1738f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>…</mo></mrow><annotation encoding="application/x-tex">\dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.12em;vertical-align:0em;"></span><span class="minner">…</span></span></span></span></span><span>﻿</span></span></p></div></p></div></p><p id="0e113c81-3185-45ef-bfba-d7ed241d453a" class="">
+</p><p id="1fc54d24-4c8d-4910-94e2-19d667a38d47" class=""><mark class="highlight-blue">Fixed values</mark><div class="indented"><p id="5ba76f83-a7dc-4ce6-b463-7c943054d37c" class=""><mark class="highlight-gray"><code>&lt;xsd:element .... </code></mark><code>fixed=&quot;value&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p><p id="e5fd5035-02a8-46a2-82bf-caa17febdaf5" class="">no other value can be specified</p></div></p><p id="0e97a977-2265-4e64-87f7-24a0277f5ccf" class=""><mark class="highlight-blue">Default values</mark><div class="indented"><p id="b77110b9-38c3-4407-be1f-9008cfaa2028" class=""><mark class="highlight-gray"><code>&lt;xsd:element ... </code></mark><code>default=&quot;value&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p><p id="9658b456-154d-4e3b-b9f7-48163205b772" class="">assigned when no other value is specified</p></div></p><p id="82ecdf18-afee-4dbd-b80c-269ca6e99050" class="">
+</p><h2 id="4ce88d44-6c16-4fc7-bf64-f037e4e7f268" class="">Facets / Restrictions of simple elements</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="35bfd804-d493-4b02-8193-8a744d11f854"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Similar to constraints for primitive data types</div></figure><p id="5ba7d2b7-e73e-49f2-9be0-f76285443127" class=""><mark class="highlight-gray"><code>&lt;</code></mark><code>xsd:restriction </code><mark class="highlight-gray"><code>base=&quot;xsd:...&quot;&gt;</code></mark></p><p id="25747793-303d-48e8-bc61-f700cceb65cd" class="">Extends the simple types by restricting them.</p><p id="5256f815-2a79-4bfb-8e3e-34379dcec244" class="">
+</p><p id="b9cef658-11b3-491f-99d8-0f5de65987f7" class=""><mark class="highlight-blue">Integers</mark><div class="indented"><p id="cbccc593-9ac8-48f3-8af4-4fbb3417e43c" class=""><mark class="highlight-gray"><code>&lt;xsd:minExclusive value=&quot;...&quot;/&gt;</code></mark></p><p id="cc5e5747-a740-4792-8e5f-f55135e5ad9e" class=""><mark class="highlight-gray"><code>&lt;xsd:maxExclusive value=&quot;...&quot;/&gt;</code></mark></p><p id="75fc7867-ecaf-47cb-9cab-e1dd8927a5be" class=""><mark class="highlight-gray"><code>&lt;xsd:minInclusive value=&quot;...&quot;/&gt;</code></mark></p><p id="996b4b5f-d702-4ff2-bc17-e5df03328237" class=""><mark class="highlight-gray"><code>&lt;xsd:maxInclusive value=&quot;...&quot;/&gt;</code></mark></p></div></p><p id="fd34ff42-527b-42f3-8023-375ea52bf75a" class=""><mark class="highlight-blue">Enumerations</mark><div class="indented"><p id="3d68e273-da26-419d-ab7d-ede05db3c0af" class=""><mark class="highlight-gray"><code>&lt;xsd:enumeration value=&quot;...&quot;/&gt;</code></mark></p></div></p><p id="e4d09071-7d4c-45d4-9955-bbf97e61fcaf" class=""><mark class="highlight-blue">Patterns in strings</mark><div class="indented"><p id="7463adc8-df1c-4057-a169-9f0b867a6264" class=""><mark class="highlight-gray"><code>&lt;xsd:pattern value=&quot;...&quot;/&gt;</code></mark></p><ul id="1a8271f4-649f-4e08-b66f-40e68f804f17" class="toggle"><li><details open=""><summary>use regular expressions as value</summary><p id="255d9000-2b0a-4485-829b-55920f9fcaa5" class=""><mark class="highlight-gray"><code>[0-9]</code></mark></p><p id="06cc1fca-4898-432d-97a9-6446cf1519ee" class=""><mark class="highlight-gray"><code>[a-zA-Z]</code></mark></p><p id="7c9591e1-64bd-49c6-a29e-9b8bac2289c8" class=""><mark class="highlight-gray"><code>([a-z])*</code></mark></p><p id="ca03307f-9460-4f4e-91f6-d16878971b04" class=""><mark class="highlight-gray"><code>([a-z])+</code></mark></p><p id="8b8e6c0d-1262-45c2-b09d-3072662af67e" class=""><mark class="highlight-gray"><code>([a-z]){3}</code></mark></p><p id="e234d8b8-fb52-4c81-a308-ba00857a8772" class=""><mark class="highlight-gray"><code>day | night</code></mark></p></details></li></ul></div></p><p id="6d07dae6-6816-486e-90a8-9eee98837ba8" class=""><mark class="highlight-blue">Whitespace restrictions in strings</mark><div class="indented"><p id="284a7ff3-c946-4a76-b882-a02362fd0be9" class=""><mark class="highlight-gray"><code>&lt;xsd:whiteSpace value=&quot;...&quot;/&gt;</code></mark></p><p id="e4007e5c-f19c-406f-9f38-cac0a4c24667" class="">whitespace characters = line feeds, tabs, spaces, carriage returns</p><p id="8f653374-a4f3-40b5-9359-9773e00510f0" class="">possible values:<div class="indented"><p id="6b03f3ed-ec18-4578-a9c9-6091cc54a6e4" class=""><mark class="highlight-gray"><code>preserve</code></mark><mark class="highlight-gray">	</mark>keep characters</p><p id="032133e6-4f27-40b8-b743-48209d236b76" class=""><mark class="highlight-gray"><code>replace</code></mark><mark class="highlight-gray">		</mark>replace with space</p><p id="0d7dc9d9-44a9-4ea3-9ccc-3eec2428674a" class=""><mark class="highlight-gray"><code>collapse</code></mark><mark class="highlight-gray">	</mark>only keep a single space from characters</p></div></p></div></p><p id="e8892b4c-937b-44cc-9d1f-40e635d6cdbd" class=""><mark class="highlight-blue">Length</mark><div class="indented"><p id="0bf6b89d-cccc-40de-be55-47e5106e26a2" class=""><mark class="highlight-gray"><code>&lt;xsd:length value=&quot;...&quot;/&gt;</code></mark></p><p id="1ea8025d-72c8-41e8-a1b2-3c4eedc71f08" class=""><mark class="highlight-gray"><code>&lt;xsd:minLength value=&quot;...&quot;/&gt;</code></mark></p><p id="e7d9d715-1425-48d5-b0af-daada96895e0" class=""><mark class="highlight-gray"><code>&lt;xsd:maxLength value=&quot;...&quot;/&gt;</code></mark></p></div></p><p id="08f2c15b-9ae9-4a46-913d-35c37cd482a3" class="">
+</p><p id="a3155264-811d-4dfa-8273-6f72f849ae30" class=""><mark class="highlight-blue">Facets / restrictions as anonymous types</mark><div class="indented"><pre id="e44a7607-cf3f-47c3-97ec-160624c7f778" class="code"><code>&lt;xsd:element name=&quot;age&quot;&gt;
+	&lt;xsd:simpleType&gt; &lt;!-- not named --&gt;
+		&lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;
+			&lt;xsd:minExclusive value=&quot;0&quot;/&gt;
+			&lt;xsd:maxInclusive value=&quot;110&quot;/&gt;
+		&lt;/xsd:restriction&gt;
+	&lt;/xsd:simpleType&gt;
+&lt;/xsd:element&gt;
+
+&lt;xsd:element name=&quot;duration&quot;&gt;
+	&lt;xsd:simpleType&gt; &lt;!-- not named --&gt;
+		&lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;
+			&lt;xsd:minExclusive value=&quot;0&quot;/&gt;
+			&lt;xsd:maxInclusive value=&quot;110&quot;/&gt;
+		&lt;/xsd:restriction&gt;
+	&lt;/xsd:simpleType&gt;
+&lt;/xsd:element&gt;</code></pre></div></p><p id="8be02008-256b-4698-953d-c8ad890b461f" class=""><mark class="highlight-blue">Facets / restrictions as named types</mark><div class="indented"><pre id="c8f830ef-0fdb-4500-ba4e-8788505658ed" class="code"><code>&lt;xsd:element name=&quot;age&quot; type=&quot;intervalType&quot;/&gt;
+&lt;xsd:element name=&quot;duration&quot; type=&quot;intervalType&quot;/&gt;
+
+&lt;xsd:simpleType name=&quot;intervalType&quot;&gt; &lt;!-- named --&gt;
+	&lt;xsd:restriction base=&quot;xsd:integer&quot;&gt;
+		&lt;xsd:minExclusive value=&quot;0&quot;/&gt;
+		&lt;xsd:maxInclusive value=&quot;110&quot;/&gt;
+	&lt;/xsd:restriction&gt;
+&lt;/xsd:simpleType&gt;</code></pre></div></p><p id="2344f5f1-4a19-4ed3-a9a9-40e0682b286d" class="">
+</p><p id="d553f41a-1016-405e-ae73-8ce539149472" class="">
+</p><p id="909b3ffa-5dc8-4dff-a19a-9a11dcd6b4de" class="">
+</p><p id="7882fe88-b84d-4a0f-bc24-14c0c3030ec0" class="">
+</p><p id="9e654866-0b38-4bde-8b3b-932de2ada629" class="">
+</p><h1 id="9dcb927c-9c60-44b1-a63d-13af8de85818" class="">Complex Types</h1><p id="88f356fd-d0f1-45e4-a992-1753dde72f2a" class="">can be anonymous or named like simple types (see above)</p><h2 id="00b53653-867a-4b6f-9e0f-d3bf5a3b59cd" class="">Complex Elements</h2><p id="7937e9c8-95c2-496f-ac08-9e2de4ad659c" class="">can contain other elements and attributes, nothing or just text</p><p id="959bd95f-fa03-40da-ad61-4802b130c86e" class=""><mark class="highlight-blue">Empty</mark><div class="indented"><pre id="14c05519-4c63-432a-8c7c-2adb1608253e" class="code"><code>&lt;person id=&quot;E832740&quot;/&gt;</code></pre><pre id="d4475a94-d681-4e60-a238-ca4d9c4dd100" class="code"><code>&lt;xsd:element name=&quot;person&quot; type=&quot;personType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;personType&quot;&gt;
+	&lt;xsd:attribute name=&quot;id&quot; type=&quot;xsd:ID&quot;/&gt; &lt;!-- attribute, nothing else --&gt;
+&lt;/xsd:complexType&gt;</code></pre></div></p><p id="4798850f-99ca-44d2-941f-5fb6c744c374" class=""><mark class="highlight-blue">Text only</mark><div class="indented"><pre id="74a828a5-23fa-4160-9bac-e9362ff1e369" class="code"><code>&lt;person id=&quot;E832740&quot;&gt; Mantas Šimkus &lt;/person&gt;</code></pre><pre id="dab9b753-37c1-4af4-a0e5-2eb8f686e6d3" class="code"><code>&lt;xsd:element name=&quot;person&quot; type=&quot;personType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;personType&quot;&gt;
+	&lt;xsd:simpleContent&gt;	&lt;!-- wrap to extend string and add an attribute--&gt;
+		&lt;xsd:extension base=&quot;xsd:string&quot;&gt;
+			&lt;xsd:attribute name=&quot;id&quot; type=&quot;xsd:ID&quot;/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:simpleContent&gt;
+&lt;/xsd:complexType&gt;</code></pre></div></p><p id="cb867131-7853-40c5-9315-d44cb0c19040" class=""><mark class="highlight-blue">Element only</mark><div class="indented"><pre id="5e6cdc12-6021-4bec-b00e-698bffc8e2da" class="code"><code>&lt;person&gt;
+	&lt;firstname&gt; Mantas &lt;/firstname&gt;
+	&lt;lastname&gt; Šimkus &lt;/lastname&gt;
+&lt;/person&gt;</code></pre><pre id="9ccd0201-7bad-46b8-8a49-43b014e4c5b6" class="code"><code>&lt;xsd:element name=&quot;person&quot; type=&quot;personType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;personType&quot;&gt;
+	&lt;xsd:sequence&gt;
+		&lt;xsd:element name=&quot;firstname&quot; type=&quot;xsd:string&quot;/&gt;
+		&lt;xsd:element name=&quot;lastname&quot; type=&quot;xsd:string&quot;/&gt;
+	&lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;</code></pre></div></p><p id="e35e7b2b-27e8-402f-b4ce-a93b64b0313f" class=""><mark class="highlight-blue">Mix of text and children</mark><div class="indented"><pre id="cb4cc977-daa4-431c-ae98-34acf39b21e0" class="code"><code>&lt;definition&gt;
+	Woah I can combine text with &lt;term&gt; elements &lt;/term&gt; in here!
+&lt;/definition&gt;</code></pre><pre id="a80202a2-a396-419e-a87f-8cf297381234" class="code"><code>&lt;xsd:element name=&quot;definition&quot; type=&quot;definitionType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;definitionType&quot; mixed=&quot;true&quot;&gt; 
+	&lt;xsd:sequence&gt;
+		&lt;xsd:element name=&quot;term&quot; type=&quot;xsd:string&quot;/&gt;
+	&lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;</code></pre></div></p><p id="9c010885-6f38-4540-9e96-5b37ff7cae2c" class="">
+</p><h2 id="1be0106d-dab1-478a-9e53-1d8ec7b8617c" class="">Attributes</h2><p id="c02e10ee-7a3c-4faf-bd8f-037d7e14b02f" class="">Only available for complex types</p><p id="53d12ccc-b747-460b-8f09-8ee3faee805d" class=""><mark class="highlight-blue">Attribute types</mark><div class="indented"><p id="9a86bdc3-bc50-4f9a-9ca5-203aba9a26f8" class=""><mark class="highlight-gray"><code>&lt;xsd:attribute </code></mark><code>name=&quot;attributeName&quot; type=&quot;attributeType&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p><p id="9da327bb-5d46-4b6f-9b13-bda855b583fa" class="">the attribute-type itself is of a simple type</p></div></p><p id="c81a9b4d-3f3d-4b70-9756-2dedea7bc0b9" class=""><mark class="highlight-blue">Default value</mark><div class="indented"><p id="05326d78-b6ab-4f83-a757-3a9653afbbde" class=""><mark class="highlight-gray"><code>&lt;xsd:attribute ... </code></mark><code>default=&quot;value&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p></div></p><p id="8f175f42-ecb3-4417-92e7-acca78da11f0" class=""><mark class="highlight-blue">Fixed value</mark><div class="indented"><p id="6b4ff1fe-6735-410e-b200-b64c6a33facf" class=""><mark class="highlight-gray"><code>&lt;xsd:attribute ... </code></mark><code>fixed=&quot;value&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p></div></p><p id="a57c2b42-c058-4f8d-a2fd-9231f7a6a4c0" class=""><mark class="highlight-blue">Optional</mark><div class="indented"><p id="b5380770-5ef5-4b4f-9da5-de559672d275" class=""><mark class="highlight-gray"><code>&lt;xsd:attribute ... </code></mark><code>use=&quot;optional&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p><p id="299ebb01-84ee-4588-850b-42af56abff51" class="">is the default setting</p></div></p><p id="f6ab7306-c5a9-4455-aa63-a4672566fb72" class=""><mark class="highlight-blue">Required</mark><div class="indented"><p id="b75a7a30-9f5d-4b97-a74d-50d531436d99" class=""><mark class="highlight-gray"><code>&lt;xsd:attribute ... </code></mark><code>use=&quot;required&quot;</code><mark class="highlight-gray"><code>/&gt;</code></mark></p></div></p><p id="78004663-e871-44ba-8fb7-618d89e31296" class="">
+</p><h2 id="431a0d86-8045-4a3d-bfd1-ae38e1f8e497" class="">Order</h2><p id="dab420c0-29f7-4dec-8e44-116ad0606e98" class=""><mark class="highlight-blue">Order Indicators</mark><div class="indented"><p id="fe0c6b97-4778-4ac9-9a4c-68e903ae486c" class="">Defining the order for children</p><pre id="22478c32-c58b-4d2c-848f-86ca96451b38" class="code"><code>&lt;xsd:complexType ...&gt;
+	&lt;xsd:all&gt;
+		&lt;xsd:element .../&gt;
+		&lt;xsd:element .../&gt;
+	&lt;/xsd:all&gt;
+&lt;/xsd:complexType&gt;</code></pre><p id="7830cb6a-077e-4ca2-957a-4f5858ee4d45" class=""><mark class="highlight-gray"><code>all</code></mark><mark class="highlight-gray">		</mark>any order, but children must appear exactly once</p><p id="66554521-638e-4b46-948e-b650ccbe9d6f" class="">			<em>minOccurs can be set to </em><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mo>∈</mo><mo stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">}</mo></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \in \{0, 1\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4625600000000001em;vertical-align:-0.03128em;"></span><span class="mrel sizing reset-size6 size4">∈</span><span class="mspace" style="margin-right:0.3252777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mopen sizing reset-size6 size4">{</span><span class="mord sizing reset-size6 size4">0</span><span class="mpunct sizing reset-size6 size4">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord sizing reset-size6 size4">1</span><span class="mclose sizing reset-size6 size4">}</span></span></span></span></span><span>﻿</span></span></p><p id="dfd1ba56-65f6-45ff-bc75-1a5dfcdb4f2b" class=""><mark class="highlight-gray"><code>choice</code></mark>		exactly one child from list allowed to appear</p><p id="ca42273a-1fb0-48ab-9061-a3e8f5434cb7" class=""><mark class="highlight-gray"><code>sequence</code></mark><mark class="highlight-gray">	</mark>in given order</p></div></p><p id="f8a7cd75-240c-4516-a1e8-0376978a38b3" class="">
+</p><h2 id="2c8c467c-a1a1-4053-847d-d2181e25957f" class="">Occurrence</h2><p id="d1f120b7-53d6-4f10-9b8b-978ba1e98227" class=""><mark class="highlight-blue">Occurrence Indicators</mark><div class="indented"><pre id="3c3e5ef5-88e7-4d5a-a2ad-db985bf7e2fc" class="code"><code>&lt;xsd:element name=&quot;person&quot;&gt;
+	&lt;xsd:complexType name=&quot;personType&quot;&gt;
+		&lt;xsd:sequence&gt;
+			&lt;xsd:element name=&quot;firstname&quot; maxOccurs=&quot;2&quot; type=&quot;xsd:string&quot;/&gt; &lt;!-- child --&gt;
+			&lt;xsd:element name=&quot;lastname&quot; maxOccurs=&quot;2&quot; type=&quot;xsd:string&quot;/&gt; &lt;!-- child --&gt;
+		&lt;/xsd:sequence&gt;
+	&lt;/xsd:complexType&gt;
+&lt;/xsd:element&gt;</code></pre><pre id="ef27fdbd-47ed-49f5-be31-7e649934eb15" class="code"><code>&lt;xsd:element name=&quot;person&quot;&gt;
+	&lt;xsd:complexType name=&quot;personType&quot;&gt;
+		&lt;xsd:sequence maxOccurs=&quot;2&quot;&gt; &lt;!-- parent --&gt;
+			&lt;xsd:element name=&quot;firstname&quot; type=&quot;xsd:string&quot;/&gt;
+			&lt;xsd:element name=&quot;lastname&quot; type=&quot;xsd:string&quot;/&gt;
+		&lt;/xsd:sequence&gt;
+	&lt;/xsd:complexType&gt;
+&lt;/xsd:element&gt;</code></pre><p id="61e36fa1-1d4c-461b-8954-89cbada86a60" class=""><em>Warning: the code snippets above have different meaning!</em></p><p id="d2a1c489-29a9-4399-a00a-63584fec1189" class=""><mark class="highlight-gray"><code>minOccurs</code></mark>	min. number of times the element can be a child</p><p id="1b90932f-18d5-4436-a7da-784f609ff078" class=""><mark class="highlight-gray"><code>maxOccurs</code></mark><mark class="highlight-gray">	</mark>max. number of times the element can be a child → can be set to <mark class="highlight-gray"><code>unbounded</code></mark></p></div></p><p id="45e2d1eb-54fa-46a1-a4db-bd205de12f0c" class="">
+</p><h2 id="23447ded-8ac8-4ffa-a471-4695aa6dbadf" class="">Extending other types</h2><p id="0f1942fa-7dfb-43cf-a50e-9333af0d2f6d" class=""><mark class="highlight-blue">Inheritance</mark><div class="indented"><p id="b06c9198-6b00-4e77-9164-a5512a42aeaa" class="">of other existing complex types</p><p id="90dec18a-e8eb-460c-a78c-d0001eb071ec" class="">ie. here any element with the type “personType” can only contain a text:</p><pre id="ac8c99bd-d2e6-487b-9b0f-19bb22e6b1c7" class="code"><code>&lt;xsd:element name=&quot;person&quot; type=&quot;personType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;personType&quot;&gt;
+	&lt;xsd:simpleContent&gt;
+		&lt;xsd:extension base=&quot;xsd:string&quot;&gt;
+			&lt;xsd:attribute name=&quot;id&quot; type=&quot;xsd:ID&quot;/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:simpleContent&gt;
+&lt;/xsd:complexType&gt;</code></pre><p id="d198f444-edd4-415f-a417-d380a9a3bf78" class="">and a student inherits the type from person:</p><pre id="5fda6e5d-507e-4b16-a2f5-be3f57ce38ee" class="code"><code>&lt;xsd:element name=&quot;student&quot; type=&quot;studentType&quot;/&gt;
+
+&lt;xsd:complexType name=&quot;studentType&quot;&gt;
+	&lt;xsd:complexContent&gt;
+		&lt;xsd:extension base=&quot;personType&quot;&gt;
+			&lt;xsd:attribute name=&quot;subject&quot; type=&quot;xsd:string&quot;/&gt;
+		&lt;/xsd:extension&gt;
+	&lt;/xsd:complexContent&gt;
+&lt;/xsd:complexType&gt;</code></pre></div></p><p id="372eede4-9504-4163-89ac-4f41d1d0ecf8" class="">
+</p><p id="2ad9e6b7-8c70-4f88-bacb-254a4831b0dc" class="">
+</p><p id="05235c58-1f1a-4117-94b3-7174a4f3b2bd" class="">
+</p><p id="d66cda1a-612c-4616-b490-acfa8abe9519" class="">
+</p><p id="8193a6bc-80e6-45f9-b7e2-6fc68c2753f2" class="">
+</p><h1 id="1a26e961-59fb-4277-9a6d-b95bcba390aa" class="">Keys and References</h1><p id="757de088-9cf3-46f1-8d58-d3894a30bbde" class=""><mark class="highlight-gray"><code>xsd:key</code></mark>		unique field exists in all selected elements</p><p id="a23ba76c-2c22-4182-87e7-7df911c412e2" class=""><mark class="highlight-gray"><code>xsd:unique</code></mark>	if field exists for selected element, then its unique</p><p id="e5a4e0fa-cad6-4219-810b-1f96c6d13c30" class="">
+</p><p id="6f275aab-12d2-4ca8-8fc6-422193f7aee7" class=""><mark class="highlight-blue">Example</mark><div class="indented"><pre id="fc829954-4cb1-40f9-8e52-476a0688620d" class="code"><code>&lt;company&gt;
+	&lt;employees&gt;
+		&lt;employee emp_id=&quot;e1&quot;&gt; &lt;!-- key --&gt;
+			...
+		&lt;/employee&gt;
+		...
+	&lt;/employees&gt;
+	
+	&lt;managers&gt;
+		&lt;manager mgr_id=&quot;e1&quot;&gt; &lt;!-- foreign key --&gt;
+			...
+		&lt;/manager&gt;
+		...
+	&lt;/managers&gt;
+&lt;/company&gt;</code></pre><pre id="e5f7ae82-feb1-4f6d-8289-d3c20eb2f0a5" class="code"><code>&lt;xsd:element name=&quot;company&quot; type=&quot;companyType&quot;&gt;
+	&lt;xsd:key name=&quot;empKey&quot;&gt;
+		&lt;xsd:selector xpath=&quot;employees/employee&quot;/&gt;
+		&lt;xsd:field xpath=&quot;@emp_id&quot;/&gt;
+	&lt;/xsd:key&gt;
+	
+	&lt;xsd:keyref name=&quot;empRef&quot; refer=&quot;empKey&quot;&gt;
+		&lt;xsd:selector xpath=&quot;managers/manager&quot;/&gt;
+		&lt;xsd:field xpath=&quot;@mgr_id&quot;/&gt;
+	&lt;/xsd:keyref&gt;
+&lt;/xsd:element&gt;
+
+&lt;xsd:complexType name=&quot;companyType&quot;&gt;
+	...
+&lt;/xsd:complexType&gt;</code></pre><p id="b7fd26aa-5dad-4fcf-89f3-9f70e10270c4" class="">If not all employees had ids, but all managers did -<div class="indented"><p id="bce47620-0ee1-4954-ae96-0200b8e9e09e" class="">then we would use <mark class="highlight-gray"><code>unique</code></mark><mark class="highlight-gray"> </mark>instead of <mark class="highlight-gray"><code>key</code></mark> for each employee.</p></div></p></div></p><p id="2a07fbaa-e7b0-484f-be84-23c0156edf0a" class="">
+</p><p id="f00284d6-357f-4402-a215-09789a385917" class=""><mark class="highlight-blue">Same example with DTD</mark><div class="indented"><ul id="cdf78f5f-2a9b-413f-a033-79371fb4dc31" class="toggle"><li><details open=""><summary>DTD solution</summary><pre id="3ebde243-2fef-4552-b2ef-75e5d4c49e91" class="code"><code>&lt;employee emp_id=&quot;e1&quot;&gt; E &lt;/employee&gt;
+&lt;project proj_id=&quot;p1&quot;&gt; P &lt;/project&gt;
+
+&lt;manager mgr_id=&quot;e1&quot;&gt; M &lt;/manager&gt; &lt;!-- manages employee with ID &#x27;e1&#x27; --&gt;</code></pre><pre id="63ef1fdf-6da1-4a55-8721-60fc4a477343" class="code"><code>&lt;!ATTLIST employee emp_id ID #REQUIRED&gt;
+&lt;!ATTLIST project proj_id ID #REQUIRED&gt;
+&lt;!ATTLIST manager mgr_id IDREF #REQUIRED&gt;
+
+&lt;!ELEMENT employee (#PCDATA)&gt;
+&lt;!ELEMENT project (#PCDATA)&gt;
+&lt;!ELEMENT manager (#PCDATA)&gt;</code></pre><p id="158845c6-5b81-46d9-8403-cba12f67554a" class="">
+</p></details></li></ul></div></p><p id="9fa6eb31-e4ae-4c19-82f5-2b4184e90b02" class="">
+</p><p id="1b50569d-fa91-4198-b88c-6c0a2155e7f4" class=""><mark class="highlight-blue">XPath is restricted in XSD</mark><div class="indented"><ul id="53e09cb6-5282-4486-af7a-2b39e26b821c" class="bulleted-list"><li style="list-style-type:disc">Only allowes axes <mark class="highlight-gray"><code>child</code></mark>,  <mark class="highlight-gray"><code>descendant-or-self</code></mark> at the beginning of a path with special syntax</li></ul><ul id="769eb764-9864-40b0-8f81-ab9458eac02b" class="bulleted-list"><li style="list-style-type:disc">Selects Elements (not attributes)</li></ul><figure id="69b41213-d6af-4d2a-86c5-ed4df9fbe826"><div class="source"><a href="XSD%2017e88e448c4b444ca22df371fc9dc7a4/6-XPath-in-XMLSchema_(2).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dc269a8c-b28c-400b-a27a-c76b240c1be1/6-XPath-in-XMLSchema_(2).pdf</a></div></figure></div></p></div></article></body></html>

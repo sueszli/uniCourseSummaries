@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Wahrnehmung und Mindset</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="619d4707-609f-475a-984d-ec4dcd88be8b" class="page sans"><header><h1 class="page-title">Wahrnehmung und Mindset</h1></header><div class="page-body"><figure id="98d20b8f-e6bb-4932-b681-d85bb058e842"><div class="source"><a href="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Merkblatt_Konstruktivismus_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a72ff2c3-988c-4757-82f8-aba8441c1f97/Merkblatt_Konstruktivismus_(1).pdf</a></div></figure><figure id="2e3dd33d-4ad1-440c-bc5f-13273198a742"><div class="source"><a href="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Merkblatt_Wahrnehmungsfilter_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7e01c4be-852f-4199-be10-1230e1d9bd83/Merkblatt_Wahrnehmungsfilter_(1).pdf</a></div></figure><p id="e2930803-e75b-4d88-9e60-d669b65f2c10" class="">
+</p><h1 id="fdc3b965-579e-4fff-b40c-753ddb3bdae4" class="">Kartoffelexperiment</h1><p id="8fa66e66-f2ae-46c6-9aaf-474deeb516be" class=""><span style="border-bottom:0.05em solid">Rosenthal Effekt - Self fulfilling prophecy</span><div class="indented"><p id="44ec4846-f9d3-4dc5-a56c-9e1bc41cd9c8" class="">Zeigt die Wirkung von Glaubenssätzen</p><ol type="1" id="2ec16476-5875-46a5-bae5-3e17aaaf05be" class="numbered-list" start="1"><li>Fragebogen an Schülern</li></ol><ol type="1" id="d21d40f6-8ac4-4c4e-8a61-4321f587745d" class="numbered-list" start="2"><li>Schüler wurde gesagt sie hätten ein bestimmtes Intelligenz Quotient IQ (sowie ihren Eltern und Lehrern)</li></ol><ol type="1" id="bacb49b2-7ad4-42eb-8065-51db716b877e" class="numbered-list" start="3"><li>Fragebogen an Schülern</li></ol><ol type="1" id="211b18f8-c28a-42e2-9598-b5888722568a" class="numbered-list" start="4"><li>Schlechtere wurden schlechter, bessere wurden besser</li></ol><ol type="1" id="43ed225e-5b47-40f7-abff-98ed97521e25" class="numbered-list" start="5"><li>Nach 10 Jahren haben sich die Auswirkungen immer noch gezeigt</li></ol></div></p><p id="53192351-e823-4fb8-a872-f58e40f76961" class="">
+</p><p id="30e04e48-523f-4911-a3c5-dbb77d7e14a8" class=""><span style="border-bottom:0.05em solid">Kartoffelexperiment</span><div class="indented"><p id="074d3a52-fa5b-4e0b-8fb5-c967e293fb1f" class="">Glaubenssatz bestimmt Lösungsansatz / Versuche.</p></div></p><p id="384a4bad-372a-48b2-a88d-2cde4da1c5dd" class="">
+</p><h1 id="72d6f681-e251-4a18-8e9e-4bfa8e755d55" class="">Wahrnehmung</h1><p id="bdb4d522-6c12-4a54-9711-fad88cbc2bee" class=""><span style="border-bottom:0.05em solid">Platon Höhlengleichnis</span><div class="indented"><p id="86e4a8b1-5932-4645-baac-2d6e983b0780" class="">Innere Bilder als Projektion</p><p id="9736722e-d7da-4345-8dba-2845fdf0ff3e" class="">
+</p></div></p><p id="69753cb4-3266-437a-af20-ec4bde0294e8" class=""><span style="border-bottom:0.05em solid">Paul Watzlawick → Konstruvismus</span><div class="indented"><p id="14e68798-434d-4bfd-b26f-f5882d826786" class="">&quot;Wie wirklich ist die Wirklichkeit?&quot;</p></div></p><p id="357281ad-c301-42f5-ae57-49609d479c30" class="">
+</p><p id="12351275-ec13-42ef-95ff-8cb5f6e1e6ab" class=""><span style="border-bottom:0.05em solid">Ablauf</span><div class="indented"><p id="49b7e7d9-6e5f-46cd-871b-0fbd951f0b89" class="">Ereignisse → Wahrnehmung → Interpretation → [FILTER] → Interne Repräsentation (Abbildung) → erzeugt internen Zustand (Gefühl dass wir dazu haben) → beeinflusst Physiologie → [FILTER] → Verhalten zb Anspannung </p></div></p><figure id="a2d8e188-1290-44f6-9804-8f41db7a15e8" class="image"><a href="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled.png"><img style="width:144px" src="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled.png"/></a></figure><p id="394474de-5a61-4034-aa8d-4287e40fcb50" class="">
+</p><p id="42d3b560-b286-45a5-b680-4362c019c1e7" class=""><span style="border-bottom:0.05em solid">Wahrnehmungs-Filter</span><div class="indented"><p id="f680d7cb-10da-45dc-a0f0-4aefe53f8a66" class="">Wahrnehmungsprozess: Dinge werden bei der Wahrnehmung priorisiert.</p><p id="0b91a398-46aa-49f1-b3c7-10dfe3ce832a" class="">Self fulfilling prophecy: Glaubenssatz beeinflusst wie man Dinge interpretiert → Bias / Verzerrung.</p><p id="d9779a97-5fd9-41ee-92d4-86c776b08d4f" class=""><span style="border-bottom:0.05em solid">Rückkopplung / Verstärkung</span><div class="indented"><p id="9250f3ff-ef9a-4ea7-8baa-95b8d4f63114" class="">Unsere Eigene physiologische Reaktion beeinflusst unsere Wahrnehmung.</p><p id="49467bc5-cf08-4c52-a56b-2fd96786fca9" class="">Wichtig: Das wahrgenommene wird interpretiert, die Interpretation beeinflusst die Wahrnehmung.<div class="indented"><p id="b13daab0-c54b-4dfd-8eee-71a657d1e285" class="">Körperhaltung beeinflusst Wahrnehmung.</p></div></p></div></p></div></p><figure id="939aef12-bcb5-40b7-88db-df7f6a117a83" class="image"><a href="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled%201.png"><img style="width:120px" src="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled%201.png"/></a></figure><p id="0859712f-4dbd-4140-b996-c18ab726480d" class="">
+</p><ol type="1" id="444469b4-5036-4087-8eda-9db2b2832a3d" class="numbered-list" start="1"><li>Metaprogramme<p id="a0c2025a-8aed-45c5-b233-595da7ea6f39" class="">Wahrnehmungsfilter (aus NLP) - basierend auf Persönlichkeitstyp</p><p id="5d87262e-689a-4389-b594-01767165c99d" class=""><a href="https://www.nlp.at/begriffe/metaprogramme">https://www.nlp.at/begriffe/metaprogramme</a></p></li></ol><ol type="1" id="0152571e-48af-4ef2-ad38-bff36f2a1c6a" class="numbered-list" start="2"><li>Werte<p id="eea1f7c0-2870-4c60-a772-674b4ad540e8" class="">Dinge die man priorisiert, die einem wichtig sind</p></li></ol><ol type="1" id="2a586ec5-aa6e-4c9c-a614-6cf3b4944908" class="numbered-list" start="3"><li>Imprints<p id="8b059592-57d2-4dc4-8319-cec2f77fd79d" class="">Prägende Ereignisse aus der Vergangenheit (Kindheit)</p></li></ol><ol type="1" id="4dda1197-9b6b-43c6-8a8e-aae570c7e180" class="numbered-list" start="4"><li>Glaubensystem<p id="6e3182c5-db7c-4b89-b74c-0d5bf04c559c" class="">Glaubenssätze</p></li></ol><ol type="1" id="3900ee6c-4fa8-4455-a292-47469424dc23" class="numbered-list" start="5"><li>Erwartungen</li></ol><ol type="1" id="e3011d1a-fe0b-415f-b4d4-624398a41b58" class="numbered-list" start="6"><li>Erfahrungen</li></ol><ol type="1" id="7c303bf3-250d-4cdc-8ad7-2128abc928f0" class="numbered-list" start="7"><li>Generalisierung<p id="a6a2c190-f76e-4131-904c-ec7c4ad37549" class="">Wenn dinge oft passieren dann neigt man zu generalisieren.</p><p id="0e4effdd-3875-45d3-af9f-216fd1e001e1" class="">zB oft betrogen → Frauen sind untreu</p></li></ol><ol type="1" id="bae8f144-fb0d-49f0-9864-f98450cebf8a" class="numbered-list" start="8"><li>Erinnerungen</li></ol><ol type="1" id="a341f853-da53-4581-a79f-764d8e22e2b9" class="numbered-list" start="9"><li>Persönlichkeit</li></ol><p id="04d92ebc-eb05-4cd4-9438-9d6dc756dd24" class="">
+</p><h1 id="7396c38c-d73a-452a-9af7-9229c3515b86" class="">Paul Watzlawick</h1><p id="35eeadae-da64-4e31-9286-441172e77589" class=""><span style="border-bottom:0.05em solid">Wahrheit</span><div class="indented"><p id="46f2d511-fc5d-4ff4-9e76-11bacfe5a865" class="">&quot;Nur anwendbar wo Leute der selben Wirklichkeitskonstruktion angehören&quot;</p></div></p><p id="ec21ba62-f256-4339-9781-f929ee1d534a" class="">
+</p><p id="5a34f239-e679-4718-8861-ebb0322a2782" class=""><span style="border-bottom:0.05em solid">Konstruktivismus: 2 Wirklichkeiten</span><div class="indented"><ol type="1" id="67833ee1-f3a4-4100-95ff-922b0e863d38" class="numbered-list" start="1"><li>Über Sinnesorgane</li></ol><ol type="1" id="cd660f40-c4d5-45d8-966f-ee6c7e79b96e" class="numbered-list" start="2"><li>Zuschreibungen der Wahrnehmung über Sinnesorgane</li></ol></div></p><p id="b308bd97-89fc-4fc4-8730-4953a0da8d49" class="">
+</p><h1 id="f6c7b686-d3d7-499e-bd26-137eb81efcef" class="">MindSet</h1><p id="44891045-3ded-4f0b-b9fa-78ac9ade968c" class=""><span style="border-bottom:0.05em solid">Elefantenbeispiel</span><div class="indented"><p id="31a13964-58b0-4b49-acbc-300dcd074771" class="">Elefant reißt sich nicht vom Holzpfahl nicht weg weil sein der Glaubenssatz &quot;ich bin zu schwach&quot; durch Erfahrung entstanden ist.</p><p id="1ecb9629-7850-4e72-903e-06c34e31280d" class="">
+</p></div></p><p id="862838d3-4a90-4249-b4cb-81f50b623dba" class=""><span style="border-bottom:0.05em solid">Glaubenssatz</span><div class="indented"><p id="c2b9dc61-4669-4c63-b477-52aafdbc94af" class="">Nicht wahr vs. falsch sondern förderlich vs. hinderlich</p><p id="c89b3206-e6be-4c79-9d40-afab0de509a8" class="">Müssen sich nicht nur auf uns beziehen.</p><ul id="b6d64a16-4e1c-4aef-a956-c8c817fb3d43" class="bulleted-list"><li style="list-style-type:disc">förderlich - <mark class="highlight-gray">fördern uns unsere Ziele zu erreichen</mark><p id="a4d2bd75-2fe8-4fd1-8e98-8b79a6c9b1eb" class="">Enthalten selten Verneinungen</p></li></ul><ul id="dae66217-3ea0-488a-b9fb-cfc30fa410b2" class="bulleted-list"><li style="list-style-type:disc">hinderlich - <mark class="highlight-gray">hindern uns unsere Ziele zu erreichen</mark><p id="c53db803-279e-46c2-b763-82ccca8ae518" class="">Enthalten viele Verneinungen</p><p id="96ea12fb-71e7-4f97-8387-4ffec73f8850" class="">Modeloperator der Notwendigkeit, Erlaubnisse - Zwang (ich <em>muss</em>)</p><p id="fbb56dc5-722c-4aab-9184-fa1c803a95e3" class="">Verursachen Druck / Schmerz</p></li></ul><p id="727a961a-0314-488a-88c6-974c058315ba" class="">Kontext / Ziel bestimmt Förderlichkeit.</p><p id="2bc8e050-4797-489f-9698-fe50cf9d838f" class="">&quot;Egal was sie glauben: sie werden immer Recht befahlten&quot; → self fulfilling prophecy</p></div></p><p id="65190e1e-255b-4893-98de-8ff70f49ea44" class=""><div class="indented"><p id="73052879-6869-45fc-8d78-3a7d277d45e6" class=""><span style="border-bottom:0.05em solid">Linguistische Struktur - Glaubenssätze</span></p><ul id="4ac0aafc-f1ba-45b7-bcd3-c9ee6330c900" class="bulleted-list"><li style="list-style-type:disc"><em>Komplexe Äquivalenz</em><p id="f65858c4-0b2b-4765-974e-004ee4a98adf" class="">Ereignissen wird eine Bedeutung gegeben: Ich schaffe die Prüfung nicht == ich bin dumm</p></li></ul><ul id="c39487e5-47d4-4235-9499-571cc8517323" class="bulleted-list"><li style="list-style-type:disc"><em>Ursache-Wirkung</em><p id="0598ec6e-2dfb-4d7b-b821-29cce5aed5a5" class="">Wenn ich das Projekt nicht schaffe → dann werde ich gekündigt → das liegt daran dass ich nicht qualifiziert genug für diesen Job bin (Glaubenssatz kommen in Gruppen → <span style="border-bottom:0.05em solid">Glaubenssatzsystem</span>)</p></li></ul></div></p><p id="ddfaec7a-4ee4-419c-bb9d-2d2e571c323e" class="">
+</p><p id="2cea9d20-c928-47dc-b648-fe7c94da6222" class=""><span style="border-bottom:0.05em solid">Einstellung</span><div class="indented"><p id="92bc5252-aec9-4941-b9e8-d173248807a2" class="">Glaubenssatz + Wert = Einstellung</p><p id="ca642243-d729-45c1-b9f3-4e040ee98109" class="">zB &quot;welche politische Partei wählst du?&quot;</p></div></p><p id="732f0fec-eec8-459a-a415-51fde67f1ff9" class="">
+</p><p id="6bbf263a-3bc1-4c4d-abcf-c333446886c1" class=""><span style="border-bottom:0.05em solid">Glaubenssystem</span><div class="indented"><p id="57f5674b-d8b6-4473-9b53-31c851f34ffd" class="">Befindet sich im Wahrnehmungs-<em>Filter</em>.</p><p id="c8a3eeeb-7f98-46aa-b5a0-e3b1e2abb1ac" class="">Dadurch beeinflusst durch Erfahrung zb.</p><p id="eef18544-ca0a-4868-8a88-6db4be0bf019" class="">Verzerrungen zum vorteil: realistischere Menschen depressiver, Unternehmer meistens verzerrtes optimistisches Weltbild </p><p id="bdc8e3e5-5499-44d8-9f17-6d1ea2189e69" class="">
+</p></div></p><p id="f430ba26-803c-46be-aaf7-b31c042cbff9" class=""><span style="border-bottom:0.05em solid">Glaubenssätze ändern</span><div class="indented"><p id="7a067406-423f-49da-b3f8-c857e875e89b" class="">Es braucht Vertrauen / Missvertrauen um vom aktuellen Glaubenssatz (augenblicklich glauben) zu anderen Glaubenssätzen zu kommen.</p><p id="5fab7990-90fa-4913-9f39-9600c9ebdf5f" class="">Kann auch sofort passieren. (zb Weihnachtsmann, Christkind)</p><p id="59aa5c7a-24f1-4ec2-ba03-741f403534e4" class="">&quot;Wenn Sie glauben es braucht 1-2 Jahre Psychotherapie um vom einen Glaubenssatz zum nächsten zu kommen, dann ist das wahrscheinlich auch das was notwendig sein wird&quot;</p><p id="2e7c6587-ac89-4e06-bcf8-88f18fa1fc94" class="">
+</p><ul id="21bf2ad3-9823-4460-8f4f-75a7be9934a8" class="bulleted-list"><li style="list-style-type:disc">Logische Methoden<p id="a68be45d-b709-45cc-b35d-faa00b71e1e9" class="">Logik funktioniert nicht: zB mit logischen Argumenten Leuten sagen sie sollten keine Angst haben.</p></li></ul><ul id="e168b551-5764-4f31-add5-b9c796c155c6" class="bulleted-list"><li style="list-style-type:disc">Emotionale Methoden<p id="6fc052b8-8241-462d-ba3c-fcaac7c18ae9" class="">Hypnotik, Linguistik, Framing</p></li></ul></div></p><figure id="79942f17-2eed-407c-9784-f323eb5ff162" class="image"><a href="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled%202.png"><img style="width:240px" src="Wahrnehmung%20und%20Mindset%20619d4707609f475a984dec4dcd88be8b/Untitled%202.png"/></a></figure><p id="906d6838-24e5-4f57-ac4a-59491536bbc8" class="">
+</p><p id="5f177e30-bc36-4c57-a6a1-f62b9c6d325e" class=""><span style="border-bottom:0.05em solid">Übung - Glaubenssätze ändern</span></p><p id="7254d103-0794-4589-9328-638c0f4e5484" class="">Was hindert mich am Erreichen des Soll-Zustandes? (Hinderliche Glaubenssätze)</p><p id="96ff3f1d-70b5-43fa-88f8-e3cc27196810" class="">Für jeden Glaubenssatz:<div class="indented"><ol type="1" id="79aaceae-68b8-4cc5-bba5-f68ac52be0a7" class="numbered-list" start="1"><li>Ist das wirklich wahr? Was spricht dagegen?</li></ol><ol type="1" id="1a3ea250-6162-459a-a01a-8865fbcb05e2" class="numbered-list" start="2"><li>Welche Konsequenzen hat es, wenn ich das glaube?</li></ol><ol type="1" id="f080bc21-f922-47fe-8d5d-cb40d090e114" class="numbered-list" start="3"><li>Welche Konsequenzen hat es, wenn ich das Gegenteil glaube?</li></ol><ol type="1" id="c7ebdaa4-949d-4235-8080-a58d320338df" class="numbered-list" start="4"><li>Welcher Mensch bin ich, wenn ich den hinderlichen Glaubenssatz gehen lasse?</li></ol><p id="cbad06bb-6df6-4006-b8b1-505543db6a73" class="">
+</p></div></p></div></article></body></html>

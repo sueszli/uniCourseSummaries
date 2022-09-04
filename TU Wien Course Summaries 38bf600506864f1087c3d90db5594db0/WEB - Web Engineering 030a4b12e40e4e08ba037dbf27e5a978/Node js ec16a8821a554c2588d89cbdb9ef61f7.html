@@ -1,0 +1,768 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Node.js</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ec16a882-1a55-4c25-88d8-9cbdb9ef61f7" class="page sans"><header><h1 class="page-title">Node.js</h1></header><div class="page-body"><p id="4fd2e2b4-842c-4268-8688-782e96694f8c" class=""><a href="https://joecreager.com/learnyounode-unofficial-companion/">https://joecreager.com/learnyounode-unofficial-companion/</a></p><p id="f610f7f3-ea32-4c13-88a7-ccfcba18e373" class=""><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs">https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs</a></p><p id="75d6dbf4-ee0b-4f96-81bf-a4656668fd99" class="">
+</p><nav id="ac5291ce-5e62-4f11-823b-4cd88b7606b6" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#580db111-9a4a-48a1-a315-ebb1df3d0ffb">Backend</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9eef0d0c-9c5e-4438-9f26-480d3d6e421b">Node.js</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a5685c65-9377-4703-a381-70b510a5123b">Express</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb65377e-7a3b-4ff2-8915-530088246e51">Routes / URL Mapping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4ba2e99b-3137-4a1a-9e21-b07d34f67464">Request and Response Objects </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#013fc5a6-4f21-4d31-8c74-373c56af6794">Middleware</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e8723178-cb3d-457f-8301-dc79749115ae">Cookies and Sessions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f60a0c7c-2eb0-4c33-ac0c-568b6e04e22a">Environment Variables / Configuration (secrets)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0a594d66-b611-4b44-bef8-2f81bad19a95">Templating (Templates / Views)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f98e96d1-42f7-431d-a4c8-2aa0ffe12e50">Networking</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#004d5207-263a-43c1-a6f3-4925228f5b82">Persistent Storage (Files)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#15e6c48e-440d-4fa8-8073-0e01a487ccc4">Modules</a></div></nav><h1 id="580db111-9a4a-48a1-a315-ebb1df3d0ffb" class="">Backend</h1><p id="64c998ca-ce4f-4966-bb67-c22519550b20" class="">Technologies used for Backend in this course:<div class="indented"><ol type="1" id="e04ef951-fa87-4219-b4ea-6a7774b50136" class="numbered-list" start="1"><li>Node.js</li></ol><ol type="1" id="ea90e222-435c-4a21-a055-927c2f0237a0" class="numbered-list" start="2"><li>Express.js Framework</li></ol><ol type="1" id="f0d16bf7-5d26-494f-8842-fbbdb032076d" class="numbered-list" start="3"><li>Node Package Manager NPM (Dependency Management) </li></ol></div></p><h1 id="9eef0d0c-9c5e-4438-9f26-480d3d6e421b" class="">Node.js</h1><p id="a2512b5e-e950-4326-919a-b6f402990cc9" class="">JavaScript runtime environment = executes JavaScript code outside a web browser but in Chrome&#x27;s V8 Engine.</p><p id="4027aaab-f002-4673-811d-6d3b4695215f" class="">Used to make Web Servers and networking tools.</p><p id="2f1e7477-eaae-4fb3-b4f9-8e5c60bb4070" class="">&quot;JavaScript everywhere&quot; paradigm:<div class="indented"><p id="ff50d7ca-6c43-410d-8afa-40bf4e00c17c" class="">web-application development around a single programming language, rather than different languages for server-side and client-side scripts.</p></div></p><p id="01253aa7-82cf-4d13-ae56-0f166dd31125" class="">
+</p><p id="9b044663-419d-4978-8d04-09ccbc811b2f" class="">Example: Simple Node.js Webserver Example (without Express)<div class="indented"><pre id="2a9f09ad-50c2-47a1-9936-a07307894c78" class="code"><code>const	http = require(&#x27;http&#x27;); //importing package
+const	requestListener	=	function (req,	res)	{ 
+		res.writeHead(200);	//200 in header -&gt; OK
+		res.end(&#x27;Hello,	World!&#x27;);	
+}	
+const	server =	http.createServer(requestListener);	
+server.listen(8080); //listening on Port 8080</code></pre><p id="92ad1dcf-b091-4bf9-a7ff-13af4bdb0de7" class="">Here:<div class="indented"><p id="b0974975-5cc0-4a48-a482-9e2e58e82b10" class=""><mark class="highlight-gray"><code>req</code></mark><mark class="highlight-gray"> </mark>stands for HTTP request</p><p id="8e080986-b91e-49c7-9eb6-f5af345cdff1" class=""><mark class="highlight-gray"><code>res</code></mark><mark class="highlight-gray"> </mark>stands for HTTP response</p></div></p></div></p><p id="d0cd222b-b24d-4b39-a518-4902731442dd" class="">
+</p><p id="308691aa-9afe-4a57-ad3a-a09bf0221cc0" class="block-color-gray">Executing a Node.js program<strong> </strong><div class="indented"><ol type="1" id="04e33c9b-4870-4d5f-9c07-647db18d818a" class="numbered-list" start="1"><li>Opening cmd in the right path where <mark class="highlight-gray"><code>program.js</code></mark> is located</li></ol><ol type="1" id="c82a75b6-1ca2-407b-be17-85f01e16627a" class="numbered-list" start="2"><li><mark class="highlight-gray"><code>node program.js</code></mark></li></ol></div></p><p id="4a99a266-0766-4af6-8ecc-e24b1255ec33" class="">
+</p><h1 id="a5685c65-9377-4703-a381-70b510a5123b" class="">Express</h1><h2 id="bb65377e-7a3b-4ff2-8915-530088246e51" class="">Routes / URL Mapping</h2><pre id="68f2023d-9b7a-4a75-ad5d-47e60142f87c" class="code"><code>const	express	=	require(&#x27;express&#x27;);	
+const	app	=	express();
+
+app.get(&#x27;/hello&#x27;,	function(req,	res)	{	
+	 res.send(&#x27;Hello	World!&#x27;);	
+});	
+
+const	port	=	3000;	
+app.listen(port,	function()	{	
+	 console.log(`Waiting	for	requests	on	Port ${port}!`);	
+});</code></pre><p id="39a9a562-5c91-4a75-b663-1d633cbc2759" class="">
+</p><p id="3dd40bf0-d799-4834-872f-ce170b7b93f5" class="">Here in <mark class="highlight-gray"><code>app.get()</code></mark>:<div class="indented"><ul id="803f5f80-5155-4ac5-b9ad-b207d7fad8b2" class="bulleted-list"><li style="list-style-type:disc">Request Method = GET</li></ul><ul id="dc93a7b0-2d38-430b-b7e1-19a779b2f742" class="bulleted-list"><li style="list-style-type:disc">path = <mark class="highlight-gray"><code>&#x27;/hello&#x27;</code></mark></li></ul><ul id="8f72af59-cfdb-4449-a389-e56b521ebf61" class="bulleted-list"><li style="list-style-type:disc">response = <mark class="highlight-gray"><code>res.send()</code></mark></li></ul></div></p><p id="9c3ab654-f6b1-450e-ab33-538af853cfb1" class="">
+</p><h2 id="4ba2e99b-3137-4a1a-9e21-b07d34f67464" class="">Request and Response Objects </h2><p id="a27b5daf-fab9-4a66-b6cb-31145187f4c8" class="">Here we search for a recipe via its ID to update it:</p><pre id="f6e305f2-a069-4242-98c5-711fc6848a20" class="code"><code>app.put(&#x27;/recipes/:id&#x27;, (req, res) =&gt; { //:id as a variable
+	const recipeId = req.params.id;
+	const hasImage = req.query.hasImage == &#x27;true&#x27;; //?hasImage
+
+	const recipe = Recipes.find(recipeId, hasImage);
+	if(!recipe) { 
+		return res.sendStatus(404); //not found
+	}
+	const payload = req.body; //payload is received body
+	recipe.update(payload);
+	res.send({updateSuccess : recipeId}); //JSON
+});</code></pre><p id="4fbdaf83-74ca-450a-aff7-82325d9ad093" class="">
+</p><h2 id="013fc5a6-4f21-4d31-8c74-373c56af6794" class="">Middleware</h2><p id="140422d5-97cf-4a8b-b4c9-608130f759e1" class="">Processing data from client with &quot;Middleware functions&quot;:</p><pre id="cc8f6739-6b39-47de-a639-c21793620cdb" class="code"><code>// for parsing application/json
+app.use(express.json());
+// for parsing HTML form data
+// application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+...
+const payload = req.body;
+...</code></pre><p id="672a0e6a-e48b-404c-9a47-aee57f54d381" class="">Also have access to <mark class="highlight-gray"><code>.next()</code></mark></p><p id="bc7be6ff-fcd4-4416-b4fa-6c9ec7f94d28" class="">
+</p><h2 id="e8723178-cb3d-457f-8301-dc79749115ae" class="">Cookies and Sessions</h2><p id="cf1cac83-4cb9-489f-92a7-ca17aa06c409" class="">Cookies can be set by both client and server as part of HTTP headers and are transmitted with every request/response cycle. </p><p id="429effdf-6e89-41d9-abfa-c09fbfad13ee" class="">Sessions use cookies to store a unique identifier.</p><p id="03c353e7-d629-494c-8cb7-27cfb0fd2751" class="">The associated session data is stored on the server.</p><pre id="45844d5a-291d-4eab-898e-08d7281f729f" class="code"><code>routes.get(&#x27;/&#x27;, async (req, res) =&gt; {
+ let sessionId = req.cookies.sessionId; //parsed by middleware
+	...
+ if(!sessionId) {
+		...
+		res.cookie(&#x27;sessionId&#x27;, sessionId); //Cookie written into response header
+	}
+	...
+}</code></pre><p id="b67d3acc-3186-48d7-8c6d-ec3a239c39e4" class="">
+</p><h2 id="f60a0c7c-2eb0-4c33-ac0c-568b6e04e22a" class="">Environment Variables / Configuration (secrets)</h2><p id="ad266d97-35e6-4607-86d8-983513970bde" class="">Configuration can be kept a secret.</p><pre id="7faea911-8ee2-450b-a4aa-b2fd0ea8b7fa" class="code"><code>const	db	=	require(&#x27;db&#x27;)	
+db.connect({	
+		host:	process.env.DB_HOST,	
+		username:	process.env.DB_USER,	
+		password:	process.env.DB_PASS	
+})</code></pre><p id="9336d503-a684-4ffd-9e45-b09620abc811" class="">Other ways to pass configuration to the program (pass parameters, read from configuration file, etc.)</p><pre id="5f2d69d3-28ef-43a7-8f26-359a59ec72cc" class="code"><code>const	port	=	process.argv.length	&gt;=	3	?	+process.argv[2] : 3000;</code></pre><p id="a83acfad-13dc-4b24-b4d3-07c46d23d45f" class="">
+</p><h2 id="0a594d66-b611-4b44-bef8-2f81bad19a95" class="">Templating (Templates / Views)</h2><pre id="7fb6f11d-4af6-4d9d-a128-21e472a4b83d" class="code"><code>app.set(&#x27;view	engine&#x27;, &#x27;pug&#x27;); //enabled by middleware
+...
+routes.get(&#x27;/&#x27;,	async	(req,	res)	=&gt;	{
+		res.render(&#x27;users&#x27;,	{
+			title: &#x27;Users&#x27;,
+			heading: &#x27;List of users&#x27;,
+			users: getUsers()
+	});
+}</code></pre><p id="77ca757c-4cd3-4aab-b4ef-5ab187e24e73" class="">									      <mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span></mark></p><pre id="a3378f14-e5a6-4fa3-a908-bd6bf2618910" class="code"><code>html	
+		head	
+				title = title
+		body	
+				h1 = heading
+				div#container	
+						-	for	user in users
+								div.user = user.email</code></pre><p id="b05f3247-2cf2-4ce8-9561-a0440019c0bd" class="">									      <mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span></mark></p><pre id="5f09f1d4-78b4-4bfd-9a70-40f79bf6381e" class="code"><code>&lt;html&gt;
+&lt;head&gt;
+		&lt;title&gt;Users&lt;/title&gt;
+&lt;/head&gt;
+		&lt;h1&gt;List of users&lt;/h1&gt;
+
+		&lt;div id=&quot;container&quot;&gt;
+			 	&lt;div class=&quot;user&quot;&gt;
+						jane.doe@tuwien.ac.at
+				&lt;/div&gt;
+		
+			 	&lt;div class=&quot;user&quot;&gt;
+						jack.bauer@tuwien.ac.at
+				&lt;/div&gt;
+		&lt;/div&gt;
+&lt;/html&gt;</code></pre><p id="a67fac3e-045c-4da9-9058-21e58c4f1f1f" class="">
+</p><h2 id="f98e96d1-42f7-431d-a4c8-2aa0ffe12e50" class="">Networking</h2><p id="d1397b23-7e6f-44dd-be7c-672f90844018" class="">Many Libraries, ie. <mark class="highlight-gray"><code>node-fetch</code></mark> to fetch resources from other APIs </p><pre id="4fd0a0f9-a39d-4986-857a-0f818f64cbd8" class="code"><code>const	fetch	=	require(&#x27;node-fetch&#x27;); //import	
+...
+const	response = await fetch(objectRequestUrl(objectID));	
+if(response.status !== 200) { //not successful
+	console.log(&#x27;Could not find object with id&#x27;	+	objectID);	
+	return	false;	
+}	
+const	object = await response.json();</code></pre><p id="e1064958-6e10-454e-881f-c4ab1f78bd81" class="">
+</p><h2 id="004d5207-263a-43c1-a6f3-4925228f5b82" class="">Persistent Storage (Files)</h2><p id="7ca85d99-a8ea-41e0-ba85-7a4fbe31cc14" class="">Filesystem utilities have synchronous and asynchronous API in Node</p><h2 id="15e6c48e-440d-4fa8-8073-0e01a487ccc4" class="">Modules</h2><pre id="49e5409b-66b1-4a77-98de-22e65b5102ec" class="code"><code>const search = async (term, max=100) =&gt; { ... }
+...
+module.exports.search = search;</code></pre><pre id="f378d507-6d68-4582-b9a9-41f598688a4c" class="code"><code>const met = require(&#x27;../utils/met.js&#x27;);
+const artworks = met.search(&#x27;van gogh&#x27;);</code></pre></div></article></body></html>

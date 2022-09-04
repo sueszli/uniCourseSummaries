@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>TIL - Theoretische Informatik und Logik</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1b7b78bf-be8f-4cf1-a3f5-859f86e5a2a6" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">⚡</span></div><h1 class="page-title">TIL - Theoretische Informatik und Logik</h1></header><div class="page-body"><h1 id="1ea0aa0a-0144-4163-9777-7b39ac721163" class="">Summaries</h1><p id="ef35769f-7bb2-4675-aa32-9e80c8b524ad" class=""><mark class="highlight-blue">BFSK</mark><div class="indented"><figure id="f58c2896-c381-43a4-8794-604aba8f9e38" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Formale%20Sprache,%20Abza%CC%88hlbarkeit%20f58c2896c38143a48794604aba8f9e38.html">Formale Sprache, Abzählbarkeit</a></figure><figure id="5b5d8914-5acf-4df0-a7ca-ad11b56853bf" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Entscheidbarkeit%205b5d89145acf4df0a7caad11b56853bf.html">Entscheidbarkeit</a></figure><hr id="04d36745-1f27-4217-8743-6bcf99fef569"/><figure id="5b67917d-a6e8-4ead-85d6-ecb2d0811b42" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Turingmaschinen%205b67917da6e84ead85d6ecb2d0811b42.html">Turingmaschinen</a></figure><figure id="ef3a45e1-d6d3-4e15-8a51-1f0f148297f7" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Automaten%20ef3a45e1d6d34e158a511f0f148297f7.html">Automaten</a></figure><figure id="0801f138-bb69-4133-8d12-64dbbe9e87ff" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Grammatiken%200801f138bb6941338d1264dbbe9e87ff.html">Grammatiken</a></figure><figure id="29bfd071-a234-41bf-8544-8b007ea786c1" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Graphen%2029bfd071a23441bf85448b007ea786c1.html">Graphen</a></figure><hr id="62488804-084b-4bf0-af7a-173d9b940c5a"/><figure id="312f8e91-f635-45ab-81be-c87a1b65bd5c" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Chomsky-Hierarchien%20312f8e91f63545ab81bec87a1b65bd5c.html">Chomsky-Hierarchien</a></figure><figure id="4050cbce-8a30-48b1-97c3-b8b19790dd37" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Komplexita%CC%88t%204050cbce8a3048b197c3b8b19790dd37.html">Komplexität</a></figure></div></p><p id="8ded0353-29e6-4e05-bd60-518c057a90b9" class="">
+</p><p id="d0759396-7637-480d-9a95-ee741029cef7" class=""><mark class="highlight-blue">Logik</mark><div class="indented"><figure id="b048a752-3f72-45b7-b95b-ecff39a82764" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Syntax%20b048a7523f7245b7b95becff39a82764.html">Syntax</a></figure><figure id="c12d7c09-6c06-431e-a3e8-2e810a7ff272" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Semantik%20c12d7c096c06431ea3e82e810a7ff272.html">Semantik</a></figure><figure id="2b7fe5ab-1a75-4cbb-be51-0321313e4196" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Induktionsbeweise%202b7fe5ab1a754cbbbe510321313e4196.html">Induktionsbeweise</a></figure><figure id="383db7c3-12f6-41a7-9d8a-458a9bbc2d46" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Semantik%20formalisieren%20383db7c312f641a79d8a458a9bbc2d46.html">Semantik formalisieren</a></figure><figure id="19df1d70-0be6-423f-822e-6ca12704aa8d" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Tableaux%2019df1d700be6423f822e6ca12704aa8d.html">Tableaux</a></figure><figure id="c6c559be-c407-4a5f-9ae6-dd622fadfb8b" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/PL%20Eigenschaften%20c6c559bec4074a5f9ae6dd622fadfb8b.html">PL Eigenschaften</a></figure><hr id="e7de1134-a31f-4467-aa5a-a102ef9afe3d"/><figure id="38a03fb7-9fd7-4e34-930d-1d68e4f3a991" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Korrektheitsaussagen%2038a03fb79fd74e34930d1d68e4f3a991.html">Korrektheitsaussagen</a></figure><figure id="9cfd8d62-98e9-4275-9987-8e9a2a2e3a2a" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Hoare-Kalku%CC%88l%209cfd8d6298e9427599878e9a2a2e3a2a.html">Hoare-Kalkül</a></figure></div></p><p id="f27b9c95-c6d0-47c0-8549-89148a46d21d" class="">
+</p><p id="f9ad5629-3796-4248-80ea-1f4321c82ce1" class="">
+</p><h1 id="56a6d50c-7f76-42e4-9729-867584a21e0e" class="">Exam Preperation</h1><p id="d9a31ff2-cb9f-4e66-965a-162af3d359fe" class=""><mark class="highlight-blue">Tree proof generator</mark><div class="indented"><p id="1a6d14b8-eae4-488e-a05d-42ea6320d736" class=""><a href="https://www.umsu.de/trees/#(p%E2%88%A8(q%E2%88%A7r)">https://www.umsu.de/trees/</a></p></div></p><p id="af6b1cba-93e2-4922-8cd4-548c4b62413c" class=""><mark class="highlight-blue">Altprüfungen</mark><div class="indented"><figure id="d5cfadf7-18a9-4e8b-9a3f-dc3e3ec10967" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967.html">Altprüfungen</a></figure></div></p><p id="22518adb-94ed-40bd-8a41-724744d8382a" class=""><mark class="highlight-blue">Übungsbeispiele</mark><div class="indented"><figure id="479b8a8b-488b-4c89-b6f8-bc2b544caf33" class="link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/UE%20Musterlo%CC%88sungen%20479b8a8b488b4c89b6f8bc2b544caf33.html">UE Musterlösungen</a></figure><figure id="a7fb02ea-5bf5-4152-81af-54f42904e13c" class="block-color-gray link-to-page"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/Meine%20UE%20Abgaben%20a7fb02ea5bf5415281af54f42904e13c.html">Meine UE Abgaben</a></figure></div></p><p id="f798997b-79f4-4628-8456-989116fa1b7f" class=""><mark class="highlight-blue">Offizielles Skriptum 2011</mark><div class="indented"><figure id="ec62c69a-a18a-45b2-8bd5-38f914ffd654"><div class="source"><a href="TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Skriptum_TIL.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ee544fbc-a2e0-49de-9db9-7f4fd4c2b212/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Skriptum_TIL.pdf</a></div></figure><p id="6fc4e6b5-d377-44ce-ab0f-0e26b70c9be9" class="">
+</p></div></p><p id="631143db-884f-4b67-9598-cd482da651ae" class="">
+</p></div></article></body></html>

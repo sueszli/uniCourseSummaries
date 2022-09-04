@@ -1,0 +1,712 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragen 5 - Testen III: Test Doubles, Fehlermuster, Refactoring</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="80d246cb-4d56-47e4-9f86-7737b186c3ee" class="page sans"><header><h1 class="page-title">Fragen 5 - Testen III: Test Doubles, Fehlermuster, Refactoring</h1></header><div class="page-body"><p id="766e1ded-b130-464e-881b-5887c8a50734" class="">
+</p><p id="b657675c-1fc5-42a8-b765-808102889156" class=""><mark class="highlight-blue">Test doubles</mark></p><ul id="16ece918-228a-4a0a-bc19-3ad6932afc8f" class="toggle"><li><details open=""><summary>Test doubles: Zweck, Motivation</summary><p id="cc1b3f12-b4f2-46bf-b56e-227b4823e4df" class=""><mark class="highlight-blue">Problem bei Komponententests</mark><div class="indented"><p id="7bb7a3d6-6d71-40b2-b0f1-950270a2504a" class="">Man kann sie nicht leicht isoliert vom restlichen System Testen weil:<div class="indented"><p id="92ed6e50-0a5b-4b3c-91d9-b499b1ccc5c8" class="">sie miteinander interagieren, andere Schnittstellen aufrufen <em>wie zB die Datenbank</em></p><p id="fde58eff-c7b8-49f0-9bbd-3145bc29d8f7" class="">nicht deterministische Werte nutzen <em>wie zB Systemzeit</em></p></div></p></div></p><p id="b43a3037-dba5-44b2-8fd7-48ffc2b254a8" class="">
+</p></details></li></ul><ul id="188819ec-c6f2-48aa-b44b-246baad59a32" class="toggle"><li><details open=""><summary>Test doubles: Definition</summary><p id="e623a7ac-1f99-4502-bb52-1d7ea64d0378" class=""><mark class="highlight-blue">Test doubles</mark><div class="indented"><p id="09ff465c-c290-4bce-b7d9-f44dd8e841d2" class=""><em>= Generischer Begriff für Austausch von realen Komponente des Systems durch eine alternative, meist simplifizierte Implementierung für Testzwecke.</em></p><p id="8d065019-f666-4f5a-a394-0923ac634c40" class="">Wir möchten Abhängigkeiten zwischen Komponenten ausblenden.</p><p id="fa8bd699-ad64-4d02-b60b-572c03ea86a0" class="">Komponenten mit einfacheren “doubles” ersetzen zum Testen.</p><p id="47793581-d429-48e1-a74a-9f9870ba2b06" class="">Vorteile: Isolation, Keine Abhängigkeiten, geringere Komplexität, Reduktion der Ausführungszeit.</p></div></p><p id="32a91274-4dd8-4b73-8272-da0a2bf066dd" class="">
+</p></details></li></ul><ul id="e1e94e0c-ebb1-4d04-9395-28c4cb1a239f" class="toggle"><li><details open=""><summary>Test doubles: Übersicht</summary><ol type="1" id="3cdc7751-4d14-4c5c-a975-d67e4d031989" class="numbered-list" start="1"><li><mark class="highlight-blue">Dummy Object</mark></li></ol><ol type="1" id="e5512b1f-bd38-418f-89de-bfec77679d56" class="numbered-list" start="2"><li><mark class="highlight-blue">Fake Object</mark></li></ol><ol type="1" id="f3743f35-7387-46c4-83b8-c1e9f4566208" class="numbered-list" start="3"><li><mark class="highlight-blue">Stub</mark></li></ol><ol type="1" id="63ce53e6-8df1-4830-8709-17d2bf8f0c55" class="numbered-list" start="4"><li><mark class="highlight-blue">Mock</mark></li></ol><ol type="1" id="62af0a12-30f6-4904-b4b1-e46eb417ff22" class="numbered-list" start="5"><li><mark class="highlight-gray">Spy</mark></li></ol><p id="92f55054-bd48-45f4-860c-fb42e1ae8e7a" class="">
+</p></details></li></ul><ul id="bf91d084-9e3a-47f2-a6a6-7d1d482938bb" class="toggle"><li><details open=""><summary>Dummy Object</summary><p id="44c0a6a9-21aa-4602-b3ea-f5995c1b6eee" class=""><mark class="highlight-blue">Dummy Object</mark><div class="indented"><p id="40afa644-ecf0-4cc8-9604-88469e4aa2b6" class="">Nicht zum Testen</p><p id="2a8e8400-1a4b-4255-8c15-5fb73f3f91fb" class="">Nicht zum Verwenden, nicht ausführbar</p><hr id="b8227251-924b-46ff-9024-85de6d10b71b"/><p id="f81741ae-ca93-4e0e-9306-69318a86d706" class="">Quasi “leeres” Argument - Platzhalter ohne Funktionalität</p><p id="680657a1-ce6c-40d0-8b46-3ce4feb45fbb" class=""><mark class="highlight-gray">zB </mark><mark class="highlight-gray"><code>DummyCustomer</code></mark><mark class="highlight-gray"> Klasse implementiert </mark><mark class="highlight-gray"><code>ICustomer</code></mark><mark class="highlight-gray"> aber wirft </mark><mark class="highlight-gray"><code>NotImplementedException</code></mark></p></div></p><p id="a12fd4d7-49c8-479d-a9be-62b19616a873" class="">
+</p></details></li></ul><ul id="245481ed-e118-41a3-be19-3930283dec1c" class="toggle"><li><details open=""><summary>Fake Object</summary><p id="b1b1cc4e-f19e-4a17-876e-c619d424ca9f" class=""><mark class="highlight-blue">Fake Object</mark><div class="indented"><p id="53365b36-f411-4ec9-bccc-24e28f1e3b50" class="">Nicht zum Testen</p><p id="58d5be93-2ecc-42a0-a784-17384fa9d5de" class="">Zum Verwenden, ausführbare Implementierung</p><hr id="a20dd1d0-742c-4287-b8c0-b683c98796b2"/><p id="f34f3870-1f5d-403e-9a91-9f2b04af1ae8" class="">Wenn reale Implementierung zu langsam oder nicht verfügbar</p><p id="e84c02e7-216f-4169-bbf5-39f15bc306cb" class=""><mark class="highlight-gray">zB simulierte Datenquelle, In-Memory Datenbank → keien Echtdaten</mark></p><p id="9cd1a088-5aab-42ed-91c7-32765d9981cb" class="">
+</p></div></p></details></li></ul><ul id="6d41689e-9d58-4837-a612-9f9193113889" class="toggle"><li><details open=""><summary>Stub</summary><p id="10bc2913-9148-4ee5-bc40-134f9d6b6d87" class=""><mark class="highlight-blue">Stub</mark><div class="indented"><p id="8e55eda4-ab62-4d3b-b1bf-c1c1167f3764" class="">Zum Testen</p><p id="dda90d0d-82ec-4486-a2b5-b048e883d3fc" class="">Zum Verwenden, ausführbare Implementierung</p><hr id="ebbb4209-c7a3-41bb-8874-41d8e04e5e9a"/><p id="1d36e6b1-d84c-425a-87ce-0d05ee6775d9" class="">Liefert vordefinierte Werte, Exceptions indem Pfad vorbestimmt wird.</p><p id="61a9cec9-f7f9-4322-8939-1033f3dd788e" class="">Erlaubt Testen von Pfaden die von außen nicht beeinflusst und durchlaufen werden können.</p><ul id="755d856d-f85e-464f-b934-d2dcbd07f415" class="block-color-gray toggle"><li><details open=""><summary>Beispiel: Asynchrone Abfrage an einem Server</summary><p id="63da2c0f-db2f-4efa-b991-05f7a18361f4" class="">Original<div class="indented"><figure id="e1755b18-dbcc-4d78-bf51-a632708b7359" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled.png"><img style="width:288px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled.png"/></a></figure></div></p><p id="920c1a4a-f72e-4e76-9d19-2d71f211bab1" class="">Stub<div class="indented"><figure id="fe7f884b-35fe-479e-902c-82aa12fcd40d" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%201.png"><img style="width:288px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%201.png"/></a></figure><figure id="f7edd60a-eabd-4a75-a185-8a800d0aa197" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%202.png"><img style="width:288px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%202.png"/></a></figure><p id="99e7b0ee-daad-4f35-a7c5-b5751221971f" class="">
+</p></div></p></details></li></ul></div></p><p id="ad5b4c3a-7dab-4904-857d-2c7c8363d9b1" class="">
+</p></details></li></ul><ul id="7dd9eae5-518f-4d17-8a0a-0e2496370964" class="toggle"><li><details open=""><summary>Mock</summary><p id="f09e1000-b058-4952-b354-d952619aebd1" class=""><mark class="highlight-blue">Mock</mark><div class="indented"><p id="3c0b36ae-c6e7-4b00-978b-c834a42251b1" class="">Gleich wie Stub, aber die Parameter die an Mock gegeben werden, werden auch im Test überprüft.</p><p id="ddc0d3cb-5ae5-445a-965c-ff611414652c" class="">Mock erkennt wenn unerwartete Werte erhalten werden - Assertion und Exception.</p><ul id="4412ff8e-fd13-4bf1-96e8-27143b1fb861" class="block-color-gray toggle"><li><details open=""><summary>Fortsetzung Beispiel: Asynchrone Abfrage an einem Server</summary><p id="c5538093-9d7c-42d7-90fa-366f15a2983e" class=""> Mock - Version 1: Ohne Assertions<div class="indented"><figure id="614aae1b-5b4e-459d-a620-f29e23de8959" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%203.png"><img style="width:288px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%203.png"/></a></figure></div></p><p id="c5a82b1d-6430-4973-87d1-1df3b043ebbe" class=""> Mock - Version 2: Mit Assertions<div class="indented"><figure id="fdd25712-0d86-4eb6-99d9-cb3f893aa64e" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%204.png"><img style="width:288px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%204.png"/></a></figure></div></p><p id="97708836-a970-4552-9fb1-4af4e0505d64" class="">
+</p></details></li></ul></div></p><p id="56f9acbc-e7ff-4ff9-9e25-0d8f391a0eca" class="">
+</p></details></li></ul><ul id="17e27b2b-8e73-4635-a22e-4be145b7d914" class="toggle"><li><details open=""><summary>Spy</summary><p id="25657037-9399-476a-8f88-63bd221e6ac4" class=""><mark class="highlight-gray">Spy</mark><div class="indented"><p id="c857a8b4-93a5-40f1-af3a-b5d136597c0e" class=""><mark class="highlight-gray">Proxy Objekt - Einzelne Methoden durch andere Implementierung ersetzt.</mark></p></div></p><p id="70b50734-b63e-4960-8265-a159d8d7b5e4" class="">
+</p></details></li></ul><p id="63babacf-ac8b-471a-af9f-0ae953cd8286" class="">
+</p><p id="fe762f4e-a559-4c47-8bdb-54f51448f8ce" class=""><mark class="highlight-blue">Mocking frameworks</mark></p><ul id="9a050dd5-4f44-4be7-a758-699d10ef5a87" class="toggle"><li><details open=""><summary><del>Mockito</del></summary><p id="051bff3f-dff3-4142-88b4-31e5963c858a" class=""><mark class="highlight-blue">Mocking Frameworks</mark><div class="indented"><p id="9fc94169-dbb4-43d4-b304-a553f478619c" class="">vereinfachen Verwendung für Mocks: Unterstützen Erstellung, Konfiguration, Überprüfung</p><p id="a482c0a9-9d6b-40ed-bed9-e2d716f071db" class="">zB Mockito, JMockit, EasyMock, PowerMock, ...</p></div></p><p id="e2d2478f-2c55-4c72-bc41-dfa3550bf3f6" class="">
+</p></details></li></ul><p id="5c07983c-89ee-445c-86aa-ac04c008b572" class="">
+</p><p id="c3f10c21-8d82-46b5-aa3d-a63163eaedf4" class=""><mark class="highlight-blue">Statische code Analyse (toolgestützt) </mark></p><ul id="5a762651-9ee8-4032-89c3-ff8b9e48fe07" class="toggle"><li><details open=""><summary>Fehlermuster in statischer code Analyse (toolgestützt) </summary><p id="796b26da-0da7-40a3-ab95-4472bc8630f2" class="">Häufige Fehlermuster im Code:<div class="indented"><p id="1d414267-39f6-4bff-9d9d-985598ff4709" class="">• Variablen mit undefiniertem Wert
+• Komplexe Konstrukte
+• Toter Code
+• Potenzielle Endlosschleifen
+• Security Schwachstellen
+• Unused Code
+• …</p></div></p><p id="2a1289e5-2faf-4cd4-9b64-ace325487233" class="">Regeln eingeteilt in:<div class="indented"><p id="c5934708-b0b3-40c3-8e49-25eadfdc1f44" class="">• Bug 			Potenzielle Fehler
+• Vulnerability 	Sicherheitslücken
+• Code Smell 		Unschöner/unwartbarer Code</p></div></p></details></li></ul><p id="b791acf4-7d6f-4b24-8038-8d4d8c82b2fc" class="">
+</p><p id="2fcd56c4-3e51-4af1-8776-c50b96c1d7d0" class=""><mark class="highlight-blue">Refactoring</mark></p><ul id="aebec1a1-ce1f-4d57-9dc1-82ed93be16f9" class="toggle"><li><details open=""><summary>Refactoring: Zweck, Motivation</summary><p id="a49b2871-0472-4c73-82c5-f4b1f369baaf" class="">Design “verwahrlost” mit der Zeit</p><p id="8af46033-92ca-4f71-a2d5-d29650eb4c02" class="">Bad Smells<em> </em>zeigen das Refactoring notwendig ist</p><p id="c392d8ab-56b2-4e9c-b760-2aaa772ad50a" class="">“Technische Schuld”: Design vernachlässigt um kurz effizienter zu sein</p></details></li></ul><ul id="2dc11933-6429-46ea-8588-382fd844293c" class="toggle"><li><details open=""><summary>Refactoring: Definition</summary><p id="8087c227-b7ed-45c7-b817-2e80720c9944" class="">Code Struktur ändern für bessere:<div class="indented"><p id="febbd09d-a9b2-4ec3-9a7e-71cfac2ece41" class="">Lesbarkeit, Verständlichkeit, interne Architektur/Design</p></div></p><p id="90a1f42d-d9e9-41e0-9a37-c857d90ab69e" class="">Funktionalität, Fehler bleiben gleich</p><p id="6632eef8-6b48-49d1-be55-403b7cce98c2" class="">Ziel ist es nicht die Performance zu verbessern</p><hr id="864bf2f3-1a19-45a9-8e4f-091e5acc8739"/><p id="e2fc8965-41ae-4969-a389-ad76c1c3206d" class="">Klare Struktur durch Kapselung, Lesbarkeit:<div class="indented"><p id="1dcf299c-30d9-4a66-97b7-8c05bb5cb3a5" class="">Leichtere Einarbeitung von neuen Entwicklern</p><p id="49682efe-a1b9-4372-972a-9204cd1b37b0" class="">Bessere Wartbarkeit, Anpassbarkeit, Erweiterbarkeit</p><p id="247f197a-6402-41a3-a5f8-9466b59dfa23" class="">Geringerer Aufwand beim Testen, Leichtere Identifikation von Fehlern</p></div></p><p id="2d50c7f8-e6b8-44f4-9ae4-c47c107eda91" class="">
+</p></details></li></ul><ul id="8180d370-4135-4ccb-a83e-abbfbf98d118" class="toggle"><li><details open=""><summary><del>Refactoring: Vorgehensweise</del></summary><ol type="1" id="325484b4-cf76-4b87-b7fa-9a6c6c503ade" class="numbered-list" start="1"><li>Identifikation			Stelle im Code manuell oder mit Tool finden</li></ol><ol type="1" id="08ad91fa-d759-4328-a627-f8cef4807863" class="numbered-list" start="2"><li>Testabdeckung		Sicherstellen, dass die Stelle abgedeckt ist</li></ol><ol type="1" id="181c94bb-1c88-4ac5-9a4b-404b0ed6a5f4" class="numbered-list" start="3"><li>Durchführung			umbauen, testen (Funktionalität bleibt gleich)<p id="05f2d39b-7564-4493-a72c-7ee83d010a7f" class="">					Patterns als allgemeine Lösungen für widerkehrende Probleme</p></li></ol><p id="70b648be-bc02-4e92-be41-79f7d12f0097" class="">
+</p></details></li></ul><ul id="832ab9f2-2a85-4785-a80e-d33b09b73814" class="toggle"><li><details open=""><summary>Refactoring: Bad smells</summary><p id="2f73fb36-cd7d-4059-b914-41a163c83484" class="">Kennzeichen von schlechten Designs - zeigen wo Refactoring notwendig ist.</p><p id="feaf38cf-7583-4788-9eb5-41dd7c9cba09" class="">Beispiele (nach Martin Fowler):<div class="indented"><p id="ec236ea1-f4c5-4985-b378-0bbdd879ffa6" class="">• Duplicated Code
+• Long Method
+• Large Class
+• Long Parameter List
+• Shotgut Surgery: Kleine Änderungen am Code führen zu Anpassungen in vielen Klassen
+• Feature Envy: Eine andere Klasse hat mehr Nutzen für eine Funktion
+• …</p></div></p><p id="2eac8172-9ecf-480b-87e1-31b16eb69c4a" class="">
+</p></details></li></ul><ul id="6b1568d5-aa87-4b7d-89af-ac213cd15b2c" class="toggle"><li><details open=""><summary><del>Refactoring: Patterns</del></summary><p id="38f84502-ea00-491a-bbc4-db43f60c20ef" class="">Allgemeine Lösungen für wiederkehrende Probleme (Bad Smells)</p><p id="129f7f6f-ca9f-4795-8e2d-e3e6db50dce3" class="">Unterteilung in Gruppen:<div class="indented"><p id="6484dbde-126a-49d0-b014-f068ff586249" class="">• Composing Methods
+• Moving Features Between Objects
+• Organizing Data
+• Simplifying Conditional Expressions
+• Simplifying Method Calls
+• Dealing With Generalization</p></div></p><figure id="d33fddbc-5dab-4eb7-9ce9-5c2bdd275a75" class="image"><a href="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%205.png"><img style="width:384px" src="../5%20-%20Testen%20III%20Test%20Doubles,%20Fehlermuster,%20Refacto%20c8f414437d2548a7b4fac01b27192d35/Untitled%205.png"/></a></figure></details></li></ul><p id="1c09afe2-9dc9-47fd-9325-9c0cad26b377" class="">
+</p><p id="118c2f64-53a6-4e45-8ccb-cbea805b1b89" class="">
+</p><p id="e2d85ad4-18c0-4db3-a5ea-0abea0171b44" class="">
+</p><p id="8ad56e40-5409-4355-b7ab-ede459d049f7" class="">
+</p><p id="087521bf-83a2-4043-9273-34e2128afe4a" class="">
+</p><p id="1c5fac44-2f77-4b40-9f93-c83c30c00e41" class="">
+</p></div></article></body></html>

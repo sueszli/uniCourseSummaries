@@ -1,0 +1,708 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>I/O, Disk Scheduling</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8f2e3ae4-4470-4c26-a5ca-8ca746e1ac17" class="page sans"><header><h1 class="page-title">I/O, Disk Scheduling</h1></header><div class="page-body"><nav id="940f810b-8038-4a6f-a107-a241bc0358a4" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7c30ee51-a02e-4dc3-90c1-2a88765f029d">I/O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a421bd6a-f5fe-4340-aee9-13f05a692bcf">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a075ffa4-4183-4a29-adc7-df5ecd7f437d">IO Funktionen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#02d53eb0-5fdb-4061-8684-771fcdcab210">DMA</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a48bca14-d5f3-417d-bd5f-1e82e42d92a7">OS Design</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#01324540-a0b5-4887-8fb7-a8cea290e15d">Schichtenmodell</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#aeacd991-3e0e-4289-8dbe-f72d3cffa992"><mark class="highlight-blue">1) Logical IO</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d62ec9a4-5ce9-4ae4-9d70-1e17c159d979"><mark class="highlight-blue">2) Device IO</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#36543dfa-67e8-4196-a648-a9711eb856ff"><mark class="highlight-blue">3) Scheduling and Control</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4507b084-baec-439c-9f02-b9243e21e148">Synchrone vs. Asynchrone I/O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8460314f-da0f-41a5-b34b-4a7474eda586">Puffern von I/O-Anfragen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a5861f14-8bee-45ad-9c07-01124143eac9">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#68019712-c5ac-4f7c-948b-0e39142dbffe">Disk I/O</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ba03efdf-8988-4baa-985d-367728820992">Disk Scheduling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e0633230-7deb-4475-ab22-f2690edad979">Disk Caching</a></div></nav><h1 id="7c30ee51-a02e-4dc3-90c1-2a88765f029d" class="">I/O</h1><h2 id="a421bd6a-f5fe-4340-aee9-13f05a692bcf" class="">Definition</h2><p id="4abce78a-e726-499e-aef6-45c8e712a43a" class="">Ein-/Ausgabe = Operationen die über OS Zugriff auf externe Geräte und Ports vom Prozessor erlauben.</p><p id="2842c423-0b8d-440f-8a65-7338613f82b2" class="">
+</p><p id="4f723727-3e45-4e99-b673-019ec89e9884" class="">3 Arten von externen IO-Geräten</p><p id="c3d90385-fe9f-4b8e-8817-444f0975c9c2" class=""><mark class="highlight-blue">Mensch-Maschinen-Interface		</mark>zB Anzeige, Tastatur, Maus, ...</p><p id="c6b421ad-6df5-4e3e-afb0-b90639e325d4" class=""><mark class="highlight-blue">Maschinen-Interface	</mark>		elektronische Geräte, zB Datenlaufwerke, Sensoren, USB Sticks...</p><p id="59062c4c-6869-44a9-8ba3-845277b39b2f" class=""><mark class="highlight-blue">Netzwerk-Kommunikation</mark>		spezielle IO für Datenaustausch mit anderen Geräten</p><p id="d901b3a8-9816-4e50-8882-77e700fa97fd" class="">
+</p><p id="84a91c34-abf0-440b-9afc-bad86266f4c4" class="">Unterschiede zwischen Arten</p><p id="35edcfdd-bd38-4de0-91fe-a125c01e1995" class=""><mark class="highlight-blue">Übertragungs-Datenrate</mark>	zB Tastatur &lt;300 byte/min, Netzwerke &gt;10 GB/s übertragen.</p><p id="faed6e75-7cae-49d0-b88a-221932097807" class=""><mark class="highlight-blue">Anwendung</mark>				zB Dateiverwaltungs-Layer: Festplatte um Files zu speichern / als</p><p id="28337dda-fee2-4401-b5c4-d9f6a715dfb6" class="">						Sekundärspeicher für Virtual Memory Management.</p><p id="abc9d359-c8dd-4d7f-9cc1-7dbb52f115bb" class=""><mark class="highlight-blue">Ansteuerungs-Komplexität</mark>	Pollen von Geräten: r/w von einem Gerät, Kontrolle bei Prozess</p><p id="6b24099c-0e61-4547-80dd-9540014964c0" class="">						Interrupt: IO-Operation selbstständig ausgeführt, meldet sich mit interrupt zurück</p><p id="ab7006bb-f8fb-465f-9858-833f8d8ae9a9" class=""><mark class="highlight-blue">Transfer-Einheiten</mark>			zB Zeichen vs. Blöcke</p><p id="01abb634-7e8c-434d-aca1-6a4b8634de9b" class=""><mark class="highlight-blue">Daten-Repräsentation</mark>		Byte Order, Parität</p><p id="a6439b4d-6ae9-4af6-92b3-d9db2370f3f9" class=""><mark class="highlight-blue">Fehlerbehandlung</mark></p><p id="4a4e06f7-c225-4f34-a8d9-f220010f01d2" class="">
+</p><p id="8df5ecfc-22ba-4488-b36c-3ec1160bcfe2" class="">Blocking vs. Non-Blocking <mark class="highlight-gray">- Bestimmt ob aufrufender Prozess blockiert wird oder nicht.</mark></p><p id="045ec3be-4954-4a58-82b7-5998bdf1a1d0" class=""><mark class="highlight-blue">Blocking IO			</mark>Prozess wird von <mark class="highlight-gray"><code>running</code></mark><mark class="highlight-gray"> </mark>in die <mark class="highlight-gray"><code>blocked</code></mark><mark class="highlight-gray"> </mark>queue gestellt werden.</p><p id="194f3981-31c2-4347-ae7e-7ef1470a5f6e" class=""><mark class="highlight-blue">Non-Blocking IO		</mark>IO-Operationen wird ohne Unterbrechung ausgeführt - Returnstatus mit Feedback.</p><p id="d9f8c0b2-5d14-479a-be4d-a8d93e7d67cd" class="">					Prozess wird nicht blockiert.</p><p id="12e795ff-d615-40a7-b384-8bb7ec757d5e" class=""><mark class="highlight-gray">					zB für Keyboard oder Gaming-Konsolen-Joysticks: Feedback: # der übertragenen Bytes</mark></p><p id="4a7ecac9-f7b2-48e5-a1dd-8845fcc45446" class="">
+</p><p id="506686ff-368a-4f1f-8236-cc4c5a407a25" class="">
+</p><p id="c8a09acb-09e9-475a-8c09-5adbb4c2d564" class="">
+</p><h2 id="a075ffa4-4183-4a29-adc7-df5ecd7f437d" class="">IO Funktionen</h2><p id="6e9c2645-dc0b-44d7-a2ea-a8a3e4b775e0" class="">Möglichkeiten von einem Prozess mit der IO-Devices zu interagieren.<div class="indented"><p id="93a6b615-33ef-4caf-b9bd-4a8ffad8f04a" class=""><mark class="highlight-gray">IO-Operation = IO-Command + Abschluss</mark></p><p id="3d2e6498-c30a-4357-a708-b9e23a53b947" class=""><mark class="highlight-gray">IO-Modul = IO-Device</mark></p></div></p><p id="beae1780-94fa-4d9b-a4e6-34f6b70e817f" class="">
+</p><p id="08d5ccef-20f5-4315-bba3-4b96a7fda1ec" class=""><mark class="highlight-blue">Programmed I/O </mark><mark class="highlight-gray">- Direkte programmierte I/O</mark></p><p id="2145b1fb-6239-4215-bb11-c71ac6047b17" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Task</mtext><mo>↔</mo><mrow><mtext mathvariant="sans-serif">I/O</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Device</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Task} \leftrightarrow \textsf{I/O Device}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Task</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">↔</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">I/O Device</span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="4ecc5401-b4d7-4230-b79b-bd03e991a2eb" class="">Prozess setztzt einen IO-Command ab und wartet dann mit busy waiting auf den Abschluss der Operation bevor er fortfährt.</p><p id="224e68b0-316d-4347-89fa-83bde95ca79d" class="">Einfachste Strategie: Einfach zu implementieren und managen, schlechte Performance<div class="indented"><p id="deb3a1de-e470-4c28-8586-c5c758021be4" class="">
+</p></div></p></div></p><p id="13d7dae4-8412-4afd-afaa-07e0fd7f357a" class=""><mark class="highlight-blue">Interrupt-driven I/O</mark></p><ol type="1" id="a24bda12-3ba1-4ed8-a2b6-3d03c85b8d1b" class="numbered-list" start="1"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Task</mtext><mo>→</mo><mrow><mtext mathvariant="sans-serif">I/O</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Device</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Task} \rightarrow \textsf{I/O Device}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Task</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">I/O Device</span></span></span></span></span></span><span>﻿</span></span></li></ol><ol type="1" id="8b018811-bd16-468c-969c-3f3080f556fa" class="numbered-list" start="2"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Task</mtext><mo>←</mo><mtext mathvariant="sans-serif">ISR</mtext><mo>←</mo><mrow><mtext mathvariant="sans-serif">I/O</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Device</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Task} \larr \textsf{ISR}\larr\textsf{I/O Device}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Task</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">ISR</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">I/O Device</span></span></span></span></span></span><span>﻿</span></span> <mark class="highlight-gray">(Interrupt Service Routine)</mark><p id="908ee687-b489-47de-a6ac-d499d053e398" class="">Prozess schickt ein IO-Command ab.<div class="indented"><p id="0c256c5d-2765-4a92-afe6-c14c66c3e753" class="">Falls IO-Operation blocking: Prozess blockiert und ein anderer Prozess vom Scheduler gewählt. </p><p id="9f8a36c1-70fc-48b8-99c0-e1a2947c0b98" class="">Ansonsten Prozess forgesetzt.</p></div></p><p id="c48a2aba-3f4c-4759-a545-37e5056bf541" class="">Wenn Operation fertig, wird Prozess durch IO-Device unterbrochen.</p><p id="dc31fbfc-c19e-42cb-bd96-7f14bc7af64d" class="">Mehr Overhead aber gute Systemperformance, ermöglicht Parallelität.</p><p id="3eab261c-78ab-4be2-b76a-98d3d2fac781" class="">
+</p></li></ol><p id="15cd3a58-26ca-4bc9-890f-3cfd64fd6c77" class=""><mark class="highlight-blue">Direct Memory Access DMA</mark></p><ol type="1" id="41d3e2dd-2bb5-4ff4-b265-861bdfe6c4c9" class="numbered-list" start="1"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Task</mtext><mo>→</mo><mrow><mtext mathvariant="sans-serif">I/O</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Device</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Task} \rightarrow \textsf{I/O Device}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Task</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">I/O Device</span></span></span></span></span></span><span>﻿</span></span></li></ol><ol type="1" id="102378c2-4e65-4b80-b648-477cc6cdcb1d" class="numbered-list" start="2"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Task</mtext><mo>←</mo><mtext mathvariant="sans-serif">MEM</mtext><mo>←</mo><mrow><mtext mathvariant="sans-serif">I/O</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Device</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Task} \larr \textsf{MEM}\larr\textsf{I/O Device}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Task</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">MEM</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">←</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">I/O Device</span></span></span></span></span></span><span>﻿</span></span><p id="3c883ac9-e1b4-475e-9714-751e131b6cb1" class="">Hardwareunterstützung für OS: <mark class="highlight-blue">DMA-Controller </mark><mark class="highlight-gray">(IO Baustein)</mark><div class="indented"><p id="ecf14d0f-8a52-4aca-ab21-fd512b5683f3" class="">Kontrolliert den Datenaustausch zwischen Hauptspeicher und einem IO-Device.</p><p id="e0236072-ff83-47c0-a97c-d8cdc0f6e43b" class="">Kein Kontextwechsle der CPU notwendig, Daten quasi parallel mit der CPU-Aktivität übertragen.</p><p id="8c92ff62-84d5-4d6f-b2f7-84181d3a0e6b" class="">Verarbeitung parallel zur CPU, Performance-Gewinn.</p></div></p><p id="60325042-2912-4db9-915a-f9056c02314c" class="">Prozess schickt IO-Kommando an IO-Device.<div class="indented"><p id="b43c0ba9-c237-4dbf-9203-027d2dcd80cb" class="">Das IO-Device kopiert selbstständig Daten von Prozess.</p><p id="8ab7decf-52af-49fe-be38-1a392927f59a" class="">Wenn Operation fertig, wird Prozess durch IO-Device unterbrochen.</p></div></p></li></ol><p id="b61c0562-53b8-4eff-83cf-fa1e7479faf6" class="">
+</p><h2 id="02d53eb0-5fdb-4061-8684-771fcdcab210" class="">DMA</h2><p id="3496e97b-efed-4365-a207-b2d7585934ff" class=""><mark class="highlight-blue">Implementierung des Direct Memory Access (DMA)</mark><div class="indented"><p id="12ff2e4f-f5ae-489b-97c8-19baee9d588a" class="">Kontrollübergabe via Bus <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> DMA-Controller übernimmt CPU Funktionalität für Memory Access.</p><p id="2c17520c-1709-4c53-85ca-e4829ef74768" class="">
+</p><p id="c8c118a9-c90d-4290-a8c2-ade2dbeab377" class="">Möglichkeiten für DMA-Transfer:<div class="indented"><ol type="a" id="38d38cb5-2d1e-4e64-b2d3-6c82aa57d75c" class="numbered-list" start="1"><li>blockwise - optionalerweise parallel mit CPU-Aktivität</li></ol><ol type="a" id="c6211940-afff-48f3-81e2-c6c92daa6c06" class="numbered-list" start="2"><li>cycle stealing - DMA erzwingt einzelne Übertragungszyklen am Bus</li></ol><p id="d45659be-7913-4b2f-b58e-9bd9bfff60c7" class="">
+</p></div></p><p id="f089bba3-569b-4ded-9f10-85206dd9b6f6" class="">Eigenschaften<div class="indented"><p id="46852dc6-28c3-41c0-96dc-73cf0a8aaa58" class="">effizient: Kein Kontextwechsel der CPU notwendig.</p><p id="5f737307-3b4a-4579-999b-de0c39b52605" class="">flexibel: DMA-Modul kann mehrere IO-Module versorgen (mehrere Ports oder eigener IO-Bus)</p></div></p></div></p><p id="d50a48d2-9183-4f87-ba2a-9a708b152877" class="">
+</p><p id="3117aaa2-a523-4cf2-b117-fead0abc4596" class=""><mark class="highlight-blue">I/O Channel</mark><div class="indented"><p id="f81aca07-0b19-4b7f-bb8e-966cbd4952e5" class=""><mark class="highlight-gray">Verallgemeinerung / Erweiterung der DMA</mark></p><p id="c576e24a-9ce0-4324-bddc-e726957d363b" class="">IO-Baustein, noch intelligenter als DMA.</p><p id="78694625-0b1d-4f00-9455-f4b97742ed41" class="">Kann ganze IO-Operationen-Sequenzen ausführen die einprogrammiert werden können.<div class="indented"><p id="274f970b-0ea0-4976-a1c4-b884bef796b1" class="">Interrupt signalisiert Ende.</p><p id="6ced9474-9878-443f-b77d-474a41ca24bd" class="">Noch mehr Parallelität und mehr Performance.</p></div></p><p id="a611b853-507b-4461-b164-395b4083b9dc" class="">
+</p><p id="fb0460b6-1718-4492-bfd5-56d7ab775833" class="">Zwei typische Arten von I/O Channels:<div class="indented"><ol type="a" id="9291936a-e882-4197-9ed2-d6bd5268e936" class="numbered-list" start="1"><li>Selector Channel: jeweils nur ein Gerät aktiv</li></ol><ol type="a" id="8d1a051d-6a20-4cc6-bffd-7a6561a04542" class="numbered-list" start="2"><li>Multiplexer Channel: mehrere Geräte gleichzeitig</li></ol></div></p></div></p><p id="6dcc6589-a984-4c54-a8aa-f5500da6522d" class="">
+</p><h1 id="a48bca14-d5f3-417d-bd5f-1e82e42d92a7" class="">OS Design</h1><p id="b56139f6-6548-4441-82c5-83e53943c2df" class=""><mark class="highlight-blue">Widersprüchliche Ziele</mark></p><p id="5276a40a-613d-45d0-b450-b9d77ec37ca1" class="">Effizienz <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Gerätespezifische Implementierungen<div class="indented"><p id="99a1c434-b8ca-4c53-85de-ca1286183520" class="">IO soll nicht System-Bottleneck sein</p><p id="055f9d8d-000e-4389-8f81-692c45a87627" class="">Wenn System zu langsam - Swapping möglich - was selbst wieder eine IO-Operation ist.</p></div></p><p id="998418b2-313f-4c02-bdf7-a38c73661eb3" class="">Flexibilität (Generality) <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> einheitliche Schnittstellen für alle IO-Devices<div class="indented"><p id="e7b83519-f2e3-40e7-a332-51c7eabce890" class=""><mark class="highlight-gray">zB Zugriffsfunktionen wie open, close, lock, unlock, ...  </mark></p><p id="31b51931-4f08-4e1f-9d7b-fad5e23d8e67" class="">Abstraktion, Austauschbarkeit von Geräten, geringere Fehlermöglichkeiten</p></div></p><p id="e010b8d4-c84f-41a5-b18c-17f167692d9d" class="">
+</p><h2 id="01324540-a0b5-4887-8fb7-a8cea290e15d" class="">Schichtenmodell</h2><p id="25220c42-10d9-44f4-ad94-3a1a7e654ab2" class=""><mark class="highlight-gray">Schichtungsebenen / Schichtenmodell / Struktur von IO-Funktionen für Peripheriegeräte</mark><div class="indented"><p id="79f716fb-fd75-4b78-b662-096297c3ac3b" class="">Damit man widersprüchliche Ziele berücksichtigen kann: Mehrere Schnittstellen.</p><p id="cea4de5a-ad5d-4ab3-b875-019f8342dce4" class="">Layer nach Komplexität, Zeitkonstanten, Abstraktion.</p></div></p><p id="34b7b77a-fd1a-4cc6-9081-6753379fa4b5" class="">
+</p><h3 id="aeacd991-3e0e-4289-8dbe-f72d3cffa992" class=""><mark class="highlight-blue">1) Logical IO</mark></h3><p id="7ad27e92-c884-4624-8da9-b5b1b34227ce" class=""><mark class="highlight-gray">(oberste Schicht)</mark></p><p id="986f34f9-1086-44cb-908a-5d93748ab0f4" class="">logische Bedienung des Gerätes - Gleiche Befehle, einheitlich über die meisten IO-Geräte.</p><p id="5fa035b7-8395-4b7e-82b2-4514f1d533a7" class="">
+</p><p id="43e96ea2-21aa-4fb3-998b-92ea0b93f69d" class="">In einem File-System besteht die Logical IO aus 3 Komponenten:</p><p id="57de3f6d-692f-48d0-a265-2768677ba272" class=""><mark class="highlight-teal">Directory Management</mark><mark class="highlight-blue"> </mark><mark class="highlight-gray">(oberste Schicht)</mark><div class="indented"><p id="0d63b448-2b45-4ce6-ad86-94fded82d6f1" class="">symbolische Dateinamen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> Referenz auf die Datei</p><p id="63fd7dd1-2fbd-4b65-8999-1b3670a2f563" class="">Directory-Benutzeroperationen wie <mark class="highlight-gray"><code>add</code></mark>, <mark class="highlight-gray"><code>delete</code></mark>, …</p></div></p><p id="4047f118-e44d-499a-8b98-c2ee2b03bc21" class=""><mark class="highlight-teal">File System</mark><div class="indented"><p id="d6a4238f-247c-4cd2-bee0-2a14c9900a73" class="">logische Struktur von Dateien und Dateioperationen wie open, close, read, write, …</p><p id="25a91e40-6ea6-4021-b457-6c8a9eec9173" class="">Byte-Folge oder logische Struktur wie zB eine <mark class="highlight-gray"><code>.csv</code></mark> Datei die Unterstützung zum Interpretieren braucht.</p></div></p><p id="3ed5fb04-5356-423c-af31-8c658b5ae9b9" class=""><mark class="highlight-teal">Physical Organisation</mark><mark class="highlight-blue"> </mark><mark class="highlight-gray">(unterste schicht, physical layer)</mark><div class="indented"><p id="be4cea6f-50f8-48ae-b83e-895af9c7a02c" class="">logische pointer <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> Spuren und Sektoren auf der Festplatte</p><p id="ddc15131-7944-4890-85b1-445b9494613d" class="">
+</p></div></p><h3 id="d62ec9a4-5ce9-4ae4-9d70-1e17c159d979" class=""><mark class="highlight-blue">2) Device IO</mark></h3><p id="e418df36-37d7-42d6-87da-f6b21f7cab59" class=""><mark class="highlight-gray">(Übersetzung zwischen oberster und unterster Schicht)</mark></p><p id="f84c90fa-763c-4f47-b234-20bcd52e1295" class="">Operationen <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> IO-Kommando- und Kontroll-Kommando-Sequenz</p><p id="c2e0a3a3-00f1-4b28-9ddb-791faa33226c" class="">Buffering zwischen Applikationsprogramm und Hardware</p><p id="23bec788-dfe3-4904-9863-c988460d7fac" class="">
+</p><h3 id="36543dfa-67e8-4196-a648-a9711eb856ff" class=""><mark class="highlight-blue">3) Scheduling and Control</mark></h3><p id="63658019-e1f3-4777-afee-3dde2ea1fc87" class=""><mark class="highlight-gray">(unterste Schicht)</mark></p><p id="2436a4c7-8d49-49ba-a44d-a81c40b25a7e" class="">Ganz spezifische Ansteuerung des Geräts via Gerätehardawre.</p><p id="f0932686-aad8-4288-a664-64c0287c11d8" class="">Queuing, Verwaltung von IO-Operationen, Interrupt-Handling, Lesen des IO-Status.</p><p id="9ee59a7f-fa5b-42cc-b8bd-fe3b9d344d9f" class="">
+</p><h2 id="4507b084-baec-439c-9f02-b9243e21e148" class="">Synchrone vs. Asynchrone I/O</h2><div id="70fbdac4-27e3-40ee-b4a0-9b5f1f482aaf" class="column-list"><div id="9ca23ecf-4974-4ef6-9e05-445f81497fc4" style="width:50%" class="column"><p id="dbfe5a8b-2fd1-4334-b473-c2c5441a6ccc" class=""><mark class="highlight-blue">Synchron - blocking</mark></p><figure id="8bc13a6c-5ad2-403f-87b8-5b398b0bd472" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled.png"><img style="width:144px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled.png"/></a></figure><p id="5dc53ffd-29e5-432d-84b8-c70399eeac6a" class="">Prozess setzt nach Abschluss der Operation an call fort.</p></div><div id="46ef5d08-69e1-455c-acf3-2e3db2fac616" style="width:50%" class="column"><p id="19df6e33-4345-404d-9f4e-374a346aa595" class=""><mark class="highlight-blue">Asynchron - non-blocking</mark></p><figure id="249d875f-ef1f-4984-a393-c666d2b498fb" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%201.png"><img style="width:120px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%201.png"/></a></figure><p id="967817bb-d59d-4ca4-b274-8f251b3cfc45" class="">Kontrolle teilt sich, Prozess arbeitet parallel bzw asynchron weiter.</p><p id="6ef5a7c2-9918-42ae-9823-fc67e61c4c40" class="">Ergebnis kann in Puffer geschrieben werden und später von Prozess gelesen werden.</p><p id="55b63989-b0a6-4f90-80b9-07bf14d8cfde" class="">Oder es gibt ein Interrupt Signal und es wird sofort reagiert (applikationsabhängig).</p></div></div><ul id="fa7b2067-1482-472e-9976-1efacc4fe53a" class="toggle"><li><details open=""><summary><mark class="highlight-blue">Synchroner Request - in depth</mark></summary><figure id="96fd03d0-a8ad-428c-83f4-536d704cc6fd" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%202.png"><img style="width:384px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%202.png"/></a></figure><ol type="1" id="cbcbdadc-a2cb-49af-97eb-a0a3a1ece1d3" class="numbered-list" start="1"><li>IO-Request auf User-Ebene aufgerufen<ol type="a" id="861b90d9-8138-4255-a91d-d52ddfff9b43" class="numbered-list" start="1"><li>Kernel führt system calls die schnell abarbeitbar sind (zB das Lesen von Registern) sofort aus und blockiert Prozess nicht und schreibt Daten sofort in Puffer. <mark class="highlight-gray">→ Ende</mark></li></ol><ol type="a" id="9c3d5731-cbb9-4093-b855-177072e2bd4e" class="numbered-list" start="2"><li>Call nicht sofort Erfüllbar <mark class="highlight-gray">→ Schritt 2</mark></li></ol></li></ol><ol type="1" id="d885eb28-0f3e-46cd-971f-18bf8eab6bd7" class="numbered-list" start="2"><li>Prozess blockiert, IO-request an Driver geschickt damit IO-call aufgesetzt wird</li></ol><ol type="1" id="8784b3f9-47cd-4c0a-a5f7-33f75c1a54fb" class="numbered-list" start="3"><li>Controller wird für Gerät programmiert<p id="4615467d-2286-4c30-aa38-86e28911f98e" class="">Vorbereitung: Control-Register gesetzt, Control-Bits gesetzt ...</p><p id="ad85cf8d-eadf-4d97-84c8-d253eccc3edc" class="">Controller angestoßen IO-Operation durchzuführen</p></li></ol><ol type="1" id="3a277d47-2feb-42c7-be6e-d8bcaf2288e7" class="numbered-list" start="4"><li>Controller führt Operation aus<ol type="a" id="ef1653f0-e710-4d33-8582-701683e0504a" class="numbered-list" start="1"><li>Transfer von Daten in Treiberpuffer</li></ol><ol type="a" id="fbcafdcd-6aa6-47fa-87af-60c2509f7726" class="numbered-list" start="2"><li>Signal mit interrupt von interrupt-handler</li></ol></li></ol></details></li></ul><p id="2d58e934-346e-4ebd-b009-33ac250056dd" class="">
+</p><h2 id="8460314f-da0f-41a5-b34b-4a7474eda586" class="">Puffern von I/O-Anfragen</h2><p id="a0fb7722-1f59-4818-a68f-4a19481d8385" class="">Puffer = Daten-Zwischenspeicher für IO-Transfer zwischen OS und IO-Gerät<div class="indented"><p id="8ad0ae34-a076-47f0-b617-77a3be44b9c3" class="">Kosten: Speicher und Puffermanagement. </p><p id="5944d4f9-4b4f-4d7a-8023-3000c772be07" class="">Erhöht Performance und Flexibilität</p></div></p><p id="0e1733e7-1e4f-4bb1-82fb-956607745bbb" class="">
+</p><p id="6423a2e7-37bc-4358-b99d-ed17ab9ef81a" class=""><mark class="highlight-blue">Reduktion des Overheads</mark><div class="indented"><p id="09a486ac-778e-461c-a32d-a20768011044" class="">Kann mehrere low-level IO-Operationen zusammenfassen und aufeinmal ausführen<div class="indented"><p id="3b036128-263a-486d-a2bf-563a4e0b49a6" class="">zB mehrere Schreiboperationen → via Buffer eine einzige zusammengefasste Schreiboperation</p></div></p></div></p><p id="809f4985-3e18-418b-b055-5c6f1403cec5" class=""><mark class="highlight-blue">Entkopplung von IO-Operation und Programm </mark><mark class="highlight-gray">- ab 2 Buffers die parallel arbeiten können</mark><div class="indented"><p id="067b1a0d-9577-425f-8c20-a20b75e05896" class="">OS entscheidet wann es am günstigsten ist IO-Operation auszuführen.</p><p id="2a99a1a4-a281-46ea-be89-05f7fe0f419c" class="">Swapping zwischen Buffer und Sekundärspeicher möglich. </p></div></p><p id="43773820-d639-49de-80d5-c7f91efe77d0" class=""><mark class="highlight-blue">Abfangen von Spitzenlastfällen </mark><mark class="highlight-gray">- Performanceunterschiede zwischen Rechner CPU und Gerät</mark><div class="indented"><p id="b62b44b2-8c2d-463b-928a-4bd965e4f137" class="">so lange Buffer Platz hat abzufangen.</p><p id="80bbc1a9-687a-4951-be90-d498e2afff20" class="">
+</p></div></p><figure id="f2e2d96d-3f6a-4437-b779-bf9488679185" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%203.png"><img style="width:288px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%203.png"/></a></figure><p id="02969300-5cc9-450e-9912-b2ffed8b38b5" class="">
+</p><p id="199920a9-fed3-42e3-a78c-eaaaba1882e3" class="">Kein Buffer bedeutet direkte Zugriffe auf IO-Gerät durch OS.</p><p id="a42e4d1b-2e03-4912-a73f-ba63cc891b6a" class="">Ab 2 oder mehr Buffern: Operationen entkoppelt und zusammengefasstwerden.</p><h1 id="a5861f14-8bee-45ad-9c07-01124143eac9" class="">____________</h1><h1 id="68019712-c5ac-4f7c-948b-0e39142dbffe" class="">Disk I/O</h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="bbbf251a-7038-4717-b0a1-86f4e305b234"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">IO Operationen auf eine mechanische Festplatte.</div></figure><p id="92b70dec-4ed9-4a8a-b803-202f6058e2e3" class="">Disk Scheduling und Caching für höhere durchschnittliche Zugriffsgeschwindigkeit</p><h2 id="ba03efdf-8988-4baa-985d-367728820992" class="">Disk Scheduling</h2><p id="e2bfd92f-ade6-4968-b22a-acf6d9de022c" class="">Mittelwerte die wir zum Rechnen benutzen:</p><p id="627f9fd8-ef85-488f-bb2a-f8cb8bb59e87" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_\mathrm{S}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>		seek time				benötigte Zeit um Disk-Arm auf die richtige Spur zu bewegen</p><p id="c6d02f4d-9266-42b7-8541-44b61bcf8438" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">D</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{RD}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">RD</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>	rotational delay		Zeitverzögerung, bis Sektor / Block in Spur gefunden</p><p id="76858123-4e90-43ed-8af8-35846b5dfe2c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">F</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{T}\mathrm{F}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">TF</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>	transfer time			Datenübertragung</p><hr id="0f1bca0f-38ba-4b72-ace6-0f7d7ac9d07a"/><p id="ce807a40-8de2-473a-9b0f-d035a2b88292" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">A</mi></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{A}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">A</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>		average access time	benötigte Zeit für Datenzugriff</p><p id="cdd7b79f-37d7-490e-b7f5-1b9cb90e5795" class="">
+</p><p id="757e3d5f-2d54-461e-af9b-66cd2d1c5f07" class=""><mark class="highlight-blue">Charakteristische Zeiten</mark></p><p id="7970879b-a283-44c3-aa7a-0025d0d0aa8c" class="">Bestimmend: Organisation der Daten auf der Festplatte<div class="indented"><p id="0e977a0e-aa8d-4eae-b8ac-bb1c2755cd9a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">b</mi></mrow><annotation encoding="application/x-tex">\mathrm{b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathrm">b</span></span></span></span></span><span>﻿</span></span>		Anzahl der zu übertragenden Bytes</p><p id="a4c4dd01-4cdb-4873-b97b-8e3527b133d7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">N</mi></mrow><annotation encoding="application/x-tex">\mathrm{N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathrm">N</span></span></span></span></span><span>﻿</span></span>		Anzahl der Bytes pro Spur</p><p id="ff6dfe4c-76d7-414c-bdae-7015d8709b8c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">r</mi></mrow><annotation encoding="application/x-tex">\mathrm{r}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathrm">r</span></span></span></span></span><span>﻿</span></span>		Umdrehungsgeschwindigkeit in <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi>U</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>e</mi><mi>c</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[U/sec]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord">/</span><span class="mord mathnormal">sec</span><span class="mclose">]</span></span></span></span></span><span>﻿</span></span></p><p id="ae2516b2-658e-45c4-af2c-c9737483c911" class="">
+</p><p id="d77d1817-3867-47d2-8050-562c4c77c5cb" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">D</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><mrow><mn>2</mn><mo>⋅</mo><mi mathvariant="normal">r</mi></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>⋅</mo><mfrac><mn>1</mn><mi mathvariant="normal">r</mi></mfrac></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{RD}}= \frac{1}{2 \cdot \mathrm{r}}= \frac{1}{2} \cdot \frac{1}{\mathrm{r}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">RD</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mbin mtight">⋅</span><span class="mord mathrm mtight">r</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span> <div class="indented"><p id="45e162b2-5e79-4ac8-b8ea-43bd18039b81" class=""><mark class="highlight-gray">Im Durchschnitt muss sich die Scheibe halb rotieren bis Sektor gefunden wurde (best case keine Rotation, worst case fast eine ganze Rotation).</mark></p></div></p><p id="439703fb-b1c7-477d-a9b4-3aaa84a1f68d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">F</mi></mrow></msub><mo>=</mo><mfrac><mi mathvariant="normal">b</mi><mrow><mi mathvariant="normal">r</mi><mo>⋅</mo><mi mathvariant="normal">N</mi></mrow></mfrac><mo>=</mo><mfrac><mi mathvariant="normal">b</mi><mi mathvariant="normal">N</mi></mfrac><mo>⋅</mo><mfrac><mn>1</mn><mi mathvariant="normal">r</mi></mfrac></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{TF}}=\frac{\mathrm{b}}{\mathrm{r} \cdot \mathrm{N}} = \frac{\mathrm{b}}{\mathrm{N}} \cdot \frac{1}{\mathrm{r}} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">TF</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span><span class="mbin mtight">⋅</span><span class="mord mathrm mtight">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">r</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="3dc13f56-8132-44e8-a977-fcd23858aa47" class=""><mark class="highlight-gray">Wobei </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi mathvariant="normal">b</mi><mi mathvariant="normal">N</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{\mathrm{b}}{\mathrm{N}} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2251079999999999em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> der prozentuelle Anteil der Bytes in der Spur ist die wir lesen wollen.</mark></p></div></p><p id="8f9e2eb5-9817-4c83-82c0-a2cae6584b94" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">A</mi></msub><mo>=</mo><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></msub><mo>+</mo><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">D</mi></mrow></msub><mo>+</mo><msub><mi mathvariant="normal">T</mi><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">F</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_{\mathrm{A}}=\mathrm{T}_{\mathrm{S}}+\mathrm{T}_{\mathrm{RD}}+\mathrm{T}_{\mathrm{TF}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">A</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">S</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">RD</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">TF</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="fa8d6887-60d7-48a6-b908-7eb7d075bda3" class="">
+</p><p id="849546e9-e5f9-483f-bf39-f97ddfc59b73" class=""><mark class="highlight-blue">Strategien</mark></p><p id="03c0d630-65f0-45e0-820e-2224dccd987a" class="">Ziel: Ordnung von Disk-I/O Requests zur Minimierung der Seek Time <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></msub></mrow><annotation encoding="application/x-tex">\mathrm{T}_\mathrm{S}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="42103262-fbdc-43e9-9510-406ed3e479dd" class="">Priority</p><p id="4028fe53-304e-4cf4-8883-47e1fa94325c" class="">First-In, First-Out (FIFO)</p><p id="085bb7ff-066f-4b28-83a3-c3f7abf94b97" class="">Last-In, First-Out (LIFO)</p><p id="bad0545d-67f0-46d2-b384-cbd0d2b19198" class="">Shortest Service Time First (SSTF)<div class="indented"><p id="65f00b20-f0c3-420c-b64d-bd58231a90eb" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><msub><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\min (\mathrm{T}_\mathrm{S})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">(</span><span class="mord"><span class="mord mathrm">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>: Zieht geringsten Weg von der aktuellen Spur in Betracht</p></div></p><p id="b96d7c3a-14d0-43bb-a4e3-2642fe742f76" class="">SCAN (Elevator Algorithm)<div class="indented"><p id="40c936f6-981d-4b4b-a7a0-f517301c7c8c" class="">Wie oben, aber damit auch requests die weiter entfernt sind ankommen - keine Starvation.</p><p id="e349b75d-ccd8-43e1-ac6f-f4e799938a72" class="">Geht über alle Spuren und führt alle requests die währenddessen eintreffen aus - wie ein Aufzug.</p></div></p><p id="b39bef89-98d6-4c0a-9d3e-13c13eef6d7a" class="">C-Scan<div class="indented"><p id="4d640514-6be6-45dd-b1cb-6507534df2a5" class="">Versucht ungleichmäßige Behandlung der Ränder auszugleichen.</p><p id="28736c6c-98a8-4af7-9e47-705581576999" class="">Leerfahrten und dadurch Behandlnug der Requests immer in die gleiche Richtung.</p></div></p><p id="feb697d0-38b3-4cbf-b2da-6652597a9f0a" class="">N-step-SCAN und FSCAN<div class="indented"><p id="7012d70f-9201-4370-a766-cd9e55c23f64" class="">Bündelt <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span></span><span>﻿</span></span> requests zusammen in einem Buffer.</p></div></p><p id="a5cd0428-bfdf-4564-8695-68a19c287919" class="">
+</p><p id="ceff228c-119f-4bd6-b36c-0df33cee8a42" class=""><mark class="highlight-blue">RAID</mark></p><p id="2e19d6e5-582e-4c3c-89a5-78183d626fd5" class="">Redundant Array of Independent Disks<div class="indented"><p id="a8dd6d0f-9a7f-421f-822d-f1a2ba782a02" class="">Mehrere Platten die parallel verwendet werden (die auch redundante Informationen beinhalten)</p><p id="8e7bd868-0850-4f6b-bfcf-0557bcb2db97" class="">Für Beschleunigung und Fehlertoleranz</p></div></p><p id="c69dab0c-0b4a-4ef5-9964-d9391fbdb302" class="">
+</p><h2 id="e0633230-7deb-4475-ab22-f2690edad979" class="">Disk Caching</h2><p id="039acd48-c603-4453-8510-b664115c96d4" class="">Ähnlich wie Memory Cache	Puffer im Hauptspeicher für Disk-Sektoren</p><p id="6de34d66-195c-4dff-b199-ec6e7b7d667a" class="">Lokalitätsprinzip bei Daten	wahrscheinlich mehrfach auf die selben Disk-Stellen hintereinander zuzugreifen</p><p id="ded4ce17-0c1e-447e-8a95-059b46f0460a" class="">
+</p><p id="324749e8-3fa2-47f7-8141-f54248d47686" class=""><mark class="highlight-blue">Austauschstrategien / Replacement-Strategien</mark></p><p id="eec5a277-3e4a-424d-b210-c6c856726262" class="">Strategie um zu besimmen was im Cache ersetzt werden soll <mark class="highlight-gray">(genau wie bei Paging)</mark>.<div class="indented"><p id="ed6fec33-835b-4c59-852a-4a63f5907dd5" class="">Austausch im Cache bei Bedarf oder im Voraus</p><p id="aff5bf4f-c372-4205-a30f-04803605ebcc" class="">
+</p></div></p><p id="0156143c-d081-4417-a4e9-4dfc9d19d600" class="">Least Recently Used (LRU)</p><p id="aec93181-2ceb-49d5-9fd9-03d40447bba4" class="">Least Frequently Used (LFU)</p><p id="100a4fb3-31b6-4b2f-8f9e-03f11fec98fd" class="">Frequency-Based Replacement <mark class="highlight-gray">(Verbesserung von LFU)</mark><div class="indented"><p id="bdbe336e-7826-48bc-85e0-c194f4e44947" class="">
+</p></div></p><p id="0be42d2f-f7f9-4971-93c6-c6c2a434d706" class=""><mark class="highlight-blue">Frequency-Based Replacement</mark></p><p id="ec5f192a-09c2-4ac3-94d6-208927158080" class="">Lokalitätsprinzips + Hohe hit-frequency</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9e694ee7-abfe-44cc-8f13-62986b1676f0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Schlecht erklärt</div></figure><p id="e648e502-7a23-47ef-88f5-63aa91b2c958" class="">Blöcke nach Zugriffszeitpunkt geordnet.<div class="indented"><p id="98fb2030-dd8f-4d67-af34-5d4900ce9fcc" class="">Links <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span> Blöcke im Bereich &quot;New Section&quot; die vor kurzem referenziert wurden.</p><p id="fe439f1c-cc00-4b06-86d7-67b0e7e2e978" class="">Die restlichen Blöcke sind in der &quot;Old Section&quot;.</p><p id="1fc36df4-8d63-429c-b6dd-246b14724ae1" class="">
+</p></div></p><p id="afca0e49-1d53-492f-bc07-c205e5cc02fc" class="">Am Anfang haben alle Blöcke denn Reference-Counter / <mark class="highlight-gray"><code>count</code></mark>-Wert 1.<div class="indented"><p id="533017c9-5f2f-4977-92d6-f495e2636372" class="">
+</p></div></p><p id="5d4f37d6-e888-4ff4-be3e-faeb4446c7fb" class=""><mark class="highlight-gray"><code>New Section</code></mark><div class="indented"><p id="bc795518-c749-4e64-888d-ee046606ce04" class="">Wird auf Grund von Lokalität nicht entfernt.</p><p id="a39a4771-0416-47d2-ac70-faeff7f1954d" class=""><mark class="highlight-gray"><code>count</code></mark> bleibt unverändert.</p></div></p><p id="85b77314-31cf-44be-9ba4-bdd0c4fae889" class="">
+</p><p id="d765fae5-6c65-45dd-b519-a15919c8e609" class=""><mark class="highlight-gray"><code>Old Section</code></mark><div class="indented"><p id="178fe5ee-e836-4d84-be48-369b09be887b" class="">Wir ersetzen Blöcke aus der old section die die niedrigste hit-frequency / höchsten <mark class="highlight-gray"><code>count</code></mark><mark class="highlight-gray"> </mark>haben.</p><p id="520aa09c-1beb-4def-970b-d6feb960ab4b" class="">Bei Zugriff wird <mark class="highlight-gray"><code>count</code></mark><mark class="highlight-gray"> </mark>erhöht und Block nach links verschoben.</p></div></p><figure id="d2e8cbce-ba6f-4ac0-b0d4-59c90c492e33" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%204.png"><img style="width:432px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%204.png"/></a></figure><p id="dc6d37a2-339a-477e-b009-d01499e9f280" class="">
+</p><hr id="e277605c-7cfb-4354-bc4a-6439c9929753"/><p id="114556af-eaef-4c0b-9457-95207b6045ab" class="">
+</p><p id="2934463e-c1ef-4f48-a19c-57056020ae26" class="">Verbesserung: Section zwischen new und old.</p><figure id="0ef42a3f-1752-44de-b0e2-78b3b949894c" class="image"><a href="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%205.png"><img style="width:432px" src="I%20O,%20Disk%20Scheduling%208f2e3ae444704c26a5ca8ca746e1ac17/Untitled%205.png"/></a></figure><p id="7dca3e9c-9cc4-4a7c-a089-a73d4c2ab44a" class="">
+</p></div></article></body></html>

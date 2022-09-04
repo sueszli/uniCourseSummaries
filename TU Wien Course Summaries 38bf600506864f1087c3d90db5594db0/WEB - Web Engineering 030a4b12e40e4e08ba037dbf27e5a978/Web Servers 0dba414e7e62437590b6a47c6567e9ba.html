@@ -1,0 +1,682 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Web Servers</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0dba414e-7e62-4375-90b6-a47c6567e9ba" class="page sans"><header><h1 class="page-title">Web Servers</h1></header><div class="page-body"><p id="4d1c2aba-5442-4bd6-a8fe-d6dcbc2bcebb" class="block-color-gray">Examples<div class="indented"><p id="7475cbe8-1865-487d-8e6c-1030685da751" class=""><a href="https://github.com/web-engineering-tuwien/docker-cgi-python">Apache/httpd with CGI (Common Gateway Interface)</a></p><p id="8727a69c-7dbf-4c80-884b-369a2cb8ca3e" class=""><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-as-a-web-server-and-reverse-proxy-for-apache-on-one-ubuntu-18-04-server">nginx</a></p><p id="f4bf9c0f-03e5-47f0-850a-08374ac4fcbe" class="">Node.js</p></div></p><p id="d4aba781-63a5-4c68-b79c-242c40c20243" class="">
+</p><nav id="b29dd93e-5e88-456c-aaf1-fe403979167d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#856ebf11-49d4-443e-acc0-ad242ea0b74f">Web Servers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3ae69283-841b-4a00-8500-09e7e704a7dd">Static vs. Dynamic Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f7dcc7f2-a372-49d1-9fad-9bfbaa922abf">Hardware</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#af97c24a-7376-4a84-bf01-281c06f6c442">Software</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2f77ef2d-ad87-4c3a-99c6-3a8734892349">Geo DNS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0b21a822-0ea1-4c95-849f-a441c4606050">Virtual Servers and Containers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#806016ff-761e-4765-bb05-e5ac4a853b41">Cloud</a></div></nav><h1 id="856ebf11-49d4-443e-acc0-ad242ea0b74f" class="">Web Servers</h1><p id="be85f3a0-7c1a-4dff-8e4d-9d8677a9b57f" class="">Web Servers are a part of the internet architecture.</p><p id="3d115fa0-833e-4d1c-8537-be24cc5d1926" class="">Web Server = server hardware + server software<div class="indented"><p id="d436d309-d0ea-4f2a-bbe4-ca65a24b8f22" class=""><mark class="highlight-teal">Server Hardware</mark>	Computer connecter to the internet / any network</p><p id="03a7644a-545f-4bc5-b150-c9941166e4ed" class=""><mark class="highlight-teal">Server Software</mark>	program that accepts HTTP requests over a specific port and responds</p></div></p><p id="6fcc3933-0d77-494a-87b1-027e59215188" class="">
+</p><p id="cd2e68a1-09ea-4f5e-8962-d6594834508c" class="">Client <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span> Server<div class="indented"><ol type="1" id="ad8be49f-c8e5-425e-af2d-0f13a5df9a20" class="numbered-list" start="1"><li>Client (Browser or other Servers / Devices)<p id="84839b12-7659-4052-add2-f641eca81df3" class=""><mark class="highlight-gray"><code>https://www.google.at</code></mark><mark class="highlight-gray"> </mark>→ Domain Name System DNS → <mark class="highlight-gray"><code>172.217.23.227</code></mark> → HTTP Request for Web Resource</p></li></ol><ol type="1" id="44b64552-e61f-4e46-94f6-eeb52ea1badb" class="numbered-list" start="2"><li>Multiple Layers and Proxies (see traceroute)<p id="d6cf1435-fa90-4c66-8950-9e728152591e" class="">Caching, filtering, load balancing...  by routers, modems,...</p></li></ol><ol type="1" id="2c130bad-931b-498f-ac12-ea2c03618bb2" class="numbered-list" start="3"><li>Server<p id="c469e5b1-c442-4eac-b1ab-bc89e7464fca" class="">HTTP Response with web resource or error</p><p id="e2fd977e-d27e-4bcc-bf50-0097eb7c08fe" class="">Can be a collection of servers, sharing the load</p></li></ol><p id="dc271319-31dc-4c3a-9f13-4d4af7f44b90" class="">
+</p></div></p><h1 id="3ae69283-841b-4a00-8500-09e7e704a7dd" class="">Static vs. Dynamic Resources</h1><p id="d7492dc5-44dd-4b49-b434-c645df929d00" class="">Web page = hypertext document<div class="indented"><p id="fb93441a-546c-417a-b5f5-930ade6953aa" class="">parts of displayed text are links to other pages of the Web (nodes in hypertext)</p></div></p><p id="1d27bbc9-94a5-416d-919c-2bfba5ec0529" class="">Web Server System output is treated as the complete HTTP response (including headers).</p><p id="57ca0abd-778e-4c8f-8e8d-2c64a769527b" class="">
+</p><ol type="1" id="b2b6f150-4f72-47ea-8a80-8c463b9e5b89" class="numbered-list" start="1"><li><mark class="highlight-teal">Static Resources </mark><p id="bfc91854-4323-435e-a696-f5dff5170f98" class="">Sent through the filesystem<div class="indented"><p id="2726425f-cf56-499c-a925-4b41f1a8047b" class="">assigned only once during the loading of the page</p><p id="a07b06c9-b22e-45da-96e7-69f9ab87fc7c" class="">Static assets from file system mapped to URL path</p><p id="80488a91-fa08-4825-a4f5-db17c66f88a6" class="">They cannot react to other part of the request (like query parameter)</p><p id="2b11a4cb-8208-4120-927a-2e7b285a2eb2" class="">MIME-Type is usually inferred (file endings) - But headers contain data about the data types.</p></div></p><p id="6c8ea7ae-861a-4c58-9b0d-a3a716e222ce" class="">Common static files in web servers<div class="indented"><ul id="a25a6c07-87c5-4846-b21a-02922d08228b" class="bulleted-list"><li style="list-style-type:disc">HTML, CSS</li></ul><ul id="b7a558fc-40ee-4df5-be41-cd01a9655140" class="bulleted-list"><li style="list-style-type:disc">JavaScript (for use in browser)</li></ul><ul id="6249b55d-e6de-49f1-8c38-bd96bc4c00d3" class="bulleted-list"><li style="list-style-type:disc">Media (Images, Video, Audio, etc.)</li></ul></div></p><p id="328ecd73-e29d-4b79-9a1e-83a52c54cc7d" class="">
+</p></li></ol><ol type="1" id="b4d164d7-bfa4-47ae-b0fa-e00c9266ff48" class="numbered-list" start="2"><li><mark class="highlight-teal">Dynamic Resources </mark><p id="c6b43674-a822-4428-ae1b-7d711f05022d" class="">Executing programs inserver side language</p><p id="fa9a1435-5746-4170-805e-069e8ed61a9f" class="">Can react to complete HTTP request (including header information)<div class="indented"><ul id="2576340d-7a50-4d4f-ac61-51bbbf350006" class="bulleted-list"><li style="list-style-type:disc">Path and Query Parameters</li></ul><ul id="c675f988-a93c-4ff3-8478-8ad4c0be4503" class="bulleted-list"><li style="list-style-type:disc">HTTP Method (GET, POST, PUT, …)</li></ul><ul id="cf97775a-0882-4c73-bedc-3691f4b657b1" class="bulleted-list"><li style="list-style-type:disc">Content Negotiation (Accept:	application/json)
+…</li></ul></div></p><p id="126925e2-c312-4801-b28d-a41bdb55f43a" class="">Links to other websites (hyperlinks)<div class="indented"><p id="e01703b5-12d8-40c4-9d39-6809a35d8e53" class="">does not actually lookup the resource until asked for the value</p></div></p></li></ol><p id="a355bef4-0b6b-4673-88a6-74c8c01d9ae7" class="">
+</p><h1 id="f7dcc7f2-a372-49d1-9fad-9bfbaa922abf" class="">Hardware</h1><p id="e8a58fbc-1c1a-4b7f-a9df-24d4d36ed28f" class="">Can be your own computer (<mark class="highlight-gray"><code>localhost</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>127.0.0.1</code></mark>) </p><p id="292c58bb-dad0-4365-81f2-aa82290ec50e" class="">Contemporary web servers:<div class="indented"><ul id="61dd2c00-598e-4fd2-b44c-a064b4290e1f" class="bulleted-list"><li style="list-style-type:disc">Part of large data centres</li></ul><ul id="ad8a75cf-1b13-4bbc-a8ba-f6475f6b19f0" class="bulleted-list"><li style="list-style-type:disc">Latency based on location → often geographically distributed (e.g., using DNS)</li></ul><ul id="063d486f-a20c-42dc-821b-21b2dfd82aa3" class="bulleted-list"><li style="list-style-type:disc">Virtual servers: 1 Physical servers can host many virtualized web servers</li></ul></div></p><p id="76196215-bab4-4630-8d14-69c74a7cbba9" class="">
+</p><h1 id="af97c24a-7376-4a84-bf01-281c06f6c442" class="">Software</h1><p id="cd9a2b5e-881b-4171-af5d-bd637926355f" class="">Program running on a server<div class="indented"><ul id="58962878-6ee8-4533-a739-7c641c001790" class="bulleted-list"><li style="list-style-type:disc">Maps path of URL to static asset on the file server</li></ul><ul id="e696c59a-3081-406b-9cfd-3efdcd909e62" class="bulleted-list"><li style="list-style-type:disc">dynamically rendered resources</li></ul><ul id="223d570d-1329-4d88-806a-bf6b54681d58" class="bulleted-list"><li style="list-style-type:disc">usually has some functionality for caching and session handling</li></ul></div></p><p id="708844d2-718e-4d0a-86a6-d7e69a42357d" class="">
+</p><h1 id="2f77ef2d-ad87-4c3a-99c6-3a8734892349" class="">Geo DNS</h1><p id="319f683a-6d2f-4f62-a99d-ab860bb9be2e" class="">&quot;geo-location based Serving&quot; = Serving resources from geographically closer data centres</p><p id="3da5245d-15a0-4110-800e-6a586470c291" class="">Possible through Domain Name System DNS.<div class="indented"><p id="65b53b2d-943b-4183-8a06-3167cfa340e1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="sans-serif">DNS</mtext><mo>:</mo><mo>=</mo><mo stretchy="false">{</mo><mrow><mtext mathvariant="sans-serif">Hostname,</mtext><mtext> </mtext><mtext mathvariant="sans-serif">’Location’</mtext></mrow><mo stretchy="false">}</mo><mo>↦</mo><mtext mathvariant="sans-serif">IP</mtext></mrow><annotation encoding="application/x-tex">\textsf{DNS} := \{ \textsf{Hostname, &#x27;Location&#x27;}\}  \mapsto \textsf{IP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textsf">DNS</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord text"><span class="mord textsf">Hostname, ’Location’</span></span><span class="mclose">}</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textsf">IP</span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="b1ead7e7-dbf3-4b7c-8728-239aa987fd6e" class="">They determine and return IP addresses based on location.</p><ol type="1" id="39c605d8-e6ff-459c-9882-f565b188b70c" class="numbered-list" start="1"><li>(local) LDNS<p id="ec1cf6c9-d600-4ed4-b10b-2cb42795db82" class="">	The lookup table provided by the internet service provider ISP.</p><p id="2d214740-edc0-49b9-8972-25e907304a6e" class="">	Accessed first, if not found, then request sent to global DNS.</p></li></ol><ol type="1" id="58405e52-7558-4089-ad28-953b19dcc9be" class="numbered-list" start="2"><li>(global) DNS</li></ol><p id="71507ad3-5f2c-4b7c-80e6-117ba137d023" class="">
+</p><h1 id="0b21a822-0ea1-4c95-849f-a441c4606050" class="">Virtual Servers and Containers</h1><p id="b9dc9c49-b606-4fb4-a53c-3af6debefc96" class="">One physical server can host multiple virtual servers and containers</p><ol type="1" id="61ded9ae-249c-4bc7-b966-53b4e3b1b34e" class="numbered-list" start="1"><li>Virtual Machines VMs<p id="6ff93547-5f4c-4ae5-9f24-c0ee835632b1" class="">	Virtual (isolated) instances of different OS run</p><p id="00e90e75-b435-4a45-9347-9fbf8c0a2a2d" class=""> 	&quot;Hypervisor&quot; technology divides physical resources</p></li></ol><ol type="1" id="f1e6bb8c-8feb-45a7-9d95-396bd2356c3f" class="numbered-list" start="2"><li>Containers<p id="f248bd7e-a8e9-4ae7-b03c-bfca473301e0" class="">	Not virtualized</p><p id="ec408594-d4f0-4588-8b0a-45c25c9a3244" class="">	&quot;cgroups&quot; → process isolation but shared through same the Host OS kernel</p><p id="9ee667e8-938e-4537-acca-05fa40db0619" class="">	Not as secure as VMs</p></li></ol><p id="ea594e90-db96-4105-bea6-b1581e631cd6" class="">
+</p><h1 id="806016ff-761e-4765-bb05-e5ac4a853b41" class="">Cloud</h1><p id="49d5df0f-e61e-4d5d-89a2-1227650b8897" class="">Sets up computational resources over API.</p><ol type="1" id="7b435c20-98a3-4c24-943e-8a2fb113931d" class="numbered-list" start="1"><li>Infrastructure as a service (IaaS) <mark class="highlight-gray">→ less restriction, lower abstraction</mark><p id="257cfc3e-5c03-45ec-9709-94e89572d2cf" class="">	retrieving new virtual server capacity can be scripted</p><p id="9598eb36-120c-4b7c-9c7d-c5a7076c5c87" class=""><mark class="highlight-gray">	ie. AWS EC2, Google Compute Engine, ...</mark></p></li></ol><ol type="1" id="55c88b96-443c-468c-bc50-07efd7c660e2" class="numbered-list" start="2"><li>Platform as a Service (PaaS)<p id="8648628b-a610-4853-999e-b867bbcefba9" class="">	Application runtimes</p><p id="84af4c2c-fd18-4f73-b737-dc32f3d53a16" class="">	Built on top of IaaS but infrastructre is abstracted away, configurable</p><p id="bca3d0e9-5f38-43ef-9c54-948bd8b2a7d4" class=""><mark class="highlight-gray">	ie. Heroku, CloudFoundry, App Engine, ...</mark></p></li></ol><ol type="1" id="499d8408-6946-4518-a8c1-8beb20728fcc" class="numbered-list" start="3"><li>Software as a Service (SaaS) <mark class="highlight-gray">→ more restriction, higher abstraction</mark><p id="c90cbb6e-707e-4766-b021-61bc67f41ff4" class="">	The software itself is running on the cloud</p><p id="e52231f2-1754-410d-97ab-8eba3ae1c5d4" class="">	Clients usually continuously pay a fee to get access to the software</p><p id="36bb7768-63a6-4269-aa9e-47f91164f066" class=""><mark class="highlight-gray">	ie. Office365, ...</mark></p></li></ol><p id="57454258-046f-4533-bfaf-a01830de6c16" class="">
+</p><p id="f31aa62d-72b8-4366-9062-dd461409bade" class="">
+</p></div></article></body></html>

@@ -1,0 +1,742 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>IFC</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="419eabe9-0187-436b-bb89-8c2c05124aa5" class="page sans"><header><h1 class="page-title">IFC</h1></header><div class="page-body"><p id="ee421696-96a4-41fc-8658-82794d19303a" class="">Minimal version of theory:</p><figure id="8ed3e0b8-9757-44d3-9d8a-220ea35a1f14" class="link-to-page"><a href="IFC%20419eabe90187436bbb898c2c05124aa5/Information%20Flow%20(compact)%208ed3e0b8975744d39d8a220ea35a1f14.html">Information Flow (compact)</a></figure><p id="637b9639-f435-497f-88fc-5a31007112ff" class="">Challenge: <a href="https://hackthe.space/">https://hackthe.space/</a> or <a href="https://ifc-challenge.appspot.com/">https://ifc-challenge.appspot.com/</a></p><p id="bef53b30-3503-4462-bc95-ee8680609549" class="">
+</p><h1 id="6dfe1dbc-ad5e-438a-8568-0b22e2e09407" class="">IFC</h1><p id="3325311f-f39b-4081-a36e-aa2cc5d39ee8" class="">Goal: leaking the high variables to the low variables with the given type system</p><ul id="6df3d4af-b313-44ea-88ad-fe91217323af" class="bulleted-list"><li style="list-style-type:disc">the code used to leak the values of the &quot;high&quot; variables h{1,6} to the corresponding &quot;low&quot; variables l{1,6}</li></ul><p id="83bfec73-38a5-4250-9771-ef32b153ef87" class="">
+</p><h2 id="3ed487f3-92d7-4c84-ab0d-b5a82155a166" class="">Step 1</h2><p id="bab1fb9c-4752-4169-819e-25a302ecc680" class="">Program is secure / confidential if high inputs do not interfere with low inputs.</p><p id="62dfdaca-32ec-4888-9120-d8a5fe0d7c3e" class="">I leaked the information through an explicit flow (= Direct assignment) of every single variable.</p><pre id="fd9c5a6d-2540-42cb-945c-bae0f66137d8" class="code"><code>l1 = h1;
+l2 = h2;
+l3 = h3;
+l4 = h4;
+l5 = h5;
+l6 = h6;</code></pre><p id="3f4f927e-1b39-4ea9-899b-8419c67aeb2b" class="">Flag: <code>WUT{e4sy_</code></p><p id="32eb1166-e2ae-4757-8489-39f506b502b1" class="">
+</p><h2 id="ccccc378-311c-4ef4-a5c7-8b9400648cdc" class="">Step 2</h2><p id="7834837e-69dd-44d8-a4a5-dda4a3c45a1a" class="">Implicit flows leak information through the control structure of the program.</p><p id="dcb4aba9-f066-4ee1-be76-e386269d8520" class="">In the given type system, implicit flows were allowed since the program did not check the type of the instruction guard.</p><pre id="b84e2f99-7f35-4d92-b7ce-39205a464da1" class="code"><code>if(h1){	l1 = true; } else { l1 = false; }
+if(h2){	l2 = true; } else { l2 = false; }
+if(h3){	l3 = true; } else { l3 = false; }
+if(h4){	l4 = true; } else { l4 = false; }
+if(h5){	l5 = true; } else { l5 = false; }
+if(h6){	l6 = true; } else { l6 = false; }</code></pre><p id="4fec3546-cdfa-44d8-bf73-139df42a21fb" class="">Flag: <code>ifc_</code></p><p id="9bd978af-770e-4f47-8f25-f1dc486563ce" class="">
+</p><h2 id="7407beec-3cf1-4660-b9b1-d3e08f0a3e26" class="">Step 3</h2><p id="20a4b9b3-647f-4e79-a196-d0923358145b" class="">This time we can not leak through an implicit flow.</p><p id="b4c8b5a0-da47-4ab2-b60e-51141e6d8b2d" class=""><em>Note: This step will be run only once, and always with the same secret. You will need to use this fact.</em></p><p id="b4a7412d-ca6a-4678-b66c-7e090b2ddd05" class="">So now our goal must be to figure out the underlying boolean values. For this, we figure out the values by testing whether the program terminates or not.</p><p id="d0252ea5-581d-42b6-a835-43075d24838e" class="">Example:</p><pre id="d71f188b-c135-4791-b564-13e4bec0756b" class="code"><code>while(h1){
+	skip;
+}</code></pre><p id="bf0b37d5-4300-435a-9fd9-7a4d90442c2f" class="">Therefore we directly assign:</p><pre id="656517eb-d609-4059-be53-e2c0644661ef" class="code"><code>l1 = false;
+l2 = false;
+l3 = true;
+l4 = true;
+l5 = true;
+l6 = false;</code></pre><p id="02101d6f-5703-41df-af3d-361cd8eb7009" class="">Flag: <code>ch4ll3ng3_</code></p><p id="94fe66c1-0cda-4cf3-b299-7642f6ec8afb" class="">
+</p><h2 id="590f766f-efa8-4be2-811f-050a24c78177" class="">Step 4</h2><p id="0158f0ae-9d77-40f6-89df-06835320fa52" class="">Once again the underlying boolean values stay the same.</p><p id="c9b4b18e-f555-4037-9a6d-ce8e87e183ce" class="">This time: loops with high guards are not allowed, loops inside ifs with high guards not allowed.</p><p id="748a2376-2ab1-4851-b884-4a4caff20144" class="">There are no timing channels that would reveal any information.<div class="indented"><ul id="d90931f6-4f9e-40ef-bc58-f204cb67b396" class="bulleted-list"><li style="list-style-type:disc">Loops must have LOW guards</li></ul><ul id="92a6e5fa-808f-49d3-9dc7-15bf6f40c313" class="bulleted-list"><li style="list-style-type:disc">no direct leak, no indirect leak</li></ul></div></p><p id="38461e79-f573-44d9-8a07-9ac0b99575d5" class="">This time we use a timing channel to leak data:</p><p id="83985852-8968-4008-929e-a5210a3722b4" class=""> long operation vs short operation</p><pre id="467702f3-34c7-424e-a0d2-6dd49e8bd524" class="code"><code>if (h1) {
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+	skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip; skip;
+
+} else {
+	skip;
+}</code></pre><pre id="715ad660-58a1-4683-9545-dc2bec6cd784" class="code"><code>l1 = false;
+l2 = true;
+l3 = false;
+l4 = true;
+l5 = false;
+l6 = true;</code></pre><p id="0f092033-6509-41ef-9253-896a44a18bff" class="">Flag: <code>f0r_</code></p><p id="dbd9947d-68ae-4eb2-9791-c9d4529edb0c" class="">
+</p><h2 id="aed7ba00-0326-485d-96a2-efb25b8b5da6" class="">Step 5</h2><p id="9a628f29-58d4-4074-9c32-89e0399ed606" class="">This time we can not leak data through the number of executed instructions because each branch must have the same number of instructions, but we can declassify the high variable <code>h1</code>.</p><p id="929cf5ac-efe8-4693-b484-ec10c4c2ce48" class="">Since we can assign high values to eachother we can exploit this feature:</p><pre id="34df7fdb-d25c-4ff0-a709-e6740bd3e591" class="code"><code>l1 = declassify(h1);
+h1 = h2;
+l2 = declassify(h1);
+h1 = h3;
+l3 = declassify(h1);
+h1 = h4;
+l4 = declassify(h1);
+h1 = h5;
+l5 = declassify(h1);
+h1 = h6;
+l6 = declassify(h1);</code></pre><p id="07483fa3-51f2-4f60-a46a-33eb48ae8fa0" class="">Flag: <code>y0u_</code></p><p id="30fb4a14-fba1-4c41-9f55-f7b0b23fe33a" class="">
+</p><h2 id="ed7bd19a-57e2-4f9c-ba74-15075ef2a6a5" class="">Step 6</h2><p id="2134cf03-97d8-4e87-9505-dff4d4cd73de" class="">This time the number of instructions per branch must be the same apart from all previous restrictions.</p><p id="777b000c-f809-4223-b969-b2581b2f128c" class="">Since the inference rules are incomplete we can use use the index of the low array to store high data:</p><p id="6d2d0748-711e-49b4-b5d0-15325f24aa66" class="">a[h1] = true;</p><pre id="91bcf01b-77bf-4f6a-a255-9f614558c04e" class="code"><code>declare array ah1 : low;
+declare array ah2 : low;
+declare array ah3 : low;
+declare array ah4 : low;
+declare array ah5 : low;
+declare array ah6 : low;
+
+ah1[h1] = true; l1 = ah1[true]; 
+ah2[h2] = true;	l2 = ah2[true]; 
+ah3[h3] = true;	l3 = ah3[true]; 
+ah4[h4] = true; l4 = ah4[true];
+ah5[h5] = true; l5 = ah5[true];
+ah6[h6] = true; l6 = ah6[true];</code></pre><p id="158822a6-8672-44c7-a1b6-9a170dfd3b04" class="">
+</p><p id="408995a4-8705-406e-9503-8458d7b5d20c" class="">Flag: <code>andihopeyoudidnttrytoguessthelastpartD07uAXIu}</code></p><p id="01dd0257-9cb4-41b9-bf3e-fa449cc8c275" class="">
+</p><hr id="d5e5c771-de06-4511-aa4c-abd50ab3e1e7"/><p id="1ade2f4e-021b-4f0b-811c-e78e208ef98f" class="">
+</p><p id="111921b2-a792-4326-9530-2f3835947243" class="">And so we get the flag:</p><p id="73457591-3093-46dd-97a3-e79900c8f755" class="">Flag: <code>WUT{e4sy_ifc_ch4ll3ng3_f0r_y0u_andihopeyoudidnttrytoguessthelastpartD07uAXIu}</code></p><p id="71aa4e9c-dbdc-4cad-9e1d-32fee16b9be8" class="">
+</p></div></article></body></html>

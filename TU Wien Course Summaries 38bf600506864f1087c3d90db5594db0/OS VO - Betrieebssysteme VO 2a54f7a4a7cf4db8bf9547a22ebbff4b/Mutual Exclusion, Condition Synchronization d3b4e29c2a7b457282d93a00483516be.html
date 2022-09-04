@@ -1,0 +1,888 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Mutual Exclusion, Condition Synchronization</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d3b4e29c-2a7b-4572-82d9-3a00483516be" class="page sans"><header><h1 class="page-title">Mutual Exclusion, Condition Synchronization</h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="745e6921-17dc-4dd6-aebd-2ba6ef3db968"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Abstraktion darüber ob Prozess oder Thread</div></figure><figure id="563a79df-dfed-49ca-b2d1-896b115dedc4" class="link-to-page"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Semaphoren%20Patterns%20563a79dfdfed49cab2d1896b115dedc4.html"><span class="icon">📎</span>Semaphoren Patterns</a></figure><p id="5c5bbc34-a37b-4501-8d01-e40f27750ff6" class="">
+</p><nav id="83f0e518-fd80-4fc5-9b57-7930f5a56d5d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#65e1fbae-b113-41ab-8482-11d6a14c9b5b">Motivation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aeb323a0-0da9-4e42-8d04-8c4869435d50">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#db9a6351-aeed-4464-8aa3-a47693315236">Mutual Exclusion</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2dfd078d-e147-4aed-9748-02059e926c68">Software-Lösungen</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#290c3aaa-286f-4faf-a8b2-e94119a9734b"><mark class="highlight-blue">Dekker-Algorithmus</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#06b0d3fc-2104-438b-879d-4a1559b662ff"><mark class="highlight-blue">Peterson-Algorithmus</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#378d726b-02a7-490a-af69-d576a4f26722"><mark class="highlight-blue">Bakery Algorithm (für </mark><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> Prozesse)</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c747262d-07c4-4405-ad81-3a6d18b79313">Hardwareunterstützte Lösungen</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#20ca7fde-eb60-42d3-a870-74c565c0633f"><mark class="highlight-blue">Interrupt Disabling</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5e2bd61a-7cad-485c-8def-70867754a13e"><mark class="highlight-blue">Test and Set</mark></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#be4e00b4-f396-4bf4-8e93-4e5cedec3092"><mark class="highlight-blue">Exchange / Swap</mark></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1e7c7b76-2c16-41f3-ba5f-d86f76e594d6">Semaphore</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51b3716c-a262-45ab-ae9d-b123dbfdd2f6">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5041a8c6-a3ae-4f25-85f1-2f9a442beb26">Condition Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a3a58420-720d-4e84-a617-436695d533a9">Semaphore</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ddd6accb-fb28-497f-9448-f9e85d543b86">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a54f44d1-131d-4e18-a89c-fe2187f799f3">Höhere Synchronisations-Konstrukte</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5e70a0a2-65ee-4666-8e96-308a6bbb1112">Semaphore</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#afecb8a6-e486-4030-bbec-7cbde29d994e">Monitore</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7f4602dd-0632-4616-b43e-b928f28d37ff">Message Passing / Nachrichten</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#15a7f1f1-5dd0-48ec-94a9-ac8a9154aa48">Lock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4b0f5096-7361-49a2-8196-4b5fa8b46a50">Sequencer und Eventcounts</a></div></nav><h1 id="65e1fbae-b113-41ab-8482-11d6a14c9b5b" class="">Motivation</h1><p id="e987d726-0d4c-4ada-9ba6-5f06fc0b0e7c" class=""><mark class="highlight-blue">Competition		</mark>Prozesse stehen im Wettkampf um gemeinsame Ressourcen</p><p id="3986128b-85d0-48dc-9701-ad43a6208bb8" class=""><mark class="highlight-blue">Shared Resources	</mark>Daten in shared memory, Kontrolle, Peripherals</p><p id="87b234f2-03c8-4ea3-8f03-4d896647d276" class="">
+</p><p id="e8f19ec5-f649-41ec-8aa6-505f6f082dee" class="">Ohne geregelte Ressourcenvergabe entstehen:</p><p id="d80a1266-169a-4180-9567-3bfc52430032" class=""><mark class="highlight-blue">Deadlock</mark><div class="indented"><p id="b3280e5b-fe5b-4529-ad84-88b0165a0a23" class="">Circular Wait:</p><p id="2ebf9cac-7586-42bc-93b7-17fc30299a40" class="">P1 besitzt R1 und braucht R2,
+P2 besitzt R2 und braucht R1</p></div></p><p id="9dd341dc-64f3-4ee6-b650-f89f3fe6a2cc" class=""><mark class="highlight-blue">Lifelock</mark><div class="indented"><p id="24120c08-2523-44cb-ae84-ca83be5be71b" class="">Kein Fortschritt - Programm nicht vollständig ausgeführt sondern immer dieselben Instructions.</p><p id="66839e18-94fd-4d4e-837f-7004ba5b75d6" class="">zB &quot;After you&quot;</p></div></p><p id="4ddbf6a1-8960-41d1-8acc-ee9ba9a88802" class=""><mark class="highlight-blue">Starvation</mark><div class="indented"><p id="91729f33-6a40-4dca-9883-d535379435f5" class="">P1 und P2 laufen abwechselnd auf CPU,
+P3 verhungert</p></div></p><p id="fcba1ec3-64da-439d-b3ca-c0fc9db8e55e" class=""><mark class="highlight-blue">Race Condition</mark><div class="indented"><p id="1ef0ab15-9c7b-4f16-88fd-af71fbc62580" class="">Ergebnisse Abhängig von Ausführungsreihenfolge / execution order.</p></div></p><p id="e8ce96d5-cda0-4776-b982-c6129dfc0038" class="">
+</p><p id="98a94856-7691-4842-94fa-22204ab5f98e" class="">Bsp Race Condition</p><div id="bba68f66-7043-4be9-ab25-a7d711dec0bd" class="column-list"><div id="13701159-e9a7-4d2f-b20b-7eb7c203057d" style="width:50%" class="column"><figure id="066efb6f-4153-40fd-821e-0535492545ae" class="image"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled.png"><img style="width:336px" src="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled.png"/></a><figcaption>A: copy, increment
+B: copy, decrement</figcaption></figure><p id="febafa31-0ef8-4a45-bf77-622aea9783bc" class="">Datenkonsistenz wäre möglich indem Prozesse atomar abgearbeitet werden müssen</p></div><div id="039e6977-e7cd-4ecc-89c4-979dcc563e5d" style="width:50%" class="column"><figure id="1452b974-5482-41c8-b399-14b1ceddddf9" class="image"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%201.png"><img style="width:336px" src="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%201.png"/></a><figcaption><mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"> </mark>steht für shared memory
+A: modify <mark class="highlight-gray"><code>t</code></mark><mark class="highlight-gray">, </mark><mark class="highlight-gray"><code>ShM := t</code></mark>, 
+A: <mark class="highlight-gray"><code>t := ShM</code></mark>, read <mark class="highlight-gray"><code>t</code></mark></figcaption></figure><p id="bd5fee42-fbe3-4442-9d66-34fe8391ef1e" class="">Reihenfolge könnte festgelegt werden indem sich A und B immer abwechseln müssen und atomar abgearbeitet werden müssen. </p></div></div><h1 id="aeb323a0-0da9-4e42-8d04-8c4869435d50" class="">____________</h1><h1 id="db9a6351-aeed-4464-8aa3-a47693315236" class="">Mutual Exclusion</h1><p id="e6bb3faa-ea6c-4168-befc-1f558c6fa40f" class=""><mark class="highlight-blue">Definition: Kritischer Abschnitt</mark></p><p id="124148ed-03f6-43a5-8ac7-c7b587b0dfb2" class="">Programm-Abschnitt in der Prozesse auf gemeinsame Ressourcen zugreifen können.</p><p id="30358871-9a87-4924-b4c2-a0b416708b71" class="">An jedem Zeitpunkt darf sich höchstens 1 Prozess darin befinden.</p><p id="2070347b-953e-4abd-ae27-cfcab3660abc" class="">Regelung durch Prolog / Epilog bei kritischem Abschnitt.</p><figure id="9becf5ca-b2cd-4cbd-9043-1db3086bf8e0" class="image"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%202.png"><img style="width:192px" src="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%202.png"/></a></figure><p id="7e969564-ef4e-4bf5-809e-bd4e77814dd5" class="">
+</p><p id="47b96a08-239c-4d17-8c99-409f24e2d0a3" class="">
+</p><p id="7e74590e-34a7-4920-9f80-a522c3a5091f" class="">Wir wollen Daten-Konsistenz bei shared Memory <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> kein &quot;gleichzeitiger&quot; Zugriff auf kritischen Abschnitt.</p><p id="162f37cb-f39b-4439-91df-9e99f004055e" class="">Anforderungen:</p><ol type="1" id="49b3872c-d5af-485d-be8f-6f61dfcfaf87" class="numbered-list" start="1"><li><mark class="highlight-blue">Wechselseitiger Ausschluss vom kritischen Abschnitt</mark><p id="dffdd85d-4c34-4c50-affc-1c66e020f35c" class="">Bewirkt Daten-Konsistenz bei shared Memory</p><p id="1d0a76c8-559c-4aef-ac20-5d58637e5c63" class="">Ermöglicht durch atomaren Instruktionssequenzen</p></li></ol><ol type="1" id="a22e41e0-585a-4cae-94d5-604443a62bb6" class="numbered-list" start="2"><li><mark class="highlight-blue">Progress / kein Lifelock</mark><p id="e3bda7c2-65f0-4530-8e0e-7c660f871177" class="">Wenn kritischer Abschnitt leer, muss in endlicher Zeit entschieden werden welcher Prozess zuerst eintritt <mark class="highlight-gray">- kein &quot;After You&quot;</mark></p></li></ol><ol type="1" id="2d8f9769-bdb0-4276-b7be-d23d3da0fec0" class="numbered-list" start="3"><li><mark class="highlight-blue">Bounded waiting / keine Starvation</mark><p id="ab50d004-1b49-4178-8348-d48447cc8845" class="">Nachdem ein Prozess request für Eintritt in ein Abschnitt abgegeben hat können andere nur beschränkt oft ankommen.</p></li></ol><p id="053fda00-0f3d-4cd1-9387-1ccc993f1ac4" class="">
+</p><h2 id="2dfd078d-e147-4aed-9748-02059e926c68" class="">Software-Lösungen</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="19b95eea-7ccc-4dab-aab6-1a0a9da25006"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Annahme: Atomare r/w-Operationen auf dem Speicher</div></figure><p id="e2387307-f482-4cae-9fe2-77640067b753" class=""><mark class="highlight-blue">Busy Waiting	</mark>Beim Warten werden Test-instructions ausgeführt wie<mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>while x != true do nothing</code></mark></p><p id="78bb7798-edca-4a81-b9c3-ced0bf893444" class="">
+</p><h3 id="290c3aaa-286f-4faf-a8b2-e94119a9734b" class=""><mark class="highlight-blue">Dekker-Algorithmus</mark></h3><p id="d0551662-75b8-44b6-803f-641ad97b9de5" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span> oder <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span><span>﻿</span></span> im Code können entweder für die Zahl <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span><span>﻿</span></span> oder <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> stehen.</p><ul id="8d417359-9720-4c07-bcbc-6488e551ede4" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Attempt 1</mark></summary><p id="08ffd500-cfab-42a1-8eb3-fa27ccb264e0" class="">Global<div class="indented"><pre id="c4f9d880-9ea0-4da1-b734-829c79e99c6e" class="code"><code>	var turn: 0..1; //can be initialized to either 0 or 1</code></pre></div></p><p id="165d958f-193a-4ba1-80bf-eea2c30ab87e" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><pre id="9c743304-1ce8-4bf9-892e-4a1a8d78f169" class="code"><code>while turn != i do nothing;
+... critical section
+turn = j;
+... remainder section</code></pre></div></p><p id="a9f871c2-cf64-49fa-be47-e57557add8e3" class="">Resultat<div class="indented"><p id="4f1fc10b-abd2-40db-82a0-94918ff119b5" class="">Mutual exclusion aber auch erzwungene execution order (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span> und <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span><span>﻿</span></span> abwechselnd).</p><p id="b5cc931c-6fff-49b3-9c6b-3fe41797a49e" class="">Wir wollen nicht immer eine condition synchronization haben.</p></div></p><p id="4a13a2d9-251d-4d32-9bb9-6396fac0746e" class="">
+</p></details></li></ul><ul id="04068820-d690-4b97-8798-4caa6090ab71" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Attempt 2</mark></summary><p id="2112e74d-5040-4b38-8b99-7dfbf6140178" class="">Global<div class="indented"><pre id="504ed0d1-010d-4a8b-b86e-2d6fbe07d9d2" class="code"><code>flag[i] := false;
+flag[j] := false;</code></pre></div></p><p id="9fb5bc59-fd7a-4597-8f89-c41493f31b4c" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><pre id="0c76b21a-efe5-4e8a-8898-41b824a1c773" class="code"><code>while flag[j] do nothing;
+//possible process switch here! -&gt; No mutual exclusion
+flag[i] := true;
+... critical section
+flag[i] := false;
+... remainder section</code></pre></div></p><p id="c6ef0e43-4167-49d8-95fe-0e91ae7c33f1" class="">Resultat<div class="indented"><p id="31f54630-0197-4a44-b114-61139d385312" class="">Keine erzwungene execution order, aber mutual exclusion nicht gegeben denn:</p><ol type="1" id="918839cc-0509-4596-90a2-0d6d5123544f" class="numbered-list" start="1"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span> führt Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> aus und es kommt zu einem process-switch.</li></ol><ol type="1" id="bb4b4f94-124b-4e35-a976-d464f4c20677" class="numbered-list" start="2"><li>Danach kann <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span><span>﻿</span></span> auch Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> ausführen und sie betreten gemeinsam den kritischen Abschnitt</li></ol></div></p><p id="f52fcac1-4391-4849-834e-d77699cd2f69" class="">
+</p></details></li></ul><ul id="17c3b0a1-5a26-4d5f-8068-0d11524f3850" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Attempt 3</mark></summary><p id="70442fbc-78f1-4b1c-8ce7-aed64928b76c" class="">Global<div class="indented"><pre id="2428c2eb-fff7-4ec1-92af-fd3d627b52c7" class="code"><code>flag[i] := false;
+flag[j] := false;</code></pre></div></p><p id="7f0cb24c-68f5-421a-9779-e1d550763f2f" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><pre id="42828ffe-f008-48ff-9d07-3eac2d6a6d87" class="code"><code>flag[i] := true;
+//possible process switch here! -&gt; Deadlock
+while flag[j] do nothing;
+... critical section
+flag[i] := false;
+... remainder section</code></pre></div></p><p id="5d3a9079-0f9c-4081-b269-1f939a302343" class="">Resultat<div class="indented"><p id="b9bdaff5-11c3-4c02-b3d0-674125c0f409" class="">Keine erzwungene execution order, mutual exclusion gegeben, aber deadlock möglich:</p><ol type="1" id="635bb239-1e3f-45d7-9a88-d57fcb2cee2c" class="numbered-list" start="1"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span> führt Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> aus und es kommt zu einem process-switch.</li></ol><ol type="1" id="cf796c64-232e-4871-91a6-5fe88a130af1" class="numbered-list" start="2"><li>Danach kann <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></span><span>﻿</span></span> auch Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> ausführen und es kann niemand mehr den kritischen Abschnitt betreten</li></ol></div></p><p id="0a425e52-974d-4a52-b956-ac79d748f910" class="">
+</p></details></li></ul><ul id="be51dc7d-37fe-48c2-8294-1678a717a950" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Attempt 4</mark></summary><p id="26c680d6-54f3-431f-b878-00b589743f54" class="">Global<div class="indented"><pre id="a442b9d7-e350-444a-89a8-73c361635428" class="code"><code>flag[i] := false;
+flag[j] := false;</code></pre></div></p><p id="70938528-f11b-4f70-9ef4-6f44d5646f87" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><pre id="619ccd5a-2e77-4a0e-a32c-ecc84cef74f9" class="code"><code>flag[i] := true;
+while flag[j] do {
+	flag[i] := false;
+	... wait for a short time
+	flag[i] := true;
+}
+...critical section
+flag[i] := false;
+...remainder section</code></pre></div></p><p id="c806fe05-2a1c-4b23-9032-b59e25fbdf8a" class="">Resultat:<div class="indented"><p id="ff95e1ed-aec7-4ee0-bc9b-b7fcbe99883b" class="">Keine erzwungene execution order, mutual exclusion gegeben.</p><p id="63bca4e6-3bc0-4162-a3a5-d02099db1572" class="">&quot;after you&quot; lifelock möglich wenn sich prozesse nach jeder Zeile abwechseln: Prozess setzt eigenen Flag auf false, falls beide gleichzeitig true sind und wartet bis anderer Prozess zuerst geht.</p></div></p></details></li></ul><p id="78005c04-fc66-4dfa-85cb-aa0f570a7c7c" class="">Initialisierung</p><pre id="cfe8bfa5-13e4-499f-a73a-363b8c8b8d80" class="code"><code>flag[i] := false;
+flag[j] := false;
+turn := 0..1 //can be set to either 0 or 1</code></pre><p id="18670f23-2577-461f-bfd3-4979f52db3c9" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><pre id="3f30e077-d6a3-43af-9a8e-e7b5a569724f" class="code"><code>flag[i] := true;
+while (flag[j]) { 					//both flags set to true
+	if (turn == j) { 					//it&#x27;s the other process&#x27; turn
+		flag[i] := false;
+		while turn == j do nothing;
+		flag[i] := true;
+	}
+}
+... critical section
+turn := j;
+flag[i] := false;
+... remainder section</code></pre><p id="4d86acb6-5430-4de5-bfb3-dfb715018298" class="">While loop can only be left if <mark class="highlight-gray"><code>!flag[j] &amp;&amp; !(turn == j)</code></mark> but this case will never occur if we only stay within this process. </p><p id="a0e74893-6a03-4512-8c2a-b824789120d5" class="">The other process will flip its own flag to false <mark class="highlight-gray"><code>flag[j] == false</code></mark><mark class="highlight-gray"> </mark>if <mark class="highlight-gray"><code>turn == i</code></mark> and wait.</p><p id="464e37ff-3097-4220-b60f-2bba38d0432b" class="">
+</p><h3 id="06b0d3fc-2104-438b-879d-4a1559b662ff" class=""><mark class="highlight-blue">Peterson-Algorithmus</mark></h3><p id="87b0941f-d69c-41e8-a947-0d6569b26e1b" class="">Gleiche Logik wie Dekker-Algorithmus aber vereinfacht.</p><p id="e9d73edc-c078-4158-8109-fbf6284de1f6" class="">Initialisierung</p><pre id="e64413bd-9834-4a6b-b807-1eb8601ef7ad" class="code"><code>flag[i] := false;
+flag[j] := false;
+turn := 0..1 //can be set to either 0 or 1</code></pre><p id="c7eb9390-a05c-4a3a-9e05-9a10100fbbe0" class="">Process <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><pre id="1f155361-b5d7-4a1d-84db-24d8e16a6727" class="code"><code>while(true) {
+	flag[i] := true;
+	turn := j;
+	while flag[j] and turn = j do nothing;
+	...critical section
+	flag[i] := false;
+	...remainder section
+}</code></pre><p id="c0e777fe-cc9f-499d-bfe2-3f75b5a633c6" class="">Mutual exclusion: Ab der Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span></span><span>﻿</span></span> ist mit Sicherheit <mark class="highlight-gray"><code>!flag[j] &amp;&amp; !(turn == j)</code></mark>, ansonsten wartet <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> einfach.</p><p id="c102ccde-6001-4f3d-b5c2-f693f85e0828" class="">Kein Lifelock: Es kann sein dass beide <mark class="highlight-gray"><code>flag</code></mark><mark class="highlight-gray"> </mark>true sind, aber <mark class="highlight-gray"><code>turn</code></mark> kann immer nur für ein Prozess true sein wodurch nur ein Prozess in while schleife warten kann.</p><p id="3083b903-4c20-4988-b286-0890fdb0dfb5" class="">
+</p><h3 id="378d726b-02a7-490a-af69-d576a4f26722" class=""><mark class="highlight-blue">Bakery Algorithm (für </mark><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> Prozesse)</mark></h3><p id="25c12f57-6050-46e5-9c7b-d645b009a729" class="">Globale Variablen:</p><pre id="d23927f0-c120-4d6c-b053-1f39ca70f049" class="code"><code>choosing: boolean array [0..n-1] //mit false initialisiert
+number: int array [0..n-1] //mit 0 initialisiert</code></pre><p id="260f8796-ab4e-4f7f-bbca-cbda3d61c492" class="">Alle Prozesse erhalten eine Nummer.</p><p id="31fd2306-a5eb-4318-8422-a6ab596fff28" class="">
+</p><p id="aae5b804-b78e-4883-b2b0-579bf84bc4b1" class="">Prozess <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><pre id="05ae1bd8-7bb6-4912-be83-0652091b6773" class="code"><code>while (true) {
+	choosing[i] := true;
+	number[i] := 1 + max(number[0], ..., number[n-1]);
+	choosing[i] := false;
+	
+	for (j := 0 to n-1) do {
+		while choosing[j] do nothing;
+		while number[j] != 0 &amp;&amp;
+				(number[j] != number[i] ? number[j] &lt; number[i] : j &lt; i) do nothing;
+	}
+	...critical section
+	number [i] := 0;
+	...remainder section
+}</code></pre><p id="0c69b147-bdac-447d-a5e6-765330a716cf" class="">Nummer <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span><span>﻿</span></span> bedeutet Prozess hat keine Anforderungen.</p><p id="01e22f4e-13fc-4de0-86f4-9ea036879d08" class="">Prozess mit niedrigsten Nummer betritt kritischen Abschnitt zuerst.</p><p id="dd9bb4fd-5956-4c8c-b5ce-8e9501fe97d2" class="">neue Nummern ≥ alte Nummern - gleiche Nummernvergabe möglich wenn mehrere Prozesse hintereinander Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span></span><span>﻿</span></span> ausführen.</p><p id="a6245521-ec7f-42ed-bfee-73738f67825c" class="">
+</p><h2 id="c747262d-07c4-4405-ad81-3a6d18b79313" class="">Hardwareunterstützte Lösungen</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1c7e2bd4-52dc-4c61-8143-6bfb14968551"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Annahme: Atomare Maschinen-Instruktionen</div></figure><h3 id="20ca7fde-eb60-42d3-a870-74c565c0633f" class=""><mark class="highlight-blue">Interrupt Disabling</mark></h3><p id="934a964e-e790-4fd7-8e3f-245c4fcca350" class="">Interrupt Disabling während kritischen Abschnitt:<div class="indented"><p id="f9ae42e7-b609-41c2-b254-72e1f9cef86a" class="">Nur bei singlecores möglich (da bei multicores echte Parallelität).</p><p id="1a062d2f-9b27-4dd4-813f-a0333adb4cf9" class="">Für kleine, sichere OS tasks sinnvoll aber nicht für user tasks da man halting nicht prüfen kann.</p></div></p><p id="3c32d2b2-49ee-4e72-a4ba-97c7c4c2fb03" class="">
+</p><h3 id="5e2bd61a-7cad-485c-8def-70867754a13e" class=""><mark class="highlight-blue">Test and Set</mark></h3><p id="52c49848-0fa0-4eb0-a07a-66b9fcf2d501" class="">Eine einzige hardware instruction die 2 Aktionen atomar ausführt:</p><pre id="e833de74-171c-485b-b52b-5195aae7a979" class="code"><code>function testset(i: int): boolean {
+	if (i == 0){ 
+		i := 1;
+		return true;		
+	} else {
+		return false;
+	}
+}</code></pre><p id="45696abe-8bad-4e08-b44f-29b7e44c8997" class="">Globale Variable</p><pre id="a46882c5-c1d6-44c9-b920-05b845ba3492" class="code"><code>var b: integer;
+b := 0;</code></pre><p id="86f7d1a8-3018-49b3-ab63-c0053b7c8d78" class="">Prozess <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><pre id="c544c3c0-1de3-4b72-9a20-fd76131e714a" class="code"><code>while !testset(b) do nothing; //if b == 0, flip b and continue, else do nothing
+...critical section
+b := 0;
+...remainder section</code></pre><p id="01c3a04a-7c32-405a-b376-fd2e0c37672c" class="">
+</p><h3 id="be4e00b4-f396-4bf4-8e93-4e5cedec3092" class=""><mark class="highlight-blue">Exchange / Swap</mark></h3><p id="db6a75d6-c0ca-4e3b-8328-4dfb05cc5cfb" class="">Vertauscht Werte von 2 Variablen als atomare Instruktionssequenz.</p><p id="7fb8b9e4-8bb7-4474-bdaa-d17e8c7c2120" class="">Globale Variablen</p><pre id="ff218277-42dc-429d-bb41-5778b307d604" class="code"><code>int b := 0;</code></pre><p id="eda4c5d7-bdf5-4987-808f-5323d6cedfbe" class="">Lokale Variable - Vorinitialisiert</p><pre id="2eb021f3-3968-4b3e-9608-865811d13e07" class="code"><code>int key := 0;</code></pre><p id="1261c705-b2b0-4b4d-9285-fab40617a64a" class="">Prozess <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><pre id="83625816-031d-41a9-8630-f1cf67d49732" class="code"><code>key := 1;
+do exchange(key,b) while (key == 1);
+...critical section
+exchange(key,b);
+...remainder section</code></pre><p id="5c80aad4-49e9-4909-94fb-21974bdee284" class="">Damit ein Prozess die while Schleife erreicht, muss <mark class="highlight-gray"><code>key := 1</code></mark> sein.</p><p id="a918d79b-a28d-4b56-8543-416a5e5edfc8" class="">Danach wenn die while Schleife erreicht wird, bestimmt <mark class="highlight-gray"><code>b</code></mark><mark class="highlight-gray"> </mark>ob fortgesetzt wird:</p><ul id="409eadeb-2b6c-4928-9791-95827488259f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>key := 1, b == 0</code></mark><mark class="highlight-gray"> </mark>- swap → <mark class="highlight-gray"><code>key := 0, b := 1</code></mark><mark class="highlight-gray"> </mark>→ continue<p id="da110e8f-6e08-494d-85ed-e6bfd2b54504" class=""><mark class="highlight-gray">Nach kritischem Abschnitt wird wieder geswapped wodurch anderer Prozess drankommt.</mark></p></li></ul><ul id="4603a533-a1f7-4147-a89b-76ec8f31ad7f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>key := 1, b == 1</code></mark><mark class="highlight-gray"> </mark>- swap → <mark class="highlight-gray"><code>key := 1, b := 1</code></mark><mark class="highlight-gray"> </mark>- swap → <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>…</mo></mrow><annotation encoding="application/x-tex">\dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.12em;vertical-align:0em;"></span><span class="minner">…</span></span></span></span></span><span>﻿</span></span> </li></ul><p id="70165482-09ae-4114-ab6e-782d11141239" class="">
+</p><p id="8ffc7633-7d3d-4628-a9ea-3ddf2f428758" class="">Eigenschaften:</p><p id="58df1cc4-d93a-4eaf-86fc-6dff2d54ebdc" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Einfach und für beliebig viele Prozesse einsetzbar</p><p id="2e520b71-39b7-4b1e-a6b3-673fd6dab9b9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Starvation möglich → kein bounded waiting</p><p id="62c6a3d5-8611-46c7-abf4-8973903a0e18" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Busy waiting (ineffizient)</p><p id="121f2800-bf17-4292-ae40-fa6edf3d459c" class="">
+</p><h2 id="1e7c7b76-2c16-41f3-ba5f-d86f76e594d6" class="">Semaphore</h2><p id="4617a2e8-dbb2-447b-9b5b-aec7ddaea971" class="">Semaphore müssen für Mutual Exclusion auf 1 initialisiert werden.</p><p id="b9975738-9f5e-4da5-b6b1-02d150f77d98" class="">Maximal 1 Prozess im kritischen Abschnitt</p><p id="bcdfe0d3-7aef-45d9-b062-e10e20ae2f56" class="">Reihenfolge und bounded waiting / fairness durch FIFO queue gegeben</p><pre id="16fb4faf-e3c2-4c85-8e86-5eb40f8df8ed" class="code"><code>init(S,1);</code></pre><pre id="dcbf42f0-b8d4-4e7c-9730-31450fe6c0bf" class="code"><code>wait(S);
+...critical section
+signal(S);
+...remainder section</code></pre><h1 id="51b3716c-a262-45ab-ae9d-b123dbfdd2f6" class="">____________</h1><h1 id="5041a8c6-a3ae-4f25-85f1-2f9a442beb26" class="">Condition Synchronization</h1><p id="2e3860d6-9256-4adc-9e1d-6d9ab2cd08d8" class="">Die Abarbeitungsreihenfolge (execution order) bestimmt Ereignisfolge.</p><p id="2415bb50-0e18-464c-a04b-2311b55c54d4" class="">Nicht eindeutig festgelegt <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Race Condition. </p><p id="54d58aa8-f17f-43b8-ade4-8799c1439849" class="">Durch Bedingungssynchronisation geben wir die execution order vor.</p><h2 id="a3a58420-720d-4e84-a617-436695d533a9" class="">Semaphore</h2><p id="f2194651-57e7-4bcd-9576-460e28226734" class=""><mark class="highlight-blue">Beispiel 1: Vorgegebene Reihenfolge</mark></p><p id="3f95cb46-f9d6-4ffb-8d13-9bb84485f4f7" class="">Ausführung von Code-Abschnitten in 2 Programmen.</p><pre id="2f1e8b16-e6d5-45d7-b008-65c429299fed" class="code"><code>init(S,0);</code></pre><div id="77f5789c-ac96-4332-b1cf-1b0cfd14ac23" class="column-list"><div id="2d0aeaf9-7cd4-48a2-a461-e6a0e53572ef" style="width:50%" class="column"><pre id="66d041d2-db94-4072-8530-5d1861cd1ea6" class="code"><code>while(true){
+	...First this
+	signal(S);
+}</code></pre></div><div id="4b64e46b-c311-48ba-ad55-63aba939e817" style="width:50%" class="column"><pre id="ca86c4e1-da0c-4482-b6e6-8492c55a7ff2" class="code"><code>while(true){
+	wait(S);
+	...Then that
+}</code></pre></div></div><p id="c02f18c7-e045-4c0e-99a4-c7e377bbd8d7" class="">
+</p><p id="5c6eee8d-168f-4391-a2b2-b4038b673b3e" class=""><mark class="highlight-blue">Beispiel 2: Abwechselnder Zugriff</mark></p><p id="19958836-efb8-4db0-8b34-326983e8d659" class="">Daten werden nicht doppelt gelesen oder geschrieben.</p><p id="c07479fa-fd23-4fd1-848b-9fac887ebce4" class="">P1 muss immer vollständig abgearbeitet werden bevor P2 starten kann - aber:<div class="indented"><ol type="1" id="b3ee18d1-9412-4ad0-b8c4-976e2180e2c7" class="numbered-list" start="1"><li>P1 kann nur in das <mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"> </mark>schreiben, nachdem die <mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"> </mark>von P2 gelesen wurde.</li></ol><ol type="1" id="0a8368a0-7175-4ddc-87ac-e483740c53f2" class="numbered-list" start="2"><li>P1 kann nur daten generieren, nachdem sie von P2 gelesen wurden.</li></ol></div></p><p id="fd1dfaae-9808-4c2f-8ad2-d1fd526cfe2f" class="">Das besondere an diesem Beispiel:<div class="indented"><p id="9ee26fad-ec6e-42e0-af7a-5c47ce2f2db8" class="">Vorgegebene Abarbeitungsreihenfolge und mutual exclusion bei <mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"> </mark>wodurch wir Datenkonsistenz haben.</p></div></p><pre id="24680c5e-3257-421d-b1aa-0cfcba2708b7" class="code"><code>init(A,1); init(B,0);</code></pre><div id="0ef72465-75fa-4b50-8ad9-5bf481d0ea99" class="column-list"><div id="8f4961c8-64f1-4d53-adf8-c01d0643e157" style="width:50%" class="column"><pre id="6e418ae8-2eaa-444b-a8bf-cedc493b0166" class="code"><code>while(true){
+	generate data;
+	wait(A);
+	write ShM;
+	signal(B);
+}</code></pre></div><div id="81ba4664-f29c-47d7-9b9b-d97d1b0a812b" style="width:50%" class="column"><pre id="a98b1dbb-6a45-4303-8df6-326b21e65c85" class="code"><code>while(true){
+	wait(B)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div></div><p id="ba90d293-0a65-49aa-a9fa-e76469c2f341" class="">Semaphore B ist gleich wie aus vorherigem Beispiel und A ist umgedreht, damit sie sich abwechseln.</p><p id="382c39c5-7e8f-449e-bceb-70fd88c3d898" class="">
+</p><p id="382b3d8a-7a31-4ee6-adbe-c01b0d180055" class=""><mark class="highlight-blue">Beispiel 3: Abwechselnder Zugriff</mark></p><p id="284845cc-d695-482c-bca1-8b3eebb9fa5b" class="">Gleich wie davor aber mit 3 Prozessen wobei die lesenden Prozesse parallel abgearbeitet werden sollen können.</p><p id="60d55ca7-f2a5-4522-922a-2f5d6ad9f64a" class="">
+</p><p id="c09abbda-48bb-4e0d-a3c7-cabb90b7c9b6" class=""><em>Versuch 1</em></p><p id="15b0bd9c-0634-4c7a-bac8-25086acdf5dd" class="">Keine Parallelität von P2, P3 gegeben - sondern P3 muss immer nach P2 kommen.</p><pre id="bc50c47c-28cd-401c-ae43-2ea22b45cbf0" class="code"><code>init(A,1); init(B,0); init(C,0);</code></pre><div id="6a7a5832-1e0e-44b2-81ba-674f4e64f48d" class="column-list"><div id="87e03484-48a8-450a-9828-2ed0b4bcc921" style="width:33.333333333333336%" class="column"><pre id="599f21d5-6738-4df5-bac6-808e6db5b833" class="code"><code>while(true){
+	generate data;
+	wait(A);
+	write ShM;
+	signal(B);
+}</code></pre></div><div id="dc4812b7-32e8-43f5-8332-f3af377fc43c" style="width:33.33333333333333%" class="column"><pre id="2bb22b4d-a221-44d8-ae39-1ad0e2fe9061" class="code"><code>while(true){
+	wait(B)
+	read ShM;
+	signal(C);
+	use data;
+}</code></pre></div><div id="51b15191-0157-4d71-9da4-0710847a923b" style="width:33.33333333333334%" class="column"><pre id="d4599cb4-41ed-44a4-bce3-8228d9a59f51" class="code"><code>while(true){
+	wait(C)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div></div><p id="7cc83127-f79c-4189-a1ad-26cf57c73644" class="">
+</p><p id="96700e37-d244-4dc7-b322-e80c84d44978" class=""><em>Versuch 2</em></p><p id="8903c433-3db0-4211-8bab-7eb4a41b8863" class="">Hier lösen wir das Beispiel genau nach dem Schema des vorherigen Beispiels.</p><p id="0f35ba18-1bda-452f-bcdb-3a084d49c2d4" class="">Starvation von P2 oder P3 möglich, da eines von ihnen mehrfach ausgeführt werden kann ohne sich abzuwechseln.</p><pre id="643166eb-d6d1-43ac-b6aa-814f418b15b5" class="code"><code>init(A,2); init(B,0);</code></pre><div id="084decf2-c44c-49a2-93b9-d704ef10dfdd" class="column-list"><div id="087a7e9b-89e8-4fd3-906f-74853238e03d" style="width:33.333333333333336%" class="column"><pre id="d1a25455-fda7-45db-924f-9e88cde28f0a" class="code"><code>while(true){
+	generate data;
+	wait(A);
+	wait(A);
+	write ShM;
+	signal(B);
+	signal(B);
+}</code></pre></div><div id="cf0df03b-7933-4e9a-b1d2-6b6a734736c6" style="width:33.333333333333336%" class="column"><pre id="6e734030-41bf-406a-b55c-e952455cf6c2" class="code"><code>while(true){
+	wait(B)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div><div id="ebdecf9e-d790-4c30-8614-4c25c6f514c9" style="width:33.33333333333333%" class="column"><pre id="294df3f5-6521-4c74-bc1f-a41563c30882" class="code"><code>while(true){
+	wait(B)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div></div><p id="faf16683-d2a5-41ea-8998-421926008078" class="">
+</p><p id="0b0dc56f-af5b-4a28-948b-0ad023bc0fab" class=""><em>Lösung</em></p><p id="efd716cb-fd97-4f46-a468-81f37c923157" class="">Kleine Abänderung um Starvation zu vermeiden</p><pre id="61fe6bed-3a5f-4da0-aafe-1e17380ec971" class="code"><code>init(A,2); init(B1,0); init(B2,0);</code></pre><div id="a24cf3fd-8b4d-4e4b-8a67-73f3ba197d15" class="column-list"><div id="c67257ef-c329-463e-a8ec-382deaee44ed" style="width:33.333333333333336%" class="column"><pre id="28eac6bf-2b7b-4bfa-a8b3-06ef2b8b507b" class="code"><code>while(true){
+	generate data;
+	wait(A);
+	wait(A);
+	write ShM;
+	signal(B1);
+	signal(B2);
+}</code></pre></div><div id="9690d8c2-6d1a-47a7-b1b6-114475678b1f" style="width:33.333333333333336%" class="column"><pre id="11cf5f9c-9291-47b9-97b0-49e77bec3a29" class="code"><code>while(true){
+	wait(B1)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div><div id="15359c38-f136-4b01-907a-0327fb3a5594" style="width:33.33333333333333%" class="column"><pre id="29ac6119-7862-46e5-84ef-a6ab1f529d3c" class="code"><code>while(true){
+	wait(B2)
+	read ShM;
+	signal(A);
+	use data;
+}</code></pre></div></div><h1 id="ddd6accb-fb28-497f-9448-f9e85d543b86" class="">____________</h1><h1 id="a54f44d1-131d-4e18-a89c-fe2187f799f3" class="">Höhere Synchronisations-Konstrukte</h1><h2 id="5e70a0a2-65ee-4666-8e96-308a6bbb1112" class="">Semaphore</h2><p id="2de123da-f163-41b0-92a5-cb0c2875e2a0" class="">Von OS zur Verfügung gestellt.</p><p id="772940cf-6fd7-4955-88eb-e46144a15edf" class="">Wir vermeiden busy waiting - Prozesse warten in blocked queues bis ein Event auftritt.</p><figure id="563a79df-dfed-49ca-b2d1-896b115dedc4" class="link-to-page"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Semaphoren%20Patterns%20563a79dfdfed49cab2d1896b115dedc4.html"><span class="icon">📎</span>Semaphoren Patterns</a></figure><p id="b7c666e7-54c7-4cf2-9d93-1d76e34fc8d4" class="">
+</p><p id="edcd59f8-92c7-4496-976d-e4786d62b756" class=""><mark class="highlight-blue">Implementierung</mark></p><ul id="53eb30aa-6f1a-40d1-bc59-24af3b5fd70a" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Detailiert</mark></summary><pre id="a4349c91-eb77-4eff-8989-96719c1c9eef" class="code"><code>type semaphore = record
+										value: integer; //auch count genannt
+										queue: list of processes;
+									end;</code></pre><pre id="4976b20e-b289-4dbe-9555-0705356f04df" class="code"><code>init(S, val):
+	S.value := val;
+	S.queue := empty list;</code></pre><pre id="6c78527c-d150-4784-8be8-bb69a5123441" class="code"><code>wait(S):
+	S.value := S.value - 1;
+	if (S.value &lt; 0) {
+		...add this process to S.queue and block it;
+	}
+	</code></pre><pre id="0d545a27-c281-410f-b852-9017b36a7ed0" class="code"><code>signal(S):
+	S.value := S.value + 1;
+	if (S.value &lt;= 0) {
+		...remove a process P from S.queue and place on ready queue;
+	}</code></pre></details></li></ul><p id="88aa7d42-bb93-4ca4-808d-d5f6b7858231" class="">Die Funktionen <mark class="highlight-gray"><code>wait(S)</code></mark><mark class="highlight-gray"> / </mark><code><mark class="highlight-gray">P(S)</mark></code>, <mark class="highlight-gray"><code>signal(S)</code></mark><mark class="highlight-gray"> / </mark><code><mark class="highlight-gray">V(S)</mark></code><mark class="highlight-gray"> </mark>sind atomare Instruktionssequenzen ausgeführt werden.<div class="indented"><p id="25f7ae77-17fd-43d2-8f4d-a8ba75257875" class="">Weil kurz und unwahrscheinlich, dass sie unterbrochen werden, nutzt man eine <mark class="highlight-gray"><code>flag</code></mark>s in der record-Datenstruktur und testet mit busy-waiting.</p></div></p><p id="800e2eea-45e6-4e68-abef-124c441eee3b" class="">
+</p><p id="704eded1-f1da-44e7-8d21-1398554ffdad" class=""><mark class="highlight-blue">Variationen in der Implementierung</mark></p><p id="58fcff41-2cfa-4ffb-a964-970b7f52f047" class=""><mark class="highlight-gray"><code>S.value</code></mark><mark class="highlight-gray"> </mark>= #Prozesse die hintereinander <mark class="highlight-gray"><code>wait(S)</code></mark> ausführen können, ohne zu blockieren.</p><p id="853aab5c-6fb1-4550-b700-4755c1e5dde9" class="">Wenn <mark class="highlight-gray"><code>S.value &lt; 0</code></mark> ist <mark class="highlight-gray"><code>|S.value|</code></mark><mark class="highlight-gray"> </mark>die Anzahl der Prozesse die in der blockierten Queue sind.<div class="indented"><p id="1fc9bffd-72a1-4221-862a-7f5782cdf5ae" class="">Binary Semaphore			Nur Werte 0 oder 1 - value wird nicht negativ.</p><p id="67d47e11-01b5-4e8d-86fb-ac337ab93df2" class="">Counting Semaphore		value kann beliebige Werte annehmen.</p></div></p><p id="a87fb997-6045-4320-874f-4c0b5930c90b" class="">
+</p><p id="1136258e-ddf7-4d5d-b137-2974d3b9d9ea" class=""><mark class="highlight-blue">Probleme</mark></p><p id="da05049c-5f87-44b4-a7e6-645273e18fa3" class="">kompliziert, unübersichtlich, schwer lesbar</p><p id="ab0195ed-3bf6-49fc-9386-444382aa31fc" class="">Debuggen schwer da über Programm-Code verstreut </p><p id="f3565fde-3913-432b-92ee-7a3f9628c940" class="">Operationen müssen entweder alle korrekt verwendet werden oder alle voneinander abhängigen Prozesse zeigen fehlferhalten.</p><p id="fc1564b0-73fd-414c-9edf-2b4b84942c75" class="">
+</p><h2 id="afecb8a6-e486-4030-bbec-7cbde29d994e" class="">Monitore</h2><div id="18003fc9-64f0-49a0-978d-6779cbbe8098" class="column-list"><div id="a4f63f2a-6d2d-4b6e-9244-7a4a1f5a004b" style="width:81.25%" class="column"><p id="92e7a469-ecc0-4848-8a52-3de9a4f33918" class="">Software-Modul, dass alles was zu Synchronisation und Mutual Exclusion gehört bündelt - beinhaltet:<div class="indented"><p id="34149f97-2329-43bd-b8b6-5799ec083033" class="">Prozeduren</p><p id="6b7ca4a3-3d91-4f05-9cc9-45e9ab927fdc" class="">Lokale Daten</p><p id="97871ba8-4dc6-478c-b8e5-1010d3de9e2a" class="">Initialisierungscode</p></div></p></div><div id="49e0d8a7-f8a7-4d11-b33d-5e22d617ee14" style="width:18.75%" class="column"><figure id="82efff19-0c22-46a0-9e66-c91118f5b6de" class="image"><a href="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%203.png"><img style="width:288px" src="Mutual%20Exclusion,%20Condition%20Synchronization%20d3b4e29c2a7b457282d93a00483516be/Untitled%203.png"/></a></figure></div></div><p id="5f0a04e1-9d50-4e3f-87e3-b482f6c891cc" class=""><mark class="highlight-blue">Zugriffsfunktionen</mark></p><p id="fdea78b0-8ebd-42f0-86fd-2f4752f84adf" class=""><mark class="highlight-gray"><code>cwait(c)</code></mark><mark class="highlight-gray">	</mark>	blockiert ausführenden / aufrufenden Prozess, bis <mark class="highlight-gray"><code>c == true</code></mark></p><p id="824326f0-f24c-45a0-a8c5-989f89e27bc5" class=""><mark class="highlight-gray"><code>csignal(c)</code></mark><mark class="highlight-gray">	</mark>	setzt einen wartenden Prozess fort</p><p id="f3822126-5307-4cdd-bdc1-db9f14b667e5" class="">
+</p><p id="26464b2d-d09d-4edf-9e9f-7d4bee1393b7" class=""><mark class="highlight-blue">Unterschiede zu Semaphoren</mark></p><p id="d5346f47-1426-4dab-8d88-d8ce3de488f1" class="">Compartmentalization</p><p id="f269e036-df9e-41b8-974a-2f20a2ba998d" class="">Automatische mutual exclusion<div class="indented"><p id="56cd318f-1311-4f15-8666-02c8e3faa2de" class="">Man kann auf lokale Variablen nur über Monitor-Funktionen zugreifen - es darf max. nur 1 Prozess im Monitorprogrammcode sein.</p></div></p><p id="c438b371-5a15-4da2-a7fd-9be13d75a66d" class=""><mark class="highlight-gray"><code>csignal</code></mark><mark class="highlight-gray"> </mark>macht nichts wenn es keinen wartenden Prozess gibt - keine Speichernde Wirkung.<div class="indented"><p id="ee5ff474-61dc-434b-8da2-7ec050aabc3a" class="">Semaphoren im Gegensatz erhöhen den value.</p></div></p><p id="e8374b96-cf77-48ae-b7b9-549e31da6792" class="">
+</p><p id="53c98285-cd8f-456d-92b3-08e54982b60f" class=""><mark class="highlight-blue">Beispiel: Producer-Consumer Problem</mark></p><p id="9f0ce7aa-3d57-4fa9-986a-ed495a28629c" class="">Monitor Datei: <mark class="highlight-gray"><code>ProducerConsumer</code></mark></p><pre id="0eb8d0e6-1bc9-4ce4-8eea-97e8d43a4cc0" class="code"><code>b: array[0..K-1] of items;
+In := 0, Out := 0, count := 0 : integer;
+notfull, notempty: condition;</code></pre><div id="0d4df586-3beb-4585-8b95-d92811c8de6c" class="column-list"><div id="fb8b861d-c899-421e-a618-5bd91e63e579" style="width:50%" class="column"><pre id="6e16bbc6-6b92-4139-b84a-71d90f7750d8" class="code"><code>append(v):
+	if (count = K) cwait(notfull);
+	b[In] := v;
+	In := (In + 1) mod K;
+	count++;
+	csignal(notempty);</code></pre></div><div id="228f8479-df72-4066-8f69-0d0af4744bda" style="width:50%" class="column"><pre id="936b9d59-9b3f-44db-8f11-894f894f0a59" class="code"><code>take(v):
+	if (count = 0) cwait(notempty);
+	v := b[Out];
+	Out := (Out + 1) mod K;
+	count--;
+	csignal(notfull);</code></pre></div></div><p id="3dac7613-6d71-487f-b972-839dfc4adacc" class="">
+</p><h2 id="7f4602dd-0632-4616-b43e-b928f28d37ff" class="">Message Passing / Nachrichten</h2><p id="2f9495ba-8a39-44d9-af61-dce7aed8d19b" class="">Methode zur Interprozesskommunikation IPC für einzelne Computer und verteilte Systeme.</p><p id="fa553e9b-c9f6-4abc-aedb-a3e449039eab" class="">Nachrichten versichern Datenkonsistenz und sind atomare Datenstrukturen:<div class="indented"><p id="4a471424-0206-4fbb-907f-e56091703a88" class="">Es sind entweder gar keine Daten da oder konsistente.</p></div></p><p id="4160154f-31b3-42bc-9b55-106db7881de1" class="">Es gibt eine Queue für empfangene Daten</p><p id="3e23e9f2-24c2-44c6-b5ed-e341ccbe8872" class="">
+</p><p id="319ad3e2-854a-4951-99fb-da79d0ae4377" class=""><mark class="highlight-blue">Senden</mark> <mark class="highlight-gray"><code>send(destination, message)</code></mark></p><p id="450524f9-5f9a-4b4e-9655-2bcf3d5b7239" class="">Es können mehrere oder ein einziger Empfänder adressiert werden.</p><p id="10e5faaf-8832-4025-afa5-e3212ac6978c" class="">Es ist auch möglich direkt (Mailbox) oder indirekt (Portadresse) Nachrichten zu versenden.<div class="indented"><p id="14a43236-4fd3-45c9-a0e9-c53a1adc7c84" class="">blocking		Blockiere so lange an Sendeoperation bis Empfänger die Nachricht erhalten hat.</p><p id="26899014-a777-4e83-8551-e7bba641aa06" class="">non-blocking	Setzte auch fort wenn unklar ob Nachricht erhalten wurde.</p></div></p><p id="8d5ddc8f-687d-4ae9-be40-08d5d2e17aee" class="">
+</p><p id="6026505b-e56b-484c-9def-0c35fc26e415" class=""><mark class="highlight-blue">Empfangen</mark><mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>receive(source, message)</code></mark></p><p id="e6e6a153-c7e7-433c-a30f-0f26b8b39c42" class="">Empfangene Daten können in einer Queue gespeichert werden (Ereignissemantik) oder alte empfangene Daten überschreiben (Zustandssemantik).<div class="indented"><p id="b013cae8-b755-4b31-a1f9-5b98cd67d9a2" class="">blocking		Blockiere so lange an dieser Operation bis eine Nachricht angekommen ist</p><p id="5922f865-d2a8-4de7-b211-34becf7f6716" class="">non-blocking</p><p id="60206bca-9db1-4094-ac00-093a11131b97" class="">test for arrival</p></div></p><p id="7b75744e-8e7c-46b7-9161-9287c3152d38" class="">
+</p><p id="6d11f4b8-6cf8-48c1-b32e-4654a12dab27" class=""><mark class="highlight-blue">Beispiel</mark></p><p id="3c4bb1f0-b744-43b5-91d2-276577a6091c" class="">Gemeinsame mailbox <mark class="highlight-gray"><code>mutex</code></mark><mark class="highlight-gray"> </mark>wird von mehreren Prozessen benutzt um eine blockierende Nachricht zu schicken und zu erhalten.</p><pre id="a9a7bcc5-b05b-46d9-b21a-0ddf2df8d8fc" class="code"><code>init: send(mutex, msg);</code></pre><pre id="f8573241-4f48-49b3-8e4c-afd5f94259da" class="code"><code>while(true){
+	receive(mutex, msg); //blocking receive 
+	...critical section
+	send(mutex, msg); //non-blocking send
+	...remainder section
+}</code></pre><p id="fd58e0da-fea2-4e3d-8e1d-62e182c14cd5" class="">
+</p><h2 id="15a7f1f1-5dd0-48ec-94a9-ac8a9154aa48" class="">Lock</h2><p id="b6512cea-c939-4eaa-a1dd-d20301cef26f" class=""><mark class="highlight-gray"><code>enter(lock)</code></mark>		blockiert nachfolgende enter-Aufrufe</p><p id="84aab2e5-51f3-4a1a-b930-c188474ead8b" class=""><mark class="highlight-gray"><code>release(lock)</code></mark>	gibt lock frei</p><p id="c36bc2c7-b511-4db0-ad60-c9521d4bff7a" class="">
+</p><h2 id="4b0f5096-7361-49a2-8196-4b5fa8b46a50" class="">Sequencer und Eventcounts</h2><p id="31f47d7d-5996-4719-9db7-e22bb2660ede" class=""><mark class="highlight-blue">Eventcount E</mark></p><p id="5f2380bb-50f3-4a23-90c1-3e7b7b54e0b9" class=""><mark class="highlight-gray"><code>advance(E)</code></mark>		<mark class="highlight-gray"><code>E++</code></mark> (wobei Anfangswert immer 0)</p><p id="9517ebe8-5a59-457d-b061-26f8032675f0" class=""><mark class="highlight-gray"><code>await(E, val)</code></mark>	blockiert bis <mark class="highlight-gray"><code>E &gt;= val</code></mark></p><p id="5e9d969e-3dc1-4a50-86a3-cf366d000149" class="">
+</p><p id="1dd0496e-549d-40fd-9485-f952aaafc363" class=""><mark class="highlight-blue">Sequencer S</mark></p><p id="04ba6a92-9f25-4395-8a5b-79d5e4c99a8b" class=""><mark class="highlight-gray"><code>ticket(S)</code></mark>		retourniert <mark class="highlight-gray"><code>S</code></mark> und executed <mark class="highlight-gray"><code>S++</code></mark> </p><p id="bfe57231-b0dc-4934-8a62-22d47a4d3d8a" class="">
+</p><p id="29dcd81c-c1f8-4805-9bf2-565b5a98e5e1" class="">Beispiel: Mutual exclusion</p><pre id="76bae3cb-11f5-4cbb-b5ae-b7ec74c44f43" class="code"><code>myticket = ticket(S);
+await(E, myticket);
+...critical section
+advance(E);</code></pre><p id="abc5de7a-2484-4bc4-b2ee-c490cab9bf60" class="">Dadurch dass, der vorgänger-Prozess von <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span></span><span>﻿</span></span> immer ein <mark class="highlight-gray"><code>myticket</code></mark> erhält mit dem Wert <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> funktioniert dieser Code.</p><p id="4ee19d8a-ec6f-41e5-a886-3c7c95de788a" class=""> </p></div></article></body></html>

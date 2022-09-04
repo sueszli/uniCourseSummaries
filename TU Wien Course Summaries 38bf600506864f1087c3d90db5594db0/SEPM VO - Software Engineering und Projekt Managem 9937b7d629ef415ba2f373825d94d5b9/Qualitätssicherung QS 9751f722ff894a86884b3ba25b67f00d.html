@@ -1,0 +1,733 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Qualitätssicherung QS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9751f722-ff89-4a86-884b-3ba25b67f00d" class="page sans"><header><h1 class="page-title">Qualitätssicherung QS</h1></header><div class="page-body"><nav id="00c617f9-a2da-4f49-931e-fc94ad07c3ed" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2b8b5da3-dccb-4a6d-be0a-e3cb168d1ccc">Qualitätssicherung QS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fa5cd981-150d-480e-bf03-45c3f7023095">Qualitätssicherung </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#abd5ea71-71be-45f1-a472-732c97ad2a8b">Qualitätskriterien</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#47bbf7d1-6b4a-4560-a63c-b98c82ff3d61">Qualitätsmerkmale </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0a6d4ecb-6a05-4ffc-be5b-50a235ef39bf">Methoden</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#20de3e22-c5d7-4c7c-b82f-0c7a60b7e3dc">Reviewing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7c9ea6f7-787b-47a9-92c5-4e43c719c297">Review</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c5f1020d-0977-4a50-a6b1-a803140ef20f">Zu Reviews verwandte Tätigkeiten</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3aec304a-aede-4301-bb2f-6483b141c0fa">Arten von Reviews</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f470c705-2273-438a-b8d7-286ec789cbf4">Mit Kunde</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1dd829c2-71e8-4e62-b5e8-c8250ad4c7b6">Ohne Kunde</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b83a11e7-daeb-4358-8517-30ceaffa4970">Anforderungen Überprüfen: &quot;Software Requirement Review&quot;</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49b7bdf5-40df-4f1e-98be-62b34cbb8724">Testen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4cf2fea4-3a97-4ed0-bad2-4f9f33710c0e">Traditioneller Testprozess</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e18b95dd-e899-4a4e-8168-5cda43ba765d">Testarten / Test Methoden (statisch vs dynamisch)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8b3f6289-4bfd-49ec-9ba7-e3eab37d334c">Teststufen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#60e7e39c-270a-4de0-8f46-b7373a975586">Unit Testing </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#115f3d4b-a77c-47d0-8354-66414833b602">Module Testing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6c36e20e-4f90-4fb5-8b6f-0b9ace1c274c">Integration Testing</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#919d1b65-f7ef-424d-80f4-c297a733f1bd">Test Driven Development TDD </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#46df548b-b1c6-403c-ae19-a46fbfcb62bf">Automatische Codeprüfung </a></div></nav><h1 id="2b8b5da3-dccb-4a6d-be0a-e3cb168d1ccc" class="">Qualitätssicherung QS</h1><h2 id="fa5cd981-150d-480e-bf03-45c3f7023095" class="">Qualitätssicherung </h2><p id="2d6ad856-d18b-4ef6-ae9b-8c0c1c4e8354" class="">Qualitätssicherung = Verifikation und Validierung in jeder Phase</p><p id="bbb65eb4-7ee8-4ebc-ac4a-b9f232c8ad96" class="">
+</p><p id="825e35b8-624a-4899-a76e-adeae4fe363a" class="">Je später ein Fehler erkannt wird, desto teurer ist die Korrektur.</p><ol type="1" id="6a5febcc-f66f-4c08-b6c9-cf88bbc6bb93" class="numbered-list" start="1"><li>Maßnahmen in frühen Phasen der Entwicklung<p id="850f95c2-1e6d-4c41-bfe8-c1a8af01242e" class="block-color-gray">Am Anfang sind eher nur Textdokumente und Modelle verfügbar.</p><p id="985c1d62-039f-41c4-8ac5-ee8a7291d931" class="block-color-gray">Werden auch im Laufe des Projekts eingesetzt - jedes mögliche Artefakt kann reviewed werden.</p></li></ol><ol type="1" id="b5e3360a-c4ed-48d3-b519-4af31ee4f954" class="numbered-list" start="2"><li>Maßnahmen in existierenden Teillösungen<p id="05b580df-b239-4e80-a2ef-9698aae15330" class="block-color-gray">Traditionelles Software-Testen</p></li></ol><ol type="1" id="acbb2aa6-63f0-467c-9468-d0e1b042109d" class="numbered-list" start="3"><li>Test-Driven Development<p id="9afe991c-5476-400c-b55a-d7b46c178901" class="block-color-gray">Tests vor und gleichzeitig zur Implementierung</p></li></ol><p id="1a8c138e-55f8-458f-8c4f-a3add68e2d3f" class="">
+</p><h2 id="abd5ea71-71be-45f1-a472-732c97ad2a8b" class="">Qualitätskriterien</h2><ul id="f1076845-9a78-4f83-a000-2ad6ebafd910" class="bulleted-list"><li style="list-style-type:disc">Testbare Anforderungen</li></ul><ul id="29bf9d17-1d01-4fbc-99e3-842d7747a24a" class="bulleted-list"><li style="list-style-type:disc">Verfolgbare Entwicklung der Anforderungen (mit Modellen) in testbare Produkte.</li></ul><p id="4d42d3d6-619e-4657-8c3c-35e34d7ae9d5" class="">
+</p><ul id="166c24b4-556f-4a56-9913-e9cfa4c1b52a" class="bulleted-list"><li style="list-style-type:disc">Leistung und Performance <mark class="highlight-gray">(z.B. Optimierung des Informationsflusses)</mark></li></ul><ul id="707603e4-23f7-4eec-a40e-da179c0b5200" class="bulleted-list"><li style="list-style-type:disc">UI, UX <mark class="highlight-gray">(z.B. Einfachheit der Bedienung, Training)</mark></li></ul><ul id="6b173f3a-f032-46d4-a034-4bb328a73f5b" class="bulleted-list"><li style="list-style-type:disc">Sicherheit <mark class="highlight-gray">(z.B. Zugangskontrolle)</mark></li></ul><ul id="02037247-9c8a-4f91-a341-409473acfe1f" class="bulleted-list"><li style="list-style-type:disc">Wartbarkeit <mark class="highlight-gray">(Trennung von Anwendung und Daten)</mark></li></ul><ul id="d2a57409-bd58-4c8c-b3e5-02621686869d" class="bulleted-list"><li style="list-style-type:disc">Erweiterbarkeit <mark class="highlight-gray">(z.B. wie Aufwändig ist es ein zusätzliches Modul dem Projekt hinzuzufügen)</mark></li></ul><p id="0437878b-badd-4ff4-bb86-ef9359ce519a" class="">
+</p><h2 id="47bbf7d1-6b4a-4560-a63c-b98c82ff3d61" class="">Qualitätsmerkmale </h2><p id="93d15b2a-f99a-4f8b-a869-408aafc6e5de" class="">Eignung für Anforderungen</p><ol type="1" id="21798cb7-8211-4f7e-8de2-16f6ecb56a56" class="numbered-list" start="1"><li>Zufriedenheit von Auftraggeber und Anwender</li></ol><ol type="1" id="abfb8102-130d-4ee1-80bc-a5ca4d49457c" class="numbered-list" start="2"><li>Erfüllung von Anforderungen, Attributen, Systemfunktionen</li></ol><ol type="1" id="23a34f08-a43f-449d-b671-6ae9cff96f42" class="numbered-list" start="3"><li>Erfüllung von gestzlichen Regelungen und Standards</li></ol><p id="c49b8a00-d196-46b9-b845-d6f4f684176b" class=""><div class="indented"><p id="cbc3f65a-8ca3-4ac6-8dac-9c76c7795663" class="">Softwareprodukt → Qualitätsprodukt durch Qualitätsmerkmale<div class="indented"><p id="4e08adad-d66c-4b47-820e-6f800e9e90d0" class="">Funktionalität		<mark class="highlight-gray">funktionale Anforderungen</mark></p><p id="a2d30c6d-4eb9-493c-b98f-b395bc6a9d85" class="">Zuverlässigkeit</p><p id="d1280f75-4bbd-452d-b442-a1bcf9697d92" class="">Benutzbarkeit</p><p id="4bedc405-673b-40de-9184-67d925db423e" class="">Effizienz</p><p id="d85d0de5-7248-4fa7-9357-d128cca47bca" class="">Änderbarkeit		<mark class="highlight-gray">Erweiterbarkeit</mark></p><p id="c81125f7-7bf1-4177-950f-8bb3ce883938" class="">Übertragbarkeit	<mark class="highlight-gray">möglichkeit auf andere Umgebungen / Plattformen zu übertragen</mark></p></div></p></div></p><figure id="a45c4f65-65ae-4738-bf74-5fa4732c8e4d" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled.png"><img style="width:672px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled.png"/></a></figure><p id="8273ac5b-a413-4ad6-8796-07eea5a10a96" class="">
+</p><h2 id="0a6d4ecb-6a05-4ffc-be5b-50a235ef39bf" class="">Methoden</h2><p id="ff5375b0-2d13-424d-a32e-adb55489e00f" class=""><span style="border-bottom:0.05em solid">Konstruktive Methoden</span><div class="indented"><p id="0ce51855-4b22-4421-9776-7763ea3314de" class="">Herstellung der Tests</p><p id="daeb66a5-2c8f-418e-92c8-b101fa6b27ce" class="">
+</p></div></p><p id="9fb3c021-99e0-4b47-a825-35523dd00a69" class=""><span style="border-bottom:0.05em solid">Analytische Methoden</span><div class="indented"><p id="eaefd237-cb47-4225-8a44-867133454d16" class="">Überpüfung der Produkte</p><ol type="1" id="12e04b3f-5e51-4942-a428-73ee7e5954ed" class="numbered-list" start="1"><li>Verifikation	<mark class="highlight-gray">Ob Komponenten der (technischen) Spezifikation entsprechen</mark></li></ol><ol type="1" id="70eb4fe9-fb5b-4314-b944-58a19384dbbe" class="numbered-list" start="2"><li>Validierung	<mark class="highlight-gray">Ob Komponenten dem Kundenwunsch entsprechen</mark></li></ol><p id="33430fa3-e5bc-4139-bbb2-80e40c668885" class="">
+</p><p id="42c588ae-a91a-4d3e-923d-f4f961ad15d6" class="">Unterteilt in:</p><ol type="1" id="8dc4a3d2-22c8-4894-87c5-09bff4ccde97" class="numbered-list" start="1"><li>statische Methoden	Reviews, Inspektionen, UML (kein code compiliert)</li></ol><ol type="1" id="d8c41cf5-0fad-4ebe-8549-cf10b9892076" class="numbered-list" start="2"><li>dynamische Methoden	Software testen, UML, IDEFØ (verhalten von code)<p id="4231f1ea-1680-4d5b-bb97-cb98c6516c93" class="block-color-gray">Bei <em>Test-Driven / Test-First-Development</em><div class="indented"><p id="36031704-b32b-4f44-80c9-1f648df43c56" class="">gleichzeitig entwickeln und Testen in agiler Entwicklung.</p><p id="11d8e8a8-81f8-4868-ac7a-14e7b07e5a3e" class="">Zuerst die Testfälle (zur Beschreibung der Funktionalität) erstellen und erst danach die eigentliche Funktionalität implementieren und testen.</p><p id="116985a5-d53b-4385-bf46-75acf71435f1" class="">
+</p></div></p></li></ol></div></p><figure id="89ceb74d-3ce6-467d-84c9-930b80543d81" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%201.png"><img style="width:384px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%201.png"/></a></figure><p id="13b3e0da-6f3f-4668-8000-00d6f7f8ce68" class="">
+</p><h1 id="20de3e22-c5d7-4c7c-b82f-0c7a60b7e3dc" class="">Reviewing</h1><h2 id="7c9ea6f7-787b-47a9-92c5-4e43c719c297" class="">Review</h2><p id="73c0baad-6272-44cf-9586-590e77257e63" class="">Produkt oder Dokument wird kommentiert und abgesegnet (approved).</p><p id="1eb6d44e-1358-499f-80e0-0f1a363552ea" class="">formale Analyse- und qualitative Beurteilung</p><p id="5830ae6a-584e-414d-9652-83acc9c2f70c" class="">
+</p><p id="0a434b03-d09f-4230-a578-ebd0d317c3a1" class=""><span style="border-bottom:0.05em solid">Reviewtypen</span><div class="indented"><p id="52882892-14a9-44b9-8ff7-b020549586dd" class="">Unterschieden durch:<div class="indented"><ol type="1" id="69ed7f74-957f-45b6-9f5c-21b68a37bbb0" class="numbered-list" start="1"><li>Vorgehensmodell Wahl</li></ol><ol type="1" id="c9a8fc91-630d-4672-b61f-793772eeda15" class="numbered-list" start="2"><li>Einbeziehungs-Grad des Kunden</li></ol></div></p><p id="b12098ce-b7bf-49b9-879a-19a02e2d0945" class="">Hier: Phasenorientierte Vorgehensweise</p><p id="74840f6d-1c7a-4e35-9a30-05b981cd7afc" class="">
+</p></div></p><p id="41ea9053-e5a1-4d00-baa1-9a674bc1df23" class=""><span style="border-bottom:0.05em solid">Rollenverteilung</span><div class="indented"><p id="28658a28-b6c5-4f9a-9983-b584a31de6b3" class="">3-6 Personen die beteiligt sind. </p><p id="1cc203ac-3946-400a-9d9e-0b6d61d0c750" class="">&gt; Moderator (keeper of process)<div class="indented"><p id="3e12928a-376a-41ed-83f2-252b948402c2" class="">Leiter, bestimmt Ablauf, Auswertung, Korrektur</p></div></p><p id="af8159ac-d4c7-4900-91e3-3872334a745a" class="">&gt; Leser (keeper of focus and pace)<div class="indented"><p id="abb263ff-3df1-4ec8-9ad2-96bde1850b57" class="">Ausarbeiter, bestimmt wie detailiert es sein sollte</p></div></p><p id="4f7eae34-62ce-45fe-a97e-14131ee1049e" class="">&gt; Schreiber (preserver of knowledge)<div class="indented"><p id="fe2bdc18-59d1-4ff6-9af2-5ba9f90c0644" class="">Protokolliert Ablauf</p></div></p><p id="e78cef00-b4e3-4e9f-a65a-852982d0facf" class="">&gt; Gutachter (Reviewer)<div class="indented"><p id="d4248e37-dc9e-40c8-818f-22b8746536f4" class="">Erkennt Fehler nach Befehl von Moderator</p></div></p><p id="04d4f724-8f1c-4b10-a9b3-c27b2dcbfa14" class="">&gt; Autor (author)<div class="indented"><p id="2d384803-8817-4729-b020-009c8d2d3b11" class="">Besitzer des Review-Objekts</p></div></p></div></p><p id="ae0f40fb-d087-4b2f-bc5c-379c9453a18b" class="">
+</p><p id="6a7aada1-19ba-45cb-9e3e-bb7d36da192e" class=""><span style="border-bottom:0.05em solid">Phasen</span><div class="indented"><p id="a95e773f-30ca-4bef-a5ec-159cf156c1b9" class="">Wiederholungen sind möglich.</p><p id="36f783d1-7641-4525-94b6-2c4b509fc458" class="">Oft werden Checklisten verwendet.</p><ol type="1" id="e248629f-aff8-4525-9658-a4a713b43011" class="numbered-list" start="1"><li>Planung („planning phase“)<p id="0b5503df-38a8-4e17-a34d-e2677b626176" class=""><mark class="highlight-gray">Objekt, Prüfziele</mark></p><p id="91a22a9c-3ca7-4e58-ab56-b4ec018b2124" class="">Moderator erstellt Arbeitspakete / Checkliste</p></li></ol><ol type="1" id="2a0e7d7c-dbf4-4f79-bdab-aa175bc42905" class="numbered-list" start="2"><li>Initialisierung („initialisation phase“)<p id="6986f5aa-e1e1-4a81-bd40-360dbc76f37f" class="block-color-gray">Kontrolle ob Code kompiliert</p></li></ol><ol type="1" id="fb57df6a-9e93-4b3c-a680-d6ecbdaec1aa" class="numbered-list" start="3"><li>Vorbereitung („preparation phase“)<p id="e8044eb4-ab60-43d3-9cc8-a973d71e6be0" class=""><mark class="highlight-gray">Einzeldurcharbeitung</mark></p><p id="d811774b-b85f-4f1f-a4a0-2b7300b245fb" class="block-color-gray">Bearbeitung, Fehler finden (Vorbereitung für die Sitzung)</p></li></ol><ol type="1" id="c88f59ba-ce86-484c-a8d6-edf70a76a9c1" class="numbered-list" start="4"><li>Reviewsitzung („review“)<p id="aa4b8935-773a-43c2-a4df-194edcf29c0f" class=""><mark class="highlight-gray">Gemeinsam Lesen, Aufzeichnen von Mängeln (nicht Korrektur)</mark></p><ol type="1" id="ebf9808f-a729-4792-9b4d-c20f3f520409" class="numbered-list" start="1"><li>Reviewsitzungen (2h)<p id="550ea00a-f8a9-48d8-b2f9-009d1bece5cb" class="block-color-gray">Moderator = Diskussionsleiter</p><p id="74b11883-466d-4417-ae63-7e895b02eb13" class="block-color-gray">Alle beschließen gemeinsam welche Nacharbeiten notwendig sind. </p></li></ol><ol type="1" id="c1d0d838-bc76-4c79-a60e-05407bf34270" class="numbered-list" start="2"><li>&quot;Die dritte Stunde&quot;<p id="47483115-0b38-4997-89bf-6b4fbf7afbab" class="block-color-gray">Feedback an Review selbst</p></li></ol></li></ol><ol type="1" id="003f2864-1388-4339-a5b6-e8b74c92b660" class="numbered-list" start="5"><li>Sammlung im Team („meeting“)</li></ol><ol type="1" id="cfcbf27f-e966-41e9-8555-c074fec08929" class="numbered-list" start="6"><li>Reviewbericht („reporting“)<p id="b86fcaf9-9538-466e-8ea5-f3ffe7dc83cb" class="block-color-gray">Schreiber protokolliert nach Sitzung</p></li></ol><ol type="1" id="75026eb9-6048-4ad9-9529-c0944d38d606" class="numbered-list" start="7"><li>Nacharbeit („re-work)<p id="4ca20c8c-dae6-45d7-9f23-b63a49b234b4" class=""><mark class="highlight-gray">Review selbst bewerten</mark></p><p id="a86cf6fc-6850-40c8-b309-6487cbec9df1" class="block-color-gray">Autor bekommt Feedback und muss Fehler ausbessern.</p><p id="18bd6724-69f2-44a9-a26d-8e1658535e62" class="block-color-gray">Moderator prüft ob ausgebessert wurde</p></li></ol></div></p><p id="62d8bf85-dbc4-46dd-ab31-9079c04a5411" class="">
+</p><p id="de5c670d-40a2-43f8-b2d2-9973bf06d318" class="">Alternativerweise (lt. Folien):<div class="indented"><ol type="1" id="6b033004-8b99-479d-b5f4-298688197921" class="numbered-list" start="1"><li>Planung</li></ol><ol type="1" id="eea3711c-9c69-4525-86e9-823fd3c882eb" class="numbered-list" start="2"><li>Vorbesprechung</li></ol><ol type="1" id="57b14820-f73b-4e10-93dc-e1746abeda90" class="numbered-list" start="3"><li>Individuelle Vorbereitung</li></ol><ol type="1" id="fcbc4272-02e2-4dab-bdad-cd6cf73f25e2" class="numbered-list" start="4"><li>Review-Sitzung</li></ol><ol type="1" id="0ccbfea6-4f6a-4ff7-8cb9-e2363020f883" class="numbered-list" start="5"><li>Nachbearbeitung</li></ol><ol type="1" id="4eb39b88-9b99-4b60-b4ce-97c516ec6c19" class="numbered-list" start="6"><li>Bewertung</li></ol></div></p><figure id="337faabe-e8bd-4d2d-9582-d848c9c3be24" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%202.png"><img style="width:192px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%202.png"/></a></figure><p id="884da043-2e6a-4a1c-a90a-7b74473f30c1" class="">
+</p><h2 id="c5f1020d-0977-4a50-a6b1-a803140ef20f" class="">Zu Reviews verwandte Tätigkeiten</h2><p id="8adbdf2a-b52b-4a44-a74e-cafb9e0f01fe" class=""><span style="border-bottom:0.05em solid">Inspektion</span><div class="indented"><p id="3ea75403-1e3d-47b1-accd-0ee8c6b04280" class="">Behebung von konkreten Mängeln</p><p id="646d42c8-ca91-4024-919b-9ebf258e7a67" class="">Leser ≠ Autor</p><p id="88f81aab-371b-4c2c-abbd-af4cd78d7ab5" class="">Spezielle Art von Reviews → &quot;Blick durch Mikroskop&quot;</p><p id="7668cba7-99a7-44eb-9052-d3eb09f6bad2" class="">Höhere Formalisierung.</p><p id="7240bbcd-0469-4292-80ed-9774dde73fde" class="">Lesetechniken die die Fehlerfindung verbessern sollen.</p></div></p><figure id="67586708-ba6a-4a62-9b55-cc8859774a7e" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%203.png"><img style="width:480px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%203.png"/></a></figure><p id="ca61da23-96a1-42cf-8ec0-3d1b249d400f" class=""><span style="border-bottom:0.05em solid">Walkthrough</span><div class="indented"><p id="791509ee-1a6c-4d35-8f48-e358ab918f60" class="">Behebung von konkreten Mängeln
+Autor = Leser &amp; Moderator</p></div></p><p id="04693fe3-c464-402f-bfda-6ad2d2d94fa1" class="">
+</p><p id="82428cd0-e6b3-4487-a8f4-432df01b70a7" class=""><span style="border-bottom:0.05em solid">Audit</span><div class="indented"><p id="a7d8b52e-a903-4c3c-9485-4123507d8ffb" class="">Überblickende Kontrolle
+durch externe Personen</p></div></p><p id="fa5f358d-1b78-4f95-8ef3-049b76adf64f" class="">
+</p><h2 id="3aec304a-aede-4301-bb2f-6483b141c0fa" class="">Arten von Reviews</h2><figure id="2bd0829d-d00f-4786-82c6-7d051b8ca027" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%204.png"><img style="width:480px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%204.png"/></a></figure><h3 id="f470c705-2273-438a-b8d7-286ec789cbf4" class="">Mit Kunde</h3><p id="87813c6a-c5ce-4fbd-b827-f2b81cc32c74" class=""><span style="border-bottom:0.05em solid">SRR - Software Requirements Review</span><div class="indented"><p id="edad5ead-1fe1-4ea4-b47e-dc099548b923" class="">Nach Anforderungsphase.</p><p id="87a2252f-8c20-40c8-a9f6-94247a88c188" class="">Review der Anforderungen mit Kunden vor Entwurfs und Design-Phase.</p></div></p><p id="616c5533-7227-42ba-86a7-983d3a03ed21" class="">
+</p><p id="5fac352e-bd0d-4598-9d2d-18e99617df42" class=""><span style="border-bottom:0.05em solid">PDR - </span>Preliminary Design Review <span style="border-bottom:0.05em solid">(Preliminary Design = Vorentwurfsplanung)</span><div class="indented"><p id="196bb61f-993e-4108-a268-5fcee1577347" class="">Während der Entwurfsphase.</p><p id="e8212620-ae5b-4fc3-9167-59b53fb1cf4e" class="">Review der Software-Architektur vor Ausarbeitung im Detail und Kontrolle der Übereinstimmung mit Anforderungen.</p></div></p><p id="6ca2f787-1b0b-48e4-92ac-7c8486e589d2" class="">
+</p><p id="47eb8f88-4357-4959-90d8-21679f40f025" class=""><span style="border-bottom:0.05em solid">CDR - Critical Design Review</span><div class="indented"><p id="67d88374-e27b-4bca-b718-1124028b79dd" class="">Meistens gleichzeitig mit PDR.</p><p id="4feaa25c-6a6a-4340-988c-d688f5ecd47f" class="">Bei besonders kritischen / wichtigen Komponenten, während Entwurf und Design-Phase.</p><p id="4d29c0b8-045e-4dd9-86b0-d1971e7999f0" class="block-color-gray">Vor allem in: phasenorientierte, strikt sequenzielle Prozessmodelle → letztmögliche Zeitpunkt, an dem der Kunde das Projekt noch stoppen kann.</p></div></p><p id="9ff7ff0d-165d-43c3-a05d-18a7b797b726" class="">
+</p><p id="d8009951-3e2b-4bbb-abfc-f99c7fd0405a" class=""><span style="border-bottom:0.05em solid">IPR - In-Process Reviews</span><div class="indented"><p id="c7ef28f1-74da-4641-8728-1b3412853985" class="">Für sehr große und komplexe Projekte die lange dauern → Kunden Fortschritte in der Implementierung, Prototypen, Testfälle vorlegen.</p><p id="a47d2449-8eeb-4d2b-a458-35afefcd3bfa" class="block-color-gray">= kontinuierliche Reviews in agilen Prozessen</p></div></p><p id="007c4956-44c0-468c-964b-632498a1c489" class="">
+</p><h3 id="1dd829c2-71e8-4e62-b5e8-c8250ad4c7b6" class="">Ohne Kunde</h3><p id="f0765cea-8ee3-4896-a541-f74c9e040306" class=""><span style="border-bottom:0.05em solid">MR - Management Review</span><div class="indented"><p id="bc89ceb2-54bf-4bb2-bb5e-3d3922afefa3" class="">Bewertung des Projekts, aktueller Projektstatus.</p><p id="91653f4f-30a3-4ac0-a045-2da88da87d2a" class="">Bei Abweichungen / geänderten Projektzielen steuern.</p></div></p><p id="f8bf851c-9a9f-4628-a2c7-a6f221869d34" class="">
+</p><p id="7c56a848-d0e9-49e0-a496-af741d369072" class=""><span style="border-bottom:0.05em solid">TR - Technical Review</span><div class="indented"><p id="e2b8a3b9-c01b-4085-84d9-b968daf3e9d8" class="">konkreten Teil der überprüfen und bewerten.<div class="indented"><p id="007c7356-3fc0-4128-91cf-49a9cf1b6870" class="">Verifikation (vergleich mit Spezifikation oder Standards). </p><p id="02bbb9fc-3e8b-4a8a-a3bb-2d4dbce4eef8" class="">Auch Fehlersuche.</p></div></p><p id="3f79377b-f184-4ab3-853d-d52de3479b09" class="">Kann Bestandteil des Prozesses sein.</p></div></p><p id="eddac05a-15ae-49bc-9d8b-bfbe246b25cb" class="">
+</p><p id="c89efff7-c251-48a2-9ce0-6c64667b4601" class=""><span style="border-bottom:0.05em solid">Code-Walk-Through</span><div class="indented"><p id="7d094420-1ebc-4b8c-bd77-7bf4cc5f3457" class="">Autor stellt seine Module ablauforientiert vor.</p><p id="51130ced-7f42-44eb-bed7-5a2fa1f8b914" class="">Kontrolle von Implementierungs-Qualität.</p><p id="5c5a43d7-8e6c-4ab0-a04f-97c5496b0a05" class="">Verbesserungsvorschläge einholen.</p><p id="f429f514-acc5-42f1-9cbd-29e54b500a85" class="">Neue Mitarbeiter einführen.</p></div></p><p id="a4722699-82e6-44c9-86d7-6cde11d2f955" class="">
+</p><p id="04d07fa2-04f9-4f4f-9e7b-967a9c13afa0" class=""><span style="border-bottom:0.05em solid">Inspektion</span><div class="indented"><p id="6732d803-0c00-4be5-aac7-e6275a1221da" class="">formales Review, speziell in frühen Phasen der Entwicklung.</p><p id="91b696a3-2d24-4921-a862-71cd8ff5b9cc" class="">Suche nach schweren Fehlern</p></div></p><p id="d11d4905-5362-4faf-92aa-221d77f3eab7" class="">
+</p><p id="3e3a05e4-2a87-4a14-98de-4221622b3aba" class=""><span style="border-bottom:0.05em solid">IRP (integrierter Review-Prozess)</span><div class="indented"><p id="4c3211e0-a45e-4685-89e1-1d2745d7789f" class="">Nach &quot;pull request&quot;.</p><p id="29ef9897-b97e-42b0-905a-f91363934e07" class="">Diskussion zB nach einem request ein commit in die main branch zu pullen.</p></div></p><p id="9a20178a-bb4f-40c8-b191-2fb34a7dd44f" class="">
+</p><h2 id="b83a11e7-daeb-4358-8517-30ceaffa4970" class="">Anforderungen Überprüfen: &quot;Software Requirement Review&quot;</h2><p id="1a28f820-b669-406b-87aa-80e566374b1f" class=""><span style="border-bottom:0.05em solid">Anforderungen → Überprüfung der Anforderungen → Testfälle</span><div class="indented"><p id="40a62fdb-cfd0-41a7-8142-2f0b6e1df6c7" class="">Test-driven-development: Testfälle <em>vor</em> der Implementierung erstellen</p><p id="b3467320-1b12-450c-aace-417569f635ec" class="">Notwendige Kriterien für Anforderungen<div class="indented"><ul id="8ac6792b-ef18-4c26-b1f8-54642c2d3647" class="bulleted-list"><li style="list-style-type:disc">Typ</li></ul><ul id="a0977fda-3e9c-4df8-88d5-fde71d83d4d7" class="bulleted-list"><li style="list-style-type:disc">Testbarkeit → Erfüllung durch ein System muss testbar sein</li></ul><ul id="ef6b5c58-9f6c-4a50-bb54-a2eddcab8aa6" class="bulleted-list"><li style="list-style-type:disc">Widerspruchsfreiheit</li></ul></div></p><p id="867d6894-e189-4b0c-910e-1b870aa14c73" class="">
+</p></div></p><p id="800870b5-8cd0-4ea5-98d5-f62927ad93b7" class=""><span style="border-bottom:0.05em solid">Überprüfung der Datenbankrelation</span><div class="indented"><ol type="1" id="18c0f611-6dbc-40b7-befc-ae2c411353de" class="numbered-list" start="1"><li>strukturiert darstellen, z.B. als Liste.</li></ol><ol type="1" id="662bc40a-24d8-48ac-aa9c-77ea900c1a5d" class="numbered-list" start="2"><li>mit ER-Model und UML reviewen, konsistent machen</li></ol></div></p><figure id="b4d9b6a7-ed99-48ad-8aac-d210141a426a" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%205.png"><img style="width:480px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%205.png"/></a></figure><p id="8cd885e8-90f1-4d5a-b6c0-9b5646eaccba" class="">
+</p><p id="29519616-7fb4-4857-b71d-689d4fe8639d" class=""><span style="border-bottom:0.05em solid">Überprüfung mit Kontrollflussdiagramm</span></p><p id="8b538e0b-dae4-4736-83eb-3e6f889c2845" class="">Daten und Kontrollfluss <div class="indented"><ol type="1" id="a4529c8d-3bf4-4685-b14d-9345cfa1aded" class="numbered-list" start="1"><li>strukturiert darstellen als Liste.</li></ol><ol type="1" id="d92aebc0-7065-45b2-8754-3c89451d1bb0" class="numbered-list" start="2"><li>Anforderungen mit Datenfluss-Modell IDEFØ reviewen und konsistent machen.</li></ol></div></p><p id="79f0fc66-6fcf-4070-a1e6-74c5749f5f6f" class="">
+</p><h1 id="49b7bdf5-40df-4f1e-98be-62b34cbb8724" class="">Testen</h1><p id="8fe77653-9d77-4b6a-a7e3-e16f512a7edc" class="">Testen kann nicht dazu genutzt werden Fehlerfreiheit zu beweisen → dafür formale Verifikation notwendig.<div class="indented"><p id="b335e355-275a-40ef-b90f-6d28119cc58f" class="">Ziel: Fehler zu finden um Störungen und Ausfälle zu verhindern.</p><p id="6c07f0bb-0b25-4ea7-be34-eab3e5abe5f0" class="">Testen ist <em>destruktiv</em>: Es versucht das System zum Ausfall zu bringen</p></div></p><p id="57f8dbcc-2cc1-4c86-9502-228625668748" class="">
+</p><p id="dcd91bb0-a00b-469c-b440-36042beae042" class="">Alle Teammitglieder sind auch Verantwortlich zum testen.</p><p id="42ecf46d-79cc-4026-a772-c0c097d4fc38" class="">Tests sind Dokumentation (&quot;living documentation&quot;)</p><p id="656f90a0-8a77-4c72-a782-54873dd7585e" class="">Testplan Artefakt beinhaltet Testfall-Implementierungen</p><p id="43e162e2-c6ea-4d2b-b675-bc0a378b264a" class="">
+</p><p id="35219536-0c55-4cae-b34f-43d19bd93be6" class=""><span style="border-bottom:0.05em solid">Anforderungen → Modelle → Daten/Komponenten → Test-Spezifikationen</span><div class="indented"><p id="166707d0-0116-47ec-9694-39cb5331350c" class="">Modelle</p><p id="87902e4f-9ec2-49d9-b420-41ee3d322fc0" class="">Reviews<div class="indented"><p id="bef74377-3e47-4052-990e-d9f5484623c9" class="">überprüfen die Korrektheit von Artefakten</p></div></p><p id="de1db007-157d-4fef-bdc1-a2c6ae125df9" class="">Systemstruktur<div class="indented"><p id="8fce8154-a9cc-4bcf-82e1-3bd230f13875" class="">Subsysteme, Komponenten, Schnittstellen.</p><p id="9f4203db-4be4-4d73-a7e1-fbede98b8080" class="">Interaktion zwischen Komponenten.</p></div></p><p id="aabf6ddd-4e5e-4890-bc9b-6dafaca81cb6" class="">Tests<div class="indented"><p id="af6dc6aa-8748-497f-850a-897adee41375" class="block-color-gray">Vorausgesetzt: Anforderungen, Ein-/Ausgangsparameter des Systems, innere Systemstruktur</p><p id="e9c55805-ce13-44bb-b4ad-95a75f05324e" class="">überprüfen das Laufzeitverhalten von Systemteilen</p><p id="5ffadb53-c6a3-48c0-92f0-ed1fb83b7803" class="">Funktionen, Modelle und Qualitätsmerkmale</p></div></p><p id="fc759261-8ece-49ab-8498-7531dad2a8a0" class="">Test-Driven Development<div class="indented"><p id="4559b56c-e521-47fb-af8a-fc6080cfc80d" class="">Herstellen von (automatisierten) Testfällen vor der Implementierung</p></div></p><p id="3dd3262d-e2cd-4947-9bc2-9bf2967a206d" class="">
+</p></div></p><p id="1755c47d-5a7a-42d5-a073-2a3043fd00b3" class=""><span style="border-bottom:0.05em solid">Fehler Unterscheidung</span><div class="indented"><p id="a5baa75d-4db3-49d6-9733-93d1756c8b87" class="">Nicht an Spezifikation oder Anforderung gehalten<div class="indented"><ol type="1" id="16f532a2-93f5-40b8-869d-b565769ae68c" class="numbered-list" start="1"><li>Error (Fehler)<p id="9fccec60-53f2-4019-82f3-108fedd6be13" class="">Mensch verursacht falsche Ergebnisse</p><p id="6da544a9-3e52-485b-b176-14a5bc48f43f" class=""><mark class="highlight-gray">zB Tippfehler in Sourcecode</mark></p></li></ol><ol type="1" id="d9bd6486-ce79-4b12-8e91-66d048cc4229" class="numbered-list" start="2"><li>Fault (Störung)<p id="85735650-4ac5-4064-b8e8-7892c22254a9" class=""><mark class="highlight-gray">Wenn ein Error das System behindert</mark></p></li></ol><ol type="1" id="b441fa78-8872-4ec2-a7eb-d6c256a54d28" class="numbered-list" start="3"><li>Failure (Ausfall)<p id="02c5cd80-5f94-455a-b19e-8761ab13cd80" class=""><mark class="highlight-gray">Abweichung vom erwarteten Ergebnis</mark></p></li></ol></div></p></div></p><figure id="acdc26fe-c079-4b34-b575-1c6d13bf8671" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%206.png"><img style="width:528px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%206.png"/></a></figure><p id="35a6f46a-110c-4666-bb00-b6bed2ebc09b" class="">
+</p><p id="895ce699-44ce-4756-9d0b-be1cddda65bb" class=""><span style="border-bottom:0.05em solid">Rollen</span><div class="indented"><p id="3c8bd8c3-f7d3-4abf-8106-7c079a04f865" class="">Meistens Ingenieur und Entwickler dieselbe Person.</p><ol type="1" id="d1933998-a7d0-4b71-9526-ec6c8fe8068c" class="numbered-list" start="1"><li>Testmanager<p id="ff281d25-9a5d-4aba-9337-74fa225c6852" class="block-color-gray">Planung, Arbeitspakete, Tests-Strategie, Fortschritt, Berichte</p></li></ol><ol type="1" id="65a76997-ea12-4d3d-a3b8-d172c1836fc8" class="numbered-list" start="2"><li>Testingenieur<p id="3a5283bd-01d4-4616-af62-68e7edbbb2a7" class="block-color-gray">Quasi wie Architekt</p></li></ol><ol type="1" id="4392eae4-4ebe-4ff2-a0c4-e2420f87bcc1" class="numbered-list" start="3"><li>Testentwickler<p id="f81801ee-d372-4265-a7dd-c9bf3ae12eeb" class="block-color-gray">Implementierung</p></li></ol><ol type="1" id="604e400f-e2a9-4a94-b68e-4ebf4231fa71" class="numbered-list" start="4"><li>Tester<p id="f4298312-f42e-40f5-8d05-118ff3276823" class="block-color-gray">Durchführung, Protokollierung</p></li></ol></div></p><p id="8a337996-d259-4e58-8b68-ef305a88adad" class="">
+</p><h2 id="4cf2fea4-3a97-4ed0-bad2-4f9f33710c0e" class="">Traditioneller Testprozess</h2><p id="052f56d1-67c4-4ae0-80e2-0cc704f41598" class="">Bei Anforderungen Tests erstellen → First Test / Test Driven Development</p><p id="e69ac04f-0e92-4ebd-8dff-acaf869d1645" class="">Unterschiedliche Schichten / Sichten → Unterschiedliche Testebenen<div class="indented"><ul id="d92aac9c-3b46-406f-824c-3c5d8f14b767" class="bulleted-list"><li style="list-style-type:disc">Implementierung<p id="72d99a2a-7c40-4f4d-ae64-5e3f94552bde" class="">Komponenten Tests / Unit-Tests / Klassen-Tests<div class="indented"><p id="31513265-182c-41a2-b112-d66df8c2e689" class="block-color-gray">(Entwickler Tests, werden meistens von Entwicklern selbst geprüft)</p><p id="0c3b7f03-39ef-4b91-8958-a4790e4351fe" class="block-color-gray">genaue Lokalisierung</p></div></p></li></ul><ul id="d852fa5b-ca66-4309-866c-2aaaad7bf89b" class="bulleted-list"><li style="list-style-type:disc">Architektur<p id="d8b40df7-0e56-434d-a8ac-18f957a95107" class="">Integrations Tests<div class="indented"><p id="d47cf31d-3d49-4b74-96b0-18e143194c65" class="block-color-gray">Komponenten zu System oder Subsytem zusammenbauen → Zusammenspiel über Schnittstellen testen, auch externe Systeme die benutzt werden.</p><p id="39c85945-6149-454e-8604-bad97dd11554" class="block-color-gray">Manchmal Mock-Objects benötigt um fehlende Komponenten zu simulieren.</p><p id="bdb5eeec-287d-4867-a58d-91f67a424421" class="block-color-gray">Automatisiert: Continuous Integration Tests</p></div></p></li></ul><ul id="70f75252-4f30-4b3e-a9b8-75853a96c108" class="bulleted-list"><li style="list-style-type:disc">Anwender<p id="dd574393-eb6e-4868-b218-13fa89de9616" class="">Systemtests, Akzeptanztests und Abnahmetests → Verifikation, Validierung<div class="indented"><p id="900f02c2-6e7b-401b-a883-34b1ec0d0ab3" class="block-color-gray">Alles außer Systemtests: In <em>Produktivumgebung </em>vom Kunden (zb OS vom Kunden)</p><p id="abb919b2-b48c-4343-a9b5-8ba749fc964d" class="block-color-gray">(keine Abnahmetests bei Produkte für den breiten Markt)</p></div></p><p id="feef597c-6b59-46d3-813e-741addf5e4d9" class="">Installationstest<div class="indented"><p id="6d2f92a1-c3ab-432a-bddb-f2122e6e5118" class="block-color-gray">Identifizieren von Fehlern während der Installation.</p></div></p></li></ul><ul id="0db5a2e6-469c-41f8-a71c-53125720a7c9" class="bulleted-list"><li style="list-style-type:disc">Regressionstests<p id="ce8b2808-fc58-418f-bba1-4435fd59a796" class="">Bei Änderungen oder Erweiterungen nach einem Test </p></li></ul></div></p><figure id="46123e9b-f60f-4268-a1b0-69e2bb36750c" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%207.png"><img style="width:528px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%207.png"/></a></figure><p id="3c7cc62a-7369-4d83-af7f-0af2896892ff" class="">
+</p><p id="64226493-a032-4b5b-bf54-40bfac5b36cc" class=""><span style="border-bottom:0.05em solid">Äquivalenzklassen-Zerlegung</span><div class="indented"><p id="f6c9a48a-0ec0-478f-94b5-7d0d0fff9ed1" class="">Mit minimalem Aufwand möglichst hohe case-coverage.</p><p id="4e1d7ea7-ebda-412c-a117-155343e5a614" class="">Man wählt Repräsentanten.<div class="indented"><pre id="fdd24e5d-4d5f-40a6-a09d-8d0a52f91802" class="code"><code>18 &lt; Alter &lt;= 65
+
+1.Partition: Alter &lt;= 18 (ungültig)
+2.Partition: 18 &lt; Alter &lt;= 65 (gültig)
+3.Partition: Alter &gt; 65 (ungültig)</code></pre></div></p><p id="83719313-189f-4bdc-9db4-6ad64097580e" class="">
+</p></div></p><p id="9dd18f68-7e1b-489e-bb0b-8f923942e8bf" class=""><span style="border-bottom:0.05em solid">Grenzwertanalyse</span><div class="indented"><p id="a9bfb891-6fe2-4a22-8bd4-40edaacb5f5c" class="">Werte aus Grenzbereich wählen</p></div></p><p id="4e5bd8f6-1d88-446c-8fe1-2693768e0927" class="">
+</p><p id="aca97213-12e3-46f1-8c51-a43c733e541c" class=""><span style="border-bottom:0.05em solid">Testfall-Dokumentation, Testfallbeschreibung</span><div class="indented"><ol type="1" id="4b54fb43-9d9b-4ffa-8fc7-4852aa372206" class="numbered-list" start="1"><li>ID (laufenede Nummer)</li></ol><ol type="1" id="ea13759c-49f4-4e95-a63c-fe212fc9b51f" class="numbered-list" start="2"><li>Typ<p id="171bb829-7786-4f72-b5f8-c31f9ec278d4" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> NF - Normalfall</p><p id="4d74233e-ad8a-457d-9a3c-e04988a8c958" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> SF - Sonderfall</p><p id="894e4d8e-b438-47b4-9443-a4247f8071d1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> FF - Fehlerfall</p></li></ol><ol type="1" id="c225b443-638e-447a-ab23-70599ad72bf8" class="numbered-list" start="3"><li>Vorbedingungen</li></ol><ol type="1" id="cf2262f6-e4f8-4b00-bf45-c3894d609b2b" class="numbered-list" start="4"><li>Eingabewerte</li></ol><ol type="1" id="2eef9f61-5a44-4e13-aed1-ead3ccd0c475" class="numbered-list" start="5"><li>Testfall-Beschreibung</li></ol><ol type="1" id="f9a11db8-59eb-4ec1-8cae-7463d4a68759" class="numbered-list" start="6"><li>Erwartetes Ergebnis (&quot;Testorakel&quot;)</li></ol><p id="97c2ee86-32f2-426c-b499-57eb329c819c" class="">
+</p><p id="624cbd79-2d1c-42cc-93c9-c3e2389034f0" class="">Beispiel:</p></div></p><figure id="a8133634-70fe-4c7e-8e85-7edbc10e4033" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%208.png"><img style="width:384px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%208.png"/></a></figure><figure id="62ac03c5-8c07-460e-8cf3-f12c57204f0a" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%209.png"><img style="width:576px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%209.png"/></a></figure><figure id="c0f419a6-a6ba-4afe-8997-106c269fa73c" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2010.png"><img style="width:576px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2010.png"/></a></figure><p id="9e0003c8-0a3e-4cfd-aefe-952e2a18b862" class="">
+</p><p id="46d2e91c-35c5-489a-a3c3-f9164235ba75" class=""><span style="border-bottom:0.05em solid">Value based testing</span><div class="indented"><p id="f6fc96dd-662b-45d6-8ad9-34d1a6242fd6" class="">Nicht alle Tests gleich wertvoll.</p><ul id="09da60d6-8e9d-40bb-ad7d-f256ac02eac3" class="bulleted-list"><li style="list-style-type:disc">Value-Based Testing → Priorisierung</li></ul><ul id="13639dd5-0053-44bd-85d4-6a7093f771c8" class="bulleted-list"><li style="list-style-type:disc">Requirements-Based testing → Max nutzen für Kunden</li></ul><ul id="b5ac1f13-19ef-4d76-8c5f-f868e216080f" class="bulleted-list"><li style="list-style-type:disc">Risk-Based testing → Welche Risiken gefährden Kunden </li></ul><ul id="de8a7427-3dea-4d4d-97cf-78aa7cbb0255" class="bulleted-list"><li style="list-style-type:disc">Test case selection techniques</li></ul></div></p><p id="0801bb98-54ca-4af2-9c3a-ca7792d8d9fb" class="">
+</p><h2 id="e18b95dd-e899-4a4e-8168-5cda43ba765d" class="">Testarten / Test Methoden (statisch vs dynamisch)</h2><ul id="facff9f8-80c9-4ebd-9164-a5ac88ec5386" class="bulleted-list"><li style="list-style-type:disc">statische Verfahren → kein Code ausgeführt<p id="1bb676d7-b690-46fd-a96c-51c97900c304" class=""><mark class="highlight-gray">Reviews, Inspektionen</mark></p></li></ul><ul id="89217c97-2c64-4392-a1bd-2bd3c9e17b2f" class="bulleted-list"><li style="list-style-type:disc">dynamische Verfahren → Software Tests<p id="d025a293-db1c-4df0-bfa5-7a88c46533f9" class=""><span style="border-bottom:0.05em solid">White-box</span><div class="indented"><p id="4e644063-c8ec-466c-981f-ddc00ba51be6" class="block-color-gray">Whiteboxtests sind meist Modul oder Systemtests</p><p id="8f6c6419-c12f-4a29-9626-c4c8c8528a48" class="block-color-gray">– Basiert auf SE-Modellen
+– Wissen über innere Struktur notwendig
+– Logik-getrieben →  Überdeckung von Knoten, Kanten, Pfaden </p></div></p><p id="73cadeff-1481-4d5a-bafc-bfcae37870b6" class=""><span style="border-bottom:0.05em solid">Black-box</span><div class="indented"><p id="27a689b6-41f2-47fe-b297-533229fb41e3" class="block-color-gray">innerer aufbau nicht geprüft, nur eingabe - ausgabe (data-driven)</p><p id="24e3fbd9-ad29-4007-aeb2-cd00260afb17" class="block-color-gray">Unit Tests werden meist als Blackbox ausprogrammiert (TDD)
+– Wissen über innere Struktur wird ignoriert
+– Daten-getriebene, Input-Output-getriebene Tests
+– Anforderungsüberdeckung</p><p id="a52c9bb2-b3cf-4a39-afd5-e506ccc44343" class="">
+</p></div></p></li></ul><h1 id="8b3f6289-4bfd-49ec-9ba7-e3eab37d334c" class="">Teststufen</h1><p id="063fa852-16ca-446e-bc62-885caeec8cd8" class="">Stufe bestimmt Testframework, System Tests (z.B. GUI Tests - sehr mühsam)</p><p id="65f0e9a9-8d57-4b16-abd5-ee25b06bc14e" class="">Abhängig von Testebene und Anwendungsfall  entweder testen auf<div class="indented"><p id="af1702d4-44e9-4214-9e6b-aff5a97ba29d" class=""><em>Funktion (Funktionstest)</em></p><p id="80340f5a-e2be-415d-aeb0-541930476658" class=""><em>Last (Lasttest)</em></p></div></p><p id="87e1ae15-e5cd-41f1-9666-bdbcfee0f2e0" class="">
+</p><h2 id="60e7e39c-270a-4de0-8f46-b7373a975586" class="">Unit Testing </h2><p id="f2f926ef-46c6-48fb-a7bf-10ff6463c767" class="">Ziel: Dokumentation von Klassen, genaue Lokalisierung von fehlern </p><p id="9b9c3357-3975-471b-a3b5-bbe1f62fa475" class="">In OOP ist ein Unit eine Klasse oder eine Methode</p><p id="43f058e5-e9d1-4c1c-8cdb-74d8c45ff5fd" class="">Unit-Tests müssen schnell durchlaufen (Regression-Library), Regressiontest nach Änderungen notwendig</p><figure id="09f58866-ba01-4c89-ad5b-3e581c464095" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2011.png"><img style="width:480px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2011.png"/></a></figure><p id="588da1f2-8ebb-423f-af32-17df0a04950d" class="">
+</p><h2 id="115f3d4b-a77c-47d0-8354-66414833b602" class="">Module Testing</h2><p id="f115b8f8-2d51-473f-9848-e0ecaefe9883" class="">Modultests / Komponententests genau wie Unit Tests</p><p id="e82c245a-9d35-43da-bd0a-339c772a7293" class=""><span style="border-bottom:0.05em solid">Modul</span><div class="indented"><ul id="b1f42df0-50d6-4c6d-a4bc-3f6c82b6f45a" class="bulleted-list"><li style="list-style-type:disc">hat eine dokumentierte Spezifikation (API)</li></ul><ul id="3c16cabc-df7c-40f7-b4d4-ba2e14a3ca67" class="bulleted-list"><li style="list-style-type:disc">ist sichtbar und in Gesamtsystem integriert (z.B. mit Interfaces)</li></ul><ul id="ab66d6d5-80bc-4d27-9067-0d5bd70687b4" class="bulleted-list"><li style="list-style-type:disc">Es kann kompiliert/interpretiert und getrennt von anderen Modulen getestet werden (z.B. mit Mocking)</li></ul><p id="8e3c6067-6bad-44f4-b93c-32c9d92ea8df" class="">
+</p><ol type="1" id="ebfc8484-687b-4256-bc5b-2f121faafd1c" class="numbered-list" start="1"><li>Komponenten bieten Interfaces an (provides)</li></ol><ol type="1" id="329d206c-6166-49c6-a721-ddff632d420b" class="numbered-list" start="2"><li>Komponenten erfordern andere Interfaces (requires)</li></ol><ol type="1" id="6207dbfe-e9bd-4bd3-9fea-335001b2e4ee" class="numbered-list" start="3"><li>Das macht Komponenten zu abstrakten, austauschbaren Modulen</li></ol></div></p><figure id="16bebeb0-347b-402a-9975-55e6589b0148" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2012.png"><img style="width:336px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2012.png"/></a></figure><figure id="afd825a5-bb42-41d0-ba44-a365fc40b370" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2013.png"><img style="width:336px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2013.png"/></a></figure><p id="d9a1561e-15f0-4e51-80ef-4b301790dc80" class="">
+</p><h2 id="6c36e20e-4f90-4fb5-8b6f-0b9ace1c274c" class="">Integration Testing</h2><p id="4f75bb8c-cdb4-47ce-afac-3e1d9b24dd85" class="">Ziel: Test der Interaktion zwischen Modulen (Zusammenführung)</p><ol type="1" id="05b42773-c19a-49ac-986e-40ef95497fc1" class="numbered-list" start="1"><li>„Big Bang“</li></ol><ol type="1" id="16e04997-34db-408b-803e-9ccbe52a3db4" class="numbered-list" start="2"><li>Inkrementell: Top-Down / Bottom-Up (besser)</li></ol><p id="b1e86f16-a374-4a5e-b395-bf3c7378a8d4" class="">Häufig: Zusammenführung durch Entwickler<div class="indented"><p id="901b153c-ec43-46ba-92d7-3c9628f7d199" class="block-color-gray">– Weniger Aufwand (weniger Stubs/Treiber nötig)
+– Frühere Erkennung von Schnittstellenfehlern
+– Fehler-Lokation besser eingrenzbar (leichteres Debugging) </p></div></p><p id="45942480-d0ef-4f56-8f11-d7356ae63e02" class="">
+</p><h1 id="919d1b65-f7ef-424d-80f4-c297a733f1bd" class="">Test Driven Development TDD </h1><p id="5290639e-824b-4876-9488-2587b689e05c" class="">Setzt keine Implementierung voraus.</p><p id="c55233bd-87c3-4e68-958b-42bef9ad7909" class="">Automatisiert.</p><p id="cc477c1d-d3ae-4f5d-8cc2-038a3a0996f2" class="">Fixer Bestandteil von den meisten agilen Vorgehensmodellen.</p><figure id="dfd687a9-a8c4-4aa5-bbed-dc811ab70f56" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2014.png"><img style="width:624px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2014.png"/></a></figure><p id="2bbe0b10-03d1-4ebb-8307-bc03f64e686a" class=""><span style="border-bottom:0.05em solid">Ablauf</span><div class="indented"><ol type="1" id="8ff9f03e-fb41-4403-9597-18c2fe9ab45b" class="numbered-list" start="1"><li>Think<p id="22d4003d-fb01-432f-bbdc-c8cd5cb3c518" class="block-color-gray">Spezifikation / Definition des Tests</p></li></ol><ol type="1" id="7ee26c7c-5f94-4e10-8d38-ef456b8849c0" class="numbered-list" start="2"><li>Red (Fehlgeschlagen)<p id="0d9a0a06-9a7e-439f-bf1b-a4be3e706f2c" class="block-color-gray">Ausführung des Tests → zu testende Klasse existiert nicht</p></li></ol><ol type="1" id="87bdfcf3-2dce-4172-9ae4-c093d4f4a76e" class="numbered-list" start="3"><li>Green (Erfolgreich)<p id="d43cbef3-b3de-4999-a078-ca80121b914e" class="">Implementierung der zu testenden Klasse oder Komponent.</p><p id="839c9224-8869-4ccf-9864-b27dfe059bd8" class="block-color-gray">Versuchen status &quot;green&quot; zu erreichen. </p></li></ol><ol type="1" id="d3026254-dafc-4293-abf7-675ec582f4b0" class="numbered-list" start="4"><li>Refactor<p id="89bbeac5-f4b5-4897-82ea-9ea5bf594558" class="block-color-gray">Nach einer Abänderung / Korrektur muss wieder sichergestellt werden dass der status &quot;grün&quot; ist.</p></li></ol></div></p><figure id="431f9949-722d-46aa-a8c6-930426da0859" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2015.png"><img style="width:528px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2015.png"/></a></figure><p id="0d1ab340-6e5a-4ffb-bb95-c5ef75ec72db" class="">
+</p><p id="33d7f479-bd21-439a-a64e-abaafc9c31ab" class=""><span style="border-bottom:0.05em solid">Best-Practices für Testen</span><div class="indented"><p id="e8ecb51b-cb47-446f-b3bf-ce4c44ec83e3" class="">Viele Unit Tests machen Integrations-Tests wesentlich einfacher. (bottom-up testing)</p><p id="592c7d82-14a9-450c-9cb5-26a1ab6b8bcc" class="">Technische Architekten	<mark class="highlight-gray">kleine Programme und Methoden, einfach zu testen + Diagramme</mark></p><p id="c8532d88-9e28-4d81-b043-463cc067f1b5" class="">Tester				<mark class="highlight-gray">Schreibt Tests basierent auf Anforderungen </mark></p></div></p><p id="8afbfe68-70c4-4fce-8fd2-60d2d5592b51" class="">
+</p><h1 id="46df548b-b1c6-403c-ae19-a46fbfcb62bf" class="">Automatische Codeprüfung </h1><p id="96107564-381e-45c1-b4f8-78cbd4a3e8d2" class="">Mit einem Test-Framework</p><figure id="1311ceca-1f78-4c2c-905a-9e86bf19b854" class="image"><a href="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2016.png"><img style="width:432px" src="Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2016.png"/></a></figure><p id="dbdd8b2f-2451-42ed-9939-c98f9c48e754" class=""><span style="border-bottom:0.05em solid">Bestandteile</span><div class="indented"><p id="7034dd8d-da0a-47ff-9c3e-47cb96c37664" class="">Software and System under Test (SUT)</p><p id="76966971-9482-4497-aa2a-9147fd135cf2" class="">Test Suite<div class="indented"><p id="e1f5cd1f-bc38-4a86-9686-cee8d39269ba" class="">Testfälle die auch generiert werden können</p></div></p><p id="94694cf9-2401-468f-8080-8f997ca0d26b" class="">Test Runner</p><p id="420318a6-c24d-41b9-91f0-df9eb005d5e8" class="">Überprüfungsmechanismus</p><p id="e4c37aed-1bc6-472b-aa95-8ee785282917" class="">Test Reporter</p></div></p><p id="5ebba9db-6a9c-4d8f-94b0-a61bdaaf7771" class="">
+</p><p id="86f2d1b2-0fe4-4d63-9ff1-f61d4df36fc0" class=""><span style="border-bottom:0.05em solid">xUnit - Testing Frameworks</span><div class="indented"><p id="00b60d90-c9bc-4c48-b06e-1b286e6ffe55" class="">Framework erlaubt einfache Erstellung, Ausführung und Auswertung der Testfälle → einfach, schnell, Korrekturen nach Änderung möglich (Regressionstests)</p><p id="4b4fb09b-300f-43f4-a377-016dfb030b87" class="">Testing-Frameworks für verschiedene Sprachen:<div class="indented"><p id="f950a028-6857-440f-b60f-5d9c08e2d843" class="block-color-gray">Java		JUnit</p><p id="ac6f2993-85d5-415a-9feb-bba3c53a78c8" class="block-color-gray">.Net		NUnit</p><p id="147e10cf-4925-40d0-bc42-49316cdb4b73" class="block-color-gray">C++		CppUnit</p><p id="8d8b6e58-7a07-4b2c-afd1-1b708a821c15" class="block-color-gray">Ruby	RUnit</p><p id="886dd974-03b0-404e-8fd1-ab6bd39d95a5" class="block-color-gray">...		...</p></div></p><p id="8542b34c-e644-4b41-8b10-574a5846b2f7" class="">Wird nicht nur für Unit Tests benutzt.</p><p id="a059acf7-758f-40fc-ad89-bc4caa2f8505" class="">
+</p></div></p><p id="04f4d174-b102-46bc-86dd-e6bb495e7f6b" class=""><span style="border-bottom:0.05em solid">Code Quality Checks</span><div class="indented"><p id="a5dfd350-176d-47d7-9bf9-7f8c6111a208" class="">Automatische Überprüfung der Einhalteung von Namenskonventionen, JavaDoc Kommentaren, Klammersetzung und Einrückungen, Duplicate Code, Komplexität usw.</p><p id="e3f2bac2-2ff0-46b0-9653-6561f5f2ea11" class="">
+</p></div></p><p id="56364e58-edc3-40c1-949d-e3f9dc45fa7b" class="">
+</p></div></article></body></html>

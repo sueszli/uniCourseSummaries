@@ -1,0 +1,694 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Models</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a21d8eb6-e183-4abb-9a9f-b15cef96d39a" class="page sans"><header><h1 class="page-title">Models</h1></header><div class="page-body"><p id="97284769-39e9-43e5-9df2-42bfcc510280" class="">
+</p><nav id="bf4affa7-4ad0-4a4f-8ef2-dc57232acfb2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e462cd42-c4ec-4c4c-b804-06174490601e">Architecture models</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6d1a634f-ec2b-4390-b5ca-813831943d4d">RAM model</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#84d4c986-097b-4e6c-aba4-4973bf0234cb">PRAM model</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1c617bdc-aed7-4d27-ad05-a7ee5f491f6d">PRAM conflict resolution</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#10240563-c146-4255-a96a-7673d923bafd">Flynn’s taxonomy</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#16902190-44cf-4bf2-8da1-38e1a14222b3">Parallel programming models</a></div></nav><p id="21b0a837-f56f-44fa-a486-eb589b5fe2ea" class="">
+</p><h1 id="e462cd42-c4ec-4c4c-b804-06174490601e" class="">Architecture models</h1><p id="a1b65890-9b5b-4176-b659-1ffc1a0baebf" class=""><mark class="highlight-gray">Algorithm in </mark><em>model </em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span></mark> <mark class="highlight-gray">Implementation as </mark><em>program </em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> Execution of it in concrete </mark><em>architecture</em> </p><p id="05f539d9-4d07-431d-ab01-00f4534049ce" class="">
+</p><p id="17c2dd09-0933-41d3-8a44-6e8f9c019361" class=""><mark class="highlight-blue">Computational model / Architecture model / Machine model</mark><div class="indented"><p id="afdc5480-387e-4ef0-b528-b1c394412fac" class="">Theoretical construct for designing and analyzing algorithms.</p><p id="1745626a-e8a0-4bae-b2f4-0b258b1e786f" class="">formally describes<div class="indented"><ul id="496ed812-e1bb-4199-bff0-3cf4a8eafeff" class="bulleted-list"><li style="list-style-type:disc">components of the processor <mark class="highlight-gray">(memory, communication, synchronization)</mark></li></ul><ul id="cf0ab413-c752-47a3-8720-02ea6d01bd9d" class="bulleted-list"><li style="list-style-type:disc">how they execute programs</li></ul><ul id="9faba1ad-0803-4ab0-a3da-8572584b9cb2" class="bulleted-list"><li style="list-style-type:disc">at what costs <mark class="highlight-gray">(serves as execution-cost-model)</mark></li></ul></div></p></div></p><p id="47232836-7e6d-4f82-b070-622d0fe7d0b0" class="">
+</p><p id="fd4c5599-d375-4a2b-a87d-6a919a6e7811" class=""><mark class="highlight-blue">Bridging models</mark><div class="indented"><p id="e27536bc-b2a0-4e95-a624-a220e7b7b370" class="">introduced as Valiant’s Bulk Synchronous Parallel BSP-Model.</p><p id="852743e3-9331-47c9-bda2-2a0d4c8278e0" class="">should have enough resemblence to actual machines that the algorithms implemented with the model can be used to predict the performance to some extent. </p><p id="0f270e3c-a79c-4538-9938-b1b7aed9235d" class=""><mark class="highlight-teal">Minimal requirements</mark><div class="indented"><p id="f3710412-a5e7-42a9-8323-cd1c845651dc" class="">If algorithm <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>A</mi></mstyle></mrow><annotation encoding="application/x-tex">\small A
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">A</span></span></span></span></span><span>﻿</span></span> performs better than <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>B</mi></mstyle></mrow><annotation encoding="application/x-tex">\small B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05017em;">B</span></span></span></span></span><span>﻿</span></span> in the model,</p><p id="d29e0bde-9cff-4bed-ad8e-7ac7ca69846c" class="">then the implementation should also do so too on the applicable hardware.</p></div></p></div></p><p id="99714666-daee-4769-8628-a1e688fe7014" class="">
+</p><p id="1957c696-bed6-433b-87f8-86bd48ac3581" class=""><mark class="highlight-blue">Model gap</mark><div class="indented"><p id="017ce45b-e463-4e56-8264-75be2d759980" class=""><mark class="highlight-teal">sequential computing</mark><div class="indented"><p id="b5919ff4-c9cb-47ce-81a1-a73225dc1387" class="">There are many bridging models, ie. RAM.</p><p id="1f0b90c4-2eb6-4ecb-a766-564776dec666" class="">Predicted performance corresponds to real performance to some degree.</p></div></p><p id="fe767acd-1dc5-47fa-a3b9-abc63eb052b1" class=""><mark class="highlight-teal">parallel computing</mark><div class="indented"><p id="a44d9e9d-684c-4927-b361-70a7fba2c669" class="">No single, agreed upon model.</p><p id="031ddd1f-7457-4ad2-95f5-38296e913db2" class=""><em>Performance portability problem: </em>No good “bridging” properties of models for the many paradigms, languages, architectures → we have to design, analyze, benchmark the parallel algorithms instead.</p></div></p></div></p><p id="b6c19978-5cc6-4873-a514-929ef924fb27" class="">
+</p><h2 id="6d1a634f-ec2b-4390-b5ca-813831943d4d" class="">RAM model</h2><p id="35a9699d-b110-4de8-8a40-fa3a0c3a48cc" class=""><mark class="highlight-blue">RAM</mark><div class="indented"><p id="2d171572-d3a1-4923-a2a6-bcfbb607914a" class="">= random access memory / von Neumann architecture.</p><p id="76bb18cc-ded8-495f-a21c-8d9ef51c073c" class=""><mark class="highlight-gray">standard sequential model - but there are alternatives (ie. turing machine)</mark></p></div></p><p id="fa252e77-16da-42cb-802d-7072a1c8f1d5" class=""><mark class="highlight-blue">Wrong asssumption in RAM</mark><div class="indented"><p id="a54d4e7c-b111-48bc-8a5f-f3c226cb6c97" class="">= ALU instructions and memory access take the same time. </p><p id="c6ae01a6-3d83-4adb-83a2-31bc5ce67ea6" class="">In reality, memory access time is much slower <mark class="highlight-teal">(= von Neumann Bottleneck)</mark>.</p><p id="c0c2e460-0fab-40b7-8309-1d14f66c5899" class="">We try to overcome it through the use of <mark class="highlight-teal">caches</mark> but they are complex.</p></div></p><p id="c82b4c1b-481e-4f9b-91d9-83d6a36452f9" class="">
+</p><h2 id="84d4c986-097b-4e6c-aba4-4973bf0234cb" class="">PRAM model</h2><p id="5f70e6a9-8442-4851-a8a2-8baf1f6c8057" class=""><mark class="highlight-blue">PRAM</mark><div class="indented"><p id="8d716f10-e1c3-4a5b-ade9-fcbcf091d77d" class="">= parallel random access memory</p><p id="fc42bd4a-0853-431c-a50b-4d17ef1c6e60" class=""><mark class="highlight-gray">a parallel computer-memory architecture model</mark></p><p id="887b6b70-483f-48b6-8c4b-0983847af5bf" class="">Processors operate under the same clock <mark class="highlight-teal">(lock-step)</mark>: they all perform one instruction per clock tick</p></div></p><p id="ee744a84-0e7b-4721-9103-77af2912122a" class=""><mark class="highlight-blue">Wrong assumption in PRAM</mark><div class="indented"><p id="f7ebb7e3-6ce9-41e3-8f3c-a88d10b108da" class="">= ALU instructions and memory access take the same time.</p><p id="dc59c455-a430-41f1-a5ea-e72a6c1f5539" class="">Even more inaccurate than in RAM because of multiple processors etc. <mark class="highlight-teal">(= Aggrevated von Neumann Bottleneck)</mark>.</p><p id="616fa5fb-681d-412f-ad06-d50e8850e300" class="">We try to overcome it by increasing the memory bandwidth through <mark class="highlight-teal">prefetching </mark>in <mark class="highlight-teal">banked / non-monolith</mark> <mark class="highlight-teal">memory</mark> for parallel instructions / vector operations.</p></div></p><p id="c895b0fc-c59a-421f-9b35-1320b9fbf436" class="">
+</p><hr id="a7cc7e88-ba66-414c-a53c-db624f31de2a"/><p id="f3656d34-4af7-45a1-88a2-22c59c222fef" class="">
+</p><p id="65f5dcbe-b362-4120-93ec-079a41e4a93c" class=""><mark class="highlight-blue">UMA</mark><div class="indented"><p id="287b6435-335e-4f68-85b3-fbac6446cd8d" class="">= Uniform memory access <div class="indented"><p id="e754368e-cb5b-4748-8b73-83cdf105109c" class="">Access time to memory <mark class="highlight-teal">does not depend</mark> on processor-location.</p></div></p><p id="6bc0bc40-8afa-4386-a16d-2a15d358620b" class="">Monolithic shared memory </p><p id="156c3c4f-846b-4021-b56e-3b2a28ec14b1" class="">Synchronous, lock-step<div class="indented"><p id="965700bf-bfc0-48d5-84d9-87403adc8ffd" class=""><mark class="highlight-gray">Communication/coordination through shared memory</mark></p><p id="eeedf4db-ee30-4f28-88f9-d0c2f37d9830" class=""><mark class="highlight-gray">Using multiple ports, memory network</mark></p><p id="7e5e483c-cc5d-48da-baa7-7558905290e4" class=""><mark class="highlight-gray">ie. RAM, PRAM</mark></p></div></p></div></p><figure id="49c22bb2-3a19-4e2d-97ac-b1365b052b1a" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled.png"><img style="width:336px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled.png"/></a></figure><p id="516db23b-1a02-4f95-a100-30e28e233165" class="">
+</p><p id="5ad64086-f9e3-4c42-8bdb-712b4d7893f9" class=""><mark class="highlight-blue">NUMA</mark><div class="indented"><p id="3cf0c3e4-5a03-4402-8b8b-e81935947ec6" class="">= Non-Uniform memory access<div class="indented"><p id="575055df-6f76-47a3-9081-2c8ae0d7b403" class="">Access time to memory <mark class="highlight-teal">depends</mark> on processor-location.</p></div></p><p id="1c27ad9d-0797-4bee-bd5e-e8933b3741ed" class="">Non-monolithic / banked shared memory</p><p id="69099149-11e4-49e1-a8c9-d39b42d69d29" class="">Asynchronous, no lock-step, no common lock<div class="indented"><p id="095fdcb2-9838-486a-9d29-28ba847707a3" class=""><mark class="highlight-gray">Synchronization through atomic operations and barriers.</mark></p><p id="54f7411d-4c7e-4b21-b4a2-d8cdaab24440" class=""><mark class="highlight-gray">Memory-network</mark></p><p id="0f17f2f9-8724-4dde-9333-5dd7598935be" class=""><mark class="highlight-gray">ie. almost all real processors</mark></p></div></p></div></p><figure id="7c852564-5465-4910-b19f-78a36fc3dfea" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%201.png"><img style="width:192px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%201.png"/></a></figure><p id="27c49427-c12d-4cf8-8316-9bc4e07747da" class="">
+</p><p id="373142ab-ae3e-4a25-a8de-c890cc94aefd" class=""><mark class="highlight-blue">NUMA with local memory</mark><div class="indented"><p id="f9b20f4b-7287-4033-b352-85b62d9d52ac" class="">Some memory locations are closer to processor (faster access) than others</p><p id="e8ef40a2-35f7-4b5b-9f92-c8fdfc9d4f77" class="">Local memory is not shared - only accessible by the processor to which it belongs</p></div></p><figure id="a6de1eaa-e754-4483-b528-0a06dc2d17f0" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%202.png"><img style="width:192px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%202.png"/></a></figure><p id="ad295726-4e96-44b0-9c03-e1f61f4b103b" class="">
+</p><p id="a10dab7e-2860-47d2-abb2-aa4b4174ad95" class=""><mark class="highlight-blue">Distributed memory</mark><div class="indented"><p id="806d939b-d378-4906-aa25-880049c743de" class="">Local memory + memory distributed over processors via network</p><p id="19490307-38f0-44fb-a942-7e98be87e3b2" class="">Needs explicit communication</p></div></p><figure id="92429c74-7f5e-4e36-999b-b685fbb784fb" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%203.png"><img style="width:192px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%203.png"/></a></figure><p id="71f7c2ad-e11a-4027-9da0-16f5922fa72f" class="">
+</p><h2 id="1c617bdc-aed7-4d27-ad05-a7ee5f491f6d" class="">PRAM conflict resolution</h2><p id="3cc33edb-7d2a-4672-abb4-f4180e5c07bc" class="">What happens if several processors in the same time-step access the same memory location in the PRAM model?<div class="indented"><p id="7c4c9840-19af-4eb2-91c3-ddecda628306" class=""><mark class="highlight-blue">EREW PRAM			</mark>❌ reading exclusive		❌ writing exclusive</p><p id="69baf32f-26bd-47fe-9258-bbe7dd52a0b5" class=""><mark class="highlight-blue">CREW PRAM			</mark>✔️ reading concurrent		❌ writing exclusive</p><p id="7ea41214-9a6f-459a-858d-439dbddfa63e" class=""><mark class="highlight-blue">CRCW PRAM			</mark>✔️ reading concurrent		✔️ writing concurrent</p></div></p><p id="9b913f1c-d83f-4c42-bf1f-aa501e8c51bc" class="">
+</p><p id="10beb2af-3386-43b5-aec8-2e2330d91e1e" class="">When exclusive it’s the algorithm designer’s responsibility to prevent it and not the hardware’s.</p><p id="197ee6d4-d464-4c5a-bde8-b83eac0cdd4c" class=""><em>CRCW PRAM </em>has 3 theoretical <em>write-conflict </em>resolutions:<div class="indented"><p id="3a199454-a97f-4eba-a776-5c442b88db4f" class=""><mark class="highlight-blue">common		</mark>conflicting processors must write same value</p><p id="40fdea36-f814-466f-be3e-4b87fb3cb8a9" class=""><mark class="highlight-blue">arbitrary		</mark>one random write succeeds</p><p id="b621aec5-c98a-4768-b93c-814e68b36ee8" class=""><mark class="highlight-blue">priority		</mark>a priority-scheme decides which write succeeds</p></div></p><p id="546b9918-1c17-40b1-a463-a228dd100d21" class="">
+</p><p id="bf671e4e-b338-40be-8212-2b36a642af14" class="">
+</p><h1 id="10240563-c146-4255-a96a-7673d923bafd" class="">Flynn’s taxonomy</h1><p id="2684652e-3933-42a1-b2b2-bbec5f2b729e" class="">Classifies instruction streams and data streams in computing systems.</p><p id="9665d901-b298-473a-9246-42c66a530956" class="">Classifies architectures by:<div class="indented"><p id="bf8fc2b0-5aa8-47f5-93f6-1e18f2f1678d" class="">Instructions carried out simultaniously</p><p id="02f1925e-10a9-4738-9c76-8a1b3bc092bc" class="">Data / words accessed simultaniously</p></div></p><p id="9c94764c-15df-4e57-8ae6-326d0cb15769" class="">
+</p><p id="0adf4e6a-0c85-4b98-a91c-0acb7af4bc9a" class=""><mark class="highlight-blue">SSID - single instruction, single data</mark><div class="indented"><p id="d3df9e48-868a-4ff9-b8f1-2e8552f926da" class="">single processor operates on single data per instruction</p><p id="81b61ef5-5cc9-4238-bb45-bbe6e73c6491" class=""><mark class="highlight-gray">ie. sequential architecture like RAM</mark></p></div></p><figure id="284606ee-6d55-4eb4-91c1-7c3e54cbba23" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%204.png"><img style="width:36px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%204.png"/></a></figure><p id="0d867322-6518-4cfe-837e-4dc58573f071" class="">
+</p><p id="5922a36f-7c1e-4060-9520-7a1706fe4979" class=""><mark class="highlight-blue">SIMD - single instruction, multiple data</mark><div class="indented"><p id="3e1a909c-e27c-4ad3-8fb0-1a896da3cac0" class="">single processor operates on multiple data per instruction</p><p id="71bfb005-ca33-46e3-aad4-8d1f8f1bd656" class=""><mark class="highlight-gray">ie. traditional vector processor, SIMD-extensions, some GPUs</mark></p></div></p><figure id="416cd0e4-e148-4efc-b0ee-1fa49151fb6d" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%205.png"><img style="width:144px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%205.png"/></a></figure><p id="cf4ea8d2-73d9-4799-a766-4f9559af59a8" class="">
+</p><p id="4afa7da9-ae01-4fef-9df5-368d53562c27" class=""><mark class="highlight-blue">MISD - multiple instruction, single data</mark><div class="indented"><p id="dda45c43-739f-4f3a-b30b-e430b3590201" class="">multiple processors and operate on a single stream of data</p><p id="b9b8153f-a01d-47a0-b976-5c1e102cf25e" class=""><mark class="highlight-gray">ie. some say there are none, some say pipelined architectures </mark></p></div></p><figure id="56d1b354-c003-49e1-8ab2-7f96b5edbcbe" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%206.png"><img style="width:192px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%206.png"/></a></figure><p id="af7e62ae-1ff3-4422-b591-2b5ce8521491" class="">
+</p><p id="4cf227d1-aef0-4bf2-a903-c2b36bda1b78" class=""><mark class="highlight-blue">MIMD - multiple instruction, multiple data</mark><div class="indented"><p id="f5416f80-1beb-4394-b4ec-3c8afac4ab0b" class="">multiple processors operate on multiple per instruction</p><p id="715fb4ef-5903-4ea3-9179-d1f2646afcd6" class=""><mark class="highlight-gray">ie. PRAM, distributed memory architecture</mark></p></div></p><figure id="40eede4c-7c1d-4bb3-a95f-36fee81545eb" class="image"><a href="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%207.png"><img style="width:288px" src="Models%20a21d8eb6e1834abb9a9fb15cef96d39a/Untitled%207.png"/></a></figure><p id="8b575577-547c-4978-bd3b-de40c2c937c5" class="">
+</p><p id="c56ead24-2d79-454e-9cc6-6ec648c971be" class="">
+</p><h1 id="16902190-44cf-4bf2-8da1-38e1a14222b3" class="">Parallel programming models</h1><p id="c2b65ace-5afa-43de-971e-f937c01f4890" class=""><mark class="highlight-blue">Parallel programming models</mark><div class="indented"><p id="e8b8b0ea-ce70-4974-9d55-b013829652dd" class="">= Programming paradigms and interfaces, libraries<div class="indented"><ul id="c6d4759e-8781-4cad-9310-a12b1498a0d8" class="bulleted-list"><li style="list-style-type:disc">parallel resources (processes, threads, tasks, ...) and granularity of parallelism</li></ul><ul id="d9f80311-be8d-458d-8603-04509bf9051f" class="bulleted-list"><li style="list-style-type:disc">memory (shared, distributed, hybrid)</li></ul><ul id="5e3e3642-4e28-4d0c-ac6b-7302ea3ca2f1" class="bulleted-list"><li style="list-style-type:disc">methods of synchronization and communication</li></ul></div></p><p id="e62a2d49-f5fc-452b-8dad-b20d15186ab7" class="">All given programming models can be realized by any architecture but a better fit is more efficient.</p><p id="d2de06fa-e320-41f6-9199-7555e809deb6" class="">
+</p></div></p><p id="d0fa99b3-39f8-49ad-a145-6ed2c4cd4eb7" class=""><mark class="highlight-blue">Using Flynn’s taxonomy for programming models</mark><div class="indented"><p id="42243658-6b05-477a-8986-c7b1843cb0d6" class="">SIMD: one instruction operates on many different elements</p><p id="b8e584ab-e6e8-4606-b5d5-f9a2d7eac080" class="">MIMD: different processes can execute different programs<div class="indented"><p id="2f3d1c5f-a488-40f4-94fb-412e56ec0171" class="">
+</p></div></p><p id="fae9b048-5e6d-47a3-a498-a87c2272f124" class="">SPMD: same program operates on multiple data (is a subcase of MIMD)<div class="indented"><p id="8ea20159-39f8-42ba-b3bc-efeded6dca9c" class=""><mark class="highlight-gray">All code in this lecture will be SPMD</mark></p><p id="742fea01-b24b-4d27-bb3a-770093941ce7" class="">All processes must execute the same program but they can execute diffrent parts of the same program at the same time.</p></div></p></div></p></div></article></body></html>

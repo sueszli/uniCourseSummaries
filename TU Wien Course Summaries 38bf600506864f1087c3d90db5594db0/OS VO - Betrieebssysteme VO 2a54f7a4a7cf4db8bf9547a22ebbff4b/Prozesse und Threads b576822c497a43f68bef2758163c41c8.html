@@ -1,0 +1,698 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Prozesse und Threads</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b576822c-497a-43f6-8bef-2758163c41c8" class="page sans"><header><h1 class="page-title">Prozesse und Threads</h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="baecab71-364f-4ef6-a924-9e57187604c0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">In dieser LVA nur singlecore CPUs - keine echte Parallelität.<p id="7d524732-bbcb-4506-b9ef-2c98aad7a267" class="">An jedem Zeitpunkt kann nur eine einzige Instruction ausgeführt werden.</p></div></figure><p id="f8ec4ee2-c1e1-418b-a2cb-c2ac5a435951" class="">
+</p><nav id="5f753684-e0a1-4e4f-b65a-4b1a4e58b236" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d6868581-42b6-496c-8574-bf0f355e359f">Begriffe</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bf7674b1-8917-4f0e-aad6-87892d2f529c">Aufgabe des OS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6452f079-fffc-4144-bfb0-29b9aca4777e">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#70ed12b1-fb37-4e49-9de1-b4310b5bf7c1">Prozess-Zustände</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e6e9520b-25a3-4ff5-8c56-0f5d1bdc6a2f">Process Switch</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#25fe3f78-a647-4361-ab47-950b1169f4cc">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#57ac4038-2539-49b5-91c9-d284720dfda5">Prozessverwaltung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b9f0ab8-deed-4a1c-96d2-81378cb8139f">Process Image</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#40f7d553-843e-406c-9140-274c953eb6c0">Process Control Block PCB</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#efe9a8cc-efdf-4815-9f1d-1686708ac36a">Execution Modes</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1003cbc8-ae07-422f-bf2b-14db21aac3a7">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d392cc92-36fe-4726-9178-67e30d989cd4">OS Designs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d27fb8ca-f50a-47f4-80eb-af99f19cf6d9">1) OS Ausführung in User Prozessen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#691e84b4-2eff-4adb-b570-a2807f51d51c">2) Nonprocess Kernel </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9c4d59f7-97d7-44a6-a16c-043c0a9f35ed">3) Prozessbasiertes OS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6b8b8329-ec7e-4c47-991c-78d33d06490d">Kernel Architekturen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4bc7f90c-cfc3-4f00-902f-7cdfd60cdf43">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#469c356b-896b-4683-929d-32abd4c7d880">Threads</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#82e22ff2-66c0-4d02-a1d2-085eebcb7436">User-Level Threads (ULT)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56e72da5-fd04-4394-8e73-29ac703225d4">Kernel-Level Thread (KLT)</a></div></nav><h1 id="d6868581-42b6-496c-8574-bf0f355e359f" class="">Begriffe</h1><p id="52fe8f52-0dca-4d51-9306-a7b18c5206e7" class=""><mark class="highlight-blue">Programm	</mark>statischer Code</p><p id="3ba03b26-6013-4848-bfbe-d48861b1e304" class=""><mark class="highlight-blue">Prozess		</mark>Programm im Ausführungs-Kontext</p><p id="765b9660-e04a-40bc-b2cf-a60b28f63bd0" class=""><mark class="highlight-gray">			= Programmcode, assoziierte Daten, Execution Context (PCB)</mark></p><p id="e906308c-8d66-4af5-aa7b-a452e7ad11fa" class=""><mark class="highlight-blue">Kontext		</mark>aktueller Prozess-Zustand, Verwaltungsdaten (Tabellen)</p><p id="4a93556a-e88b-4ab2-8912-1c69d864f79d" class="">
+</p><p id="98cbdcc3-906e-40d5-975b-1b1154dd384a" class="">
+</p><p id="bce359f9-730b-414c-8f3a-97a182195d69" class=""><mark class="highlight-blue">Dispatcher	</mark>OS-Programm für Process-Switching bei Timeout Interrupt</p><p id="26b82e6a-f96b-4cfa-bbf9-2108770e9469" class=""><mark class="highlight-blue">Trace		</mark>Ausführungs-Reihenfolge von Instruktionen - Können sich überlappen.</p><ul id="670185d4-0a24-4dc3-9896-234c55d74fc9" class="block-color-gray toggle"><li><details open=""><summary><mark class="highlight-gray">Visualisierung von Trace</mark></summary><figure id="addca856-39a4-40c6-b5af-81f579eee7ac" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled.png"><img style="width:192px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled.png"/></a></figure><figure id="ed8f3362-f795-452d-b5f5-69d3b692536c" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%201.png"><img style="width:192px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%201.png"/></a><figcaption><mark class="highlight-gray"><code>a+0</code></mark><mark class="highlight-gray"> steht für Start-Adresse </mark><mark class="highlight-gray"><code>a</code></mark><mark class="highlight-gray"> und offset. </mark></figcaption></figure><figure id="de0d34c5-2d2c-4127-a010-1a749b2333ae" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%202.png"><img style="width:192px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%202.png"/></a><figcaption>Prozesse haben fixes Zeitbudget</figcaption></figure></details></li></ul><p id="430999eb-0b5c-4c98-bc15-60c4e904b1ba" class="">
+</p><h2 id="bf7674b1-8917-4f0e-aad6-87892d2f529c" class="">Aufgabe des OS</h2><p id="2bac80e2-9895-449f-b47f-2349e7fa4f2d" class="">OS allokiert Speicher und baut Datenstrukturen auf für Prozess-Zustand und Speicherbereich.</p><p id="91a3e55e-4397-4563-8a64-cc41de6e8a02" class="">OS kreiert, beendet und verwaltet Prozessse.</p><p id="3d6e95cc-c954-488d-90c8-49418c8e8a3a" class=""><mark class="highlight-blue">Prozess-Erzeugung</mark><div class="indented"><p id="7d1bd921-5329-4cc3-83be-63e811b0c201" class="">Login von user</p><p id="7095448e-2014-4467-9092-206181f70410" class="">OS Service Ausführung</p><p id="7104495b-8262-408b-bd68-f634570f7db9" class="">Subroutine call (Process Spawning: Parent erzeugt Child)</p><p id="6a350400-921e-4795-888e-3ce4749ca132" class="">Absetzen eines Jobs</p></div></p><p id="b6a5dc90-cb7c-471f-ad5d-1e2ec74a0705" class=""><mark class="highlight-blue">Prozess-Beendigung</mark><div class="indented"><p id="88430405-046a-4aa9-a04b-aae57967c697" class="">Logout von user</p><p id="c33b42e7-c1dc-4b22-8176-50c83c643c4a" class="">Service request an OS</p><p id="10878ab4-35f3-46ff-8163-e559cd12cad8" class="">Fehler Auftritt (Arithmetic error, IO failure, ...)</p><p id="25596daf-9f13-4f4c-99ad-3a0f82de0760" class=""><em>Halt-</em>Instruction</p></div></p><p id="cb7647c3-f485-45b9-b651-3925f98599b2" class=""><mark class="highlight-blue">Prozess-Verwaltung</mark><div class="indented"><p id="9d6b7737-b136-4245-ac8f-befe97ab0b5d" class="">Ressourcen-Vergabe</p><p id="9c59b7ba-895f-4bae-9d39-0edbd1682c4e" class="">
+</p></div></p><p id="889ade62-03eb-46fe-80eb-118815dab943" class="block-color-gray">Im kernel mode ist OS zuständig für:<div class="indented"><p id="17c4f359-386c-431d-8f3b-11d8ea6b7d85" class="">Prozess-Management	Erstellen, Beenden, Switchen, Synchronisieren</p><p id="aefc9581-2f53-4d5c-94d1-20dd51c63a88" class="">Speicher-Management	Speicherallokation, Swapping</p><p id="463ae6b0-2bf0-4312-bd67-b252b60891f7" class="">IO-Management		Buffer, Allokation von Peripherals und ihre Channels</p><p id="745c48d1-b479-428f-95b0-4cf382819041" class="">Supportfunktionen		Accounting, Monitoring</p></div></p><h1 id="6452f079-fffc-4144-bfb0-29b9aca4777e" class="">____________</h1><h1 id="70ed12b1-fb37-4e49-9de1-b4310b5bf7c1" class="">Prozess-Zustände</h1><p id="b465b379-1c77-468a-90f4-22bd53971cb9" class="">Jede queue, wie ist als PCB-liste / Prozessliste implementiert. </p><p id="c37896a4-07df-42c5-9f9d-c0d699c3aa65" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Running</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Running}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Running</span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="79f211bf-4287-40dc-9834-c8b7ada36506" class="">Instruction pointer <mark class="highlight-gray"><code>eip</code></mark> bei Prozess.</p></div></p><p id="dbea3e0b-7a31-4207-b697-3eb7f3f834f4" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mtext mathvariant="sans-serif">Not</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Running</mtext></mrow><mrow><mo fence="true">{</mo><mtable rowspacing="0.3600em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext mathvariant="sans-serif">Ready</mtext></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext mathvariant="sans-serif">Blocked</mtext><mtext> </mtext><mtext mathvariant="sans-serif">/</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Waiting</mtext></mrow></mstyle></mtd></mtr></mtable></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Not Running}
+\begin{cases}
+   \textsf{Ready}\\
+   \textsf{Blocked / Waiting}
+\end{cases}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.5919999999999996em;vertical-align:-1.071em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Not Running</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner sizing reset-size6 size5"><span class="mopen sizing reset-size5 size6 delimcenter" style="top:0.024999999999999994em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord text"><span class="mord textsf">Ready</span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord text"><span class="mord textsf">Blocked / Waiting</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size5 size6"></span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="6b3bb53a-c018-4f0e-a72e-39197f45a4d5" class="">Ready	ready to run</p><p id="c9a31b32-6412-47ac-9129-053e9dd17b79" class="">Blocked	waiting for event (zB IO response)</p></div></p><p id="8abafe4d-bc57-430f-9971-85f4ca3aea28" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">New</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{New}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">New</span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="a6aa0c27-9640-4476-b418-9b784310a54f" class="">Erzeugung von Prozess durch OS:</p><ol type="1" id="f9745785-84f7-4403-82ed-dfeaf63cec4a" class="numbered-list" start="1"><li>Erstellung von process ID</li></ol><ol type="1" id="5cfea988-296a-430c-ac3d-ce53d563e986" class="numbered-list" start="2"><li>Eintrag in Prozesstabelle</li></ol><p id="3a728aeb-1458-4404-bac9-ae8860e608d2" class="">Prozesse bleiben hier nach Erzeugung wenn Systemlast zu hoch oder <mark class="highlight-gray"><code>ready</code></mark><mark class="highlight-gray"> </mark>voll.</p></div></p><p id="0d61dbc0-b324-4186-a1ec-398b965e927d" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext mathvariant="sans-serif">Exit</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Exit}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Exit</span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="37f0c3cb-8084-4451-8096-3db0b99741dc" class="">Beendigung von Prozess durch OS:</p><ol type="1" id="dcdfb89f-23b4-4f58-bfee-2336b72050a4" class="numbered-list" start="1"><li>Terminierung von Programm</li></ol><ol type="1" id="669dc31f-3206-485a-9fe6-f9b79ec4e746" class="numbered-list" start="2"><li>Prozessinformationen aus Tabellen verwendet <mark class="highlight-gray">zB Accounting, Debugging</mark></li></ol><ol type="1" id="aeb43c27-cacb-43d0-90d3-85ece26b782a" class="numbered-list" start="3"><li>Administrative Schritte<mark class="highlight-gray"> zB logging</mark></li></ol><ol type="1" id="66c6350a-bba5-4c1f-969e-57f073f3748a" class="numbered-list" start="4"><li>Tabellen-Einträge löschen, Speicher freigeben</li></ol></div></p><p id="9bdda4f0-ee54-409c-9618-5aa72de2c19d" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mtext mathvariant="sans-serif">Ready,</mtext><mtext> </mtext><mtext mathvariant="sans-serif">suspend</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Ready, suspend}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Ready, suspend</span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="fb955070-d577-40a8-b240-40c7fe0bfc56" class="">Auslagerung in Sekundärspeicher</p></div></p><p id="5fd3eda8-7922-4407-8220-0d850d7fdc44" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mtext mathvariant="sans-serif">Blocked,</mtext><mtext> </mtext><mtext mathvariant="sans-serif">suspend</mtext></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \textsf{Blocked, suspend}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord textsf">Blocked, suspend</span></span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="9649a577-4632-4198-a219-7eb5477f0a8f" class="">Auslagerung in Sekundärspeicher</p></div></p><p id="a26f7462-f8fd-4194-bb52-1072bbd0c32b" class="">
+</p><div id="a3fa1dad-dce9-4bdc-89af-2e6e2343f299" class="column-list"><div id="d6ff2a06-7261-4136-92af-d1267d178963" style="width:56.25%" class="column"><figure id="795511d6-b0bf-40de-b310-ccc3cfc371dc" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%203.png"><img style="width:528px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%203.png"/></a></figure></div><div id="64b65d87-ea0c-4e25-afd3-0e16401ba753" style="width:43.75%" class="column"><figure id="fb85dba5-c135-4804-b6ad-277c7246566b" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%204.png"><img style="width:288px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%204.png"/></a></figure></div></div><p id="73550bac-c438-4cc6-a71d-9e54bbd906df" class="">
+</p><p id="38c0dbb3-ec5f-49e9-a346-cc170bfda468" class=""><mark class="highlight-blue">Ursachen für Suspend</mark><div class="indented"><p id="0c016967-477a-4012-8371-ec74aa44fcfc" class=""><mark class="highlight-blue">Swapping</mark>: Arbeitsspeicher zu voll <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Auslagerung in Sekundärspeicher (IO Operation)</p><p id="0bc17dd4-bf0b-4ccd-bb99-1c2e70aabf6c" class="">Hintergrundprozess</p><p id="fd35a23e-413a-41e1-ae01-836804f786a0" class="">Problembehaftet</p><p id="b3a8f541-8e99-4b0a-b404-181d8cabf9b1" class="">Timing: Periodischer, wiederaufkehrender Prozess</p><p id="f3fd931d-7f7b-4ef8-aa3b-89a4411aebb0" class="">Parent request: Kann wegen Untersuchung, Modifikation, Koordination sein Child suspenden</p></div></p><p id="993bbfed-b225-4fdd-9123-3474a2d00d1d" class="">
+</p><h2 id="e6e9520b-25a3-4ff5-8c56-0f5d1bdc6a2f" class="">Process Switch</h2><p id="f71d569e-59e1-4d99-9e89-39f4351835c0" class="">Umschaltung zwischen Prozessen wenn OS wieder im Besitz der Kontrolle ist durch:</p><p id="4c1407d4-6465-40a5-92d4-dfe1329dc512" class=""><mark class="highlight-blue">Call / Supervisor Call / System Call </mark><div class="indented"><p id="6b01a98d-1530-4061-a711-67d5695f3859" class="">Expliziter Aufruf eines Betriebssystem Services im Prozess zB IO-Operation</p></div></p><p id="0dc602fb-c161-4eed-81a1-a7ee532cc468" class=""><mark class="highlight-blue">Trap</mark><div class="indented"><p id="374f872c-b5e4-4b72-be95-512520bd8b6d" class="">Fehler bei Ausführung von Instruction - Supervisor-Mode um Fehler zu behandeln.</p></div></p><p id="8a1fde8c-ecdf-48a5-82ca-508427e5c297" class=""><mark class="highlight-blue">Interrupt</mark><div class="indented"><p id="2a761ac6-aeb3-4eb3-89f7-c0492bbe9bbb" class="">Ursache außerhalb des Prozesses zB key-press (IO-Interrupt)</p><p id="ce05e02a-1d25-442b-8e6c-67bd5fd6b5ed" class="">Interrupt-Behandlungsroutine von OS gewählt</p><p id="5eb567c4-5756-4ec1-9508-bfee0e9153bb" class=""><mark class="highlight-blue">Queuing Model</mark>: Eigene Queue für jedes Event auf dass ein Prozess durch Warte-Ereignis blockieren und warten kann.</p></div></p><figure id="66b9922b-5e2c-486f-a9e8-e562b6b66a4c" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%205.png"><img style="width:192px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%205.png"/></a><figcaption>Queuing Model</figcaption></figure><h1 id="25fe3f78-a647-4361-ab47-950b1169f4cc" class="">____________</h1><h1 id="57ac4038-2539-49b5-91c9-d284720dfda5" class="">Prozessverwaltung</h1><p id="ca62ab3d-7d2b-4de0-8454-4dca0c7a5d2b" class="">Die Verwaltung von Prozessen und Ressourcen braucht eigene Datenstrukturen.</p><p id="65f50a06-c701-4906-a76e-eaddde347f82" class="">Diese Tabellen müssen nicht unbedingt einander referenzieren.</p><p id="fe3c8f05-7c06-4c01-96a5-9ae034920551" class=""><mark class="highlight-blue">Memory Table			</mark>Physischer Bereich im Arbeitsspeicher und Sekundärspeicher</p><p id="3e88841b-cff6-4cca-a1c3-de87cce0e9ff" class=""><mark class="highlight-blue">IO Table				</mark>Peripherals und ihre Zustände, Buffer</p><p id="6a5f3430-46ce-407b-a1cf-1265e4dce33a" class=""><mark class="highlight-blue">File Table				</mark>Dateien und ihre Zustände, Buffer</p><p id="18507643-d9d2-42f7-b29f-8d98853c9527" class=""><mark class="highlight-blue">Primary Process Table	</mark>Globale Prozesstabelle - mit pointer zu process image </p><p id="5cd0fa92-e224-402f-9578-69124a6dbdd1" class="">
+</p><h2 id="1b9f0ab8-deed-4a1c-96d2-81378cb8139f" class="">Process Image</h2><p id="61fc1db1-cf59-4ac7-81ef-e59e59a2aba4" class="">Im Virtual Memory - muss nicht zusammenhängend sein.</p><p id="99eaa23a-084e-4d21-a574-fe1773f37169" class="">OS braucht Teile davon für Prozessverwaltung.</p><p id="68f4bce9-5a43-4bb4-80ac-0167c5eda01c" class=""><mark class="highlight-blue">Private User Address Space	</mark>User Programm <mark class="highlight-gray">(nicht modifizierbar)</mark></p><p id="03d5c461-273d-4982-b1f8-18d9eb5e0069" class=""><mark class="highlight-blue">Shared Address Space		</mark>User Data <mark class="highlight-gray">(modifizierbar)</mark>: Variablen, modifizierbare Programme</p><p id="2a985be8-ed5e-4806-a2d7-f5d275baab08" class=""><mark class="highlight-blue">User Stack				</mark>Für User Programme</p><p id="59f6556a-1066-4f76-b027-c215dc648f06" class=""><mark class="highlight-blue">Process Control Block PCB	</mark>Execution Context</p><p id="d0bb82de-652d-4f82-a322-b02c32c3a2fc" class="">
+</p><h2 id="40f7d553-843e-406c-9140-274c953eb6c0" class="">Process Control Block PCB</h2><p id="58ec70a7-d23a-48e4-ba4e-d4de52d30689" class="">Teil von Process-Image.</p><p id="b6fe526f-1768-4b87-9efc-5e688c7a82d1" class="">Gesamter Kontext von Prozess - steht OS zur Verfügung.</p><p id="21555dc0-96d3-4aac-8574-b03ece4d8a34" class=""><mark class="highlight-blue">Process ID </mark><mark class="highlight-gray">(Identifizierung)</mark><div class="indented"><p id="10befeec-e5d8-476e-8255-fc951ef99329" class="">Index aus Primary Process Table </p><p id="a0f94d92-c5e4-4de6-af28-6acbea24e30c" class="">Benutzer ID <mark class="highlight-gray">(process owner)</mark></p><p id="a609ed16-f99c-46ba-b0e0-e3da563a4397" class="">Parent Process ID <mark class="highlight-gray">(parent process) </mark>- Damit zb Child-processes ohne parents geschlossen werden</p></div></p><p id="dd9e6d64-2057-4d4a-abb0-33a796a0f23e" class=""><mark class="highlight-blue">Processor State Information </mark><mark class="highlight-gray">(Steuerinformation)</mark></p><p id="e10dbd58-4b61-4185-b053-ba22b4bb6d9c" class="">Damit man nach einer Unterbrechung dort fortsetzen kann wo man war.<div class="indented"><p id="9b77bbb3-ec23-49dd-b8b1-58c840b1cbbf" class="">Registerinhalte</p><p id="20afc88d-954f-4ed6-87f6-1ff1cf5abcde" class="">Kontroll-Register<mark class="highlight-gray"> (Befehlszähler / instruction pointer)</mark></p><p id="5682c764-ddcf-4fc7-9e26-5bd971487421" class="">Status-Register <mark class="highlight-gray">(Program status word PSW): Flags, Statepointer</mark></p><p id="bc77b088-cc92-4c4b-a228-10faa7a30f18" class="">Stack pointer</p></div></p><p id="0e36be72-216e-4875-8cf6-efd1d2ee4322" class=""><mark class="highlight-blue">Process Control Information </mark><mark class="highlight-gray">(Prozesskontrolle)</mark></p><p id="19e7e8a3-57cc-4a67-aa1d-54756bdebf5e" class="">Informationen über Rechte, Priorität, Privilegien, Ressourcen die gebraucht werden für Scheduler:<div class="indented"><p id="c562c4a9-319b-477a-8dfc-e99662584ffb" class="">Aktueller Zustand</p><p id="9d64f76f-dc6f-4eaa-8569-de02fa3c1a6e" class="">Priorität</p><p id="67738e3c-9c83-4fed-a350-20abf2565da4" class="">Ereignis auf das der Prozess wartet</p><p id="66d94cbe-35dd-4438-a1b7-591fd85ccdf9" class="">Interprozesskommunikation IPC</p><p id="b2baa434-2a52-4e98-af51-1aa55b0abf88" class="">Privileges</p><p id="18c5ccd9-adfb-4a26-bf09-bf885e4b4970" class="">Memory management <mark class="highlight-gray">(pointer zu segment / page tabellen)</mark></p><p id="450b2d69-96b8-4dff-98b6-83286d306553" class="">Ressourcen <mark class="highlight-gray">(elapsed CPU-Time und benutzte Ressourcen)</mark></p><p id="a14b93a9-907d-463e-aa21-fd834ff3c3c2" class="">Pointer aud andere Prozesse<div class="indented"><p id="fd52946d-d238-48ab-a66a-d38e79f4afd1" class="">auf Parents</p><p id="edc8d060-8ac5-436d-a877-824fad0fd07f" class="">um Queues (PCB Listen) zu implementieren.</p></div></p><p id="b812ec24-f6db-41ec-94d6-c46658f8c901" class="">
+</p></div></p><h2 id="efe9a8cc-efdf-4815-9f1d-1686708ac36a" class="">Execution Modes</h2><p id="043978f2-dd2a-4dff-85f0-36c1816b8b27" class="">Datenstrukturen (PCB Listen) müssen vor unerlaubten Zugriffen geschützt werden.</p><p id="9de80e0e-b68d-4181-95ee-f40258c8bd49" class="">CPU unterstützt durch mindestens 2 Modi (als mode-bits gesetzt)</p><p id="90b703d9-5d86-4847-a896-be23d34a18c3" class=""><mark class="highlight-blue">User mode		</mark>Für Benutzerprogramme</p><p id="f4730c09-66a8-4d79-8219-a232b703b6c1" class=""><mark class="highlight-blue">Privileged mode	</mark>Für OS um auf bestimmte Speicherbereiche zuzugreifen.</p><p id="c0ce00cf-e994-411a-84a4-bcdaf346bf29" class=""><mark class="highlight-gray">				bzw system / kernel / supervisor / control mode</mark></p><h1 id="1003cbc8-ae07-422f-bf2b-14db21aac3a7" class="">____________</h1><h1 id="d392cc92-36fe-4726-9178-67e30d989cd4" class="">OS Designs</h1><p id="58375535-88ae-4c2d-a798-34f5cb3b6019" class="">Mode-Switch notwendig für OS Routinen aber nicht Process-Switch - Abhängig von OS design.</p><p id="5d7faeb0-a086-44f4-bbe4-8cf4e1796d2b" class=""><mark class="highlight-blue">Mode Switch		</mark>Änderung von Execution Mode</p><p id="2854822c-20d1-483f-8429-e7944acc58ec" class=""><mark class="highlight-blue">Process Switch	</mark>Änderung von Process </p><p id="90929b1e-063d-4a24-a927-72e294f1de94" class="">
+</p><figure id="8485b41a-73e5-415b-ae0d-66831cc5ca9f" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%206.png"><img style="width:528px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%206.png"/></a></figure><ol type="1" id="f132a3bd-ca0e-492a-b3bd-e2c5426eb029" class="numbered-list" start="1"><li>Process Switch<mark class="highlight-gray"> (rot) </mark>- Kontrolle von user process <mark class="highlight-gray">(grün) </mark>wird an OS übergeben </li></ol><ol type="1" id="233d6b17-70e2-4941-862b-8f065530f946" class="numbered-list" start="2"><li>Mode switch - zu privileged mode</li></ol><ol type="1" id="b6c37162-f14b-4cda-86d9-9e096830a803" class="numbered-list" start="3"><li>Kontext wird abgespeichert <mark class="highlight-gray">(grau)</mark></li></ol><ol type="1" id="567b9064-f94a-4aea-8b56-a267436fdc67" class="numbered-list" start="4"><li>Optionaler Process Switch <mark class="highlight-gray">(2 Wege - orange)</mark><ol type="a" id="753b0173-b773-451c-911d-99d5e456aafc" class="numbered-list" start="1"><li>OS Programm als Subroutine ausgeführt</li></ol><ol type="a" id="a939075f-284b-4f18-965a-dccd4f11590b" class="numbered-list" start="2"><li>OS Programm als neuer Prozess ausgeführt</li></ol></li></ol><ol type="1" id="417c8ae1-3aed-47bf-bb9a-123e1a8ce74c" class="numbered-list" start="5"><li>Alter Zustand / Kontext aus user process wieder hergestellt <mark class="highlight-gray">(grau)</mark></li></ol><p id="a3145512-2119-4d91-832f-6251f4cd76cc" class="">
+</p><h2 id="d27fb8ca-f50a-47f4-80eb-af99f19cf6d9" class="">1) OS Ausführung in User Prozessen</h2><p id="b23cc10e-d69f-4296-a5b5-0a8a508298fd" class="">Kein Process-Switch</p><p id="2460f375-6180-4de8-b57c-d084c4878e7f" class="">OS als Ansammlung an Subroutinen die vom User aufgerufen werden.</p><p id="81a6ed2b-4398-478b-8ae1-2e3a8370e9cf" class="">Fast alle OS-Routinen laufen im Kontext der Benutzerprozesse ausgeführt.</p><figure id="4edd9964-4cbd-44c5-a05c-8f3c89550398" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%207.png"><img style="width:240px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%207.png"/></a></figure><p id="53aa02c9-3fe4-41dd-9da0-bad158f3e4c8" class="">
+</p><p id="2240c4fe-8d62-48fd-bfb1-f4957dea9924" class=""><mark class="highlight-blue">Erweiterung vom Process Image</mark></p><p id="442daee1-57e4-4007-ab67-d1325bebf3b9" class=""><mark class="highlight-gray">Private User Address Space	User-Programm (unveränderlich)</mark></p><p id="218b1d1b-36b5-4bc5-ad25-2f59d87b01b6" class=""><mark class="highlight-gray">Shared Address Space		User Data (modifizierbar): Variables, Callstack </mark>+ OS-Code und Daten</p><p id="2dc45a3b-4ad6-4d34-bf28-8c014f38df40" class=""><mark class="highlight-gray">User Stack				Stack für User Programme</mark></p><p id="0c020c2b-dfee-4ff9-9b0d-4acf3c2cd080" class="">System / Kernel Stack		Stack für privileged mode (nicht von Prozess manipuliert)</p><p id="ae6174ed-a974-4472-a48a-2409d8725f54" class=""><mark class="highlight-gray">Process Control Block PCB	Execution Context</mark></p><p id="39ffcfa4-3452-4585-9ff0-d1892ba983da" class="">
+</p><h2 id="691e84b4-2eff-4adb-b570-a2807f51d51c" class="">2) Nonprocess Kernel </h2><p id="f9a56bad-53e6-4564-ba5e-9f16ff1524f5" class="">Process-Switch</p><p id="39bb3192-1e63-4646-bca3-48b009aa00c6" class="">Gesamter OS strikt getrennte im Kernel mit höheren Privilegien, eigenem Speicherbereich + Stack.</p><p id="1467a51e-8039-43f0-8dec-48cb3c3c5544" class="">Nur Benutzerprogramm Prozess genannt.</p><figure id="53b58cb9-1c16-431c-bcfa-8add1e17a057" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%208.png"><img style="width:240px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%208.png"/></a></figure><p id="ab80f91d-9a01-462a-b521-49deab6f1b0a" class="">
+</p><h2 id="9c4d59f7-97d7-44a6-a16c-043c0a9f35ed" class="">3) Prozessbasiertes OS</h2><p id="3a572421-eb69-40da-956a-8ba5ed3bf311" class="">Process-Switch</p><p id="254f8675-c63f-4dd1-b220-cd44e30f4731" class="">OS als Ansammlung von getrennten Systemprozessen mit höhrer Priorität.</p><p id="0d2b7649-1e18-49dc-8404-2fea8172b2a0" class="">Kernel <mark class="highlight-gray">(≠ Prozess) </mark>genützt für Basis-Services:<div class="indented"><p id="ccdf6f09-23f1-4048-833e-ff09b93534fb" class="">Process Switching</p><p id="fe5823d5-a316-4668-82bb-0c7bd93724a8" class="">Basic memory management</p><p id="c0567cae-90ee-4f7a-98f4-1bfd46fbb5ea" class="">Interprocess Communication IPC (Nachtichtenaustausch und Kontrolle)</p><p id="b01ccaef-2610-4a3f-a8b4-34c21da2aa39" class="">Interrupts und IO </p></div></p><figure id="79ba69dd-71ab-44da-8f0d-5d812661d05e" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%209.png"><img style="width:288px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%209.png"/></a></figure><p id="62e9d33f-468b-4bf3-94f3-0e7b8d4b1ad4" class="">
+</p><p id="bf65f8dd-0015-4801-8cf2-a263ca0e75e4" class=""><mark class="highlight-blue">Beispiel: Mikrokernel Architektur</mark></p><p id="86257af5-259d-4eb3-b6c1-dc047c6c4b49" class="">Kernel minimalistisch - nur aller nötigsten Services - Restlichen OS features als optionale libraries.</p><p id="55e14606-a7f6-45a0-88c0-5147f11695f5" class="">Hat Basis-Services <mark class="highlight-gray">(siehe Prozessbasiertes OS)</mark></p><p id="ad896df1-d5ab-47b1-8ad2-7cc02c0c05fe" class="">Eigenschaften:<div class="indented"><p id="552d9914-230f-413f-a670-6b2ea19b72d4" class="">Einheitliches Interface</p><p id="02ae48ab-c5db-4b75-b80a-5d762b4822c8" class="">Einfach anzupassen, flexibel, erweiterbar</p><p id="9f274166-2fbf-48de-92da-bbdee2f66f88" class="">Portabel</p><p id="eef92878-f417-4b90-b6ef-d0ea76d90ad0" class="">Klein und Übersichtlich</p></div></p><p id="3c4a2a9c-2ce0-411a-ba5e-a143674035be" class="">
+</p><h2 id="6b8b8329-ec7e-4c47-991c-78d33d06490d" class="">Kernel Architekturen</h2><p id="55ae0a0c-71f2-4d2d-9bcf-417d91491887" class="">Monolithic OS <mark class="highlight-gray">(eher alt - no Compartmentalization)</mark><div class="indented"><p id="44eae6a7-a366-4cd4-a91b-d5482fdab5e4" class="">großer Block - Menge von Routinen die sich gegenseitig aufrufen</p></div></p><p id="0f0bc7f4-9455-4ae7-946e-4c9a7ce52cac" class="">Layered OS <mark class="highlight-gray">(modern - has Compartmentalization)</mark><div class="indented"><p id="1f5b9b48-d6b2-4153-a756-7b3caa128ec6" class="">Modularisiert, klare Grenzen zwischen Funktionalitäten</p><p id="2e359a8f-0bdd-41a6-bf02-8afc2a52c9b5" class="">Hierarchische Struktur, das meiste im Kernel mode ausgeführt</p></div></p><h1 id="4bc7f90c-cfc3-4f00-902f-7cdfd60cdf43" class="">____________</h1><h1 id="469c356b-896b-4683-929d-32abd4c7d880" class="">Threads</h1><p id="ab820de8-6b84-4b23-9494-cfdafad0ccd5" class="">Prozesse = Ressourcen-Verwaltung + Ausführungszustände + Dispatching</p><figure id="be48b230-0d9d-4934-b13c-41e3aa9a5682" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2010.png"><img style="width:144px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2010.png"/></a><figcaption>Single-Threaded</figcaption></figure><p id="2e009887-d552-4a07-a7bf-4ebfff36fea9" class="">
+</p><p id="e6ec997e-257b-4609-a62f-cb6eb5a1c427" class="">Entkopplung / Seperation of concerns mit Threads:</p><ol type="1" id="9c9c26c0-7cbc-4b48-8e81-d7343f61b0bc" class="numbered-list" start="1"><li><mark class="highlight-blue">Process / Task (Ressourcen-Verwaltung)</mark><p id="782e6181-ec47-4ccb-8283-c6203039a759" class="">Virtueller Addressraum (mit Process Image)</p><p id="91ef6e75-3a23-4f9e-ab33-b8df13234393" class="">Speicherschutz</p><p id="ebae7c1c-94e2-477a-ac4b-49561b538a9d" class="">Files, IO</p></li></ol><ol type="1" id="7f322694-8329-4767-be7d-f2044b1a2f46" class="numbered-list" start="2"><li><mark class="highlight-blue">Thread / Lightweight process (Dispatching, Ausführungszustände)</mark><p id="0c339488-5101-4e7b-93d5-8b265d03ddd2" class="">schnelleres Erzeugen und Umschalten als bei Prozessen.<div class="indented"><p id="954064a7-d82f-45cb-b4ef-5716867aaf6d" class="">Ausführungszustand<div class="indented"><p id="73ffa884-76bd-49e7-81e0-60f0564d941c" class=""><mark class="highlight-gray">Running, Ready, Blocked - je nach Implementierung.</mark></p><p id="cc4ad9bd-ed85-4ad6-9f01-f1137f3d5a05" class=""><mark class="highlight-gray">Aber suspend nicht für einzelne Threads möglich, sondern nur für Prozess.</mark></p></div></p><p id="f375c5b6-b8ab-4aff-8de3-16157eb98266" class="">Kontext<mark class="highlight-gray"> wenn nicht gerade laufend</mark></p><p id="75c3dbf3-eeed-4520-938e-2073710cc784" class="">User Stack, Kernel Stack</p><p id="fb4689a0-1d3e-4352-85e3-271fba6de193" class="">thread-lokale statische und lokale Variable</p><p id="5a6b7668-049b-46e8-9717-33288c56f95d" class="">Zugriff auf Prozessspeicher und Ressourcen</p></div></p><p id="de1fc232-4812-45a6-b175-5479747139cb" class="">
+</p></li></ol><p id="c907680d-509d-4274-aff3-a92269172854" class=""><mark class="highlight-blue">Multi-Threading</mark></p><p id="1838019f-992e-41e9-a1fb-8ca067cdeef2" class="">PCB von Process angepasst: Tabelle mit pointern zu allen threads. </p><p id="baa8858b-89b3-4c76-a57e-25b03b29bcfb" class="">Alle Threads haben greifen auf selben user address space zu.</p><p id="d22780e6-79f0-4bc4-83de-8ff81d58c8ea" class="">Wenn Prozess terminiert - terminieren alle Threads.</p><figure id="5c36ee6f-8c08-4997-bd39-b4608174265e" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2011.png"><img style="width:288px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2011.png"/></a><figcaption>Multi-Threaded</figcaption></figure><p id="eed31442-2e6c-4586-a058-942bb01d366d" class="">
+</p><p id="682deba8-e2b4-4ece-bbd7-8142c4921457" class=""><mark class="highlight-blue">Vorteile von Threads</mark></p><p id="38a2422c-bed3-4158-b51b-fc656b49a5c0" class="">Bessere performance als Prozesse<div class="indented"><p id="43f935c2-b750-4789-9dcc-d6c13cac7935" class="">Kein Mode-Switch für Erzeugung, Termination und Switching.</p></div></p><p id="782f34aa-5a73-4be2-9bcd-4660563fa041" class="">Alle Threads haben die gleichen Ressourcen:<div class="indented"><p id="df3fe20e-dd0c-4249-8758-06e805a82ba2" class="">Inter-Thread-Kommunikation ohne Kernel möglich - aber: benötigt Synchronisation</p></div></p><p id="812f8932-3a56-4e64-9131-20e7302e6374" class="">
+</p><p id="217c126b-026a-462e-a32a-59c39e62e2b1" class=""><mark class="highlight-blue">Anwendungen von Threads</mark></p><p id="55f212fd-8cad-41f5-986f-049f31e2ed30" class="">Applikationen bei denen sonst mehrere Prozesse auf dieselbe Ressource zugreifen würden wie zB:<div class="indented"><p id="a9fcb5c9-b84e-4d67-b5a8-f5fb80b9bc2f" class="">File Server in LAN<div class="indented"><p id="e32e3278-1268-473a-bdbf-f52bd4e1b48f" class="">Ein Thread für jeden Request</p></div></p><p id="5ee11264-519a-4810-9916-a3a107e5f6a2" class="">Spreedsheet Programm wie Excel<div class="indented"><p id="7781b82f-08d5-4670-b770-8d1951771a6a" class="">Für jede UI Komponente ein Thread</p><p id="0f9c07ea-2a11-4392-843a-8ba7ae389f34" class="">
+</p></div></p></div></p><h2 id="82e22ff2-66c0-4d02-a1d2-085eebcb7436" class="">User-Level Threads (ULT)</h2><div id="f0b8e294-dbde-40d0-80ee-d882357725a4" class="column-list"><div id="1334fbee-dbeb-4521-892a-093dd90858b7" style="width:75%" class="column"><p id="ff91bb6b-6fe4-419f-ad31-c3f7184b57ad" class="">Prozess ruft thread-library auf.<div class="indented"><p id="86e8a99e-4bce-4497-aee3-372a40be1c52" class="">Threads für den Kernel unsichrbar.</p><p id="a91365e8-d433-4d35-bb05-d5a1023f1248" class="">Thread library code implementiert alles</p><ul id="6827d7ff-b705-4180-9fea-f7941b9c7e7b" class="block-color-gray toggle"><li><details open=""><summary><mark class="highlight-gray">implementiert</mark></summary><ul id="308fa5ae-dda6-4886-b9e0-928cac8f6fed" class="bulleted-list"><li style="list-style-type:disc">Erzeugung und Terminierung</li></ul><ul id="84409f3e-a656-4a8c-957f-d7573214c9cc" class="bulleted-list"><li style="list-style-type:disc">Daten-, Nachrichtenaustausch zwischen Threads</li></ul><ul id="ccbb89fb-2a82-40db-92ea-41cffb73bb07" class="bulleted-list"><li style="list-style-type:disc">Thread Scheduling</li></ul><ul id="82c811be-f71f-4627-919c-f107f02df973" class="bulleted-list"><li style="list-style-type:disc">Sichern und Herstellen von Thread Kontexten</li></ul></details></li></ul><p id="113a6d24-3e3a-4148-9aeb-f2b88ee06985" class="">Thread-Switching im User-mode.</p></div></p><p id="14e7af9a-e184-44df-87ab-0afc67e01095" class=""><mark class="highlight-blue">Vorteil gegenüber KLT</mark><div class="indented"><p id="03f65696-755f-4291-9810-ac5e2c109ce4" class="">Scheduler kann an Applikation angepasst werden</p></div></p><p id="82c137e3-d686-4f07-8285-392c38690158" class=""><mark class="highlight-blue">Nachteil gegenüber KLT</mark><div class="indented"><p id="52d19e0a-b64a-4003-8b94-24f639b8c6ee" class="">Threads können nicht auf mehrere Prozessoren aufgeteilt werden</p></div></p></div><div id="2083e885-b491-4943-b0a4-66bc44bd5342" style="width:25.000000000000007%" class="column"><figure id="3a7f2012-9585-42a6-a0d3-0f4a688cb24d" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2012.png"><img style="width:641px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2012.png"/></a></figure></div></div><h2 id="56e72da5-fd04-4394-8e73-29ac703225d4" class="">Kernel-Level Thread (KLT)</h2><div id="93372b52-16c6-4bd1-90fc-ce1ba0c41bcd" class="column-list"><div id="4daeb035-3f36-4c52-8d25-34df0e8de425" style="width:75%" class="column"><p id="e749c3f9-f4b6-48b4-ae3c-6604b4a5cde6" class="">Kernel Thread API, keine library.<div class="indented"><p id="779d2327-5165-4ae6-aa3d-43f62df7dc6d" class="">Thread scheduling / management durch Kernel.</p><p id="731ebfb3-aef1-4646-abf6-740e216049c2" class="">Auch für OS services eingesetzt.</p></div></p><p id="84a860dc-bc33-4baf-a312-42f1138f6711" class=""><mark class="highlight-blue">Vorteil gegenüber ULT</mark><div class="indented"><p id="472af45a-a7a6-4900-8503-c315ef0ebd77" class="">Einzelne Threads können blockiert werden.</p><p id="687def61-1989-46e8-b82f-ddc3e02c6329" class="">Gleichzeitiges Schedulen mehrerer Threads eines einzelnen Prozesses mit Multicore möglich.</p></div></p></div><div id="df46fd6e-520a-42c6-a505-e76818ed04b5" style="width:25.000000000000007%" class="column"><figure id="af14dc0f-90dc-4fc4-8261-f69edf90da88" class="image"><a href="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2013.png"><img style="width:647px" src="Prozesse%20und%20Threads%20b576822c497a43f68bef2758163c41c8/Untitled%2013.png"/></a></figure></div></div><p id="18c3efc0-0870-40bd-bceb-6f722ec08b21" class=""><mark class="highlight-blue">Nachteil gegenüber ULT</mark><div class="indented"><p id="df614f91-38e0-4cef-b705-6fa8f1623dc5" class="">Mehr Overhead: Thread switching innerhalb eines Prozesses über den Kernel bedeutet 2 Mode switches <mark class="highlight-gray">(kernel → user → kernel)</mark></p><p id="13ebbec3-8d68-4a3b-a1f4-850abcff44fb" class="">
+</p></div></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="93bd7253-2c4b-4539-b00d-6a40c07f7a70"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Es ist möglich einen hybriden ULT/KLT Ansatz zu wählen.</div></figure><p id="186b0fc6-5404-42c1-8f5a-6b5addf5d472" class="">
+</p></div></article></body></html>

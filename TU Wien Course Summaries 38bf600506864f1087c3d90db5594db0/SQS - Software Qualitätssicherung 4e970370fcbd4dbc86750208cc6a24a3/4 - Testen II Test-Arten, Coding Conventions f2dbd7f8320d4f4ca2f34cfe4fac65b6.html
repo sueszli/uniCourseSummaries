@@ -1,0 +1,715 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>4 - Testen II: Test-Arten, Coding Conventions</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f2dbd7f8-320d-4f4c-a2f3-4cfe4fac65b6" class="page sans"><header><h1 class="page-title">4 - Testen II: Test-Arten, Coding Conventions</h1></header><div class="page-body"><p id="9acde4b0-d9dc-4b77-84a5-c250455f7b88" class="">
+</p><nav id="81cea5f1-2c03-4210-93cd-e416867eea91" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e215cb01-4926-47ea-8d73-30d846617b9b">Software Testen Grundlagen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6b7fe800-3bc8-477f-b68d-06b7826532dd">Teststufen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#640f1c94-2621-4636-b3b0-ada0d354ff56">Testentwurfsverfahren</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#21909d4f-3c6e-4742-9367-2985098641d3">Unit Tests</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#65530e89-63ba-45f3-8218-4b53baab2d78">JUnit</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#463c9fe7-e768-4ef3-ae97-fc26c3a393e1">TDD</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fad992ec-cf5b-49ae-8d86-cf69a4c7637f">Test Abdeckung: Kontrollflussorientierte Testverfahren</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#76c1c5e9-c8ea-4b3f-8508-8f7c6f93c306">Test-Arten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#27d9bef2-9e01-4283-81de-8c8527ce3b7f">Sourcecode Qualitätskriterien</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5abe1ed4-4ccd-4c25-a40e-5bdf5b6fa9dd">Coding Conventions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ce31167b-d093-407f-ba9e-fe54363feff1">Commit conventions, Commit management</a></div></nav><p id="d9d4456b-519a-431c-9330-2eccf17c7501" class="">
+</p><h1 id="e215cb01-4926-47ea-8d73-30d846617b9b" class="">Software Testen Grundlagen</h1><p id="a185dae2-2f07-429e-8925-029073edf378" class=""><mark class="highlight-blue">ISTQB Testprinzipien</mark><div class="indented"><ol type="1" id="d92250ce-2758-466a-852f-c4c68897ab42" class="numbered-list" start="1"><li><mark class="highlight-teal">Testen zeigt Fehler auf</mark><p id="4dfbd5a4-47d4-4856-8a0e-5b58c2c93472" class="">beweist aber nicht Fehlerfreiheit</p><p id="64606244-7d23-49e3-a689-3541805028a8" class="">“Testen zeigt die Anwesenheit von Fehlern, nicht die Abwesenheit”</p></li></ol><ol type="1" id="257fe801-f8d3-4bcc-aaae-b7902dd53e5a" class="numbered-list" start="2"><li><mark class="highlight-teal">Vollständiges Testen ist nicht möglich</mark><p id="0c0c2791-a78e-48b7-b6b3-eb4186b250c7" class="">Nicht alle Kombinationen an Eingaben, Vorbedingungen, Zuständen testbar (praktikabel zu testen)</p><p id="97418a07-9c9a-46a8-80d7-9825789e7a65" class="">Stattdessen priorisiert nach Risiko testen</p></li></ol><ol type="1" id="c6ac0532-8198-4c07-a39e-08ff8ec2c523" class="numbered-list" start="3"><li><mark class="highlight-teal">Frühzeitig Testen</mark><p id="a304711f-b090-498e-aef9-c55e9a4ccb5a" class="">Je früher Fehler gefunden werden desto einfacher und günstiger zu beheben</p></li></ol><ol type="1" id="cc80b895-b518-4294-be15-c83f9d07c89e" class="numbered-list" start="4"><li><mark class="highlight-teal">Fehlerhäufungen beachten</mark><p id="d3690237-1b33-49b5-aa64-afa1606a4eaf" class="">Fehler sind nicht gleichmäßig verteilt - tendenziell dort wo Fehler gefunden auch mehr zu erwarten</p></li></ol><ol type="1" id="3ec3f93d-a7d0-446d-ae9e-cfdbb8ec917d" class="numbered-list" start="5"><li><mark class="highlight-teal">Veränderung statt Wiederholung</mark><p id="dc2f7a23-edce-4224-9473-35e38d00ddc9" class="">Wiederholtes ausführen von den selben Testcases wird keine neuen Fehler finden</p></li></ol><ol type="1" id="b30e7cb0-306d-4117-b7cc-0ea2e056ed25" class="numbered-list" start="6"><li><mark class="highlight-teal">Testen ist kontextabhängig</mark></li></ol><ol type="1" id="d552f25c-499f-4671-a4a0-18e08c3c13d6" class="numbered-list" start="7"><li><mark class="highlight-teal">Trugschluss: Fehlerlose Systeme sind brauchbar</mark><p id="e74f838f-3208-4afb-8444-8f33c44340c7" class="">Fehler finden, beheben garantiert nicht, dass Produkt den Anforderungen und Bedürfnissen vom Benutzer entspricht</p></li></ol></div></p><p id="67c8d973-3fb1-467a-a7f5-4ebb708755b7" class="">
+</p><p id="7629fc3b-2ca1-4b92-bf9c-b1bf34045393" class=""><mark class="highlight-blue">Potentielle Fehlerquellen</mark><div class="indented"><p id="82fec413-6f29-4bd6-825e-703f18e5466b" class=""><em>Fehler in Anforderungen / Spezifikationen</em></p><p id="888a1b9e-049b-4989-974a-3d8695b0f54b" class=""><em>Fehler im Design</em><div class="indented"><p id="63ee65ae-3c0e-495b-b91a-a987e60a8b47" class="">durch ungenauen, falsch interpretierten Anforderungen </p><p id="329c7978-aef0-4aec-a2e1-2b2cbfc8112f" class="">durch Mangel an Erfahrung mit Technologie</p></div></p><p id="9e8265b1-e4ad-40c9-93dc-a63946a7735f" class=""><em>Fehler in Testdaten</em></p></div></p><figure id="9995658f-acca-4e2d-88dc-0a4e039c1b4f" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled.png"><img style="width:240px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled.png"/></a></figure><p id="dd737ab7-1073-4a33-b731-38441a68c4af" class="">
+</p><h2 id="6b7fe800-3bc8-477f-b68d-06b7826532dd" class="">Teststufen</h2><p id="84fa5c2a-efb4-47fc-9f1d-cdc31ac9a43c" class="">Teststufen sind Tests auf unterschiedlichen Ebenen des Entwicklugnsprozesses.</p><p id="f0e0e691-80db-458d-812e-da5953ca8173" class=""><mark class="highlight-gray">Eine Teststufe besteht aus einem oder mehreren Test-Typen (bestimmte Art von Tests).</mark><div class="indented"><p id="a4fc2f20-76ad-4051-bbfb-2e140e8aa442" class=""><mark class="highlight-gray">Testtypen: Review, Funktionaler-Test, Massentest, Stresstest, Performancetest.</mark></p></div></p><p id="9c877453-fdee-4eac-9267-3b0342307240" class="">
+</p><p id="d89d3fb7-d4c0-4054-babf-3d9e6a62b0db" class=""><mark class="highlight-blue">Akzeptanztests / Abnahmetests</mark><div class="indented"><p id="28b2a314-8ae0-432c-8cca-4c848f2796ca" class="">Testen ob System im produktiven Einsatz den Abnahmekriterien vom Kunden entspricht (Validierung).</p><p id="a5629224-b1f3-40ce-abce-84cd598a96c9" class="">Dient <em>nicht</em> dazu Fehler im System zu finden.</p><p id="a737665a-c370-4a0d-ab06-9464a40ba14e" class=""><mark class="highlight-gray">wie Systemtest nur </mark>von Kunde, Benutzer ausgeführt</p><ul id="eef8114c-8d02-4027-9b3f-914b05917eff" class="block-color-gray toggle"><li><details open=""><summary>Stufen von Akzeptanzkriterien</summary><p id="76a3a9e0-2c0f-4c03-bee0-409e6717c605" class="">Bedingung / Anforderung (Condition of Satisfaction)<div class="indented"><p id="d42acdad-7505-481d-937f-220dc7aff9fc" class="">Beispiel: beim Login Passwörter dürfen nicht knackbar sein Beispielhafte</p></div></p><p id="f8a5c3b5-4a0c-4fe0-87bc-d6017ce7ad06" class="">Akzeptanzkriterien (Acceptance Criteria)<div class="indented"><p id="88fbd0d8-144e-4d52-9f76-a8fa232ed9bd" class="">Definition für “nicht einfach knackbar” aus Condition of Satisfaction:</p><p id="e4736f60-93c4-4e54-9a42-04960958aba9" class="">Min 8. Zeichen, nur alphanumerisch, mind. eine Zahl, ...</p><p id="bc18bee8-3bbb-4fe3-9a3a-463305a3f4b3" class="">
+</p></div></p></details></li></ul></div></p><p id="c0ee9ecd-b307-4a7a-8d3f-f1059787c33f" class=""><mark class="highlight-blue">Systemtests</mark><div class="indented"><p id="988954a6-0d42-4a4d-959d-90126e6e6da7" class="">Testen vom integrierten System nach Kunden-Anforderungen (Validierung) und nach Spezifikation (Verifikation).<div class="indented"><p id="529f4c0d-f902-4dbf-a5cf-afec89b430e3" class=""><mark class="highlight-gray">Basiert auf: Anforderungsspezifikation, Use-Cases, Geschäftsprozesse.</mark></p></div></p><p id="014f22a0-4b0a-4077-bd8f-cf286b11541c" class="">Testumgebung sollte Abbild der Produktivumgebung sein (keine umgebungsspezifischen Fehler).</p><p id="3c503664-58aa-48d9-914c-b4bf26bf52d6" class="">von unabhängigem Testteam ausgeführt</p></div></p><p id="27a06ff0-3010-4d93-9d70-b8b48c2ba990" class=""><mark class="highlight-blue">Integrationtests</mark><div class="indented"><p id="da02977a-7232-4618-a54b-506ea5a40db8" class="">Testen mit dem Ziel Fehler in Interaktion zwischen Komponenten / Schnittstellen zu finden.</p><p id="b67cd5d7-b98b-401f-b394-ccfd092790b9" class="">Zusammenführung (Integration) von mehreren Komponenten.</p><p id="96bbe3f2-65e3-4b97-aae4-13fb29377618" class="">von Entwicklern erstellt und ausgeführt</p><p id="12e20f5e-21e6-4d89-8f39-732f79b4c038" class="block-color-gray"><mark class="highlight-gray">Bottom-up, Top-Down, Big-Bang Strategien</mark><div class="indented"><ul id="b0741524-abdc-47a0-83ab-253314a4c036" class="toggle"><li><details open=""><summary>Bottom up</summary><p id="13457f4d-d20b-4bca-990f-b0a69ea908be" class="">Basis ausprogrammiert, dann Test-Treiber erstellt, dass Objekte erzeugt.</p><p id="aa9ac829-75b2-4384-9cbc-58f8255d7b0b" class="">Nach jeder Integrationsstufe wird Treiber verändert und eine Ebene höher gestellt.</p><p id="70fe41ca-2b12-4a63-a2b7-10f8b4940750" class="">
+</p></details></li></ul><ul id="9c26146a-c819-418e-ad00-6d6498365b95" class="toggle"><li><details open=""><summary>Top down</summary><p id="20e597ce-8e97-4ce1-9ab2-6efba6e3839a" class="">Zuerst die obersten Module entwickelt und darauf den der Test-Treiber aufsetzt.</p><p id="7571bb4e-5c90-49f9-9c3f-c1758524d3bb" class="">Alle darunterliegenden Module werden mithilfe von Stubs simuliert.</p><p id="8b8c90e2-7b22-4693-bc84-8ad5dc0c36f2" class="">Stubs werden je nach Integrationsstufe im echten Code befüllt.</p><p id="e10684bb-cf8b-4c08-bfef-12e4dc1ecd02" class="">Vorteil: Es gibt nur einen Testtreiber.</p><p id="fddb3acc-6d4c-444d-a2c5-203b69201feb" class="">
+</p></details></li></ul></div></p><p id="f5f39fa4-430c-4919-97d9-2c935d8e80f3" class=""><mark class="highlight-gray">Kann mehrere Integrationsstufen haben</mark></p></div></p><p id="4252cc04-2551-4d6b-a447-54d5739e294f" class=""><mark class="highlight-blue">Komponententests / Modultests / Unittests</mark><div class="indented"><p id="39b3231e-c793-4325-854a-044802a58dbc" class="">Testet Komponente isoliert vom restlichen System gegen Spezifikation.</p><p id="ad4e12e0-fb21-423e-86fc-ef3db60939b2" class="">braucht Zugang zu Source-Code<div class="indented"><p id="f0b2d94c-ea13-4c79-8486-9163d7f394da" class=""><mark class="highlight-gray">Testet Implementierung: Argumente werden übergeben, Ausgabe wird kontrolliert</mark></p></div></p><p id="5a26875e-d016-4f0b-bb2e-32afe5b844e0" class="">von Entwicklern erstellt und ausgeführt</p></div></p><p id="5aea5318-e752-4ef4-ac09-b539cc408630" class="">
+</p><p id="6d587906-c011-4517-86da-41076ecea057" class=""><mark class="highlight-gray">Privater Test</mark><div class="indented"><p id="a47b94a4-cfe3-4ffe-bfbb-5e4d559e01b9" class=""><mark class="highlight-gray">Vom Entwickler vor der Freigabe, undokumentiert</mark></p></div></p><p id="93ec7908-2c89-4528-ae69-e83f4a56a5a9" class=""><mark class="highlight-gray">Regressionstests</mark><div class="indented"><p id="05e7f4fe-8b7c-4cca-9cfd-5795a424d470" class=""><mark class="highlight-gray">Vor Durchführung von Veränderungen - Wiederholung von Tests</mark></p></div></p><p id="9ac4ec7c-cb81-4cd7-87cc-223a0db779e0" class="">
+</p><h2 id="640f1c94-2621-4636-b3b0-ada0d354ff56" class="">Testentwurfsverfahren</h2><div id="26ef0f48-c44e-4206-97ad-19cff16ee196" class="column-list"><div id="2e3b4606-c659-4d29-8980-570904913fea" style="width:50%" class="column"><p id="47b6c8b3-d7b5-4cb2-9eb7-bd728a37319e" class=""><mark class="highlight-blue">Blackbox Tests </mark><mark class="highlight-gray">(Box geschlossen lassen)</mark><div class="indented"><p id="774e95a4-4c15-436b-9e3b-5efee4aa9b58" class="">basiert auf Spezifikation ohne Wissen über innere Struktur</p><p id="9053627a-b0f9-43e7-92a0-1c8fb28c9a5b" class="">Daten-getrieben (Input-Output getrieben)</p><p id="2bce4f2e-e23e-4329-b350-d8ab52722b0c" class="">Überdeckung von Anforderungen</p><p id="82e9da3d-59fe-490e-aeca-275f250efe86" class="">Partitionierung der Eingabedaten</p></div></p></div><div id="e23c774f-2c52-4b29-be52-5dd3283849b0" style="width:50%" class="column"><p id="be799433-4ed1-4238-9b17-40961ac4801a" class=""><mark class="highlight-blue">Whitebox Tests </mark><mark class="highlight-gray">(in Box hineinschauen)</mark><div class="indented"><p id="11ca70ca-723d-4f0f-9ddd-f1de7f7b287e" class="">basiert auf Code-Struktur, Modulen mit Wissen über innere Struktur</p><p id="b6969a7b-335d-4f16-8705-5743f398be79" class="">Logik-getrieben</p><p id="d6e457b5-1e5d-49d6-ba16-a3336f87176d" class="">Überdeckung von Knoten, Kanten, Pfaden</p><p id="cb662815-01ea-4cc8-a831-ab43dabd6b96" class="">Partitionierung von Eingabedaten für Bedingungsüberdeckung (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>C</mi><mn>0</mn></msub><mo>−</mo><msub><mi>C</mi><mn>3</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small C_0 - C_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.07153em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.07153em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>)</p></div></p></div></div><p id="d7793f17-571c-49c6-b2d2-a2d1bff193e3" class=""><mark class="highlight-blue">Erfahrungsbasiertes Testen / Exploratives Testen</mark><div class="indented"><p id="6186cca8-5688-4e5b-9aa9-d55415b9cd24" class="">zusätzlich zu anderen Testentwurfsverfahren</p><p id="aece4f39-e2c9-4c26-875e-9ada7c3ccd92" class="">basiert auf Intuition, Erfahrung des Testers<div class="indented"><p id="81b3f906-6fee-4d2c-b370-fbbc40c37ba3" class="">zB Erfahrung aus anderen Projekten, Stellen die unter Zeitdruck entstanden sind etc.</p></div></p><p id="957e40a9-6f41-4b8b-b0cc-53fb0cf59a7b" class="">muss dokumentiert werden</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1903131d-523e-484a-aa52-e2aae6fd5429"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">siehe 6. Vorlesung für vollständige Version</div></figure></div></p><figure id="0ecaafd2-41c4-48b2-bc59-4de8f3ff2fea" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%201.png"><img style="width:144px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%201.png"/></a></figure><p id="652f31d8-1e17-4ca7-8c57-3b52b2ecb52c" class="">
+</p><p id="8eb36e97-5bd0-40cc-b805-088d632ac44c" class="">
+</p><h1 id="21909d4f-3c6e-4742-9367-2985098641d3" class="">Unit Tests</h1><h2 id="65530e89-63ba-45f3-8218-4b53baab2d78" class="">JUnit</h2><figure id="ea5e490b-3afa-486c-aba7-92f1ae276725" class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/JUnit%205%20ea5e490b3afa486caba792f1ae276725.html">JUnit 5</a></figure><p id="2335bda0-75f7-4210-b1cb-34946142780a" class="">
+</p><p id="4fcb1eeb-0fda-4059-8733-f5e05d82ef18" class=""><mark class="highlight-gray">Unit Tests Grobstruktur</mark><div class="indented"><ol type="1" id="6a545531-79e6-4fd7-822f-7cd6c9362239" class="block-color-gray numbered-list" start="1"><li>Set-Up (Vorbereitung)</li></ol><ol type="1" id="6ccc3403-e991-4fc2-88f0-097f11328882" class="block-color-gray numbered-list" start="2"><li>Exercise (Ausführung)</li></ol><ol type="1" id="c01d6feb-66c2-4b57-9da7-4c44453c45e7" class="block-color-gray numbered-list" start="3"><li>Verify (Auswertung)</li></ol><ol type="1" id="937b4d31-3302-4b26-9f55-b049991a6265" class="block-color-gray numbered-list" start="4"><li>Tear-Down (Nachbearbeitung / zerstören)</li></ol></div></p><p id="3adf2297-0c78-419d-9d3c-85bd6a2914f3" class="">
+</p><p id="0fe8a28c-6869-41ae-bb53-98773d2caf38" class=""><mark class="highlight-blue">Testframework für Unit Tests</mark><div class="indented"><p id="6e06787b-759f-41f9-b741-2a2ca5a2cc1b" class="">Automatische Ausführung von Komponententests: <em>xUnit</em></p><p id="214f8dc8-1402-42dc-b1a7-3c78c8143a4e" class=""><mark class="highlight-gray">JUnit, CPPUnit, NUnit, ...</mark></p></div></p><p id="23b4883a-d0a8-4cbb-ab0c-c5ff7d100893" class="">
+</p><p id="a25c41d7-36d8-4962-8e0f-10f65bf8316a" class=""><mark class="highlight-blue">Benennung</mark><div class="indented"><p id="b6a391b4-03c5-4b0e-aae7-ae0563c3f69d" class="">Testmethoden einheitlich benannt</p><p id="167e763b-fff8-47bf-9e4d-2eceac421fb5" class=""><mark class="highlight-gray"><code>(Test)&lt;UseCase/Method&gt;_should&lt;ExcpectedOutcome&gt;</code></mark></p><ul id="28c07e24-559e-4e76-a74e-cff21c22c44d" class="toggle"><li><details open=""><summary>Beispiele</summary><pre id="752e6665-2092-44f5-a43d-cffdc3faef70" class="code"><code>@Test
+public void testAdd_shouldContainAddedWord() {...}
+
+@Test
+public void testAdd_moreThanMax_shouldReplaceFirstWord() {...}
+
+@Test
+public void testRemove_Null_shouldThrowNullPointerException() {...}</code></pre></details></li></ul></div></p><p id="f96dbf98-ccda-480e-a34e-6a2095207b92" class="">
+</p><p id="d5f6ff66-c924-4dde-8799-0f01c45ef1fc" class=""><mark class="highlight-blue">Unit Testing - Best Practices</mark><div class="indented"><ul id="c08285d9-5694-4c47-b9f7-c6cdf775389e" class="bulleted-list"><li style="list-style-type:disc">Testfälle sind isoliert<p id="baf33576-37fb-4b9b-9061-3771e652d0ab" class="">keine Abhängigkeiten zueinander: Jeder Testfall bereitet eigene Daten vor, räumt sie auf</p></li></ul><ul id="a42b8bfb-b71d-48a3-86d2-c37245ffa685" class="bulleted-list"><li style="list-style-type:disc">Keine Logik in Tests (Abfragen, Schleifen, try/catch)</li></ul><ul id="72ca6c92-d22f-4206-88d2-91dab084a26f" class="bulleted-list"><li style="list-style-type:disc">Jeder Testfall testet nur einen Aspekt bzw Zustand<p id="9d229e1f-95f8-4a3c-a5f9-6c42efb6a368" class="">Nur ein Testfall per Methode</p><p id="19c3b534-d8f2-444d-936b-732f3e9247b6" class="">Keine Zufallsdaten sondern Äquivalenzklassen</p></li></ul><ul id="7b7c57d5-5579-4cdc-b263-e0547ab776df" class="bulleted-list"><li style="list-style-type:disc">Namenskonventionen einhalten</li></ul><ul id="44eebd4a-d335-49a8-8f00-3ca0fead4ce3" class="bulleted-list"><li style="list-style-type:disc">Verständliche Fehlermeldungen bei Assertions</li></ul><ul id="05cb60c8-bbfc-4f2d-b6db-552585f37439" class="bulleted-list"><li style="list-style-type:disc">Klassen und Testklassen liegen im selben Package</li></ul></div></p><p id="73a4a3fa-e905-4037-b70b-c64e0efdf488" class="">
+</p><h2 id="463c9fe7-e768-4ef3-ae97-fc26c3a393e1" class="">TDD</h2><p id="26ff89af-5ce2-472e-a5e1-75e3bfaf83d6" class=""><mark class="highlight-blue">Beispiel</mark><div class="indented"><figure id="13b27a7a-1073-4da6-9c98-7ce479d179e5" class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Testen%20von%20Wo%CC%88rterbuch%2013b27a7a10734da69c987ce479d179e5.html">Testen von Wörterbuch</a></figure></div></p><p id="a879edc2-d9cc-4f3d-b0fb-1ce3af24650a" class="">
+</p><p id="d32d369e-ba24-437f-a631-3d1f3cd0ca02" class="">
+</p><h1 id="fad992ec-cf5b-49ae-8d86-cf69a4c7637f" class="">Test Abdeckung: Kontrollflussorientierte Testverfahren</h1><p id="e897f498-2dc9-4e57-b61a-6f05ef89d948" class=""><mark class="highlight-gray">Tools zur Überprüfung der Testabdeckung: Clover, Cobertura, JaCoCo</mark></p><p id="a3109984-d07a-4ed5-bc89-67f9162f04bc" class="">
+</p><p id="5d03ec13-6514-4762-96ef-d271f37507bd" class=""><mark class="highlight-blue">Test Abdeckung</mark><div class="indented"><p id="533287dd-6a1e-47b2-bef0-e22e91339a6a" class="">Code Coverage - sieht man in Coverage Reports</p></div></p><p id="f9f5a21e-748f-4fba-b344-27ffd9b0a199" class="">
+</p><p id="190d3042-565b-4836-ba3f-62fc221c4181" class=""><mark class="highlight-blue">Kontrollflussorienterte Verfahren</mark><div class="indented"><p id="4177802e-df99-45b1-8a93-36a0618be3a5" class=""><em>= Überdeckungstests </em><mark class="highlight-teal"><em>(für Code Coverage)</em></mark></p><p id="b3b0043f-6c58-46b9-966b-96a6317d7bf2" class="">strukturorientiert (basiert auf Kontrollfluss des Programmes)</p><p id="d5f0237f-0ac2-42a0-9f6f-58b9674e0f6f" class="">relevant auf Unit Test Ebene <mark class="highlight-teal">(</mark><mark class="highlight-teal"><em>Whitebox Tests</em></mark><mark class="highlight-teal">)</mark></p><p id="7e1bfba5-a330-4d93-b7af-95d59290ad2c" class="">definieren keine Regeln für Erzeugung von Testdaten</p></div></p><figure id="fb6902e9-7233-4d43-b8bd-b27b754fbf25" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%202.png"><img style="width:192px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%202.png"/></a><figcaption>Kontrollflussgraph</figcaption></figure><p id="30dbcb01-0bfe-4d5d-a50c-d8259905d4be" class="">
+</p><h2 id="76c1c5e9-c8ea-4b3f-8508-8f7c6f93c306" class="">Test-Arten</h2><p id="de3acf57-1744-4217-9235-bd0057c44c43" class=""><mark class="highlight-gray">Man kann auch coverage von Klassen und Funktionen testen.</mark></p><div id="1d6d7e68-5900-4eb8-9423-ea91fb53cf91" class="column-list"><div id="98a151ba-62aa-4618-b034-8cf06860b4c7" style="width:93.75%" class="column"><p id="46162d94-7cac-43f6-b744-2daf06514c55" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">C_0 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> - Anweisungsüberdeckung / Statement Coverage</mark><div class="indented"><p id="991e4a4a-b2b5-46a2-8c29-4f2bbae0d59b" class="">Jede Anweisung min 1x durchlaufen<div class="indented"><p id="bc169cca-9d2e-4a95-ab89-fd22536a91dc" class="">Zeigt ob toter Code existiert (falls sie nie durchlaufen werden können)</p><p id="a3f5bf39-d2a7-4ede-a979-a61b66c423d5" class="">Zu schwaches Kriterium für sinnvolle Tests</p></div></p></div></p></div><div id="ff2d8c4d-f8b4-4f5b-807c-a1119fb61fca" style="width:6.25%" class="column"><figure id="b1c5a73e-71d6-44db-86a3-a8d145565eb0" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%203.png"><img style="width:60px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%203.png"/></a></figure></div></div><div id="199242cd-40f7-4fcb-a027-14e6c52c30d0" class="column-list"><div id="abddbfdf-2106-448b-af2a-a4cd56715c8a" style="width:93.75%" class="column"><p id="2ed1ccdb-d16f-43e9-a0ec-6a1cd228cd6e" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">C_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> - Zweigüberdeckung / Branch Coverage</mark><div class="indented"><p id="397381bc-d7af-4f52-a34e-44eee21d6cde" class="">Jede Kante min 1x durchlaufen<div class="indented"><p id="333c211d-d5a6-4e3a-927f-f83aa7d88161" class="">Zeigt ob nicht ausführbare Programmzweige existieren</p></div></p></div></p></div><div id="de95cd65-a216-4fff-9dd1-483bc84cc3c9" style="width:6.250000000000002%" class="column"><figure id="44b73c27-a715-4079-a89d-28f91247a141" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%204.png"><img style="width:60px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%204.png"/></a></figure></div></div><div id="f0550bb2-acd2-4d77-84cc-7fc61e5aea2e" class="column-list"><div id="d3d08c32-5a95-432e-bdb5-877e6d1e7aa7" style="width:93.75%" class="column"><p id="a1327fab-8935-44b6-9af7-1e059e4b0c1b" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">C_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> - Bedingungsüberdeckung / Condition Coverage</mark><div class="indented"><p id="b3557bdf-7a96-4ecc-b234-8c8e37cd9126" class="">Ziel: Überprüfung zusammengesetzter Entscheidungen und Teilentscheidungen</p><p id="f444e0be-c29f-43b3-b2e6-92f4e0fdb070" class="">
+</p><ol type="1" id="729a9769-457d-4b38-b6cc-8c16e16020b6" class="numbered-list" start="1"><li>Einfacher Bedingungsüberdeckungstest<p id="8c62ca04-117b-423b-872a-fe9765bd2f41" class="">Alle atomaren Teilentscheidungen gleichzeitig true oder false</p></li></ol></div></p></div><div id="107a270f-3888-40a2-8c54-ed9be927e5b7" style="width:6.250000000000004%" class="column"><figure id="dbb03c56-4f45-462d-814f-6c4fc7e83d1f" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%205.png"><img style="width:60px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%205.png"/></a></figure></div></div><div id="ea2d4bb8-db12-427e-b745-174420102b48" class="column-list"><div id="0350b551-a704-4474-bcfd-6b5c9bc6aec1" style="width:93.75%" class="column"><p id="353ce305-6b21-45c8-8ff3-e4d6428108ba" class=""><div class="indented"><ol type="1" id="3bfa4c7b-d522-4c74-8a03-38f3dd1e38fc" class="numbered-list" start="2"><li>Mehrfach-Bedingungsüberdeckungstest<p id="595165bd-c7b1-4498-98ea-2f1b8940e256" class="">Test aller true/false-Kombinationen der atomaren Teilentscheidungen</p><ul id="a2eb6319-eb8b-46a6-b654-127243d0194f" class="toggle"><li><details open=""><summary>Beispiel</summary><p id="28dfdf49-4566-4e34-b0c6-ed20c94e95d7" class="">Entscheidung: <mark class="highlight-gray"><code>(((a == 0) || (b &lt; 5)) &amp;&amp; (x &lt; 6) || (y == 0)))</code></mark><div class="indented"><p id="89840bf1-3dbf-40e9-8264-71960d706310" class="">		  <mark class="highlight-gray"><code>((A || B) &amp;&amp; (C || D))</code></mark></p></div></p><p id="4589fa82-057b-42e8-a79c-25396c7c21bc" class="">sind <mark class="highlight-gray"><code>a</code></mark>, <mark class="highlight-gray"><code>b</code></mark>, <mark class="highlight-gray"><code>x</code></mark>, <mark class="highlight-gray"><code>y</code></mark><mark class="highlight-gray"> </mark>unabhängig können die Teilaussagen <mark class="highlight-gray"><code>A</code></mark>, <mark class="highlight-gray"><code>B</code></mark>, <mark class="highlight-gray"><code>C</code></mark>, <mark class="highlight-gray"><code>D</code></mark><mark class="highlight-gray"> </mark>unabhängig voneinander true oder false sein.</p><p id="21dfadaf-56e1-4226-ba4e-24548a9c7213" class="">Dadurch <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msup><mn>2</mn><mn>4</mn></msup><mo>=</mo><mn>16</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2^4 = 16 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.713364em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">16</span></span></span></span></span><span>﻿</span></span> Kombinationen bzw Testfälle.</p><p id="9122b566-2c81-4d4a-86f7-e5cfa4506447" class="">
+</p></details></li></ul></li></ol></div></p></div><div id="19c36cca-dac3-4ed7-8448-801f2093cb42" style="width:6.25%" class="column"><figure id="a4df6798-8142-46e1-a076-08a57cd14347" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%206.png"><img style="width:72px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%206.png"/></a></figure></div></div><div id="525256e8-9749-4996-8676-b63c862ac55b" class="column-list"><div id="710d47b4-1708-4326-b00c-27f64ec69f37" style="width:93.75%" class="column"><p id="c3ca4408-59f8-4b5b-98e2-b5abdba262ca" class=""><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">C_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> - Pfadüberdeckung / Path Coverage</mark><div class="indented"><p id="ee66860a-3aba-4973-a4f5-d0f4b6cc717e" class="">Abdeckung aller möglichen Pfade (Knotenfolgen)</p><p id="5e6af47c-24ab-41ed-a7b5-ceefaadf6c67" class="">für komplexe Module nicht geeignet (vor allem wenn Schleifen involviert sind)</p></div></p></div><div id="a046c3b7-fce3-43f3-99df-6c6ee5fcece5" style="width:6.250000000000004%" class="column"><figure id="7679db96-f59e-45c4-9073-ee46075bedd3" class="image"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%207.png"><img style="width:48px" src="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Untitled%207.png"/></a></figure></div></div><p id="ce5e12fe-0407-49bf-96fe-8b3b05b6d590" class="">
+</p><p id="2134b4d6-88ff-4f08-845f-dbdfb607bf7e" class="">
+</p><h1 id="27d9bef2-9e01-4283-81de-8c8527ce3b7f" class="">Sourcecode Qualitätskriterien</h1><p id="71c95f4b-7a94-40ff-87e2-25a2028d0a31" class="">Toolgestützte Code Analysen für statische QS-Methoden.</p><p id="997bf03e-2917-4902-b89f-4855b995d52e" class="">
+</p><h2 id="5abe1ed4-4ccd-4c25-a40e-5bdf5b6fa9dd" class="">Coding Conventions</h2><p id="d1aa7eb0-00d2-4a28-8cfb-8cf71bbfa181" class=""><mark class="highlight-gray">Tools zur Überprüfung von Coding Standards: Checkstyle, IDE wie zB IntelliJ</mark></p><p id="b8bfd8df-75bc-4ef9-8e5c-14fd0744a075" class="">
+</p><p id="967e76fd-021f-47d3-837d-56f6ceb56082" class=""><mark class="highlight-blue">Coding Conventions / Code Guidelines</mark><div class="indented"><p id="1efa016b-9083-40b9-9cdf-f2d61c73a20f" class="">Einheitlicher Stil im Projekt für jede Programmiersprache</p><p id="c80f6991-ebd4-4e74-81a6-0d55d58c60fd" class="">bessere Lesbarkeit, Verständlichkeit</p><p id="85e2f6a4-ca94-4a97-80e5-d67474934de7" class="">Eigene Regeln für<div class="indented"><p id="3ef60b17-28a6-4cde-b636-97e792c117ff" class="">• Dokumentation
+• Einrückung (space/tab)
+• Max Zeilenlänge
+• Import Reihenfolge
+• Methoden/Feld Reihenfolg, Modifier/Sichtbarkeit, Veränderbarkeit
+• System.out Vermeidung, Logging
+• Namenskonventionen
+• Code Formatierung</p></div></p></div></p><p id="c7971660-bd81-4edf-85fb-afd9f39fd001" class="">
+</p><p id="56a647b2-7886-4702-b9cc-86d75320842e" class=""><mark class="highlight-blue">Kontrolle</mark><div class="indented"><figure id="5d29c556-5288-4bb4-bceb-b8618ed2d0ea" class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/Checkstyle%20(Allgemein)%205d29c55652884bb4bcebb8618ed2d0ea.html">Checkstyle (Allgemein)</a></figure><figure id="4a038ec2-69d1-4d9a-85d6-5b1ed2aeb0de" class="link-to-page"><a href="4%20-%20Testen%20II%20Test-Arten,%20Coding%20Conventions%20f2dbd7f8320d4f4ca2f34cfe4fac65b6/ArchUnit%20(Architekturvorgaben)%204a038ec269d14d9a85d65b1ed2aeb0de.html">ArchUnit (Architekturvorgaben)</a></figure></div></p><p id="cd197206-792d-4b6e-a81e-b503dbe82fdd" class="">
+</p><h2 id="ce31167b-d093-407f-ba9e-fe54363feff1" class="">Commit conventions, Commit management</h2><p id="a07c5788-3c39-4ca2-93e7-baf8d755a783" class=""><mark class="highlight-blue">Commit messages</mark><div class="indented"><p id="8be9e493-eba5-49c0-b73d-26bddcb992b7" class="">Gute Messages:<div class="indented"><ul id="cf0cd661-6958-4140-83a6-73ef6b0b86e0" class="bulleted-list"><li style="list-style-type:disc">Warum wurde diese Änderung gemacht? Was wurde geändert?</li></ul><ul id="52949839-41cf-4e0e-bee9-7668a1d4d8dc" class="bulleted-list"><li style="list-style-type:disc">nur eine logische Änderung pro Commit</li></ul><ul id="f55f30bf-c1b4-47d2-843d-c06c32212e99" class="bulleted-list"><li style="list-style-type:disc">Idempotent (in sich geschlossen)</li></ul></div></p><p id="cf30a802-264b-4536-98d2-453b20d718e8" class="">Zweck von Commit Messages:<div class="indented"><ul id="e16bf43e-7b60-4461-be5b-ecf128a2b3e2" class="bulleted-list"><li style="list-style-type:disc">Beschleunigung des Review-Prozesses</li></ul><ul id="73ffaf5d-06b2-4b73-9bed-79ca035c8ce0" class="bulleted-list"><li style="list-style-type:disc">Unterstützen das Erstellen von Release Notes</li></ul><ul id="ad91125e-ea32-4d56-b2a6-a0427a688817" class="bulleted-list"><li style="list-style-type:disc">Erleichtern zukünftige Wartung</li></ul></div></p></div></p><p id="bed7a5df-d28f-4dee-9592-42266ccc7a8b" class="">
+</p><p id="0053900d-40ba-4890-9456-3573f0bbde81" class=""><mark class="highlight-blue">Commit Management</mark><div class="indented"><p id="69803dfe-be95-410c-9e1f-f2967000525b" class=""><a href="https://www.conventionalcommits.org/">https://www.conventionalcommits.org</a></p><p id="1829ea58-b8d7-4cea-825f-2abe9a58e8dd" class="">Vorteile: Changelogs, Tracability, bessere Maintainability</p><p id="e9d7b16f-c395-42e5-9323-76ea1183a9d7" class="">
+</p></div></p></div></article></body></html>

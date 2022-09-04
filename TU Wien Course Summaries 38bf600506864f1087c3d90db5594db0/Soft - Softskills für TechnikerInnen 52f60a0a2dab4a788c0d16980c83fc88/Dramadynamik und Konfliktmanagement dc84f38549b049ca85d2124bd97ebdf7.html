@@ -1,0 +1,691 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Dramadynamik und Konfliktmanagement</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dc84f385-49b0-49ca-85d2-124bd97ebdf7" class="page sans"><header><h1 class="page-title">Dramadynamik und Konfliktmanagement</h1></header><div class="page-body"><figure id="1aa936c4-bd20-44e3-b66f-0459c74929a9"><div class="source"><a href="Dramadynamik%20und%20Konfliktmanagement%20dc84f38549b049ca85d2124bd97ebdf7/Merkblatt_DramaDreieck.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7c24e131-9347-4dd6-b228-366fdb4d90b7/Merkblatt_DramaDreieck.pdf</a></div></figure><figure id="e4b685be-bef1-4e86-9c0f-911c7d9335aa"><div class="source"><a href="Dramadynamik%20und%20Konfliktmanagement%20dc84f38549b049ca85d2124bd97ebdf7/Merkblatt_Spiele.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/59e62273-cf8e-481b-afa4-5160eebb28f7/Merkblatt_Spiele.pdf</a></div></figure><p id="ff2e0e8b-d36b-4fed-a07e-d5a7b5fd4065" class="">
+</p><h1 id="d1e2d339-d41d-42b3-b549-1b2338893055" class="">Dramadynamik</h1><p id="94cd3fde-546a-4563-b22e-5d0d7b142622" class="">stephen karpman und eric berne</p><p id="8f499ec6-464b-4591-99c5-8fa537f08b2a" class="">Vereinfacht: XOR Funktion<div class="indented"><p id="bdef034b-9d09-49e5-ada5-772879597ebe" class="">zB entscheiden zwischen Familie und Karriere</p></div></p><p id="cd2dd32a-0138-4865-86a5-233fdf15560e" class="">
+</p><h1 id="a380c306-01cc-40ba-ae14-0a2aee3cd484" class="">Dramadreieck</h1><p id="8b04c0a2-14cd-4d59-8311-fb0b1418db42" class="">Beschriebt alltägliche Dramadynamiken.</p><p id="11cba1c2-1858-4d06-943b-dace9121dff8" class="">Man kann zu verschiedenen Zeitpunkten mehrere Rollen übernehmen.</p><p id="d4ec2384-f2ba-49a8-b627-68f9760d3981" class="">Dramadynamik mit sich selbst möglich.</p><p id="bdd8a1c7-1929-4165-9c84-f3ef7352a628" class="">Alle Rollen sind nicht zufrieden-zu-stellend.</p><p id="f35515b9-936e-430a-8ad8-8523300d53ca" class="">Negative / Positive bzw erwachsene Rolle</p><p id="c816260e-c5c1-4945-9014-cb1d67ee4f04" class="">
+</p><p id="913fea88-a600-4fa4-a75f-399d200b51f7" class=""><span style="border-bottom:0.05em solid">Opfer / Muse</span><div class="indented"><p id="3dae1fa1-f11c-489f-9c10-f158f00ada1c" class="">Können sehr gut in der eigenen Emotion aufgehen (sich entfalten)</p><p id="8cb4632a-26a8-40fa-a1a5-fc92df0f1bbd" class="">Leiden aber ändern an ihrer Situation nichts - beschuldigen Täter</p><p id="4a71d629-76e2-4d42-9701-e13ccd4811d4" class="">Wiegt ab: Schmerz vs. Nutzen </p><p id="18adb200-1efd-4bbc-8591-33dee305febb" class="">Nutzen: Bekommt Aufmerksamkeit und Hilfe</p><p id="2a81f74c-0b5a-4e36-bc64-6eb376d00380" class="">Sinnvolle Frage an Opfer: &quot;Was kannst du tun?&quot;</p></div></p><p id="48c8b581-a1de-4952-8808-084e8914a857" class="">
+</p><p id="1360b365-8d41-44cc-82ca-c983f294f02b" class=""><span style="border-bottom:0.05em solid">Retter / Mentor</span><div class="indented"><p id="324f9d66-119e-4547-b0c8-6b8f6267f87f" class="">Retter versucht immer zwanghaft gesellschaftliche Normen durchzusetzen.</p><p id="4ce6af4e-1e71-4359-8e02-1345e8c8195d" class="">Stehen den Opfern zur Seite → Schreiben dem Opfer die Handlungsfähigkeit nicht zu und handeln für sie</p><p id="35f5057b-66d5-4b0a-92b0-ecd6e0d9179f" class="">Bestärkt Opfer in der Opferhaltung (infantilisierend - unselbstständig machend)</p><p id="a592a528-9230-457d-aa5c-70a77a678c26" class="">&quot;Emotionsvampir&quot; - hat kein eigenes emotionales Empfinden und braucht die emotionen des Opfers um zu fühlen</p><p id="e88ee631-14e5-4f12-98cc-8f4fffa02b80" class="">Nutzen: Bekommt Wertschätzung</p><p id="dc6dbb32-c700-48d5-9c7b-795a89b73a40" class="">Sinnvolle Frage an Retter: Wie fühlst du dich?</p><hr id="e23c1b67-1a2e-41d5-bcd1-2731bcda45d1"/><p id="44e96b10-476d-4029-af91-898fd3f31822" class="">Mentor versucht Schmerz zu erhöhen so, dass es sich für Opfer nicht mehr lohnt passiv zu bleiben.</p><p id="59cdf8d9-5fee-4c84-a4e3-2d016d9824e2" class="">Versucht Opfer auf eigene Handlungsmacht aufmerksam zu machen.</p></div></p><p id="dc1ebb61-15ab-452e-8a3b-460b1b89ea8d" class="">
+</p><p id="89ac6232-8212-410c-a6c1-2154f8bb79b9" class=""><span style="border-bottom:0.05em solid">Täter / Macher</span><div class="indented"><p id="8b33b2a2-7ad6-4a03-9fe8-591dca61d4ad" class="">Kann Person, Gegenstand, die ganze Welt sein</p><p id="d497d88c-0323-4325-8f21-3da9520248e0" class="">Sind sehr handlungsfähig</p><p id="a99c7b9a-1deb-4744-99b3-6a7ed16a0a53" class="">Nutzen: Erlebt Mächtigkeit</p><p id="d5a79e2e-b31e-4104-9fa4-1abd72c311eb" class="">Sinnvolle Frage an Täter: Was ist dir wichtig?</p></div></p><p id="33a2fa9e-d36d-44a3-901c-f5a987567ab1" class="">
+</p><h1 id="48e84ba3-2121-4c72-a38a-20525105eda3" class="">Psychologische Spiele - Transaktionsanalyse</h1><p id="daaa87fb-cd56-4d53-9a73-72ee46a97753" class="">Meistens erkennt man es selbst nicht wenn man in einem Spiel steckt.</p><p id="21d013fe-cf26-455e-a5cd-a65ce6c3a677" class="">
+</p><p id="555fbf79-b88a-48a3-a25f-0895b541b6b5" class="">Dramadynamik und wechselnde Rollen macht es spannend und zu einem Spiel.</p><p id="9c4f0f11-c419-4867-8136-2e9a5dfc5481" class="">Viele wunden Punkte → Viele Möglichkeiten bei psychologischen Spielen einzusteigen.<div class="indented"><ul id="121a055e-5042-4ba2-9494-77d38affc320" class="bulleted-list"><li style="list-style-type:disc">Ja, aber - Spiel</li></ul><ul id="0f174a04-e268-450b-b4a7-6e8498b3a3d2" class="bulleted-list"><li style="list-style-type:disc">Gerichtssaal - Spiel</li></ul><ul id="94947283-bbe1-4e88-a1e3-9a95aa6a9dd4" class="bulleted-list"><li style="list-style-type:disc">Du bist so wunderbar ... - Spiel<p id="6339e882-0032-4527-9a44-12be757e27bd" class="">&quot;Du kannst das so gut, ich kann das nicht so gut&quot;</p></li></ul><ul id="577e5f1b-8776-43de-8c5a-4eb98dfae9c3" class="bulleted-list"><li style="list-style-type:disc">Ich bin blöd ...  - Spiel<p id="f4f59a6b-f7b9-4e2c-b9c9-d8fe71b01e49" class="">&quot;Ich kann das überhaupt nicht, du kannst das so gut&quot; </p></li></ul></div></p><p id="f5eae61c-8219-4d4b-bd8e-cdec9cff80c3" class="">
+</p><p id="5bd7f787-0530-46b8-a0cb-dc5fd1bb7baa" class=""><span style="border-bottom:0.05em solid">Ablauf: Ja, aber Spiel</span><div class="indented"><ol type="1" id="52fff60a-4739-40f9-8f2a-145dbd9cebcf" class="numbered-list" start="1"><li>Verzerrung der Wirklichkeit (Falsche Wahrnehmung, falsche Darstellung, Lügen)<p id="d3bc25e6-8841-4960-8d19-f2955aff6973" class="">Kann jemanden in die Opferrolle versetzen.</p></li></ol><ol type="1" id="a055813a-e459-4142-974a-4557d248e841" class="numbered-list" start="2"><li>Köder / Wunder Punkt<p id="1be89acd-c46a-4bcd-a6b2-151180fc2f10" class="">Retter identifiziert sich mit Opfer und sieht Situation als Einladung.</p></li></ol><ol type="1" id="47d07569-d1d6-4476-a814-10ee13d79a80" class="numbered-list" start="3"><li>Reaktionen<p id="700ba077-c987-48c1-bbb5-b74f03ca62a4" class="">Lösungen werden von Retter angeboten aber Opfer möchte in Rolle bleiben: &quot;Ja, aber es geht nicht weil so und so&quot;<div class="indented"><p id="6a4b8e96-2ea4-4590-a225-e9da3c9f279c" class="">a) Entweder Retter übernimmt abschließend das Problem und löst es selbst</p><p id="30092767-f6e6-402e-81e6-d0b76dcbd61c" class="">b) oder Retter geht in Täter Rolle über</p></div></p></li></ol><ol type="1" id="3a9cfd1c-3470-4465-acb0-cb04cd76641c" class="numbered-list" start="4"><li>Verblüffung<p id="0445e3af-9bf5-494e-a08b-d9cd34314e03" class="">Retter und Opfer wundern sich beide, dass Dinge passiert sind wie sie es sind</p></li></ol><ol type="1" id="d76346e3-163b-4bd8-90d2-75852947bbfd" class="numbered-list" start="5"><li>Spielgewinn wird ausbezahlt<p id="be65c295-c3b8-4b3d-a5e3-09c3a5ba3096" class="">Niemand macht nachhaltig einen Gewinn</p></li></ol></div></p><p id="64cd6c8e-cc3a-4dcf-a79c-71cb6593933f" class="">
+</p><p id="f7bff1b4-0402-44af-921f-b3fd993aff2a" class=""><span style="border-bottom:0.05em solid">Wie steige ich aus dieser Dynamik heraus?</span><div class="indented"><ol type="1" id="b9f1cde2-9cc2-4161-a09e-ea706c5ce8e6" class="numbered-list" start="1"><li>Steige erst gar nicht erst ein.</li></ol><ol type="1" id="eb71323a-f050-433f-a4ba-3c57ddaff3ce" class="numbered-list" start="2"><li>Löse Verzerrungen auf</li></ol><ol type="1" id="adbc41d3-ca1a-4243-8247-09659a7df0b6" class="numbered-list" start="3"><li>Eigene wunden Punkte kennen - welches Leid möchte ich wirklich nicht das andere ertragen? Wann steige ich in die Retter-Rolle über?</li></ol><ol type="1" id="6d186a05-4cfe-4748-b081-06a2f9a2e7d4" class="numbered-list" start="4"><li>Verdeckte Ebenen aufdecken<p id="7db0460f-7504-4c99-86f3-c145cfca43d0" class="">Auf Dynamik aufmerksam machen → &quot;Ich glaube dir geht es in Wirklichkeit um etwas anderes&quot;</p></li></ol><ol type="1" id="0dde0475-a0dc-4c38-bfc5-9f25b47f0a3b" class="numbered-list" start="5"><li>Überraschende Sichtweisen<p id="2b10fdfb-dacc-4d76-8ff5-7b5bc5e788c0" class="">Andere Perspektiven in Betracht ziehen</p></li></ol><ol type="1" id="2ceaa00b-6968-468d-98ca-b014a70f1808" class="numbered-list" start="6"><li>Humor, Absurdität</li></ol><p id="2304b38e-b8fb-4672-a3ff-bfe0e7aa159a" class="">
+</p></div></p><p id="14e4d08d-2ef4-4415-ba7b-dde52e7fe014" class="">
+</p><figure id="cca68219-e3f9-445b-b946-3c8830d9e7a1"><div class="source"><a href="Dramadynamik%20und%20Konfliktmanagement%20dc84f38549b049ca85d2124bd97ebdf7/Merkblatt_Konflikte.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/db5a49a6-0f29-4212-96f4-065acbe2a61d/Merkblatt_Konflikte.pdf</a></div></figure><h1 id="c6ec33b4-328d-4cb3-a158-28d378040067" class="">Konflikte und Konfliktmanagement + Verhandlungstechniken</h1><p id="6e290715-fb54-4791-86de-41cb72f8695b" class="">Intra und Inter-Personell</p><p id="e7d6cf25-dac9-40fb-b18a-f0e2fc6bcc0b" class="">Konflikte haben Chancen (Wachstum) und Gefahren (Bruch der Beziehung).</p><p id="db9eda76-e2e5-42a6-98ac-06011bf44e24" class="">Konfliktvermeidung ist schlecht - kein Wachstum.</p><p id="29d99cac-da12-41ee-b17e-13dd552e952d" class="">
+</p><p id="efe9f809-3528-4987-85f1-b39be735f4a7" class=""><span style="border-bottom:0.05em solid">Umgangs-Möglichkeiten</span><div class="indented"><ol type="1" id="bb29b4f0-3de4-4579-90b0-4cf249d0e547" class="numbered-list" start="1"><li>Love it (damit leben lernen)</li></ol><ol type="1" id="2d5c1808-4918-449e-9d75-b2f71ffcba53" class="numbered-list" start="2"><li>Leave it</li></ol><ol type="1" id="8f99b123-d7a0-4b29-9489-f339acf1afce" class="numbered-list" start="3"><li>Change it</li></ol></div></p><p id="ae434f03-98e6-40f1-a7dc-c81e726725f3" class="">
+</p><p id="89fe04ba-ba9f-4b8e-9a1a-13b813c9c907" class=""><span style="border-bottom:0.05em solid">Ausgangssituationen</span><div class="indented"><p id="0c2a2d4a-18ff-425c-ab81-fe977c534927" class="">win-win, win-lose, lose-lose, lose-win</p></div></p><p id="5433f3a2-51b1-43f4-b46c-42514a1f860b" class="">
+</p><p id="c783e6b0-f279-456f-bf0c-14a4975034aa" class=""><span style="border-bottom:0.05em solid">Man unterscheidet zwischen</span><div class="indented"><ol type="1" id="0f3f566d-6f26-454c-8378-eb6c4950c592" class="block-color-teal numbered-list" start="1"><li>Wert: zB Freundschaftlichkeit (kann verletzt werden)</li></ol><ol type="1" id="00b51247-0575-43ce-bf70-8b32dd1ca9a7" class="block-color-teal numbered-list" start="2"><li>Erfüllungsbedingungen / Forderungen = {Hand geben, Lächeln, Grüßen, ...}</li></ol></div></p><p id="6a48704f-6a15-4d06-8451-9ce657458777" class="">
+</p><p id="454e79ca-856f-42b3-ad6d-acfe70fd2561" class=""><span style="border-bottom:0.05em solid">Konfliktentwicklungsstufen nach Glasl</span><div class="indented"><p id="0c2f23fb-c9d3-4682-a48c-a375f4b96cb0" class="">Bis Stufe 3 lassen sich Konflikte selbst lösen, dann Hilfe benötigt</p><p id="9bdc719c-3163-494c-8d89-1e952878840b" class="">
+</p><p id="abc6a0c5-d24a-4a6f-a897-59d447576f28" class="">Beispiel: Im Unternehmen streiten sich 2 Abteilungen um einen Kopierer</p><ol type="1" id="9ffbb386-c3ea-44b6-a4f3-83c5d3082de3" class="numbered-list" start="1"><li>Verhärtung: Eine Abteilung teilt mit, dass sie den Drucker auch haben möchte</li></ol><ol type="1" id="b2c7115b-f657-4107-8174-0c17338188bf" class="numbered-list" start="2"><li>Polemik: Diskussion</li></ol><ol type="1" id="aa7b1ee8-ff86-4276-b38a-36f6e4bd4660" class="numbered-list" start="3"><li>Taten statt Worte: Kopierparat wird einfach heimlich gestohlen</li></ol><ol type="1" id="6864b8ee-3875-4877-aa68-2794049aa2bd" class="numbered-list" start="4"><li>Image und Koalitionen</li></ol><ol type="1" id="05b42f94-fc72-4bc6-9feb-1dd243cd5508" class="numbered-list" start="5"><li>Gesichtsverlust</li></ol><ol type="1" id="a2797a2f-52b0-4f93-8b76-c16142a17724" class="numbered-list" start="6"><li>Drohstrategien</li></ol><ol type="1" id="c9e17c0f-c235-4457-91cb-e65ad83591b4" class="numbered-list" start="7"><li>Begrenzte Vernichtungsschläge</li></ol><ol type="1" id="17976d8f-3cb5-4916-b6a0-b04ffd313f82" class="numbered-list" start="8"><li>Zersplitterung des Feindes</li></ol><ol type="1" id="127c4b6a-4de8-42cd-ab71-6eda5c6286f1" class="numbered-list" start="9"><li>Gemeinsam in den Abgrund (lose-lose)</li></ol><p id="60382e47-d24b-473a-bc43-59f056fed9b1" class="">
+</p></div></p><p id="2f8eedee-f978-476d-a51c-266c55354549" class=""><span style="border-bottom:0.05em solid">Glasl Umkehr</span><div class="indented"><p id="297f568f-39b5-4efc-917b-8566e043c7cb" class="">Ziel: Win-Win-Situation, aus Konflikt herauskommen</p><ol type="1" id="5f2c9b42-b61e-4c97-8021-b263b7a3307b" class="numbered-list" start="1"><li>Verhalten</li></ol><ol type="1" id="f7637660-4d90-433f-b92a-3a98edc55337" class="numbered-list" start="2"><li>Verteilung</li></ol><ol type="1" id="5c4d2968-68c3-4143-bf60-16a863b9198a" class="numbered-list" start="3"><li>Grund &amp; Motto</li></ol><hr id="9a20296c-32a3-49a1-815e-10cc3cb02129"/><p id="52f66d51-3ab5-41fc-ac91-4a71f1b24f8b" class="">Neue Mission: gemeinsam Werte und Erfüllungsbedingungen besprechen</p><hr id="db867fac-080e-45b7-9994-320afb1091a1"/><ol type="1" id="94b3114b-9b95-4572-b09c-f755e95a9a4f" class="numbered-list" start="1"><li>Leitbild</li></ol><ol type="1" id="f3f265ee-cfdd-4624-8015-2f804b6b71d1" class="numbered-list" start="2"><li>Neuverteilung</li></ol><ol type="1" id="44854586-e78c-4d1a-a1bd-65b615a4d379" class="numbered-list" start="3"><li>Neues Verhalten</li></ol><p id="5fbb889c-b1b8-4a7f-b547-73041ec8a46e" class="">
+</p></div></p><h1 id="098963aa-687e-40d1-8902-95283b1f51b6" class="">Umgang mit Konflikten</h1><p id="9ca1b863-dd69-4f2e-894c-8713ae9161b4" class=""><span style="border-bottom:0.05em solid">Beteiligt</span><div class="indented"><ul id="d32adf73-345c-4d04-8a24-7a58b2883520" class="bulleted-list"><li style="list-style-type:disc">Werte herausfinden und welche Möglichkeiten es gibt sie zu erfüllen (wenn sie nicht erfüllt werden kann, dann Dramadynamik)</li></ul><ul id="4c0b2cde-d923-4f8f-83ca-3a326ffc3335" class="bulleted-list"><li style="list-style-type:disc">Herausfinden welche Werte <em>wichtig</em> sind: Werte von Erfüllungsbedingungen trennen und auch nach neuen Erfüllungsbedingungen suchen</li></ul><ul id="28726780-714a-40e0-9c22-db7159d5a982" class="bulleted-list"><li style="list-style-type:disc">Gelassenheit</li></ul><ul id="2c3ccb79-624d-469c-be13-9e335862ffa8" class="bulleted-list"><li style="list-style-type:disc">Beleidigungen ignorieren</li></ul><ul id="30f2ce1c-93ae-4be2-92ee-5c9acbffc42a" class="bulleted-list"><li style="list-style-type:disc">Bei Kritik den wahren Kern bestätigen</li></ul><ul id="d4012c66-e75f-4f4d-8341-d6993c13a33d" class="bulleted-list"><li style="list-style-type:disc">Beziehung hat Vorrang</li></ul><ul id="350cbc7f-349a-4d69-b853-1da4d7a34b7a" class="bulleted-list"><li style="list-style-type:disc">Gesicht von anderen wahren lassen</li></ul></div></p><p id="69cde36f-c25b-4975-9c20-6fc72f7d10cb" class="">
+</p><p id="84ec8c93-702b-4207-a187-15560ae3ef9f" class=""><span style="border-bottom:0.05em solid">Unbeteiligt</span><div class="indented"><ul id="522e9a7a-35b3-4adc-9051-1018414f06b1" class="bulleted-list"><li style="list-style-type:disc">Konfliktmoderation: Mediation</li></ul><ul id="b272cef5-a603-421f-9072-89e0cbce1cf4" class="bulleted-list"><li style="list-style-type:disc">Haltung: Allparteilichkeit</li></ul><ul id="5267a891-e1ed-4405-9669-1a03dd6ea95f" class="bulleted-list"><li style="list-style-type:disc">Gemeinsames Ziel verdeutlichen - nicht in Vergangenheit graben</li></ul><ul id="e5801f18-ff61-4160-9cd3-4e31685a0080" class="bulleted-list"><li style="list-style-type:disc">Werte von Erfüllungsbedingungen trennen</li></ul><ul id="d5e4bdb4-5846-4b17-8ca6-8cc7f74536ea" class="bulleted-list"><li style="list-style-type:disc">Moderation durch Dritte</li></ul><ul id="e678d5dd-1adf-4438-9fb3-d3ba3bb5b89b" class="bulleted-list"><li style="list-style-type:disc">Konfliktlösung durch Macht</li></ul></div></p><p id="41ae63af-4b49-4078-9cbb-8309670d93f8" class="">
+</p><p id="6e2260c1-d65e-4811-b4a0-ef841bb9bde6" class=""><span style="border-bottom:0.05em solid">Harvard Konzept (Verhandlungstechnik)</span><div class="indented"><p id="93ddff69-bbab-4661-b2d5-f5469f72bad9" class="">Beim Verhandeln keine Gegner sein sondern andere Parteien als Partner sehen die mich dabei unterstützen eine Lösung zu entwickeln.</p><ul id="2454d96c-ff82-4563-b266-941e8ba3ba03" class="bulleted-list"><li style="list-style-type:disc">Win-Win Prinzip → Konsens statt Kompromisse</li></ul><ul id="6f5f32c7-4cdb-4dfe-af9d-f01c80d8ace6" class="bulleted-list"><li style="list-style-type:disc">Beste Alternative (Plan B)</li></ul><ul id="7cd2da8b-6e4e-4609-ba22-5c99d6d397cb" class="bulleted-list"><li style="list-style-type:disc">Menschen und Probleme getrennt behandeln (Gegenseitige Wertschätzung)</li></ul><ul id="55f15d2d-1d38-4a91-95f1-5987e4f9972d" class="bulleted-list"><li style="list-style-type:disc">Interessen statt Positionen (Werte statt Erfüllungsbedingungen) </li></ul><ul id="d2740491-9aa7-401c-88c6-3e65c0f5176f" class="bulleted-list"><li style="list-style-type:disc">entscheidungsmöglichkeiten zum beidseitigen Vorteil entwickeln</li></ul><ul id="fe00e8dc-fab8-4bb9-8ae2-5cf0e54171aa" class="bulleted-list"><li style="list-style-type:disc">Anwendung neutraler Beurteilungskriterien</li></ul></div></p><p id="97581f25-b83d-4228-b4d2-bd40798281a5" class="">
+</p><h1 id="ec223f95-1bcc-4917-ae39-9a6984b8be18" class="">Havard Strategie vs. Strategie des Stärkeren</h1><div id="8c34066d-5dd3-4956-9d4f-c56727f3d9c8" class="column-list"><div id="2fa285a9-824a-4761-9436-c3ea53bf6203" style="width:50%" class="column"><p id="82ea2e2a-2ccc-45b4-b6d6-fba647c482bd" class=""><span style="border-bottom:0.05em solid">Harvard Strategie</span></p><ul id="803031f2-65e1-4c1d-b82a-f1355fe3ffc9" class="bulleted-list"><li style="list-style-type:disc">WIN WIN</li></ul><ul id="0eafb540-fbda-46ef-965b-e3df62b9c3f5" class="bulleted-list"><li style="list-style-type:disc">Andere Parteien als Problemlöser</li></ul><ul id="ed501a3d-d13a-441e-8df1-95f13e7410ab" class="bulleted-list"><li style="list-style-type:disc">Offen für Alternativen</li></ul><ul id="de56560f-aada-448b-9802-5c549201e1fd" class="bulleted-list"><li style="list-style-type:disc">objektive Maßsstäbe</li></ul></div><div id="ce60640a-7b96-4e66-977b-7823d4f1561f" style="width:50%" class="column"><p id="08fd1e86-b75b-4191-99ce-73222cf5ceb0" class=""><span style="border-bottom:0.05em solid">Strategie des Stärkeren</span></p><ul id="0f2e39f1-c9e2-4449-aed4-3e7b48e2e616" class="bulleted-list"><li style="list-style-type:disc">Sieg über Gegner</li></ul><ul id="7be19fb7-591f-45aa-ab9a-1db1890ade20" class="bulleted-list"><li style="list-style-type:disc">Andere Parteien als Gegner</li></ul><ul id="4408c382-cb49-4d3b-bd26-6c088258aad1" class="bulleted-list"><li style="list-style-type:disc">Beharren Auf Positionen</li></ul><ul id="0f539c27-72dd-4c5c-8d56-82befc3eacbb" class="bulleted-list"><li style="list-style-type:disc">Subjektive Vorteile</li></ul></div></div><p id="51047c50-99a4-4368-9876-de9bc3d90630" class="">
+</p></div></article></body></html>

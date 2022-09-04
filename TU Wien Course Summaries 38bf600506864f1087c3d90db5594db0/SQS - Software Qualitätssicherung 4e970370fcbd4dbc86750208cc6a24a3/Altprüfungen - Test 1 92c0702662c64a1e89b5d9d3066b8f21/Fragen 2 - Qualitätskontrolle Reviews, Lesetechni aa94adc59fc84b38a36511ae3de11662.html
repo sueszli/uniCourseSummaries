@@ -1,0 +1,719 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fragen 2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="aa94adc5-9fc8-4b38-a365-11ae3de11662" class="page sans"><header><h1 class="page-title">Fragen 2 - Qualitätskontrolle: Reviews, Lesetechniken, Anforderungen, UML</h1></header><div class="page-body"><p id="961cb788-8224-40dc-93aa-cecfb6651de2" class="">
+</p><ul id="71d3a97a-5c1e-4394-86dc-36b1f5fdc427" class="toggle"><li><details open=""><summary>Welchen QS Methoden gehören Reviews an?</summary><p id="dcd1d7df-2580-45b3-88c7-440393307d13" class="">Review, Inpektion, Audit sind <em>analytische QS Methoden</em>.</p><p id="03d632e2-2bf2-4cc1-903a-bba2fd5389d8" class="">Sie werden vor allem in frühen Phasen für Dokumente oder Code (muss nicht ausführbar sein) eingesetzt. </p><p id="2d57fd48-3b82-4030-b46d-2a79736cd5c4" class="">
+</p></details></li></ul><ul id="4c7bb4e4-1064-4ace-9fd8-bd1b29ec3bdb" class="toggle"><li><details open=""><summary>Review vs. Debugging</summary><p id="791d0c1b-d54e-451b-803f-a802c91a447e" class="">Testen beschäftigt sich nicht mit der Lokalisierung von Fehlerstellen und dessen Entfernung (vgl. Debugging)</p><p id="5aff24e8-5cce-4aea-8ca0-0501c361be02" class=""><mark class="highlight-gray"><em>Siehe Block 1: Statische vs. dynamische Prüfungen</em></mark></p><p id="c8b8671c-eb24-4071-8e2a-00ac26a70c13" class="">
+</p></details></li></ul><ul id="c61010a5-86d7-4cbb-96ed-8e5902843d16" class="toggle"><li><details open=""><summary>Reviews im V-Modell (Zugehörigkeit zu Tests)</summary><p id="3dd709b6-7467-45a1-a566-93ccfd09c6ad" class=""><mark class="highlight-gray">Siehe Block 1: Einsatz von QS → Analytische Seite → Testplanerstellung in jeder Phase, danach immer ein Review</mark></p><p id="00da6910-c817-445f-be20-f590a601b97b" class="">
+</p></details></li></ul><p id="2090d6e7-34f2-46f3-8900-c57dd6eaa05d" class="">
+</p><p id="8665a9d6-2e3e-48b8-a9c7-1d1c28c1fe77" class=""><mark class="highlight-blue">Review</mark></p><ul id="51679cb7-619d-4002-b365-b225c727f9a0" class="toggle"><li><details open=""><summary>Review: Definition, Allgmeines</summary><p id="e47a2d73-c079-4c98-8913-e8f329424aea" class="">Qualitative Beurteilung von Produkten, Prozessen (wo quantitative Beurteilung schwer)</p><p id="fc3b0df3-5810-434f-991d-19d1719aac29" class="">Mängel entdeckt, nicht korrigiert</p><p id="8b15358d-8cf0-480f-9eb3-9979c17cfa9c" class=""><mark class="highlight-gray">IEE: “Ein Review ist ein [..] formal geplanter und strukturierter Analyse- und Bewertungsprozess, in dem Projektergebnisse einem Team von Gutachtern präsentiert und von diesen kommentiert oder genehmigt werden.“</mark></p><p id="b508ed06-6877-409f-9719-9c0bff2c6e48" class="">
+</p></details></li></ul><ul id="071e551d-2b98-4c69-a3a7-e3619408a7f7" class="toggle"><li><details open=""><summary>Review: Ablauf</summary><p id="701f6703-4cd0-47d1-9754-f790a279c93f" class="">Vorgang nach Arbeitsplan / Checkliste</p><p id="1a7ab88c-476e-4419-b9dc-ba9356e20dfc" class="">Nachträgliche Beurteilung des Reviews selbst zur Verbesserung</p><p id="0801cf10-767b-496f-a3cd-b7b3d698907e" class="">Dauer: ~2h</p><hr id="05c84cf7-14f2-44c0-8bba-5858622c56ea"/><ol type="1" id="0cc1b074-1aed-4d44-9cd6-3381a67565cb" class="numbered-list" start="1"><li>Planung<p id="ba508946-583a-4819-8093-e63ec67bcef9" class="">Teilnehmer, Prüfobjekt, Prüfziele, Auslösekriterien (Einstiegskriterien), Ort, Zeit, ... auswählen</p></li></ol><ol type="1" id="a68adbf3-892a-4436-8afa-f6a654a724e7" class="numbered-list" start="2"><li>Vorbesprechung (optional)<p id="52cd2a9d-1c01-4fc4-9770-a3885f0d56f0" class="">Vorstellung Prüfobjekt (falls Produkt komplex oder neu)</p></li></ol><ol type="1" id="090928b4-83ea-40ff-af3b-4d7a29d85e02" class="numbered-list" start="3"><li>Einzeldurcharbeitung<p id="9f42f651-5ddf-4e81-9752-84672b3c2712" class="">Teilnehmer bereiten sich vor - Beurteilen Prüfobjekt nach ihrer Rolle, notieren Auffälligkeiten (Fehler, Fragen, Kommentare)</p></li></ol><ol type="1" id="b2850a08-7984-4751-bcf5-bddf02c3ea2a" class="numbered-list" start="4"><li>Durchführung (Review Sitzung)<p id="55cfadfa-b119-45bf-9484-ceb01ec833fb" class="">Gemeinsames Lesen, Aufzeichnung von Mängeln</p><p id="6e7c0a8e-3d6d-4e6d-bdfb-063f3ee638b6" class="">Erkentnisse besprechen, protokollieren (Mängel nicht beheben)</p></li></ol><ol type="1" id="6ac87474-d86a-4e4f-bfc9-5d9d33d1cc0d" class="numbered-list" start="5"><li>Nachbearbeitung<p id="0e877989-ee6b-4609-b0da-c2a80e147c9c" class="">dokumentierte Mängel beheben, Dokumente aktualisieren</p></li></ol><ol type="1" id="097b3755-22f4-4e4a-92b9-17e8d8f09b57" class="numbered-list" start="6"><li>Bewertung (Follow-up)<p id="25651cd8-851e-48f5-9ea3-1e836426ba2b" class="">dokumentierte Mängel überprüft</p></li></ol><ol type="1" id="91e13c64-c3bb-42ba-973f-3da7e61c2c37" class="numbered-list" start="7"><li>Berichterstattung<p id="a3200ce2-8c69-48a5-a20f-24d5a4937798" class="">Wiederholungen von Reviews sind möglich</p></li></ol><figure id="3a456a80-abc0-4ee1-ad9e-8077e44ef9e7" class="image"><a href="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%201.png"><img style="width:132px" src="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%201.png"/></a></figure><p id="be5d33ff-250a-4e57-9bca-130f8c867d34" class="">
+</p></details></li></ul><ul id="7f0f1d97-56ae-4ca1-8da1-4f216cec3aa2" class="toggle"><li><details open=""><summary>Review: Rollen / Teilnehmer</summary><p id="466e694b-49f4-47b6-9cc2-53163336d7c7" class="">Moderator		Leiter des Reviews <mark class="highlight-gray">(keeper of the process)</mark></p><p id="21df68a5-5632-4643-87e5-a36ecc91df5d" class="">Leser			Leser <mark class="highlight-gray">(keeper of focus and pace)</mark></p><p id="53bef67b-bf16-4b64-9a1e-9f52d88b0d25" class="">Gutachter		Kommentierung des Prüfobjekts <mark class="highlight-gray">(Reviewer)</mark></p><p id="2b7eddfe-7cc0-4fa3-94ae-fd88cf0b176b" class="">Schreiber			Verfassung von Protokoll <mark class="highlight-gray">(preserver of knowledge)</mark></p><p id="05f1a898-8286-4bd4-a336-f926957644bd" class="">Autor			Klärung von offenen Fragen - keine Rechtfertigung <mark class="highlight-gray">(author)</mark></p><figure id="83308735-1745-4d67-92c6-a8c5e56cbad0" class="image"><a href="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%202.png"><img style="width:192px" src="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%202.png"/></a></figure><p id="de7b52a8-ccf1-4d11-98a7-7b41f8f659b5" class="">
+</p></details></li></ul><p id="02b099e0-9733-43db-b1a6-121d4f8035ea" class="">
+</p><p id="bc0d2750-b46b-4e0a-ad28-2fc6aaafcc04" class=""><mark class="highlight-blue">Review Arten im Vergleich</mark></p><ul id="105dce96-bcca-42fd-9d45-586fd3263e2b" class="toggle"><li><details open=""><summary>Code Walk-through</summary><p id="ba589a37-4377-4d21-a7c2-45ec79f9cb1b" class="">Autor stellt seine Module ablauforientiert vor, Qualität der Implementierung wird begutachtet.</p><p id="7f268f09-35cc-43b5-ba8e-8c49b6193afe" class="">Neue Mitarbeiter können dabei zusehen, sich mit Projekt vertraut machen.</p><p id="8721ed2d-a415-43fa-81fc-e9975d9683e2" class="">Autor selbst entscheidet ob etwas und was überarbeitet wird.</p><hr id="f2b2c8ca-a7a2-4ebd-9a6b-aa7ca380e306"/><p id="0a70698d-751c-4c8b-8970-3906e0ef1ad0" class="">Ziel				Fehler im Prüfobjekt finden, Benutzer und Mitarbeiter ausbilden</p><p id="2fdf4114-28b5-438e-a9bb-3494100baa72" class="">Teilnehmer		Autor (= Moderator), Gutachter</p><p id="fe8b211f-5d9a-4fde-bb03-3843138f7421" class="">Eigenschaften		Prüfobjekt wird nach Ablauf von Autor vorgetragen und dieser entscheidet</p><p id="ea6075d9-4600-4e40-8df0-6d496550124e" class="">
+</p></details></li></ul><ul id="3ba4b204-2da3-4265-9a93-252a2450419c" class="toggle"><li><details open=""><summary>Technisches Review</summary><p id="13d2eaf7-c89c-45a4-b2a1-38116ddcb99c" class="">Etwas formaleres Review: Moderator und Protokollführer anwesend.</p><p id="e78b879c-a51b-4344-aa2d-2cbd8e6aaa47" class="">Produkt wird begutachtet um Schwächen, Stärken zu finden.</p><p id="1c28cd77-a8c1-4b4a-963f-184c6e710749" class="">Review-Team gibt Empfehlung an Management, das letztendlich entscheidet.</p><ul id="0d42b312-c1b9-4fb1-b05b-fc04ca0935b2" class="toggle"><li><details open=""><summary>Richtlinien</summary><p id="97a86049-97ce-4584-836c-269dd31efb56" class="">– Produkt nicht der Autor soll Reviewed werden
+– Verwendung eines Arbeitsplans
+– Diskussion sachlich und Kurz
+– Keine Lösungen suchen nur Fehler
+– Schriftliche Aufzeichnung führen
+– Anzahl der Teilnehmer begrenzen
+– Teilnehmer sollen gut vorbereitet sein
+– Auch Review selbst beurteilen</p><p id="78c54c47-9bbf-4cd5-813d-bcb51abc8479" class="">
+</p></details></li></ul><hr id="03bd7309-30c2-4ad2-b86c-f96affdb8721"/><p id="02516bd0-c786-490a-ac98-ebba50d2b269" class="">Ziel				Stärken, Schwächen von Prüfobjekt finden, Prozess verbessern</p><p id="a230c17c-25d9-4fe1-92d7-58f42a552499" class="">Teilnehmer		Moderator, Autor, Gutachter, Protokollführer</p><p id="853da078-d1a1-4af4-bbc5-942645f350ae" class="">Eigenschaften		Alle Reviewer ausgebildet, Prüfteam gibt Empfehlung an Manager</p><p id="eceef43c-c196-4640-956b-1f3f90ac3eff" class="">
+</p></details></li></ul><ul id="80d6c8f1-8ace-4741-8c7a-559560cb4829" class="toggle"><li><details open=""><summary>Inspektion</summary><p id="df9b25f4-0dd0-4902-94a6-2b44e476cd96" class="">Formales Review - speziell in frühen Phasen der Entwicklung (vor allem Anforderungs und Designdokumente).</p><p id="8197d7f4-f7ff-46dd-91b9-b68c5429a46f" class="">Leser trägt Absatz für Absatz vor - Team versucht schwere Fehler zu finden.</p><p id="68f44f22-c473-46fd-9e6c-f8b7d4884f23" class="">Moderator entscheidet Freigabe.</p><hr id="bbf03c57-018d-477a-96b7-78e9a44ed0cd"/><p id="6e3467ca-170a-44cd-8680-9a318de6804e" class="">Ziel				Schwere Fehler im Prüfobjekt finden, Prozess verbessern, Metriken ermitteln</p><p id="89d6314d-3044-4379-b024-e0e2e9c30ce9" class="">Teilnehmer		Moderator, Autor, Gutachter, Protokollführer, Vorleser</p><p id="ea436b95-f79d-4880-99e3-995af192276a" class="">Eigenschaften		Ausgebildeter Moderator gibt Freigabe, Vorleser liest absatzweise vor</p><p id="ae6da881-59b3-4ed6-b7bf-f2bd47122830" class="">
+</p></details></li></ul><ul id="cdb32081-7fcf-46a6-847a-befa5e08153d" class="toggle"><li><details open=""><summary>Review Arten Übersicht: Reviews mit Kunde vs. Reviews ohne Kunde</summary><p id="2149382f-8683-41bf-9fb8-88457f297c7c" class=""><mark class="highlight-teal">Mit Kunde</mark><div class="indented"><ul id="e4c25fe7-f7fe-440c-b754-c3a3dfa589d3" class="bulleted-list"><li style="list-style-type:disc">SRR: Software Requirement Review<p id="c31059fe-82ce-4396-a43c-4d209869e115" class=""><mark class="highlight-gray">Review von Anforderungen und ihrer Verständlichkeit. Wird in der Systemspezifikationsphase verwendet.</mark></p></li></ul><ul id="6fa5d2a2-64e4-402e-817b-5014b36d0d33" class="bulleted-list"><li style="list-style-type:disc">PDR: Primary Design Review<p id="00cc0852-b1d3-4795-b640-3fc66f1ae810" class=""><mark class="highlight-gray">Vergleich von: momentanes Design vs. Software Designbeschreibung</mark></p></li></ul><ul id="2484158a-cf8c-499a-9b2b-cd9324eb2cfc" class="bulleted-list"><li style="list-style-type:disc">CDR: Critical Design Review<p id="01c20371-fe21-47f9-9a47-99cd6cbf5ffb" class=""><mark class="highlight-gray">Informierung von Kunde bei kritischen Entscheidungen</mark></p></li></ul><ul id="7271097b-e10a-4f23-a6c2-4f172fef9d17" class="bulleted-list"><li style="list-style-type:disc">IPR: In Prozess Review</li></ul></div></p><p id="ed3105d7-4a7e-4156-b9ff-034a68e239b6" class=""><mark class="highlight-teal">Ohne Kunde</mark><div class="indented"><ul id="293ef943-e74d-4af7-885a-66651ff8559b" class="bulleted-list"><li style="list-style-type:disc">MR: Management Review</li></ul><ul id="136f8a64-829d-4918-b190-f03e6a3b6049" class="bulleted-list"><li style="list-style-type:disc">Code Walkthrough</li></ul><ul id="184be4da-d1d1-48ec-8f7b-0a7be7c69076" class="bulleted-list"><li style="list-style-type:disc">Technical Review</li></ul><ul id="277f5111-3cca-4663-bd8e-7329f184b624" class="bulleted-list"><li style="list-style-type:disc">Inspektion</li></ul></div></p><figure id="f6275e0f-72f1-4688-94c3-bc0668f46868" class="image"><a href="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%203.png"><img style="width:288px" src="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%203.png"/></a></figure><p id="1fc4b21a-93b8-4337-9fe2-52713fdb16f9" class="">
+</p></details></li></ul><p id="c38c2431-b722-4ba3-b06b-cbbd94df485d" class="">
+</p><p id="2772340f-b2b2-4dd8-a175-0fd85c9cc3bc" class=""><mark class="highlight-blue">Inspektion</mark></p><ul id="abc93c88-fbe5-4af3-b697-b0a4db8dcc31" class="toggle"><li><details open=""><summary>Inspektion <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>∈</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \in </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5203800000000001em;vertical-align:-0.035190000000000006em;"></span><span class="mrel sizing reset-size6 size5">∈</span></span></span></span></span><span>﻿</span></span> Review</summary><p id="0edc4db2-90ef-4522-bb78-36fb6eed41fe" class="">in frühen Phasen der Fehlerfindeung<div class="indented"><p id="4c559d4b-0962-4d0a-9019-8fa79bb25841" class="">(zB auch für Anforderungsdokument, Designdokument, Testfälle, Code)</p></div></p><p id="21b2a3a2-1f17-4828-a3e2-57670a42d522" class="">systematisch, formal, wirtschaftlich um Fehler zu finden</p><hr id="305826ac-7cc7-43ed-bdaf-91e44be036e4"/><p id="4b9f36a5-1cdd-4018-a96c-a8543a84a878" class="">Einsparungen durch frühes Finden von Fehlern.</p><p id="ba4f7764-16ce-4c81-bfe1-d8e72b3d6a64" class="">Beurteilungsgrundlage für Qualität (zB durch Restfehlerschätzungen).</p><p id="e78e83eb-05ab-44dc-ae2c-b13d4d276d93" class="">Unterstützt von Lesetechniken und Fehlerlisten (Fehler in Teammeetings gesammelt)</p><p id="8213aabc-c860-4f2b-94f9-731b7d318ab2" class="">Mehr Informationen über Produkt: Lerninstrument für neue Teammitglieder, Erkenntnisse für Management (PM und QM).</p><p id="ecdb1c30-079d-45ab-bbfe-96d0d83a2173" class="">
+</p></details></li></ul><ul id="47a6f291-b545-479f-a07c-c9749ee8b4a0" class="toggle"><li><details open=""><summary><del>Inspektion: Planung und Kontrolle durch QM</del></summary><figure id="f80b702f-581c-4c3d-90af-a7538718f074" class="image"><a href="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%204.png"><img style="width:288px" src="../2%20-%20Qualita%CC%88tskontrolle%20Reviews,%20Lesetechniken,%20An%2075732af947b4457db2d5b046c1e941eb/Untitled%204.png"/></a></figure><p id="5e36b87a-84d9-430f-b39a-8d21de101029" class="">
+</p></details></li></ul><ul id="b219673e-ccfa-4682-9437-e391546bb6e7" class="toggle"><li><details open=""><summary>Inspektion: Dimensionen</summary><p id="273226b8-ff11-4efe-bbea-17bac8fe5262" class="">Prozess<div class="indented"><p id="b3ac2d7b-82b4-4975-a06f-0581346b077b" class="">Planung → Überblick → Fehlerfindung → Fehlersammlung → Fehlerkorrektur → Follow-Up</p></div></p><p id="ed3399ce-530f-42d4-ba96-4b235160740c" class="">Produkt<div class="indented"><p id="29f15b95-841e-4f6c-ae86-872b9a4c1fb9" class="">Anforderung, Design, Code, Testfälle</p></div></p><p id="7fb5b12d-4419-4d91-9802-40556d9a9018" class="">Rollen<div class="indented"><p id="b25594fc-10d1-41ee-b26f-dbac743afd18" class="">Organisator, Moderator, Inspektor, Autor, Schreiber, Präsentator, Sammler</p></div></p><p id="bee16915-7fad-4b67-a625-a2bee26d7051" class="">Lesetechniken<div class="indented"><p id="2e6add54-19d0-4ec9-8c67-1b8f24a072fc" class="">Ad-hoc, Checklisten-basiert, Szenario-basiert, Perspektiven-basiert, Fehler-basiert</p></div></p><p id="63b48251-50a8-4929-9867-9c7d4ae58235" class="">
+</p></details></li></ul><ul id="dc162d05-34b5-4bc0-9304-c20eb68078cc" class="toggle"><li><details open=""><summary>Inspektion: Kosten vs. Nutzen</summary><p id="091b3f1b-931f-40e4-ab77-a140c051ca5e" class="">Kosten<div class="indented"><p id="b174da2f-e8f7-4847-aac7-25fa41d23d6c" class="">Aufwand von Inspektoren, Einplanung im Projektplan</p></div></p><p id="fc6e38af-d891-4d85-92ad-a314738eb6c6" class="">Nutzen<div class="indented"><p id="952cb0fb-d4e4-4145-a156-c0e392939ed5" class="">Einsparungen durch frühe Fehlerfindung</p><p id="be14ccb3-03c4-411d-8da3-862055b01d92" class="">Beurteilungsgrundlage für Produktqualität (zB Restfehlerschätzungen)</p><p id="fadac3b3-dea2-4441-bf21-084ede0e7eb1" class="">Mehr Informationen über Produkt zur Planung</p><p id="a68a02f9-ece4-412d-8af3-2cb9e68a2eb1" class="">Inspektion als Lerninstrument für Inspektoren und neue Teammitglieder um Produkt kennenzulernen</p></div></p></details></li></ul><p id="faf13b42-d030-405c-b7d9-ca3508b62909" class="">
+</p><p id="f020145d-7f18-4fa6-992b-6e9324094fd0" class=""><mark class="highlight-blue">Alternativen zur Inspektion</mark></p><ul id="76b27671-8971-4f48-8959-db5fe2b3470d" class="toggle"><li><details open=""><summary>Crowdsourcing in SE: Definition</summary><p id="2c77f7c3-8d70-4318-be60-79ed21d3b4fe" class="">“The act of undertaking any external software engineering tasks by an undefined, potentially large group of online workers in an open call format.”</p><p id="ae378301-0ef0-4b04-9ca2-3772a349f790" class="">
+</p></details></li></ul><ul id="0c6537d5-9191-49ad-a8b1-a2ad4d1c8a23" class="toggle"><li><details open=""><summary><del>Alternativen zur Inspektion</del></summary><p id="a3143e45-b6db-45f8-a296-342b74b072a5" class=""><mark class="highlight-blue">Model Quality Inspection MQI</mark><div class="indented"><p id="66b19283-a046-44ef-8e45-f38fe31c9eb9" class="">Funktioniert durch crowdsourcing</p><p id="fc46a032-8127-437e-aad9-24d6b92cd918" class="">Defekte in großen Modellen früh und effektiv finden durch Best-Practice Software Inspektion</p></div></p><p id="71eb7539-4031-4b57-8a83-9f171fc1e58b" class="">
+</p><p id="aade8009-f588-4a63-8e2a-4d8e32a11af8" class=""><mark class="highlight-blue">Crowdsourced Software Inspection CSI</mark><div class="indented"><p id="7da54ce1-f433-4869-a5e9-723569b8d480" class="">Funktioniert durch crowdsourcing</p><p id="56ab445e-4fbe-4156-9abf-5615b101591d" class="">Automatisierung mit natural language processing NLP</p></div></p><p id="31cd14cc-d157-4765-835e-dbf1a3141ba8" class="">
+</p></details></li></ul><p id="73146fe6-03cd-46e2-96d7-107b073ea2c7" class="">
+</p><p id="d15c1f6c-8411-4db5-8a5c-7ccbde1192e9" class=""><mark class="highlight-blue">Lesetechniken</mark></p><ul id="8a3ed895-a531-4633-bdde-16c9f2c02a38" class="toggle"><li><details open=""><summary>Lesetechnik: Definition</summary><p id="6ba46f4d-b109-443c-9f2d-8b1d62439925" class="">“strukturierte Ansätze oder Dokumente, die den Fehlerfindungsprozess während einer Inspektion oder einer Review unterstützen.”</p><p id="1705964f-5e23-4e2f-8a4e-a1c9c8fae481" class="">
+</p></details></li></ul><ul id="2118d910-a003-44b7-880a-97750740fd9d" class="toggle"><li><details open=""><summary>Lesetechniken im Vergleich</summary><p id="e5f4f4be-eb3a-47db-ab30-97cd780aef66" class=""><mark class="highlight-blue">Ad hoc</mark><div class="indented"><p id="b542859e-5326-4b6c-b8e9-15d204e91257" class="">Unstrukturiertes Lesen</p><p id="b1aaf048-32ad-497e-b02b-1dd8957c32f0" class="">braucht hohe Kenntnisse des Gutachters</p></div></p><p id="463ba441-c6f4-4ac8-9fbd-b44dd990f25d" class=""><mark class="highlight-blue">Checklistenbasiert</mark><div class="indented"><p id="6447eb36-b4b0-4bea-802d-181ab4176e89" class="">vordefinierte Fragestellungen sequentiell abarbeiten</p><p id="ac215de3-bb6c-4967-8418-741613c677b7" class="">generische Checklisten für das Projekt erweitert<div class="indented"><p id="1833afb9-9ed5-4d1f-af24-56d7aa5696e4" class="">Checklisten für besondere Fehlertypen, Fehlerorte (Design, Code) usw</p></div></p><p id="993ffed1-afaf-4b48-9a17-6a614c8a187f" class="">Durch Struktur gut wiederholbar</p></div></p><p id="96bd4a57-b112-49f8-95e5-d9a7673d5099" class=""><mark class="highlight-blue">Perspektivenbasiert</mark><div class="indented"><p id="b6fcbe9a-c606-4746-8d47-97459857c563" class="">Fehlersuche aus Perspektiven / Rollen (User, Tester, Entwickler)</p><p id="783521e9-9f25-4f99-8302-eaaed7ce2f63" class="">braucht Fachspezialisten</p></div></p><p id="7da7ad45-8017-4cc9-baae-8291187af013" class=""><mark class="highlight-blue">Fehlerbasiert</mark><div class="indented"><p id="c87878db-57a8-4061-85ef-8c3f9bfb5f8b" class="">Spezielle Form von checklistenbasierter Lesetechnik</p><p id="e9e9b4f7-67e3-4a74-aef2-744c24463030" class="">Fehler in Fehlerkategorien eingeteilt</p></div></p><p id="a2f16f0d-b971-4dfe-8093-d619d930f4d3" class=""><mark class="highlight-blue">Szenariobasiert — Usage-Based Reading (UBR)</mark><div class="indented"><p id="d925f3f3-856a-4ad9-ac70-90680b6b9acb" class=""><em>= Best Practice</em></p><p id="c870d550-23ed-41c0-9790-227f94e1e480" class="">Szenarien / Use Cases die durch Fachspezialisten priorisiert werden.</p><p id="5b0ddf63-a1bf-4526-b3d3-eb0004c471bf" class="">Fehlersuche nach Priorität.<div class="indented"><ol type="1" id="b2177843-8b13-4ee1-a702-4a01eb80fa51" class="numbered-list" start="1"><li>Auswahl des wichtigsten Anwendungsfalles</li></ol><ol type="1" id="48ab45ed-fa51-4c3e-8e13-37c2dd0525aa" class="numbered-list" start="2"><li>Überprüfung der relevanten Teile dafür</li></ol><ol type="1" id="b6686938-ae18-4e10-9e48-d39373ca0a63" class="numbered-list" start="3"><li>Reporting von Mängel, Fehler</li></ol><p id="71e11fb3-62bc-4c7f-8935-bc3567c7d522" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↺</mo></mrow><annotation encoding="application/x-tex">\circlearrowleft</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6639600000000001em;vertical-align:-0.08198em;"></span><span class="mrel amsrm">↺</span></span></span></span></span><span>﻿</span></span></p></div></p></div></p><p id="002a0162-0db2-4582-a2dd-edd525bb1fd4" class="">
+</p></details></li></ul><p id="1af620c8-05cb-431e-a15c-42619b76e14d" class="">
+</p><p id="4dcc78db-10d2-43af-a0d1-67abf540f761" class=""><mark class="highlight-blue">Anforderungen</mark></p><ul id="a5f35c69-0c24-4fa6-8b40-d4b163c42d81" class="toggle"><li><details open=""><summary>Anforderung: Definition</summary><p id="fa8cc7ef-0db1-47e1-a177-35b63bcfb28a" class="">Anforderung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> Qualitätsdefinition<div class="indented"><p id="c8bc39b3-a901-4362-9e7b-810436178238" class="">Anforderungen beschreiben Funktionen und <em>Qualitäten</em></p><p id="5b015256-cebc-43ce-8aa4-237526662c7c" class=""><em>Qualitäten </em>müssen testbar beschrieben werden</p></div></p><p id="d36b1d8f-2412-4596-8bdb-eec107e15605" class="">
+</p></details></li></ul><ul id="5e96ec89-10fb-47a6-9ffb-6ec49cf7a32d" class="toggle"><li><details open=""><summary>Reviewing von Anforderungen</summary><p id="7185027a-5716-46e7-aa7c-edb37129a1f1" class="">Überprüfung, Verbesserung von Anforderungs-Qualität</p><p id="f1b9b653-91dc-4690-91db-24c82f725008" class=""><mark class="highlight-teal">Software Requirement Review</mark><div class="indented"><p id="f053a353-4cc7-4471-8deb-f47082db951c" class="">Prüfen Korrektheit von Anforderung</p><p id="eb75c935-f47b-4ff2-9180-118b2c41dc47" class="">Phase: Systemspezifikation</p></div></p><p id="5755299c-4d84-4550-bbcc-8a7c23c90048" class=""><mark class="highlight-teal">Preliminary Design Review</mark><div class="indented"><p id="f7ae3cde-0ff0-4706-abf0-e4cbae186df8" class="">Prüfen technische Angemessenheit von Design (mit aktueller Beschreibung)</p><p id="f612ccb2-e78d-48a7-b05c-703a8bedd920" class="">Phase: Systemdesign</p></div></p><hr id="07419f34-9f6d-4a9f-9541-4eaafbc8428f"/><p id="d587e93b-bec8-4ba0-82f5-0be8e002f59e" class="">Erstrebenswert: Beschreibung klar, knapp, konsistent, vollständig, umsetzbar</p><p id="34b7b53f-c71a-49bd-b8ef-607424e8edf2" class="">Klassifikation<div class="indented"><p id="12b4c068-745f-4b63-9e9f-e4a8229c6898" class="">Kriterien: funktional, nichtfunktional, testbar, verständlich</p><p id="e8e72baa-3fba-43db-bbc0-b25523b1e742" class="">rückverfolgbar (zu Anforderungsdokumenten zB Projektbeschreibung)<div class="indented"><p id="2e98d7d2-498b-4335-8174-664c3bb68b58" class=""><mark class="highlight-gray">später hergestellte Dokumente dann gegen Anforderungen</mark></p></div></p></div></p><p id="beae3f05-c91e-4963-b7db-ee5d297b289c" class="">
+</p></details></li></ul><ul id="55a6570a-d430-4f2a-b093-dba09b05d95c" class="toggle"><li><details open=""><summary>Anwendungsfall Aufbau</summary><p id="e8d71e12-55f3-4b9d-818a-9c0bd2407b1e" class="">Allgemein<div class="indented"><ol type="1" id="50ced846-b3cd-4022-9e3a-90e9b0501f0b" class="numbered-list" start="1"><li>Titel</li></ol><ol type="1" id="bbe4a6a4-8747-400f-9eae-14f2cdf3d47c" class="numbered-list" start="2"><li>Kurzbeschreibung</li></ol><ol type="1" id="26ac73d1-a89c-40e2-84b1-92f439cefdbc" class="numbered-list" start="3"><li>Welche Aktoren sind beteiligt</li></ol><ol type="1" id="1b2f9b40-d522-4350-be00-fefe93b0d559" class="numbered-list" start="4"><li>Vorbedingung</li></ol><ol type="1" id="47d82edf-beaa-4243-8f96-1a2a4aa6d398" class="numbered-list" start="5"><li>Nachbedingung</li></ol></div></p><p id="bb230337-eef8-42ba-9e7f-ad215597b740" class="">Flow of events<div class="indented"><ol type="1" id="d281eb9f-9024-4fa8-840c-422fb444dee6" class="numbered-list" start="1"><li>Hauptszenario</li></ol><ol type="1" id="c7b19a2a-9fac-4758-85f4-3f34117bd24e" class="numbered-list" start="2"><li>Alternativszenario</li></ol><ol type="1" id="95caab89-5b85-4621-8424-6e23f0a6194f" class="numbered-list" start="3"><li>Fehlerszenario</li></ol></div></p><p id="de32765a-5e07-4753-bc37-113a7032b7ef" class="">Nichtfunktionale Anforderungen</p><p id="9518e39c-e0d3-480e-9647-87bf869df9df" class="">
+</p></details></li></ul><ul id="436f2930-b0da-4435-89f5-996230864a06" class="toggle"><li><details open=""><summary>Anforderung: Klassifikation nach FURPS</summary><p id="151b78ea-a523-4ca8-b993-4946662719bf" class="">Functional (Funktional)			Features, Fähigkeiten, Sicherheitsvorrichtungen</p><p id="609cd338-1eeb-40d3-adc6-abdea090bb71" class="">Usability (Benutzerfreundlich)		Human factors, Nützlichkeit, Dokumentation</p><p id="cfa85e4b-542b-495c-ba85-805f408bf94e" class="">Reliability (Zuverlässig)			Uptime, Verlässlichkeit, Wiederherstellbarkeit</p><p id="50dba331-f5f8-46f6-84b8-209f1f1ba06b" class="">Performance					Antwortzeiten, Durchsatz, Genauigkeit</p><p id="b2f858f4-7038-4569-8516-6f19bf576db4" class="">Supportability (Wartbarkeit)		Modifizierbarkeit, Wartung, Konfiguration</p><hr id="4c0c016d-44ad-4791-a371-88b464a4a4d5"/><p id="5470d57a-31d6-4657-b1be-9c4ba7a86d1f" class="">Zur Laufzeit messbar:			Performanz, Sicherheit, Verfügbarkeit, Verwendbarkeit</p><p id="68bdd22e-88d3-4d12-903e-cd0d48679bfc" class="">Nicht zur Laufzeit messbar: 		Modifizierbarkeit, Portabilität, Wiederverwendbarkeit</p><p id="04c4576e-7195-4552-8953-b3b38efa9432" class="">
+</p></details></li></ul><ul id="e881fd0f-51f7-4965-a8e6-49ab6afa382e" class="toggle"><li><details open=""><summary>Anforderung: Einteilung nach funktional vs. nicht-Funktional + contraints</summary><p id="e1b25806-5ec4-478e-bb04-91e2607e5531" class=""><mark class="highlight-blue">Funktionale Anforderungen</mark><div class="indented"><p id="359c7ede-89cc-416e-b564-0e63ba4368b1" class="">Beschreiben was das System tut, um Mehrwert für die Stakeholder zu liefern</p><p id="ed8191b5-c86e-403e-8dc3-91d8e966f0bc" class="">Bilden ein <mark class="highlight-teal">Anwendungs-Szenario: </mark>Meistens in der Form: “System kann Funktion X ausführen”</p><ul id="e17c6394-2ea1-4f97-a0c0-df30b1c4cb2b" class="toggle"><li><details open=""><summary>Beispiele</summary><p id="b2ae9f94-9d59-4d3e-95fe-c4a8ccb5cbab" class="">– Das System kann gespeicherte Rechnungen als ausdruckbare Datei exportieren.</p><p id="71c86a6b-d054-4636-bb93-b540098a8291" class="">– Der Administrator kann Bestellungen stornieren</p></details></li></ul></div></p><p id="d5b9c595-c685-4b71-b757-3b13f172f18b" class=""><mark class="highlight-blue">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark><div class="indented"><p id="600c6ec9-2c21-4706-acd8-04c4534daac4" class="">Charakteristika, nicht-technische Beschreibung, Eigenschaften</p><ul id="d9ad33dc-1982-4a92-976e-26416066105e" class="toggle"><li><details open=""><summary>Beispiele</summary><p id="14cc7745-8f17-4f18-a12f-236b1605e177" class="">– Wenn ein Fehler eintritt, informiert das System den Benutzer und arbeitet in einem verschlechterten(degradierten) Zustand weiter.</p><p id="0a0ab8e9-10a8-49b6-b95d-4eadcd2c7e04" class="">– Falls das System die Anzahl der Bestellungen nicht verarbeiten kann, trennt es einige bestehende Verbindungen zu Clients. Die Administratorin wird informiert und das System arbeitet in einem verschlechterten(degradierten) Zustand weiter.</p></details></li></ul></div></p><p id="4535f03d-dad7-4274-b88f-b601aee45ce2" class=""><mark class="highlight-blue">Constraints</mark><div class="indented"><p id="e8acb435-d053-4c5f-bb2b-380f00957b9f" class="">Einschränkungen des Systems durch Frameworks bzw. Architekturentscheidungen</p></div></p><p id="63d9b30c-53ec-4d01-ba62-020023e8904e" class="">
+</p></details></li></ul><p id="e9d829d6-27e5-46bb-a7ba-9042b3895f8d" class="">
+</p><p id="f6959625-c815-4b3e-89d6-8aa63fd4882c" class=""><mark class="highlight-blue">Modell</mark></p><ul id="12a38156-a7f8-4c3e-a420-be43926d937b" class="toggle"><li><details open=""><summary><del>Modell: Definition</del></summary><p id="57990d31-134a-4f38-84bc-26294c1bf516" class="">Gemeinsame Notation mit konsistenter Bedeutung</p><p id="c58e487f-fe19-49b5-a137-b680e70e96c5" class="">
+</p></details></li></ul><ul id="be36ae23-a1bf-4e35-8afe-541388ed3aff" class="toggle"><li><details open=""><summary><del>Modell: Einsatzgebiete</del></summary><p id="278a86b9-6bc2-4dcb-bb08-bce93b22d4b0" class="">Modelle helfen Überblick zu behalten:<div class="indented"><p id="ff068d28-e316-4204-892e-f4815c7e1280" class="">Anforderung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Modell <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Daten-/Komponenten-/Test-Spezifikation  </p><p id="5594f73b-42fe-4589-900d-9456c66bafde" class="">Anforderung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Modell <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Datenbank, Business Logik, GUI</p><p id="bbc11074-3134-4fd7-b70e-5c3af80bc002" class="">Anforderung <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Qualitätsdefinition und Modelle <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Qualitätssicherung QS</p></div></p><hr id="4931a347-287f-4d88-b7c6-62531315f42b"/><p id="fa9eb3ca-915f-45cc-95a2-d6ed07a872ff" class="">Einsatz in Entwicklung:<div class="indented"><p id="ad091f78-64c7-434c-aa5a-c6a31dac3d2b" class="">– <mark class="highlight-gray">Datenbankmodelle:</mark> Datenmodellierung, EER &amp; Relationen
+– <mark class="highlight-gray">Business Logik:</mark> Zustandsdiagramme, Daten- und Kontrollfluss
+– Schnittstellen zwischen Teilsystemen und Benutzern</p></div></p><p id="00fa4f64-0cc0-466f-a3da-98d16d6f53d3" class="">Einsatz in QS:<div class="indented"><p id="63aa777c-3262-4b2a-a90d-f63c64e45009" class="">– Anwendungsszenarien (etwa Use Cases)
+– Datenmodelle (Relationenmodell (ER), Domänenmodell)
+– Datenflussmodelle (UML, IDEF0)
+– Kontrollflussmodelle (UML, Pseudocode)
+– Zustandsdiagramme, Sequenzdiagramme (UML)
+– Testfallspezifikationen</p><p id="9e63329f-b19e-41fa-885f-b1da97454d03" class="">
+</p></div></p><p id="f21652f2-2b1e-4957-9df0-196df97119d7" class="">
+</p></details></li></ul><ul id="91bbaa9e-09aa-4bae-908d-0cee7b4d5b8f" class="toggle"><li><details open=""><summary>UML Sichten auf Software Strukturen - Charakteristika des Systems</summary><ol type="1" id="2ed25391-e91c-4c3a-9407-9683e9ba13fe" class="numbered-list" start="1"><li><em>Konzeptionelle Sicht</em><p id="e6dc6467-8677-4590-a3bd-d8a0f7654b2f" class="">Übersicht über Problembereich, Domäne — zB Domänenmodell</p></li></ol><ol type="1" id="75697cc0-dda8-41c0-ac36-851661a38432" class="numbered-list" start="2"><li><em>Spezifizierende Sicht</em><p id="1fe82e02-4d2a-4dd1-a3d6-77d7088a4638" class="">Softwareschnittstellen, keine Implementierung — zB Komponentendiagramm</p></li></ol><ol type="1" id="b2b95916-bcf1-4cae-9dc5-91fa2e894e29" class="numbered-list" start="3"><li><em>Implementierende Sicht</em><p id="0f0df91f-2c72-4bc7-9a78-e7e4e149a0b3" class="">Klassen als Grundlage für Implementierung — zB Klassendiagramm</p><p id="e481434c-973f-4b59-a217-bf24f77d28e4" class="">(am häufigsten eingenommene Sicht)</p></li></ol></details></li></ul><p id="86f3eb47-4eb2-407d-a259-21099017f8fe" class="">
+</p></div></article></body></html>

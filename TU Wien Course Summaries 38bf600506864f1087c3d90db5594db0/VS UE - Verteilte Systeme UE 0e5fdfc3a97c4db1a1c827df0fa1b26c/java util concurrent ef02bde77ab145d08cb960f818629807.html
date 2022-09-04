@@ -1,0 +1,1037 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>java.util.concurrent</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ef02bde7-7ab1-45d0-8cb9-60f818629807" class="page sans"><header><h1 class="page-title">java.util.concurrent</h1></header><div class="page-body"><p id="755c738c-fae2-41b4-aa24-e65ec977fcb5" class=""><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html">https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html</a></p><p id="ffecb96d-53de-4dfb-a15a-25bad0b936e6" class=""><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html">https://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html</a></p><p id="e5ea7435-962d-451c-a5ab-4d1ef4a1362f" class=""><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility">https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html#MemoryVisibility</a></p><p id="b5c1bd77-dd6e-4c8c-a01d-cdf481bc8c93" class="">
+</p><p id="68ddbe7b-f32f-4a0e-a16f-3448a4ebedd4" class="">In depth tutorials<div class="indented"><p id="9e496518-04c6-4e80-97a3-85f0833461d3" class=""><a href="https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1">https://www.youtube.com/watch?v=mTGdtC9f4EU&amp;list=PLL8woMHwr36EDxjUoCzboZjedsnhLP1j4&amp;index=1</a></p></div></p><p id="deae3a89-b500-4bfc-be63-e63f47bc482b" class="">Compact summary<div class="indented"><p id="d94f73d8-5dcb-49ca-8f0f-a5769e3db865" class=""><a href="https://www.youtube.com/watch?v=c-a5JHVfGYM">https://www.youtube.com/watch?v=c-a5JHVfGYM</a></p></div></p><p id="4f218025-60fc-4760-90a6-5b5f5492dd2d" class="">
+</p><nav id="5092e36d-a5d7-45ae-95df-1a88ad476caf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f60440b7-335a-4bbb-a9e6-2d1a79d1e6c2">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28ac5e82-33a6-4eb0-a8fb-02fa21142f55">Thread</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e12ad8ba-2586-474c-9e59-778895e3218a">Thread API</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ec68e5b-7673-48ac-ad17-f3675db13e86">Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ff2e1ebb-78b8-417f-93c0-d21d717ddcde">Liveliness</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#982284c5-9d12-4b70-ac1f-cf56e7556425">Guarded Blocks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4b9d8f8e-28e6-4447-92ee-e9a737e0a2f3">High level Concurrency Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0473ba45-11fe-41d7-9294-9d4e6895ff32">Lock</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92ba815c-7405-4943-8f30-7c119997c5d4">Executor</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#548c6c28-0ead-440a-bab4-a88b3643c169">Thread Pools</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0a756c4d-5922-4edb-87fa-68486d146852">Concurrent Collections</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6b90f5a6-6ee3-43eb-9305-3e7c4a135aee">Atomic Variables</a></div></nav><p id="68acd945-12c2-4173-9222-4e1f8dc13ec4" class="">
+</p><h1 id="f60440b7-335a-4bbb-a9e6-2d1a79d1e6c2" class="">Definition</h1><p id="8565c47b-b418-4756-8b46-f24a1ba4807e" class=""><mark class="highlight-blue">Process</mark><div class="indented"><p id="0b3c489e-cd29-4274-b785-62a507a01ab1" class="">The JVM is run as a single process process scheduled by the OS.</p><p id="6aab0489-60d4-4209-a864-3c410bf9886a" class="">A Java application can also create additional processes (not part of this tutorial).</p><p id="5d1bbdf0-9a13-4b40-9c70-e3fda2c2cd75" class="">
+</p></div></p><p id="ef950b65-5a21-4638-8e8d-7f5c3de265a3" class=""><mark class="highlight-blue">Thread</mark><div class="indented"><p id="7c6c3585-472b-4d81-91bb-02a43fb62789" class="">Lightweight processes - creating it requires less resources.</p><p id="fec9d1f2-0ccb-4d4e-ba06-f47aaa7c82cc" class="">Exist within a process and share its resources.</p><p id="7fbbab29-4d38-45ea-b7e9-35240b43223a" class="">You start with the <em>main</em> <em>thread</em>.</p><p id="c46d2a91-1603-4533-9328-f2cbbd2dc585" class="">
+</p></div></p><p id="4be0a696-f071-44c6-9b31-8b8dd26662d2" class="">
+</p><h1 id="28ac5e82-33a6-4eb0-a8fb-02fa21142f55" class="">Thread</h1><p id="0cd8ee17-9bb9-4135-86f2-e60da38e8b91" class=""><code>Runnable</code><div class="indented"><p id="473ff4e7-3218-4926-af5e-41e4e0a70593" class="">Runnable is an interface which represents a task that could be executed by either a <mark class="highlight-gray"><code>Thread</code></mark><mark class="highlight-gray"> </mark>or <mark class="highlight-gray"><code>Executor</code></mark><mark class="highlight-gray"> </mark>or some similar means.<div class="indented"><p id="b1376359-a687-4267-94f6-e0765e7317c9" class="">They are passed to the <mark class="highlight-gray"><code>Thread</code></mark>s constructor.</p></div></p><p id="1b924953-a3d4-4ab9-a25f-a6cb155439b6" class="">Interface that classes that run within the <em>Thread</em> Object must implement.</p></div></p><pre id="1f594905-63da-4b5b-912f-c1af60c92050" class="code code-wrap"><code>public class HelloRunnable implements Runnable {
+
+    public void run() {
+        System.out.println(&quot;Hello from a thread!&quot;);
+    }
+
+    public static void main(String args[]) {
+        (new Thread(new HelloRunnable())).start();
+    }
+
+}</code></pre><p id="2f7cc254-2e5a-4abc-8b23-1bdc3e3da664" class="">
+</p><p id="15ed6307-fb53-4786-b025-ecfbb1ac6b75" class="">
+</p><h2 id="e12ad8ba-2586-474c-9e59-778895e3218a" class="">Thread API</h2><p id="2b353fd8-4790-4975-b9db-dc741a9c3a2a" class=""><code>.sleep()</code><div class="indented"><p id="c68c36f1-e237-41aa-a789-e35006411385" class="">suspend execution inside a Thread (not precise).</p><p id="1bd59fea-7542-4dc4-919c-51ba84a1d821" class="">Make CPU time available for other threads or processes.</p><p id="83971100-cdb8-4b49-b4d7-8cdab6287a7d" class="">Can be interrupted with <mark class="highlight-gray"><code>InterruptedException</code></mark>.</p></div></p><p id="fca5c877-0d3d-4d2e-8195-b12e003563f8" class="">
+</p><p id="b4d664bd-1375-48ae-a502-d5ed79d1ee12" class=""><code>.interrupt()</code><div class="indented"><p id="87651751-18ca-4fbc-bd3a-ff041a581e80" class="">Usually interruped threads are programmed to terminate (<mark class="highlight-gray"><code>return</code></mark><mark class="highlight-gray"> </mark>from the run method).</p><p id="1b13447e-a48e-4b29-8933-f1b04d146e32" class="">When interrupted, a <mark class="highlight-gray"><code>InterruptedException</code></mark><mark class="highlight-gray"> </mark>is thrown in the Thread.<div class="indented"><p id="a198dcd6-d256-41a7-a585-d5d6287c2050" class="">If the used methods do not invoke this execution, we must periodically check it ourselves with <mark class="highlight-gray"><code>.interrupted()</code></mark> and then throw the exception ourselves.</p></div></p><hr id="515c59da-8ffe-4b2c-9f4a-1f12cc1c3aad"/><p id="a56a34ab-3431-41dc-839d-01753841e24b" class="">For interruptions, we set the <em>interrupt-status-flag</em> of a Thread.<div class="indented"><p id="0a7c5dad-94af-44fc-bd72-96523c72fd95" class="">Static method: <mark class="highlight-gray"><code>Thread.interrupt()</code></mark> → sets flag to true</p><p id="6b5b8e43-6590-477f-b7c7-d04954bbe247" class="">Static method: <mark class="highlight-gray"><code>Thread.interrupted()</code></mark> → sets flag to false</p><p id="da135bfa-8f35-4a2b-818a-2cac2c247e51" class="">Non-static method: <mark class="highlight-gray"><code>isInterrupted()</code></mark><mark class="highlight-gray"> </mark>→ doesnt change flag </p><p id="997a6c75-9ce5-4f07-83e7-57dca388d214" class="">Throwing <mark class="highlight-gray"><code>InterruptedException</code></mark><mark class="highlight-gray"> </mark>and exiting → sets flag to false</p></div></p><p id="0e138e4a-10d2-4c8a-aa5b-fca7b3d4fef8" class="">
+</p></div></p><p id="49aabce5-ce82-4d40-a364-f6a99bf6c0a8" class=""><code>t.join()</code><div class="indented"><p id="b0e5c647-34d4-4fff-894b-c9532c1e3a8d" class="">Called inside a Thread.</p><p id="3d1f17d5-d13b-4f59-833c-13ccf47be271" class="">Waits for termination of <mark class="highlight-gray"><code>t</code></mark>. </p><p id="019ad4b3-b0be-4ef9-8901-4aea16303640" class="">Can be interrupted with <mark class="highlight-gray"><code>InterruptedException</code></mark>.</p></div></p><p id="a9335dac-fd5c-44cc-89fb-aa41405355f0" class="">
+</p><p id="b01daf22-265f-4d36-9feb-afefcbd3f1a7" class="">Example<div class="indented"><p id="464caf25-7362-4813-96c0-9ba67eba6574" class="">We have 2 Threads:<div class="indented"><p id="cec0f7b8-5199-4097-8783-3ab7db6c98a6" class=""><em>main-thread</em> creates a new thread from the Runnable, <mark class="highlight-gray"><code>MessageLoop</code></mark> and waits for it to finish.</p><p id="6740b841-db9c-48b3-9938-805e1dbcaed8" class="">If it takes to long, the <em>main-thread</em> will interrupt it.</p></div></p></div></p><pre id="0b49a8a2-9d23-4160-9829-e0f3f37f1c63" class="code"><code>public class SimpleThreads {
+
+    // Display message + name of the current thread
+    public static void threadMessage(String message) {
+        String threadName = Thread.currentThread().getName();
+        System.out.format(&quot;%s: %s%n&quot;, threadName, message);
+    }
+
+    public static void main(String args[]) throws InterruptedException {
+        long patience = 1000 * 60 * 60; // one hour
+
+				//start Timer
+        threadMessage(&quot;Starting MessageLoop thread&quot;);
+        long startTime = System.currentTimeMillis();
+				//start MessageLoop
+				Thread t = new Thread(new MessageLoop());
+        t.start();
+
+        threadMessage(&quot;Waiting for MessageLoop thread to finish&quot;);
+        while (t.isAlive()) {
+            threadMessage(&quot;Still waiting...&quot;);
+            // Wait max 1 second
+            t.join(1000);
+            if (((System.currentTimeMillis() - startTime) &gt; patience) &amp;&amp; t.isAlive()) {
+                threadMessage(&quot;Tired of waiting!&quot;);
+                t.interrupt();
+                t.join(); // wait indefinitely
+            }
+        }
+        threadMessage(&quot;Finally!&quot;);
+    }
+}</code></pre><pre id="b759c209-5400-403b-813b-cdb3a749b28e" class="code"><code>private static class MessageLoop implements Runnable {
+    public void run() {
+        String importantInfo[] = { &quot;Mares eat oats&quot;, ...};
+        try {
+            for (int i = 0; i &lt; importantInfo.length; i++) {
+                Thread.sleep(4000);
+                SimpleThreads.threadMessage(importantInfo[i]);
+            }
+        } catch (InterruptedException e) {
+            SimpleThreads.threadMessage(&quot;I wasn&#x27;t done!&quot;);
+        }
+    }
+}</code></pre><p id="0010be22-b400-4ae0-8dfe-fc309f8a99e3" class="">
+</p><p id="925265b4-7174-4ea8-a43c-115fa7ebd5f2" class="">
+</p><h1 id="8ec68e5b-7673-48ac-ad17-f3675db13e86" class="">Synchronization</h1><p id="3f0a3069-1074-40b3-80f2-b74a6b0696d8" class="">Threads communicate by sharing memory. This might cause:<div class="indented"><p id="6669c978-8851-418f-b948-4667ea1c80ff" class=""><mark class="highlight-blue">Thread Interference</mark><div class="indented"><p id="39848a48-1732-4bfb-bb2c-375bc07a5ad2" class="">Multiple Threads access shared memory<div class="indented"><p id="5ead526c-11ee-412c-8b45-b115bc23744b" class="">This happens when two operations running on different threads acting on the same data, <em>interleave</em>.</p></div></p></div></p><p id="12b75113-6d3b-4d4c-9169-0c79b09b5d37" class=""><mark class="highlight-blue">Memory consistency error</mark><div class="indented"><p id="a2b1e20b-df03-4bc2-8ed0-ed2fd10f9fe0" class="">Inconsistent views of shared memory.<div class="indented"><p id="bfb92d6c-5dd3-4e9b-a3dd-8f6b707f7604" class="">There is no fixed execution-order.</p></div></p></div></p></div></p><p id="6639a34b-edee-478c-ab3d-601d0e9bbdec" class="">Solution: Synchronization.</p><p id="6b6dc59a-4f7f-49d3-bce8-9bf1edda1877" class="">
+</p><p id="a77a855b-e779-4d3e-9dfe-0fa4722f55ef" class="">
+</p><p id="2a184e8c-0632-4dc4-a45b-bceda3122131" class=""><mark class="highlight-blue">Synchronized Methods: Atomic actions</mark><div class="indented"><p id="2d47d42f-66e7-44e4-ac16-8147199e60fe" class="">No interleaving allowed: &quot;Kritischer Abschnitt&quot;</p><pre id="c23ec9dc-baff-4651-8735-7269497bf5b6" class="code"><code>public class SynchronizedCounter {
+    private int c = 0;
+
+    public synchronized void increment() {
+        c++;
+    }
+
+    public synchronized void decrement() {
+        c--;
+    }
+
+    public synchronized int value() {
+        return c;
+    }
+}</code></pre></div></p><p id="6050148e-c5d1-45d4-8dbd-7a0fa936d39d" class="">
+</p><p id="6a9455b9-6c4e-4d9f-8578-a704614aa2d5" class=""><mark class="highlight-blue">Synchronized Statements: making only a part of the method atomic</mark><div class="indented"><p id="a0e8a3ff-44b6-44b1-8ea0-53de81dd5161" class="">Built on the <em>intrinsic lock</em> or <em>monitor lock</em>.</p><p id="1d2f2712-5601-4f51-9285-1c5d3d402682" class="">Thread that needs exclusive access has to <em>acquire</em> the intrinsic lock, access it, then <em>release</em> the intrinsic lock when it&#x27;s done.</p><p id="42ce4f61-d804-4812-b5fc-f013faf0460e" class="">A thread is said to <em>own</em> the intrinsic lock between the time it has acquired the lock and released the lock.</p><p id="7890e2a2-89d6-436c-8abc-4236453b9d20" class="">Synchronized statements must specify the object that provides the intrinsic lock:</p><pre id="ed16fdc3-729d-4408-bf0b-ba3f7c428b70" class="code"><code>public void addName(String name) {
+    synchronized(this) {
+        lastName = name;
+        nameCount++;
+    }
+    nameList.add(name);
+}</code></pre></div></p><p id="101a42a2-d1a5-4030-abb5-a16a24089b94" class="">
+</p><p id="cb3cffb1-019b-42c3-8400-f80f1a5f7ae4" class="">To avoid unneccasry blocking, where interleaving does not affect the memory:<div class="indented"><p id="4a77c3a2-7289-4658-a6a4-ec2ea16ca993" class="">Incrementing <mark class="highlight-gray"><code>c1</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>c2</code></mark><mark class="highlight-gray"> </mark>can interleave since they are never read together, but the operations must be synchronized.  <mark class="highlight-gray"> </mark></p><pre id="d558c3c8-40b6-4a37-a3d0-263b1768321f" class="code"><code>public class Example {
+    private long c1 = 0;
+    private long c2 = 0;
+    private Object lock1 = new Object();
+    private Object lock2 = new Object();
+
+    public void inc1() {
+        synchronized(lock1) {
+            c1++;
+        }
+    }
+
+    public void inc2() {
+        synchronized(lock2) {
+            c2++;
+        }
+    }
+}</code></pre></div></p><p id="30a7feb6-3a81-467a-b649-e6fc2613626f" class="">
+</p><p id="d235f9ae-e699-4fa7-a388-b152f601da92" class=""><mark class="highlight-blue">Atomic Access</mark><div class="indented"><p id="0994c662-7c76-48ac-9a16-c66607b87909" class="">No interruptions: Action happens completely or not at all.</p><p id="4162c8ac-a888-4e6b-bb4c-fde46715b4ec" class="">No side effects are visible until the action is complete.</p><p id="a5f36eb3-62e0-4054-b308-035848074e3e" class="">Reads and writes are atomic for all primitive variables - but <mark class="highlight-gray"><code>long</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>double</code></mark><mark class="highlight-gray"> </mark>variables must be declared <code>volatile</code> </p></div></p><p id="e1c59566-f4be-4083-baa5-b48220a5354f" class="">
+</p><h1 id="ff2e1ebb-78b8-417f-93c0-d21d717ddcde" class="">Liveliness</h1><p id="890c97a4-68ff-4a20-9a00-d542014103ab" class="">Synchronization can cause thread contention like these.</p><p id="4e3813b3-a52d-4d7a-81d6-49c872630c40" class="">
+</p><p id="0f2e0f33-96b7-48fe-b886-2e51811ad526" class=""><mark class="highlight-blue">Deadlock</mark><div class="indented"><p id="f64e1e18-a26b-4053-8eff-617567498be3" class="">describes a situation where two or more threads are blocked forever, waiting for each other.</p></div></p><p id="e30561f6-d92c-4954-882e-48bb2dde9781" class="">Example<div class="indented"><p id="61a1c6b5-0f61-43f7-8b8d-2cc1ee527dc0" class="">Two Friends (Gaston, Alphonse) who bow and remain bowed until the other friend can bow back.</p><p id="eb7bbc18-7df1-4ec8-8fe9-c0730245b281" class="">If both bow at the same time, they remain locked forever. Neither block will ever end, because each thread is waiting for the other to exit <mark class="highlight-gray"><code>bow</code></mark>.</p></div></p><pre id="55c04835-a153-4eba-8b19-536691e64c46" class="code"><code>public class Deadlock {
+    static class Friend {
+        private final String name;
+
+        public Friend(String name) { ... }
+        public String getName() { ... }
+
+        public synchronized void bow(Friend bower) {
+            System.out.format(&quot;%s: %s&quot; + &quot;  has bowed to me!%n&quot;, this.name, bower.getName());
+            bower.bowBack(this);
+        }
+
+        public synchronized void bowBack(Friend bower) {
+            System.out.format(&quot;%s: %s&quot; + &quot; has bowed back to me!%n&quot;, this.name, bower.getName());
+        }
+    }
+
+    public static void main(String[] args) {
+        final Friend alphonse = new Friend(&quot;Alphonse&quot;);
+        final Friend gaston = new Friend(&quot;Gaston&quot;);
+        new Thread(new Runnable() {
+            public void run() {
+                alphonse.bow(gaston);
+            }
+        }).start();
+        new Thread(new Runnable() {
+            public void run() {
+                gaston.bow(alphonse);
+            }
+        }).start();
+    }
+}</code></pre><p id="19487b2b-db1b-4809-b75b-b04f4b930be0" class="">
+</p><p id="1a136c08-f1c5-4015-9641-c0613dd39665" class=""><mark class="highlight-blue">Starvation</mark><div class="indented"><p id="8ced48de-d820-4134-aea4-9b0eaac9bf86" class="">situation where a thread is unable to gain regular access to shared resources and is unable to make progress.</p><p id="b1c3bf4d-9a78-4727-94db-3694235c6968" class="">This happens when shared resources are made unavailable for long periods by &quot;greedy&quot; threads.</p></div></p><p id="62b00847-0df8-4918-8e7f-543b77e7ba97" class="">
+</p><p id="48714f10-4523-46b8-810b-e49b2cd933e3" class=""><mark class="highlight-blue">Livelock</mark><div class="indented"><p id="62706ae9-9a2b-40c4-85b0-2af894a8e283" class="">The threads are not blocked but still make no process- they are simply too busy responding to each other to resume work.</p></div></p><p id="b71c2dce-c33b-452c-83b7-67692003fec4" class="">
+</p><h2 id="982284c5-9d12-4b70-ac1f-cf56e7556425" class="">Guarded Blocks</h2><p id="521b0594-86c2-4872-9367-188443260a75" class="">Only proceed if a specified condition is met.</p><p id="6cdb81ee-0b02-4d7f-8110-ef92eb6dd6d5" class="">Using loops is wasteful:<div class="indented"><pre id="a77f327b-f06d-4493-9fef-f9c48d48015c" class="code"><code>public void guardedJoy() {
+    while(!joy) {}
+    System.out.println(&quot;Joy has been achieved!&quot;);
+}</code></pre></div></p><p id="550f9fe0-e591-4570-895b-c4e248d73a85" class="">
+</p><p id="48cd812c-1889-48bc-a9f6-24a1e0c31d4a" class=""><code>Object.wait()</code><div class="indented"><p id="e53a54b2-48c3-4f7b-b086-f67ffaa852c1" class="">Suspends current Thread until (any) event - then it checks if the condition was met, again.</p><pre id="1b38adf7-d7d1-468f-9829-0ca21430a138" class="code"><code>public synchronized void guardedJoy() {
+    // This guard only loops once for each special event, which may not
+    // be the event we&#x27;re waiting for.
+    while(!joy) {
+        try {
+            wait();
+        } catch (InterruptedException e) {}
+    }
+    System.out.println(&quot;Joy and efficiency have been achieved!&quot;);
+}</code></pre></div></p><p id="6ae841bd-be65-4af8-9eda-3dec6f8b5b15" class="">
+</p><p id="ff2ce207-3e53-4d71-94fd-ef31de4ac6f2" class=""><code>Object.notifyAll()</code><div class="indented"><p id="20f881ac-2390-4935-ae32-1dcd48f2ead9" class="">Event</p><pre id="872cfd1c-de6d-4c30-83b6-91b168fe348e" class="code"><code>public synchronized notifyJoy() {
+    joy = true;
+    notifyAll();
+}</code></pre></div></p><p id="2287866b-df32-458e-b78b-c7ec7eebc610" class="">
+</p><p id="3881b12b-d22b-450c-adf4-cc11786d0e5c" class="">Producer-Consumer-Example<div class="indented"><p id="dd4ea59c-e4a9-4799-b06f-04aaef36eaed" class="">Only used to demonstrate guarded blocks. This could be done a lot easier using java.collections. </p></div></p><pre id="ce222984-8137-4d4f-9d09-b3666a891b70" class="code"><code>public class Drop {
+    // Message producer -&gt; consumer
+    private String message;
+    // True: consumer should wait (for producer to put())
+		// False: producer should wait (for consumer to take())
+    private boolean empty = true;
+
+    public synchronized String take() {
+        while (empty) {
+            try {
+                wait();
+            } catch (InterruptedException e) {}
+        }
+        empty = true;
+        notifyAll(); // Notify producer that status has changed.
+        return message;
+    }
+
+    public synchronized void put(String message) {
+        while (!empty) {
+            try { 
+                wait();
+            } catch (InterruptedException e) {}
+        }
+        empty = false;
+        this.message = message;
+        notifyAll(); // Notify consumer that status has changed.
+    }
+}</code></pre><p id="b1b0e1eb-3b49-40b3-bf92-0a5a1f021ffd" class="">
+</p><pre id="edfe366f-2d8c-4f7b-a426-93de772a9a5c" class="code"><code>public class Producer implements Runnable {
+    private Drop drop;
+
+    public Producer(Drop drop) {
+        this.drop = drop;
+    }
+
+    public void run() {
+        String importantInfo[] = { &quot;Mares eat oats&quot;, ... };
+
+        for (int i = 0; i &lt; importantInfo.length; i++) {
+            drop.put(importantInfo[i]);
+            try {
+                Thread.sleep(...random time);
+            } catch (InterruptedException e) {}
+        }
+        drop.put(&quot;DONE&quot;);
+    }
+}</code></pre><pre id="f15cf942-4f5b-4a0e-a177-400925190615" class="code"><code>public class Consumer implements Runnable {
+    private Drop drop;
+
+    public Consumer(Drop drop) {
+        this.drop = drop;
+    }
+
+    public void run() {
+        for (String message = drop.take();
+             ! message.equals(&quot;DONE&quot;);
+             message = drop.take()) {
+
+            System.out.format(&quot;MESSAGE RECEIVED: %s%n&quot;, message);
+            try {
+                Thread.sleep(...random time);
+            } catch (InterruptedException e) {}
+        }
+    }
+}</code></pre><p id="942e343b-d36f-4536-99cb-9029cc383468" class="">
+</p><pre id="5e4368a1-593e-4156-ab9b-57a261397979" class="code"><code>public class ProducerConsumerExample {
+    public static void main(String[] args) {
+        Drop drop = new Drop();
+        (new Thread(new Producer(drop))).start();
+        (new Thread(new Consumer(drop))).start();
+    }
+}</code></pre><p id="028ba061-f3ea-4e91-863b-52a7015dc016" class="">
+</p><p id="9c2d742e-7406-4fc5-8b98-3fd0eb361d02" class="">
+</p><h1 id="4b9d8f8e-28e6-4447-92ee-e9a737e0a2f3" class="">High level Concurrency Objects</h1><p id="f81cc9c5-48ef-46a5-8213-f6101b861b6c" class="">Synchronized code is build on top of a simple <em>reentrant lock</em>.<div class="indented"><p id="68076a72-2706-42d8-9273-09715e80137f" class="">Easy to use but many limitations.</p><p id="f95593ad-5485-438d-baa1-e97fd6e0bf13" class="">One thread can lock an object at a time (kritischen Abschnitt betreten).</p><p id="55e64f3f-a259-4a60-a3b2-f2809ad54d84" class="">We now encapsulate task creation and management (previously done by threads) and the tasks themselves (runnables).</p></div></p><p id="7e12b1c8-5acb-4544-a2f4-979fdfcf9750" class="">
+</p><h2 id="0473ba45-11fe-41d7-9294-9d4e6895ff32" class="">Lock</h2><p id="5feaea8d-bb88-4edc-bd9a-8bcf7c44b539" class=""><code>Lock</code> Interface in <code>java.util.concurrent.locks</code></p><p id="d9bffe7f-afd3-4ada-a23c-bdfa13581bfa" class="">Example: Solve Deadlock</p><ul id="b6a5f392-a892-455e-a735-559b8a64dab0" class="toggle"><li><details open=""><summary>Example</summary><pre id="e60a75cb-71e2-482c-9d05-4ea5a4965f7c" class="code"><code>  public static void main(String[] args) {
+    final Friend alphonse = new Friend(&quot;Alphonse&quot;);
+    final Friend gaston = new Friend(&quot;Gaston&quot;);
+    new Thread(new BowLoop(alphonse, gaston)).start();
+    new Thread(new BowLoop(gaston, alphonse)).start();
+  }</code></pre><pre id="9808d5de-8267-45fd-bad2-40c4534deb10" class="code"><code>static class BowLoop implements Runnable {
+  private Friend bower;
+  private Friend bowee;
+
+  public BowLoop(Friend bower, Friend bowee) { ... }
+
+  public void run() {
+    while(true) {
+      try {
+        Thread.sleep(...random time);
+      } catch (InterruptedException e) {}
+      bowee.bow(bower);
+    }
+  }
+}</code></pre><pre id="2717acb2-ff0b-4780-9fc3-9938bd585747" class="code"><code>import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+static class Friend {
+
+  private final String name;
+  private final Lock lock = new ReentrantLock();
+
+  public Friend(String name) { ... }
+  public String getName() { ... }
+
+	//if it returns false: both bowing at the same time
+  public boolean impendingBow(Friend bower) {
+    Boolean myLock = false;
+    Boolean yourLock = false;
+    try {
+			// returns true if the lock was free and was acquired by the current thread
+      myLock = lock.tryLock();
+      yourLock = bower.lock.tryLock();
+    } finally {
+      if (!myLock || !yourLock)) { //if one of us wasnt free
+        if (myLock) { lock.unlock(); }
+        if (yourLock) { bower.lock.unlock(); }
+      }
+    }
+    return myLock &amp;&amp; yourLock;
+  }
+
+  public void bow(Friend bower) {
+    if (impendingBow(bower)) {
+      try {
+        System.out.format(
+          &quot;%s: %s has&quot; + &quot; bowed to me!%n&quot;,
+          this.name,
+          bower.getName()
+        );
+        bower.bowBack(this);
+      } finally {
+        lock.unlock();
+        bower.lock.unlock();
+      }
+    } else {
+      System.out.format(
+        &quot;%s: %s started&quot; + &quot;to bow to me, but saw that I was already bowing to him.%n&quot;,
+        this.name,
+        bower.getName()
+      );
+    }
+  }
+
+  public void bowBack(Friend bower) {
+    System.out.format(
+      &quot;%s: %s has&quot; + &quot; bowed back to me!%n&quot;,
+      this.name,
+      bower.getName()
+    );
+  }
+}</code></pre></details></li></ul><p id="a205ef02-977b-4a6a-9de2-13b4289ae489" class="">
+</p><h2 id="92ba815c-7405-4943-8f30-7c119997c5d4" class="">Executor</h2><p id="417cb50d-1d36-4113-9f39-338ef9b908db" class="">Previously, we seperated the task being done by the thread (Runnable), and the thread itself, responsible for creating tasks.</p><p id="664db896-b678-49c2-b54f-57902245762b" class="">We dont want to sperate thread management and creation from the rest of the application in large applications.</p><p id="a0063a72-1515-4ef5-acca-8671e3569766" class="">
+</p><p id="c03b4792-b2ad-49b7-b8c5-057f69781331" class=""><code>Executor</code><div class="indented"><p id="e1db965c-66a1-421c-b563-906f97fea3eb" class="">Interface for launching new tasks.</p><p id="72ba3ccc-0e2d-441b-9412-c64453d67e0c" class="">The Executor runs an existing worker thread to run the runnable <mark class="highlight-gray"><code>r</code></mark> or place it in a queue until the worker thread is available <mark class="highlight-gray">(→ see thread pools)</mark>.</p><pre id="48486ba6-f58b-4e21-a309-c4d9d73a95ec" class="code"><code>Runnable r = ...
+(new Thread(r)).start();</code></pre><pre id="5e211d13-7e01-47b2-8308-febc82299ad2" class="code"><code>Runnable r = ...
+Executor e = ...
+e.execute(r);</code></pre></div></p><p id="7c94ef30-bdeb-4dbb-8297-2dc771f083f0" class="">
+</p><p id="0ed9d406-b6fb-4b06-81c1-e74379886c02" class=""><code>ExecutorService</code><div class="indented"><p id="1411fa3e-5db9-4ce6-a8bc-c7e631c93db7" class="">Subinterface of Executor.</p><p id="4ce81b48-c2e8-4315-8787-bcb74e1b6da7" class="">Additional features for life cycle.<div class="indented"><p id="1254dedc-9a9e-4591-a7f8-d00e4fa1e454" class=""><code>.submit()</code><div class="indented"><p id="9a33035d-2c5b-4c72-b2f3-e622d375b003" class="">Accepts <mark class="highlight-gray"><code>Runnable</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>Callable</code></mark></p><p id="4d515f37-129b-4cb6-be1f-df643eeaca4d" class="">returns a <mark class="highlight-gray"><code>Future</code></mark><mark class="highlight-gray"> </mark>Object</p><p id="e35cf1cf-fe2e-49ef-9d0f-db3355196ee4" class="">Can handle large collections of <mark class="highlight-gray"><code>Callable</code></mark><mark class="highlight-gray"> </mark>objects.</p><p id="658a5f32-eac8-4110-85f1-47505b15fc1e" class="">Can handle immediate shutdown of tasks.</p></div></p></div></p><p id="dc4c9abb-0120-4910-9d7a-191419f62403" class="">
+</p></div></p><p id="2ba8c6ff-a376-4363-b43b-ede3999fbdf2" class=""><code>ScheduledExecutorService</code><div class="indented"><p id="ec8145fc-b8a2-4706-9b8e-0bc118b42faa" class="">Subinterface of ExecutorService.</p><p id="d7c20e47-fc8d-4b3b-9100-6a787b59c63f" class="">Additional features for future and periodic execution of tasks.</p><p id="9b5c6416-f15f-4340-b63d-de975cfa9bd4" class=""><code>.schedule()</code><div class="indented"><p id="44012e4f-1451-40f0-9854-6b23e6f76e09" class="">Accepts <mark class="highlight-gray"><code>Runnable</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>Callable</code></mark></p><p id="c4fa98a4-8e80-4551-9aad-87b97757b7c7" class="">Calls tasks with specified delay or in intervals with fixed delays.</p></div></p></div></p><p id="ba02811f-8484-4f6e-af19-2e8f06089e22" class="">
+</p><h2 id="548c6c28-0ead-440a-bab4-a88b3643c169" class="">Thread Pools</h2><p id="907efb9c-d1f2-464c-bb23-a48c302bf8c2" class="">These are implementations of the <mark class="highlight-gray"><code>ExecutorService</code></mark>.</p><p id="b5f69e33-1927-4404-9ae9-8845e647d006" class="">One can also implement the <code>ThreadPoolExecutor</code> Interface to implement own thread pools.</p><p id="d0110e07-0a42-4e7d-9250-45f82ca01c0d" class="">Thread pools consist of <em>worker-threads</em>.<div class="indented"><p id="2589ee7c-c7a6-41e7-b2c6-53bb69cf0303" class="">Used to execute multiple tasks.</p><p id="1ec5a8d8-c1f0-435d-bd47-beae69db05a3" class="">Less overhead for thread-creation.</p></div></p><p id="2e9aeab8-a666-4d6e-aae1-eabb8d468332" class="">
+</p><p id="2f650ecf-0d14-4799-97b4-6e2ce413f1d1" class=""><code>newFixedThreadPool</code><div class="indented"><p id="9fd6e830-3147-4721-ade9-f60f0d7a63e9" class="">Has a maximum of allowed threads runnning.</p><p id="ec77fe51-6636-42a9-9220-7fe24cc71846" class="">Works with internal queue.</p><p id="3674a70b-08c5-4319-97af-d453576a39a5" class="">Useful for servers handling requests.</p></div></p><p id="89485ce2-ce1a-411b-9fdd-d5e227106cf8" class="">
+</p><p id="f54cbc56-8a0b-4f30-86cd-7fdf969456bc" class=""><code>newCachedThreadPool</code><div class="indented"><p id="b27316bc-4459-4512-92b0-4fd7e772751f" class="">Creates Executor with expandable threadpool.</p><p id="a4195b5e-a3ae-45e3-96d2-b865b853e21a" class="">For short-lived tasks.</p><p id="0fbeb285-a86c-4621-acd4-a1fe23e77ae3" class="">
+</p></div></p><p id="9099e2fe-64e9-4274-aae6-cbf740c9b4ca" class=""><code>newSingleThreadExecutor</code><div class="indented"><p id="52eb4209-bd12-4efc-85fb-946b0cebe31b" class="">Thread pool size = 1</p></div></p><p id="b938ea49-7234-4b44-a84f-b9b3cfc5b4b7" class="">
+</p><p id="2aa3fdfe-542f-4a8f-8a52-071411b11d0c" class=""><code>ForkJoinPool</code><div class="indented"><p id="fa2f9e66-91d1-4ed1-8714-ec577da99b34" class="">Can execute <mark class="highlight-gray"><code>ForkJoinTask</code></mark><mark class="highlight-gray"> </mark>Processes.</p><p id="d57da328-6dc4-4c0d-9da3-a68146fa1528" class="">Helps take advantage of multiple CPU cores.</p><p id="6d2fdac6-3d7a-48be-9f5c-3909fc18eb83" class=""><em>work-stealing algorithm</em>: workers that run out of things to do can steal tasks from workers that are still busy.</p><p id="042f36a5-7cd7-4aa8-85fd-79214f9a6b1c" class="">Usage: Writing small portions of code in a <code><mark class="highlight-gray">ForkJoinTask</mark></code><div class="indented"><pre id="c75cc337-e1a6-4029-ba79-446b02a8e78f" class="code"><code>if (my portion of the work is small enough)
+  do the work directly
+else
+  split my work into two pieces
+  invoke the two pieces and wait for the results</code></pre></div></p><p id="3bbea660-9174-4256-ab3d-256361746e74" class="">
+</p></div></p><h1 id="0a756c4d-5922-4edb-87fa-68486d146852" class="">Concurrent Collections</h1><p id="10b733fa-49ba-494b-8977-dfb6ca90e77d" class="">Help avoid Memory Consistency Errors.<div class="indented"><p id="c772ea1e-16cf-498d-becb-11309f8acf35" class="">Set an Execution Order.</p></div></p><p id="b42377ea-5fef-4c39-b4a8-f044f9e97ac3" class="">
+</p><p id="d84fdfc1-4d95-4c8a-9d8d-2cb246002564" class=""><code>BlockingQueue</code><div class="indented"><p id="92cddf8d-117f-4c22-8023-761e1fb0ad40" class="">Fifo Queue</p><p id="64f90d76-e028-4c72-bb15-46d189ab0670" class="">Blocks when you try to add to a full queue or retrieve from an empty queue.</p><p id="a3d21dd3-9610-4ae1-a101-5d4b1699ba06" class="">
+</p></div></p><p id="5bf3cd7d-7153-4c7b-b707-b63d64519b76" class=""><code>ConcurrentMap</code> / <code>ConcurrentHashMap</code><div class="indented"><p id="703f4a2f-d11f-48d8-8562-ac7b65cff5cb" class="">Subinterface of <a href="http://java.util.Map"><mark class="highlight-gray"><code>java.util.Map</code></mark></a><mark class="highlight-gray"> / </mark><mark class="highlight-gray"><code>java.util.Hashmap</code></mark></p><p id="9544df65-8f76-45ee-88b4-8a1e6dc11407" class="">Atomic operations</p><p id="dfab6213-e981-4f5d-8ce8-765c35cac93f" class="">
+</p></div></p><p id="7f4e68b9-8bb9-4f54-9a39-cb32bf260f5d" class=""><code>ConcurrentNavigableMap</code><div class="indented"><p id="3f7b6747-9aad-491a-9c83-2de44490a2f6" class="">Analog of <mark class="highlight-gray"><code>TreeMap</code></mark></p></div></p><p id="7444e2ac-68a9-4a5d-90d6-91e04616faff" class="">
+</p><h1 id="6b90f5a6-6ee3-43eb-9305-3e7c4a135aee" class="">Atomic Variables</h1><p id="79f4f624-6738-4237-81a5-b82788b75225" class="">Atomic operations on a single variable.</p><p id="9909eba2-57fd-41e7-8052-e163ad3701e1" class="">All classes have<mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>get</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>set</code></mark><mark class="highlight-gray"> </mark>methods that work like reads and writes on <mark class="highlight-gray"><code>volatile</code></mark> variables.</p><pre id="58bcf638-b586-413b-bf16-3bee231f8557" class="code"><code>import java.util.concurrent.atomic.AtomicInteger;
+
+class AtomicCounter {
+    private AtomicInteger c = new AtomicInteger(0);
+
+    public void increment() {
+        c.incrementAndGet();
+    }
+
+    public void decrement() {
+        c.decrementAndGet();
+    }
+
+    public int value() {
+        return c.get();
+    }
+
+}</code></pre><p id="ef24c1a1-4ce4-416e-ba22-db9988122185" class="">
+</p><p id="9415d6e0-febb-4d61-8bdd-b044e070edda" class="">
+</p><p id="75c878d1-87b0-4f6f-a57f-91007f5cb642" class="">
+</p><p id="96152c12-1b06-4673-acb7-74b85894b965" class="">
+</p><p id="7d99177d-888a-49d0-892a-3ef4fe24f2ae" class="">
+</p><p id="4b3dd348-cd51-4616-9ada-feb1df1f4a0d" class="">
+</p><p id="d74eb60a-7b4a-4399-9a06-ffca37a8518a" class="">
+</p><p id="0ad3ad0c-a8b0-469a-9c78-cf7b89f948b5" class="">
+</p><p id="179a01cf-801f-46ac-8dca-52954a8cbbe2" class="">
+</p><p id="9a0ea198-a31d-4861-8f73-4fdeecb4cdbf" class="">
+</p><p id="c9c702e4-9432-4ad0-bc1b-b27251d1904b" class="">
+</p><p id="e35293ea-7d3e-469a-af0a-847559982fb4" class="">
+</p><p id="125929a9-6fc5-4f90-84b9-f75dac1e8f9a" class="">
+</p><p id="3403e692-2e53-4079-b022-f9a5fe22783e" class="">
+</p><p id="aaff6511-1498-433e-afc9-238f301eb53a" class="">
+</p><p id="7729e4c5-1b12-4de5-ba0f-b8953b2a4e7e" class="">
+</p><p id="4f7ec0c6-e8ff-4a7f-93f7-cd0e3bb1e9c0" class="">
+</p></div></article></body></html>

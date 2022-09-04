@@ -1,0 +1,819 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>WS21</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f0a690d2-460c-4b81-b337-e0afa57c8d67" class="page sans"><header><h1 class="page-title">WS21</h1></header><div class="page-body"><figure id="4af810bc-15c3-4dcf-8978-833c9d3993fe"><div class="source"><a href="../Altpru%CC%88fungen%20-%20Test%201%2092c0702662c64a1e89b5d9d3066b8f21/All%20vowi%20documents%20(V0)%20a8977f0b736340edb51a2a95df5004b8/TU_Wien-Software-Qualittssicherung_VU_(Biffl)_-_Praxis_Test_WS21.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dbcc1a6e-a84b-4ce6-84d1-a56cb43648ca/TU_Wien-Software-Qualittssicherung_VU_(Biffl)_-_Praxis_Test_WS21.pdf</a></div></figure><p id="9d1f4cb9-73ac-4623-a65f-9fa329326bcf" class="">
+</p><p id="1aa36f09-d5e5-48a7-b303-e4ab5c5831ef" class="">
+</p><h1 id="c8e60e52-69d5-4580-a4d1-5820dfa2036d" class="">Mock vs. Stub</h1><p id="f278f59a-9aa7-46eb-9bc7-53a31404317e" class="">Ein System nützt die folgende Schnittstelle zum Suchen nach Events:</p><pre id="8c02da29-e1b4-4ec7-a52e-6d3d1b8806a7" class="code"><code>interface OnlineEventService {
+
+	/**
+	* Searches for events in the given location on the given date.
+	*
+	* @param location must not be null
+	* @param date must not be in the past
+	* @return a list with the results
+	*/
+	List&lt;String&gt; find(String location, LocalDate date);
+}</code></pre><p id="e9a9e256-43c9-4d12-918d-d4392f230313" class="">
+</p><p id="e7d20476-715f-4179-8f64-df5e3859a755" class="">Um das System isoliert mit Unit-Tests zu testen wurde folgender Test Double implementiert:</p><pre id="070e32eb-374b-482e-afe3-2028d6fb0a64" class="code"><code>public class SimpleEventService implements OnlineEventService {
+	private List&lt;String&gt; events;
+	private boolean called;
+
+	public void setEvents(List&lt;String&gt; events) { this.events = events; }
+	public boolean isCalled(){ return called; }
+
+	@Override
+	public List&lt;String&gt; find(String location, LocalDate date) {
+		Assertions.assertNotNull(location);
+		Assertlons.assertNotNull(date);
+		Assertions.assertTrue(date.isAfter(LocalDate.now());
+		
+		called = true;
+		return events;
+	}
+}</code></pre><p id="8a6c7532-869a-4bef-8c89-bf9733af0ecc" class="">
+</p><p id="9d32f6c1-deab-4c35-9e74-678395e56811" class="">Handelt es sich dabei um ein Stub oder ein Mock?</p><p id="122ad086-484e-4ee7-8418-c73b9708ee85" class="">Begründen Sie Ihre Antwort und erläutern Sie den Unterschied basierend auf dem gegebenen Beispiel.</p><p id="ac9eec90-c09f-4482-881c-4793b3b83735" class=""><mark class="highlight-gray">Es handelt sich um ein Mock, da die Argumente die an das Mock gegeben werden auch überprüft werden.</mark></p><p id="3840ed71-8085-4f51-aa5f-d4f610eb5638" class=""><mark class="highlight-gray">Ein Mock erkennt wenn unerwartete Werte erhalten werden - mit Assertions und Exceptions.</mark></p><p id="61912701-2416-4263-ad63-9bcacc5ec688" class="">
+</p><p id="1c40afc1-401f-468d-b1f4-1add5d52f4ff" class="">
+</p><h1 id="3b40b5ef-1c0c-4db8-8413-a71506feaa58" class="">Äquivalenzklassen</h1><p id="f4ae2122-bf7b-43fe-bce1-662571358035" class="">Ein Wintersportgebiet wirbt mit einer Rabattaktion.</p><p id="9775da02-9009-463f-810c-2906682fa627" class="">Auf Tageskarten wird deshalb 10% Rabatt, auf Wochenkarten 15% Rabatt und auf Stundenkarten 5% Rabatt vergeben.</p><p id="a146c78d-42f9-417b-8e65-42439ca71999" class="">Personen, die eine aktive Mitgliedschaft beim Alpenverein haben, erhalten beim Kauf einer Tages- bzw. Wochenkarte zusätzlich 20% Rabatt.</p><p id="2a2e4797-9863-4b8b-8836-e1f156a34cd6" class="">Bei Online-Kauf werden allen Personen zusätzlich 5% auf Tageskarten gewährt.</p><p id="4474034f-a871-463f-9827-9430f12274bc" class="">Rabatte akkumulieren sich.</p><p id="83af6200-8481-413d-a847-28e0194ca459" class="">
+</p><p id="a3560e60-357c-4752-b658-9ddad3ee5503" class="">Definieren Sie anhand der gegebenen Informationen alle Aquivalenzklassen.</p><p id="2d9accf7-9616-4039-9499-12b124ef0008" class="">Geben Sie zwei wichtige Testfälle (nicht JUnit-Tests) an.</p><p id="493604ef-b305-42b2-aa4c-1c3fb85236dd" class="">
+</p><p id="6c849035-c1a9-42fc-ba87-fb526687bd90" class=""><mark class="highlight-gray">Äquivalenzklassen:</mark></p><pre id="51958ef3-d68e-4b87-955d-b408efc0e89b" class="code"><code>Tageskarten
+	Aktive Mitgliedschaft
+		Online -&gt; 30%
+		Offline -&gt; 30%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 10%
+
+Wochenkarten
+	Aktive Mitgliedschaft
+		Online -&gt; 35%
+		Offline -&gt; 35%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 10%
+
+Stundenkarten
+	Aktive Mitgliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 5%
+	Keine aktive Mitliedschaft
+		Online -&gt; 10%
+		Offline -&gt; 5%</code></pre><p id="a1c50c50-2b35-41b5-b8f8-34a1f9438584" class="">
+</p><p id="9eb89cd9-15ca-49aa-b0dc-4b1aa7da26bc" class=""><mark class="highlight-gray">Zwei wichtige Testfälle (ohne JUnit)</mark><div class="indented"><p id="0bfea8d7-5702-496b-ab53-985d34309958" class="block-color-gray"><mark class="highlight-gray">Die folgenden Testfälle sind wichtig, da sie aus ganz unterschiedlichen Äquivalenzklassen sind:</mark></p><ol type="1" id="59a4887b-84e0-4f5a-b244-37c64e3c6e88" class="block-color-gray numbered-list" start="1"><li>Tageskarte / Aktive Mitgliedschaft / Online → 30% Rabatt</li></ol><ol type="1" id="9e817ede-ec97-4635-be34-4c9cedd0f58b" class="block-color-gray numbered-list" start="2"><li>Stundenkarte / Keine aktive Mitgliedschaft / Offline → 5% Rabatt</li></ol></div></p><p id="1d291cfe-f5ca-43ce-bd78-d86ab6ac67a2" class="">
+</p><p id="c8f60071-b84c-4613-9cb7-d8432fbf8bc5" class="">
+</p><h1 id="995628fc-9069-4632-a1f9-3663ead23b9d" class="">JUnit Testfälle</h1><p id="893a493b-bba7-476e-b085-94b5c4e5243e" class="">Führen Sie ein Review der nachfolgenden JUnit-5 Testfälle durch.</p><p id="86501364-8891-4ee2-be19-9c6d946a265c" class="">Finden Sie 5 Fehler in der Implementierung der Testfälle.</p><p id="5bb3a407-2b11-44a1-8efd-c2d3f53116a4" class="">Erklären Sie die gefundenen Probleme und geben Sie Vorschläge zur Behebung.</p><p id="07100bc6-ddcb-4b33-8013-a519783489c6" class="">Achten Sie im Speziellen auf Bad Practices.</p><p id="97da8ae7-c78e-4e07-855d-04179d462fd3" class="">
+</p><p id="5424e68e-21ca-4a6a-bdbc-c3d0d458ac82" class="">(Hinweis: Mehrfach auftretende Fehler der selben Art nur 1x aufzählen)</p><pre id="a4e896a0-3fb9-47ec-99f9-0b9f8cb33f36" class="code"><code>public class SimpleListTest {
+	private static List&lt;String&gt; list;
+	
+	@BeforeAll
+	public static void setUp() {
+		list = new ArrayList&lt;&gt;();
+		list.add(&quot;A&quot;);
+		list.add(&quot;B&quot;);
+	}
+	
+	@Test // (1)
+	public void testContains_shouldFindElement() {
+		list.add(&quot;C&quot;);
+		boolean isFound = list.contains(&quot;C&quot;);
+	}
+	
+	@Test // (2)
+	public void testAdd_shouldAddElement() {
+		for (int i=0; i&lt;3; i++) {
+			list.add(i, &quot;C-&quot; + i);
+		}
+		assertTrue(
+			list.get(0).equals(&quot;C-0&quot;)
+			&amp;&amp; list.get(1).equals(&quot;C-1&quot;)
+			&amp;&amp; list.get(2).equals(&quot;C-2&quot;)
+		);
+	}
+
+	@Test // (3)
+	public void test_shouldFail(){
+		if (!list.contains(&quot;Z&quot;)) {
+			assertTrue(true);
+		} else{
+			fail();
+		}
+	}
+
+	@Test // (4)
+	public void testAddWrongIndex_shouldFail() throws IndexOutOfBoundsException {
+		assertThrows(Exception.class, () -&gt; list.add(100, &quot;Elem-100&quot;));
+	}
+}</code></pre><p id="a4ee1ecd-b6e1-4475-b9cf-798ae24bd934" class="">
+</p><p id="6bf32374-4e56-4fc1-a3cd-22af89422b38" class="block-color-gray">Fehler:<div class="indented"><ol type="1" id="d8b71038-f1c1-4e2d-a035-236498d96ff1" class="numbered-list" start="1"><li>Keine Testisolation<p id="943234f8-a569-4de4-b9b3-21f9d3f838ae" class=""><mark class="highlight-gray">Die Datenstruktur </mark><mark class="highlight-gray"><code>list</code></mark> wird innerhalb aller Aufrufe benützt.</p></li></ol><ol type="1" id="2b188ad2-a2f0-4e0b-b187-ea7cfe1a2593" class="numbered-list" start="2"><li>Kein Testen<p id="797951e3-8321-4817-970c-ce1bd849edbe" class="">Die erste Test-Methode prüft die Variable <mark class="highlight-gray"><code>isFound</code></mark><mark class="highlight-gray"> nicht mit asserts ab</mark>.</p></li></ol><ol type="1" id="d5675689-4983-4e2d-a058-57cd5534428f" class="numbered-list" start="3"><li>Logik (Verzweigungen und Schleifen)<p id="0eadbf27-bddb-4320-9eff-e441b75016fe" class="">Test 2, 3 beinhalten Verzweigungen oder Schleifen</p></li></ol><ol type="1" id="cb87b19f-076f-457e-91d1-42141aa381eb" class="numbered-list" start="4"><li>Keine sprechenden / einheitlichen Namen für Testmethoden<p id="3205151b-9c30-495d-ad64-4b4c5063ba26" class=""><mark class="highlight-gray">Es steht zwei Mal in den Methodennamen, das Wort </mark><mark class="highlight-gray"><code>shouldFail</code></mark><mark class="highlight-gray"> aber die </mark><mark class="highlight-gray"><code>fail()</code></mark><mark class="highlight-gray"> Methode wird nur 1x aufgerufen.</mark></p><p id="19b78b80-29d7-4a97-845b-293afa4b8d54" class="">Die dritte Methode hat eine andere Namensstruktur als die anderen.</p></li></ol><ol type="1" id="812cdfd2-ff4e-4234-a6ab-298382d271d7" class="numbered-list" start="5"><li>Nicht implementierte Methoden<p id="1bef7b86-5063-43fc-bd92-4b27cd3c8268" class="">Die Methode <mark class="highlight-gray"><code>fail()</code></mark><mark class="highlight-gray"> </mark>ist nicht implementiert</p></li></ol><ol type="1" id="66a59e0a-432a-4471-9186-23d2e1ff6c91" class="numbered-list" start="6"><li>Sinnlose asserts<p id="6cdc0d40-6d12-4cca-9985-0d6f6ca4c4c3" class=""><mark class="highlight-gray"><code>assertTrue(true)</code></mark><mark class="highlight-gray"> wird immer erfüllt</mark></p></li></ol></div></p><p id="a79880fa-0ed0-42b3-b576-3092ee814c3e" class="">
+</p><p id="403a6edb-d216-4b31-9ce2-6893c46daf3c" class="">
+</p><h1 id="3279be98-abd8-4795-86ff-cce3e39b4556" class="">Stringbasierter Stack, JUnit</h1><p id="96ff4c9e-cd95-4aae-bfde-40ed0e536743" class="">Bei der Klasse StringStack handelt es sich um eine stringbasierte Stack Implementierung.</p><pre id="3e6ad815-4158-4c24-8524-333705eeaf7c" class="code"><code>public class StringStack
+	private String[] storage;
+	private int position;
+
+	public StringStack(int capacity) { this.storage = new String[capacity]; }
+
+	public int size() { return position; }
+
+	// doesn&#x27;t check whether position &lt; storage.length()
+	// can cause IndexOutOfBound
+	public void push (String elem) {
+		storage[position] = elem;
+		position++;
+	}
+
+	public String pop() throws EmptyStackException {
+		if (position == 0) { throw new EmptyStackEx ception (); }
+
+		String elem = storage[position-1];
+		storage[position-1] = null;
+		position--;
+		
+		return elem;
+	}
+}</code></pre><p id="ac30ddaa-c890-4a91-9255-a3fd2f2d9734" class="">
+</p><p id="a3780317-ebc0-43d8-8928-fe46adcf9cb7" class="">Überprüfen Sie die Funktionalität der Methode pop() indem Sie für folgende zwei Szenarien einen JUnit 5 Test definieren:<div class="indented"><p id="9845d51b-4d0e-4cfb-b838-f1a44f8aa9a9" class="">a) <em>Normalfall:</em> Aufruf der Methode pop() auf einem befüllten Stack</p><pre id="1ea82e7a-85e5-4edf-929f-b3fbf2843504" class="code"><code>@Test
+public void testPop_fullStack_shouldSucceed() {
+	StringStack s = new StringStack(2);
+	s.push(&quot;foo&quot;);
+	s.push(&quot;bar&quot;);
+	assertEquals(&quot;bar&quot;, s.pop());
+}</code></pre><p id="c264f74e-b79b-4067-b0d2-ee3ac3e83be4" class="">b) <em>Fehlerfall:</em> Aufruf der Methode pop() auf einem leeren Stack</p><pre id="133cc791-8a00-4d46-bc1f-ad40b3d05218" class="code"><code>@Test
+public void testPop_emptyStack_shouldThrowEmptyStackException() {
+	StringStack s = new StringStack(0);
+	assertThrows(EmptyStackException.class, () -&gt; s.pop());
+}</code></pre></div></p><p id="6ebb0ec5-03e3-4610-8d08-4ba201eb558a" class="">Bedenken Sie auch Best Practices bei der Erstellung von Tests.</p><p id="320cdbc6-f60b-46be-8739-e54c5078beb2" class="">Sie können davon ausgehen, dass die Methoden size() sowie push() korrekt funktionieren.</p><p id="e6d21e2c-3291-46db-94f2-b8ac52b1c67d" class="">
+</p><h1 id="4b580f3f-385a-4f75-8678-03052bd5f00b" class="">Qualitätsfaktoren</h1><p id="6192b201-dc24-4650-8180-49d44b237fa8" class="">Ihr Unternehmen wurde mit der Entwicklung einer Web Applikation für Schulen beauftragt.</p><p id="2ca46967-e942-4b9b-b3f4-cee6cfc9913a" class="">Die Applikation soll im ersten Schritt die Stundenpläne der einzelnen Klassen darstellen und Lehrern/Lehrerinnen die Anwesenhitskontrolle der Schüler/Schülerinnen während des Unterrichts ermöglichen.</p><p id="37dc10eb-561e-47df-b4b2-d9bfc83e1f55" class="">Auf die Stundenpläne haben sowohl Lehrer/Lehrerinnen, als auch Schüler/Schülerinnen jederzeit Zugriff.</p><p id="77ff589e-1f17-455c-be7f-4a77aeaa3975" class="">Die Erweiterung um weitere Features für e-Learning ist bereits beschlossen und befindet sich in Planung.</p><p id="c94aa8e2-83c5-42a1-96b5-c64e38640ce2" class="">
+</p><p id="4190d381-1299-48e1-94e1-81a3eee684df" class="">Nennen und beschreiben Sie drei wichtige Qualitätsfaktoren (nicht-funktionale Anforderungen) an die Applikation, die hier besonders berücksichtigt werden müssen!</p><p id="573b2ba6-a05e-4795-866c-bd898f133a56" class="">Begründen Sie Ihre Antwort.</p><p id="4a44a4e4-bf6a-4451-97f9-f3885ccc48b9" class="">
+</p><p id="eb3e3fd7-9bc0-475e-a076-7db5b2bd34c5" class=""><mark class="highlight-gray">3 wichtige nichtfunktionale Anforderungen / Qualitätsanforderungen</mark><div class="indented"><ol type="1" id="87b1a9fc-d1d8-455a-b5b1-429bdce689e3" class="block-color-gray numbered-list" start="1"><li>Usability<p id="e529ea24-f9bb-46aa-aa86-3c19c572026e" class="">Das System sollte gut dokumentiert sein, sodass sie weiterskalieren kann.</p><p id="61dd3b71-9a0a-4987-8c96-aca5a37c2788" class="">Das System sollte von weniger Technik-affinen Nutzenden wie Schülern leicht nutzbar sein um ihre Stundenpläne nachzuschlagen. Das muss mit qualitativen Untersuchungen festgestellt werden.</p></li></ol><ol type="1" id="e8e0d9bc-2a70-4c64-9a40-7eb47cd74e33" class="block-color-gray numbered-list" start="2"><li>Reliability<p id="e7cb1ad2-1cd7-430b-b07c-72fc3d89675b" class="">Bei einem Systemausfall sollten Administratoren benachrichtigt werden und es muss die Möglichkeit bestehen die Daten zur Anwesenheit / Abwesenheit auch lokal im System zu speichern und nachträglich hochzuladen wenn das System wieder erreichbar ist.</p></li></ol><ol type="1" id="e6deef0a-6ce9-4044-9a56-bdb9c42b5ef1" class="block-color-gray numbered-list" start="3"><li>Supportability<p id="622b20db-a2a9-4eb6-8dab-cf049a1c13b6" class="">Es wurde bereits beschlossen, dass der Funktionsumfang erweitert werden sollte.</p><p id="979f0f74-9f66-4eef-aadc-7eda18ed802e" class="">Deshalb sollten statische Code Analysewerkzeuge die den Code nach coding-conventions untersuchen wie SonarLint mit den Conventions von Google eingesetzt werden.</p><p id="66eeb1db-f667-4a3f-bc4b-cbfda58da40f" class="">Dadurch wird gewährleistet, dass das Projekt weiterskalieren kann.</p></li></ol><p id="cfbb69f6-d41e-4c09-beb2-5f4bf1c5e776" class="">
+</p></div></p><p id="59b34032-2c9a-40cf-a01d-039ea83701d0" class=""><em><mark class="highlight-gray">Klassifikation nach FURPS</mark></em><div class="indented"><p id="6a421229-924a-4642-892a-457a2bf69932" class=""><del><mark class="highlight-gray">Functional (Funktional)			Features, Fähigkeiten, Sicherheitsvorrichtungen</mark></del></p><p id="c8f10b50-d8bf-4f21-ba28-4db7b9676231" class=""><mark class="highlight-gray">Usability (Benutzerfreundlich)		Human factors, Nützlichkeit, Dokumentation</mark></p><p id="9b73262b-3ff7-4d1d-9ad8-358598cad9fa" class=""><mark class="highlight-gray">Reliability (Zuverlässig)			Uptime, Verlässlichkeit, Wiederherstellbarkeit</mark></p><p id="ca9c1f2a-b68e-4c0c-9519-4a3fbb84e07a" class=""><mark class="highlight-gray">Performance					Antwortzeiten, Durchsatz, Genauigkeit</mark></p><p id="90433710-1825-4553-9079-8b03db8a3ba3" class=""><mark class="highlight-gray">Supportability (Wartbarkeit)		Modifizierbarkeit, Wartung, Konfiguration</mark></p><hr id="41d96595-12dd-4e63-a7ab-5fa64414962e"/><p id="687c7766-ec77-411e-bd7b-e7f180e8a301" class=""><mark class="highlight-gray">Zur Laufzeit messbar:			Performanz, Sicherheit, Verfügbarkeit, Verwendbarkeit</mark></p><p id="b4644f63-f2c1-494f-bb8e-412e47060a43" class=""><mark class="highlight-gray">Nicht zur Laufzeit messbar: 		Modifizierbarkeit, Portabilität, Wiederverwendbarkeit</mark></p></div></p><p id="a048ae6d-2b6a-4e98-b4d6-6b77d211d829" class="">
+</p><p id="b6665657-9df9-4ac7-a465-109cea65bf91" class=""><em><mark class="highlight-gray">Nichtfunktionale Anforderungen (”Qualitätsanforderungen”)</mark></em><div class="indented"><p id="50334b40-c3bc-4d49-ad91-8fb45b389556" class=""><mark class="highlight-gray">Charakteristika, nicht-technische Beschreibung, Eigenschaften</mark></p></div></p><p id="df862058-9cfe-426b-a4cb-ece678b83d75" class="">
+</p><p id="cfa51ddc-77b1-4258-8bbd-d3db5950d02a" class="">
+</p><h1 id="61186baa-1731-4398-ae3e-49b372ec5de7" class="">Coverage</h1><figure id="9d7acc25-3396-436c-86ca-7b4107e6ee17" class="image"><a href="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled.png"><img style="width:336px" src="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled.png"/></a></figure><p id="46470a09-c7e6-45ed-be9c-10b4e91d0847" class="">
+</p><p id="52e60a60-3dc8-4ee8-ae1f-c523a3872d9d" class="">Geben Sie an wie viele Testfälle erforderlich sind für eine vollständige:<div class="indented"><ol type="a" id="48776272-4b53-4479-acc2-563383d53b08" class="numbered-list" start="1"><li>Statement coverage<p id="c48bb0a6-368a-4452-a0e6-6d7dc1cdafff" class=""><mark class="highlight-gray">4 Testfälle</mark></p><figure id="48698938-6dae-45c5-9f53-6c726b7e9719" class="image"><a href="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%201.png"><img style="width:120px" src="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%201.png"/></a></figure></li></ol><ol type="a" id="d3aeeb91-105e-490a-9063-23bed2d69488" class="numbered-list" start="2"><li>Branch coverage<p id="62c7f2e9-a815-4ff5-98ff-4fe38169a91a" class=""><mark class="highlight-gray">10 Testfälle</mark></p><figure id="4b8c1f4b-9958-42bc-8c68-3ce510a212db" class="image"><a href="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%202.png"><img style="width:120px" src="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%202.png"/></a></figure></li></ol><ol type="a" id="a93d2475-d2c0-4b2b-8604-c8552484d716" class="numbered-list" start="3"><li>Path coverage<p id="2eb49b8a-9675-4d82-84d6-174fa01f8274" class=""><mark class="highlight-gray">3 Testfälle</mark></p><figure id="2faa6239-0982-4c37-aef2-0f16b70f69cb" class="image"><a href="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%203.png"><img style="width:120px" src="WS21%20f0a690d2460c4b81b337e0afa57c8d67/Untitled%203.png"/></a></figure></li></ol></div></p><p id="ea20c985-d3bb-4abc-8807-d59d23cdb6eb" class="">
+</p><p id="12b9c83f-d994-4f15-8275-829c94e78ae3" class="">Definieren Sie zusätzlich 3 konkrete Testfälle (Input-Daten, ausgeführte Statements) auf Basis von Grenzwerten.</p><p id="a5a65055-213d-4de5-9f44-8371240436fe" class=""><mark class="highlight-gray">Grenzwerte von Knoten </mark><code><mark class="highlight-gray">A</mark></code><mark class="highlight-gray"> - </mark><code><mark class="highlight-gray">4,5,6</mark></code></p><p id="43bffce4-6768-416e-92cb-c57b9550bd62" class=""><mark class="highlight-gray">Grenzwerte von Knoten </mark><code><mark class="highlight-gray">B</mark></code><mark class="highlight-gray"> - </mark><code><mark class="highlight-gray">9,10,11</mark></code></p><p id="28972de8-4598-4e27-bda1-70e611ff2a8a" class=""><mark class="highlight-gray">Grenzwerte von Knoten </mark><code><mark class="highlight-gray">C</mark></code><mark class="highlight-gray"> - </mark><code><mark class="highlight-gray">-1,0,1</mark></code></p><p id="260111c5-4f94-4411-b0e2-05847f3ffa19" class="">
+</p><p id="cdcc2616-e447-4340-b5db-5550753e4159" class=""><mark class="highlight-gray">Ausgewählte Testfällte (Eingabevektoren der Form </mark><code><mark class="highlight-gray">(A, B, C)</mark></code><mark class="highlight-gray">)</mark><div class="indented"><p id="056ca004-64f3-4280-b877-904752ead5c9" class=""><mark class="highlight-gray"><code>(4,9,-1)</code></mark></p><p id="5dd47aa0-7a7c-42e9-b9e5-af83c9eeae92" class=""><mark class="highlight-gray"><code>(5,10,0)</code></mark></p><p id="f616cd23-9d89-464c-bb3c-426c8d009eaa" class=""><mark class="highlight-gray"><code>(6,11,1)</code></mark></p></div></p><p id="cb3b7fee-5ea1-4c23-8ad2-83c4fb69c9c2" class="">
+</p></div></article></body></html>

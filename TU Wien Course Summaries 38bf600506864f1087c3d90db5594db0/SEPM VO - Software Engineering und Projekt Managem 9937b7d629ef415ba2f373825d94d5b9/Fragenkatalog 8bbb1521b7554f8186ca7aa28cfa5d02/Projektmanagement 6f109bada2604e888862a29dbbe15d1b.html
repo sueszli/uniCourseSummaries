@@ -1,0 +1,712 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Projektmanagement</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6f109bad-a260-4e88-8862-a29dbbe15d1b" class="page sans"><header><h1 class="page-title">Projektmanagement</h1></header><div class="page-body"><ul id="22e42b2a-7473-4d72-874a-40369987f34f" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist ein Projekt? Durch welche Merkmale ist es definiert?</span></summary><p id="dd00bf28-cdff-4b30-b949-f170a1b4ba2d" class="">Definiert durch</p><ul id="938c0af2-a6ad-482b-9d5f-85535bf44a64" class="bulleted-list"><li style="list-style-type:disc">Einmaligkeit</li></ul><ul id="c68de63c-8dee-472c-8f6b-0156006159b1" class="bulleted-list"><li style="list-style-type:disc">Kooperation mit anderen (Beteiligte)</li></ul><ul id="61a12cce-771a-4212-a63a-366f0612f048" class="bulleted-list"><li style="list-style-type:disc">Festgelegtem Ziel (Erwartung an Qualität, Leistung)</li></ul><ul id="ec4a1081-00e5-4143-9646-a168035e42ca" class="bulleted-list"><li style="list-style-type:disc">Beschränktem Budget (Ressourcen - personal, sachmittel, zeitliche)</li></ul></details></li></ul><p id="5a030e47-628b-42f0-aa06-9ce633f19a87" class="">
+</p><ul id="597b7f3b-a396-4b48-9825-bda7b2c138e0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche drei Kennzeichen hat ein Projekt?</span></summary><ol type="1" id="66a0a96d-6fd0-413b-97c3-bb495b93c1ba" class="numbered-list" start="1"><li>Abgrenzbarkeit von: Aufgabe, Ergebnis, Ressourceneinsatz, Zeitrahmen</li></ol><ol type="1" id="619d0f6d-58c7-46bd-8a73-09f82d5ffdd5" class="numbered-list" start="2"><li>Komplexität der Aufgabe</li></ol><ol type="1" id="47f5f974-c438-4007-8a6e-cd0f93e49f47" class="numbered-list" start="3"><li>Einmaligkeit der Aufgabe</li></ol></details></li></ul><p id="09dfe031-3194-48f3-9959-7711929dd4f0" class="">
+</p><ul id="eef2895f-6b13-4134-8080-e1132fe43bf0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist Projektmanagement?</span></summary><p id="1ba00d8a-c1c8-4839-bc05-982ead18c732" class="">Management = getting things done by people</p><p id="1ff1603e-e555-4a3b-ae84-9374e3af2485" class="">Projektmanagement = getting the project done<div class="indented"><p id="f0cd7ee6-6858-4498-a8d0-55b42c938bb0" class="block-color-gray">Gesamtheit von Methoden zur effizienteren Steuerung von Projekten.</p><p id="7c53fccf-3966-48f3-a3e2-49d27bfe8b1f" class="block-color-gray">Im engeren Sinne die Projektleitung → die für die Führung/Steuerung eines Projekts verantwortliche Person/Stelle.</p></div></p><p id="b8b7694d-b9bb-4782-958e-e9888b13f7bb" class="">
+</p></details></li></ul><p id="1ad707b2-d5f1-40cb-ba1d-f148bac5c1d8" class="">
+</p><ul id="d09a469a-3e79-490f-92f0-dce98e72f342" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Nennen Sie drei Stakeholder, die Einfluss auf die Anforderungen haben. Begründen Sie Ihre Antworten.</span></summary><p id="85e01f5f-8f04-40c6-938c-2d755493ab91" class="">Stakeholder und ihr Einfluss auf Anforderungen:</p><ul id="c3de4c74-3806-48cb-a86b-cd7cce1d2885" class="bulleted-list"><li style="list-style-type:disc">Kunde<p id="40760bbf-2697-4166-8583-34be041dd80a" class="block-color-gray">Hat die eigentliche Idee / Bedürfnis die durch das zu entwickelnde Produkt abgedeckt werden soll.</p></li></ul><ul id="507fc6d4-cd07-4bec-9413-6980780cf615" class="bulleted-list"><li style="list-style-type:disc">Entwickler<p id="ceda8328-ed5e-4c9b-b142-aeee8a0f623c" class="block-color-gray">Wissen über technische (Un-)Möglichkeiten.</p><p id="e5343603-cd7f-4a36-874e-44f37b62b927" class="block-color-gray">Sie müssen die Vorstellung des Kunden technisch Bewerten, Beschreiben und Verwirklichen.</p></li></ul><ul id="01117454-4add-49bd-b9b6-d11999adac57" class="bulleted-list"><li style="list-style-type:disc">Betreiber (Abteilung für Betriebs und Wartungsphase des Projekts)<p id="85874e5f-dfa4-4f41-8f62-40c10904b122" class="block-color-gray">Will einen reibungslosen Betrieb, einfache Wartung.</p></li></ul><ul id="f03df6f9-90e4-4ff3-94d4-714581249796" class="bulleted-list"><li style="list-style-type:disc">Management<p id="57ed6969-65ab-489b-82dc-8f8279af3795" class="block-color-gray">Ressourcenvergabe und Zeitplan.</p></li></ul><ul id="4d0f853b-001f-4943-a79c-19d698bde853" class="bulleted-list"><li style="list-style-type:disc">Konkurrent vom Kunden<p id="d5e83b48-3218-42f6-8625-51c98a3d73cb" class="block-color-gray">Kunde will sich von der Konkurrenz abheben, um am Markt zu bestehen.</p></li></ul></details></li></ul><p id="a454a674-9411-47fc-a732-f7bf641296e3" class="">
+</p><ul id="afc72536-9e64-4930-923b-9982159ee458" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">5 typische Gründe warum ein Projekt den Zeit-/Kostenrahmen überschreitet</span></summary><ol type="1" id="7d6a0e23-e598-4f94-8f56-973ea881f758" class="numbered-list" start="1"><li>Nicht validierbare oder unvollständige Anforderungen<p id="ce6ffb2b-ceb5-469d-baac-e3b38fba7dc2" class="">Anforderungen ≠ Erfordernisse, unklar/mehrdeutig formuliert.</p></li></ol><ol type="1" id="ebab939c-3558-4b16-9543-f41eac482260" class="numbered-list" start="2"><li>Mangelhafte Umsetzung der Anforderungen<p id="2cf44ccf-b338-49df-a079-276ed9ce477a" class="">Anforderungen nicht verstanden, falsch umgesetzt, technische Mängel (Implementierung) oder Termin-Not und Ressourcenmangel.</p></li></ol><ol type="1" id="c9b43ed6-0e12-4cfc-a89f-90740c1da570" class="numbered-list" start="3"><li>Mängel im Projektmanagement<p id="98730592-7141-42ef-9887-b680b309e490" class="">Mangelhafte Kommunikation, unrealistische Termin- und Kostenrahmen oder Ressourcenmangel (Verfügbarkeit, Qualifikation, Erfahrung).</p></li></ol><ol type="1" id="d6ccfb1f-a03b-4fd8-99fe-69e0729439b2" class="numbered-list" start="4"><li>Kunde / Anwender nicht involviert</li></ol><ol type="1" id="20ee5046-b630-4036-8d2a-85b612a5ecc8" class="numbered-list" start="5"><li>Sich ständig ändernde Anforderungen</li></ol></details></li></ul><p id="d2c211ac-515f-4b15-8330-7a4f70f22d26" class="">
+</p><ul id="d8b98384-1974-43fe-a6fb-1bf9272587f1" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welches Vorgehen verwendet man in der Steuerung?</span></summary><ul id="7e75db1b-ac37-4e30-939b-18eddb1edcf5" class="bulleted-list"><li style="list-style-type:disc">Die Aufgabenstellung definieren</li></ul><ul id="c92a5bdb-6566-4ba4-b2f5-dc4dbe7092fb" class="bulleted-list"><li style="list-style-type:disc">Das Projekt planen</li></ul><ul id="6d789975-fb14-4d87-a701-56f9f56fb3be" class="bulleted-list"><li style="list-style-type:disc">Das Projekt(team) organisieren</li></ul><ul id="96023106-c72b-417c-a8dd-80a8b50ffcca" class="bulleted-list"><li style="list-style-type:disc">Aufgaben verteilen</li></ul><ul id="71d75784-b74b-4fed-b837-82d414c33dce" class="bulleted-list"><li style="list-style-type:disc">Den Projektfortschritt kontrollieren</li></ul><ul id="454885c3-08b2-4431-9afa-30bf32ae439a" class="bulleted-list"><li style="list-style-type:disc">Bei Bedarf steuernd eingreifen</li></ul><ul id="c41d193b-bf4c-4020-b5a8-3cf1f0120b2a" class="bulleted-list"><li style="list-style-type:disc">Sich mit Risiken beschäftigen</li></ul><ul id="17787a1e-29b1-47b8-82e7-d1feb27e4194" class="bulleted-list"><li style="list-style-type:disc">Entscheidungen vorbereiten und Entscheidungen fällen</li></ul><ul id="d3af8327-44d7-49b7-be79-0efe1551cbcf" class="bulleted-list"><li style="list-style-type:disc">Bürokratische Dinge erledigen</li></ul></details></li></ul><p id="7f758a96-d604-4c59-b5ec-7bd1703323c0" class="">
+</p><ul id="9d5105cb-0f85-4a23-b4dd-fbc877494de1" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Komponenten vom Projektauftrag</span></summary><p id="7d74de14-91cd-4b54-a06c-7958ce2fac44" class="">Schriftliche (Ziel)vereinbarung zwischen Auftraggeber und Auftragnehmer).<div class="indented"><p id="80d37ccb-8eee-4e5e-b56f-69a26e59b657" class="">Voraussetzung dafür ist die Ausarbeitung eines Projektvorschlags.</p></div></p><p id="377e58a3-91b9-4e75-ae62-8d8ab9e7e59e" class="">Beinhaltet:<div class="indented"><ul id="23034c0a-0f1e-4477-bd23-6750fdef338b" class="bulleted-list"><li style="list-style-type:disc">Projektname</li></ul><ul id="74deb168-904a-46e7-a1b7-41594c863d64" class="bulleted-list"><li style="list-style-type:disc">Projektbeschreibung</li></ul><ul id="0fc18aa7-e096-4cf6-b086-2a4379129262" class="bulleted-list"><li style="list-style-type:disc">Rollen und Verantwortlichkeiten</li></ul><ul id="b62c0746-0443-4d47-a02f-4b8e2767a733" class="bulleted-list"><li style="list-style-type:disc">Ziele, Abgrenzung</li></ul><ul id="638e9bd4-6387-432d-8997-47662668df01" class="bulleted-list"><li style="list-style-type:disc">Projektplan (Zeit- und Kostenplan), Komponentendiagramm</li></ul><ul id="09b332ca-b08e-41d1-b41c-0bae34633369" class="bulleted-list"><li style="list-style-type:disc">Umfeld- und Risikoanalyse</li></ul><ul id="8469f5f7-420d-4ccd-bdce-063105d38a34" class="bulleted-list"><li style="list-style-type:disc">Wiederverwendung von Komponenten, Technologiewahl</li></ul><ul id="8ee6cfab-049a-4086-b3fe-29ef8e7c9769" class="bulleted-list"><li style="list-style-type:disc">Lieferumfang und Abnahme</li></ul><ul id="1f0b7fc0-2d4e-4ed1-8590-b475e05cb8b2" class="bulleted-list"><li style="list-style-type:disc">Nichtfunktionale Anforderungen (Skalierbarkeit, Performanz oder Verfügbarkeit)</li></ul><ul id="2755a3ae-c8d8-4ce0-b4d3-68f6bd4ec9fa" class="bulleted-list"><li style="list-style-type:disc">Arbeitsstruktur</li></ul><ul id="83c1bb7e-1ad4-4d3e-89db-af6707e41028" class="bulleted-list"><li style="list-style-type:disc">Informationswesen</li></ul></div></p></details></li></ul><p id="bcefd8fe-88c6-4323-a46d-a552fee671a7" class="">
+</p><ul id="b6400e51-7a43-4a41-b968-f6c179a8f129" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Teufelsquadrat</span></summary><p id="2d513d48-28e7-4758-b16f-a726957d120e" class="">Die vier angegebene Ziele des Quadrates konkurrieren um die verfügbare Produktivität,
+welche durch die Fläche des äußeren Vierecks dargestellt wird.</p><p id="0d80dd0b-a86c-4752-a486-294210fb9617" class="">Aufgrund der Begrenzungen der Ressourcen ergibt sich automatisch eine Begrenzung der Produktivität, symbolisiert durch die Fläche des inneren Vierecks.</p><p id="0c23daa0-7456-493b-b406-655ff1b467ba" class="">Man kann das Viereck in die eine oder andere Richtung strecken,muss dann allerdings einen geringerem Zielerfüllungsgrad auf der andere Seite hinnehmen.</p><p id="3eedb600-b35d-42c5-acb5-8f63a71086eb" class="">
+</p><figure id="58fae767-ed07-4368-84fe-f5b80c03e0e2" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled.png"><img style="width:822px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled.png"/></a></figure></details></li></ul><p id="3e7c5ea5-11a6-4c25-95be-683e41e8a90a" class="">
+</p><ul id="397567ec-f452-4c76-accc-fb3a4d45bb5c" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was verstehen Sie unter einem Projektstrukturplan?</span></summary><p id="f85bff0a-d299-4742-8a2e-8de187c77f2f" class="">Der Projektstrukturplan (PSP)</p><p id="7595904e-cfc2-4cde-ab41-999b8d3e0f14" class="">Projekt-Gliederung in Teilaufgaben und Arbeitspakete. <div class="indented"><p id="50a2b68a-1fe5-4156-96cd-3e02e92ea1f6" class="">Teilaufgaben müssen weiter unterteilt werden.</p><p id="fb1a1d1a-fd0d-4002-8164-27550556344b" class="">Arbeitspakete können nicht mehr unterteilt werden.</p></div></p><p id="127663c8-77db-41fa-8af6-3df6d8b8d32f" class="">Strukturierung der Arbeit<div class="indented"><p id="55404683-12ba-474c-9bb9-5c9fc0da8661" class="">- Nach zweckmäßigen Kriterien
+- In angemessener Detailierung / Tiefe</p></div></p><p id="a8fb77f7-fe32-4e69-a34e-2be9d3ccfd84" class="">Ist (die wichtigste) Planungsgrundlage für:<div class="indented"><p id="83314fc5-3e52-452f-bfc8-920b621ceacc" class="">- Aufwandsschätzung
+- Ressourcenplanung (Know-How, Skills, ..)
+- Personaleinsatzplanung (wer mach was wann?)</p></div></p></details></li></ul><p id="70d0e92e-4222-43ff-b036-d66856456541" class="block-color-gray">
+</p><ul id="29ef387b-2742-4b4e-9755-459ae2047961" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Aus welchen Ebenen besteht ein Projektstrukturplan?</span></summary><p id="ca66e6a0-4496-4b9b-9a9f-7650e533c5ac" class="">Projektstrukturplan PSP besteht aus 3 Ebenen:<div class="indented"><p id="43ee9f8d-ec05-4857-840e-6fceece26f1d" class="">• Projektname
+• Komponenten, Teilsysteme oder Teilprojekten
+• konkrete Arbeitspaketen</p></div></p><p id="55823cc2-dc9d-4f4e-a4cb-d6fc16d2f6dd" class="">Je nach Betrachtungsweise (Gesamtsystem, Teilsystem, Komponente) können zusätzliche Ebenen nach Bedarf verwendet werden.</p></details></li></ul><p id="5213ebce-8e67-4dc6-8016-074ae456a7bf" class="block-color-gray">
+</p><ul id="e2144370-23e3-48a3-9982-1ca2744a8bc8" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Skizzieren und erläutern Sie einen
+	(i) funktions- bzw. aufgabenorientierten Projektstrukturplan
+	(ii) objektorientierten Projektstrukturplan.
+Worin liegen die wesentlichen Unterschiede und wofür werden sie eingesetzt?</span></summary><p id="d708fafc-b51d-49eb-9eb6-b522e79eab4d" class="">Allgemeiner Aufbau</p><figure id="0fcd6828-f683-4875-8e2c-ed072b1e9ed5" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%201.png"><img style="width:528px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%201.png"/></a></figure><p id="040fe2fc-b955-4f15-9592-3824504d3a11" class="">
+</p><p id="5d86bd75-9e7b-462b-a993-bb94f7b618b7" class="">
+</p><p id="e3543485-ac01-4940-a8b9-323ebbeb702d" class="">Funktionsorientierter Projektstrukturplan<div class="indented"><p id="cb1b9b64-cb4b-4aec-9a13-1857b36bfb9d" class="">Bessere Übersicht über die verschiedensten Funktionen des Projektes</p><p id="4ee80927-f91d-49e5-888e-e939ba902807" class="">Tätigkeiten, Handlungen, Funktionen (FTH)</p></div></p><figure id="bbbc86ba-ea86-45c5-b63c-2f0cd0201049" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%202.png"><img style="width:432px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%202.png"/></a></figure><figure id="90cf1f61-e5ee-43ce-8997-567ab64ac2b3" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%203.png"><img style="width:432px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%203.png"/></a></figure><p id="7f32034c-aeb0-4595-8de9-3d145c4624db" class="">
+</p><p id="27497602-65e6-4f83-97c6-1c58ca3f4e00" class="">Aufgabenorientierter Projektstrukturplan<div class="indented"><p id="ef0389a8-625d-4a7a-a488-a4ebd8813272" class="">Planung auf Aufgabeebene</p><p id="4d76c3bc-a1f8-424e-92d5-49026a641c3d" class="">Phasen, Abläufe, Entwicklungsprozesse (APA)</p></div></p><figure id="b450d495-3d72-482f-bb42-d1fb652d50ca" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%204.png"><img style="width:459px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%204.png"/></a></figure><figure id="bb2f22d3-9b97-47bd-95bb-4175e93f4603" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%205.png"><img style="width:480px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%205.png"/></a></figure><p id="0704cef4-ad7b-4655-8dd1-ee3decd7d3b0" class="">
+</p><p id="c08ca32e-feff-40bb-a4e8-2bf887e6ad80" class="">Objektorientierter Projektstrukturplan<div class="indented"><p id="c685ff8b-251b-4989-86c4-7dd8927493e5" class="">Objekte, Komponenten, Bauteile</p></div></p><figure id="41ab9d06-ca43-4944-baee-bb8375d5ff83" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%206.png"><img style="width:480px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%206.png"/></a></figure><figure id="bdb92a0f-1d99-41f6-abfb-26f1b041a547" class="image"><a href="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%207.png"><img style="width:480px" src="Projektmanagement%206f109bada2604e888862a29dbbe15d1b/Untitled%207.png"/></a></figure></details></li></ul><p id="0729d03c-394f-4213-b842-5d53cff45182" class="">
+</p><ul id="e376c3eb-0f78-4fb0-ae83-174180924888" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was versteht man unter einem Projekterfolg?</span></summary><p id="32f3ed4f-e933-4984-96ad-975751f22ca2" class="">Abschließen eines Projektes unter 100%iger Zufriedenstellung und Abdeckung des Projektauftrages mit dem Kunden.</p><p id="def0e1d2-67a0-4b27-95ab-8c90f20678fd" class="">Der Kunde muss mit dem Projekt zufrieden sein, er muss damit arbeiten können. </p></details></li></ul><p id="84b1218c-8c96-4a3d-9abf-29fef3613e2a" class="">
+</p><ul id="4efcc83b-7a25-4b24-afaa-20957206fcee" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Durch welche Rahmenbedingungen wird der Projekterfolg gefördert? Geben Sie für
+jede Rahmenbedingung zumindest ein konkretes Beispiel an.</span></summary><p id="d75180d1-b2b1-465d-bfa6-78cc7d032c8f" class="">Planung<div class="indented"><p id="439faba3-05e4-4c47-929d-9f28f65206a0" class="">• Zielvorgaben des Projekts, konkrete Anforderungen an das zu erstellende Produkt
+• Die Planung braucht Spielräume für Veränderungen</p></div></p><p id="d8344426-f5d5-4337-ae42-8294a3e8167c" class="">Kontrolle<div class="indented"><p id="0e913bcc-0ee1-4675-b24c-b67888061622" class="">• Finanzielle, zeitliche und personelle Restriktionen und deren Risiken
+• Erfüllung der geforderten Aspekte</p></div></p><p id="b826f629-c45c-4a9a-9deb-276360b5ae69" class="">Steuerung<div class="indented"><p id="66a35a76-e827-4145-ba52-b074170b38e7" class="">• Auswahl von Artefakten
+• Einbettung von Teammitgliedern in die Organisation</p></div></p></details></li></ul><p id="86136684-06f3-4850-8b79-12c7bec0756d" class="">
+</p><ul id="2b3e9243-02f4-42d9-a333-e36d352a3204" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was sind die Aufgaben eines Teamkoordinators?</span></summary><p id="167e2458-d238-45d4-a92d-8b41d86ba6d1" class="">Der Projektleiter / Teamkoordinator hat die Projektverantwortung.</p><p id="9141b02a-2aa3-41a7-adb5-786229673435" class=""><span style="border-bottom:0.05em solid">Aufgaben des Projektleiters</span><div class="indented"><ol type="1" id="aa437629-a0e9-44f5-bba6-7968979faaae" class="numbered-list" start="1"><li>Projektablauf – was ist zu tun? (Start, Verfolgung, Abschluss)</li></ol><ol type="1" id="3cacdfa6-c534-4a66-a418-94d42ae5f522" class="numbered-list" start="2"><li>Arbeitsstruktur – wer ist wofür zuständig?</li></ol><ol type="1" id="769bdd0f-de2c-4b06-914a-2be5ee5b4638" class="numbered-list" start="3"><li>Informationswesen – wer informiert wen, worüber, wann, wie?</li></ol><p id="4a68f582-0a8f-428d-b942-b8db2315f068" class="">Sowie:<div class="indented"><ul id="f7429337-4275-4bb4-962c-cff6e80d622a" class="bulleted-list"><li style="list-style-type:disc">Aufgabenstellung definieren</li></ul><ul id="3cb97ba8-0851-4492-b0d7-303ff24c92f7" class="bulleted-list"><li style="list-style-type:disc">Risikomanagement</li></ul><ul id="6f704865-edc4-4552-a8b3-a3d298d0c224" class="bulleted-list"><li style="list-style-type:disc">Projektplanung, Team organisieren, Aufgaben verteilen</li></ul><ul id="f4d6cf0c-8e8f-45ac-aaa1-47665871abf6" class="bulleted-list"><li style="list-style-type:disc">Fortschritt kontrollieren, soll-ist Vergleich, eingreifen</li></ul><ul id="9ea49f01-03a9-4ed0-a51a-4b0a1241aedd" class="bulleted-list"><li style="list-style-type:disc">...</li></ul></div></p></div></p></details></li></ul><p id="6fd19230-c13c-4386-82aa-b22ecec95c1a" class="">
+</p><ul id="db476f4e-ccc2-49ed-8955-b887e32fb4dd" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Projektmanagement – Erfolgsfaktoren</span></summary><p id="7f21220a-8c58-4917-82ce-642a629d543e" class="">- Einbringung und Berücksichtigung der Anwender
+- Adäquates Projektmanagement
+- Anforderungen müssen eindeutig beschrieben, realisierbar und auch überprüfbar sein
+- Flexibler, realistischer Projektplan, der mögl. Verzögerungen berücksichtigt
+- Realistische Kostenabschätzung und Budget, inkl. Risikoanalyse
+- Angemessene Ziele
+- Schlüsselteammitglieder haben genügend Projekterfahrung
+- Gute Teamarbeit, funktionierende Kommunikation im Team</p></details></li></ul><p id="6368efdd-b591-4e0f-be94-5fd22ac7952d" class="">
+</p><ul id="75b8b154-e927-44a0-8206-33534c7d8c99" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was verstehen Sie unter einem Projektstrukturplan (Work Breakdown Structure)? Aus welchen Ebenen besteht eine WBS?</span></summary><ol type="1" id="e0a15de9-1476-495e-896a-9b4efd77fdd7" class="numbered-list" start="1"><li>Projektname</li></ol><ol type="1" id="8bf41867-643c-4524-9c03-2cc869893a7a" class="numbered-list" start="2"><li>Unter- bzw. Teilsysteme (vgl. Architectural Releases)</li></ol><ol type="1" id="62afdaa5-188e-4f3e-b0f3-e0481a37fc3f" class="numbered-list" start="3"><li>einzelne Arbeitspakete</li></ol></details></li></ul><p id="5b2a90d4-6111-4e55-ac90-dd561cae07e9" class="">
+</p><ul id="730454c9-9fae-4d0a-9c70-5043101b419c" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist ein PERT Diagramm?</span></summary><p id="5b49841a-8435-4e93-a13d-47c998d956d4" class="">Netzplan: PERT-Diagramm<div class="indented"><figure id="b493e02f-e652-4e36-b8dd-fd4eb73f9c29" class="image"><a href="../Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%202.png"><img style="width:144px" src="../Projekt%20Management%20PM%2067c5ca4137d547658fdacefaad1265d4/Untitled%202.png"/></a></figure></div></p></details></li></ul><p id="9587592e-279a-42cb-9c83-dfc3fac18985" class="">
+</p></div></article></body></html>

@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Extended collection of tools and commands</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="75c8e2a9-0f4a-4945-8f81-e285955fbdf7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">Extended collection of tools and commands</h1></header><div class="page-body"><h2 id="c955e5ca-f1f1-4cda-a011-de8255f1b218" class="">Tools</h2><p id="53e870c4-d02f-4be4-92c8-0c901564f087" class="">General</p><ul id="3bb1bd31-490c-4ce4-9d00-5ee16e5bbdda" class="bulleted-list"><li style="list-style-type:disc"><code>man 3 &lt;C command&gt;</code>: looking up C functions</li></ul><ul id="f45b6d7c-7f8a-4414-a39b-bc728c679198" class="bulleted-list"><li style="list-style-type:disc"><code>man ASCII</code>: to find out</li></ul><p id="1d252a65-dfcb-433c-b215-2abb2e1fc349" class="">
+</p><p id="dfabe1b9-9351-4da8-82c8-571a89d33f58" class="">Static</p><ul id="f1d27071-098d-45fe-9202-3338d48b14c3" class="bulleted-list"><li style="list-style-type:disc"><code>objdump</code>: informations about object files<p id="8914690c-6ab8-4817-ae43-00c6c49c7bde" class="block-color-gray">Also possible to disassemble machine code into assembly code:<div class="indented"><p id="671c053c-0879-48e3-9875-de6e7e1bf7f4" class=""><mark class="highlight-gray">Example: </mark><mark class="highlight-gray"><code>objdump -M intel -ds /exercises/secret_handshake/hi &gt; hi.s</code></mark></p><p id="fbbeabe6-6183-4315-84d6-10753a0b0818" class=""><mark class="highlight-gray">Here we ask objdump to produce the assembly code (</mark><mark class="highlight-gray"><code>-d</code></mark><mark class="highlight-gray">) and display sections (</mark><mark class="highlight-gray"><code>-s</code></mark><mark class="highlight-gray">) in Intel syntax (</mark><mark class="highlight-gray"><code>-M intel</code></mark><mark class="highlight-gray">) and put the result in the file </mark><mark class="highlight-gray"><code>hi.s</code></mark></p></div></p></li></ul><ul id="5a6fc5bd-d02e-44e3-840c-ab3c3bc3112e" class="bulleted-list"><li style="list-style-type:disc"><code>readelf</code>: informations about ELF files</li></ul><ul id="fcde60df-7676-4369-b47e-9307564ed376" class="bulleted-list"><li style="list-style-type:disc"><code>strings</code>: strings and printable characters in a file</li></ul><ul id="5e82b6a4-4fd1-4a2c-a817-72e9ca05368e" class="bulleted-list"><li style="list-style-type:disc"><code>file</code>: Determines file type and displays some general info</li></ul><ul id="6eb360d8-b184-4f44-9afe-221dd6f03627" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>ldd</code></mark><mark class="highlight-gray">: Displays shared object dependencies</mark></li></ul><ul id="285871c9-9653-4a57-b20f-4ea3a64f72bd" class="bulleted-list"><li style="list-style-type:disc"><code>strace &lt;address&gt; &lt;input&gt;</code>: system function call trace</li></ul><ul id="265c9412-9dec-44e5-9585-a099043642c6" class="bulleted-list"><li style="list-style-type:disc"><code>ltrace &lt;address&gt; &lt;input&gt;</code>: library function call trace</li></ul><p id="f41ef5ea-b152-43a5-ba48-1d5fc1dbabd0" class="">
+</p><p id="2cb5dabb-1f24-4097-95ed-b46bcee2c3b9" class="">Dynamic</p><ul id="9ad9eefc-061a-4747-b834-67676608c2bd" class="bulleted-list"><li style="list-style-type:disc"><code>gdb</code>: The GNU project debugger</li></ul><ul id="9b08707d-8caa-4702-9f23-09e54b13130e" class="bulleted-list"><li style="list-style-type:disc"><code>strace</code>: Trace system calls and signals</li></ul><ul id="e6058b8f-4771-4cc8-921e-1b76d86dadd0" class="bulleted-list"><li style="list-style-type:disc"><code>ltrace</code>: Trace library calls</li></ul><p id="dfac1a05-4dfc-4bc7-b0ef-945107eead53" class="">
+</p><p id="8dbe8dde-47ac-4b71-b081-c7632498c6df" class="">Decompile</p><ul id="8467830b-9762-4dc6-9872-0aeb2023fc24" class="bulleted-list"><li style="list-style-type:disc">radare2 program<p id="a331b8e8-2e96-4a89-8fa8-75f8b899a40b" class=""><a href="https://www.youtube.com/watch?v=3NTXFUxcKPc&amp;list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN&amp;index=7">https://www.youtube.com/watch?v=3NTXFUxcKPc&amp;list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN&amp;index=7</a></p></li></ul><ul id="a08f4080-2c28-4271-86f4-ea7a8795702e" class="bulleted-list"><li style="list-style-type:disc">cutter program<mark class="highlight-gray">: GUI for Radare2</mark></li></ul><ul id="8374a26d-3178-4d88-a238-1ffd59bd0025" class="bulleted-list"><li style="list-style-type:disc">hopper program: GUI for Radare2, can try to guess the decompiled program</li></ul><ul id="e3e1c75b-d0f5-4b05-b803-e78414ab48b5" class="bulleted-list"><li style="list-style-type:disc"><a href="https://retdec.com/">https://retdec.com/</a></li></ul><ul id="0b4fc3a8-7071-4640-b86a-e5b69002efd1" class="bulleted-list"><li style="list-style-type:disc"><a href="https://derevenets.com/">https://derevenets.com/</a></li></ul><ul id="3be6d944-245c-4022-9065-8a2433603847" class="bulleted-list"><li style="list-style-type:disc"><a href="http://boomerang.sourceforge.net/">http://boomerang.sourceforge.net/</a></li></ul><ul id="1f07438c-2fa1-40ee-a970-6a24dc6884ab" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.backerstreet.com/decompiler/decompilers.htm">https://www.backerstreet.com/decompiler/decompilers.htm</a></li></ul><p id="e8f1396a-ed6f-4cd6-a24b-42bd3cb1e525" class="">
+</p><h2 id="c3f9ea7e-2364-4ee2-aeda-98da97870c12" class="">GDB</h2><p id="7ec0b8da-79e7-4092-8e13-a52f10bb5675" class=""><a href="https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf">GDB Cheat Sheet</a></p><p id="2e56356f-5399-478a-a11a-7bd9446e6473" class=""><a href="https://gist.github.com/integeruser/0c436a64e087b1c43b278761434cbbfa">Extensive GDB Cheat Sheet</a> by <a href="https://blog.quarkslab.com/author/francesco-cagnin.html">Francesco Cagnin</a></p><p id="20c85f23-c844-4061-8f83-73a2d7f4cb7e" class="">
+</p><ul id="1d8b7327-c407-402d-8b45-35986b8b74df" class="bulleted-list"><li style="list-style-type:disc"><code>list</code> - returns C code if existent </li></ul><ul id="454d68d0-f87f-4a48-8489-b9f181d23397" class="bulleted-list"><li style="list-style-type:disc"><code>help</code></li></ul><ul id="b1922cd5-05ce-4e6a-b291-b3bea6bdb5c6" class="bulleted-list"><li style="list-style-type:disc"><code>quit</code> - exits </li></ul><ul id="7a6c89b6-0dcc-4b77-a6d6-18a565cb5b00" class="bulleted-list"><li style="list-style-type:disc"><code>run</code> - runs the loaded program as if you did from the command line</li></ul><ul id="0c3bbf13-7773-4779-8995-aacafd2b9c45" class="bulleted-list"><li style="list-style-type:disc"><code>break</code> - sets a breakpoint at a function or address.<p id="5449362f-6eca-4387-8bfb-7eb031159284" class=""><mark class="highlight-gray">in example: </mark><mark class="highlight-gray"><code>break *0x123...</code></mark></p><ul id="d7979329-210c-4a7a-b494-768d02b19715" class="bulleted-list"><li style="list-style-type:circle"><code>si</code> - step one instruction</li></ul><ul id="e552a9f3-78a8-48fd-ad5b-d038fb37b717" class="bulleted-list"><li style="list-style-type:circle"><code>ni</code> - step one instruction without calling functions </li></ul><ul id="a98444fa-f79e-4b88-901d-4843298ccb66" class="bulleted-list"><li style="list-style-type:circle"><code>set $eax=0</code> - change value of register</li></ul></li></ul><ul id="976c24fc-8873-4aab-a272-f2fc02cdcef1" class="bulleted-list"><li style="list-style-type:disc"><code>continue</code> - resumes execution</li></ul><ul id="2a35b09e-8f11-4b3e-a304-497cb9442047" class="bulleted-list"><li style="list-style-type:disc"><code>info</code> - displays all kinds of info<p id="951141a6-66f7-4720-a8cf-17c175df1d55" class=""><mark class="highlight-gray"><code>info registers</code></mark><mark class="highlight-gray"> to show registers</mark></p><p id="9142fafe-5e76-4d63-9656-627cce329d43" class=""><mark class="highlight-gray">print register with </mark><mark class="highlight-gray"><code>x/s 0x123..</code></mark></p></li></ul><ul id="2e075499-c6db-426b-a55d-55e7e3b6bade" class="bulleted-list"><li style="list-style-type:disc"><code>print</code> - powerful command to display and format data</li></ul><ul id="f706d9a9-4903-4ccc-a830-4b1b507d2e89" class="bulleted-list"><li style="list-style-type:disc"><code>set</code> - to change settings of gdb or set values inside the program memory<p id="39bab6fe-832f-4ce7-99e8-ed0028ade84c" class=""><mark class="highlight-gray"><code>set disassembly-flavor intel</code></mark></p></li></ul></div></article></body></html>

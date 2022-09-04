@@ -1,0 +1,831 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>PL/pgSQL</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4e6df475-5586-4ee9-9168-4c37c60c5f5b" class="page sans"><header><h1 class="page-title">PL/pgSQL</h1></header><div class="page-body"><p id="faa6f4d4-2a8d-44d6-9362-0f8cef2339b2" class=""><a href="https://www.postgresql.org/docs/current/static/plpgsql.html">https://www.postgresql.org/docs/current/static/plpgsql.html</a></p><p id="cedd7ff6-4f0e-4599-b0b7-420f32d859a6" class="">Prozedurale DB-Sprache für PostgreSQL</p><p id="fe22440e-fc4e-4305-a3e3-43eb1b13c54f" class="">
+</p><p id="3633fc1f-590f-4f4e-b687-b26278e536ef" class="">
+</p><nav id="10dbae25-6322-42aa-96a7-26879237b67b" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#78c49c73-79f8-499c-9097-864e7674dd79">Funktionen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e372dd0-a9c5-4dd1-9a95-3fcd415b16a8">Variablen Typen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#91aeb0f2-1f06-4288-a15b-3ed0a826c8bf">Befehle</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7b23df05-2b32-432b-8afe-246b42bfb8ab">Kontrollstrukturen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e036587f-8216-4bb5-905d-63af5b16e4fb">Cursors</a></div></nav><p id="d31d12e3-2e8e-4efd-9e89-77b812f1d4f6" class="">
+</p><p id="6deedb44-d13d-49b9-814f-efaba810e69e" class="">
+</p><h1 id="78c49c73-79f8-499c-9097-864e7674dd79" class="">Funktionen</h1><pre id="e6ffbe1d-d6d9-4d3a-8298-3ce371f8e9ef" class="code"><code>CREATE [OR REPLACE] FUNCTION name (arg argtype)
+		[RETURNS rettype | RETURNS TABLE (colname coltype)] AS $$
+	...
+$$ LANGUAGE plpgsql;</code></pre><p id="3b536a47-0ade-4e25-8457-c57b1952e4d9" class="">
+</p><p id="6676b0e3-03dc-4358-a33b-748bc0613e11" class=""><mark class="highlight-blue">Funktionen</mark><div class="indented"><pre id="9faaa313-541b-426f-a96f-4dc70ba6f713" class="code"><code>SELECT sum(2,3);</code></pre><pre id="4be482e2-fb89-4a9b-ab2a-79e88f670ecf" class="code"><code>CREATE FUNCTION sum (integer, integer) RETURNS integer AS $$
+BEGIN
+		$1 + $2
+END
+$$ LANGUAGE plpgsql;</code></pre><pre id="171f64f1-fc88-49b0-9b5d-70cad247a8ba" class="code"><code>CREATE FUNCTION sum (IN a integer, IN b integer, OUT c integer) AS $$
+BEGIN
+		c = a + b
+END
+$$ LANGUAGE plpgsql;</code></pre><p id="625e0fcf-5d2e-4480-aaea-1f0099999c8d" class="">
+</p><p id="798e76a6-413a-4319-a679-9201644d2298" class="">Eingabe		<mark class="highlight-gray"><code>IN, OUT, INOUT, VARIADIC</code></mark><mark class="highlight-gray"> </mark>(zugriff mit <mark class="highlight-gray"><code>$i</code></mark><mark class="highlight-gray"> </mark>möglich)</p><p id="8f600453-80e5-4e52-929b-20c9eccd5fc9" class="">Ausgabe		<mark class="highlight-gray"><code>RETURN NEXT exp;</code></mark><mark class="highlight-gray"> </mark>concatinated tupel an Ergebnis - oder auch <mark class="highlight-gray"><code>void</code></mark></p></div></p><p id="d161d8d9-aac4-40cb-b3fb-29fc20b26e5d" class="">
+</p><p id="556e35b8-a9db-4be2-a054-27edc8102825" class="">
+</p><p id="2730bc13-084d-4408-bf05-81b938b51a96" class="">
+</p><p id="028007c4-95f0-4581-96f2-b5c41232d519" class="">
+</p><p id="21e47088-4624-41e4-8186-0bab2b8170aa" class="">
+</p><h1 id="8e372dd0-a9c5-4dd1-9a95-3fcd415b16a8" class="">Variablen Typen</h1><pre id="30a4ef39-9572-44d4-9c04-1e247c8e59d6" class="code"><code>name [CONSTANT] type [NOT NULL] [{DEFAULT | =} expression];</code></pre><p id="2a816053-8145-4f9c-808d-82df7b108b5e" class="">
+</p><p id="671826c4-18dd-4189-be62-fe4e60e8b492" class=""><mark class="highlight-blue">Typ</mark><div class="indented"><pre id="a9ef73d7-d572-4556-a62a-ceddd3393eda" class="code"><code>matrknr integer;
+input1 ALIAS FOR $1;
+rang CONSTANT varchar(2) = &#x27;C4&#x27;;</code></pre></div></p><p id="761966de-f919-4f36-8b6e-4fc8cc5beb2f" class="">
+</p><p id="3e9b4606-6621-4977-af4a-91138d0765c1" class=""><mark class="highlight-blue">Copying Types </mark>von anderen Variable oder Tabellenspalte<div class="indented"><pre id="2637475b-e7e8-40e2-a9de-692e7df245ca" class="code"><code>matrnr Studenten.MatrNr%TYPE;
+-- MatrNr Studenten.Matrnr%TYPE;  ist schlechter Stil
+aktuell vorl%TYPE;</code></pre></div></p><p id="e0d248f0-d119-4c57-9e73-9a1d19b84b33" class="">
+</p><p id="3cbab8b6-8353-4d08-917b-5a63ded6f306" class=""><mark class="highlight-blue">Row Types </mark>von Tabelle (nicht veränderbar)<mark class="highlight-blue"> </mark><div class="indented"><pre id="00554c16-7415-41e4-ab74-e8d19bb869b2" class="code"><code>student Studenten%ROWTYPE;</code></pre></div></p><p id="8550455d-ee37-495f-93a3-5d501c2b25a4" class="">
+</p><p id="a0221e5d-bf0b-4d34-ae31-26d30b24ecd8" class=""><mark class="highlight-blue">Record Types </mark>von Tabelle (veränderbar, wiederverwendbar)<div class="indented"><pre id="1b013495-5a71-421a-abc8-65690189d052" class="code"><code>ergebnis RECORD;
+SELECT * INTO ergebnis FROM Studenten;
+SELECT * INTO ergebnis FROM Professoren;</code></pre></div></p><p id="be38020f-4730-4ae5-8652-071f190393c6" class="">
+</p><p id="86bca10b-6966-4999-9348-07a4c2baefdd" class="">
+</p><p id="c3f8024e-2ceb-4e9b-b5ef-be73b22d4279" class="">
+</p><p id="be01da50-ae7e-4bbf-9fb9-0f3b6404784e" class="">
+</p><p id="8b2356fa-14cd-4bc1-9c82-64a7d002be2c" class="">
+</p><h1 id="91aeb0f2-1f06-4288-a15b-3ed0a826c8bf" class="">Befehle</h1><p id="c9a7e0cb-0274-428e-a1bc-22b3b53796ba" class=""><mark class="highlight-blue">Befehl ohne Ergebnis</mark><div class="indented"><pre id="7a229a78-ac36-4e58-819e-fbb06f5d610e" class="code"><code>PERFORM statement</code></pre><p id="09166838-3791-4ac5-8374-ae920b4dad1f" class=""><mark class="highlight-gray"><code>INSERT, UPDATE, ...</code></mark><mark class="highlight-gray"> </mark>brauchen kein prefix beim Aufrufen</p><p id="2aabb31a-9eed-43b8-b198-50760888a486" class="">Andere Befehle zB <mark class="highlight-gray"><code>SELECT</code></mark><mark class="highlight-gray"><mark class="highlight-gray"> </mark></mark>brauchen <mark class="highlight-gray"><code>PERFORM</code></mark><mark class="highlight-blue"> </mark>davor.</p></div></p><p id="6b3ac4c1-08df-4c7c-a823-32afed3b7742" class="">
+</p><p id="b169793e-d219-4b38-b495-e6f14f7cfb22" class=""><mark class="highlight-blue">Befehle mit einer Zeile als Ergebnis</mark><div class="indented"><pre id="8ebcdf98-aa81-4f60-b343-a06e6467d26d" class="code"><code>SELECT expr INTO [STRICT] target FROM ...;
+INSERT expr RETURNING expr INTO [STRICT] target;</code></pre><p id="3e4671ec-3cca-4890-b1c0-d51085c3da92" class=""><mark class="highlight-gray"><code>INTO</code></mark><mark class="highlight-gray"><mark class="highlight-gray"> </mark></mark>lädt einzeiliges Ergebnis in Typ <mark class="highlight-gray"><code>RECORD</code></mark> oder <mark class="highlight-gray"><code>ROWTYPE</code></mark>. </p><p id="6b2a993b-f487-452a-a436-dfb222b044c3" class="">Mit <mark class="highlight-gray"><code>STRICT</code></mark><mark class="highlight-gray"> </mark>muss genau eine Zeile zurückgeliefert werden (ansonsten wird die erste gewählt).</p></div></p><p id="330449f2-a169-48df-9852-194a6ed78933" class="">
+</p><p id="7a574ecf-986d-4a64-bc19-8f71bcf30d57" class=""><mark class="highlight-blue">String parsen und executen</mark><div class="indented"><pre id="37619885-d1ea-4836-a694-35e089ad1ca6" class="code"><code>EXECUTE cmdString [INTO [STRICT] var] [USING expr]; </code></pre><pre id="81b4e656-6140-4e17-916f-db694c705332" class="code"><code>EXECUTE format(&#x27;SELECT count(*) FROM %I WHERE Sem &gt; $1&#x27;, tabname) INTO c; </code></pre></div></p><p id="6767008a-ea25-48f8-bd28-5d225505926a" class="">
+</p><p id="9d1bf0d0-ef41-4b65-95bc-eb8b05c5710f" class="">
+</p><p id="7a40b31c-be17-4352-b747-52525b2aba94" class="">
+</p><p id="7662b8e2-8f2d-45af-9daf-19f1e0b7471d" class="">
+</p><p id="afdf917e-3ccc-444e-86e9-973663c3917b" class="">
+</p><h1 id="7b23df05-2b32-432b-8afe-246b42bfb8ab" class="">Kontrollstrukturen</h1><p id="ed15cbf9-8e99-486f-a428-79305a6972bd" class=""><mark class="highlight-blue">BLOCK</mark><div class="indented"><pre id="90cd8bd2-e920-4d30-bd3d-44234f592778" class="code"><code>[&lt;&lt;label&gt;&gt;] -- name für Block
+[DECLARE declarations] -- lokale Variablen
+BEGIN
+	statements
+	[EXCEPTION exceptionhandling]
+END [label];</code></pre></div></p><p id="eb968387-d389-468f-b83f-77304595838c" class="">
+</p><p id="b413af53-3f75-482f-b8aa-5d17bda419ad" class=""><mark class="highlight-blue">IF THEN ELSE</mark><div class="indented"><pre id="ec670b64-b9a4-4b67-9db4-3d9db5d0688c" class="code"><code>IF expr THEN
+		statements
+[ELSIF expr THEN
+		statements]
+[ELSE 
+		statements]
+END IF;</code></pre></div></p><p id="92db50b9-b1ed-4bd2-b22c-0cf59a6ce549" class="">
+</p><p id="5749ddba-1ee7-4cd0-ac9a-791d365f1cae" class=""><mark class="highlight-blue">CASE</mark><div class="indented"><pre id="9cbf99ab-f7d8-4147-98ac-5b4e655c896a" class="code"><code>CASE note
+		WHEN 1,2,3,4 THEN txt = &#x27;Positiv&#x27;;
+		WHEN 5 THEN txt = &#x27;Negativ&#x27;;
+END CASE;</code></pre><pre id="42806cf3-d34c-4c18-b7a8-a575f8731e22" class="code"><code>CASE
+	WHEN note = 1,2,3,4 THEN txt = &#x27;Positiv&#x27;;
+	WHEN note = 5 THEN txt = &#x27;Negativ&#x27;;
+END CASE;</code></pre></div></p><p id="9c0aaac8-85b9-4886-9d99-30d6a7330fe8" class="">
+</p><p id="c0af9756-43b6-41fd-a5de-fe5aa94dd97a" class=""><mark class="highlight-blue">WHILE LOOP, FOR LOOP</mark><div class="indented"><pre id="0b1ede8c-f804-427d-8a99-eb60ed0438d1" class="code"><code>[&lt;&lt;label&gt;&gt;]
+WHILE expr LOOP
+		statements
+END LOOP [label];</code></pre><pre id="d579e79c-c146-4db1-a857-c3d07ad6ea14" class="code"><code>[&lt;&lt;label&gt;&gt;]
+FOR expr IN [REVERSE] expressions [BY expr] LOOP
+		statements
+END LOOP [label];</code></pre><p id="4dbcc1fb-a563-4c46-8845-6537cf4a9ab8" class="">verlassen oder skippen</p><pre id="e41b0367-7f1e-4b2e-ba47-d78673d55342" class="code"><code>EXIT/CONTINUE [label] [WHEN expr];</code></pre></div></p><p id="806880e7-945c-4d52-abaa-815aafef6b78" class="">
+</p><p id="1b924eeb-91ff-4ce4-884b-4559dd0607e1" class=""><mark class="highlight-blue">FOR EACH</mark><div class="indented"><pre id="5ac8805c-11c2-406f-84d1-6480ed21413a" class="code"><code>[&lt;&lt;label&gt;&gt;]
+FOR target IN query LOOP
+		statements
+END LOOP [label];</code></pre></div></p><p id="dff0f083-6425-490d-a861-9dbf196f3491" class=""><div class="indented"><pre id="0c012a20-620d-4b4b-9f98-2d67958355e1" class="code"><code>FOR s IN SELECT * FROM Studenten LOOP
+		INSERT INTO hoeren VALUES (s.MatrNr, 184686)
+END</code></pre><pre id="c54c913a-04fa-45df-bd17-887de154fc42" class="code"><code>CREATE OR REPLACE FUNCTION suche(matrnr numeric(10)) RETURNS void AS $$
+DECLARE
+		name varchar(30);
+		semester numeric(2);
+BEGIN
+	SELECT s.name, s.semester INTO name, semester
+		FROM students s WHERE s.matrnr = matrnr;
+	IF (name IS NULL) THEN 
+		RAISE NOTICE &#x27;nothing found&#x27;;
+	ELSE
+		RAISE NOTICE &#x27;Name: %, Semester: %&#x27;, name, semester;
+	END IF;
+END
+$$</code></pre></div></p><p id="79989f06-bbba-4dac-b4b3-ac60801a9436" class="">
+</p><p id="59d879e0-7ad1-4e9f-a2ba-536145bba313" class=""><mark class="highlight-blue">Exception Handling</mark><div class="indented"><p id="0ec111b4-192d-4a75-a1bb-23c7f30af4fe" class="">Statements vor rollback ausgeführt - Zugriff auf lokalen Variablen möglich</p><pre id="13d691cf-e2ef-499e-9117-bfb61de823d4" class="code"><code>BEGIN
+	statements
+EXCEPTION
+	WHEN conds THEN statements
+	WHEN conds THEN statements ...
+END;</code></pre><p id="eb7258d7-bce5-4c68-9dc8-0d515748474a" class="">
+</p><pre id="6d0f8305-ab1a-41e2-87fc-5ae17933654b" class="code"><code>-- Note auf 1 setzen oder neu erstellen
+LOOP
+		-- updaten
+		UPDATE pruefen SET Note=1 WHERE MatrNr=mn AND VorlNr=vn AND PersNr=pn;
+		RETURN WHEN FOUND;
+		
+		-- neues tupel erstellen
+		BEGIN
+				INSERT INTO pruefen VALUES (mn, vn, pn, 1);
+				RETURN;
+				EXCEPTION WHEN uniquie_violation THEN -- hier leer lassen
+		END;
+
+END LOOP;</code></pre></div></p><p id="aa62678b-9dcd-4c9a-bdb8-4a89e5e29e54" class="">
+</p><p id="77abce76-a83c-4c01-be12-17c3d8d9e4cc" class="">
+</p><p id="e9870e30-e9ec-4361-a25f-0e8b1fc0ca2a" class="">
+</p><p id="01208cbf-7430-4ce4-ac13-01dac70375ed" class="">
+</p><h1 id="e036587f-8216-4bb5-905d-63af5b16e4fb" class="">Cursors</h1><pre id="833bfb8b-0134-48e7-9b61-1a30c361085c" class="code"><code>name refcursor;
+name [[NO] SCROLL] CURSOR [(args)] FOR query;</code></pre><p id="233183ef-70ca-4df3-9327-baaaf98e9436" class=""><mark class="highlight-gray"><code>FOR query</code></mark>, <mark class="highlight-gray"><code>SCROLL</code></mark><mark class="highlight-gray"> </mark>und <code><mark class="highlight-gray">NO SCROLL</mark></code><mark class="highlight-gray"> </mark>wenn nicht gebunden</p><p id="e7e246b3-b0fe-4d38-a803-fea04be2a82b" class="">
+</p><pre id="9bb23f59-afc6-4459-818e-e7bab70b532c" class="code"><code>-- nur deklarieren
+curs1 refcursor;
+
+-- für Tabelle
+curs2 CURSOR FOR SELECT * FROM Studenten;
+
+-- für Query
+curs3 CURSOR (mn integer) FOR
+		SELECT *
+		FROM Studenten
+		WHERE MatrNr=mn;</code></pre><pre id="26d906dc-903e-4a95-a03f-e3d6d72be16b" class="code"><code>OPEN curs1 FOR SELECT * FROM Professoren;
+OPEN curs2;
+OPEN curs3(42);</code></pre><p id="82b7e624-21d1-4f86-839d-79ebe27ceb2f" class="">
+</p><p id="1b6ceaa9-6090-4f4b-856d-2f61834c60b0" class=""><mark class="highlight-blue">Befehle</mark><div class="indented"><p id="ec045e51-fed3-41e9-8355-c522b5666667" class=""><mark class="highlight-gray"><code>OPEN</code></mark><mark class="highlight-gray">		</mark>öffnen vor verwendung</p><p id="73e24abd-4997-45ce-9d1f-ad4ec3309ee2" class=""><mark class="highlight-gray"><code>FETCH</code></mark><mark class="highlight-gray">		</mark>liest nächste Zeile, sonst <mark class="highlight-gray"><code>NULL</code></mark></p><p id="6ab45c5f-b1c2-4b0d-b85f-b2df18a8005b" class=""><mark class="highlight-gray"><code>FOUND</code></mark><mark class="highlight-gray">		</mark>sagt quasi <mark class="highlight-gray"><code>hasNext()</code></mark></p><p id="952cfabc-7266-442f-b90e-d2c6c04e1665" class=""><mark class="highlight-gray"><code>MOVE</code></mark><mark class="highlight-gray">		</mark>erlaubt bewegung ohne zu lesen</p><p id="772289d7-2560-41b9-a600-fe2f9ae46e8e" class=""><mark class="highlight-gray"><code>CLOSE</code></mark><mark class="highlight-gray">		</mark>schließen nach Verwendung</p></div></p><p id="2710ce98-3c3a-4a2d-ae91-60e9f36fa0ce" class="">
+</p><p id="6adce694-301d-4ce0-bc4c-8bad569457f4" class=""><mark class="highlight-blue">Fetchen</mark><div class="indented"><pre id="6a28c6e2-d065-4ae2-a60c-cac9e41dcd0f" class="code"><code>FETCH [direction {FROM | IN}] cursor INTO target;</code></pre></div></p><p id="35cc77cf-a607-4db5-8f27-5f72cb41ef41" class=""><div class="indented"><pre id="aaaa6d76-ecce-4c8d-9d52-99c90b3b7656" class="code"><code>FETCH curs1 INTO rowvar;
+FETCH LAST FROM curs2 INTO stud;
+FETCH PRIOR FROM curs2 INTO stud;
+FETCH RELATIVE 2 FROM curs2 INTO stud;
+FETCH curs3 INTO mn, name, sem;</code></pre></div></p><p id="d46c7f8f-f02a-403b-83c6-59bec95b5c61" class="">
+</p><p id="2854ce2d-f84f-4553-b26f-50ea3ae543e9" class=""><mark class="highlight-blue">Insert/Delete</mark><div class="indented"><p id="d622ab37-4e92-4c7e-9c64-bc3b3c94264c" class="">Vor der Abfrage bei cursor <mark class="highlight-gray"><code>FOR UPDATE</code></mark><mark class="highlight-gray"> </mark>dazuschreiben.</p><pre id="b022f0a2-f7e3-4e97-8f09-e5d5a9a0caa4" class="code"><code>UPDATE table SET ... WHERE CURRENT OF cursor;
+DELETE FROM table ... WHERE CURRENT OF cursor;</code></pre></div></p><p id="3c5ac816-fa69-4901-8c0b-c3de933b180d" class=""><div class="indented"><pre id="6872a43a-0f73-47e8-b20e-74ca5c6a3a1b" class="code"><code>Vorlesungen(VorlNr, SWS):
+INSERT INTO Vorlesungen VALUES (26120, 3), (27550, 4):
+
+CREATE FUNCTION reassign() RETURNS void AS $$
+DECLARE
+		c CURSOR FOR SELECT * FROM Vorlesungen FOR UPDATE;
+		c2 refcursor;
+		count integer = 0;
+		row RECORD;	
+BEGIN
+		-- ausgeben und VorlNr mit Count ändern
+		FOR r IN c LOOP
+				RAISE NOTICE &#x27;(%, %)&#x27;, r.VorlNr, r.SWS;
+				UPDATE Vorlesungen SET VorlNR=count WHERE CURRENT OF c
+				count = count+1;
+		END LOOP;
+	
+		-- erneut ausgeben
+		OPEN c2 FOR SELECT * FROM Vorlesungen;
+		LOOP
+				FETCH c2 INTO row;
+				RAISE NOTICE &#x27;(%, %)&#x27;, row.VorlNr, row.SWS;
+				EXIT WHEN NOT FOUND;
+		END LOOP;
+
+END;
+$$ LANGUAGE plpsql;</code></pre><p id="94a2b7ad-e76f-42f6-ad4c-412677269fa3" class="">Ausgabe: <code><mark class="highlight-gray">(26120, 3)</mark></code>, <mark class="highlight-gray"><code>(27550, 4)</code></mark>, <code><mark class="highlight-gray">(0, 3)</mark></code>, <mark class="highlight-gray"><code>(1, 4)</code></mark> </p></div></p></div></article></body></html>

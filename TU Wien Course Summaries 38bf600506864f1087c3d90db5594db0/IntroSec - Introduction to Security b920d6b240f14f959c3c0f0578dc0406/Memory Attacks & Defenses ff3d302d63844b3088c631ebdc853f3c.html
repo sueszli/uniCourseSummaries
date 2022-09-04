@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Memory Attacks &amp; Defenses</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ff3d302d-6384-4b30-88c6-31ebdc853f3c" class="page sans"><header><h1 class="page-title">Memory Attacks &amp; Defenses</h1></header><div class="page-body"><figure id="97a2ce70-ab51-455a-9202-db22d50ec557" class="link-to-page"><a href="Memory%20Attacks%20&amp;%20Defenses%20ff3d302d63844b3088c631ebdc853f3c/Binary%20Exploitation%20Examples%2097a2ce70ab51455a9202db22d50ec557.html"><span class="icon">📎</span>Binary Exploitation Examples</a></figure><nav id="45d13b73-bd75-4d15-80dc-d43dbdff3d4d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#97caaa26-4199-41a7-a14b-99a65d476e33">Cause of Vulnerability</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c30c7530-9ffd-4834-a743-c2c4473e0fb7">Buffer Overflow</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7c6285ce-293e-4c6f-b883-f7e76592c068">1) Return Address</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#65a3bff1-908f-42c2-8fef-1b9778a01072">2) Pointer Variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2473ffa7-fa0c-4a8e-bf3c-2d6bb68d8a8c">3) Stack Frame Pointer</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8aad2b1b-713a-47cb-9728-ee2e32b47e03">Memory Defenses</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b1455c21-80b0-48ae-a018-c5b50f0df936">Canaries</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b38ddcd2-01c3-4797-922e-0a47dfb18f3a">Data Execution Prevention DEP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a3312a5c-b2f7-43f0-abf9-916cbe623df0">Address Space Layout Randomization ASLR</a></div></nav><h1 id="97caaa26-4199-41a7-a14b-99a65d476e33" class="">Cause of Vulnerability</h1><p id="ba3c01f4-6ffa-4c43-933b-e7b9065a21b7" class=""><mark class="highlight-teal">Abstraction</mark></p><p id="61b97192-1c9d-40e7-9e6a-2651b2e4ba81" class="">Assumptions because of abstraction<mark class="highlight-teal"> </mark>over machine code</p><div id="7922fcab-319e-42e3-ab8f-50f380a10a5b" class="column-list"><div id="81098fec-2e1e-4440-9566-e94ddf63f2e8" style="width:50%" class="column"><p id="0ac7d78d-e052-4235-8485-35e23cee5c17" class="">Assumptions:</p><ul id="9ec2a91b-ec64-4cc4-933f-2472926bf866" class="bulleted-list"><li style="list-style-type:disc">Basic statements are atomic (ie. assigments)</li></ul><ul id="5c56b190-8719-44b2-821c-0ed84e3dbc20" class="bulleted-list"><li style="list-style-type:disc">Only one branch can be taken, functions start at the beginning, execute to the end, then return to call site</li></ul><ul id="0a77abde-12bd-40ec-b883-6ecd3dacf05d" class="bulleted-list"><li style="list-style-type:disc">only source code instructions can be executed </li></ul></div><div id="82da2b6f-b9b3-48b3-86cf-94d668a80bda" style="width:50%" class="column"><p id="d3925705-77c9-4508-a80e-9c3269469ab7" class="">Truth:</p><ul id="341a5c07-9c35-46bb-95fc-910ca20fa68c" class="bulleted-list"><li style="list-style-type:disc">Statements compiled to many instructions that can be executed seperately (on x86)</li></ul><ul id="fac957a4-6aaf-4ddb-a5dd-c9db7c00daf2" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>eip</code></mark><mark class="highlight-gray"> </mark>can be set anywhere </li></ul><ul id="89d399b9-6ee3-4170-834a-d16101362e1b" class="bulleted-list"><li style="list-style-type:disc">Dead code (unused library functions) can be executed</li></ul></div></div><p id="3e982c69-fab7-4bf5-9714-cf77b6cada0b" class="">
+</p><p id="bfd2f176-34a2-4a79-a073-815b3ca7ff54" class=""><mark class="highlight-teal">No Boundary-Checking</mark></p><p id="d48c919b-efeb-4bb1-8d83-f6509b52b1a5" class="">Many C library functions are unsafe.</p><p id="aa95b7c0-e004-41fc-ad91-a21515f2e13f" class="">Examples<div class="indented"><p id="d2b3a3ff-6315-4982-abbc-dae312053ea0" class="">No boundary checking:<div class="indented"><p id="e8a1ff5e-0aa7-4461-a6fc-43f0e42fb3f6" class=""><mark class="highlight-gray"><code>strcpy(buf, str)</code></mark>		(copies until <mark class="highlight-gray"><code>&quot;\0&quot;</code></mark>)</p><p id="9f9ff9b7-f812-41a0-a9f2-5c87d5ee3ae7" class=""><mark class="highlight-gray"><code>strcpy(char *dest, const char *src)</code></mark></p><p id="7bbfd6ab-a8b4-41bb-b15d-0386964a2483" class=""><mark class="highlight-gray"><code>strcat(char *dest, const char *src)</code></mark></p><p id="102cfb27-51ca-4dab-9a09-3540c5846fc1" class=""><mark class="highlight-gray"><code>gets(char *s)</code></mark></p><p id="a8df10d6-7168-49f4-8514-53065a44f354" class=""><mark class="highlight-gray"><code>scanf(const char *format, …)</code></mark></p><p id="18338d76-eef2-45b4-bf8c-d4c7bec94248" class=""><mark class="highlight-gray"><code>printf(const char *format, …)</code></mark></p><p id="9b134547-9e5f-40b7-b29f-b2081625f963" class="">
+</p></div></p><p id="96f1e532-ff3a-4f83-8d85-a73d07c7a672" class="">Boundary checking:<div class="indented"><p id="ee61f5e3-4be7-4e6b-95b4-7ea9f76acd81" class=""><mark class="highlight-gray"><code>strncpy(char *dest, const char *src, size_t n)</code></mark><mark class="highlight-gray"> </mark>copies exactly n characters</p><p id="6d529503-179b-4789-843d-733603d64ef5" class="">off-by-one-overflow possible if we choose wrong n: <mark class="highlight-gray"><code>MAX_STRING_LEN-1</code></mark>   </p><p id="6f96279a-df04-4cc5-8c41-16132d886608" class="">
+</p></div></p></div></p><p id="58c482d9-5edd-4e49-80aa-3ce234a17f4d" class="">
+</p><p id="46c67fd9-c193-4d6a-b3ab-b7c55ce1ef07" class=""><mark class="highlight-teal">No typing</mark></p><p id="883df47a-5ac3-4644-b5dd-64dab10af842" class="">C, C++ are memory unsafe: data is not typed, direct memory access</p><p id="20652a3e-5ffa-493b-8412-51ab7e4d692c" class="">
+</p><h1 id="c30c7530-9ffd-4834-a743-c2c4473e0fb7" class="">Buffer Overflow</h1><p id="700d920e-8fff-4b5d-99d5-3aceed79602b" class=""><mark class="highlight-gray">Goal: hijacking control-flow, stealing or modifying valuable information (= control/data corruption)</mark></p><p id="1edcadfb-1fcf-4f21-915d-fc38fabb16cb" class="">Buffer over-read	reading adjacent memory until <mark class="highlight-gray"><code>&#x27;\0&#x27;</code></mark> beyond buffer boundary</p><p id="e6ed046f-fbb4-4443-b505-e8ac82051a74" class="">Buffer over-write	overwriting adjacent memory</p><figure id="f42af5c3-bcd7-491d-a9d3-22459d9226b5" class="image"><a href="Memory%20Attacks%20&amp;%20Defenses%20ff3d302d63844b3088c631ebdc853f3c/Untitled.png"><img style="width:480px" src="Memory%20Attacks%20&amp;%20Defenses%20ff3d302d63844b3088c631ebdc853f3c/Untitled.png"/></a></figure><p id="4b00f2df-2bd4-45ca-9dab-66690fd30884" class=""><mark class="highlight-gray"><code>ret</code></mark><mark class="highlight-gray"> also known as &quot;saved eip&quot;</mark></p><p id="2ec76ba9-79c2-4fc7-8c61-79331d8bb164" class="">
+</p><h2 id="7c6285ce-293e-4c6f-b883-f7e76592c068" class="">1) Return Address</h2><p id="7c0e0599-f28f-4af3-88cd-01b08a082201" class=""><mark class="highlight-teal">Basic Stack Code Injection</mark></p><ol type="1" id="68103fd4-6528-44b5-8802-c2018c5beb4d" class="numbered-list" start="1"><li>overwriting <mark class="highlight-gray"><code>ret</code></mark><mark class="highlight-gray"> </mark>→ start of buffer<p id="e3b9987a-30b2-4a52-a26a-5dc341aaf000" class="">must be guessed, does not need to be precise, we use a NOP-sled</p></li></ol><ol type="1" id="6dfa09a6-0a7c-46da-8c26-81d1c19ee570" class="numbered-list" start="2"><li>Buffer string contains assembly instructions like <mark class="highlight-gray"><code>execve(&quot;/bin/sh&quot;)</code></mark></li></ol><ol type="1" id="50fb156b-dd19-413d-8246-fb1c8379d397" class="numbered-list" start="3"><li>When program exists, we return to newly set address, buffer executed</li></ol><p id="18349721-3ead-4784-92f5-c7952fbeb0e7" class="">
+</p><p id="e7dc0313-e093-40db-9c69-8189c574a2e0" class=""><mark class="highlight-teal">Return-to-libc ret2libc</mark></p><p id="1af4e16f-6438-4fa1-a6ba-69603dc664b0" class="">Allows bypassing DEP: No code injection.</p><p id="5df670f9-0ac7-4ad8-a67c-0de9b3079bed" class="">Programs that use functions from a shared library (like <mark class="highlight-gray"><code>printf</code></mark> from libc library), link entire library into their address space at run time.</p><ol type="1" id="7cdf520a-9766-4c43-81bc-319a992535ab" class="numbered-list" start="1"><li>overwriting <mark class="highlight-gray"><code>ret</code></mark><mark class="highlight-gray"> </mark>→ library instructions, like <mark class="highlight-gray"><code>system(), exec(), ...</code></mark></li></ol><ol type="1" id="8aca6332-9a66-40df-947a-37b1803ef245" class="numbered-list" start="2"><li>Setting function arguments (<mark class="highlight-gray"><code>funcp</code></mark><mark class="highlight-gray"> </mark>behind <mark class="highlight-gray"><code>ret</code></mark>) to <mark class="highlight-gray"><code>&quot;/bin/sh&quot;</code></mark></li></ol><p id="2ef5ab3d-4fab-4302-abee-5e54366c7699" class="">
+</p><p id="72f6ca00-6ec9-45ca-a5e8-843b58d70f7b" class=""><mark class="highlight-teal">Return Oriented Programming ROP</mark></p><p id="7d73fc3c-de0a-4cd4-acca-08a17dd47894" class="">ROP is a generalisation of ret2libc attacks, no code injection, overwriting <mark class="highlight-gray"><code>ret</code></mark>.</p><p id="f32a34f3-f066-422a-8d02-5648a441a728" class="">Instead of executing library functions, we execute sequences gadgets from the process memory <mark class="highlight-gray">→ Turing-complete functionality in x86.</mark></p><p id="8ab330b7-0c08-41ab-aa1b-b2a0cfd429f2" class="">Gadgets are short sequences of machine code instructions that end with a return instruction.<div class="indented"><p id="4a4354e0-cbff-4ef0-a127-1cd40885e14f" class=""><mark class="highlight-gray">Implementation of return function:  </mark><mark class="highlight-gray"><code>mov eip, [esp]; add esp, 4</code></mark><mark class="highlight-gray"> or just </mark><mark class="highlight-gray"><code>pop eip;</code></mark></p></div></p><p id="efbcda2b-f440-4f9a-b271-c7aa94b153b8" class="">At the end we must undo unwanted side effects.</p><p id="2c9d39a8-e67f-4bde-a3c5-b35596a633c1" class="">
+</p><h2 id="65a3bff1-908f-42c2-8fef-1b9778a01072" class="">2) Pointer Variables</h2><p id="39bfacc9-8522-4a10-ac74-f98e98500b9e" class=""><mark class="highlight-teal">Function Pointer Overflow</mark></p><p id="5c398ae7-5485-446b-ab13-8443fd77bb69" class="">C uses function pointers for callbacks.</p><p id="3c50ce82-8c3f-49a2-ad56-811031728454" class="">Callback function pointer can be in the stack or as an argument of this frame <mark class="highlight-gray">(</mark><mark class="highlight-gray"><code>funcp</code></mark><mark class="highlight-gray"> behind </mark><code><mark class="highlight-gray">ret</mark></code><mark class="highlight-gray">)</mark>.</p><p id="aa2afcb0-6b39-4669-b362-2a73f4da4968" class="">
+</p><p id="05ba0124-5180-4b2d-b811-9865bdd866fc" class=""><mark class="highlight-teal">Pointer Overflow</mark></p><p id="8e8589b7-5a15-48d0-87a2-43efb91d7069" class="">If pointer and its content both overwritable <mark class="highlight-gray"><code>*dst=buf[0]</code></mark><mark class="highlight-gray"> </mark>→ possible to change memory everywhere. </p><p id="79362157-352f-43fb-9763-4e2a4ebd951f" class="">
+</p><h2 id="2473ffa7-fa0c-4a8e-bf3c-2d6bb68d8a8c" class="">3) Stack Frame Pointer</h2><p id="202bd053-f983-4a34-913c-c47f5cfe08b9" class=""><mark class="highlight-teal">Off-by-One Overflow </mark><mark class="highlight-gray">(1-byte overflow)</mark></p><ol type="1" id="571afa8f-9991-47e5-aba4-e30f06d9341a" class="numbered-list" start="1"><li>overwriting <mark class="highlight-gray"><code>sfp</code></mark><mark class="highlight-gray"> </mark>→ buffer (on little endian architecture)</li></ol><ol type="1" id="537b44e3-2b27-4af5-9649-89c589fa9e5e" class="numbered-list" start="2"><li>buffer is arranged like a real frame but contains attack code</li></ol><p id="3de3fec2-1d36-43b7-a52c-41dbcf8d48d2" class="">
+</p><h1 id="8aad2b1b-713a-47cb-9728-ee2e32b47e03" class="">Memory Defenses</h1><p id="2feb9863-3c2c-462f-b4be-19e259faa454" class=""><mark class="highlight-gray">Buffer Overflows →</mark>  Canaries, Data Execution Prevention DEP →<div class="indented"><p id="f6fc591f-a0fe-4a7a-ac1a-890ecfa4aa92" class=""><mark class="highlight-gray">Return Oriented Programming ROP → </mark>Address Space Layout Randomization ASLR →<div class="indented"><p id="91b14f45-b253-46e2-8a9f-c499f95e4d3f" class=""><mark class="highlight-gray">Return/Jump/Data Oriented Programming</mark></p></div></p></div></p><p id="75119ec9-818e-4690-8fe8-acbdebfc4848" class="">
+</p><h2 id="b1455c21-80b0-48ae-a018-c5b50f0df936" class="">Canaries</h2><p id="fac38a33-e63f-413c-ab5d-71b9927f2cff" class=""><mark class="highlight-gray">= Stack cookie, Stack guard, ProPolice, GS-Flag</mark></p><p id="91ec82f6-0399-4456-b8b9-eca57bce9b0d" class="">Get checked on their integrity before returning from function.</p><figure id="ee98618d-a7df-4258-93d1-03f629ef174e" class="image"><a href="Memory%20Attacks%20&amp;%20Defenses%20ff3d302d63844b3088c631ebdc853f3c/Untitled%201.png"><img style="width:336px" src="Memory%20Attacks%20&amp;%20Defenses%20ff3d302d63844b3088c631ebdc853f3c/Untitled%201.png"/></a></figure><p id="fdcf9ec5-2bed-48ee-9507-b9951b558186" class=""><mark class="highlight-teal">Terminator Canary</mark>		always the same value &#x27;\0&#x27;, EOL, EOF, ... <mark class="highlight-gray">— can be known</mark> </p><p id="468839f4-1fa4-41a2-b21e-21ca93e792e6" class=""><mark class="highlight-teal">Random Canary</mark>		stored in global variable, can not be guessed <mark class="highlight-gray">— can be found in memory</mark></p><p id="ce5b1344-f07c-4060-874d-df8a76726421" class=""><mark class="highlight-teal">Random XOR Canary</mark>	string generated from control data XOR scrambled</p><p id="866d5bbd-963f-444c-a655-870d173a5cb7" class="">					can detect modification of <mark class="highlight-gray"><code>ret</code></mark><mark class="highlight-gray"> </mark>even if canary untouched</p><p id="6248f4c1-27b4-49fa-8ea3-f6f784926f00" class="">					<mark class="highlight-gray">— can be found or reverse engineered with data and hash algorithm</mark></p><p id="605ff212-96d9-4a21-b9de-60a87d82072f" class="">
+</p><p id="a6b2322f-6b71-4e09-8d51-75c43b27b297" class=""><mark class="highlight-teal">Problem</mark></p><p id="f7020ada-971a-4c68-b6c0-a54e52fd6559" class="">Lower performance.</p><p id="8d3ade6f-3294-4318-9cea-6600af43793f" class="">Protect only against contiuous overwrites of the stack: Can be defeated with function-pointer-overflow when pointer and its content get overwritten, like: <mark class="highlight-gray"><code>*dst=buf[0]</code></mark></p><p id="fa46e950-ad53-4c55-b094-eb4138229ad6" class="">
+</p><p id="3d5ea987-8ac1-4047-b598-ad64cb45e25f" class=""><mark class="highlight-teal">Solution: ProPolice Stack-Smashing-Protection</mark></p><p id="deb68898-61b0-405b-97dd-3a2b173f630c" class="">Rearranges stack to prevent function-pointer-overflow (puts pointers behind buffer variables).</p><p id="16b39ac0-f823-4803-8755-fec53d3cea32" class="">
+</p><p id="aa22e74d-c377-4cfe-adb1-70392524100c" class=""><mark class="highlight-teal">Problem</mark></p><p id="ef4996d5-c9c9-434e-948a-6d39f9a63b03" class="">Needs recompiling with a modified compiler.</p><p id="0dfd9e13-52c2-4e5a-a332-392f10cdfec3" class="">Possible attacks:</p><ul id="ec337b38-640e-4717-9852-59185f3f1158" class="bulleted-list"><li style="list-style-type:disc">Overwriting vtable pointer <mark class="highlight-gray">(pointers to virtual methods - vtables) </mark>with attack code address in stack <mark class="highlight-gray">- the canary integrity is only checked before function return</mark></li></ul><ul id="4a187cd5-f5a6-4a62-958d-6e9a598e5108" class="bulleted-list"><li style="list-style-type:disc">smashing canary, overwriting pointer to the exception handler with that of attack code (in heap) </li></ul><p id="b424197c-1e8b-433e-9a1f-6a865f7c7fd9" class="">
+</p><h2 id="b38ddcd2-01c3-4797-922e-0a47dfb18f3a" class="">Data Execution Prevention DEP</h2><p id="6f5d3244-f5a1-4f97-a8c8-e8c82ed02aca" class=""><mark class="highlight-gray">=  W</mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊕</mo></mrow><annotation encoding="application/x-tex">\oplus</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">⊕</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">P, NX, XD</mark></p><p id="231b11b2-b30b-4a3a-a2b4-fec888f1750b" class="">All writeable memory (stack and other data areas) is marked as non-executable.</p><p id="3db48f8f-44e7-45a0-b6c9-bcda2f7e675e" class="">
+</p><p id="93037baa-23f8-4cda-ab9d-98ca40c9fe63" class=""><mark class="highlight-teal">Problem: protect against code injection but not against code reuse</mark></p><p id="96349bf0-607e-4450-875c-3386dc6d3641" class="">Some languages need an executable stack.</p><p id="21ff1568-ce8e-4a49-b15a-37f7044529bd" class="">Can be bypassed by: ret2libc, ROP, attacks on memory mapping routine and heap possible, ...</p><p id="964bf322-6c27-45db-b30a-f1d9987321dc" class="">
+</p><h2 id="a3312a5c-b2f7-43f0-abf9-916cbe623df0" class="">Address Space Layout Randomization ASLR</h2><p id="34e7c952-3b5b-4335-a912-e9b50fee0a3d" class="">Make stack addresses, addresses of library routines, etc. unpredictable and different from machine to machine.</p><p id="d9b59553-70c7-4a25-886f-6d2074d23cbe" class="">Random base addresses for: system call IDs, instruction sets, most importantly pointers</p><p id="5252906f-6416-47db-9aea-c61fd165d5b4" class="">
+</p><p id="f8e15eca-46b7-49bd-84c7-8798c02f5070" class=""><mark class="highlight-teal">Problem: no protection against pointer leak</mark></p><p id="ce4e8c37-fb1d-443f-bedf-2cbc6487f2b2" class="">Address randomization does not change stack or library table layouts.</p><p id="8d0a80fb-6494-4758-900f-64bc5d82b9bb" class="">Only base shift must be guessed (or brute forced).</p><p id="60829669-3d0a-490f-b98a-aa86f8d1adae" class="">ROP is still possible by guessing the offset.</p><p id="1ff63c0e-0afc-4ec0-8e87-f47775cc2f8f" class="">
+</p><p id="510c29d4-8b95-4899-9d1e-b2d17b2fefac" class=""><mark class="highlight-teal">Possible Solutions</mark></p><p id="af3e8d36-320f-44c1-9467-39bb43248866" class="">getting rid of sequences ending with return instruction.</p><p id="c7da99f1-784f-46da-a7c1-e6381080857c" class="">Making sure that we return to where we came from after a return instruction.</p><p id="04258ec8-4393-48f4-86ea-76b1a2f548b2" class=""><mark class="highlight-gray">Can still be bypassed with Return/Jump/Data Oriented Programming.</mark></p></div></article></body></html>

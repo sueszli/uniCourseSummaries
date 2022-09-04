@@ -1,0 +1,677 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Teams und Gruppendynamik</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d40ca603-f07b-48f7-86d5-98495a9c533d" class="page sans"><header><h1 class="page-title">Teams und Gruppendynamik</h1></header><div class="page-body"><figure id="9c7fc98f-4071-496d-9ee3-059839b54a76"><div class="source"><a href="Teams%20und%20Gruppendynamik%20d40ca603f07b48f786d598495a9c533d/Merkblatt_Gruppendynamik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6b9e8f76-de8c-46d8-aa72-940a3a34eec0/Merkblatt_Gruppendynamik.pdf</a></div></figure><figure id="57b81434-a948-4368-b029-da6185e2e335"><div class="source"><a href="Teams%20und%20Gruppendynamik%20d40ca603f07b48f786d598495a9c533d/Merkblatt_Teamentwicklung.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/849b46a0-bf89-4c3e-a5df-5c5ba6341671/Merkblatt_Teamentwicklung.pdf</a></div></figure><figure id="76dd2820-e8e1-454b-81e3-7fe9acb9815d"><div class="source"><a href="Teams%20und%20Gruppendynamik%20d40ca603f07b48f786d598495a9c533d/Test_Belbin.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/24d36132-af6d-4927-b56b-720957fb1a49/Test_Belbin.pdf</a></div></figure><p id="8a72d272-8724-4c36-8e7a-0ff13a147e9c" class="">
+</p><p id="a74754c5-8b67-491d-8972-c0eea39c4b1a" class="">Verhalten von Menschen im Kontext zu einer Gruppe</p><p id="9997fab4-fea5-4e9b-adb0-6825e2c20b88" class="">Verhalten <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span> Umwelt / Gruppe</p><p id="26d0bd44-5d58-4d2c-a7b1-4ce7370d3bbb" class="">Es gibt Rollen</p><p id="0315fa1b-4249-4a05-9cef-0b9a6f677e4c" class="">Man unterscheidet zwischen Team und Gruppen</p><p id="dc626176-fb99-4b56-9c66-7b71d5a03f09" class="">
+</p><p id="df6accb4-bd46-484b-a3c1-512941e51e85" class=""><span style="border-bottom:0.05em solid">Stanford Prision Experiment (Zimbardo 1973)</span><div class="indented"><p id="dc9e7dbf-9c3d-4102-9643-6453beaa14b8" class="">Experiment musste abgebrochen werden weil Gefängniswärter gewaltig wurden weil sich das so aus der dynamik entwickelt hat. → Eigendynamik</p><p id="2eee70fe-2dd4-43bf-90f1-2453659ea9c1" class="">
+</p></div></p><p id="7f8c167b-9e1e-41b5-b270-4375b04b7698" class=""><span style="border-bottom:0.05em solid">Klaus Grave: Psychologische Grundbedürfnisse</span></p><p id="6a998d32-50f3-4e0c-b15a-06b6a63666fa" class="">Menschen sind soziale Wesen, Beziehungswesen<div class="indented"><ol type="1" id="12091b67-7efc-47db-a6fe-6494a8855fde" class="numbered-list" start="1"><li>Beziehung</li></ol><ol type="1" id="ec87ff0b-f72c-4e59-9a78-a1885e7b43d8" class="numbered-list" start="2"><li>Lustgewinn / Unlustvermeidung</li></ol><ol type="1" id="7594c85e-4520-43e7-8959-b8ebacff6265" class="numbered-list" start="3"><li>Orientierung und Kontrolle</li></ol><ol type="1" id="671243e3-2ae8-4da7-b754-554cf4e6111a" class="numbered-list" start="4"><li>Selbstwert-Steigerung / Selbstwert-Aufrechterhaltung</li></ol></div></p><p id="63fda895-41f5-46ba-9f5c-6602ba30f8ba" class="">Menschen sind bereit sich zu fügen, andere Dinge zu opfern als Preis für eine soziale Beziehung (peer pressure).</p><p id="99881dc8-3a52-45ef-abad-d280ab32ad61" class="">
+</p><p id="806d63d3-88be-49e4-940e-4891409ce068" class=""><span style="border-bottom:0.05em solid">Raoul Schindler: Rang-Dynamik</span><div class="indented"><p id="78cffdd2-c9c0-4d41-b278-6d8d0779835e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></span><span>﻿</span></span> = Gruppenleiter, braucht heroische Anteile, Durchsetzungsvermögen, empathisch, narzisstisch</p><p id="458936a4-805d-4e29-aa74-529df4ba646c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span></span><span>﻿</span></span> = Rapport Leader, halten zur Gruppe, Ressourcen Leader, Ethik Leader - eher neutrale Rolle</p><p id="8b9299ad-aa9d-4913-bc20-af4935c20da4" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span></span></span></span></span><span>﻿</span></span> = schwächstes Glied, folgt dem Alpha</p><p id="13c44dbb-7484-49f4-9383-4df2d5a83a01" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Ω</mi></mrow><annotation encoding="application/x-tex">\Omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Ω</span></span></span></span></span><span>﻿</span></span> = Störfaktoren, Gegenpol zum Alpha</p></div></p><p id="3b881742-5686-4a1a-9cd2-8df0a70b4582" class="">
+</p><p id="3c91a665-ee37-4f0b-8b0d-703f8396f24a" class=""><span style="border-bottom:0.05em solid">Gruppenarten</span><div class="indented"><ul id="7a6bcd20-0a69-4194-9ccb-6c4278793bf4" class="bulleted-list"><li style="list-style-type:disc">Gruppe - Menge an Leuten</li></ul><ul id="e220b1be-3e29-436d-8681-a912bf978102" class="bulleted-list"><li style="list-style-type:disc">Arbeitsgruppe - Gemeinsame Arbeit</li></ul><ul id="d0428421-8191-431e-824f-8d2fb2929a87" class="bulleted-list"><li style="list-style-type:disc">Pseudo-Team - glaubt durch Team-Entwicklungsstufen gegangen zu sein</li></ul><ul id="6c34219e-6c67-4be1-b683-78ed97cf7d93" class="bulleted-list"><li style="list-style-type:disc">Team - Ist durch Team-Entwicklungsstufen gegangen → kann zu Hochleistungsteam werden<p id="dd18e582-aeb8-4aa2-8cbb-28162443e5e0" class="">Zeichnet sich aus durch:<div class="indented"><p id="550c42d7-e8a8-4fb8-acea-175e669fda16" class="block-color-gray">&quot;Was ist unsere Aufgabe?&quot;</p><p id="d6b7d956-4471-4a34-946e-13fc99f8e9ef" class="block-color-gray">&quot;Wie sollen wir uns organisieren?&quot;</p><p id="da3c4a08-fdd3-4032-b6f7-bd4d8314c2ba" class="block-color-gray">&quot;Wer hat die Verantwortung?&quot;</p><p id="c3709d87-f1b5-48f7-a721-6fb06835f68a" class="block-color-gray">&quot;Wer kümmert sich um unseren Erfolg?&quot;</p><p id="3fcae2ec-5397-4467-b1ce-64a1b5567d11" class="block-color-gray">&quot;Wie lösen wir Probleme?&quot;</p><p id="5685c65b-56c2-4a2d-a587-7bed8d7c4b49" class="block-color-gray">&quot;Wie passen wir zu anderen Gruppen?&quot;</p><p id="c643c72b-4765-4757-b5c1-f60bf205c554" class="block-color-gray">&quot;Vergünstigungen für Mitglieder?&quot;</p></div></p></li></ul></div></p><p id="488a4294-b56f-45b3-84ba-224964b2fdd0" class="">
+</p><p id="c7da110f-cd91-4d4c-b4d0-db5ac202af4e" class=""><span style="border-bottom:0.05em solid">B. W. Tuckman: Team-Entwicklungsphasen</span></p><p id="4355dfcb-c517-4967-8460-336c27371c87" class="">Teamwork Kreislauf <mark class="highlight-gray">1 → 2 → 3 → 4 → 1 → 2 ....</mark><div class="indented"><ol type="1" id="c1166001-51d4-4e56-b971-09164b2f3a14" class="numbered-list" start="1"><li>Forming (Kuschelphase): Begegnen, freundliches aufeinander zugehen, suche nach Gleichheit</li></ol><ol type="1" id="ed91c657-2774-4916-be62-c701964558dd" class="numbered-list" start="2"><li>Storming: Offenbarwerdung der Differenzen und Konflikte </li></ol><ol type="1" id="a18efda3-bcac-47da-8e8a-3cc154d12a33" class="numbered-list" start="3"><li>Norming: Es werden basierend auf Konflikten Normen festgelegt (unausgesprochene Gesetze)</li></ol><ol type="1" id="72586c6c-c57d-4889-b3c0-5f6274747d31" class="numbered-list" start="4"><li>Performing: Team kann gemeinsam performen</li></ol></div></p><p id="cb4e1c22-866f-445c-b5e3-53ffba2d835f" class="">
+</p><p id="eeb0bae7-d064-4bd9-a3d5-0c1457ef8962" class=""><span style="border-bottom:0.05em solid">M. Belbin Rollen</span><div class="indented"><p id="9fcc1819-6f06-4912-af9a-87f04e2ba7c4" class="">Forscher<div class="indented"><ul id="e580ced5-3617-4f19-8ccc-d49c411f0c58" class="bulleted-list"><li style="list-style-type:disc">Überzeuger: Holt Informationen und Vertritt Grupper</li></ul><ul id="ff828f66-758a-4eab-91b6-2c1293889b47" class="bulleted-list"><li style="list-style-type:disc">Bewerter: Baut Prototypen und prüft aktuellen Stand</li></ul></div></p><p id="a12be271-636a-4493-9bf5-0474254115b2" class="">Organisatoren<div class="indented"><ul id="190c6f17-e968-4d47-8b58-6ddd333addd0" class="bulleted-list"><li style="list-style-type:disc">Entscheider: Organisation, vereinbart Termine und Ziele</li></ul><ul id="bd09421c-f84e-4014-ad26-11f0fb515185" class="bulleted-list"><li style="list-style-type:disc">Macher: Regelmäßige Arbeite, Durchhaltevermögen</li></ul></div></p><p id="ccb49939-49b5-484a-a520-91a750bf6337" class="">Berater<div class="indented"><ul id="915ef601-342b-4d03-b9ee-10e408e7d8cc" class="bulleted-list"><li style="list-style-type:disc">Kreativer: Viele Ideen, Visionär</li></ul><ul id="2f6bf307-e0e3-4cd3-bb53-db854b40e59f" class="bulleted-list"><li style="list-style-type:disc">Berater: Holt Ratschläge, sehr vorsichtig, detailorientiert</li></ul></div></p><p id="d2f69242-bc29-4956-9c12-54832a0b507e" class="">Linker: Verbindet alle Rollen miteinander → Verknüpfungsarbeit</p><p id="0846ccfc-5687-4538-aebc-cd6ea76510c0" class="">Controler<div class="indented"><ul id="42f92537-7086-4e4b-95bc-759e0632a862" class="bulleted-list"><li style="list-style-type:disc">Bewahrer: Rückgrat des Teams, achtet auf Ausgeglichenheit des Teams, Gegenspieler zum Kreativen, Beschützt Team, Gegen Veränderungen</li></ul><ul id="6770741d-09c4-421d-a707-f6252da307aa" class="bulleted-list"><li style="list-style-type:disc">Prüfer: detailorientiert</li></ul></div></p></div></p><p id="25146a4f-7eab-41ef-853b-92e9e82ca71e" class="">
+</p></div></article></body></html>

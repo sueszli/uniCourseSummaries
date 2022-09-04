@@ -1,0 +1,704 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3 - Testen I: Definition, Vorgehensmodelle, Planung, Äquivalenzklassen, Grenzwerte</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="75901c8c-0e28-4b07-9227-26e591304f8a" class="page sans"><header><h1 class="page-title">3 - Testen I: Definition, Vorgehensmodelle, Planung, Äquivalenzklassen, Grenzwerte</h1></header><div class="page-body"><p id="9d5ec5db-de1b-4681-8beb-0425776b9ec0" class="">
+</p><nav id="ae7d358f-24e6-4965-b013-b897dff94e24" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bd948af8-570a-4507-a6a0-13d673572115">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3a1b8cef-81f4-4def-ae29-81330b69b544">Testen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7f22c366-e184-4e37-bd0b-0d284fa24130">Fehler, Verifikation, Validierung</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0b5ad5e5-cb84-4ee2-ba0e-26da9f8d7067">Testen im Vorgehensmodell</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb111059-c9cf-408e-823d-4c03ccb8d0fc">Testen in traditionellen Vorgehensmodellen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3d80c6ec-c7ff-478a-99c3-4e4d745e0b67">Testen in agilen Vorgehensmodellen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cc54e154-5e80-47e8-bc96-09e4dce4ea14">Testprozess, Testplanung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1c3a2955-400c-449b-808a-9bf2df8cd5a6">Testprozess</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2c5ff5a6-38eb-4eb0-ac9b-bb2a5c9d7d29">Aufbau von Testfällen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#00266865-2978-4ddc-90db-c3f31359ffdc">Äquivalenzklassen, Grenzwerte</a></div></nav><p id="6ff9a0cf-dd82-470e-835e-04f12a2edca5" class="">
+</p><h1 id="bd948af8-570a-4507-a6a0-13d673572115" class="">Definition</h1><h2 id="3a1b8cef-81f4-4def-ae29-81330b69b544" class="">Testen</h2><p id="5b54f8a0-4489-4fd0-be44-102b705ceed3" class=""><mark class="highlight-blue">Testen</mark><div class="indented"><p id="b582ad06-03c3-40b1-990e-130f82ec44a2" class="">Analytische QS-Methode</p><p id="ed129429-f79c-4f8f-9adf-afa38ee498c1" class="">Konstruktiver Prozess: Produkt wird nicht “zerstört” - Fehler finden spart Fehlerkosten.</p><p id="9b5771cc-a446-4bf6-bbdc-fd84076c035b" class="">Ausführen von Programm mit der Absicht: <div class="indented"><p id="b93ef1de-893b-43e8-8ea3-ed480af03f15" class="">– Fehler finden, verhindern
+– Vertrauen, Zuversicht bezüglich Softwarequalität bekommen
+– Informationen für Entscheidungen bereitstellen</p></div></p><p id="6140e03c-258c-46b0-a69f-7d07c57bfeb3" class="">Nicht mit der Absicht:<div class="indented"><p id="70003548-3f71-46bb-baa7-760e4662a978" class="">– Lokalisierung und Entfernung (Debugging)
+– Nachweis von Fehlerfreiheit (Formaler Korrektheitsbeweis)</p></div></p><p id="eee9c4c6-0dad-4dc7-b61b-20c5217aeae7" class="">Überprüfung vom Laufzeitverhalten von Systemteilen:<div class="indented"><p id="697e624b-00e3-4224-b9a0-d3de5ec2509d" class="">– Funktionen, Modelle, Qualitätsmerkmale
+– Ausgangsbasis: Anforderungen, Umgebung, Argumente, innere Systemstruktur</p></div></p></div></p><p id="1acf3f8c-e14d-4f4d-854e-832f5d2910a2" class="">
+</p><p id="2a8edda8-b258-41cc-b6ec-df63ce8df970" class=""><mark class="highlight-blue">Testen </mark><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>↔</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.330183em;vertical-align:0em;"></span><span class="mrel sizing reset-size6 size5">↔</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-blue"> Qualität</mark><div class="indented"><p id="6fd21db7-3167-4ba3-b05f-ab9954258977" class="">Umsetzung von Qualität benötigt:<div class="indented"><p id="41dc1f15-30a3-4276-bff9-65daf42c0459" class="">– Testbare Anforderungen (Definition von Funktionen, Qualitäten)
+– Testbare Produkte (zur Verfolgung der Entwicklung von Anforderungen)</p></div></p></div></p><p id="a6d7092c-4222-4061-a08a-3fe0728d0c1c" class="">
+</p><p id="8f186798-4383-46b8-b18a-9c9c47f3928c" class=""><mark class="highlight-blue">Test-Driven Development TDD</mark><div class="indented"><p id="74f2c828-5bbe-4fc9-8702-c0f90fe03461" class="">– Testfälle <em>vor </em>der Implementierung erstellen für automatischen Retest
+– Früher Review von wichtigen Akzeptanztestfällen</p></div></p><p id="aa4f58d4-257e-429e-8635-a20f80a2bf8b" class=""><mark class="highlight-blue">Test First Ansatz</mark><div class="indented"><p id="a581962b-ffb1-42cb-bd4f-169ceafe1b7a" class="">– Spezifikation vor detaillierten Entwurf testen</p></div></p><p id="22841362-ead6-4ba4-92b2-c7d9545da965" class="">
+</p><h2 id="7f22c366-e184-4e37-bd0b-0d284fa24130" class="">Fehler, Verifikation, Validierung</h2><p id="0f0bc89d-7b07-4692-b4c7-98d1e520e4f3" class=""><mark class="highlight-blue">Fehler</mark><div class="indented"><p id="f5e36293-ed78-4f9e-abe4-dceba5fd8661" class="">Abweichung von Spezifikation</p><p id="a9d475b6-ef18-4514-be80-a764a59ca3d8" class="">Abweichung von Nutzer-Anforderungen</p></div></p><p id="614a0c91-3d13-4d5a-be24-e0873c6f6bd0" class=""><mark class="highlight-blue">Verifikation</mark><div class="indented"><p id="601494c0-00d9-4cdf-9377-80081b4bc1d1" class="">Test gegen Spezifikation (Pflichtenheft, ...)</p><p id="b46f4279-5e50-4e99-9932-b2eb5373670f" class="">Nach jeder Phase durchführen</p><p id="a3b9f5a1-0b92-4f8a-8022-39437a6fe3e8" class=""><mark class="highlight-gray">“Bauen wir das Produkt richtig?”</mark></p></div></p><p id="0ae6cf7a-7495-47ac-a196-855abb811c65" class=""><mark class="highlight-blue">Validierung</mark><div class="indented"><p id="f76be1ce-531b-44ff-a01c-3fb5e2a388ea" class="">Test gegen Nutzeranforderungen<div class="indented"><p id="b3668486-9a48-4801-b4e2-da80c2dfcb66" class="">Zu Beginn: Validierung des Pflichtenhefts, der Spezifikation</p><p id="224005be-c3c3-4cc7-83e1-d861c1203d40" class="">Am Ende: Validierung der erstellten Software</p></div></p><p id="8ffacbfd-0a89-474b-ae7b-83b6d4baac06" class=""><mark class="highlight-gray">“Bauen wir das richtige Produkt?”</mark></p></div></p><figure id="b63f92ad-05a2-420f-bce3-f3a25b8e7c08" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled.png"><img style="width:132px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled.png"/></a></figure><p id="58b283a6-26b9-4f63-9d9f-b86ae0517397" class="">
+</p><p id="558badf2-22ca-4eb9-b387-e81e23180730" class="">
+</p><h1 id="0b5ad5e5-cb84-4ee2-ba0e-26da9f8d7067" class="">Testen im Vorgehensmodell</h1><h2 id="bb111059-c9cf-408e-823d-4c03ccb8d0fc" class="">Testen in traditionellen Vorgehensmodellen</h2><p id="f3678402-2b5a-487c-8abd-dcbde5b84209" class=""><mark class="highlight-blue">Traditionelles Testen im V-Modell</mark></p><figure id="5aea78e7-6f6e-4565-9409-91fe066f5318" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%201.png"><img style="width:192px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%201.png"/></a></figure><p id="5bb77d49-67a2-4253-bf90-73408a1a0f4f" class=""><mark class="highlight-blue">Testen in traditionellen Vorgehensmodellen</mark><div class="indented"><p id="6207a8d1-db07-4df4-8618-106f6e15b6dd" class="">Lange Zyklen</p><p id="9ec218b9-3aeb-452d-98b9-5c22e10b7b8c" class="">Schwierige Fehlersuche</p></div></p><figure id="e89076f3-fd82-4a0c-ac98-a2cf0baa4d91" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%202.png"><img style="width:192px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%202.png"/></a></figure><p id="697ea136-1480-499b-afb7-4b47dfb56610" class="">
+</p><h2 id="3d80c6ec-c7ff-478a-99c3-4e4d745e0b67" class="">Testen in agilen Vorgehensmodellen</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7ad20f1d-3420-4c4d-86f2-c76dc5ada46c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Siehe 6. Vorlesung für vollständige Version</div></figure><p id="cd9ae0c3-30cb-4fef-9819-c40c5ad0bd43" class="">
+</p><p id="083d6d4f-2da5-4d90-9a8c-63e9e31b5417" class=""><mark class="highlight-blue">Agiles / flexibles Testen (zB in SCRUM)</mark><div class="indented"><p id="d91bb366-0268-4469-b3a5-db6a24b2d041" class="">Kurze Zyklen</p><p id="5f775331-dc95-4399-86fc-da9ffa47976d" class="">selbstorganisierende Teams</p><p id="ec7782e4-5b7e-4e8b-9b4a-17ecf12340e5" class="">Schreiben von Beschreibung vor Umsetzung des Source-Codes</p></div></p><figure id="16d111fb-a863-46ce-8734-7a3aaf36381f" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%203.png"><img style="width:192px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%203.png"/></a></figure><figure id="58131c8d-f7ca-4c9a-8033-88bdef79d092" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%204.png"><img style="width:192px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%204.png"/></a></figure><p id="53d25251-7dde-4502-81c2-6ad544ce5a7d" class="">
+</p><p id="5aa3ea30-f357-4c35-ab7f-69de4f53f1b3" class=""><mark class="highlight-blue">Test Driven Development TDD</mark><div class="indented"><ol type="1" id="cc014e62-9dde-4526-97f7-7d5f5c29365b" class="numbered-list" start="1"><li><mark class="highlight-teal">Think</mark><p id="3fbde260-db8f-45f4-aefa-4b9fe72a01e3" class="">– Auswahl der Anforderungen die implementiert werden sollen
+– Testfall-Spezifikation</p></li></ol><ol type="1" id="08a99a9f-2e89-4f94-8350-f662b5470120" class="numbered-list" start="2"><li><mark class="highlight-teal">Red</mark><p id="310f8cfb-95f1-4a50-8fe3-e5d924c33b08" class="">Implementierung und Ausführung der Testfälle<div class="indented"><p id="c0f365c6-377b-4bdd-aedc-68fbb989b742" class="">– Alle Tests müssen fehlschlagen</p></div></p></li></ol><ol type="1" id="e618c8f2-5121-41bf-8925-39fe30d14606" class="numbered-list" start="3"><li><mark class="highlight-teal">Green</mark><p id="9552161d-a1f0-4f30-88a6-5d6e824efc21" class="">Implementierung der Komponenten und Klassen und Ausführung der Testfälle<div class="indented"><p id="6d64ea9f-2902-4e45-a353-545d1353ff68" class="">– erfolgreich → weiter bei Schritt 4, Refactor
+– schlägt fehlt →  weiter bei Schritt 3, Green</p></div></p></li></ol><ol type="1" id="6a72e954-fe99-4395-97ed-396ea915815b" class="numbered-list" start="4"><li><mark class="highlight-teal">Refactor</mark><p id="8dea0724-0a72-4c2d-aea6-0f131eedf17d" class="">Optimierung der Implementierung ohne Änderung der Funktionalität, Ausführung der Testfälle.<div class="indented"><p id="3d7b05ca-0f2e-4a81-8b53-fe429f15e453" class="">– Testfälle dürfen nicht fehlschlagen.
+– Auswahl der nächsten Anforderung (weiter zu Schritt 1)</p></div></p></li></ol></div></p><figure id="75a344d4-47da-402c-991b-9d38dd4f5edd" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%205.png"><img style="width:60px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%205.png"/></a></figure><p id="6ec0f82f-1dfa-4ff5-a9d3-ef9f70e303c0" class="">
+</p><p id="16fb7765-9450-4479-a432-11d1c7431b76" class=""><mark class="highlight-blue">Continuous Integration and Test (CI&amp;T Environment)</mark><div class="indented"><p id="9a1f1431-32b8-47d6-ad9e-33a73e3d3da4" class="">= ein System, das bei Änderungen (neue Version im Versionsverwaltungssystem) automatisch die zusammenhängenden Tools (CI Pipeline) nutzt um eine Routine automatisch durchzuführen:<div class="indented"><p id="f3f73291-81fd-4b98-af16-3ad4073fd67e" class="">– testen, Metriken berechnen (zB Testabdeckung)
+– builden
+– zusammenführen (integrating)
+– Testbericht erstellen im Dashboard und an Teammitglieder schicken</p></div></p><p id="cdac5fc6-05ec-4d98-b0a1-9b0a5abc073e" class="">In maven ohne pipeline zB mit ”Cruise Control“, ”Apache Continuum“ und Bug-Tracking tools.  </p></div></p><figure id="030ec1d5-9d0c-49ee-aa61-3b2a3a12ac1c" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%206.png"><img style="width:144px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%206.png"/></a></figure><p id="f4d7eb2b-7b83-4593-853f-00249884cb27" class="">
+</p><p id="6a74f47d-474e-4c2e-8fd1-fc1ad7ae8663" class=""><mark class="highlight-blue">Ziel von Testautomatisierung</mark><div class="indented"><p id="bbd4e736-c6fe-49ad-ba84-91968b35c241" class="">– repetitive manuelle Tätigkeiten reduzieren
+– Die Effizienz des Testens zu steigern: Hohe Anzahl an Tests in angemessener Zeit ausführen
+– Tests durchführen, die man nicht manuell durchführen kann (z.B. Last-Tests)
+– Automatisch Reports der Testergebnisse generieren</p><p id="d6ca9e1c-2e9e-440d-9d98-b3d0013f8ba1" class="">
+</p></div></p><p id="444eec7e-299b-4c0b-b679-e311f4e9d9ac" class="">
+</p><h1 id="cc54e154-5e80-47e8-bc96-09e4dce4ea14" class="">Testprozess, Testplanung</h1><h2 id="1c3a2955-400c-449b-808a-9bf2df8cd5a6" class="">Testprozess</h2><p id="cc8c3be5-9562-4b41-a5a7-d3db747b9e74" class=""><mark class="highlight-blue">Testprozess Phasen</mark><div class="indented"><p id="5eb040d9-4180-4a90-8e53-7792a6c3e08f" class="">Ist eingebettet in Projektplan</p><ol type="1" id="edac48a9-b25e-48e1-9220-fa63d9e11452" class="numbered-list" start="1"><li>Planung &amp; Steuerung <mark class="highlight-gray">(Vorbereitung von “Test-Masterplan”)</mark><p id="c501bbac-87da-4203-b246-333723a6fb1d" class="">von Teststufen: zB Modultest, Integrationstest, Akzeptanztest</p><p id="b393945b-e10a-4926-823f-c55ad66ddf43" class="">von Testmethoden: Test von funktionalen Anforderungen, nicht-funktionalen Anforderungen</p></li></ol><ol type="1" id="9c0fd4d3-964e-4124-88e2-92d2bb620e55" class="numbered-list" start="2"><li>Analyse / Design <mark class="highlight-gray">(Spezifikation)</mark></li></ol><ol type="1" id="a177ee7d-4972-415c-b4da-5db93fc8d020" class="numbered-list" start="3"><li>Realisierung und Durchführung <mark class="highlight-gray">(Testläufe)</mark></li></ol><ol type="1" id="dcb7437c-bb71-4a50-a935-a96bdb250eec" class="numbered-list" start="4"><li>Auswertung und Bericht <mark class="highlight-gray">(Testergebnisse)</mark></li></ol><ol type="1" id="4dfc75e2-caed-4d0b-8b43-87cf1e3d0cd0" class="numbered-list" start="5"><li>Abschluss <mark class="highlight-gray">(zB Archivierung)</mark></li></ol></div></p><figure id="06b96b92-fec4-473f-a35f-af0339c29f7e" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%207.png"><img style="width:96px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%207.png"/></a></figure><p id="1773e698-44f0-4802-beb7-f99b19edaa35" class="">
+</p><h2 id="2c5ff5a6-38eb-4eb0-ac9b-bb2a5c9d7d29" class="">Aufbau von Testfällen</h2><figure id="dd40f3c2-b69c-4346-acec-16a9a8055648" class="link-to-page"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Beispiel%20Dreieck%20dd40f3c2b69c4346acec16a9a8055648.html">Beispiel: Dreieck</a></figure><p id="f8d84ab1-110a-48f6-b122-f06090ea082f" class="">
+</p><p id="cf1ed7c5-30bf-484a-bc57-33e869c07a09" class=""><mark class="highlight-blue">Testfall</mark><div class="indented"><p id="76fd101a-13c7-4abf-a866-3f743215a39e" class="">Tests bestehen aus einer Menge Testfälle (<mark class="highlight-teal">= Testsuite</mark>)</p><p id="314a85e5-5159-458f-abd0-6e1977ff56cd" class="">Testfall bestehen aus einer Menge (V, E, A, R)<div class="indented"><p id="257f3ebc-5753-41b0-826e-ca350a52dcdc" class=""><strong>V: </strong>Vorbedingungen (zB Systemzustand, DB-Zustand)</p><p id="f9faf6c9-27bd-46da-aa9e-fa266b8ee131" class=""><strong>E:</strong> Eingabewerte</p><p id="f8ebc6bb-24cb-40ee-ad2b-5361e527309c" class=""><strong>A: </strong>Aktionen zur Eingabe der Werte</p><p id="95afb15e-e18e-49ec-b9fe-9eb74d5c2039" class=""><strong>R:</strong> Erwartete Ergebnisse (Orakel)</p></div></p></div></p><p id="dc3c1651-1424-43ef-86ac-2971b89d7241" class=""><mark class="highlight-blue">Testfall Typen</mark><div class="indented"><ul id="c137af43-65d8-4945-ab71-1e843272ee10" class="bulleted-list"><li style="list-style-type:disc">NF 	Normalfall	soll bei korrekter Implementierung funktionieren</li></ul><ul id="3ad2308d-f480-436d-b134-43486c343969" class="bulleted-list"><li style="list-style-type:disc">SF 	Spezialfall 	Grenze zwischen Normalfall und Fehlerfall</li></ul><ul id="44096871-f1be-4337-b316-9be99731b19f" class="bulleted-list"><li style="list-style-type:disc">FF 	Fehlerfall		soll bei korrekter Implementierung Fehlermeldung werfen</li></ul><p id="fc799d33-3c48-4fcd-bd7f-dd7e2d0c8158" class="">Auswahl von Testfällen:<div class="indented"><p id="93decc4b-d103-4baf-9d58-9a2438dd628f" class="">Minimale Anzahl, Qualität, Risiko der Systemfunktionalität</p></div></p></div></p><figure id="8dca3f05-d098-4a72-9b8b-24d69c0c4aba" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%208.png"><img style="width:144px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%208.png"/></a></figure><p id="32376296-926b-4a64-8072-66eaa7fa2f02" class="">
+</p><p id="82452855-fb9c-4d28-bc0a-3b7d7dc6b11a" class=""><mark class="highlight-blue">Testerfolg</mark><div class="indented"><p id="a9ddbc0d-4dfd-4996-ac6a-74e9733360a9" class="">Wenn Fehler gefunden wird</p><p id="5cd711ce-e41b-4b25-a6a0-d3ae98fd9d12" class="">Tests die keine Fehler aufdecken bieten Information über <em>Produktqualität </em>durch <em>systematische Testüberdeckung</em></p></div></p><p id="17e87e4b-8e54-46a5-b316-c3227b4ab84b" class="block-color-gray">Wert von Fehlern / Testfällen → Value based Testing<div class="indented"><p id="981a6790-521a-45b5-bb74-c4394fe94eb3" class="">Value-Based-Testing beruht darauf dass nicht alle Testfälle bzw. alle Fehler gleich viel Wert sind.</p><p id="17aaf1fc-b85f-4215-aeae-acac6839cdd9" class="">Requirements-Based	Welche Anforderungen bringen den meisten Mehwert für Kunden?</p><p id="5d6b0576-2d84-4c8c-af10-86853b267cdb" class="">Risk-Based			Welche Risiken gefährden den Nutzen am meisten? (zB dependencies)</p><p id="5faee0b9-ff1d-44c5-aaf0-343801ae5e74" class="">Test Case Selection		Testfälle finden die all diese Risiken und Nutzen abdecken</p></div></p><p id="b00bf886-e987-40a1-9154-88896eb05621" class="">
+</p><h2 id="00266865-2978-4ddc-90db-c3f31359ffdc" class="">Äquivalenzklassen, Grenzwerte</h2><p id="501b6103-ad5c-454b-951c-e34ad63509d2" class=""><mark class="highlight-blue">Äquivalenzklassen-Zerlegung</mark><div class="indented"><p id="ed1b5bb7-0314-4a4c-805f-19e1d837ed28" class="">Zerlegung von Datenmenge (Input oder Output) in Untermengen (Klassen) basierend auf erwartetes Verhalten<div class="indented"><p id="f2c282c7-31e1-414d-a1e0-160ff5b15078" class="">Klassen müssen äquivalente Ergebnisse und Wirkungen produzieren</p><p id="06b33fc9-b623-4ee2-a456-249bcc4b01f5" class=""><mark class="highlight-gray">Dadurch sinkt Testaufwand</mark></p></div></p><p id="318b62da-9bd6-42f1-8efe-ff4e0e0652f9" class="">Jede Klasse muss 1x getestet werden</p></div></p><p id="36e14b1b-9c8e-4a0a-8016-0fb7aeae8e02" class=""><mark class="highlight-blue">Äquivalenzklassen-Zerlegung: Schritte </mark><div class="indented"><ol type="1" id="c9b0ef64-492e-46b7-98e9-ae87a5ff9f40" class="numbered-list" start="1"><li>Zu testende Funktion bestimmen</li></ol><ol type="1" id="a7ec8aa5-629e-4490-891f-fa211a654a38" class="numbered-list" start="2"><li>Eingabe-Vektoren (Faktoren) finden (A, B, C, ...):<p id="3ae6c2d0-4e2c-487b-8559-2ac83db09e51" class="">explizit: Parameter</p><p id="0f62104e-7bb9-44b8-9524-fbb47da1d265" class="">implizit: globale Variablen, Systemzustand, Datenbankzustand, ...</p></li></ol><ol type="1" id="3fa87689-fc78-4be9-9b46-df3771c18821" class="numbered-list" start="3"><li>Für jeden Faktor seine gültigen, ungültigen Äquivalenzklassen finden und aus jeder Klasse einen Wert wählen<p id="9cc09ffb-9999-4a00-b266-60d9c6a848bf" class="">A → A1, A2, ...</p><p id="614bab0f-77e4-4778-a662-4c950e81e3ff" class="">B → B1, B2, ...</p></li></ol><ol type="1" id="fd7ef770-00ac-4197-a5e1-482da5462f7a" class="numbered-list" start="4"><li>Eine Kombination wählen<p id="6264d502-827d-4f5f-842a-975245c19232" class="">die Wahl bestimmt die Intensität</p></li></ol></div></p><p id="e8da05f9-9798-4ead-960f-ae80ece25883" class="">
+</p><p id="fac728c5-e3a7-492d-9266-cdf4377b5d37" class=""><mark class="highlight-blue">Grenzwertanalyse</mark><div class="indented"><p id="3af3903e-454a-49d9-a65b-5e710dd0fcb9" class="">Erweiterung der Äquivalenzklassenzerlegung für bessere <em>Überdeckung</em></p><p id="4f6635a1-c584-49e2-bc61-69a70f53b093" class="">Grenzwerte für jede Klassengrenze und dazu je ein Testfall</p><hr id="d7b14b49-8fef-46e7-83e6-b1bf1568c8b9"/><p id="9c408195-b0f6-4c5c-a43f-947e61c13801" class="">Ist eine Vertiefung der Äquivalenzklassenzerlegung, bei der gezielt die Ränder (= Grenzwerte) von den einzelnen Klassen überprüft werden, da dort am häufigsten Fehler (zB falscher Vergleichsoperator, oder Index one-off Fehler) auftreten.</p></div></p><figure id="a279ea1e-483a-4256-8bec-b572411f5848" class="image"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%209.png"><img style="width:144px" src="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Untitled%209.png"/></a></figure><p id="91c53dab-e631-4b9d-bac8-f1a7b53d5c88" class="">
+</p><p id="65e15f84-905c-4b78-8c8b-220a51e3302d" class=""><mark class="highlight-blue">Beispiele</mark><div class="indented"><figure id="d83866a8-7338-4ba8-a861-f58582aa40fb" class="link-to-page"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Beispiel%20Alter%20+%20BMI%20d83866a873384ba8a861f58582aa40fb.html">Beispiel: Alter + BMI</a></figure><figure id="018990c5-8565-4fdb-93ce-a6a37cc1494a" class="link-to-page"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Beispiel%20Autoversicherung%20018990c585654fdb93cea6a37cc1494a.html">Beispiel: Autoversicherung</a></figure><figure id="e818f9b3-b7f7-460d-9e0a-6d4efb4e86ab" class="link-to-page"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Beispiel%20Porto%20e818f9b3b7f7460d9e0a6d4efb4e86ab.html">Beispiel: Porto</a></figure><figure id="517e9f87-cd32-453d-8776-70ad67ec8001" class="link-to-page"><a href="3%20-%20Testen%20I%20Definition,%20Vorgehensmodelle,%20Planung%2075901c8c0e284b07922726e591304f8a/Beispiel%20String%20Methode%20517e9f87cd32453d877670ad67ec8001.html">Beispiel: String Methode</a></figure></div></p></div></article></body></html>

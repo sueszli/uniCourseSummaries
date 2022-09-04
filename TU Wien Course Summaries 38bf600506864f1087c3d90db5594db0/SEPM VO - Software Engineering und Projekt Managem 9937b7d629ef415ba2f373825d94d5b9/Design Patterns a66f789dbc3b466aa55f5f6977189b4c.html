@@ -1,0 +1,791 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Design Patterns</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a66f789d-bc3b-466a-a55f-5f6977189b4c" class="page sans"><header><h1 class="page-title">Design Patterns</h1></header><div class="page-body"><p id="3cbb95ba-9cdd-483f-b0f6-eb6e66cd301b" class="">
+</p><nav id="05bda650-4902-49c9-8770-5de192f31b71" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99bd8425-217d-4322-b42d-f211fe5713d3">Motivation, Best Practice</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c5d5b5ee-e229-47e7-8db9-cb595d2841b8">About Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1a78ac90-80d2-4914-bc08-f326f743a54d">Usage in Software Development</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4caf0e75-b802-447c-b474-6367f43a2edc">Pattern Types: Architectural Patterns (Overview)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#76e04b9b-40f0-4cc5-916d-e1e8f48dbf7c">Fundamental Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#532341c5-1b0c-4f46-9740-b53320c37404">○ Interface</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#15afc0b2-f965-46fe-9dc3-5c25d496e043">○ Delegation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2bd3de54-5f96-42a8-a025-e59a56c344f5">○ Immutable</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#85c38df8-6541-4b39-9fcd-55215b5ee0d0">Creational Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6cee4e36-62d6-4d11-b7c3-90f29fbf3995">○ Singleton </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1673e93e-e18c-4910-9559-85fda91cb7d2">○ Factory </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1f5ba959-2a6d-4ff4-beab-fdface9ad070">○ Abstract Factory </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0798d076-cdc8-4d63-9c2d-bc727a52b838">Structural Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4482d2f3-6f43-47b4-a096-038777bfecd5">○ Facade / Facet</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d87e697a-a250-4e04-847e-f00e6328f9fc">○ Adapter / Translator</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ed611a53-7559-43dd-b0ec-de6fcb6a0363">○ Proxy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f993c9c8-05ec-41f9-933d-aacabe3360ed">○ Inversion of Control IoC</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#edaeb5a8-b222-4781-b441-7e4ad2076444">Behavioral Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#117970ab-6064-4f1b-93ae-db45a71bcaed">○ Observer</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#161109e7-318a-4e32-81e4-fbd87802a2a7">○ Decorator / Wrapper</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#43e8aa28-f5bf-4039-bcfa-f015f96c3163">○ State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4aa4c47a-4179-4c60-acbb-25196f4fb372">○ Strategy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#57ba11d5-3108-42a6-a5e6-d4ca02817993">○ Chain of Responsibility</a></div></nav><h1 id="99bd8425-217d-4322-b42d-f211fe5713d3" class="">Motivation, Best Practice</h1><ul id="1db862c8-8c94-4c41-a2fb-f42b55530a6e" class="toggle"><li><details open=""><summary>Patterns in an industrial scenario</summary><p id="beb56a3a-b9e7-455c-8977-a9a81af88652" class=""><span style="border-bottom:0.05em solid">Goal</span><div class="indented"><p id="36eeb1cd-786a-4c28-85a1-24a06fda63fa" class="">cooperation of engineers from different diciplines with different vocabularies and tools </p><p id="7b62b702-82c1-4750-842a-a14e9a313056" class="">managing complex systems</p></div></p><p id="534cf025-68a6-4e32-8f53-0824332765a1" class="">
+</p><p id="8be43466-14c1-4bd6-8ceb-6162be26ad17" class=""><span style="border-bottom:0.05em solid">Complex system</span><div class="indented"><ol type="1" id="f998924c-183e-4304-99ce-41dacbc9099c" class="numbered-list" start="1"><li>Magnitude<p id="b12e0764-3eb7-4c13-b429-752159f088fb" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Num of Elements, possible states in the system</p><p id="e7072598-699b-4981-aab5-b88e77d9631c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> num of possible - num of useful solutions</p></li></ol><ol type="1" id="59051b3f-e419-4d1d-a9cb-888cff249093" class="numbered-list" start="2"><li>Diversity<p id="b5467834-8373-4c1c-880d-60829c41bd48" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> heterogeneity of elements, Connectivity, structural complexity</p></li></ol></div></p><p id="2ccc0d4e-018b-4b88-aae1-0d96f92f8c20" class="">
+</p><p id="32fef8d1-5af5-4925-9764-f7d7895d9986" class=""><span style="border-bottom:0.05em solid">Managing complexity</span><div class="indented"><ol type="1" id="2758f7f2-5eb7-4434-8e66-28e5a56c1311" class="numbered-list" start="1"><li>Abstraction
+<mark class="highlight-gray">– simplification</mark></li></ol><ol type="1" id="5eb4d177-f0b1-462d-ad2f-98f253e4762b" class="numbered-list" start="2"><li>Decoupling
+<mark class="highlight-gray">– separation of components that should not depend on each other</mark></li></ol><ol type="1" id="4c8acb9e-a00e-429f-b29b-0e559825a602" class="numbered-list" start="3"><li>Decomposition
+<mark class="highlight-gray">– focus on components that are easier to understand</mark></li></ol><ol type="1" id="fb152c60-39e3-4dda-82fa-2a6c17f4a999" class="numbered-list" start="4"><li>Classification
+<mark class="highlight-gray">– similar parts</mark></li></ol><ol type="1" id="09a215ef-d537-4660-99fa-4fbe77096030" class="numbered-list" start="5"><li>Standardization</li></ol><ol type="1" id="59d61772-2fe5-41c3-8906-ec4ccfe3414f" class="numbered-list" start="6"><li>Modeling</li></ol><ol type="1" id="7b3cb2d6-5b24-4797-a7ef-fa2b6dac4cb3" class="numbered-list" start="7"><li>Transformation
+<mark class="highlight-gray">– transformation of the given problem to a domain with proven solution approach</mark></li></ol><ol type="1" id="c5f126e5-8a33-484f-8cba-bc9a4d146434" class="numbered-list" start="8"><li>Experience
+<mark class="highlight-gray">– use documented experiences from experienced contributors</mark></li></ol></div></p><p id="13bac938-75e5-4af5-927b-f4a7ff62786f" class="">
+</p><p id="63be6b61-933e-46c0-aa2d-65c07b886e8d" class=""><span style="border-bottom:0.05em solid">Complexity-drivers in industrial scenario</span><div class="indented"><p id="a96997da-7ecb-4b48-b35a-086dde38fbd6" class="">Types of heterogenity<div class="indented"><p id="2147bb7a-d280-46d1-9541-0a7be7d0efad" class="">– Technical	<mark class="highlight-gray">&quot;Engineering Polynesia&quot;</mark>
+– Semantic<mark class="highlight-gray">	&quot;Engineering Babylon&quot;</mark>
+– Process		<mark class="highlight-gray">&quot;Engineering Chaos&quot;</mark></p></div></p></div></p></details></li></ul><p id="b47d2e18-1b16-4a05-b71e-4974bac7c7f5" class="">
+</p><h2 id="c5d5b5ee-e229-47e7-8db9-cb595d2841b8" class="">About Patterns</h2><p id="c06ea55a-0ce1-4c65-a681-0d87e221342d" class=""><span style="border-bottom:0.05em solid">Definition</span><div class="indented"><p id="fd333f75-d4fa-4b05-9ec2-bff00b57c77a" class="">„Pattern“ has been defined as „an idea that has been useful in one practical context and will probably be useful in others.“</p></div></p><p id="0800e5fa-aa3d-45b5-922e-10eba4525605" class="">
+</p><p id="bbef9b4f-fd4f-4fbc-81a3-b1ab8116257f" class=""><span style="border-bottom:0.05em solid">Elements of a pattern</span><div class="indented"><ol type="1" id="3987e075-5683-434e-aa67-6228f0bce6b6" class="numbered-list" start="1"><li>Name - Aliases, classifications</li></ol><ol type="1" id="5611869f-9d45-4071-af69-de245b9583c2" class="numbered-list" start="2"><li>Motivation and problem statement</li></ol><ol type="1" id="a814f9fd-5574-4c74-9818-bb7240b8fedd" class="numbered-list" start="3"><li>Context</li></ol><ol type="1" id="e6c9c3b1-f65f-41b9-a936-0870d7d95502" class="numbered-list" start="4"><li>Solution<p id="4bbcc1bd-d72c-45ed-ba66-c23b74e2a8c6" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Structure</p><p id="c2c16007-8376-4f83-9662-29cd757bb495" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Participants</p><p id="7540b429-4f2d-4549-a1da-0b9a34944589" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Collaboration</p><p id="7ed58196-051f-4d46-abf3-1a7a4d843406" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Consequences</p><p id="5385989e-1d92-45b4-bb72-df245e300599" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Implementation</p><p id="502357e4-6df7-4b57-92c3-6a246538dadd" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Examples</p></li></ol></div></p><p id="90e0308d-9961-4158-9009-3c0fcf884e7d" class="">
+</p><h2 id="1a78ac90-80d2-4914-bc08-f326f743a54d" class="">Usage in Software Development</h2><p id="83ea420d-e43c-4361-96c8-25dac069a54c" class=""><span style="border-bottom:0.05em solid">Advantages</span><div class="indented"><p id="a1d62f0e-28ab-472d-b22a-ca8c918f136b" class="">Common vocabulary → helps manage complex systems, better communication<div class="indented"><p id="9cb1aa6f-0dfa-4932-bf05-c8f71709564f" class="">Improves documentation</p></div></p><p id="8bd1e9ce-9b1c-4bac-a380-e1410c1a1dff" class="">Capture knowledge and make it more widely available</p><p id="e81497fb-5de3-4d3e-afcf-1bc3074621a6" class="">Combination of patterns</p><p id="ef512a2a-8b12-4fb5-9d03-a523ebe43b92" class="">Reusability, adaptability, extendability → Minimizes development time and costs</p></div></p><p id="8dcab395-55cb-48ca-a5b9-29988512774a" class="">
+</p><p id="e32472eb-37f2-429f-ade4-fa4b33c859bb" class=""><span style="border-bottom:0.05em solid">Disadvantages</span><div class="indented"><p id="467e5953-c647-407b-abb6-8796cf45e745" class="">Patterns need to be adapted to the code context</p><p id="c0e61b75-e52a-4ff6-baee-c42f00afa53a" class="">Only indirect code reuse</p><p id="adf6dc7e-3da4-4643-9194-002f1c405509" class="">deceptively simple</p><p id="fa00dd51-c2be-44fb-9a77-68a83d433807" class="">Teams may suffer from pattern overload</p></div></p><p id="9bf90ecd-42d6-4240-bd98-70a77abcf746" class="">
+</p><p id="28e18774-362a-4cb0-9080-96963c95b4ae" class=""><span style="border-bottom:0.05em solid">Classification of Patterns</span><div class="indented"><ol type="1" id="e132ce2e-6979-48c9-b290-194098c09d62" class="numbered-list" start="1"><li>Architectural Patterns<p id="30dafcab-c698-4c66-a8c1-5aa25b6f28f9" class="block-color-gray">– Structure of software systems
+– Subsystems, dependencies, communication</p></li></ol><ol type="1" id="757dfef2-6d69-451f-938c-6b24abb726e7" class="numbered-list" start="2"><li>Design Patterns<p id="51339e39-5b71-400e-b83d-5949cc1dd604" class="block-color-gray">– level of classes
+– <em>Snippets</em> focus on low-level details, Programming language specific</p></li></ol><ol type="1" id="bae7ffa1-3b61-46b4-91b7-a08c5328da1b" class="numbered-list" start="3"><li>ProtoPatterns<p id="fd98f28a-8130-46e0-b8f7-f8943f03d521" class="block-color-gray">– Particular case</p></li></ol><ol type="1" id="19af82a2-388b-497f-8872-c8a581df5bd9" class="numbered-list" start="4"><li>Antipatterns<p id="0b1c7afd-766c-4531-af50-eb4beb497b93" class="block-color-gray">– Commonly used but should be avoided</p></li></ol></div></p><p id="d3b284ec-87df-4b43-b817-55d57632279b" class="">
+</p><p id="e385b5eb-617f-4048-9fb7-8b91d035e0df" class=""><span style="border-bottom:0.05em solid">When to use</span><div class="indented"><p id="83342eaa-538c-4c02-aa39-1e26ccf8ab10" class="">Similar problems that recur with variations in different contexts</p><p id="8c0d10b2-626a-4646-a307-c6e4fe67386d" class="">Patterns can be an overkill if solution is simple linear set of instructions</p></div></p><p id="5c4c4ae9-db48-4f5f-be72-2a9e26a5ca34" class="">
+</p><h2 id="4caf0e75-b802-447c-b474-6367f43a2edc" class="">Pattern Types: Architectural Patterns (Overview)</h2><ol type="1" id="8fbe0cf4-0f03-4198-b3fc-ed0c2410061d" class="numbered-list" start="1"><li><mark class="highlight-yellow_background">Fundamental Patterns</mark><p id="fdf9b1a3-18f2-454d-b8be-fc945e97ffe4" class=""><mark class="highlight-gray">essential concepts of software architecture</mark><div class="indented"><ul id="e9827a92-9d49-47c7-8094-f0716398ba15" class="bulleted-list"><li style="list-style-type:disc">Interface Pattern</li></ul><ul id="b96ea4c3-591b-43d0-946c-0af44775d745" class="bulleted-list"><li style="list-style-type:disc">Delegation Pattern</li></ul><ul id="9f0f11e8-1820-4dfb-b4d5-1ea475abceae" class="bulleted-list"><li style="list-style-type:disc">Immutable Pattern</li></ul></div></p></li></ol><ol type="1" id="c4d72e78-424f-43dd-ae04-c1fcbaf4d78b" class="numbered-list" start="2"><li><mark class="highlight-yellow_background">Creational Patterns</mark><p id="88d66795-f6ea-42f7-93a2-b81a6fce15d4" class=""><mark class="highlight-gray">initializing and configuring classes and objects</mark><div class="indented"><ul id="d7ed1843-775d-4fef-99ec-7f503e61a699" class="bulleted-list"><li style="list-style-type:disc">Singleton</li></ul><ul id="23933022-2286-4c4b-99f9-6ba292a222ef" class="bulleted-list"><li style="list-style-type:disc">Factory</li></ul><ul id="3502c65a-303f-4f11-8ec7-7a9fe67563ea" class="bulleted-list"><li style="list-style-type:disc">Abstract Factory</li></ul><ul id="d8e58675-5cb2-46a0-9fe9-7474cf639784" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Builder (Factory for building complex objects in different variants)</li></ul><ul id="1c33e756-ab6d-4bd8-a48a-480160391762" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Prototype (Factory for cloning new instances from a prototypical instance)</li></ul></div></p></li></ol><ol type="1" id="a7d7b877-c52e-48ca-9a44-939ff909ed8a" class="numbered-list" start="3"><li><mark class="highlight-yellow_background">Structural Patterns</mark><p id="a64cc55c-066b-4654-bf1f-cf3cb5b32937" class=""><mark class="highlight-gray">decoupling &quot;interface </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> implementation&quot; of classes and objects</mark><div class="indented"><ul id="3474984f-74aa-4cb4-8c2c-0c4b29cc1278" class="bulleted-list"><li style="list-style-type:disc">Facade / Facet</li></ul><ul id="c1701e2d-af0b-456b-bdbc-b6bba48d5101" class="bulleted-list"><li style="list-style-type:disc">Adapter</li></ul><ul id="051ef5ef-6bb6-48fa-a85b-3b8b41994918" class="bulleted-list"><li style="list-style-type:disc">Proxy</li></ul><ul id="da7e6b20-0308-4b9d-bb83-0c18c4273466" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Bridge (Abstraction for dynamically binding one of many implementations)</li></ul><ul id="47d8c26c-6aee-43ff-9f9d-200b5c1277f5" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Composite (Treats objects and compositions uniformly)</li></ul><ul id="20f19df9-e6b3-4d36-85c8-5249b9ed1c4a" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Flyweight (Many fine-grained objects shared efficiently)</li></ul></div></p></li></ol><ol type="1" id="621c53dc-9a9c-4ee6-aa68-7233f27069d0" class="numbered-list" start="4"><li><mark class="highlight-yellow_background">Behavioral Patterns</mark><p id="a7967bf5-44a7-4fa0-b581-4791950db245" class=""><mark class="highlight-gray">dynamic interactions among objects</mark><div class="indented"><ul id="4b6c9104-baed-4627-b048-8d0d0387331c" class="bulleted-list"><li style="list-style-type:disc">Observer</li></ul><ul id="3d823a8d-0bdc-4d25-8901-c6b410d66675" class="bulleted-list"><li style="list-style-type:disc">Decorator</li></ul><ul id="80964f27-a7f5-4d0f-8da6-c95b5016a985" class="bulleted-list"><li style="list-style-type:disc">State</li></ul><ul id="1950bb6a-e966-4d04-8a5e-bddae73b1eb5" class="bulleted-list"><li style="list-style-type:disc">Strategy</li></ul><ul id="b8ba1b64-f451-4eda-8038-57a26d78adee" class="bulleted-list"><li style="list-style-type:disc">Chain of Responsibility</li></ul><ul id="13245e5b-bab1-4efa-8ec4-8fcdfbc1ea00" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Iterator (Aggregate elements are accessed sequentially)</li></ul><ul id="c3f971f4-b668-4fd5-83a5-1e6836fc9925" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Command (Object represents all the information needed to call a method at a later time)</li></ul><ul id="5951e5d8-1a62-431d-b23a-1d9e81aacb73" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Mediator (Mediator coordinates interactions between its associates)</li></ul><ul id="5a58ec62-2c7b-4498-8bda-7a3805dfdbba" class="block-color-gray bulleted-list"><li style="list-style-type:disc">Memento (Snapshot captures and restores object states)</li></ul></div></p><p id="747dfbbb-715e-4257-b3bd-c58a3f06cde1" class="">
+</p></li></ol><h1 id="76e04b9b-40f0-4cc5-916d-e1e8f48dbf7c" class="">Fundamental Patterns</h1><h2 id="532341c5-1b0c-4f46-9740-b53320c37404" class="">○ Interface</h2><p id="d409e58a-d4b7-414d-ae98-ee37172cbdb4" class="">Seperating description and implementation</p><p id="5e6acd34-47ff-4560-b45a-e4acd6a03f0e" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="2ae1a36d-6a43-4401-a710-8b081c4a80fc" class="">Separate description and concrete implementation</p><p id="fd3a4dd5-5140-48f2-ba11-712d75bffe0c" class="">defines the signature operations of an entity</p><p id="417b12df-f254-4ef9-8990-5119ddbdd4c4" class="">implementations can be added / changed easily afterwards</p><p id="06ed0c59-ba6e-429d-9d8e-8c3f9b8cca6e" class="">should be stable - in comparison to implementation</p></div></p><p id="ea95e653-e6b1-47f5-8405-787428fdd635" class="">
+</p><h2 id="15afc0b2-f965-46fe-9dc3-5c25d496e043" class="">○ Delegation</h2><p id="042e5262-3be5-4006-a86e-490ea32591f5" class="">Extension of functionality without inheritance</p><p id="5f694c98-9abf-477c-81b7-628827c3a48e" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="7d0282ae-1e42-4c88-b971-3ae56b05eeb2" class="">Class needs additional functionality</p></div></p><p id="22c8c85c-72cd-4c76-b50f-6bc102bfb9a1" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="7fdd7b63-3800-400a-bfab-e4d5e67b05dd" class="">Outsource functionality into third class and use its instance via delegation</p><ul id="4a890b0a-9e37-4e49-a527-edd42ece116e" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Example 1</span></summary><figure id="c829cb2c-e94b-4d1d-8696-c519419d8640" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled.png"><img style="width:240px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled.png"/></a></figure><p id="aed87bfc-f867-4b9d-a43b-c5ccd4740b40" class="">Solution without inheritance:<div class="indented"><p id="071f170e-0d12-45fd-9834-94463a613a74" class="">Notification-Service gets an instance of the object that should get called.</p></div></p><figure id="f3d1058b-90cf-4c56-9a59-4b233a5fcc4d" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%201.png"><img style="width:192px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%201.png"/></a></figure></details></li></ul><ul id="a9eced27-f8ac-41e5-b75a-969473867dd6" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Example 2</span></summary><pre id="f331e32e-57b4-4c93-bd51-00245c1a5e79" class="code"><code>class A {
+  void foo() {
+    print(&quot;a.foo&quot;);
+  }
+}
+
+class B {
+  private delegate A a; // delegation link
+
+  public B(A a) {
+    this.a = a;
+  }
+
+  void foo() {
+    a.foo(); // call foo() on the a-instance
+  }
+}</code></pre><pre id="1af9daef-0b34-4184-a62a-7920791cf8a5" class="code"><code>a = new A();
+b = new B(a); // establish delegation between two objects</code></pre></details></li></ul></div></p><p id="a44807ed-74c8-403e-afc1-28f87d08ed7b" class="">
+</p><h2 id="2bd3de54-5f96-42a8-a025-e59a56c344f5" class="">○ Immutable</h2><p id="c5122d2a-b4ab-4f0d-80f0-383ebda0c6fa" class="">Providing unchangeable object after initialization</p><p id="bc7ae0c0-fb2c-4902-9027-38b47f42ed1e" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="41df0d2c-d3e1-4f57-8d1a-dfbf109d34d0" class="">Object instance should be immutable</p><p id="b3b4ad84-866d-48a6-9842-c7044aab7d64" class="">Because several threads are accessing same object but object properties should be configurable</p></div></p><p id="effeafd8-dd74-405f-913c-cacbfd8ba9a5" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ol type="1" id="ff6f5d7f-a6e5-4ae6-ae2d-de875fc938a3" class="numbered-list" start="1"><li>Initialize variables in constructor</li></ol><ol type="1" id="d1db8c69-5d4e-4807-a60b-39012d3a7f20" class="numbered-list" start="2"><li>Provide only read access with Getter-Methods <code>getName(), getDate()</code></li></ol></div></p><p id="2c4de07b-668c-4712-a6bb-3b6721832a02" class="">
+</p><h1 id="85c38df8-6541-4b39-9fcd-55215b5ee0d0" class="">Creational Patterns</h1><h2 id="6cee4e36-62d6-4d11-b7c3-90f29fbf3995" class="">○ Singleton </h2><p id="9fd9b71c-673b-43b3-a581-212b6cb38d69" class="">Provision of a single instance only</p><p id="e8b23c21-7621-4b0f-bbe3-8d406103821e" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="f5ef6770-2ded-4e8f-be80-76747bc1328d" class="">Only one object instance should exist:<div class="indented"><ul id="ddfe33a7-92ed-4094-8d39-3d274eaa405a" class="bulleted-list"><li style="list-style-type:disc">Database access</li></ul><ul id="1258bf9c-e321-465f-8607-b95ee49c8db8" class="bulleted-list"><li style="list-style-type:disc">Id generator</li></ul><ul id="804ac143-73ff-4b66-9f63-255f5c7b48cc" class="bulleted-list"><li style="list-style-type:disc">Logger</li></ul><ul id="0b953b18-ba06-432d-9a16-dc7b5fb10a5e" class="bulleted-list"><li style="list-style-type:disc">Communication with hardware</li></ul></div></p></div></p><p id="609d5b36-77c4-408f-ab0f-7663e3f13340" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="dfe3d293-d8af-4f94-89c9-02bde4dca54f" class="toggle"><li><details open=""><summary>Example</summary><pre id="e4747cce-31c7-4aa9-b32a-d580e71507c3" class="code"><code>public class Person {
+	private final Logger LOG = LoggerFactory.getLogger(Person.class);
+	
+	Logger getLogger() {
+		return LOG;
+	}
+}</code></pre><p id="8ef87dea-ae6b-4f7e-bec2-a623ecb766d4" class="">In this case <code>LOG</code> is the same object even without static due to the way the LoggerFactory works.</p></details></li></ul></div></p><p id="aebfe06f-f8dd-4964-9fe0-9a963dede46b" class="">
+</p><h2 id="1673e93e-e18c-4910-9559-85fda91cb7d2" class="">○ Factory </h2><p id="42506b17-421d-44a4-b131-7081c36ba211" class="">Method in a derived class creates associates</p><p id="724b55ca-d1d1-4929-a7e9-bfea65207f84" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="5082528c-98d0-40a7-a317-0c2452547554" class="">Object creation &amp; configuration is complex</p><p id="0a96bfd0-37e6-4d1e-8f2d-9bd7415bb61b" class="">Initialization of additional sub-instances required</p></div></p><p id="146334ec-89ab-4299-9d58-a2e4ca09c85b" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="dac192b5-5ca3-46a3-a872-597ac955d978" class="toggle"><li><details open=""><summary>Example</summary><pre id="f5af5589-d2a7-4766-b82c-17736d9beee1" class="code"><code>interface Product { float getPrice(); }
+
+public class Milk implements Product {
+	final float price;
+	public Milk(final float price) { this.price = price; } //constructor
+	public float getPrice() { return price; } //getter
+}
+
+public class Sugar implements Product {
+	final float price;
+	public Sugar(final float price) { this.price = price; } //constructor
+	public float getPrice () { return price; } //getter
+}
+
+public class Product Factory {
+	public static Product createProduct(String what){
+		//When sugar is requested, we return sugar:
+		if (what.equals(&quot;Sugar&quot;)) { return new Sugar(1.49F) ; }
+		// When milk is needed, we return milk:
+		else if (what.equals(&quot;Milk&quot;)) { return new Milk(0.99F); }
+		// Otherwise return at least sugar
+		else { return new Sugar(1.49F); }
+	}
+}</code></pre><figure id="0527ce2a-8881-4c17-a3d6-c9b8bcf42453" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%202.png"><img style="width:240px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%202.png"/></a></figure></details></li></ul></div></p><p id="ad7d8408-a09e-4d50-af68-cb6ee5f05ab0" class="">
+</p><h2 id="1f5ba959-2a6d-4ff4-beab-fdface9ad070" class="">○ Abstract Factory </h2><p id="a8c578f8-0223-43a2-a4af-78be7898bac6" class="">Factory for building related objects without specifying their concrete classes</p><p id="88f9278b-2929-4043-a1d6-ccfc4a8c2c0f" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="03d3a097-9385-4b3c-8f8b-547aa1d93e6f" class="">Achieving higher abstraction by grouping individual factories with a common theme</p></div></p><p id="83b64e63-e702-403f-b5ae-c3c69dfd4ccb" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="4041d2e0-f669-4021-b7fc-f2e7b8aad387" class="">A group of individual factories that have a common theme</p><p id="94891a19-35c7-4136-ac3c-7fbadd587cf5" class="">Two hierarchies → abstract AbstractFactory class provides interface </p><p id="2e215582-b34f-422a-9c80-c9516c1d4619" class="">Client only knows abstract interface → Family may grow independently of the client</p></div></p><figure id="4a98d701-5fc2-4baf-8542-42fe0ef9de58" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%203.png"><img style="width:432px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%203.png"/></a></figure><figure id="4355d524-e429-4bd1-8e4a-69136400f738" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%204.png"><img style="width:384px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%204.png"/></a></figure><h1 id="0798d076-cdc8-4d63-9c2d-bc727a52b838" class="">Structural Patterns</h1><h2 id="4482d2f3-6f43-47b4-a096-038777bfecd5" class="">○ Facade / Facet</h2><p id="09139011-c270-43c7-9abd-025390fdeb61" class="">Simplifies the interface for a subsystem</p><p id="78f4ce8c-761d-46c2-bd2e-d01d9f2f2361" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="331c3364-b77b-4afc-9eb3-9e0e079f02be" class="">Need simplified access to a complex subsystem</p><p id="71854f79-7500-41e6-9bdc-aae222d7de69" class="">Provides an abstracted interface of a subsystem</p></div></p><p id="5a86e929-1989-44ac-90f2-48c00d302bcb" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="e40a6b32-d460-499f-9d99-3c1d64eddfdf" class="toggle"><li><details open=""><summary>Example</summary><pre id="f854585b-c660-4b9f-964c-0838c8a37a5b" class="code"><code>public class SimpleMail {
+	public static int sendMail(String address, String subject, String body) {
+		int status = 0;
+		... //Complex mail sending operation
+		return status;
+	}
+}</code></pre></details></li></ul></div></p><figure id="c91e9229-0780-4967-ab8b-46eee73d6f64" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%205.png"><img style="width:336px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%205.png"/></a></figure><p id="1291709b-9d7d-4f3f-929d-18739be43880" class="">
+</p><h2 id="d87e697a-a250-4e04-847e-f00e6328f9fc" class="">○ Adapter / Translator</h2><p id="1b3f25ad-9ad4-4d05-a45b-de4636649564" class="">Adapts a server interface for a client</p><p id="a64a6ce9-0948-4fcb-aa59-5f8094e5fd95" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="a96aac20-ab38-4ade-8371-b04a8786e550" class="">Need to integrate incompatible external functionality</p></div></p><p id="eadee044-8825-4718-a918-94bb185cc3f7" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="04975597-bba6-48b5-9fb6-cc25e33e4e8b" class="">Translates (data transformation) into a compatible interface</p></div></p><figure id="46620435-fc5c-4c68-824e-b6f245065a7d" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%206.png"><img style="width:336px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%206.png"/></a></figure><figure id="dfafb7e7-6a69-4152-a2f8-0c16bb60172a" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%207.png"><img style="width:336px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%207.png"/></a></figure><p id="af7e9c6e-29f7-441d-8681-db39d1d7abf5" class="">
+</p><h2 id="ed611a53-7559-43dd-b0ec-de6fcb6a0363" class="">○ Proxy</h2><p id="bd463708-3c98-4e37-8d4f-b47a24bb48eb" class="">One object approximates another</p><p id="396d369c-65d8-44e7-bb52-69378b6f1b2a" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="13e1b71d-3685-4c7c-b654-37d41bc87056" class="">Need to integrate further actions before intended method call</p></div></p><p id="468b6333-6457-4fba-8ead-9755c5fcf5ec" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="8895a867-e468-466b-b423-01e1c6db3076" class="">Extends concept of the delegation pattern</p><p id="017db730-b588-471d-b742-536ec4a7714b" class="">Implements interface and acts as a representative of the „original“ implementation</p><p id="97c65b13-8462-4205-b4ba-cf524b284604" class="">Used in: security, logging, caching</p></div></p><figure id="3bb7b1ed-027f-45f6-b437-a57ee5898d40" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%208.png"><img style="width:384px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%208.png"/></a></figure><figure id="cee1aa5d-1f7f-4088-87fd-0ec243fd7df2" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%209.png"><img style="width:384px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%209.png"/></a></figure><p id="b556c9eb-3672-4b69-97dc-ff2c10329d90" class="">
+</p><h2 id="f993c9c8-05ec-41f9-933d-aacabe3360ed" class="">○ Inversion of Control IoC</h2><p id="de3a0571-d2b6-4064-b41d-79082744497c" class="">Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p><p id="7fc70fd3-59d4-4c85-a345-95dca2eaed52" class="">Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p><p id="ecd0d9a4-0b9d-41d8-9241-44398544f1ac" class="">
+</p><p id="c397284b-2f81-45e0-9f89-eec5fad4a996" class="">Detailierter: Siehe Block 3 - Werkzeuge</p><p id="56b3f398-a284-4892-9313-d3e7f062ae75" class="">
+</p><h1 id="edaeb5a8-b222-4781-b441-7e4ad2076444" class="">Behavioral Patterns</h1><h2 id="117970ab-6064-4f1b-93ae-db45a71bcaed" class="">○ Observer</h2><p id="910074b6-8aa0-41aa-a30c-e54b2d99f0ef" class="">Dependents update automatically when a subject changes</p><p id="ac28c13f-40e4-4c7f-a648-a97247fe690f" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="98b8a372-3823-4cd0-957c-df6d1b0fedf9" class="">Need to react to state changes in an object</p></div></p><p id="281b8cd7-26ab-428a-a90e-02f79ae63d70" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="666ca372-c4c1-403b-94d8-99c81be59f64" class="">in case of changes of the instance‘s state execute specific action(s)
+– e.g., notification of instances interested in change</p></div></p><figure id="f746b0cf-f63e-4ef5-bc96-c20054f7c073" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2010.png"><img style="width:528px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2010.png"/></a></figure><p id="d5c4d286-aec1-48a3-ace8-d347b2445bca" class="">
+</p><h2 id="161109e7-318a-4e32-81e4-fbd87802a2a7" class="">○ Decorator / Wrapper</h2><p id="4c695372-6e39-4cd0-bd1f-6ac4d57ea69d" class="">extends an object</p><p id="08305bc8-4311-4eef-ade3-da873fad62fd" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="190e9f4c-ac28-4f39-9a16-1e4312e32304" class="">Need to extend object functionality during runtime (inheritance not possible during runtime)</p></div></p><p id="7118f714-c2d9-4368-acd7-5712ebcb2888" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="b1b3abcd-d5ea-4cea-8bfb-c20b1cafc32d" class="">Dynamically add new functionality to an existing object</p><ul id="ea53e430-b4bf-4976-acfe-5ccc6e474840" class="toggle"><li><details open=""><summary>Example</summary><pre id="30ca6e8a-a9c2-41f0-8908-2203afed8875" class="code"><code>Cake cake = new ChocolateCake();
+
+NutsInCake nic = new NutsInCake(cake) ;
+nic.setAmount(15) ;
+nic.setType(&quot;hazelnut&quot;) ;
+
+CandleCake cc = new CandleCake (nic) ;
+cc.setCandles(13);
+cake = (Cake) cc;
+cake.bake();</code></pre><pre id="5cdf49f7-217f-4f4c-97ed-05664794dbb6" class="code"><code>VisualComponent vc = new ScrollBar( new Border( new TextEditor() ));
+vc.draw();</code></pre><pre id="4f6fd30d-5822-48ea-933c-a013602779f0" class="code"><code>Stream s = new FileStream(filename);
+Stream s = new CompressingStream( new BufferedStream(new FileStream(filename) ));</code></pre></details></li></ul></div></p><figure id="6f8e63d3-8067-4e32-9aa4-15d0cc5f3744" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2011.png"><img style="width:288px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2011.png"/></a></figure><figure id="aec48320-c6cf-480d-9fac-b789071d2408" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2012.png"><img style="width:336px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2012.png"/></a></figure><h2 id="43e8aa28-f5bf-4039-bcfa-f015f96c3163" class="">○ State</h2><p id="616b8cf7-309a-4ea3-8666-ac93e67c597f" class="">Object whose behavior depends on its state</p><p id="2a37d941-820e-45e1-829f-055cb7ff5466" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="5b787994-95e6-491e-a50e-3c930459f295" class="">Need to change object behavior based on current state</p></div></p><p id="652f1391-33cf-4fff-814d-bcf861ab54c0" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="853c5356-3f7b-4aeb-95f6-539acd1c0621" class="">Allow an object to update its behavior when its internal state changes</p><p id="1e4d8be2-e5bf-437b-b8d5-6d008919c958" class="">(internal state gets changed with a <code>setState()</code> method)</p></div></p><figure id="83957c87-5978-453d-8533-716514656074" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2013.png"><img style="width:336px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2013.png"/></a></figure><figure id="425effe8-4f59-4ede-8159-59742e5caad2" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2014.png"><img style="width:384px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2014.png"/></a></figure><p id="ea6cef8e-2377-4d71-8189-8d65ead72bba" class="">
+</p><h2 id="4aa4c47a-4179-4c60-acbb-25196f4fb372" class="">○ Strategy</h2><p id="47ef1f90-6e08-4176-b3b9-416f96d8310b" class="">Vary algorithms independently</p><p id="ebcf0686-fffc-4aa1-b396-1f32f4a2863b" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="14b1ca36-1c01-476d-b8c8-6ce79ea177fb" class="">Dynamically add new algorithms → context chooses algorithm to use</p><ul id="cdc47e39-e1af-4917-b963-9cd48bcdbd51" class="toggle"><li><details open=""><summary>Example</summary><pre id="db6c9b71-bec7-4c9d-b57f-e308656b09ed" class="code"><code>class NotificationManager {
+	public enum NotificationMethod {SMS, EMAIL};
+	private List&lt;Person&gt; members;
+	
+	public void addMember(Person person, NotificationMethod notificationPref){
+		members.add(person);
+		INotification notification;
+		if (notificationPref == NotificationMethod.SMS)
+			notification = new Sms();
+		else
+			notification = new Email();
+		
+		notification.setPerson(person) ;
+		person.setNotificationPreference(notification);
+	}
+
+	public void sendNotifications (String message)
+		for (Person p : members)
+			p.sendMessage(message);
+	}
+}</code></pre><figure id="c130e6d0-44b7-4a94-b50d-e22bf3594955" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2015.png"><img style="width:288px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2015.png"/></a></figure></details></li></ul></div></p><figure id="a5e55f4d-a0c4-4d1b-a010-9fc20041fe80" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2016.png"><img style="width:384px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2016.png"/></a></figure><p id="2a847609-cfac-4a87-820c-2458fb7a0d5f" class="">
+</p><h2 id="57ba11d5-3108-42a6-a5e6-d4ca02817993" class="">○ Chain of Responsibility</h2><p id="bf4285bf-d3d3-4edc-bc86-1155813300f7" class="">Request delegated to the responsible service provider</p><p id="62eaf60a-3be0-4311-8677-90b9fce52feb" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="9224bf17-6c4b-4733-9343-1b17679c4f6c" class="">Improve loose coupling between a series of processing logic</p></div></p><p id="f01559e0-240b-4c2a-9c05-516f1745b32f" class=""><span style="border-bottom:0.05em solid">Solution</span></p><figure id="87d13e03-aaa9-44a0-9412-4aaf02a8175d" class="image"><a href="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2017.png"><img style="width:480px" src="Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%2017.png"/></a></figure><p id="79126f54-1ba2-4ed0-9db3-04138d2b3e93" class="">
+</p><p id="611da63a-974b-43e8-b5bb-9e6bb1b18efc" class="">
+</p><p id="52bde4b8-c3db-422a-9048-37dc8cb0bf8d" class="">
+</p></div></article></body></html>

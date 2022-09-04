@@ -1,0 +1,852 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SAX</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3bc2f754-af92-4b8d-a7ca-4937f651bf3a" class="page sans"><header><h1 class="page-title">SAX</h1></header><div class="page-body"><p id="64901469-4209-4ced-8cd6-9d4ea1e90317" class=""><a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/ContentHandler.html#endElement(java.lang.String,%20java.lang.String,%20java.lang.String)">https://docs.oracle.com/javase/7/docs/api/org/xml/sax/ContentHandler.html#endElement(java.lang.String, java.lang.String, java.lang.String)</a></p><p id="83dafaba-5fec-4292-9a6c-2fce2564e1b1" class="">
+</p><nav id="3d118395-a3bd-45c4-93ff-36f1e540aade" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f057adae-29bb-4e6f-a5e6-de497f2e9ef6">XML Parsers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#50da6fa9-d660-4f01-a9e4-0deb256bba1b">Callbacks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5b30a75b-b0d8-4b2f-8a2e-d1c9d998682f">Content handling: Examples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#54234758-468d-4e68-b498-c6711e01f2e0">Error Handling</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4baa96f-a77b-4785-bc25-b9f730a2ea28">Features</a></div></nav><p id="e6cab2f7-5117-44b9-9b51-13f2485f6a92" class="">
+</p><h1 id="f057adae-29bb-4e6f-a5e6-de497f2e9ef6" class="">XML Parsers</h1><p id="24f25d31-9acf-4f3c-8073-940df003929a" class=""><mark class="highlight-blue">Standards for XML parsers</mark><div class="indented"><ul id="eeb99c68-ce1c-4a0d-aae9-27a83039472e" class="bulleted-list"><li style="list-style-type:disc">DOM<p id="896cd9a0-6c53-41cc-9363-1b4f8f0ff7f7" class="">= Document Object Model (tree-based)</p><p id="9192063a-862f-441a-bae4-63c350b87781" class="">W3C standard</p></li></ul><ul id="8e5f3038-2525-484e-9b87-4e0eb178d960" class="bulleted-list"><li style="list-style-type:disc">SAX<p id="065ae692-865c-42a3-ac6f-e30496dde505" class="">= Simple API for XML (event-based)</p><p id="a6affc31-8b25-44c6-9fdd-f9e066998634" class="">“effective” standard, very popular</p><p id="d5ffff94-8607-415b-abf4-855bb1f50162" class="">Versions for different programming languages (we only look at Java)</p></li></ul></div></p><p id="ee052eac-eaaa-409b-b5ba-aaf98dd5eb07" class="">
+</p><p id="f8e1e942-26c5-44a9-b1e3-fc8d8a4c58b1" class=""><mark class="highlight-blue">XML Parsers (General)</mark><div class="indented"><p id="dc10a9a1-f0c5-49bb-9a0d-218327cb7cd3" class="">XML document <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> XML parser <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> App</p><p id="09f65932-f791-4962-ac48-ff11bcb7b0bd" class="">XML parser: splits document into pieces and sends the “XML information set” to the application.</p></div></p><figure id="7be7c661-d957-4952-93ce-90560c8b254d" class="image"><a href="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled.png"><img style="width:192px" src="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled.png"/></a></figure><p id="a8e03d8c-5bcc-4bb7-9ca2-c5d82b969f14" class="">
+</p><p id="4a7facea-e080-494e-8137-727184e96bf4" class=""><mark class="highlight-blue">Event-based Parser</mark><div class="indented"><p id="1bed8033-10e2-4efd-874b-ca832c0409da" class="">Events = callbacks sent to the application by the event-based parser <mark class="highlight-gray">(ie. element start, end)</mark></p><p id="34d35bf4-8992-44cb-8832-c4a5184948fc" class="">Handlers = implemented by application to deal with events</p><p id="82407759-5bf2-47b6-abcf-1d070cb25043" class="">Used for large documents with a lack of data structure.</p><ul id="a65346c2-d95f-457e-9568-f3e4f9a38db1" class="bulleted-list"><li style="list-style-type:disc">Sequential access</li></ul><ul id="cbdf2af6-15d6-40ef-ac2d-78dd0876b895" class="bulleted-list"><li style="list-style-type:disc">Fast</li></ul><ul id="33670b88-e49f-434e-949e-e7ff64ce1f31" class="bulleted-list"><li style="list-style-type:disc">Constant memory</li></ul></div></p><figure id="eea46375-d348-468c-9bb9-a7c0b1ba7d0c" class="image"><a href="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled%201.png"><img style="width:192px" src="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled%201.png"/></a></figure><figure id="227de91d-9d03-451b-92f2-0da8c83823b4" class="image"><a href="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled%202.png"><img style="width:192px" src="SAX%203bc2f754af924b8da7ca4937f651bf3a/Untitled%202.png"/></a></figure><p id="95754a27-624d-4a0c-b9d5-0936eb4d3eca" class="">
+</p><p id="d4d35e01-dd43-4e35-9965-b93bad317415" class="">
+</p><h1 id="50da6fa9-d660-4f01-a9e4-0deb256bba1b" class="">Callbacks</h1><p id="5415d161-98b6-4e7c-986b-6ed9788c2259" class=""><mark class="highlight-blue">Callbacks</mark><div class="indented"><p id="b0b0fa51-0991-418f-922c-2c933efa780f" class="">We call the SAX-parser (and supply it with methods) which it calls back:</p><p id="070d4852-d0da-4253-8ff7-a71f765c97bb" class=""><mark class="highlight-gray"><code>startDocument(...)</code></mark><mark class="highlight-gray">			</mark>beginning of parsing </p><p id="d1ae6e30-8dce-4739-8e7b-72d6ed877602" class=""><mark class="highlight-gray"><code>startElement(...)</code></mark><mark class="highlight-gray">				</mark>beginning of element<div class="indented"><ul id="89515078-bc23-4c16-9d67-d9e0a7b4bcda" class="toggle"><li><details open=""><summary>in depth</summary><p id="da952dc5-1c18-4707-a20c-3593e2a6aaed" class=""><mark class="highlight-gray"><code>public void startElement(... , Attributes atts) throws SAXException</code></mark></p><hr id="c5585ca2-1b86-4a72-bc1a-661ff222b003"/><p id="33531be6-8f5c-4358-92f2-f19048663aa6" class=""><mark class="highlight-gray"><code>Attribute</code></mark><mark class="highlight-gray"> </mark>is an interface with some useful methods:<div class="indented"><ul id="861e887f-187b-4ae7-89d5-0532c07f0b33" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>getLength()</code></mark> - number of attributes</li></ul><ul id="c8d65ed1-0079-4e82-a348-3191eeba2f39" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>getLocalName(index)</code></mark> - attribute’s local name</li></ul><ul id="b08baeb1-cdf8-4cf3-a472-9d3d887d134f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>getQName(index)</code></mark> - attribute’s qualified name</li></ul><ul id="3d0966cf-7b05-4a85-bf40-f2e4cba1e1ec" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>getValue(index)</code></mark> - attribute’s value</li></ul><ul id="9f5755e9-37de-4870-b1ab-c2265c6f9add" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>getType(index)</code></mark> - attribute’s type (CDATA, NMTOKEN, etc.)</li></ul><p id="f3f2ee3c-9baa-4c22-bec9-600b9989e1c8" class="">
+</p></div></p></details></li></ul></div></p><p id="c1ee6fb8-3eaf-4b8d-bb80-460394ffcb25" class=""><mark class="highlight-gray"><code>characters(...)</code></mark><mark class="highlight-gray">				</mark>character data</p><p id="cd31bdb1-e953-4f9c-beaf-fa91d04a4817" class=""><mark class="highlight-gray"><code>endElement(...)</code></mark><mark class="highlight-gray">				</mark>end of element</p><p id="8dafcab3-4329-4e9f-9434-fab6f6e810ce" class=""><mark class="highlight-gray"><code>endDocument(...)</code></mark><mark class="highlight-gray">				</mark>last method called by parser</p><p id="5dc441c4-e7b9-492d-96bb-04f58a2a2e6a" class=""><mark class="highlight-gray"><code>processingInstruction(...)</code></mark><mark class="highlight-gray">		</mark>each processing istruction <code><mark class="highlight-gray">&lt;?target data?&gt;</mark></code></p></div></p><p id="43789cee-ae6f-469a-b6f4-d6ab4333c9e7" class="">
+</p><p id="eb5b34c0-051d-4763-a63d-185069d4b24d" class=""><mark class="highlight-blue">Event handlers</mark><div class="indented"><p id="7265c10a-aaee-4480-b507-0e36806b5f65" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/xml/sax/ContentHandler.html"><mark class="highlight-gray"><code>ContentHandler</code></mark></a><mark class="highlight-gray">		</mark>(crucial) handles basic parsing call-backs <mark class="highlight-gray">ie. element starts</mark><div class="indented"><p id="3965b23e-7dbb-4930-8a80-e8ca00913818" class="">					we can use the <mark class="highlight-gray"><code>DefaultHandler</code></mark><mark class="highlight-gray"> </mark>to implement stubs for all methods</p><p id="4d433650-eb85-4173-aca7-924510faee52" class="">					then we only need to implement part of the interface</p></div></p><p id="6aa345a7-9aaa-43b9-b3e3-ac3e009f40d5" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/xml/sax/ErrorHandler.html"><mark class="highlight-gray"><code>ErrorHandler</code></mark></a><mark class="highlight-gray">			</mark>(crucial) handles parsing errors</p><p id="c426c292-82bf-4770-a599-9a65d1290d69" class=""><mark class="highlight-gray"><code>DTDHandler</code></mark><mark class="highlight-gray">			</mark>handles notation, unparsed entity declarations</p><p id="bc988f66-bd19-46b0-be80-52bdd9ee7115" class=""><mark class="highlight-gray"><code>EntityResolver</code></mark><mark class="highlight-gray">		</mark>customized handling for external entities</p></div></p><p id="98b22b9e-0fa1-446a-8d38-e5267990e2be" class="">
+</p><p id="84ebba84-9491-4745-9730-51652fcc8567" class="">
+</p><h1 id="5b30a75b-b0d8-4b2f-8a2e-d1c9d998682f" class="">Content handling: Examples</h1><p id="91f90d2d-2671-49d5-acec-c3bce2f789bb" class=""><mark class="highlight-blue">Example 1) Simple SAX program</mark><div class="indented"><pre id="d8a1bc31-a6fa-421c-913b-689f8a1aa265" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;course&gt;Semi-structured Data&lt;/course&gt;</code></pre><pre id="04072944-056f-408a-8310-8192fe169d8d" class="code"><code>startElement: course
+characters: Semi-structured Data
+endElement: course</code></pre><p id="5a38f444-f864-4103-81e4-e5b9c464b52f" class="">Program consists of 2 classes:<div class="indented"><ul id="ef68e865-3e33-47c5-8ee4-9ce9bcfa44d0" class="toggle"><li><details open=""><summary><code><mark class="highlight-gray">CourseApp</mark></code></summary><pre id="6105d89a-5eba-4cab-9858-ec0956f5232e" class="code"><code>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+public class CourseApp {
+
+	public static void main(String[] args) throws Exception {
+
+		//create XMLReader (parser reads and calls callbacks in handler)
+		XMLReader parser = XMLReaderFactory.createXMLReader();
+
+		//install the content handler
+		MyHandler handler = new MyHandler();
+		parser.setContentHandler(handler);
+		
+		//start parsinqg
+		for (int i =0; i &lt; args.length; i++) {
+			parser.parse(args[i]);
+		}
+	}
+}</code></pre></details></li></ul><ul id="6f417444-6e8b-4ec4-92d2-1b6974408bb2" class="toggle"><li><details open=""><summary><code><mark class="highlight-gray">MyHandler</mark></code></summary><p id="d6a83f46-a087-4531-8190-2cbaf4aefec8" class="">contains handlers for 3 kinds of callbacks</p><pre id="538bae2e-021f-497f-a233-1f5e965610e0" class="code"><code>import org.xml.sax.*;
+import org.xml.sax.helpers.*; // implements other methods
+public class MyHandler implements ContentHandler {
+
+	//SAX calls this method when it encounters a start tag
+	public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes atts) throws SAXException {
+		System.out.println(&quot;startElement: &quot; + qualifiedName);
+	}
+
+	//SAX calls this method to pass in character data
+	public void characters(char[] text, int start, int length) throws SAXException {
+		System.out.println(&quot;characters: &quot; + new String(text, start, length));
+	}
+
+	//SAX calls this method when it encounters an end tag
+	public void endElement(String namespaceURI, String localName, String qualifiedName) throws SAXException {
+		System.out.println(&quot;endElement: &quot; + qualifiedName);
+	}
+}</code></pre><p id="c7f581b0-fc64-400e-9990-486a0674f371" class="">Use the default-handler package <mark class="highlight-gray"><code>org.xml.sax.helpers.*</code></mark><mark class="highlight-gray"> </mark>(implements all interface methods with empty body so we don’t have to).<div class="indented"><p id="b161699c-0aa0-4645-bad6-633393091283" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/xml/sax/helpers/DefaultHandler.html">https://docs.oracle.com/javase/8/docs/api/org/xml/sax/helpers/DefaultHandler.html</a></p></div></p></details></li></ul></div></p></div></p><p id="8e3006c7-2fea-4082-8050-7de7a7fff392" class="">
+</p><p id="cfc5ad00-eb0c-4ae2-9065-515ac6b888a2" class=""><mark class="highlight-blue">Example 2)</mark><div class="indented"><ul id="7a3f7261-1e6b-48d2-b011-a93cd6d877aa" class="toggle"><li><details open=""><summary>Input</summary><pre id="b47c4b98-2596-49d9-9020-27262a5786a6" class="code"><code>&lt;products&gt;
+	&lt;product&gt;
+		&lt;name&gt;Product A&lt;/name&gt; &lt;!-- fst --&gt;
+		&lt;value&gt;100&lt;/value&gt;
+		&lt;product&gt;
+			&lt;name&gt;Product B&lt;/name&gt;
+			&lt;value&gt;200&lt;/value&gt;
+			&lt;product&gt;
+				&lt;name&gt;Product E&lt;/name&gt;
+				&lt;value&gt;600&lt;/value&gt;
+			&lt;/product&gt;
+		&lt;/product&gt;
+		&lt;product&gt;
+			&lt;name&gt;Product C&lt;/name&gt;
+			&lt;value&gt;400&lt;/value&gt;
+			&lt;product&gt;
+				&lt;name&gt;Product E&lt;/name&gt;
+				&lt;value&gt;600&lt;/value&gt;
+			&lt;/product&gt;
+		&lt;/product&gt;
+	&lt;/product&gt;
+	
+	&lt;product&gt;
+		&lt;name&gt;Product D&lt;/name&gt; &lt;!-- snd --&gt;
+			&lt;value&gt;300&lt;/value&gt;
+			&lt;product&gt;
+				&lt;name&gt;Product C&lt;/name&gt;
+				&lt;value&gt;400&lt;/value&gt;
+				&lt;product&gt;
+					&lt;name&gt; Product E &lt;/name&gt;
+					&lt;value&gt;600&lt;/value&gt;
+				&lt;/product&gt;
+			&lt;/product&gt;
+	&lt;/product&gt;
+&lt;/products&gt;</code></pre></details></li></ul><ul id="8e98f51a-26a7-4e48-b5c7-38b10c3ae0ca" class="toggle"><li><details open=""><summary>Output</summary><pre id="11ff2ed0-b20d-4857-bec7-1e738351008c" class="code"><code>Total value of Product A: 1900
+Total value of Product D: 1300</code></pre></details></li></ul><p id="fc071d21-029b-4248-8c74-2b66ff7d88fb" class="">Handler:<div class="indented"><ul id="80b00878-1608-4ba7-bf5a-c4c0193c52b2" class="toggle"><li><details open=""><summary><code><mark class="highlight-gray">TopProducts</mark></code></summary><pre id="f041150f-cc96-4b9b-be4b-048957c36a17" class="code"><code>import org.xml.sax.*;
+public class TopProducts implements DefaultHandler {
+	String eleText;
+	private int level = 0;
+	private int value = 0;
+
+	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
+		if (&quot;product&quot;.equals(localName)) {
+			level++;
+		}
+	}
+
+	//  SAX calls this method to pass in character data
+	public void characters(char[] text, int start, int length) throws SAXException {
+		eleText = new String(text, start, length);
+	}
+	
+	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
+		if (&quot;name&quot;.equals(localName) &amp;&amp; level == 1) {
+			System.out.print(&quot;Total value of &quot; + eleText + &quot;: &quot;);
+		}
+		if (&quot;value&quot;.equals(localName)) {
+			value += Integer.parseInt(eleText);
+		}
+		if (&quot;product&quot;.equals(localName)) {
+			level--;
+			if (level == 0) {
+				System.out.println(value);
+				value = 0;
+			}
+	}
+
+}</code></pre></details></li></ul></div></p></div></p><p id="0fbd66ec-e74e-4a12-80b1-d3645823e716" class="">
+</p><p id="d1baa83a-dd3c-477b-9c00-327d9274a40f" class="">
+</p><h1 id="54234758-468d-4e68-b498-c6711e01f2e0" class="">Error Handling</h1><p id="b97b656a-7fe8-4e96-90c9-69ea9096fcf2" class="">Programming an <mark class="highlight-gray"><code>ErrorHandler</code></mark> to handle parsing errors (otherwise parsing errors will be ignored).</p><p id="2866e5bb-fa84-4000-9620-2e70dc0b4ad5" class="">Example:<div class="indented"><ul id="83a18d9d-65f4-4173-b778-325f31be29bc" class="toggle"><li><details open=""><summary>Installing error handler</summary><pre id="80bdc8e9-cae6-4f63-ac40-bb165e49cd8e" class="code"><code>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+public class CourseApp {
+	public static void main(String[] args) throws Exception {
+		
+		//create XMLReader
+		XMLReader parser = XMLReaderFactory.createXMLReader();
+
+		//install the content and error handler
+		MyHandler handler = new MyHandler();
+		parser.setContentHandler(handler);
+		parser.setErrorHandler(handler); // &lt;------
+
+		//start parsing
+		for (int i =0; i &lt; args.length; i++) {
+			parser.parse(args[i]);
+		}
+	}
+}</code></pre></details></li></ul><ul id="786fc457-06b8-4f4a-b225-36744ec3c215" class="toggle"><li><details open=""><summary>Implementing methods</summary><pre id="772e0877-4f0d-42fa-8110-036b717bf082" class="code"><code>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+
+public class MyHandler extends DefaultHandler {
+
+	public void fatalError(SAXParseException ex) throws SAXException {
+		printError(&quot;FATAL ERROR&quot;, ex)
+	}
+
+	public void error(SAXParseException ex) throws SAXException {
+		printError(&quot;ERROR&quot;, ex)
+	}
+
+	public void warning(SAXParseException ex) throws SAXException {
+		printError(&quot;WARNING&quot;, ex)
+	}
+
+	private void printError(String err, SAXParseException ex) {
+		System.out.printf(&quot;%s at %3d, %3d: %s \n&quot;, err, ex.getLineNumber(), ex.getColumnNumber(),
+		ex.getMessage());
+	}
+}</code></pre></details></li></ul></div></p><p id="0dc8403e-2e2c-40f3-a152-411f601f679b" class="">
+</p><p id="bf87e953-1962-43db-a15e-affc31c118f5" class=""><mark class="highlight-blue">ErrorHandler Methods</mark><div class="indented"><p id="fba4e777-38fd-4be8-9257-b1d9ec1cd687" class=""><mark class="highlight-gray"><code>public void fatalError(SAXParseException ex) throws SAXException</code></mark><mark class="highlight-gray"> </mark>→ well-formedness error</p><p id="e74c0982-d8c6-4014-9a38-8e0225d5875e" class=""><mark class="highlight-gray"><code>public void error(SAXParseException ex) throws SAXException</code></mark><mark class="highlight-gray"> </mark>→ validation error</p><p id="4bcd0df6-2d96-4e5c-b215-46e9b6719df2" class=""><mark class="highlight-gray"><code>public void warning(SAXParseException ex) throws SAXException</code></mark><mark class="highlight-gray"> </mark>→ minor error</p></div></p><p id="971b0ab6-471a-42a6-89d4-4ad77d44b93f" class="">
+</p><p id="916c11a4-f4f7-4064-a1d2-7ae6a477aadb" class="">
+</p><h1 id="c4baa96f-a77b-4785-bc25-b9f730a2ea28" class="">Features</h1><p id="db44b1f9-6293-4804-aa86-4acafb4658bf" class=""><mark class="highlight-blue">Features</mark><div class="indented"><p id="556c7c83-6684-42f3-8a0f-ecb3e765cdc2" class=""><a href="https://xerces.apache.org/xerces2-j/features.html">https://xerces.apache.org/xerces2-j/features.html</a></p><p id="515731bb-a878-4199-93db-219cba278fd9" class="">Used to configure parser with: <mark class="highlight-gray"><code>setFeature(java.lang.String name, boolean value)</code></mark></p><ul id="e158c00a-72b5-4031-a7f1-0d5f6a8c5c04" class="block-color-gray toggle"><li><details open=""><summary>Example</summary><pre id="2f1d1d07-5ee7-445f-aa3c-3204a68451d0" class="code"><code>import org.xml.sax.*;
+import org.xml.sax.helpers.*;
+public class CourseApp {
+	public static void main(String[] args) throws Exception {
+		//create XMLReader
+		XMLReader parser = XMLReaderFactory.createXMLReader();
+	
+		//install the content and error handler
+		MyHandler handler = new MyHandler();
+		parser.setContentHandler(handler);
+		parser.setErrorHandler(handler);
+	
+		//turn on validation
+		parser.setFeature(&quot;http://xml.org/sax/features/validation&quot;, true);
+	
+		//start parsing
+		for (int i =0; i &lt; args.length; i++) {
+			parser.parse(args[i]);
+		}
+	}
+}</code></pre></details></li></ul><hr id="a7893eb3-b461-4cdc-b4a2-cd8dd939d54b"/><p id="59fb014d-9a4c-489e-b6ea-9a7f2b17cb12" class="">can throw 2 exceptions:<div class="indented"><p id="0500da42-c601-40d5-98ae-01f42ee81911" class=""><mark class="highlight-gray"><code>SAXNotRecognizedException</code></mark> - if feature can not be assigned<div class="indented"><p id="161d6174-56a0-45b6-82b1-0b6f01ad95f9" class="">ie. turn on validation in a non-validating parser</p></div></p><p id="dca461ee-ad3d-49a8-b124-53e2ced7e940" class=""><mark class="highlight-gray"><code>SAXNotSupportedException</code></mark> - if feature can not be activated<div class="indented"><p id="b36775e1-ad78-4eb9-94b5-924ef74dc7ed" class="">ie. turn on validation (in a validating parser) when part of the document has already been parsed</p></div></p></div></p></div></p><p id="77ba2097-9529-4d16-acb4-45f495630555" class="">
+</p><p id="960e1a28-7008-4d35-ae6f-ba0374f15001" class=""><mark class="highlight-gray">Example of features: </mark><mark class="highlight-blue">Namespace awareness</mark><div class="indented"><p id="f68149ba-1a6b-4ccb-82ea-57672cb8fb43" class=""><a href="http://xml.org/sax/features/namespaces">http://xml.org/sax/features/namespaces</a></p><ul id="5bcb8f24-2969-4b4e-858f-3b07ee2766b3" class="toggle"><li><details open=""><summary>Reminder: <mark class="highlight-gray"><code>startElement(...)</code></mark><mark class="highlight-gray"> </mark>is called at the beggining of every element</summary><pre id="b1dee97f-0a67-4d90-9848-a75605f635a4" class="code"><code>public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes atts) throws SAXException</code></pre></details></li></ul><p id="2089754c-ea30-4a14-8409-8993e58dd368" class="">If parser <em>is namespace aware</em>:<div class="indented"><p id="540bed18-fa9a-4f5f-b3bd-80dc7abf2cd6" class=""><mark class="highlight-gray"><code>namespaceURI</code></mark><mark class="highlight-gray">		</mark>holds prefix (prefix:localname)</p><p id="fabdb3dc-5cb9-446c-b2f1-2024768c9d1c" class=""><mark class="highlight-gray"><code>localName</code></mark><mark class="highlight-gray">		</mark>holds element name without prefix</p><p id="577562d5-8c63-44ec-b609-6702d764d7b6" class=""><mark class="highlight-gray"><code>qualifiedName</code></mark><mark class="highlight-gray">	</mark>empty</p></div></p><p id="82ed1cfd-54db-4ea4-911e-f3aaa0bdd1a3" class="">If parser <em>is not namespace aware</em>:<div class="indented"><p id="7285bc80-3586-41b6-aa5f-bd977f576c86" class=""><mark class="highlight-gray"><code>namespaceURI</code></mark><mark class="highlight-gray">		</mark>empty</p><p id="5645f555-1d22-464d-a27a-6e831acb2e97" class=""><mark class="highlight-gray"><code>localName</code></mark><mark class="highlight-gray">		</mark>empty</p><p id="6b1074ae-bf4d-4baf-a7d5-c5920b8c80ed" class=""><mark class="highlight-gray"><code>qualifiedName</code></mark><mark class="highlight-gray">	</mark>holds elements name (with prefix)</p></div></p></div></p><p id="c2929842-0756-459e-93a9-f5b2f58e0d85" class="">
+</p><p id="958ac6d7-770e-4145-b2f1-6f711622f76f" class=""><mark class="highlight-blue">Validation of document</mark><div class="indented"><p id="01cc6ae1-774b-43ae-b180-68d7bd753484" class=""><a href="http://xml.org/sax/features/validation">http://xml.org/sax/features/validation</a></p></div></p></div></article></body></html>

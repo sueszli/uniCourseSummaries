@@ -1,0 +1,707 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Recovery</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6e4da6d9-968b-4638-a6bc-9b86a8287dc7" class="page sans"><header><h1 class="page-title">Recovery</h1></header><div class="page-body"><nav id="5d3d1ff0-b3ee-4fc4-a651-e25ec5a53874" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4aec61e5-e34e-46c2-b9db-e991c170afd3">Transaktionsverwaltung</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8d1fcc6b-c2a0-48dd-b062-1ec4e96c72d6">Speicherverwaltung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3d063e19-9bc5-4dac-9b0c-7489d49d80e4">Auslagerungs-Strategie</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b1d1c459-4afa-49c6-bcf4-55d214b45ebe">Auslagerungs-Strategie <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>⇒</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \Rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.330183em;vertical-align:0em;"></span><span class="mrel sizing reset-size6 size5">⇒</span></span></span></span></span><span>﻿</span></span> Recovery-Art </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#47899a0a-97ae-4820-97b5-f21bee90af33">Logging</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e0b5399d-a1dc-415e-a33d-f35cc3ea6915">LSN Logs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#372e317e-bdef-4b37-8afc-642f7aca240b">CLR Logs</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#708aaedd-5cc8-41ce-afcc-8915512d422e">Recovery-Algorithmus</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ab6d5e03-2356-4f1e-b2f0-766015aead9f">Checkpoints</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0836ae1c-1773-434e-884f-d58c2ec8f723">Checkpoint-Arten</a></div></nav><p id="c0a76761-e32d-4a55-8196-94b6cc89838e" class="">
+</p><h1 id="4aec61e5-e34e-46c2-b9db-e991c170afd3" class="">Transaktionsverwaltung</h1><p id="2eeeeda3-edef-459d-b293-0f354faa102e" class=""><mark class="highlight-blue">Transaktion und ACID Eigenschaften</mark><div class="indented"><p id="a5800c04-4afe-4123-b407-694ccb7da47f" class="">Folge von Datenbank-Operationen mit den Eigenschaften<div class="indented"><p id="90926764-dd41-4b0d-9c0d-90bf3c9b6a06" class=""><em><span style="border-bottom:0.05em solid"><strong>A</strong></span></em><em>tomicity</em><div class="indented"><p id="31a958fc-9508-4776-81e9-0e0e4ec41002" class="">Atomare Ausführung (ohne logische Unterbrechung)</p></div></p><p id="6729fc4a-abac-4d5f-a703-7cb8236efdf7" class=""><em><strong><span style="border-bottom:0.05em solid">C</span></strong></em><em><strong>onsistency</strong></em><div class="indented"><p id="72341f32-4ad6-484b-9047-67a5439f4a0d" class="">Datenbank davor und danach in einem konsistenten Zustand sein muss (während der Operation aber nicht zwingend)</p></div></p><p id="a77ccca4-15b2-4179-a363-8bb7a5c8ddd9" class=""><em><span style="border-bottom:0.05em solid"><strong>I</strong></span></em><em>solation</em><div class="indented"><p id="55aeb78d-aab6-41df-91c4-ccf70fb4e01a" class="">Parallel laufende Transaktionen dürfen sich nicht gegenseitig beeinflussen.</p></div></p><p id="a8effb46-c917-4e9f-8b3e-b71a0ba7675a" class=""><em><strong><span style="border-bottom:0.05em solid">D</span></strong></em><em>urability</em><div class="indented"><p id="2c1242b6-baf0-4bc4-abc5-f524a1adc9ba" class="">Persistenz, auch nach Systemfehler oder Stromausfall (dann verliert man alles im Arbeitsspeicher)</p></div></p></div></p><hr id="92b4a4a4-c67c-416c-b06e-c84bbd2d897d"/><p id="39225e5c-956b-484b-a252-ef37f3237f9f" class="">Atomicity, Durability durch Recovery in DBMS.</p><p id="504afe5c-6fe3-4752-9036-50e0e8b5268a" class="">Isolation durch Concurrency / Mehrbenutzersynchronisation in DBMS.</p></div></p><p id="23d8b0f9-71b8-43d6-b72c-8e2554cf021d" class="">
+</p><p id="a34345c8-3f20-47f9-bb3a-9c9655508510" class=""><mark class="highlight-blue">Operation</mark><div class="indented"><p id="2aea95b6-09b2-48d5-bb74-36d34fbcdb40" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">d</mi><mo stretchy="false">(</mo><mi mathvariant="monospace">A</mi><mo separator="true">,</mo><mi mathvariant="monospace">a</mi><mo stretchy="false">)</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt read(A, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">read</span><span class="mopen">(</span><span class="mord mathtt">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">a</span><span class="mclose">)</span></span></span></span></span></span><span>﻿</span></span>		<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">a</mi><mo>:</mo><mo>=</mo><mi mathvariant="monospace">A</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt a := A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathtt">A</span></span></span></span></span></span><span>﻿</span></span>    →    wobei <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="monospace">a</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \tt a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">a</span></span></span></span></span></span><span>﻿</span></span> eine lokale Variable ist</p><p id="faf518cd-1937-4842-8c7e-991ab4990d9c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">w</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">e</mi><mo stretchy="false">(</mo><mi mathvariant="monospace">A</mi><mo separator="true">,</mo><mi mathvariant="monospace">a</mi><mo stretchy="false">)</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt write(A, a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">write</span><span class="mopen">(</span><span class="mord mathtt">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">a</span><span class="mclose">)</span></span></span></span></span></span><span>﻿</span></span>		<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">A</mi><mo>:</mo><mo>=</mo><mi mathvariant="monospace">a</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt A := a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathtt">a</span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="6bc0f454-85c1-4d3a-b21d-6bc57c5cf14f" class="">
+</p><p id="775ef506-45b6-4423-9caa-162bf558a05c" class=""><mark class="highlight-blue">Transaktionskontrolle</mark><div class="indented"><p id="116e64a9-35e6-45dd-a923-e81dc5d185d1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">B</mi><mi mathvariant="monospace">O</mi><mi mathvariant="monospace">T</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt BOT</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">BOT</span></span></span></span></span></span><span>﻿</span></span>						Begin of transaction</p><p id="7c2f4765-5496-4e15-ba06-fa17fc57113d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt commit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">commit</span></span></span></span></span></span><span>﻿</span></span>					Von Arbeitsspeicher zu Festspeicher</p><p id="ab0acfaa-2f25-4799-baf9-54330d23e764" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">b</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">t</mi><mstyle mathcolor="grey"><mi mathvariant="monospace">/</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">b</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">k</mi></mstyle></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt abort \color{grey}/ rollback</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.699993em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">abort</span><span class="mord mathtt" style="color:grey;">/rollback</span></span></span></span></span></span><span>﻿</span></span>			Operationen aus Transaktion zurücksetzen aus Arbeitsspeicher</p><p id="dce0dc77-4fde-4401-bd5d-04aa2224b532" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">f</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">e</mi><mtext> </mtext><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">p</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt define ~savepoint</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.199998em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">define</span><span class="mspace nobreak"> </span><span class="mord mathtt">savepoint</span></span></span></span></span></span><span>﻿</span></span>		ermöglicht rollback bis savepoint (zusätzlich zu vollständigem)</p><p id="3cb9c191-bf4c-4973-8bcd-04fed1926417" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">b</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">k</mi><mtext> </mtext><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">o</mi><mtext> </mtext><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">p</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt rollback~to~savepoint</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.199998em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">rollback</span><span class="mspace nobreak"> </span><span class="mord mathtt">to</span><span class="mspace nobreak"> </span><span class="mord mathtt">savepoint</span></span></span></span></span></span><span>﻿</span></span></p></div></p><hr id="e35116a1-875e-438a-827c-ebe80fdeda94"/><p id="91ddc75d-b35b-493f-a545-6989d3a3a809" class="">Mögliche Abschlüsse einer Transaktion<div class="indented"><ol type="1" id="ca49a0e5-5ad9-45f9-8b83-5babab93d8ce" class="numbered-list" start="1"><li>commit</li></ol><ol type="1" id="ebb985a1-d60a-412d-9ae9-a36833f71a43" class="numbered-list" start="2"><li>abort Aufruf</li></ol><ol type="1" id="30127d05-32ec-4929-9f4a-98bcba88dc46" class="numbered-list" start="3"><li>Fehler → abort durch DBMS</li></ol></div></p><p id="146ec5bc-6a92-4e92-961c-071f8c46109f" class="">
+</p><p id="0e24b145-8d7e-4c00-b2fb-1bdb5e5575f1" class="">
+</p><h1 id="8d1fcc6b-c2a0-48dd-b062-1ec4e96c72d6" class="">Speicherverwaltung</h1><p id="1d6f94b4-8aa7-4b55-9b71-012bff018c05" class=""><mark class="highlight-blue">Zweistufige Speicherhierarchie</mark><div class="indented"><p id="3125e527-a820-4d58-a342-7f2f9948a3d7" class="">Hauptspeicher / RAM		schnell, aber flüchtig</p><p id="e092bb39-c006-4dbf-a3f3-c14f2fce0603" class="">Festplatte / Storage		langsam, aber persistent, billiger</p></div></p><p id="46730bf9-54c2-40ec-af06-c5fc0b39d407" class="">
+</p><p id="979fdd4f-c0ee-44bf-bf8f-212767da16f8" class=""><mark class="highlight-blue">Speicherorganisation mit Pages </mark><mark class="highlight-blue"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="d7dfaf50-e40f-4b9c-b154-1b73436aa9f5" class="">Einheit zum Verschieben von Datensätzen zwischen Speichern.<div class="indented"><p id="7b1d7d7e-6042-40d2-b1ea-f0ce05855d7f" class="">Auslagern	RAM <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>→</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.330183em;vertical-align:0em;"></span><span class="mrel sizing reset-size6 size5">→</span></span></span></span></span><span>﻿</span></span> Storage</p><p id="428eca86-4f5e-4dfa-af3b-b657e8ec1510" class="">Einlagern		RAM <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>←</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \larr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.330183em;vertical-align:0em;"></span><span class="mrel sizing reset-size6 size5">←</span></span></span></span></span><span>﻿</span></span> Storage</p></div></p><p id="51600beb-9595-4563-80f1-c8ddf71c7cf6" class="">Datensatz kann mehrere pages umfassen.<div class="indented"><p id="d941ecff-cbb1-48d4-916d-aa70ba1a4b4e" class="">Annahme: nur ein Datensatz per Seite <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>A</mi><mo>∈</mo><msub><mi>P</mi><mi>A</mi></msub></mstyle></mrow><annotation encoding="application/x-tex">\small A \in P_A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6501870000000001em;vertical-align:-0.035190000000000006em;"></span><span class="mord mathnormal sizing reset-size6 size5">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30555333333333334em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p></div></p></div></p><p id="00064804-86ef-498b-8e2b-535875982ec9" class="">
+</p><p id="fa530246-a811-48e1-9706-16a21292280a" class=""><mark class="highlight-blue">Fixierung von pages</mark><div class="indented"><p id="37653935-31bc-4b7d-a9ce-51aa678c6c41" class="">Während page access sind sie fixiert mit <em>fixed-bit</em> und dürfen nicht ausgelagert werden.</p></div></p><p id="c7e4b6b9-66f3-494d-a1b1-9df8093fdf6e" class="">
+</p><h2 id="3d063e19-9bc5-4dac-9b0c-7489d49d80e4" class="">Auslagerungs-Strategie</h2><p id="3f553e9e-f8ed-4d04-9daa-cf07bce7dd7d" class=""><mark class="highlight-blue">Auslagern von Pages: RAM</mark><div class="indented"><p id="f5e1e494-37e6-4b62-929f-dd5fdebca74a" class="">Auslagern vor <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt commit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">commit</span></span></span></span></span></span><span>﻿</span></span> <div class="indented"><p id="970816aa-1d84-43b2-a924-faf43d06c2a1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>steal</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{steal}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">steal</span></span></span></span></span></span><span>﻿</span></span>	alle nicht fixierte pages dürfen ausgelagert werden.</p><p id="20b3f6c8-ae08-47ca-af3d-b047e1fb624a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>steal</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{steal}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">steal</span></span></span></span></span></span><span>﻿</span></span>	zusätzlich dürfen sie in keiner <em>aktiven</em> Transaktion verändert worden sein.</p><p id="9dd70c61-6798-4255-8ec6-d21d84278073" class="">		ansonsten muss man sie bei einem rollback auch in der storage überschreiben.</p></div></p><p id="c1e89c19-5173-4c0e-b34d-ac927ff2812b" class="">Auslagern nach <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt commit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">commit</span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="abb20bcd-740c-4641-844f-8f6a7f287118" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>force</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{force}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">force</span></span></span></span></span></span><span>﻿</span></span>	erzwungenes Auslagern am Ende jeder Transaktion.</p><p id="367e0955-0ed2-49d1-a141-1d4e2095659b" class="">		teuer, vor allem bei &quot;hot-spots&quot;</p><p id="5a334350-ecba-4b4a-bfc6-4544a32d0ffa" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>force</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{force}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">force</span></span></span></span></span></span><span>﻿</span></span>	pages am Transaktionsende mit <em>dirty-bit </em>markieren - auslagern optional.</p><p id="b1d8b556-fca4-4c6d-aa17-a1d564eba5d3" class="">		bessere performance, wenn page beliebt - nicht immer neu einlagern.</p></div></p><p id="637f3431-94de-4a69-9ae7-418753574eb7" class=""><mark class="highlight-gray">Bei </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>steal + force</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{steal + force}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.699993em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">steal + force</span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> muss Transaktion gesamte page sperren und nicht einzelne Datensätze.</mark></p></div></p><p id="0510d9a1-fe3c-404a-a68f-eb66a9757062" class="">
+</p><p id="dcf8b5d4-52b6-41c2-8ea5-442d8cea4090" class=""><mark class="highlight-blue">Auslagern von Pages: Storage</mark><div class="indented"><p id="543344dc-1162-4749-81af-a36c65a5aa88" class="">Update-in-Place <mark class="highlight-gray">(direkte Strategie)</mark><div class="indented"><p id="3144f142-5f29-4af5-9bdc-7e4ff424ec12" class="">Jede page hat einen eindeutigen Platz im storage die überschrieben wird</p></div></p><p id="e22fec5e-008b-422b-8509-20807d02db27" class="">Twin-block-verfahren <mark class="highlight-gray">(indirekte Strategie)</mark><div class="indented"><p id="35e93a63-53b7-43bb-a115-19639fdb15b4" class="">Jede page hat 2 Kopien im storage + bit dass sagt welche aktuell ist</p><p id="d55ebca7-5760-4378-ad0e-1ffd29234304" class="">aktuelle kopie wird überschrieben</p></div></p><p id="8ef8c185-31b8-4e80-9dbc-6063c7321184" class="">Schattenspeicherkonzept <mark class="highlight-gray">(indirekte Strategie)</mark><div class="indented"><p id="69bcd973-52d3-4eb9-9afa-2c52ee5b3546" class="">nur jede mindestens 1x veränderte hat 2 Kopien im storage</p></div></p></div></p><p id="62f3896a-8913-47dc-b7fb-cc75321b2fff" class="">
+</p><h2 id="b1d1c459-4afa-49c6-bcf4-55d214b45ebe" class="">Auslagerungs-Strategie <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>⇒</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \Rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.330183em;vertical-align:0em;"></span><span class="mrel sizing reset-size6 size5">⇒</span></span></span></span></span><span>﻿</span></span> Recovery-Art </h2><p id="6847bbd1-afa8-41f5-8dcd-e8388b9b1abd" class=""><mark class="highlight-blue">Fehlerkategorien</mark><div class="indented"><ol type="1" id="a79b8b53-fbda-4ec3-be78-0283558dd313" class="numbered-list" start="1"><li>Fehler mit Verlust von Storage<p id="94a9c065-8ff5-41c5-b511-d920158a3123" class="">	Nur mit backup / archiv wiederherstellbar</p></li></ol><ol type="1" id="785c9beb-fbce-4115-8b3d-74e2683c947e" class="numbered-list" start="2"><li>Fehler mit Verlust von RAM<p id="822cf57e-cdc1-4109-bc99-261c7f807267" class="">	Abgeschlossene Transaktionen (Winner) müssen rekonstruiert werden (globales redo)</p><p id="9c8e41d7-f9d2-4e6b-b8e7-cb08af6d1941" class="">	Abgebrochene Transaktionen (Loser) müssen zurückgesetzt werden (globales undo)</p></li></ol><ol type="1" id="ecfe7ebc-2916-418a-a145-086f3f583853" class="numbered-list" start="3"><li>Lokale Fehler in einer Transaktion<p id="73233fd1-6079-4550-afde-45365cddef4a" class="">	Eigentlich ein Spezialfall vom oberen Fehler (lokales undo)</p></li></ol></div></p><p id="2226bcea-fa8c-4005-9933-3407aefe6cda" class="">
+</p><p id="a54c9e60-9118-4853-b61c-92fe6e3179c8" class="">Es gilt:<div class="indented"><p id="7807d25f-7424-41bb-be85-81f9c27aaf83" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>force</mtext><mo>→</mo><mtext>kein redo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{force} \rarr \text{kein redo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">force</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">kein redo</span></span></span></span></span></span><span>﻿</span></span></p><p id="9316e99a-29af-4f35-97ea-8187f4341556" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>force</mtext><mo>→</mo><mtext>redo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{force} \rarr \text{redo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">force</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">redo</span></span></span></span></span></span><span>﻿</span></span></p><p id="d1f7be45-87f2-48e6-9400-fa1bb2ab90d0" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>steal</mtext><mo>→</mo><mtext>undo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{steal} \rarr \text{undo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">steal</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">undo</span></span></span></span></span></span><span>﻿</span></span></p><p id="bd147552-0d54-461a-87c4-78556739c365" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>steal</mtext><mo>→</mo><mtext>kein undo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{steal} \rarr \text{kein undo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">steal</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">kein undo</span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="49e2c37e-ae21-4c7a-9ecb-9e165dbf7f75" class="">
+</p><p id="6521848b-1020-46c4-b183-79b93866b26d" class=""><mark class="highlight-blue">Angenommene Systemkonfiguration:</mark><div class="indented"><p id="a2fe2d7a-3a3c-4fa4-a56a-d4ee6be0b38e" class=""><mark class="highlight-blue">Auslagerungsstrategie</mark><div class="indented"><p id="28973ea9-db85-4b5a-bd8f-08aaa369bbc4" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>steal</mtext><mo>→</mo><mtext>undo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \text{steal} \rarr \text{undo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">steal</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">undo</span></span></span></span></span></span><span>﻿</span></span></p><p id="71ba1463-e1d3-4d1b-936a-26954f69bc2b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">¬</mi><mtext>force</mtext><mo>→</mo><mtext>redo</mtext></mstyle></mrow><annotation encoding="application/x-tex">\small \neg\text{force} \rarr \text{redo} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">¬</span><span class="mord text sizing reset-size6 size5"><span class="mord">force</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">redo</span></span></span></span></span></span><span>﻿</span></span></p><p id="6d4f43c8-cd06-402a-b84e-09175d910dbd" class="">Update-In-Place</p></div></p><p id="ab00cfef-98b8-4c62-b517-098da428ca5f" class=""><mark class="highlight-blue">Write-ahead-log WAL</mark><div class="indented"><p id="a81157fd-2395-49fc-b751-1a6299b23d52" class="">Wird durch obere Konfiguration erfordert.</p><p id="015ac4af-6069-480d-b357-2c4d065c4e38" class="">Alle Log-Einträge müssen vor <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt commit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">commit</span></span></span></span></span></span><span>﻿</span></span> + Auslagerung der page ausgeschrieben werden.</p><p id="448c626e-81be-48ab-9424-27a3c8bf14ec" class="">Chronologische Reihenfolge der Logs muss erhalten bleiben.</p></div></p><p id="456ef365-ea3a-4892-a268-c63287369707" class=""><mark class="highlight-blue">Kleine Sperrgranulate</mark><div class="indented"><p id="13086e8e-e51d-4951-a4e6-73d5dac75005" class="">Zugriffsmatrix erweitert mit mehr Locks</p></div></p><p id="9edae541-8a98-453e-b125-657ea7a2cd3b" class="">
+</p><p id="70102e60-f7e5-482f-bf41-b69a3d0e862c" class="">
+</p><p id="876c5e78-95b3-439b-9a2e-480cd4ec8ec4" class="">
+</p><p id="3c2595de-6e69-4d80-a2d9-689d57c715b0" class="">
+</p><p id="d9f235d7-cfa5-4006-a7d8-1e4a35d0af7c" class="">
+</p></div></p><h1 id="47899a0a-97ae-4820-97b5-f21bee90af33" class="">Logging</h1><h2 id="e0b5399d-a1dc-415e-a33d-f35cc3ea6915" class="">LSN Logs</h2><p id="4a15d847-3f32-4c27-b6ed-2f0cfbd93724" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mi mathvariant="monospace">L</mi><mi mathvariant="monospace">S</mi><mi mathvariant="monospace">N</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">T</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">I</mi><mi mathvariant="monospace">D</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">P</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">g</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">I</mi><mi mathvariant="monospace">D</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">R</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">U</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">P</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">L</mi><mi mathvariant="monospace">S</mi><mi mathvariant="monospace">N</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\tt [LSN,~TransaktionsID,~PageID, ~Redo,~Undo,~PrevLSN]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mopen">[</span><span class="mord mathtt">LSN</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">TransaktionsID</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">PageID</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">Redo</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">Undo</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">PrevLSN</span><span class="mclose">]</span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="d8cf3972-1db0-4c22-9c13-63da4b9ac9c2" class="">LSN 				<mark class="highlight-gray">Log Sequence Number: ID von log</mark></p><p id="ced94bb0-6de9-45bf-baa6-71e2131a3398" class="">TransaktionsID		<mark class="highlight-gray">ID von Transaktion</mark></p><p id="a567e87a-5341-4ab0-b858-dffd1f3c0970" class="">PageID			<mark class="highlight-gray">ID von page die von operation betroffen ist - </mark><span style="border-bottom:0.05em solid"><mark class="highlight-gray">ein log pro page</mark></span></p><p id="ae7b0bb0-78cc-4364-af75-2be9038e3494" class="">Redo			</p><p id="21789444-e888-49be-8223-bb16bdb49ee6" class="">Undo			</p><p id="17971738-7657-4ce1-9425-de5287046b2c" class="">PrevLSN			<mark class="highlight-gray">Pointer zur vorherigen Log-ID von </mark><em><mark class="highlight-gray">dieser</mark></em><mark class="highlight-gray"> Transaktion</mark></p></div></p><p id="3e97be37-15a7-40c9-b37a-7c193dbe1a5a" class="">
+</p><p id="4f0087cc-dffb-4732-bcee-209d2fc52d42" class=""><mark class="highlight-blue">Logging in pages</mark><div class="indented"><p id="7eaa5a29-92ff-4221-9d59-7412ec929467" class="">Jede page erhält auch die LSN vom Log der jüngsten Operation die auf sie ausgeführt wurde.</p></div></p><p id="ea1ab33e-cd48-48b3-8c70-0e3789aa23ab" class="">
+</p><p id="b29bb8c7-103e-425a-9c60-d63011087b80" class=""><mark class="highlight-blue">Physische Protokollierung vs. Logische Protokollierung</mark><div class="indented"><p id="ca4760df-21de-454e-85c8-807681950bd3" class="">Physisch<div class="indented"><p id="5c348917-20fa-4971-aaee-a02c7f157305" class="">In der Praxis verwendet</p><p id="cd53710f-5c2c-4dc8-b688-daa418a8e371" class=""><em>Redo</em> und <em>Undo</em> enthalten ganze Zustände &quot;images&quot;: &quot;after image&quot;, &quot;before image&quot;</p><p id="c6658c2f-42fd-4832-9493-0d50d50b9cf7" class="">Dienen auch als zusätzliche Redundanz.</p></div></p><p id="eb61087b-b625-4a22-91b2-aef5cca3b682" class="">Logisch<div class="indented"><p id="c8d7421e-bea1-413c-961b-64d99953a9f5" class="">Operationen</p></div></p></div></p><p id="23e6cd76-042c-4c26-82d8-be1114e26599" class="">
+</p><p id="1d6a68b6-6d28-4f9c-ba38-4a322d72b974" class=""><mark class="highlight-blue">Implementierung</mark><div class="indented"><p id="667a917d-3c62-4e47-b2fb-a26fc5a020b8" class="">Logs in Hauptspeicher als Ringbuffer (getrennt vom restlichen Speicherbereich).<div class="indented"><p id="cd977d89-025c-4c70-8a1c-fd6dd6357d98" class="">Kontinuierliches Ausschreiben für gleichmäßige Lastverteilung.</p></div></p><p id="56310699-4b2b-4d7f-ba0a-ce01f809e97e" class="">Log-storage kann zusätzlich auch ein backup haben.</p></div></p><figure id="4f468e77-fc2a-42b0-9cb6-612c18c55caf" class="image"><a href="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled.png"><img style="width:192px" src="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled.png"/></a></figure><p id="d4b0f31d-8f0c-4ab3-87bc-d477886bdfe8" class="">
+</p><h2 id="372e317e-bdef-4b37-8afc-642f7aca240b" class="">CLR Logs</h2><p id="9f496bef-962b-4eed-b4f7-88811a1d266d" class=""><mark class="highlight-gray">Compensation log record</mark></p><p id="23b73846-200d-4a74-a1d3-99bfa66d346a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">⟨</mo><mi mathvariant="monospace">h</mi><mi mathvariant="monospace">L</mi><mi mathvariant="monospace">S</mi><mi mathvariant="monospace">N</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">T</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">I</mi><mi mathvariant="monospace">D</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">P</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">g</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">I</mi><mi mathvariant="monospace">D</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">R</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">P</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">L</mi><mi mathvariant="monospace">S</mi><mi mathvariant="monospace">N</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">U</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">N</mi><mi mathvariant="monospace">x</mi><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">L</mi><mi mathvariant="monospace">S</mi><mi mathvariant="monospace">N</mi><mi mathvariant="monospace">i</mi><mo stretchy="false">⟩</mo></mrow><annotation encoding="application/x-tex">\tt \lang hLSN, ~TransaktionsID, ~PageID, ~Redo, ~PrevLSN, ~UndoNxtLSNi \rang</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mopen">⟨</span><span class="mord mathtt">hLSN</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">TransaktionsID</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">PageID</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">Redo</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">PrevLSN</span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathtt">UndoNxtLSNi</span><span class="mclose">⟩</span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="f481d79e-db7f-4b4a-a98c-30d445ab7c20" class="">LSN</p><p id="02ae9d9e-dfeb-4922-bff3-d0b87f5ef8e2" class="">TransaktionsID</p><p id="24f692f9-4c95-4c0b-9d61-63d2d3e2eb57" class="">PageID</p><p id="4903cc98-6e03-4bfa-8b56-7caee5e72e39" class="">Redo			<mark class="highlight-gray">Hat keine undo Information</mark></p><p id="fae794a3-8d29-43b7-8f55-11497d415ac3" class="">PrevLSN			<mark class="highlight-gray">Älteste LSN von Transaktion welche hiermit rückgängig gemacht wurde</mark></p><p id="29e0024a-a1ab-4144-8ebf-1c83a2eddd7b" class="">UndoNxtLSN		<mark class="highlight-gray">LSN welche als nächstes rückgängig gemacht werden soll (bis </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">B</mi><mi mathvariant="monospace">O</mi><mi mathvariant="monospace">T</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt BOT</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">BOT</span></span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">)</mark></p></div></p><p id="351de0f7-e522-417e-ae03-5d52ea3db7ce" class="">
+</p><p id="47c51d20-44a9-416c-a3a2-515a7e7916fb" class="">
+</p><p id="a5f33b2a-0331-4cf0-b472-1ff4d036fcd3" class="">
+</p><p id="09235132-efcc-4f9d-9378-b356a53a1f59" class="">
+</p><p id="07180b06-9d8c-45d8-8978-79e7be76c79b" class="">
+</p><h1 id="708aaedd-5cc8-41ce-afcc-8915512d422e" class="">Recovery-Algorithmus</h1><p id="4efbf1fe-2783-488f-a826-67e71aa6d9bb" class="">Winner	müssen rekonstruiert werden</p><p id="73e0a34b-a240-48f9-b137-a32a72d5f8cc" class="">Loser	müssen rückgängig gemacht werden</p><p id="8ed70664-b24c-4bb6-94d4-25df82575af4" class="">
+</p><figure id="d7e395f2-bdb1-41a5-a413-ebc5407af12b" class="image"><a href="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%201.png"><img style="width:192px" src="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%201.png"/></a></figure><p id="f01cd1d2-ff6a-444a-9e2e-00e800ae33c2" class="">Ablauf<div class="indented"><ol type="1" id="5fba86c9-b1b9-4658-8df6-8a342c47577e" class="numbered-list" start="1"><li><mark class="highlight-blue">Analyse</mark><p id="b0c6b661-0c45-4d56-a896-2e18d5d1ca8d" class="">Aus der Log Datei Loser (ohne <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">m</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt commit</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">commit</span></span></span></span></span></span><span>﻿</span></span>) finden.</p><p id="8e18fc2d-fc54-45a7-b119-14893eaa5316" class="">Älteste LSN für alle Transaktionen finden.  </p></li></ol><ol type="1" id="f95cd931-63cf-4c01-942e-af8e49c3bf91" class="numbered-list" start="2"><li><mark class="highlight-blue">Redo: aller Transaktionen</mark><p id="d2b36841-1d84-42b5-a872-18408160d181" class=""><em>alle</em> logs werden von Anfang an inkl. CLRs durchgegangen:<div class="indented"><p id="4a9148e9-4db8-49ef-ab8c-a0a3d13ed89b" class="">rekonstruiert wenn log-LSN &gt; page-LSN in storage</p><p id="eb63bb24-a6aa-4f96-8211-fd8dddd0002e" class=""><mark class="highlight-gray">In der Praxis hat man mit physischen logs die after-images vom ältesten log.</mark></p></div></p></li></ol><ol type="1" id="5b0f0c00-b1e0-40e2-b27f-31ef1672f29a" class="numbered-list" start="3"><li><mark class="highlight-blue">Undo: aller Loser-Transaktionen</mark><p id="860938ed-f15c-49e2-b5b1-c896074fd01b" class="">zusätzlich CLR-logs machen (sollte System währenddessen nochmals abstürzen)</p><p id="b30947ee-a357-4d24-ac1c-164869cad118" class="">Ablauf:<div class="indented"><p id="176dfa19-7542-46be-9a80-e5918f8facc1" class="">In umgekehrter Reihenfolge alle Logs durchgehen.</p><ol type="i" id="9e4d2240-436e-4b3b-9f70-d010f47bbb10" class="numbered-list" start="1"><li>Älteste LSN der Transaktion zurücksetzen<p id="87a9daf5-250c-45a3-9475-4944e70460f1" class="">Bzw aus der Liste entfernen wenn die Operation <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">B</mi><mi mathvariant="monospace">O</mi><mi mathvariant="monospace">T</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt BOT</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">BOT</span></span></span></span></span></span><span>﻿</span></span> war.</p></li></ol><ol type="i" id="5b5537e5-7cab-441f-b294-754e991dbc95" class="numbered-list" start="2"><li>CLR erstellen mit<p id="e2f1746a-c4f8-49da-bc31-b9c9235f4c5d" class=""><mark class="highlight-gray"><code>CLR-PrevLSN</code></mark> := älteste <mark class="highlight-gray"><code>LSN</code></mark> der Transaktion welche gerade zurückgesetzt wird (kann auch von einer CLR sein)</p><p id="3e93949a-f97a-4bb3-947a-e849d549b692" class=""><mark class="highlight-gray"><code>CLR-UndoNxtLSN</code></mark> := entnommene <mark class="highlight-gray"><code>Log-PrevLSN</code></mark> aus dem zurückgesetzten Log-Eintrag</p></li></ol><ol type="i" id="6e47ee07-f20a-4c35-ad18-cc5ca09f2736" class="numbered-list" start="3"><li><mark class="highlight-gray"><code>page-LSN</code></mark> auf <mark class="highlight-gray"><code>CLR-LSN</code></mark> setzen</li></ol></div></p></li></ol></div></p><p id="23543334-cd5c-4636-9745-e51798adac05" class="">
+</p><p id="19fe2fff-5e72-4b90-afc2-131814f3697a" class=""><mark class="highlight-blue">Lokales Zurücksetzen</mark><div class="indented"><p id="fde49118-088d-46d3-a1cb-6d03a509c70f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">l</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">l</mi><mtext> </mtext><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt local~undo</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549999em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">local</span><span class="mspace nobreak"> </span><span class="mord mathtt">undo</span></span></span></span></span></span><span>﻿</span></span>, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">d</mi><mi mathvariant="monospace">o</mi><mtext> </mtext><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">l</mi><mtext> </mtext><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">p</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\small \tt undo~until~savepoint</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.199998em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathtt">undo</span><span class="mspace nobreak"> </span><span class="mord mathtt">until</span><span class="mspace nobreak"> </span><span class="mord mathtt">savepoint</span></span></span></span></span></span><span>﻿</span></span></p><p id="2c30a6bf-c3cc-48de-8b56-d1eeeb43a657" class="">Erhöhte Effizienz, indem Log-Einträge die noch im RAM sind benutzt werden können</p><p id="a0702081-fe66-4cc5-a292-bf2bb673168a" class="">Ablauf:<div class="indented"><ol type="1" id="a1fa0766-b053-4731-930e-2d74c38b3642" class="numbered-list" start="1"><li>Älteste LSN bestimmen von Transaktion</li></ol><ol type="1" id="bd827200-ee94-4637-9a45-62a8325295a7" class="numbered-list" start="2"><li>Lokale Änderungen rückgängig machen</li></ol></div></p></div></p><p id="30b8194e-b31e-4958-9523-16d5a33b230c" class="">
+</p><p id="d354faf2-0236-44b8-ba90-afb58ecba41f" class="">
+</p><p id="ab2e30ed-b1f0-49b9-a585-2d0f30ce8402" class="">
+</p><p id="d3a3a88c-25fb-43f8-8f5d-088a1a0c7863" class="">
+</p><p id="7e01ad0d-7d27-418d-becb-613c48fcec31" class="">
+</p><h1 id="ab6d5e03-2356-4f1e-b2f0-766015aead9f" class="">Checkpoints</h1><p id="1bb311a5-9a41-40fe-b307-9e8ac7607353" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">h</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">p</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi><mo mathvariant="monospace">≠</mo><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">a</mi><mi mathvariant="monospace">v</mi><mi mathvariant="monospace">e</mi><mi mathvariant="monospace">p</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">n</mi><mi mathvariant="monospace">t</mi></mrow><annotation encoding="application/x-tex">\tt checkpoint \neq savepoint</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9166599999999999em;vertical-align:-0.22222em;"></span><span class="mord"><span class="mord mathtt">checkpoint</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathtt">savepoint</span></span></span></span></span></span><span>﻿</span></span></p><p id="1356a32b-e6bf-4696-b3cc-d1608b987d3b" class=""><mark class="highlight-blue">Savepoint</mark><div class="indented"><p id="ca6eee5f-6932-4cdc-875b-45d0aba37947" class="">Zeitpunkt bis zu der man lokal zurücksetzt</p></div></p><p id="51b6b3ff-422b-48e1-a4e2-38ec2956318e" class=""><mark class="highlight-blue">Checkpoint / Sicherungspunkt</mark><div class="indented"><p id="f86f43f2-3143-44d7-9ab0-e3ff05023408" class="">Zeitpunkt bei der man alle Transaktionen commited (damit die Analyse vom aller ersten log anfangen muss)</p></div></p><p id="77786232-b638-424c-8a97-5ef78cd4453f" class="">
+</p><h2 id="0836ae1c-1773-434e-884f-d58c2ec8f723" class="">Checkpoint-Arten</h2><p id="0878262b-06e5-4c3b-a585-5fae03fbc998" class="">bestimmt die älteste benötigte LSN </p><p id="7e8137fb-1759-46b8-be27-9b25fa054d28" class="">
+</p><p id="5161a0e0-aa80-40e1-b68d-7706cb24eafa" class=""><mark class="highlight-blue">Transaktions-Konsistente checkpoints</mark><div class="indented"><p id="b4ecce9b-9e57-4e37-ab8b-3c8b816e1237" class="">Blockiert gesamtes System.</p><p id="b7f2a4ef-b3b2-40ff-b623-1b86569c1c72" class="">Kein redo/undo ab checkpoint notwendig.</p><p id="4d40131b-6ff8-4d78-b328-29549dd3c3bf" class="">Ablauf:<div class="indented"><ol type="1" id="0a36a0c2-ef10-43c7-a7f1-3a7e73ada6b7" class="numbered-list" start="1"><li>Checkpoint anmelden</li></ol><ol type="1" id="ce9eced7-1887-40f7-8dc2-8ad37fa6d985" class="numbered-list" start="2"><li>Neue Transaktionen blockieren und warten lassen, alle anderen Transaktionen commiten</li></ol></div></p></div></p><figure id="72b75049-feaf-4594-9627-76cc166b4559" class="image"><a href="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%202.png"><img style="width:336px" src="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%202.png"/></a></figure><p id="8a3cfd35-a913-4f5d-bb10-12b27cd31b0e" class="">
+</p><p id="2afa6db7-dbfe-4da1-839b-b97d48a08aff" class=""><mark class="highlight-blue">Aktions-Konsistente checkpoints</mark><div class="indented"><p id="766842e3-0ee5-4c19-a882-d2775638dd69" class="">Es werden nur alle Schreiboperationen blockiert - Leseoperationen werden zugelassen.</p><p id="957380d7-624f-4498-9a0f-e9967678b48b" class="">Undo nötig bis zur kleinsten LSN <mark class="highlight-gray"><code>MinLSN</code></mark><mark class="highlight-gray"> </mark>von allen Transaktionen die während checkpoint aktiv waren.</p><p id="27188c9b-e66f-4f9d-b1b1-60d40fc29a98" class="">Ablauf:<div class="indented"><ol type="1" id="b63bbf5a-5629-4b6d-a5c6-e7d406a00064" class="numbered-list" start="1"><li>Checkpoint anmelden (strichlierte Linie)</li></ol><ol type="1" id="adb72cda-4b40-4467-84b6-bdebdd4bad0a" class="numbered-list" start="2"><li>Neue Änderungsoperationen blockieren und warten lassen, alle pages ausschreiben.</li></ol></div></p></div></p><figure id="2f5e84b6-7d70-4e5c-b2a6-2f84669a091e" class="image"><a href="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%203.png"><img style="width:336px" src="Recovery%206e4da6d9968b4638a6bc9b86a8287dc7/Untitled%203.png"/></a></figure><p id="4d9b8932-cb46-453a-b973-850c45909a8a" class="">
+</p><p id="f8f4bab8-368b-468b-922f-d5c0eabc04ff" class=""><mark class="highlight-blue">Fuzzy checkpoints</mark><div class="indented"><p id="d4ca44e1-70be-4f2c-8d5a-bc36431f61e0" class="">Es gibt gleichmäßig verteilte checkpoints.<div class="indented"><p id="c3bcc9dd-8ed5-4455-bd69-c03d31ba2f36" class="">Alle pages mit <mark class="highlight-gray"><code>dirty-bit=1</code></mark>werden kontinuiertlich ausgeschrieben.</p><p id="cb972864-b4fc-4111-b918-493cef64c997" class="">Gleichmäßige Lastverteilung.</p></div></p><p id="9b642a18-7909-4068-b63d-66ea918b17cd" class="">Redo ab <code><mark class="highlight-gray">MinDirtyPageLSN</mark></code><div class="indented"><p id="44a6fc15-f6d9-4f7b-ab39-6efba4ac65ed" class="">Wird immer mitgespeichert: älteste LSN an dirty-pages die noch nicht ausgeschrieben wurden.</p></div></p><p id="33a1d200-11c6-44f8-9199-c72ebdc34678" class="">Undo nötig bis zur kleinsten LSN <mark class="highlight-gray"><code>MinLSN</code></mark><mark class="highlight-gray"> </mark>von allen Transaktionen die während checkpoint aktiv waren.</p><p id="39e3aa18-952b-4e91-981c-99803b017699" class=""><em>Hot-Spot</em>s können lange nicht ausgeschrieben werden da sie fixiert sind → Deshalb wird ein counter geführt um pages die mehrmals bearbeitet wurden zum Ausschreiben zu zwingen. </p></div></p><p id="a54f1b1d-f533-48d3-96c8-68f27c26457a" class="">
+</p></div></article></body></html>

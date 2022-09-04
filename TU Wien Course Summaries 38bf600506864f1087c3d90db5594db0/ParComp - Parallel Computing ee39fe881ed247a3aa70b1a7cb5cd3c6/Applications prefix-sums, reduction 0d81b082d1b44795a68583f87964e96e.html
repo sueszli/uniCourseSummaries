@@ -1,0 +1,768 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Applications prefix-sums, reduction</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0d81b082-d1b4-4795-a685-83f87964e96e" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">Applications prefix-sums, reduction</h1></header><div class="page-body"><p id="30bb456f-2796-4f26-98be-475c54fa37e8" class="">
+</p><nav id="b88d87b3-ebaa-4595-946f-b6f459fc814f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#61bc5435-209c-4574-91fa-25c39df640dc">Applications of reduction</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b96ece1b-ba51-4fa2-853f-8d3606996071">Cutoff computation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#db9ed6f3-d2d5-4a7b-8ad2-6c13a3f3d9af">Applications of prefix-sums</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#925ff8da-4eae-419b-9b94-efed288b7a72">Array compaction: Load balancing</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cb49828a-a96b-4161-bc80-0a361ca5f73e">Array compaction: Partitioning for QuickSort</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#382b8b95-e6d9-48bd-b15e-b7e69e8dbce2">Blocking technique</a></div></nav><p id="2534594a-5414-4103-a57f-157a374b28d3" class="">
+</p><h1 id="61bc5435-209c-4574-91fa-25c39df640dc" class="">Applications of reduction</h1><h2 id="b96ece1b-ba51-4fa2-853f-8d3606996071" class="">Cutoff computation</h2><p id="5bad86b7-22a2-45cc-b73d-57aef80cafd3" class=""><mark class="highlight-blue">Cutoff computation</mark><div class="indented"><p id="b2792f89-964e-4a37-afd9-94a946b08357" class=""><mark class="highlight-gray"><code>done = allreduce(localdone, AND);</code></mark></p><p id="efa8b8c8-8285-4bf3-9632-826516d806cc" class=""><mark class="highlight-gray"><code>localdone</code></mark><mark class="highlight-gray"> </mark>= <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">∀</mi><mi>i</mi><mo>:</mo><mi>x</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>&lt;</mo><mi>ε</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \forall i: x[i] &lt; \varepsilon </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">∀</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">x</span><span class="mopen sizing reset-size6 size5">[</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mclose sizing reset-size6 size5">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">ε</span></span></span></span></span><span>﻿</span></span> <em><mark class="highlight-gray">(convergence check)</mark></em><div class="indented"><p id="33fabfb4-4a38-4996-b167-b7f9dff2a2e9" class=""><mark class="highlight-gray">all </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> are local</mark></p></div></p><p id="097d1cae-b521-4909-b8f0-81a2ca55ba23" class="">here <mark class="highlight-gray"><code>AND</code></mark> is the associative operation, and we distribute result to all processes (<em>Reduction-to-all</em>).</p><pre id="7e04f651-debf-4b6f-a489-5b8a8e1f2dd5" class="code"><code>// Parallelizable part
+do {
+	for (i=0; i&lt;n; i++) {
+		x[i] = f(i);
+	}
+	// convergence check
+	done = allreduce(localdone, AND);
+} while (!done)</code></pre></div></p><p id="4b249ce6-9f0f-4ba1-a97a-90ed4358f0a0" class="">
+</p><p id="6e131ca1-cda1-45f3-8f63-357f7ca9250e" class="">
+</p><h1 id="db9ed6f3-d2d5-4a7b-8ad2-6c13a3f3d9af" class="">Applications of prefix-sums</h1><h2 id="925ff8da-4eae-419b-9b94-efed288b7a72" class="">Array compaction: Load balancing</h2><p id="b776a921-f801-43da-9a80-b4e6d6006286" class=""><mark class="highlight-blue">Sequential solution</mark><div class="indented"><p id="ac683d5f-79c0-49ef-807a-7966df07960a" class="">Input arrays: <code><mark class="highlight-gray">a</mark></code>, <mark class="highlight-gray"><code>active</code></mark></p><pre id="afb97f0f-89f8-4e02-85ea-f951640d60d7" class="code"><code>for (i=0; i&lt;n; i++) {
+	if (active[i]) {
+		a[i] = f(b[i]+c[i]);
+	}
+}</code></pre><p id="a153d6af-f8fa-47e0-adad-241a18fb72bd" class="">Work: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n + |\texttt{active}| \cdot f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="23e6cb3b-7b84-4be6-9a84-6db9298a57ac" class="">where <mark class="highlight-gray"><code>|active|</code></mark><mark class="highlight-gray"> </mark>ist the number of indices set to <mark class="highlight-gray"><code>true</code></mark></p></div></p></div></p><p id="4f48e319-46e6-44fd-9262-2bfdeb69ff77" class="">
+</p><p id="61d4b379-cb15-4e19-a649-f7c23d104307" class=""><mark class="highlight-blue">Solution: Without array compaction</mark><div class="indented"><p id="2166dd20-ae35-4cc2-b96a-d59503ef98c8" class="">There are no dependencies between loop iterations → Data parallel computation.</p><pre id="86f5fcfa-e966-4ce5-aef8-7f40d23b7585" class="code"><code>par (0 &lt;= j &lt; p) {
+	// i: j*(n/p) ---&gt; (j+1)*(n/p)-1 
+	for (i=j*(n/p); i&lt;(j+1)*(n/p); i++) {
+		if (active[i]) {
+			a[i] = f(b[i]+c[i]);
+		}
+	}
+}</code></pre><p id="f4b95a5c-6590-4106-998f-e10e35d09017" class="">Work:	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n) + O( |\texttt{active}| \cdot f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="b34ca419-34a3-4fca-91de-26089537f8b8" class="">Time:	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O( |\texttt{active}| \cdot f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="95613893-602e-4261-80e7-faf734a97166" class="">Static assigment of work to processors → load inbalance: processors with <mark class="highlight-gray"><code>active[i] == false</code></mark><mark class="highlight-gray"> </mark>do little work.</p></div></p><p id="2051dbde-6440-4f72-beea-dc36f6f9701f" class="">
+</p><p id="ae44fa6d-2853-4793-89e9-d2618b505c12" class=""><mark class="highlight-blue">Solution: With array compaction</mark><div class="indented"><p id="22b9ffc7-b57d-45b7-abc6-fb18e58c88d8" class="">Lower work to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(|\texttt{active}| \cdot f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> by iterating only over active indices:</p><p id="3096cf96-b85a-4b89-adcb-e37e8c576242" class="">Split into blocks of size <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small |\texttt{active}|/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></p><pre id="ffc197cd-493c-4fe3-97f6-d9944b587fb8" class="code"><code>par (i=0; i&lt;n; i++) {
+	index[i] = active[i] ? 1 : 0;
+}
+
+Exscan(index,n); // exclusive prefix computation
+
+m = index[n-1] + (active[n-1] ? 1 : 0); // m = |active| -&gt; used below
+
+par (i=0; i&lt;n; i++) {
+	if (active[i]) {
+		compact[index[i]] = i;
+	}
+}</code></pre><pre id="4f5aed21-b166-4d0f-80b5-5c579f818a0e" class="code"><code>par (j=0; j&lt;m; j++) {
+	i = compact[j];
+	a[i] = f(b[i]+c[i]);
+}</code></pre><ul id="242dcd26-ddea-41fe-9f41-e672872d8ed7" class="toggle"><li><details open=""><summary>Example</summary><pre id="058ee0b3-3b73-4f83-aa53-31b702042b68" class="code"><code>            0     1      2      3     4      -&gt; n = 5
+active  = [true, true, false, false, true]   -&gt; m = 3
+index   = [ 1,    1,     0,     0,    1  ]
+	↓ Exscan
+index   = [ 0,    1,     2,     2,    2  ]</code></pre><p id="0019fc99-49f3-4e8c-a905-5f62bdfd74e7" class="">Now we can copy values with their index for the new compact array in <mark class="highlight-gray"><code>index</code></mark>. </p><p id="6e75402f-33d2-4a8e-a3f5-f3b4c12c91dc" class="">
+</p></details></li></ul><p id="a79a7112-e588-42dd-82fe-855f1b64112a" class="">Work:	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n) + O(|\texttt{active}| \cdot f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="ce0b9f4b-762f-4522-b750-4d645ab7d4f4" class="">Time:	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo><mo>+</mo><mtext>Exscan</mtext><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext mathvariant="monospace">active</mtext><mi mathvariant="normal">∣</mi><mo>⋅</mo><mi>f</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/p) + \text{Exscan}(p,n) + O((|\texttt{active}| \cdot f)/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Exscan</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">((</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord texttt">active</span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="39f2133b-7fc1-4c91-a300-c71cfafccb00" class="">where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Exscan</mtext><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo>+</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Exscan}(p,n) = O(n/p + \log n) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Exscan</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p></div></p><p id="e1fe8b8b-b319-48d3-950f-66710fe363bf" class="">
+</p><p id="9c25a4de-fa07-4442-948f-b94c1978bea2" class="">
+</p><h2 id="cb49828a-a96b-4161-bc80-0a361ca5f73e" class="">Array compaction: Partitioning for QuickSort</h2><p id="ac2c8af4-144a-4c04-a0f4-9b6d050efc9e" class=""><mark class="highlight-blue">Quicksort algorithm</mark><div class="indented"><p id="3a48037b-5122-490d-bd5a-6504bb55cf8e" class=""><mark class="highlight-gray"><code>Quicksort(a, n)</code></mark><div class="indented"><ol type="1" id="98cd8608-674b-4e9b-8f8e-23a571107183" class="numbered-list" start="1"><li>Select pivot <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">a</mi><mo stretchy="false">[</mo><mi mathvariant="monospace">k</mi><mo stretchy="false">]</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt a[k]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">a</span><span class="mopen">[</span><span class="mord mathtt">k</span><span class="mclose">]</span></span></span></span></span></span><span>﻿</span></span></li></ol><ol type="1" id="e7d73b5f-a618-47b3-88a7-34f76490d183" class="numbered-list" start="2"><li>Partition <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mi mathvariant="monospace">a</mi></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.34444800000000003em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">a</span></span></span></span></span></span><span>﻿</span></span> into<p id="b1352345-c157-44f8-834b-b391ff016d14" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">a</mi><mo stretchy="false">[</mo><mn mathvariant="monospace">0</mn><mo separator="true">,</mo><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mo separator="true">,</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">1</mn></msub><mo>−</mo><mn mathvariant="monospace">1</mn><mo stretchy="false">]</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt a[0,...,n_1-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">a</span><span class="mopen">[</span><span class="mord mathtt">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord mathtt">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mord mathtt">1</span><span class="mclose">]</span></span></span></span></span></span><span>﻿</span></span>	elements &lt; pivot</p><p id="75780048-e2b9-4635-9ff3-5b8ae3adf02c" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">a</mi><mo stretchy="false">[</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">1</mn></msub><mo separator="true">,</mo><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mo separator="true">,</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">2</mn></msub><mo>−</mo><mn mathvariant="monospace">1</mn><mo stretchy="false">]</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt a[n_1,...,n_2-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">a</span><span class="mopen">[</span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord mathtt">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mord mathtt">1</span><span class="mclose">]</span></span></span></span></span></span><span>﻿</span></span>	elements = pivot</p><p id="048fe070-73d5-4285-bfe5-7cf08c075ec5" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">a</mi><mo stretchy="false">[</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">2</mn></msub><mo separator="true">,</mo><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mi mathvariant="monospace">.</mi><mo separator="true">,</mo><mi mathvariant="monospace">n</mi><mo>−</mo><mn mathvariant="monospace">1</mn><mo stretchy="false">]</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt a[n_2,...,n-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">a</span><span class="mopen">[</span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord mathtt">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord mathtt">n</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mord mathtt">1</span><span class="mclose">]</span></span></span></span></span></span><span>﻿</span></span>	elements &gt; pivot</p></li></ol><ol type="1" id="29080fe0-46f7-4388-8507-1807248d0eef" class="numbered-list" start="3"><li>In parallel:<p id="3bbdd29e-e2ab-4d63-8a98-c43a55416af4" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">Q</mi><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">t</mi><mo stretchy="false">(</mo><mi mathvariant="monospace">a</mi><mo separator="true">,</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">1</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt Quicksort(a,n_1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">Quicksort</span><span class="mopen">(</span><span class="mord mathtt">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></span><span>﻿</span></span></p><p id="0fc904eb-3872-4383-93f6-2c6e171b6810" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.8em"><mrow><mi mathvariant="monospace">Q</mi><mi mathvariant="monospace">u</mi><mi mathvariant="monospace">i</mi><mi mathvariant="monospace">c</mi><mi mathvariant="monospace">k</mi><mi mathvariant="monospace">s</mi><mi mathvariant="monospace">o</mi><mi mathvariant="monospace">r</mi><mi mathvariant="monospace">t</mi><mo stretchy="false">(</mo><mi mathvariant="monospace">a</mi><mo>+</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">2</mn></msub><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="monospace">n</mi><mo>−</mo><msub><mi mathvariant="monospace">n</mi><mn mathvariant="monospace">2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mrow><annotation encoding="application/x-tex">\footnotesize \tt Quicksort(a+n_2,~n-n_2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8em;vertical-align:-0.2em;"></span><span class="mord sizing reset-size6 size4"><span class="mord mathtt">Quicksort</span><span class="mopen">(</span><span class="mord mathtt">a</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace nobreak"> </span><span class="mspace" style="margin-right:0.19516666666666668em;"></span><span class="mord mathtt">n</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.26022222222222224em;"></span><span class="mord"><span class="mord mathtt">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3153325em;"><span style="top:-2.4570000000000003em;margin-left:0em;margin-right:0.0625em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size4 size2 mtight"><span class="mord mathtt mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></span><span>﻿</span></span></p><p id="66f1d1d1-8eae-460c-9183-cd0fdbc66e04" class="">
+</p></li></ol></div></p></div></p><p id="37a3e0df-c370-4d00-bfc5-980538936114" class=""><mark class="highlight-blue">Parallel partitioning algorithm</mark><div class="indented"><pre id="003cf600-07be-4272-868e-1afbfc4406ad" class="code"><code>par (i=0; i&lt;n; i++) {
+	index[i] = (a[i]&lt;a[k]) ? 1 : 0;
+}
+
+Exscan(index,n); // exclusive prefix computation
+n1 = index[n-1]+(active[n-1] ? 1 : 0); // num of smaller elements
+
+par (i=0; i&lt;n; i++) {
+	if (a[i]&lt;a[k]) {
+		aa[index[i]] = a[i]; // store value of each element smaller than a[k]
+	}
+}
+
+// same for equal to and larger than pivot elements
+...
+
+// copy back
+par (i=0; i&lt;n1; i++) {
+	a[i] = aa[i];
+}
+
+// same for equal to and larger than pivot elements
+...</code></pre><ul id="985b4b58-26a2-49df-b174-e37c0f9f64f3" class="toggle"><li><details open=""><summary>Example: getting 3 partitions</summary><p id="842e6b81-1212-4a29-ab02-a476d190ad38" class="">find smaller<div class="indented"><pre id="6ea5de89-c871-4bef-b0e2-6e657d4292ce" class="code"><code>         0  1  2  3  4       n = 5 (indices)
+a =     [1, 4, 5, 3, 2]      k = 3
+index = [0, 1, 1, 1, 1]      (after Exscan for elements &lt; a[k])</code></pre><pre id="d1da457a-87a5-466a-8a25-fabb8433a226" class="code"><code>if (a[i] &lt; a[k]) // i = {0,4}
+		aa[index[i]] = a[i];
+			\_______/    \___/
+		  	{0,1}      {1,2}
+
+aa = [1,2]</code></pre></div></p><p id="f56bbd99-215c-48f1-b38a-fa5c72429dee" class="">find equal<div class="indented"><pre id="c3f073dc-fa06-4014-9633-a0f8dccf05e7" class="code"><code>         0  1  2  3  4       n = 5 (indices)
+a =     [1, 4, 5, 3, 2]      k = 3
+index = [0, 0, 0, 0, 1]      (after Exscan for elements = a[k])</code></pre><pre id="b07af71c-2a8d-45eb-90d9-a43ec40c642e" class="code"><code>if (a[i] == a[k]) // i = {3}
+		aa[index[i]] = a[i];
+			\_______/    \___/
+		  	 {0}        {3}
+
+ab = [3]</code></pre></div></p><p id="4e610f4f-e0aa-46b5-ab7a-7e83ec249247" class="">find larger<div class="indented"><pre id="ef4626f1-0108-4e33-b98e-91e5fe894718" class="code"><code>         0  1  2  3  4       n = 5 (indices)
+a =     [1, 4, 5, 3, 2]      k = 3
+index = [0, 0, 1, 2, 2]      (after Exscan for elements &gt; a[k])</code></pre><pre id="63e49948-43d9-4659-b203-489c63ad2281" class="code"><code>if (a[i] == a[k]) // i = {1,2}
+		aa[index[i]] = a[i];
+			\_______/    \___/
+		  	{0,1}      {4,5}
+
+ac = [4,5]</code></pre></div></p></details></li></ul></div></p><p id="15e27339-2713-4df2-9614-8ea573084ad4" class="">
+</p><p id="99ec5bed-643f-4fdb-a316-8410e7e749b0" class=""><mark class="highlight-blue">Runtime analysis</mark><div class="indented"><p id="e37d8a7f-35ec-43ce-b79a-622c63e024cf" class="">Running time: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> <mark class="highlight-gray">(if choice of pivot is good - with max </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small n/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/2</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> elements in both segments)</mark><div class="indented"><p id="9fe7f0a2-fd7d-44ad-a521-6979c0b40969" class=""><em>Sequential</em><div class="indented"><p id="4f2e4db7-2cc6-4dd7-ac45-72abba60cf58" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>≤</mo><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin(n) \leq T_\infin(n/2) + O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="addd31cb-5748-4fee-8c9d-42b6a49066a5" class="">Solution: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin(n) \in O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="14b39a3e-4bd9-40e2-a6bf-f9751a25b113" class=""><em>Parallel</em><div class="indented"><p id="eec53078-5e15-44c2-8ac9-36ad3deef768" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>≤</mo><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin(n) \leq T_\infin(n/2) + O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="5a1bc2ef-27fa-4cd5-b398-4c35ffe91385" class="">Solution: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T_\infin(n) \in O(\log(n)^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.938364em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="3e2e26d0-87c3-4e07-b236-92ace6d6cbf2" class=""><em>Speedup</em><div class="indented"><p id="798e4fba-1b6f-4394-9643-d35e2335373b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/ \log(n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">))</span></span></span></span></span><span>﻿</span></span></p></div></p></div></p></div></p><p id="7dc56a19-5979-4f8b-8a3e-b7ffe6418c08" class="">
+</p><h2 id="382b8b95-e6d9-48bd-b15e-b7e69e8dbce2" class="">Blocking technique</h2><p id="debf0b61-eb15-4656-bac5-341ec5ca4039" class=""><em><mark class="highlight-gray">Use when applicable (not always applicable).</mark></em></p><p id="3cde0e7b-0a65-4b9c-a14e-eba3cba649af" class="">Goal: reducing communication / synchronization steps.</p><p id="b4280efc-ad0d-4802-8706-d7686ca7e8b1" class="">
+</p><ul id="5856c8ef-27d4-4c55-8592-b755bf9bc3ee" class="toggle"><li><details open=""><summary><mark class="highlight-blue">Blocking technique (general view)</mark></summary><ol type="1" id="721020bc-268c-4c69-ba89-94aadebfc845" class="numbered-list" start="1"><li>Divide into sub-problems of size <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> that can be solved sequentially or in parallel.</li></ol><ol type="1" id="46b56dd2-5490-4845-b6ff-6705af63f774" class="numbered-list" start="2"><li>Assign subproblem to each processor.<p id="4741a48a-8793-40b4-be6a-1e4746c6740e" class=""><em><mark class="highlight-gray">Step 1 and 2 should be fast: ie. </mark></em><em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></em><em><mark class="highlight-gray">, </mark></em><em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></em><em><mark class="highlight-gray">, ...</mark></em></p></li></ol><ol type="1" id="f0f0bb41-ff97-4066-a927-4cd806b83879" class="numbered-list" start="3"><li>Solve subprolems using sequential algorithm.<p id="43d3232a-4b36-42af-9a69-78f83957a7f4" class=""><em><mark class="highlight-gray">Should be perfectly parallelizable: ie. </mark></em><em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></em></p></li></ol><ol type="1" id="8875cb46-4b6c-4dc5-91e5-3e6bc58a4b8b" class="numbered-list" start="4"><li>Use parallel algorithm to combine subproblem results.<p id="21f36005-cf70-4f15-9b01-0600fd75d762" class=""><em><mark class="highlight-gray">Should be fast: ie. </mark></em><em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></em></p><p id="803e1507-0459-470b-b066-498453df0028" class=""><em><mark class="highlight-gray">Total cost must be less than </mark></em><em><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></em></p></li></ol><ol type="1" id="52789bce-eaa3-42e7-bfdd-a072f60f5eb9" class="numbered-list" start="5"><li>Apply combined result to subproblem solutions.<p id="df1cb044-0103-4563-92bf-757060f456d4" class=""><em><mark class="highlight-gray">Should be perfectly parallelizable</mark></em></p></li></ol></details></li></ul><p id="c26a52e1-a353-47a3-af70-65e7a2b75ea7" class="">
+</p><p id="81cda232-a4ef-41f7-958d-7cd7309b793b" class=""><mark class="highlight-blue">Blocking technique (alternative view)</mark><div class="indented"><ol type="1" id="8632104a-f62b-4b7d-9cfb-b83d677e868c" class="numbered-list" start="1"><li>Use work-optimal algorithm to shrink algorithm<p id="aa73117a-bbd1-46a9-a2ee-0004fec1be55" class=""><mark class="highlight-gray">Make blocks of size </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \Theta(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">Θ</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> using </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(f(p,n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">))</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> time steps per processor.</mark></p></li></ol><ol type="1" id="9b77853f-bca1-4860-8740-9ede5200fb6d" class="numbered-list" start="2"><li>Use fast and possibly non work-optimal algorithm on shrunk problem<p id="e4c728bf-cc97-4b10-ad50-61833c6bfb7a" class=""><mark class="highlight-gray">Solve </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> subproblems in parallel.</mark></p></li></ol><ol type="1" id="7d2d8263-59fb-4b58-85eb-6dff13990dfd" class="numbered-list" start="3"><li>Unshrink, compute final solution with work-optimal algorithm<p id="033727d4-75a9-4d0c-9d5c-138e49a993fa" class=""><mark class="highlight-gray">Combine into final solution using </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(g(p,n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">g</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">))</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> time steps per processor.</mark></p></li></ol><hr id="dfbbe985-0e1a-4d44-97ef-ca92154e4395"/><p id="1baa8c9b-c5d9-451d-a597-3236be0d67aa" class="">Usually we can get from <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n/ \log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="35bbeed3-c265-4d72-b26f-af3996856af7" class="">Resulting parallel algorithm is cost-optimal if <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>f</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small f(p,n)\in O(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.10764em;">f</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>g</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small g(p,n) \in O(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">g</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>.</p></div></p><p id="5b06fd3e-35fc-4c4f-b8fb-ecb33660ab32" class="">
+</p><p id="9c860d2b-56ff-4c91-bc3f-6730a35cf85f" class=""><mark class="highlight-blue">Blocking technique for prefix-sums algorithms (in depth)</mark><div class="indented"><ol type="1" id="1a2e7e22-81af-4b37-b7e8-c90b238ea0d3" class="numbered-list" start="1"><li>Processors compute block in array locally without synchronization.<p id="3a9a8715-bc2d-4860-88a5-ada408b78b58" class="">Each processor <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span> has block of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> elements:<div class="indented"><p id="5f30b656-a483-4ea9-967c-c397cbb75b19" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>x</mi><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mstyle></mrow><annotation encoding="application/x-tex">\small x[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">x</span><span class="mopen sizing reset-size6 size5">[</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05724em;">j</span><span class="mclose sizing reset-size6 size5">]</span></span></span></span></span><span>﻿</span></span> where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>j</mi><mo>=</mo><mi>i</mi><mo>⋅</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mo>…</mo><mo separator="true">,</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>⋅</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo>−</mo><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small j = i \cdot n/p,~\dots,~(i+1)\cdot n/p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.768564em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner sizing reset-size6 size5">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="684c3fd5-60f7-40bf-af8a-36778421480d" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></p><p id="d718d2ac-ddf8-43f6-b486-9518e012c872" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo>=</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small T= n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark></p><p id="877af13c-47a7-47e4-aaaa-03f86915a5ec" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>W</mi><mo>=</mo><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small W = n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span></mark></p></li></ol><ol type="1" id="59746fe7-989d-4b0f-897a-f27a4a0f7ec6" class="numbered-list" start="2"><li><mark class="highlight-gray"><code>Exscan(y, p)</code></mark><p id="4f2ee8f2-2bb1-4b9e-8df1-c391fe45fcc8" class="">takes <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> communication rounds / synchronization steps and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> work.</p><p id="6280a658-e5e7-45d0-b930-dd38221229b6" class="">Does not need to be work-optimal.</p><p id="1041cd17-8c96-4a8e-9e39-7143978f1144" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T = O(n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></p><p id="a0279e1d-3c5c-449a-b888-9b44e7a29e39" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>W</mi><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small W = O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> with </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> processors — ie. </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(\log p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> for </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> in </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n / \log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark></p></li></ol><ol type="1" id="00591f28-5254-4e72-a399-0a0e80b66eb6" class="numbered-list" start="3"><li>Processor <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>i</mi></mstyle></mrow><annotation encoding="application/x-tex">\small i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.593568em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">i</span></span></span></span></span><span>﻿</span></span> adds exclusive prefix sum <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>y</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mstyle></mrow><annotation encoding="application/x-tex">\small y[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">y</span><span class="mopen sizing reset-size6 size5">[</span><span class="mord mathnormal sizing reset-size6 size5">i</span><span class="mclose sizing reset-size6 size5">]</span></span></span></span></span><span>﻿</span></span> to all <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>x</mi><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mstyle></mrow><annotation encoding="application/x-tex">\small x[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">x</span><span class="mopen sizing reset-size6 size5">[</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05724em;">j</span><span class="mclose sizing reset-size6 size5">]</span></span></span></span></span><span>﻿</span></span><p id="bb77eaba-d176-4ba7-8f0b-4d5aff0ea6b4" class="">Completing by local postprocessing of blocks.</p><p id="035b978b-870e-4a3c-b016-ddcea87e2a35" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo>=</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small T= n/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span></mark></p><p id="a946c717-d31d-4ea7-b283-9e934979fd63" class=""><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>W</mi><mo>=</mo><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small W = n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">W</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span></mark></p></li></ol></div></p><p id="a8477468-e2eb-4348-a39c-2f0dc28b7acf" class="">
+</p><p id="92f50336-5830-4546-98de-fe2781f79145" class=""><mark class="highlight-blue">Invariant</mark><div class="indented"><p id="89b22879-f9b0-4b7d-9607-b0a422523a40" class="">Total work (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>+</mo></mstyle></mrow><annotation encoding="application/x-tex">\small +</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.599994em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5">+</span></span></span></span></span><span>﻿</span></span> operations) is <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mi>n</mi><mo>+</mo><mi>p</mi><mi>log</mi><mo>⁡</mo><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 2n+p \log p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.654993em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop sizing reset-size6 size5">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span>.</p><p id="48ef2a4e-ba10-43c3-90ee-45c4fc6e161e" class="">This is at least twice that of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Tseq</mtext><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Tseq}(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Tseq</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>.</p></div></p><p id="de372e33-8644-4f43-b9a9-eff452001a9e" class="">
+</p><p id="b839d3ed-2c9b-499f-97eb-26bc622e5e91" class=""><mark class="highlight-blue">Invariant</mark><div class="indented"><p id="c57b8436-7ecc-4813-ae12-5d0b1194de1a" class="">Possibly better performance if reduction is done first with prefix sums following after.<div class="indented"><ol type="a" id="e9885818-5845-41ba-a946-3dd3274457be" class="numbered-list" start="1"><li>Prefix first		<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> reads, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> writes per block</li></ol><ol type="a" id="0b8abb2b-1180-48aa-bbc1-cd24d9e6bfb6" class="numbered-list" start="2"><li>Reduction first		<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> reads, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span> writes per block</li></ol></div></p><p id="4a681482-2617-4a8c-a1f3-3f8b5d9cb5ab" class="">But both are <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>≥</mo><mo stretchy="false">(</mo><mn>2</mn><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \geq(2n-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6947460000000001em;vertical-align:-0.12237300000000001em;"></span><span class="mrel sizing reset-size6 size5">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">2</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> operations with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo>+</mo></mstyle></mrow><annotation encoding="application/x-tex">\small +</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.599994em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5">+</span></span></span></span></span><span>﻿</span></span>.</p></div></p><p id="0d4c0258-9bb8-4207-a37a-3b74c0bd0907" class="">
+</p><p id="bd6976f9-761e-43ee-8a7c-62fa4c124ea3" class="">
+</p></div></article></body></html>

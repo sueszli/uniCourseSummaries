@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Altprüfungen</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d5cfadf7-18a9-4e8b-9a3f-dc3e3ec10967" class="page sans"><header><h1 class="page-title">Altprüfungen</h1></header><div class="page-body"><p id="5883f513-c5d0-4cc2-bd17-52567d2fffe7" class=""><mark class="highlight-blue">Nach Thema</mark><div class="indented"><figure id="641caaa0-a168-44e0-8042-7910c3549f8e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/PL_Formel.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1ca23af7-97dc-493b-b32a-d4e280210acc/PL_Formel.pdf</a></div></figure><figure id="e812f93e-c5a9-4e61-9304-f739274d698f"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Rice.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9daae4c2-2197-4328-82ba-60728ff5a75f/Rice.pdf</a></div></figure><figure id="c242d35a-20a2-4460-b9ee-980de43d3b3e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Programmkorrektheit.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2b0feba-bc30-4cb9-be4e-eed53f86ca80/Programmkorrektheit.pdf</a></div></figure><figure id="206201c8-2e01-4483-b225-2ee477f8be00"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Chomsky.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a047f09a-a1e6-4b2d-a128-7428edf77f9d/Chomsky.pdf</a></div></figure><figure id="0aa9a7be-a535-4624-9767-75b92d0b33e7"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Entscheidbarkeit.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/651ed143-1cd8-4c03-b98f-0ef2fb05c223/Entscheidbarkeit.pdf</a></div></figure><figure id="6fca7880-b667-45fe-9704-5fb3927fa036"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Gelste_Aufgaben__TIPS_-_Satz_von_Chomsky-Schtzenberger.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4ce84e1d-5d8c-4b83-b552-044506461455/Gelste_Aufgaben__TIPS_-_Satz_von_Chomsky-Schtzenberger.pdf</a></div></figure></div></p><p id="1734f7d2-eb96-4072-ba1b-da7b3a7104a5" class="">
+</p><p id="2cffa003-6bbf-441f-a889-c35e396729b2" class="">
+</p><h1 id="ab3d63e5-27a3-4c8f-a144-06bd661375fb" class="">2022</h1><p id="8eb11aaf-6227-4aab-8224-d0ae9c95ee2c" class=""><mark class="highlight-blue">Prüfungsvorbereitung (Teil 1) ✅</mark><div class="indented"><figure id="6fae1e76-3370-4a55-89e7-e92f1a0d237e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/folien_fsa_rep.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ff5f4512-b28e-4249-8546-bf4752c435c4/folien_fsa_rep.pdf</a></div></figure></div></p><p id="f1ecd2b3-9857-4cd1-a2fc-1ca8dae025c4" class=""><mark class="highlight-blue">Prüfungsvorbereitung (Teil 2) ✅</mark><div class="indented"><figure id="df7ad20c-dd7f-4df2-8a82-2261a751320d"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL-Pruefungsvorbereitung_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/396c5841-5d03-4add-8a28-ffd121ae2df7/TIL-Pruefungsvorbereitung_Logik.pdf</a></div></figure></div></p><p id="160c3023-9bad-43d0-859d-266fe314ed60" class=""><mark class="highlight-blue">Tutorien ✅</mark><div class="indented"><p id="4138bee1-8ce5-4f70-94d5-0aa83173e2b5" class=""><a href="https://jakobmaier.at/files/">https://jakobmaier.at/files/</a></p><p id="2341b218-33dd-4ffd-b1b6-b1d4b05f31f0" class=""><em>Teil 1</em><div class="indented"><figure id="09ed0ab4-4fdb-46cc-83b0-88d9b23bb5f8"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL_Tut_1.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13585a0a-307d-46c2-8b17-b154d75652b6/TIL_Tut_1.pdf</a></div></figure><figure id="f0bb112a-b7d3-4bf5-8394-965b909f9b69"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL_Tut_2.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/045e7f4d-e017-429d-99bc-50cc64b82f76/TIL_Tut_2.pdf</a></div></figure><figure id="7c817b55-8bb5-4488-8184-cd0bf1960594"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL_Tut_3.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/72309d4e-756e-48f3-8534-99f6709c9eca/TIL_Tut_3.pdf</a></div></figure></div></p><p id="c22f6000-0d94-4565-b209-20dd75cc7711" class=""><em>Teil 2</em><div class="indented"><figure id="92c40007-4944-4648-b791-21d68f619629"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL_Tut_5.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b287f67f-b05b-4e0a-a1b6-c77e73c0b407/TIL_Tut_5.pdf</a></div></figure></div></p></div></p><p id="e2ef5e0e-360f-4122-9231-a5d12a807b49" class="">
+</p><p id="414e1796-fd23-43b8-9518-1e1f970f0374" class="">
+</p><h1 id="2065192e-b9ff-4e16-9d27-e07bbb7d8c14" class="">2021</h1><p id="0b88a353-3694-48f9-92bf-554e54524d9b" class=""><mark class="highlight-blue">Prüfungsvorbereitung (Teil 1) ✅</mark><div class="indented"><figure id="035eae06-ae15-4260-b798-b3f755680965"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/folien_fsa_rep%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/688036ed-3f4b-45fa-856a-5ee34ac5c401/folien_fsa_rep.pdf</a></div></figure></div></p><p id="60f62525-7c7c-4d92-ac70-67b5355edf35" class=""><mark class="highlight-blue">Prüfungsvorbereitung (Teil 2) ✅</mark><div class="indented"><figure id="45b773fd-517c-4106-9912-900e8760a5d4"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TIL-Pruefungsvorbereitung_Logik%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2927a524-a774-43e5-a11a-e895efc84c68/TIL-Pruefungsvorbereitung_Logik.pdf</a></div></figure></div></p><p id="1d1887d9-9d61-44cf-922b-181f12793c76" class=""><mark class="highlight-blue">12.April ✅</mark><div class="indented"><figure id="7e55b84b-44bf-4fa8-959d-27b066a25e82"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/12.04.2021_(1)_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5fb98a58-ea25-46e4-bfec-599aede0b3d2/12.04.2021_(1)_(1).pdf</a></div></figure><figure id="4e6f784b-dd1b-4f64-99e7-4725cfb47c96"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/12.04.2021_-2.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/12776119-1d33-451a-89b9-dac1b2744fed/12.04.2021_-2.pdf</a></div></figure><figure id="4e9926e2-4481-4e59-8535-eb3d0251ff35"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/WS2021-12-APRIL_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c81fd22-a210-4529-b175-1f7110842010/WS2021-12-APRIL_(1).pdf</a></div></figure><figure id="f120555d-a33d-48b3-b995-25d631021a84"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/12.04.2021_-2_(2).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a70ada1b-f36b-4fbd-965d-6ad76088d2f5/12.04.2021_-2_(2).pdf</a></div></figure><p id="5e0e8352-859c-4b18-b80e-22a1d8903290" class="">Angabe:</p><figure id="afe88128-1348-4655-beb5-5b7f1ca9ed94"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-04-12.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/058bfe58-837d-4d85-82b2-f5b9fc864a43/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-04-12.pdf</a></div></figure></div></p><p id="35e6e4a3-3b7c-4e75-94ee-7e5a87b14b55" class=""><mark class="highlight-blue">17.Mai </mark>✅<div class="indented"><figure id="4029f21d-325d-4c83-92bb-861b090379b8"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/WS2021-17-MAI_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a2d7af14-bfc3-40be-9978-d1c112cb1f5a/WS2021-17-MAI_(1).pdf</a></div></figure><figure id="6da1e72d-b58c-4a8a-bfe3-d2a4a0af33eb"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/17.05.2021_(1)_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4c9274ad-7f60-4fbf-8048-7d5060706901/17.05.2021_(1)_(1).pdf</a></div></figure><figure id="71f14cdc-9f5f-41d9-9a03-c98423feed55"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/17.05.2021_-2_.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/83e53a99-0b17-4c9e-9866-01c83058b5fb/17.05.2021_-2_.pdf</a></div></figure><p id="6ddb14a6-958d-4d3c-91b1-5b5d2261787f" class="">Angabe:</p><figure id="af152ec7-8985-4ad5-826f-83b9938e8286"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-05-17.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15280960-211b-4089-a392-6f0f79c5c909/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-05-17.pdf</a></div></figure></div></p><p id="5c4ade8c-c2c2-4a53-9b3c-373027ba4159" class="">
+</p><p id="a8d62ff4-6f6a-45a4-965c-0003e4912eba" class="">
+</p><h1 id="fd8acdc5-78f4-4194-a87c-b501ce680d83" class="">2020</h1><p id="93e1dc0a-690b-487d-837b-9fcf69bdf3b7" class=""><mark class="highlight-blue">23.Februar </mark>✅<div class="indented"><figure id="96cfd3b5-3409-464d-81ef-e5b7ca6c9d5c"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/11923551.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a25c6da8-c9af-4446-979a-2453365817d6/11923551.pdf</a></div></figure><figure id="bfbce4cb-a739-4f99-9575-577ab912eb4e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/23.02.2021_WS20_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/191eca6d-08db-4488-b106-d47fc85b30a7/23.02.2021_WS20_(1).pdf</a></div></figure><figure id="20d7c9e1-75a2-474d-bfc9-6e87285a25e8"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/WS2020-23-FEBRUAR_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/df9b44ae-72be-4fe4-b60a-64f79d90cb96/WS2020-23-FEBRUAR_(1).pdf</a></div></figure><p id="f81775a0-d817-493d-b308-933348b6bb85" class="">Angabe:</p><figure id="d521adae-682d-447b-8a31-372c9c0d9158"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-02-23.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/31d4c56f-949f-4ac7-86b7-69c79f435e45/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2021-02-23.pdf</a></div></figure></div></p><p id="2b84f072-8c24-4124-95b7-fab01e0d8cf3" class="">
+</p><p id="15c5b9b5-2e35-439c-80aa-1b7e614d8594" class="">
+</p><h1 id="9bb2b9b5-d2ad-48e4-9857-1f3f80d6dc97" class="">2019</h1><p id="e9169b41-28a6-41ce-8aa1-80ff5349e1ed" class=""><mark class="highlight-blue">23.Jänner ✅</mark><div class="indented"><figure id="b83fec25-260e-40fb-8d78-a91fe8407b80"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/Prufung_2019-01-23_BFSK_A.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5cc8e34f-fb26-4b17-b00f-955445c0fd41/Prufung_2019-01-23_BFSK_A.pdf</a></div></figure><figure id="0650fee1-61e3-4d4e-a10c-e193d99f4ff4"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2019_01_23_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/60f0ac88-7b40-4628-bc55-11c81b734077/2019_01_23_BFSK.pdf</a></div></figure><figure id="c376b549-fe50-4bcb-8340-fda500cd2f35"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/23.01.2019_A_2_(1)_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2771ff72-9014-446c-a3ac-b9c165cf5beb/23.01.2019_A_2_(1)_(1).pdf</a></div></figure><p id="cac05c39-326f-4a3d-91a5-5414e57e18ee" class="">Angabe:</p><figure id="c23c4515-70be-4d0b-9cd9-688dc300a51a"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d028d4d1-d76f-49be-9564-632d0f05590b/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_BFSK.pdf</a></div></figure><figure id="f93c931f-cc9f-4db2-a7e1-028cab84258c"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_BFSK_A.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5c229d07-8144-4ec6-866c-912a6bb367a8/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_BFSK_A.pdf</a></div></figure></div></p><p id="eae2ff8e-9ceb-4c24-9a6b-5777084191a2" class="">
+</p><p id="f5e4fc32-4715-41d9-b8eb-18b2a0ab2786" class="">
+</p><h1 id="58ba2452-35b4-46ec-9de9-c8aaa4498d19" class="">2018</h1><p id="722a4590-f199-4264-9aa2-5cfcc045e2ae" class=""><mark class="highlight-blue">23.Jänner ✅</mark><div class="indented"><figure id="f0907918-4f8e-4c86-8ea5-d11bf7abbde7"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2018_01_23_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/748e7b5a-6744-4303-8ae8-7d8455121d91/2018_01_23_Logik.pdf</a></div></figure><figure id="6bbd18eb-7dfe-4ff2-9317-2be91cb033b4"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/23-1-18.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d4d38a8-bde2-4791-b74e-69c28daa8ab3/23-1-18.pdf</a></div></figure><figure id="08d92a44-d490-4d1e-82c6-b917dfe46f39"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/23.01.2019_A_2.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0f40b6a6-b616-499f-8805-f8d687443bba/23.01.2019_A_2.pdf</a></div></figure><figure id="22be4ff5-3b25-49cd-89a9-f99aaee4c943"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/WS2018-23-JNNER_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5a6bee97-bfc6-49d9-bdca-f89c2de31b15/WS2018-23-JNNER_(1).pdf</a></div></figure><p id="ee40e66c-a8fc-48d9-a48f-94e0df9053e5" class="">Angabe:</p><figure id="07a37e1e-89ee-4514-bfe0-75a9bc6bcebb"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f1e77571-40ad-4145-9dcc-3bdfc845f233/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_Logik.pdf</a></div></figure><figure id="1a1e4e0a-82f5-46c3-94b1-e4bf89afcae2"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_Logik_A.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b4977f64-7624-4396-9921-479d7dab62a5/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2019-01-23_Logik_A.pdf</a></div></figure></div></p><p id="bbefe9fc-6605-4758-bb63-b47f31bd4754" class=""><mark class="highlight-blue">24.Jänner ✅</mark><div class="indented"><figure id="87e8a90b-68c6-467d-8d15-ebd75935481b"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/24-1-18.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bfc3df1e-2ebd-4786-af59-de887d221fa6/24-1-18.pdf</a></div></figure><figure id="d1374792-07de-493e-b0db-b34c1d907250"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/24-1-18%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/17c652bf-1249-483c-943a-9d2fcad0490e/24-1-18.pdf</a></div></figure><figure id="7e9bc18f-48fe-4952-b002-417c70369c23"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2018_01_24_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cdaf9726-f1ef-484a-8d35-d368e4e70e65/2018_01_24_BFSK.pdf</a></div></figure><figure id="cc267f4a-07fc-482d-91a5-b5575888e0b1"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2018_01_24_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01713fa2-4fea-4018-89b8-e3af54a8656a/2018_01_24_Logik.pdf</a></div></figure><p id="5b3688ac-a417-4052-9e27-6334dcfe78f7" class="">Angabe:</p><figure id="8f3fb37c-aa8c-452c-8fb7-d49401d51986"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-01-24_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4ef707f7-80b2-4377-b772-7e9059ab71f1/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-01-24_Logik.pdf</a></div></figure><figure id="e661eff7-d584-4170-9158-9a6de6ce56de"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-01-24_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc9a3cef-9009-49c5-8897-e55d39fe3a61/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-01-24_AFS.pdf</a></div></figure></div></p><p id="7b2ce2e6-c340-47fc-98e3-73c414352669" class=""><mark class="highlight-blue">21.März </mark>✅<div class="indented"><figure id="3c1dd6c9-61b9-4410-938d-5e48bf857c96"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2018_03_21_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/613f0786-0315-4de3-a03f-f3e93aaeac8d/2018_03_21_BFSK.pdf</a></div></figure><figure id="b54a0685-a155-4908-9cb8-ef9b507dadbe"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2018_03_21_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3d6a21a0-4bc0-4842-a1cf-85e948c1e530/2018_03_21_Logik.pdf</a></div></figure><figure id="e379a31e-ee4f-468e-9a98-3b9e0cdeb033"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/21-3-18.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1bdbd19a-4cdb-4ae3-bedd-100934d4ad8e/21-3-18.pdf</a></div></figure><figure id="0f84d737-5367-421a-b4e3-059f714fcb47"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/21-3-18%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/947c1f40-cfc3-4f11-a232-c0297c3db815/21-3-18.pdf</a></div></figure><p id="23fa6d3f-7703-4712-b51b-815c70bdeca0" class="">Angabe:</p><figure id="90def0a5-f62c-4f98-9b72-5d3c7f3983a3"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-03-21_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9023b5a2-5e5a-4569-a40f-55ac40cbc94e/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-03-21_Logik.pdf</a></div></figure><figure id="faa4f22e-8204-4e69-87bc-5a61fdd9bcbc"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-03-21_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c49ce5a3-4d57-4bdf-afcf-ece84da574c2/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2018-03-21_BFSK.pdf</a></div></figure></div></p><p id="e2fe6a49-67e3-4e47-97aa-0463788cc224" class="">
+</p><p id="62a65330-be0e-41fb-861c-801d1beedbc1" class="">
+</p><h1 id="af6210c7-fad1-49ef-a9b3-932b8cc0f4e3" class="">2017</h1><p id="fbfd6673-18fc-43fb-b0d0-ab2e526ff194" class=""><mark class="highlight-blue">26.Juni</mark><div class="indented"><figure id="0585a1c0-74d4-433e-9646-47783d9b5997"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_BFSK_Muster_Prfung_26.6.2017.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b4f634d6-ec7d-4af6-b9c8-a6b8bb3c8ab3/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_BFSK_Muster_Prfung_26.6.2017.pdf</a></div></figure><figure id="4b6e9b1f-2fc5-4ac2-8eff-225ecb08c448"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Logik_Muster_Prfung_26.6.2017.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a4e1d6c7-0da2-4aef-98ce-540e6b92b1c0/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Logik_Muster_Prfung_26.6.2017.pdf</a></div></figure><figure id="4207e445-b58a-4234-8ca9-3f1d938cfd0a"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermuller_Oswald)_-_Logik_Muster_Prufung_26.6.2017.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/115355cf-0934-4497-94b0-d6126f45af14/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermuller_Oswald)_-_Logik_Muster_Prufung_26.6.2017.pdf</a></div></figure></div></p><p id="4de29ac5-32c2-4076-b845-d063d6eebfba" class=""><mark class="highlight-blue">24.Oktober</mark><div class="indented"><figure id="0477409c-ba82-4b1d-9bf9-f86b6c25e91c"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_Fermuller_Oswald_-_Prufung_2017-10-24_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f923fddd-47ce-4fcf-90e1-933e7da2bf04/TU_Wien-Theoretische_Informatik_und_Logik_VU_Fermuller_Oswald_-_Prufung_2017-10-24_BFSK.pdf</a></div></figure><figure id="e41555d9-af06-4ce7-90e2-3a510dc1812b"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/24-10-17.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3ee89913-75ab-45f6-9e24-a6bea088a047/24-10-17.pdf</a></div></figure><figure id="748912d0-dbb2-43a0-94ec-c3c58e0c448e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/24-10-17%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5c1e761e-a283-40e1-981c-4df9991bf92c/24-10-17.pdf</a></div></figure><figure id="7a56b8b5-6f27-4247-acea-8d67c2402425"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_Fermuller_Oswald_-_Prufung_2017-10-24_BFSK_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dff1750-fefe-407c-bacc-a3bb621b6512/TU_Wien-Theoretische_Informatik_und_Logik_VU_Fermuller_Oswald_-_Prufung_2017-10-24_BFSK_(1).pdf</a></div></figure><p id="6ebf850f-a954-4756-a636-dc6ffac50f35" class="">Angabe:</p><figure id="7fc53dcf-8ecc-4805-b0ec-7133c58bcd52"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-10-24_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e5ee36b4-37c6-4061-b13f-c6341e1223f5/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-10-24_Logik.pdf</a></div></figure><figure id="f16c9349-56c8-417b-aa38-5aa5408e8cab"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-10-24_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2df9f34b-e0b8-4522-b2a4-3f353dbcfa63/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-10-24_BFSK.pdf</a></div></figure></div></p><p id="b2c11cdd-20a0-48c7-a47a-08136afa4c3b" class=""><mark class="highlight-blue">11.Dezember</mark><div class="indented"><figure id="74bfffb7-4fe3-4aaa-a83a-73e0f7f012ac"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2017_12_11_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/476e7744-658a-4c8c-9429-bb295fde73cc/2017_12_11_Logik.pdf</a></div></figure><figure id="61c28de1-49a7-4cb4-b548-8de5080e7cba"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/2017_12_11_Logik%201.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dbffa4a9-a81a-4a73-85d4-b87490d5322e/2017_12_11_Logik.pdf</a></div></figure><p id="bd5e849b-3b98-4606-9313-9ce94d52246f" class="">Angabe:</p><figure id="05c3d8b6-443e-4505-bdf6-4b12b92eaeda"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-12-11_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8512b396-975a-4cc9-a598-2a9824eae7bf/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2017-12-11_Logik.pdf</a></div></figure></div></p><p id="9dd29ad1-1e1a-44a9-8744-e46c65793b94" class="">
+</p><p id="1c6f54cc-6342-4d48-adf3-7c819281e30f" class="">
+</p><h1 id="2d0977ec-6c2a-4fc9-9177-6e11808b8c20" class="">2016</h1><p id="79c5aa32-b999-46fc-b065-e7615faa3e1c" class=""><mark class="highlight-blue">27.Juni</mark><div class="indented"><figure id="e309c679-9eac-43a0-aa64-925848a08449"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-06-27_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d603697f-9bff-47fc-8449-3add4e6c4021/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-06-27_Logik.pdf</a></div></figure><figure id="0139a7fb-0e54-42de-954e-970317b560d1"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-06-27_BFSK.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aaa3b885-0c57-4cf2-83f0-41c0d16807ca/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-06-27_BFSK.pdf</a></div></figure></div></p><p id="c4bace3c-e788-4e33-b207-ed58bf3ebf97" class=""><mark class="highlight-blue">19.Oktober</mark><div class="indented"><figure id="f465adbd-5e4d-4ff6-aafd-f7febe3cfa23"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-10-19_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1f277061-89fe-4ffb-abae-d30ab9719fb5/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2016-10-19_Logik.pdf</a></div></figure></div></p><p id="0c61b2be-444e-4a35-9316-205a7271c49e" class="">
+</p><p id="1715b106-2849-427f-ab23-2ed2bf01f4c2" class="">
+</p><h1 id="4a121c54-3bf1-439c-9869-661910c31e5a" class="">2015</h1><p id="c98c72aa-897e-450a-80fe-a80a4230403c" class=""><mark class="highlight-blue">22.Juni</mark><div class="indented"><figure id="92b5d4b5-9ec9-48c6-a1dc-a527e7f1f529"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-06-22_Logik_Muster.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2508450-48cb-4217-964d-5c2de71b4ef5/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-06-22_Logik_Muster.pdf</a></div></figure><figure id="6f404f25-0fcd-4bc5-8f97-61918a290778"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-06-22_BFSK_Muster.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/103a66b7-e55e-4fa0-95bb-0e145a41ba74/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-06-22_BFSK_Muster.pdf</a></div></figure></div></p><p id="cbb77818-7b50-4ebf-b83f-e0901382b6f8" class=""><mark class="highlight-blue">21.Oktober</mark><div class="indented"><figure id="de4de57c-54eb-4d16-9c19-df8108f226e3"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-10-21_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2748767b-c7e0-4dfb-a650-759e1eb56bb1/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-10-21_Logik.pdf</a></div></figure><figure id="bc5a8539-b4eb-43ed-ab74-9f0bf60b4de8"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-10-21_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/982d3ee5-8a72-46cc-8ab7-928e5ec7f102/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2015-10-21_AFS.pdf</a></div></figure></div></p><p id="2ac177d6-b189-49d2-9092-bb23f75696f6" class="">
+</p><p id="3fee9d74-7122-404a-9eae-3f73b568b3e0" class="">
+</p><h1 id="edbeab3c-7bd8-427c-b65d-4010ec024f41" class="">2014</h1><p id="e0cad285-d0a6-41e1-b48a-1b576670b67d" class=""><mark class="highlight-blue">23.Juni</mark><div class="indented"><figure id="847f672a-de0f-478b-a250-7c9f8dc633e6"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-06-23_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0f64c922-2a56-4d42-a1d7-12a41423b71d/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-06-23_Logik.pdf</a></div></figure><figure id="5f95d323-ae9e-4748-81a9-622876db4057"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-06-23_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81e3be1e-5fc6-449e-a468-e82b4b479166/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-06-23_AFS.pdf</a></div></figure></div></p><p id="a9b336bc-2be0-47b0-8bc3-c450dc67362d" class=""><mark class="highlight-blue">27.Jänner</mark> ❗ <mark class="highlight-red">keine Lösung</mark><div class="indented"><p id="a58b3234-c708-4e2e-ae10-cde226305b07" class="">Angabe:</p><figure id="133fb464-5b31-4ca1-9fe7-099d624d549f"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-01-27_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1199a916-c44f-4cbe-8f56-ccc331ce6376/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-01-27_AFS.pdf</a></div></figure><figure id="8085564b-89c2-4d4b-993d-39da236f5d82"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-01-27_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/664fdf1b-8137-4964-910d-f6e150af0f37/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2014-01-27_Logik.pdf</a></div></figure></div></p><p id="12ad1824-758e-4142-b958-3bcd4233b55b" class="">
+</p><p id="e2ffe261-ef85-4401-8f4c-887aaf4ebf2b" class="">
+</p><h1 id="1335851b-5156-41cc-aab1-b40d4c083546" class="">2013</h1><p id="0e08ec4f-86ac-40a7-8c46-77e26e5bbb5a" class=""><mark class="highlight-blue">24.Juni</mark><div class="indented"><figure id="82e64e10-bef1-42ee-8924-e1c329cea6d5"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-06-24_AFS_(1).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5bb22950-8c55-4ed0-8737-09cf89fd9c20/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-06-24_AFS_(1).pdf</a></div></figure><figure id="5067b8c1-f1be-466d-beff-59b3c65b4730"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-06-24_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/95d90351-b3a1-4cae-a9e8-a4e1e6fbd6b3/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-06-24_Logik.pdf</a></div></figure></div></p><p id="cfbd796e-0910-4b12-9f44-75efffca4674" class=""><mark class="highlight-blue">16.Oktober</mark> ❗ <mark class="highlight-red">keine Lösung</mark><div class="indented"><p id="471782c3-22ae-43f8-811d-c6da31219427" class="">Angabe:</p><figure id="47f717ae-1c7a-444a-b3d2-10311abb722e"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-10-16_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2899c190-9382-4a3d-bf45-221d5e4395bf/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-10-16_Logik.pdf</a></div></figure><figure id="9760c482-e48a-4a21-b469-d90c6ea0055d"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-10-16_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1073b432-c8e2-47c5-9abc-98d1f76997e5/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-10-16_AFS.pdf</a></div></figure></div></p><p id="8a5d182d-aba1-4ecd-88a1-6ad1ad7d0bbf" class=""><mark class="highlight-blue">16.Dezember</mark> ❗ <mark class="highlight-red">keine Lösung</mark><div class="indented"><p id="c9096a61-f690-4854-9e2e-5e79bf2b4710" class="">Angabe:</p><figure id="d4244fdb-c5aa-4a8e-be2c-c8cb60971484"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-12-16_AFS.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02e77ecb-71a4-4ff7-b47d-c771c3cbbb51/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-12-16_AFS.pdf</a></div></figure><figure id="0ad8b0ea-1e9a-4c64-807d-554b025fbc6f"><div class="source"><a href="Altpru%CC%88fungen%20d5cfadf718a94e8b9a3fdc3e3ec10967/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-12-16_Logik.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2485adbc-01b7-49eb-aeda-68aa5e1a4e8f/TU_Wien-Theoretische_Informatik_und_Logik_VU_(Fermller_Oswald)_-_Prfung_2013-12-16_Logik.pdf</a></div></figure><p id="c3b8b7b3-ce86-45ac-ac37-f0fddb4197d6" class="">
+</p></div></p></div></article></body></html>

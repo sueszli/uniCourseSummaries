@@ -1,0 +1,866 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Semaphoren Patterns</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="563a79df-dfed-49ca-b2d1-896b115dedc4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title">Semaphoren Patterns</h1></header><div class="page-body"><nav id="f589fc6b-e5b8-4231-935d-95dd1898665a" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#79c72e75-6083-4f20-936b-f70b8bd94e7b">Producer-Consumer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6b0c1561-599f-4dd5-a824-c29db6c8cd94">Priorität von Prozessen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c45aaf7b-897b-4c37-bae9-52861f9024ff">Reader-Writer Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fedd75af-cdcd-461e-ae8e-38a49173d01a">Dining Philosophers Problem</a></div></nav><h1 id="79c72e75-6083-4f20-936b-f70b8bd94e7b" class="">Producer-Consumer Problem</h1><p id="640a7534-020a-409c-ac6a-c8d31b807ee7" class="">Producer generieren daten die sie über einen Puffer an Consumer übergeben.</p><p id="4d00e3fc-f9a9-40a2-9f6a-ce37916ab5d0" class="">Mutual exclusion<div class="indented"><p id="f265b452-7dbb-425b-9ad2-08dad4254aba" class="">Zu jedem Zeitpunkt darf nur ein Prozess auf den Puffer zugreifen.</p></div></p><p id="dc29dd2b-3c30-4c5a-9f94-44c5bf34460c" class="">Condition synchronization<div class="indented"><p id="4c918283-411a-4c48-a4a5-c959f4460627" class="">Ein Consumer darf nur dann lesen wenn mindestens 1 Element im Buffer steht</p></div></p><p id="7ca5d015-b85d-441d-a28d-9c07e5291992" class="">
+</p><p id="3b07b8bb-812f-4ccf-b77b-c91f3fa4105c" class=""><mark class="highlight-blue">Endloser Buffer-Speicher</mark></p><pre id="4431ac78-0315-48f9-8a15-5c87c9195400" class="code"><code>append(v):
+	b[in] := v;
+	in := in + 1;
+
+take():
+	w := b[out];
+	out := out + 1;
+	return w;</code></pre><pre id="54b76540-fe71-4e12-913c-99b7665660b6" class="code"><code>init(S,1); init(N,0);</code></pre><div id="9309505c-cbab-42ea-989c-076f19481a3b" class="column-list"><div id="284d6585-9260-4e8f-8523-f5dc53f228f7" style="width:50%" class="column"><pre id="9a454680-36a8-4602-be90-671f581d1acb" class="code"><code>while(true){
+	produce(v);
+	wait(S);
+	append(v);
+	signal(S);
+	signal(N);
+}</code></pre></div><div id="e3a528d9-8b9f-4736-bc16-14446038ab37" style="width:50%" class="column"><pre id="c854fe54-0546-4782-8dd4-6942b437ba5f" class="code"><code>while(true){
+	wait(N);
+	wait(S);
+	w := take();
+	signal(S);
+	consume(w);
+}</code></pre></div></div><ul id="4009a2a5-e356-40ac-bc21-a59fdab64101" class="toggle"><li><details open=""><summary>Über die Reihenfolge</summary><p id="c8ab9de2-df85-4b5b-86df-0e1ca1caf3df" class="">Die Reihenfolge beim Consumer für die Zeilen 2, 3 ist relevant, wenn man sie vertauscht entsteht ein Deadlock weil der Consumer <code>S.value</code> auf 0 reduziert und der Producer nicht mehr durch kann.</p></details></li></ul><p id="6f383319-f1d6-45eb-a1ce-f9c68c189166" class="">
+</p><p id="1e74541b-88e4-4432-9a1f-354ea3ccbade" class=""><mark class="highlight-blue">Begrenzter Buffer-Speicher (Ring-Buffer)</mark></p><p id="fdea3508-4e30-48fe-9028-dbfc2c35ef2f" class="">Buffer hat <mark class="highlight-gray"><code>K</code></mark> Elemente platz, (dafür nützen wir Semaphor <mark class="highlight-gray"><code>E</code></mark>)<div class="indented"><p id="1861dba5-55e0-4e69-a2dc-b083d453202c" class="">Schreiben: mindestens 1 Element gelesen</p><p id="94212ff1-e06b-47d0-b799-518ce66e2e5e" class="">Lesen: mindestens 1 element geschrieben</p></div></p><pre id="dcd05ba3-e8e8-4d3c-82d6-26b7ff0cc05a" class="code"><code>append(v):
+	b[in] := v;
+	in := (in + 1) mod K;
+
+take():
+	w := b[out];
+	out := (out + 1) mod K;
+	return w;</code></pre><pre id="96e6819f-20ca-4e5d-88ba-34355c471740" class="code"><code>init(S,1); init(N,0); init(E,K); &lt;--</code></pre><div id="a715ae77-07f7-4f1f-9e04-25be2c3f11f3" class="column-list"><div id="ff6187d5-5dab-45a4-a79c-61ea2e475c45" style="width:50%" class="column"><pre id="cf8572dc-5f6b-4b05-a620-49095931b49d" class="code"><code>while(true){
+	produce(v);
+	wait(E); &lt;--
+	wait(S);
+	append(v);
+	signal(S);
+	signal(N);
+}</code></pre></div><div id="92f912cd-f0d8-4643-9c93-e40a1bf861ce" style="width:50%" class="column"><pre id="edd218b1-ee92-4106-8d2a-5fabbbbad44a" class="code"><code>while(true){
+	wait(N);
+	wait(S);
+	w := take();
+	signal(S);
+	signal(E); &lt;--
+	consume(w);
+}</code></pre></div></div><p id="48113557-ea91-4d38-b4d6-4b6ffd5b63e0" class="">
+</p><h1 id="6b0c1561-599f-4dd5-a824-c29db6c8cd94" class="">Priorität von Prozessen</h1><p id="2d8a19e9-b525-4240-9107-56dbe4fdf6f2" class="">Wir wollen P1-Prozesse gegenüber P2-Prozessen priorisieren.</p><p id="59f92d36-c873-423a-b894-b13ae4ee3221" class=""><mark class="highlight-blue">Lösung 1</mark></p><p id="74b31652-e6fe-486a-ae4b-656cc4190e39" class="">Synchronisierung von 2 Prozessen die mit mutual exclusion of ein <mark class="highlight-gray"><code>ShM</code></mark><mark class="highlight-gray"> </mark>zugreifen, wobei P1 gegenüber P2 priorisiert wird.</p><pre id="61365cf2-2c59-4eec-bd64-fef8f0ae9579" class="code"><code>init(A,1); init(B,1);</code></pre><div id="dbe00f16-a12a-48cb-88eb-fb1feb79ba2f" class="column-list"><div id="3cda89d6-2c2a-4d45-a21d-d33022cd45ac" style="width:50%" class="column"><pre id="fcde805e-0438-4c78-92c6-be8384bff0c6" class="code"><code>while(true){
+	wait(A);
+	ShMAccess;
+	signal(A);
+}</code></pre></div><div id="897d6576-38f1-49be-8cd1-07be49109956" style="width:50%" class="column"><pre id="4538c091-5915-4605-bc1b-b29995e6ff1c" class="code"><code>while(true){
+	wait(B);
+	wait(A);
+	ShMAccess;
+	signal(A);
+	signal(B);
+}</code></pre></div></div><p id="520bd4ae-a0bb-49da-ad2a-80f6af4e2d41" class="">In der <mark class="highlight-gray"><code>A</code></mark> queue kann maximal nur ein P2 Prozess stehen. - Dadurch kommen P1 Prozesse fast immer früher dran.</p><p id="1ff2bc0d-f663-48ee-adf8-f5749b7e771f" class="">
+</p><p id="60d44c6a-ef67-4c8a-99ed-9e3307d19525" class=""><mark class="highlight-blue">Lösung  2</mark></p><p id="9d913780-9c95-4cc3-8f38-d7efa92f3732" class="">Wartet bis alle P1 auf shared memory zugegriffen haben, und führt erst dann P2 aus.</p><pre id="96c9d682-e334-4f90-a425-1b402ac08e99" class="code"><code>init(A,1); init(B,1);
+counter := 0;</code></pre><div id="b1873ec3-a07e-404e-954c-c3162627a6f2" class="column-list"><div id="ec407904-d6f8-4207-aed8-f6444bd82021" style="width:50%" class="column"><pre id="40d68816-3ad8-4753-a762-5d834eb5a4d4" class="code"><code>while(true){
+	wait(B);
+	counter++;
+	if counter == 1 then wait(A);
+	signal(B);
+
+	wait(B);
+	ShMAccess;
+	signal(B);
+
+	wait(B);
+	counter--;
+	if counter == 0 then signal(A);
+	signal(B);
+}</code></pre></div><div id="c3c182f5-e5ff-4497-9ceb-c1fdf112d37b" style="width:50%" class="column"><pre id="ea52dd73-1a25-43be-9029-bf42918bb02e" class="code"><code>while(true){
+	wait(A);
+	ShMAccess;
+	signal(A);
+}</code></pre></div></div><p id="9a57e045-f398-4cab-a8dc-09bdf00251d4" class=""><mark class="highlight-gray"><code>B</code></mark><mark class="highlight-gray"> </mark>dient dazu in jedem der drei Segmente im Programm1 alle instructions atomar zu exekutieren.</p><p id="73e3d9d2-435a-4462-bda9-ce387d0f212b" class="">
+</p><h1 id="c45aaf7b-897b-4c37-bae9-52861f9024ff" class="">Reader-Writer Problem</h1><p id="6b9313d9-f97d-496d-b00a-3d155ada974d" class="">Analogie: Tafel in einer Schule<div class="indented"><p id="4ba7c3cf-505b-492b-8e7f-d85382200c1a" class="">Während die Tafel jeweils von einem einzigen Schreiber beschrieben wird darf niemand zusehen aber danach dürfen beliebig viele Leser parellel die Tafel lesen.</p></div></p><p id="84aad92d-51f0-46ae-9252-eac955cd576d" class="">Writer muss priorisiert werden und darf jederzeit die Leser unterbrechen.<div class="indented"><p id="ecf04ced-c10a-45fb-9b4f-ed1753afbdb7" class="">
+</p></div></p><p id="835e5f87-9f31-49a1-91ad-0a8c3c311d62" class=""><mark class="highlight-blue">Versuch 1</mark></p><p id="39fd9a8d-11ac-4108-83a8-c2c73c6e600e" class="">Der 1.reader muss sich mit dem writer synchronisieren, der Rest der reader nicht.</p><pre id="e7b1dcd0-3ab0-4fa1-bfd9-3f8d95e2e686" class="code"><code>init(x,1); init(wsem,1);
+rc := 0; //reader counter</code></pre><div id="9b311d65-4b0b-469f-ba0d-27d2d84de167" class="column-list"><div id="f1d10e28-f8ea-4198-b339-684980acaf56" style="width:50%" class="column"><pre id="84345e12-0001-4ffa-9d0a-dcae74b49465" class="code"><code>while(true){
+	wait(x);
+	rc++;
+	if rc == 1 then wait(wsem);
+	signal(x);
+
+	read;
+
+	wait(x);
+	rc--;
+	if rc == 0 then signal(wsem);
+	signal(x);
+}</code></pre><p id="e5c081d1-4252-449d-95f9-12e172cdc716" class=""><mark class="highlight-gray">Keine mutual exclusion um read, da mehrere reader gleichzeitig lesen dürfen.</mark></p></div><div id="57e111ac-5b0b-4cb7-9e06-e3aee42fb4c6" style="width:50%" class="column"><pre id="a3ce65de-65db-42db-a40a-18fe481d7cf3" class="code"><code>while(true){
+	wait(wsem);
+	write;
+	signal(wsem);
+}</code></pre><p id="f2c81af4-7b68-4b34-862b-41baae58fd7a" class=""><mark class="highlight-gray">Mutual exclusion um write, da jeweils nur 1 writer schreiben darf.</mark></p></div></div><p id="b01d1b9c-0d68-47c6-a644-967233851187" class="">Dadurch ist mutual exclusion um <mark class="highlight-gray"><code>write()</code></mark><mark class="highlight-gray"> </mark>und parallelität um <mark class="highlight-gray"><code>read()</code></mark><mark class="highlight-gray"> </mark>hergestellt.</p><p id="204f04b6-4416-4bef-ada4-bda10a9b5ce7" class="">Problem:</p><p id="5dd0b2a9-cb56-4680-ba9b-83139026ebd4" class="">So lange es noch weitere reader gibt, kommt der writer nicht mehr dran.</p><p id="8cabc2f0-af9a-49a0-a35d-415b04eeecb7" class="">Reader sind priorisiert und können</p><p id="4ffdd827-dfbc-4501-8c3a-8fdd09179625" class="">Dadurch lesen die reader immer veralterte Daten - keine aktuellen.</p><p id="84371bc3-78ec-42fe-a4eb-225750a53b5c" class="">
+</p><p id="a2575efd-af74-42fe-8e4a-c582a4165f0c" class=""><mark class="highlight-blue">Versuch 2</mark></p><p id="689ad6b4-60c3-4dc0-9082-9defa429d1aa" class="">Wir spiegeln alles mit <mark class="highlight-gray"><code>y</code></mark>, <mark class="highlight-gray"><code>rsem</code></mark>:<div class="indented"><p id="7e10b8c1-43af-4edb-a363-69e39013d61c" class="">Reader können jetzt ausgehungert werden - Es warten alle neuen reader bei der <mark class="highlight-gray"><code>rsem</code></mark> queue sobald es einen writer bei Zeile <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span></span><span>﻿</span></span> gibt.</p><p id="ee4020c6-5190-4739-8607-2690fcd9d882" class="">Dann wird gewartet bis die alten reader <mark class="highlight-gray"><code>signal(wsem)</code></mark> und <mark class="highlight-gray"><code>signal(rsem)</code></mark><mark class="highlight-gray"> </mark>ausgeführt haben und geschrieben werden kann.</p></div></p><pre id="d140485a-79f8-4726-80a3-37f30dddcb9e" class="code"><code>init(x,1); init(y,1); init(wsem,1); init(rsem,1);
+rc := 0; wc := 0;</code></pre><div id="dc94718f-8d9c-4e45-997e-6ee442fb61e0" class="column-list"><div id="bf02b5bc-e6ee-40bd-86b4-4df399c30fd8" style="width:50%" class="column"><pre id="b3da0586-df1a-4078-a3f8-5b9be7487815" class="code"><code>while(true){
+	wait(rsem);
+	wait(x);
+	rc++;
+	if rc == 1 then wait(wsem);
+	signal(x);
+	signal(rsem);
+
+	read;
+
+	wait(x);
+	rc--;
+	if rc == 0 then signal(wsem);
+	signal(x);
+}</code></pre></div><div id="fc642f5f-9efa-480a-9ba6-573d78af3c3c" style="width:50%" class="column"><pre id="32bc980d-6276-457b-b4ef-bc26be47a01e" class="code"><code>while(true){
+	wait(y);
+	wc++;
+	if wc == 1 then wait(rsem);
+	signal(y);
+
+	wait(wsem);
+	write;
+	signal(wsem);
+
+	wait(y);
+	wc--;
+	if wc == 0 then signal(rsem);
+	signal(y);
+}</code></pre></div></div><p id="ae9f0a6e-45da-4308-aa0f-9222eed7d35e" class="">Problem: Writer können reader nicht unterbrechen.<div class="indented"><p id="1de9b480-2607-4ead-bd71-494a5302a591" class="">Sollte die blockierte <mark class="highlight-gray"><code>rsem</code></mark> queue zu lange sein, muss der writer bei der <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span></span><span>﻿</span></span>. Zeile so lange warten, bis alle reader aus der FIFO queue fertig sind.</p><p id="99d32d7c-757e-49f0-b996-d569806f4390" class="">Wir wollen, dass die queue sich wo anders anhäuft damit wir sofort mit einem writer die reader unterbrechen können.</p></div></p><p id="3d3970c0-9a19-4a19-a942-c386536515a1" class="">
+</p><p id="9d2f4e72-20db-4ff6-9720-78609102b900" class=""><mark class="highlight-blue">Lösung: Writer haben Priorität</mark></p><p id="b8c53e1a-621e-4d09-b91d-d456e71af591" class="">Es kann jeweils nur ein einziger reader in die <mark class="highlight-gray"><code>rsem</code></mark><mark class="highlight-gray"> </mark>queue wenn dieser nachkommt während geschrieben wird - die restlichen sind in der <mark class="highlight-gray"><code>z</code></mark> queue.</p><pre id="3d2130f2-da4e-4871-8f7c-e4fb875aff2e" class="code"><code>init(x,1); init(y,1); init(z,1); init(wsem,1); init(rsem,1);
+rc := 0; wc := 0;</code></pre><div id="c218d145-d735-4ca8-8fca-ff62a9d1b438" class="column-list"><div id="cdae4f01-c431-4cb4-bbc3-0d1dab3e071c" style="width:50%" class="column"><pre id="8e8add5d-d832-4bf3-8443-aaab6208f1d9" class="code"><code>while(true){
+	wait(z);
+	wait(rsem);
+	wait(x);
+	rc++;
+	if rc == 1 then wait(wsem);
+	signal(x);
+	signal(rsem);
+	signal(z);
+
+	read;
+
+	wait(x);
+	rc--;
+	if rc == 0 then signal(wsem);
+	signal(x);
+}</code></pre></div><div id="3397a490-d582-41d8-9707-697a5af9ecbd" style="width:50%" class="column"><pre id="3b887e97-85c2-4ee6-85e5-96a1829001f4" class="code"><code>while(true){
+	wait(y);
+	wc++;
+	if wc == 1 then wait(rsem);
+	signal(y);
+
+	wait(wsem);
+	write;
+	signal(wsem);
+
+	wait(y);
+	wc--;
+	if wc == 0 then signal(rsem);
+	signal(y);
+}</code></pre></div></div><p id="7294f73a-fa80-4301-97ac-e08d4f302f64" class="">
+</p><p id="bd68bd9e-1d12-43a0-8b7c-98b655dafc4d" class=""><mark class="highlight-blue">Alternative Lösung: writer-Priorität ohne reader-starvation</mark></p><p id="cc6b0ec4-60c5-43dc-ab88-52da8d925cb4" class="">Schreiber kommen früher dran - keine so starke Priorität wie davor.</p><p id="477eae63-af45-4ce9-906e-8bef5153f167" class="">Nicht die &quot;klassische Lösung&quot;.</p><pre id="3b762a58-7b1f-47bb-a4cd-2eed2f21d0a8" class="code"><code>init(x,1); init(y,1); init(z,1); init(wsem,1); init(rsem,1);
+rc := 0; wc := 0;</code></pre><div id="b8ea401d-2a00-4896-bc96-bd1201b96765" class="column-list"><div id="a53aa3be-6636-4e82-9f19-caa115b1ddee" style="width:50%" class="column"><pre id="17080f20-062b-4593-a6f7-2ddcf9cd8483" class="code"><code>while(true){
+	wait(z);
+	wait(rsem);
+	wait(x);
+	rc++;
+	if rc == 1 then wait(wsem);
+	signal(x);
+	signal(rsem);
+	wait(z);
+
+	read;
+
+	wait(x);
+	rc--;
+	if rc == 0 then signal(wsem);
+	signal(x);
+}</code></pre></div><div id="671f97d9-5348-48f4-ad99-ac8f3f7a5059" style="width:50%" class="column"><pre id="46e6d4bc-63b7-4ad0-8f8b-189704f2ba19" class="code"><code>while(true){
+	wait(rsem);
+
+	wait(wsem);
+	write;
+	signal(wsem);
+
+	signal(rsem);
+}</code></pre></div></div><p id="245ea470-9efb-4269-a2c9-5ba3ed53098e" class="">
+</p><h1 id="fedd75af-cdcd-461e-ae8e-38a49173d01a" class="">Dining Philosophers Problem</h1><p id="17e8d408-828d-4893-819b-ffd9263eb261" class="">5 Philosophen die gemeinsam essen, jeder braucht 2 Gabeln.</p><figure id="3e98929e-d656-4904-948c-8cdeac8b6016" class="image"><a href="Semaphoren%20Patterns%20563a79dfdfed49cab2d1896b115dedc4/Untitled.png"><img style="width:120px" src="Semaphoren%20Patterns%20563a79dfdfed49cab2d1896b115dedc4/Untitled.png"/></a></figure><p id="7429240a-a368-4ad8-b221-ac8669afa9a7" class="">
+</p><p id="84f946ed-d75f-4583-985b-fe83cfc59b80" class=""><mark class="highlight-blue">Versuch</mark></p><p id="24396a03-f6b5-4f68-86bf-403f4b7c1396" class="">Ein Prozess pro Philosoph. Ein Semaphor pro Gabel.</p><p id="92436753-f67f-40cf-a43c-0ffb9ec2396c" class="">Jeder Philosoph ist greedy und nimmt beide gabeln nacheinander. → Deadlock, kein Prozess kann die 3. Zeile ausführen wenn alle gleichzeitig die 2. Zeile ausführen.</p><pre id="e11f73e1-eba8-4d8e-a46e-b153e442d836" class="code"><code>for(i=0; i&lt;=4; i++){
+	init(fork[i],1);
+}</code></pre><pre id="b2c7b6c8-8cc1-430e-8837-16979ffce19f" class="code"><code>while(true){
+	think;
+	wait(fork[i]);
+	wait(fork[i+1 mod 5]);
+	eat;
+	signal(fork[i+1 mod 5]);
+	signal(fork[i]);
+}</code></pre><p id="f7c228aa-4ec7-44dd-a8eb-4a694c872e55" class="">
+</p><p id="9d8eb2b7-23ed-4cde-bcf9-ab97d50f9965" class=""><mark class="highlight-blue">Mögliche Lösungen</mark></p><ul id="8a282045-85a0-4ec2-bdb3-9a4e4d5f7b6f" class="bulleted-list"><li style="list-style-type:disc">Zusätzlicher Semaphor der nur zulässt dass an jedem Zeitpunkt nur 4 Gabeln genommen werden, dadurch bleibt immer eine Gabel frei.</li></ul><ul id="6e82bcfb-d58c-4b1e-8663-c03333f5e8d2" class="bulleted-list"><li style="list-style-type:disc">Mindestens ein Prozess muss die Gabeln in umgekehrter Reihenfolge nehmen.</li></ul><ul id="160ce5db-a6ea-4e5a-b919-ea240aef9fdb" class="bulleted-list"><li style="list-style-type:disc">Gabeln immer gleichzeitig nehmen - alles oder nichts: Atomare Operation für mehrere Semaphore mit<hr id="35c7b173-bbe1-42ec-96a9-9582c4493309"/><p id="9b890378-171c-41e5-a7c6-404dfb2bf406" class=""><mark class="highlight-gray"><code>mWait(S1...SN)</code></mark><mark class="highlight-gray">		</mark>blockiert wenn irgendeines ≤0 ist, verringert sonst alle gleichzeitig </p><p id="4a44f139-00fc-42c4-83b6-f6832ffde5aa" class=""><mark class="highlight-gray"><code>mSignal(S1...SN)</code></mark><mark class="highlight-gray">	</mark>	erhöht alle gleichzeitig um 1</p><hr id="9c17675b-7439-4c2d-b96e-8eb1435cc588"/><p id="23295691-01fe-4cd1-8f25-f2a46f8adbc8" class="">(Bei <mark class="highlight-gray"><code>mSignal</code></mark><mark class="highlight-gray"> </mark>ist es eigentlich egal ob sie alle gleichzeitig erhöht werden, es geht nur um die Lesbarkeit.)</p><p id="302f1d6e-c7b8-4a15-9be3-d15b6eead578" class="">Einsatz:</p><pre id="4db23808-a22c-4d30-9d0f-c7445564a8a8" class="code"><code>while(true){
+	think;
+	mWait(fork[i], fork[i+1 mod 5]);
+	eat;
+	mSignal(fork[i], fork[i+1 mod 5]);
+}</code></pre></li></ul></div></article></body></html>

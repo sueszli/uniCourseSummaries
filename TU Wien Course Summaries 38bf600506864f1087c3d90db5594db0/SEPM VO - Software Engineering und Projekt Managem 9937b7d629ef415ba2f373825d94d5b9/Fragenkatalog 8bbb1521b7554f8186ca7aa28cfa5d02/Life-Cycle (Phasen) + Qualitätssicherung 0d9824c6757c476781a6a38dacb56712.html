@@ -1,0 +1,763 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Life-Cycle (Phasen) + Qualitätssicherung</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0d9824c6-757c-4767-81a6-a38dacb56712" class="page sans"><header><h1 class="page-title">Life-Cycle (Phasen) + Qualitätssicherung</h1></header><div class="page-body"><ul id="5f92b2c3-f272-4524-bee6-c556452319a4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Skizzieren Sie den Software Life-Cycle.</span></summary><p id="cf0c9082-dfed-4a6f-8d29-f8b169f5d47e" class="">Basiskonzept für Vorgehensmodelle.<div class="indented"><ol type="1" id="42b2cf29-6a98-4cae-bb51-5bcc0e4acfcf" class="numbered-list" start="1"><li>Anforderungen und Spezifikation <mark class="highlight-gray">(Software Spezifikation)</mark></li></ol><ol type="1" id="50b615bd-9d4e-46bd-92fa-2e9a07d13235" class="numbered-list" start="2"><li>Planung <mark class="highlight-gray">(Software Spezifikation &amp; Design)</mark></li></ol><ol type="1" id="713ddd89-ab57-48a3-bcea-034d66dfdb50" class="numbered-list" start="3"><li>Entwurf und Design<mark class="highlight-gray"> (Design &amp; Implementierung)</mark></li></ol><ol type="1" id="c1bd762a-7d22-4477-bfd7-f75d84a6683a" class="numbered-list" start="4"><li>Implementierung und Integration <mark class="highlight-gray">(Implementierung &amp; Validierung)</mark></li></ol><ol type="1" id="9236908f-ff8c-4567-80f2-e84f02a997b2" class="numbered-list" start="5"><li>Betrieb und Wartung<mark class="highlight-gray"> (Validierung &amp; Evolution)</mark></li></ol><ol type="1" id="e04a5eec-3da5-407a-863d-972738faa520" class="numbered-list" start="6"><li>Retirement<mark class="highlight-gray"> (Evolution)</mark></li></ol></div></p><figure id="2209eb89-a234-43bb-9b13-a38f2d0cb174" class="image"><a href="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled.png"><img style="width:686px" src="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled.png"/></a></figure></details></li></ul><p id="9f37ea3c-d35a-49cc-9974-af13bf92ebfa" class="">
+</p><ul id="9fc37079-f939-4fbb-987a-968caeea2e3b" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Beschreiben Sie Traceability. Welche Arten von Traceability gibt es?</span></summary><p id="56f58845-b04b-449c-a46d-7227f71aa254" class="">Rückverfolgbarkeit einer Information durch den gesamten Entwicklungszyklus.</p><p id="174a0a3e-2a70-4cdc-8c26-e10d98363be3" class="">z.B. bei sicherheitskritischen Anwendungen gefordert.</p><p id="682f610a-86c6-47ca-a60d-26cadf89d86e" class="block-color-gray">Änderungsverfolgung<div class="indented"><p id="a7094f9e-2aca-41fa-81f9-356e0bfe5385" class="">Anforderung → Entwicklungsartefakte<div class="indented"><ul id="17f25699-5e21-4d58-91f2-dde448fc4a54" class="bulleted-list"><li style="list-style-type:disc">Woher kommt eine Anforderung und wo wurde sie umgesetzt?</li></ul><ul id="c1c59623-2726-4ee2-b71a-3f06e28d4571" class="bulleted-list"><li style="list-style-type:disc">Welche Artefakte sind von einer Änderung der Anforderung betroffen?</li></ul><ul id="90ae4e75-1d48-4b52-9cf3-d7d79a75e953" class="bulleted-list"><li style="list-style-type:disc">Welche Anforderungen sind von einer Änderung der Umsetzung betroffen?</li></ul></div></p><p id="2cb8a55e-1e74-4e28-a748-26db2361f46e" class="">
+</p></div></p><p id="728f1559-ebbf-464f-bdac-e07dd854b5c2" class="">Informationen aus dem Headerblock → automatisiertes Requirements Tracing z.B. in IDEs</p><ol type="1" id="6f9b161f-e023-4211-b2c5-2eae18f137dc" class="numbered-list" start="1"><li>Zeitlich<p id="38052a48-4975-4add-89a4-d784d68e91da" class="">Unterschiedliche releases, versionen</p></li></ol><ol type="1" id="7ae359a5-09a6-40cd-98f0-a08f03e6680b" class="numbered-list" start="2"><li>Vertikal<p id="693c8aac-ed94-469c-8aa8-118051465ae0" class="">Beziehungen eines Artefakttyps: <mark class="highlight-gray">z.B. System – Subsystem – Komponente.</mark></p></li></ol><ol type="1" id="213f2900-a9d2-40ad-821c-21e5356ab1be" class="numbered-list" start="3"><li>Horizontal<p id="4896a8d4-4ee5-4d32-9c60-6e4259895022" class="">Beziehungen von Entwicklungsartefakten: <mark class="highlight-gray">z.B. Anforderungen – Implementierung – Testfälle</mark></p></li></ol></details></li></ul><p id="349e19f4-d578-492b-8d4c-5d9ff4fe794d" class="">
+</p><ul id="5617482e-2aa9-49b9-9b33-41e32e5c6737" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Wie kann Traceability in einem Softwareprojekt umgesetzt werden?</span></summary><p id="bcba363b-521d-4080-9c87-ba6fd6d850f3" class="">Durch typische Fragestellungen:</p><p id="d18d2661-44ae-4791-ab2b-ad998a0a42a7" class="">- Woher kommt eine Anforderung und wo wurde sie umgesetzt?
+- Welche Artefakte sind von einer Änderung der Anforderung betroffen?
+- Welche Anforderungen sind von einer Änderung der Umsetzung betroffen?</p><p id="d57b2a81-e55d-4659-9cf6-ee213f1bcf0f" class="">
+</p><p id="54fa5f27-de1a-4efb-99cd-daf1553b9339" class="">Daraus ergeben sich folgende Vorteile:</p><p id="61baef31-0474-48e0-a79d-1433da870203" class="">- Nachvollziehbarkeit der Information bei Änderung
+- (Automatische) Benachrichtigung bei Änderung</p><p id="710d9bdb-8af8-4443-aedd-8b0f729f4175" class="">
+</p><p id="c05713e1-653e-4007-b14a-5c434015a68c" class="">Umsetzung kann automatisiert werden:<div class="indented"><p id="1e30eb3d-a4e3-450f-a0d3-07190db3374d" class="">Informationen aus dem Headerblock können zur (automatisierten) Realisierung für
+Requirements Tracing eingesetzt werden (z.B. in IDE´s)</p></div></p></details></li></ul><p id="d7e3fd20-fe6f-4217-9f75-a3862eb9ce71" class="">
+</p><ul id="9156138c-687e-4f30-a485-2917f44c67be" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Phasen umfasst der Wartungsprozess?</span></summary><p id="22b2faf4-c601-4f6f-9086-b6eebfa14f87" class="">Gleich wie Life-Cycle Prozess</p></details></li></ul><p id="76708c40-fb2c-4b96-97f5-9a2bf79274b7" class="">
+</p><ul id="286d497a-9ecf-4eaf-ae00-b4717638c3b5" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Nennen und beschreiben Sie unterschiedliche Sichten auf die Wartung</span></summary><p id="e35d4eb2-aba1-42d8-b83a-4ad0e01fa8e3" class="">Process-View<div class="indented"><p id="40d8e8c2-1c7d-48a5-a7f3-6cede712c5ea" class="block-color-gray">Änderung des Software-Produkts nach Auslieferung (Delivery) und Inbetriebnahme (Deployment bzw. Product Launch).</p></div></p><p id="faf448d6-6a31-4aa7-a743-f3413925dc6e" class="">Activity-View<div class="indented"><p id="3c6400eb-70ff-498d-9237-867ae74a0266" class="block-color-gray">Wartungs-Aufgabe</p></div></p><p id="3259b934-b655-4402-9869-16fe2a4d94a7" class="">Phase-Oriented-View<div class="indented"><p id="60bf36d2-b3a6-4029-89ae-30b1e7952065" class="block-color-gray">Wartungsphase endet mit “Stilllegung” des Softwareproduktes.</p></div></p></details></li></ul><p id="b87a49c9-9611-4d2f-89d8-bcaa89d96e43" class="">
+</p><ul id="e8f85f05-6360-4ace-97d0-27396dbc6be5" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Nennen Sie drei Techniken zur Wartung.</span></summary><ul id="360ee08d-5dd6-4f37-9f52-b05e27a004ed" class="bulleted-list"><li style="list-style-type:disc">Herstellen des Produktverständnisses<p id="88d4611c-53c7-4bd5-876d-c2aa8afc2a76" class="">KeyTools, Code-Browsers, klare und präzise Dokumentation.</p></li></ul><ul id="f1cd4b54-f4fc-437f-b989-6efd84a99590" class="bulleted-list"><li style="list-style-type:disc">Reengineering / Refactoring<p id="8c23c0dc-e9ed-4778-ac2e-a123893fbc6d" class="">Überprüfung und Überarbeitung des Software Codes.</p></li></ul><ul id="5a6e6468-0f86-4ed5-a6d1-f7fbd7dc5ae0" class="bulleted-list"><li style="list-style-type:disc">Reverse Engineering<p id="16ca277f-130d-40aa-997e-5704ba11a19a" class="">Analyse → meistens auf höheren Abstraktionsniveau z.B. UML-Modelle aus Code</p></li></ul></details></li></ul><p id="647930bf-35d0-4ff6-bd05-93bac6b65da7" class="">
+</p><ul id="148aafff-45cb-40a9-99d5-65a8a799c752" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Klassifizierung von Anforderungen</span></summary><ul id="b368416c-be5b-4254-9115-f653f85ac15e" class="bulleted-list"><li style="list-style-type:disc">Funktionale Anforderungen<p id="a507b5bb-f147-46cf-bcdb-0cf65f11e7a1" class="">Datenformate, Feature, Verhalten vom System in bestimmten Situationen</p></li></ul><ul id="509ce0ed-ddf3-47f3-84ca-b720106cb37b" class="bulleted-list"><li style="list-style-type:disc">Nicht-Funktionale Anforderungen<p id="05fbf6c3-144b-4d1c-a22c-7a00ccea068a" class="">Leistung und Performance, Usability, Sicherheit, Warbarkeit</p></li></ul><ul id="ee7c3c69-040c-46e7-9067-e53ca0a42916" class="bulleted-list"><li style="list-style-type:disc">Designbedingungen<p id="79b2624c-b3a8-468a-b02b-560afbaf6b22" class="">worauf soll beim technischen Entwurf geachtet werden</p><p id="300ad069-8986-45cd-a9d5-b563344e396a" class="">z.B. Schnittstellen, Plattformen und Entwicklungsumgebung</p></li></ul><ul id="3efa5cfe-733b-495c-8c07-08602ce29c2e" class="bulleted-list"><li style="list-style-type:disc">Prozessbedingungen<p id="163dd787-0c2a-47be-a0e4-37a94c961a66" class="">Rahmenbedingungen im Softwareprojekt, z.B: Ressourcen / Dokumentation</p></li></ul></details></li></ul><p id="efee01fb-5589-4088-882b-807a40db1795" class="">
+</p><ul id="06ca20df-5240-4276-b1da-1c11771773fe" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">5 essenzielle Nicht-Funktionale Anforderungen</span></summary><ul id="77bdb0dc-fba2-44bc-80f5-a76299d5f066" class="bulleted-list"><li style="list-style-type:disc">Leistung und Performance</li></ul><ul id="1ebc60ea-7a76-475b-afd9-fc6272f7efd0" class="bulleted-list"><li style="list-style-type:disc">Usability und menschliche Faktoren</li></ul><ul id="5d7ef265-7a24-4e6e-947b-41024e3c7b51" class="bulleted-list"><li style="list-style-type:disc">Sicherheit</li></ul><ul id="79ee3f27-99f7-4ab8-bcca-051df891282e" class="bulleted-list"><li style="list-style-type:disc">Wartbarkeit</li></ul><ul id="753031f1-6a19-49d4-a25d-21df7d1d8214" class="bulleted-list"><li style="list-style-type:disc">Erweiterbarkeit</li></ul></details></li></ul><p id="a88c7cb9-e78e-4a17-bf5f-16fec55d6740" class="">
+</p><ul id="a9670a5b-b283-48ea-8f7d-96e9e2c85935" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">4+1 View Model of Architecture / Nennen und beschreiben Sie die unterschiedlichen Sichten auf die Architektur</span></summary><p id="4337a781-544c-4488-8844-5d1cc4b62503" class="">Eine Sicht (view) beschreibt einen Teilaspekt der Architektur und des Designs und die jeweiligen Eigenschaften eines Systems.</p><p id="b754b437-7c6b-4400-b8f7-52e088f72cc9" class="">
+</p><ol type="1" id="22722340-1f75-4b05-a3ec-71fde9b72ed6" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Logical View</span><p id="0dae6743-441d-4af6-bac9-68172d584cb6" class="block-color-gray">Funktionale Anforderungen, Design Packages, Subsysteme, Klassen</p><p id="1f5be985-96ed-4eff-82bc-78ecd70e6d63" class="block-color-gray">UML: Klassendiagramme, Package Diagrams ...</p></li></ol><ol type="1" id="3ae89da8-7caf-4180-9364-4d7a0b5dc5ff" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Implementation View</span><p id="82764bc4-a1b9-4d71-a8ef-edfce7d4e15c" class="block-color-gray">Implementierung, Source Code</p><p id="d86b9b34-d8e0-4016-9666-de273ad06665" class="block-color-gray">UML: Component Diagram</p></li></ol><ol type="1" id="c1560718-6aaf-4dd6-bbe7-deda3b0cbd13" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Process View</span><p id="cb6ee00a-276b-4889-8a2c-824348504f83" class="block-color-gray">Nicht-funktionale Anforderungen, System-Integration</p><p id="589debb7-f008-40c4-b4f5-2502abdc680b" class="block-color-gray">Concurrency, Lastverteilung, Fehlertoleranz</p><p id="60d34f71-b1c6-411c-a35e-399d8a5bd371" class="block-color-gray">UML: Sequence, Activity Diagrams, Communication Diagrams</p></li></ol><ol type="1" id="037948f9-8e68-4464-98e5-ee48122adecc" class="numbered-list" start="4"><li><span style="border-bottom:0.05em solid">Deployment View</span><p id="ada72654-0e55-449b-8d0b-38c39819fa66" class="block-color-gray">Systems-Engineer: Deployment, Installation, Performance</p><p id="5214a2d1-f4ba-4b4a-8c97-a8cb1078e19d" class="block-color-gray">UML: Deployment Diagrams</p><hr id="e0cfefe2-65d8-4c0b-894a-5d0f861034d5"/></li></ol><ol type="1" id="1a79dd63-1529-427a-9b42-043b410f6d84" class="numbered-list" start="5"><li><span style="border-bottom:0.05em solid">Use-Case View</span><p id="63713b61-02b9-44ca-925f-3a80ffbb568d" class="block-color-gray">Integration, Testen, Verifikation</p><p id="77abd723-fd0f-48a1-a276-e423fa7657c3" class="block-color-gray">Schnittstelle zwischen allen vorherigen Sichten aus Architektur-Sicht</p><p id="554d5664-9eb4-4379-b134-99e2664f7979" class="block-color-gray">beinhaltet <em>Schlüsselszenarien (key scenarios) → Sicht der Geschäftsprozesse</em></p><p id="cb860383-f90a-4436-861c-4fe739ef6884" class="block-color-gray">UML: Use Case Diagram + Beschreibung, Aktivitätsdiagramme</p></li></ol><p id="d8b30327-e348-4e54-953f-551b47151f84" class=""><div class="indented"><figure id="63cf0338-a594-4520-bd56-0d7a5f02da3b" class="image"><a href="../Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%202.png"><img style="width:336px" src="../Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%202.png"/></a></figure></div></p></details></li></ul><p id="824fb4a9-653e-4a2d-b59f-6fff1bfb3b58" class="">
+</p><ul id="c097aa83-785b-453b-8b68-6c48a0514751" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">System Control (Stair vs Fork)</span></summary><p id="781e39a6-40eb-46db-9745-819a55ba442f" class="">Zentrale vs. verteilte Kontrolle<div class="indented"><p id="4229b5a7-f4e7-455d-b923-8238fc0fa77e" class="block-color-gray">fork = zentral<div class="indented"><p id="21a62184-002f-4782-98ff-80116ddaea37" class="">Anpassung nur an wenigen Objekten nötig - leichtere Wartbarkeit</p><p id="22552e8c-c662-40b2-a796-cd393d614b0f" class="">Hohe Abhängigkeit Systems von diesem Objekt</p><p id="d6874a99-5f91-4c9a-a495-a043a058090c" class="">Wiederverwendung von Datenobjekten leichter</p></div></p><p id="6656bd30-1efe-495f-93c7-e43fd882c0a0" class="block-color-gray">stair = verteilt / dezentral<div class="indented"><p id="35925648-2bca-435c-9653-2547e6b0f1a8" class="">Schrittweise Ausführung von Funktionen, dadurch wechselt die Kontrolle - schwierigere Wartung</p><p id="ee8cdfc2-0b17-460c-8760-31a6b9ebecf3" class="">Bessere Wiederverwendbarkeit der Methoden z.B. durch Vererbung</p><p id="686e6173-e12e-405b-bff7-83e11b32fb93" class="">Ausfall eines Teiles nicht so schlimm</p><p id="a030094f-d169-4078-a935-d585e703d8a5" class="">Hohe Fehleranfälligkeit</p></div></p><p id="0e0d4484-002c-4325-a622-a301a5a2a1c7" class="">
+</p><figure id="790bcd6f-1544-4659-8a11-dba2c547faf2" class="image"><a href="../Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%203.png"><img style="width:240px" src="../Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%203.png"/></a></figure></div></p></details></li></ul><p id="5ab54776-9275-4b3a-ba32-cf74291d2a88" class="">
+</p><ul id="02e8d57d-e9d2-4413-8047-c56af02389b4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Blackbox/Whitebox Multiple Choice</span></summary><p id="35835258-0dbe-4cd2-9e3c-5ca657e54dbf" class="">Blackbox<div class="indented"><p id="1f224198-4fae-4d94-8554-9c84e70c334c" class="">Berücksichtigt nur Eingabe und Ausgabe, nicht interne Funktionalität</p><ul id="2b1376e0-444f-4df9-ab43-ddbd1443f37a" class="bulleted-list"><li style="list-style-type:disc">Anforderungen/Spezifikation als Grundlage</li></ul><ul id="01570946-cf18-4aef-90fd-8c299b353022" class="bulleted-list"><li style="list-style-type:disc">Data driven testing</li></ul><ul id="4d5ba6e0-a32e-40e3-9063-1ee37cbd9f3d" class="bulleted-list"><li style="list-style-type:disc">Unabhängig von der Realisierung der Module.</li></ul><ul id="73ecb0ff-4506-4575-bf65-560f5cf63379" class="bulleted-list"><li style="list-style-type:disc">Äquivalenzklassenbildung.</li></ul><ul id="e24fe2db-93d9-4cae-ba1e-ff82c3584e45" class="bulleted-list"><li style="list-style-type:disc">Keine genaue Fehlerortung möglich</li></ul></div></p><p id="ef07200e-0186-4879-8273-3275e23333cc" class="">White box<div class="indented"><p id="9f72e3de-de9f-4f56-91f1-f6ea2bf54c29" class="">Versucht jede interne Funktion anzusprechen und zu testen</p><ul id="255a965f-9ff4-48b7-8fc8-b47e4784ddc1" class="bulleted-list"><li style="list-style-type:disc">Sourcecode als Grundlage → Wissen über internen Aufbau notwendig.</li></ul></div></p><p id="97d850bb-b241-4546-ba95-5478a5ee504b" class="">
+</p><p id="36a28613-2f3e-48d6-b72d-c4e820432ff9" class="">
+</p></details></li></ul><p id="4f3b39ca-b92e-469d-a271-c636c4deb328" class="">
+</p><ul id="831dd03e-27a5-4086-be06-2f214b870235" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Beschreiben Sie den Prozess des Testfallbestimmens. Was muss dokumentiert werden?</span></summary><p id="6c52388c-6316-4256-b272-cdaadf823103" class="">Testfall bestimmen nach Anforderungen</p><ul id="3fb19ba5-844d-439b-a0cc-29d5165dcd61" class="bulleted-list"><li style="list-style-type:disc">Testdatum / Zeit</li></ul><ul id="35760f09-0d53-4011-a7ed-8829c9104672" class="bulleted-list"><li style="list-style-type:disc">Bezeichnung/ Beschreibung des Tests</li></ul><ul id="ff341431-bafe-44dd-8b0d-bb0c6c4eca67" class="bulleted-list"><li style="list-style-type:disc">Testtyp<p id="b999b191-459c-4a1d-8937-a7f6b46c47f0" class="">Normalfall, Fehlerfall, Sonderfall</p></li></ul><ul id="0e9a3d9a-6f72-4dff-8d9f-88ca4e19c4e1" class="bulleted-list"><li style="list-style-type:disc">Vorbedingung<p id="e160ead4-6aac-4173-b3ce-09952d065730" class="">Eingabedaten, Zustand des System vor Testausführung.</p></li></ul><ul id="2eff357b-3c5d-4938-9d73-3eea1b7bbb16" class="bulleted-list"><li style="list-style-type:disc">Eingabe<p id="6d9d2c25-6912-4512-8931-c8dcfb9a475a" class="">Äquivalenzklasse</p></li></ul><ul id="63c97e27-8f21-41ad-a698-c16197e7d0a5" class="bulleted-list"><li style="list-style-type:disc">Erwartete Ausgabe</li></ul><ul id="486ff93d-cac6-47a5-bade-a4866dd8a183" class="bulleted-list"><li style="list-style-type:disc">Erhaltene Ausgabe</li></ul><ul id="323defcb-0614-4c5f-a17c-40706516a6b3" class="bulleted-list"><li style="list-style-type:disc">Erfolgreich / Nicht erfolgreich <mark class="highlight-gray">(OK / NOK)</mark></li></ul><p id="c87d4ebe-342b-4b99-b1e6-cb2c3aa667a1" class="">
+</p></details></li></ul><p id="20b73d00-b4a9-4e05-ac88-7dab8620a2f4" class="">
+</p><ul id="084a2ebf-2d3b-40c1-977e-14f0eef89796" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Diskutieren Sie die Begriffe Validierung und Verifikation</span></summary><p id="b515e7f1-9276-4d8b-9d77-8a37f97d252f" class="">Überpüfung der Produkte</p><ol type="1" id="e880451e-dd07-47ef-ac4c-227a4dbcd2b9" class="numbered-list" start="1"><li>Verifikation	<mark class="highlight-gray">Ob Komponenten der (technischen) Spezifikation entsprechen</mark><p id="8b04f7b1-37ab-4622-945e-fb7b1d15ea1f" class="block-color-gray">Spezifikation vs. Umsetzung („Wurde das Produkt richtig entwickelt?“)</p><p id="122cd89e-1f19-453a-b39b-0926bad5a589" class="block-color-gray">Beispiel: Komponententests (Prüfung gegen die technische Spezifikation)</p></li></ol><ol type="1" id="58467f07-5c17-4ea1-a3f7-6ba263166b7e" class="numbered-list" start="2"><li>Validierung	<mark class="highlight-gray">Ob Komponenten dem Kundenwunsch entsprechen</mark><p id="b02063f2-120f-4c4a-befc-566de0be1ae9" class="block-color-gray">Erwartung des Kunden vs. Umsetzung („Wurde das richtige Produkt entwickelt?“)</p><p id="7c8cbe08-161a-4516-95ae-c5c15d470ae9" class="block-color-gray">Beispiel: Akzeptanz- und Abnahmetests (Prüfung gegen Anforderungen).</p></li></ol><p id="72dddc41-e34a-4686-9ce1-cabaeac95dda" class="">
+</p></details></li></ul><p id="619cf22a-e98f-49f5-b386-43db1cc67914" class="">
+</p><ul id="f5e9ba19-d7d2-42aa-8cd1-26ca2d41ed0f" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was sind Äquivalenzklassen?</span></summary><p id="df0425c5-08f1-42b6-b293-c5a120e8e1a3" class="">Hierbei werden die Eingabedaten in Klassen mit dem selben (äquivalenten) Verhalten
+eingeteilt und anschließend Repräsentant jeder Klasse für einen Testfall gewählt.</p><p id="37bffe17-889e-4b2a-b74c-0ee435d2cb5b" class="">Testfälle müssen gültige (Normalfall, Sonderfall) UND ungültige Eingabewerte (Fehlerfall)
+berücksichtigen.</p><p id="78a8b58f-c28c-4885-9940-194f9fe97f3b" class="">
+</p><figure id="b7a7dc6b-03b7-4f39-8c13-90aad66276db" class="image"><a href="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%201.png"><img style="width:1083px" src="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%201.png"/></a></figure></details></li></ul><p id="ab60caca-a15a-41b7-8657-ad6e34aaa879" class="">
+</p><ul id="a20f0d7e-bda3-4adf-a9b7-662140040aa3" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist eine Grenzwertanalyse?</span></summary><p id="49bbbdf0-cd48-4532-95f9-bdd51ecc50c5" class="">Spezialfall einer Äquivalenzklasse, bei welcher man die Repräsentanten um die <em>Klassen-Grenzen </em>wählt, da hier besonders leicht Fehler auftreten.</p></details></li></ul><p id="7b004c45-3edd-4353-b498-4dd8d72badd3" class="">
+</p><ul id="cf7e48f3-8bfa-4448-812a-83b571493141" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Beschreiben und skizzieren Sie den Ablauf eines Reviews</span></summary><p id="5e292559-e687-4f1d-a746-3c5368772e0c" class="">Produkt oder Dokument wird kommentiert und abgesegnet (approved).</p><p id="b4eaeb50-c848-47de-b509-4e9cf6676737" class="">formale Analyse- und qualitative Beurteilung</p><p id="aa871595-8faa-4fe6-b173-918e71dbf1b4" class="">
+</p><p id="18a8b0b4-951e-4198-b5c3-a230c62241e7" class=""><span style="border-bottom:0.05em solid">Reviewtypen</span><div class="indented"><p id="129b49dd-2d65-4a00-a326-5a39167cb944" class="">Unterschieden durch:<div class="indented"><ol type="1" id="27963c80-0740-4a44-ab63-9202b630942e" class="numbered-list" start="1"><li>Vorgehensmodell Wahl</li></ol><ol type="1" id="95ea82b0-8215-48d0-a079-2c2bdd22c164" class="numbered-list" start="2"><li>Einbeziehungs-Grad des Kunden</li></ol></div></p><p id="231f6f21-1617-4330-b10b-f57cab298a8c" class="">Hier: Phasenorientierte Vorgehensweise</p></div></p><figure id="863066d6-2dfa-40e2-8c18-17a4527e2cc4" class="image"><a href="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%202.png"><img style="width:132px" src="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%202.png"/></a></figure><p id="8fde08db-2119-4501-8ff9-90800a5546e3" class="">
+</p><p id="0e7cbe10-04f7-4276-806e-67bd3f4edff9" class=""><span style="border-bottom:0.05em solid">Rollenverteilung</span><div class="indented"><p id="2150bb65-1f9d-434a-acb6-deb9239734be" class="">3-6 Personen die beteiligt sind. </p><p id="e3d8936a-3a44-42df-beec-7f991509e3b4" class="">&gt; Moderator (keeper of process)<div class="indented"><p id="ddb8b0e8-ae8f-4327-a70a-b71c992d723d" class="">Leiter, bestimmt Ablauf, Auswertung, Korrektur</p></div></p><p id="fe04ebee-44ad-49ea-a94d-924432dbc4d1" class="">&gt; Leser (keeper of focus and pace)<div class="indented"><p id="ae20c23e-a95f-4d8a-931b-263169e11cbb" class="">Ausarbeiter, bestimmt wie detailiert es sein sollte</p></div></p><p id="62181dec-08ea-45fb-891b-738cce2ec2c6" class="">&gt; Schreiber (preserver of knowledge)<div class="indented"><p id="d0643c8f-d8ea-4708-9b9f-e593c93480ad" class="">Protokolliert Ablauf</p></div></p><p id="76f4f988-a52c-4603-af2e-8a5d92ab678c" class="">&gt; Gutachter (Reviewer)<div class="indented"><p id="f995274d-59a3-4f9b-b681-d4da5d77bfe7" class="">Erkennt Fehler nach Befehl von Moderator</p></div></p><p id="5aa97cc6-423d-4853-83fc-a975d57f660b" class="">&gt; Autor (author)<div class="indented"><p id="607eb16f-4a17-4932-a097-f9ad867d845d" class="">Besitzer des Review-Objekts</p></div></p></div></p><p id="f7bd47f8-6995-4c91-973c-482d77b98187" class="">
+</p><p id="ad154840-4580-4999-95a5-64c1274395e6" class=""><span style="border-bottom:0.05em solid">Phasen</span><div class="indented"><p id="883b018b-d0f4-4ca5-a16f-b80e32daa282" class="">Wiederholungen sind möglich.</p><p id="b921b7fa-f856-4e5d-9cdd-a23c6aeff93d" class="">Oft werden Checklisten verwendet.</p><ol type="1" id="0c526108-68d8-4185-b858-c3b8dafc4b92" class="numbered-list" start="1"><li>Planung („planning phase“)<p id="33d1dadd-557c-444d-89fe-1ec6d5152e4e" class=""><mark class="highlight-gray">Objekt, Prüfziele</mark></p><p id="df152e01-6421-4f82-819a-18649f23c52a" class="">Moderator erstellt Arbeitspakete / Checkliste</p></li></ol><ol type="1" id="381f7497-7d28-478f-b448-64f55b98564e" class="numbered-list" start="2"><li>Initialisierung („initialisation phase“)<p id="e1474f75-26b7-430f-8f45-32e5c4831857" class="block-color-gray">Kontrolle ob Code kompiliert</p></li></ol><ol type="1" id="dbc95b3c-4906-4b42-aca7-953ee7317556" class="numbered-list" start="3"><li>Vorbereitung („preparation phase“)<p id="0f4fc401-a367-4fb0-b3d0-f16cc62f4779" class=""><mark class="highlight-gray">Einzeldurcharbeitung</mark></p><p id="db68e81b-4459-41e9-9826-86dd1f7da0c8" class="block-color-gray">Bearbeitung, Fehler finden (Vorbereitung für die Sitzung)</p></li></ol><ol type="1" id="3f77f556-bd73-4dd2-a37f-27f6999a779b" class="numbered-list" start="4"><li>Reviewsitzung („review“)<p id="0467bf45-54ec-4e50-a42d-07125a16c000" class=""><mark class="highlight-gray">Gemeinsam Lesen, Aufzeichnen von Mängeln (nicht Korrektur)</mark></p><ol type="1" id="a0042cc5-ffc2-4362-a6b4-19955886ce3a" class="numbered-list" start="1"><li>Reviewsitzungen (2h)<p id="f4622387-9497-47f5-8757-79fa02bf14a9" class="block-color-gray">Moderator = Diskussionsleiter</p><p id="8976afe2-b0f5-4106-bc69-28b46cdba7cc" class="block-color-gray">Alle beschließen gemeinsam welche Nacharbeiten notwendig sind. </p></li></ol><ol type="1" id="b53aad07-1bec-42ab-b11e-3f7f8a5b92df" class="numbered-list" start="2"><li>&quot;Die dritte Stunde&quot;<p id="9259d545-2035-45c7-93d7-61f94ba8d003" class="block-color-gray">Feedback an Review selbst</p></li></ol></li></ol><ol type="1" id="9b14cdd8-b50a-48ec-94f0-de843a5658da" class="numbered-list" start="5"><li>Sammlung im Team („meeting“)</li></ol><ol type="1" id="cc5297d8-8275-43ec-b08f-61554c47cec5" class="numbered-list" start="6"><li>Reviewbericht („reporting“)<p id="9a3c6ea1-5223-41fe-b1dc-ffade4f2d865" class="block-color-gray">Schreiber protokolliert nach Sitzung</p></li></ol><ol type="1" id="6dc082ba-0f51-4611-aedd-f4db48c2627e" class="numbered-list" start="7"><li>Nacharbeit („re-work)<p id="72c7243c-be3d-4ebb-81a1-5189e3596203" class=""><mark class="highlight-gray">Review selbst bewerten</mark></p><p id="7a5c8a8b-8ce8-446a-b442-68d977fe2f3f" class="block-color-gray">Autor bekommt Feedback und muss Fehler ausbessern.</p><p id="712018a6-5f7d-417f-a03f-5f220861fb4b" class="block-color-gray">Moderator prüft ob ausgebessert wurde</p></li></ol></div></p><p id="460bcc11-e804-4caf-b1f3-338e4d771cdf" class="">
+</p><p id="5b0d139a-5df0-4b21-aef2-d2714db6da49" class="">Alternativerweise (lt. Folien):<div class="indented"><ol type="1" id="2b553e23-3f55-4124-b97f-cbd50b3d72f2" class="numbered-list" start="1"><li>Planung</li></ol><ol type="1" id="7735181e-fe89-4afc-a4f2-1ee2abfcfedc" class="numbered-list" start="2"><li>Vorbesprechung</li></ol><ol type="1" id="ec39c81c-077a-4f37-9282-abeccaaf85f2" class="numbered-list" start="3"><li>Individuelle Vorbereitung</li></ol><ol type="1" id="5fb22a47-7d92-448d-bbee-11b72a0a523e" class="numbered-list" start="4"><li>Review-Sitzung</li></ol><ol type="1" id="6f4db042-ebb9-4017-976d-21d7a7e9e0a6" class="numbered-list" start="5"><li>Nachbearbeitung</li></ol><ol type="1" id="fc0af702-6430-4fd7-a092-b18c84c1a7b4" class="numbered-list" start="6"><li>Bewertung</li></ol></div></p><figure id="60baa1fa-4ec9-4f2a-b0e0-4545317ca071" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%202.png"><img style="width:96px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%202.png"/></a></figure></details></li></ul><p id="2ef41382-3a56-47bb-a4bc-ed5f9493db97" class="">
+</p><ul id="7c7c9abb-0ccb-472b-b59f-49f918473df9" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Qualitätskriterien gibt es in der Softwareentwicklung?</span></summary><p id="b9aa5f92-9636-42cc-a5e5-adb2191e111a" class="">Qualitätssicherung = Durchführung von Verifikation und Validierung in jeder Phase der Software-Herstellung</p><ul id="d8ccf25b-1a08-4fb4-afcb-e19741516126" class="bulleted-list"><li style="list-style-type:disc">Testbare Anforderungen</li></ul><ul id="8b139b28-b688-40ed-b35e-203e8d04cab3" class="bulleted-list"><li style="list-style-type:disc">Verfolgbare Entwicklung der Anforderungen (mit Modellen) in testbare Produkte.</li></ul><p id="3b1771c3-f839-4f37-8f12-de9eed62e8cd" class="">
+</p><ul id="6b9b655f-5fdd-4862-a791-218f3c502e44" class="bulleted-list"><li style="list-style-type:disc">Leistung und Performance <mark class="highlight-gray">(z.B. Optimierung des Informationsflusses)</mark></li></ul><ul id="969ff21c-ccb4-4661-97dd-b8eab9131ff7" class="bulleted-list"><li style="list-style-type:disc">UI, UX <mark class="highlight-gray">(z.B. Einfachheit der Bedienung, Training)</mark></li></ul><ul id="8a285b9a-2905-4f3c-aabe-f97aa4ae8de4" class="bulleted-list"><li style="list-style-type:disc">Sicherheit <mark class="highlight-gray">(z.B. Zugangskontrolle)</mark></li></ul><ul id="0c126575-c29a-4b27-af83-1b61e655fd5a" class="bulleted-list"><li style="list-style-type:disc">Wartbarkeit <mark class="highlight-gray">(Trennung von Anwendung und Daten)</mark></li></ul><ul id="ba24cb70-bf46-4459-9cdc-1f7319c95e31" class="bulleted-list"><li style="list-style-type:disc">Erweiterbarkeit <mark class="highlight-gray">(z.B. wie Aufwändig ist es ein zusätzliches Modul dem Projekt hinzuzufügen)</mark></li></ul></details></li></ul><p id="7d0a0697-bb0c-4bc0-975c-22c0f4b5afa7" class="">
+</p><ul id="f56918d3-7b94-465e-a9f8-85ae84ad09ff" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist ein Software Review und wozu dient er?</span></summary><p id="53542b8b-1c91-4080-8a76-e2e24cfaf6d5" class="">Was ist ein Review?<div class="indented"><p id="2501c766-c8b9-4ec5-b932-a6e5e4f1f046" class="">Produkt oder Dokument wird kommentiert und abgesegnet (approved).</p><p id="b3d17689-aa13-42b2-9d29-926a59ede3d3" class="">formale Analyse- und qualitative Beurteilung</p><p id="f764ad9b-58bf-40b4-a7c1-80791eb10340" class="">
+</p></div></p><p id="86e655dc-1c2b-4d96-89d9-211f0f558ba5" class="">Wozu dienen Reviews?<div class="indented"><p id="d7cf9ec2-9a4e-44de-9575-38d8f2179d02" class="">qualitativen Beurteilung von Produkten und Prozessen die quantitativ nur schwer oder gar nicht beurteilt werden können (z.B. Modelle, Dokumente)</p></div></p></details></li></ul><p id="b385801d-9465-4a1b-a961-41a1b1e0fc53" class="">
+</p><ul id="45f076b3-22fd-4edd-b536-5fbf6d119b92" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Arten von Reviews kennen Sie? Erläutern Sie die wesentlichen Aspekte der einzelnen Reviewarten und geben Sie jeweils ein konkretes Beispiel an.</span></summary><h2 id="3f524a33-02dc-4360-bd92-248eb94fd84a" class="">Zu Reviews verwandte Tätigkeiten</h2><p id="5c9ae2bb-ee6f-45a4-911d-4f0799809fce" class=""><span style="border-bottom:0.05em solid">Inspektion</span><div class="indented"><p id="4d022fc6-eb0c-45f2-9d03-0a3fbd76ea3e" class="">Behebung von konkreten Mängeln</p><p id="31e9e2c9-ad6c-42fb-8170-3dda000f8a7f" class="">Leser ≠ Autor</p><p id="cab63119-3e83-4d29-9a66-896295aa87f8" class="">Spezielle Art von Reviews → &quot;Blick durch Mikroskop&quot;</p><p id="1ad37c3c-c019-4a87-9e53-e9ab862a90ef" class="">Höhere Formalisierung.</p><p id="cc9c57e0-d499-4f16-824a-fa270f0bae66" class="">Lesetechniken die die Fehlerfindung verbessern sollen.</p></div></p><figure id="6666f434-a0e4-44a9-b6d2-edbde66b062d" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%203.png"><img style="width:192px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%203.png"/></a></figure><p id="44ac0697-df02-40bd-973c-904ce35d2fcc" class=""><span style="border-bottom:0.05em solid">Walkthrough</span><div class="indented"><p id="6d40da27-0876-46bc-8834-09e7e5297f2f" class="">Behebung von konkreten Mängeln
+Autor = Leser &amp; Moderator</p></div></p><p id="a27471b4-736c-453e-b014-6bdbbbc686b7" class="">
+</p><p id="40991231-f595-441b-a013-dc93353f7e23" class=""><span style="border-bottom:0.05em solid">Audit</span><div class="indented"><p id="d09f4d2f-7706-4566-9c1a-c48215aa2eda" class="">Überblickende Kontrolle
+durch externe Personen</p></div></p><p id="d61b2f1f-558c-4857-a65a-83a78ef2edbb" class="">
+</p><h2 id="27102f79-cc19-4728-b9ab-b2633d6eb2fe" class="">Arten von Reviews</h2><figure id="1ac15adc-3f69-4366-9460-dc194a667e4e" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%204.png"><img style="width:240px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%204.png"/></a></figure><h3 id="8dd279e9-ff79-4b01-8e9b-3d40323f32a9" class="">Mit Kunde</h3><p id="cfd55320-7266-4037-a33e-8530e9d229ec" class=""><span style="border-bottom:0.05em solid">SRR - Software Requirements Review</span><div class="indented"><p id="c5e5436c-84bf-4a23-9119-33c280301924" class="">Nach Anforderungsphase.</p><p id="a5c483d3-9d78-4c57-9bb8-5c9f6c6d26d5" class="">Review der Anforderungen mit Kunden vor Entwurfs und Design-Phase.</p></div></p><p id="8e7ce9ff-acc4-4740-9f9b-5a582181e0d0" class="">
+</p><p id="697ba37e-25c0-4852-b26c-cd607193f9d3" class=""><span style="border-bottom:0.05em solid">PDR - </span>Preliminary Design Review <span style="border-bottom:0.05em solid">(Preliminary Design = Vorentwurfsplanung)</span><div class="indented"><p id="dde0b443-b07c-43f0-aa94-ad4a6ecd4634" class="">Während der Entwurfsphase.</p><p id="812d55f2-affa-476b-9e12-b149a3a9752b" class="">Review der Software-Architektur vor Ausarbeitung im Detail und Kontrolle der Übereinstimmung mit Anforderungen.</p></div></p><p id="fc07fe4f-5a9a-401d-8de3-d8a945bf37b6" class="">
+</p><p id="77fadf22-6659-4a88-8f9e-5888131cdf75" class=""><span style="border-bottom:0.05em solid">CDR - Critical Design Review</span><div class="indented"><p id="10648807-7111-4464-a831-8ba5723fae9c" class="">Meistens gleichzeitig mit PDR.</p><p id="79173a06-6250-412d-af59-c70c668ecf47" class="">Bei besonders kritischen / wichtigen Komponenten, während Entwurf und Design-Phase.</p><p id="e180209d-83fe-4486-b3c7-51af0fd3051d" class="block-color-gray">Vor allem in: phasenorientierte, strikt sequenzielle Prozessmodelle → letztmögliche Zeitpunkt, an dem der Kunde das Projekt noch stoppen kann.</p></div></p><p id="847b8ee5-c20d-4ab5-af5a-3bc919d41379" class="">
+</p><p id="bead585b-35dc-4db8-89aa-f112d08b23d8" class=""><span style="border-bottom:0.05em solid">IPR - In-Process Reviews</span><div class="indented"><p id="cc85b747-4be2-4a0f-ae87-e75a4701b4a4" class="">Für sehr große und komplexe Projekte die lange dauern → Kunden Fortschritte in der Implementierung, Prototypen, Testfälle vorlegen.</p><p id="c2fb50b1-776d-4d23-b98d-2ef1227a1715" class="block-color-gray">= kontinuierliche Reviews in agilen Prozessen</p></div></p><p id="89c5b919-bb2f-4b08-98c2-f8a5cff9bcf7" class="">
+</p><h3 id="ea28ded7-a8ba-4106-a2ab-d6a76f4fec56" class="">Ohne Kunde</h3><p id="3e58fe6f-653e-4383-822b-a8e7e8313fe3" class=""><span style="border-bottom:0.05em solid">MR - Management Review</span><div class="indented"><p id="8805aa13-3ca3-40c4-90b0-c7977db298be" class="">Bewertung des Projekts, aktueller Projektstatus.</p><p id="f9072abb-a6e2-4253-9628-b66b09f9fa65" class="">Bei Abweichungen / geänderten Projektzielen steuern.</p></div></p><p id="534b74f5-a508-4c3e-980f-b3cb78524353" class="">
+</p><p id="911f029c-b27c-4d43-8944-ea8e57caf76c" class=""><span style="border-bottom:0.05em solid">TR - Technical Review</span><div class="indented"><p id="d31f1cf6-a4f3-48c8-a7a4-a474c23d0f51" class="">konkreten Teil der überprüfen und bewerten.<div class="indented"><p id="639c78e7-f360-434a-b7c5-1c88099932b0" class="">Verifikation (vergleich mit Spezifikation oder Standards). </p><p id="aec22932-ce68-4d21-99c9-2b1b2e04e336" class="">Auch Fehlersuche.</p></div></p><p id="d5f1c0c6-2553-4fb6-b5a9-7fae085bf215" class="">Kann Bestandteil des Prozesses sein.</p></div></p><p id="59255322-f5ab-4f5c-b027-1e9d5417c5ca" class="">
+</p><p id="b5de703b-467a-4895-a6ff-902845b2c290" class=""><span style="border-bottom:0.05em solid">Code-Walk-Through</span><div class="indented"><p id="1086811c-6039-4415-867c-f788207a9266" class="">Autor stellt seine Module ablauforientiert vor.</p><p id="5f424de0-6d58-4c4c-94c7-4b39d50565c3" class="">Kontrolle von Implementierungs-Qualität.</p><p id="cfba4261-4b15-4be0-a094-90627f3dcbf4" class="">Verbesserungsvorschläge einholen.</p><p id="c3a8187b-9a45-4ba6-ba9b-88a3a439327c" class="">Neue Mitarbeiter einführen.</p></div></p><p id="098f4246-f529-42f7-9bd4-1ccbc14968a6" class="">
+</p><p id="c9ccd966-9fbe-470f-8b74-0c57e4739fa4" class=""><span style="border-bottom:0.05em solid">Inspektion</span><div class="indented"><p id="870313ee-e00f-4a6d-a646-52ddf7c93f7d" class="">formales Review, speziell in frühen Phasen der Entwicklung.</p><p id="d1c5dd93-cb73-462e-9cf5-c61210376fd5" class="">Suche nach schweren Fehlern</p></div></p><p id="c53f5118-b8e9-4c2f-b900-8c727005709d" class="">
+</p><p id="e6a30432-2371-4a51-acbd-cc9964b2ae61" class=""><span style="border-bottom:0.05em solid">IRP (integrierter Review-Prozess)</span><div class="indented"><p id="f1ea7eff-2758-4476-be58-b47258676fa5" class="">Nach &quot;pull request&quot;.</p><p id="effc949e-7b0e-456a-8dad-b72cef4ac669" class="">Diskussion zB nach einem request ein commit in die main branch zu pullen.</p></div></p></details></li></ul><p id="b1f38214-f609-4097-a0ac-872123292420" class="">
+</p><ul id="29d681d0-32b3-462b-9f36-d37bc349b6d5" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Rollen finden sich typischerweise bei Reviews und welche Aufgaben nehmen die unterschiedlichen Rollen wahr?</span></summary><p id="48d09fb9-2d11-4caa-acad-2120e214e334" class="">
+</p><p id="861f2938-a440-419a-9051-b67f44bc5dc0" class=""><span style="border-bottom:0.05em solid">Rollenverteilung</span><div class="indented"><p id="7af1e0b2-4f39-415b-9314-b4ea5c16b39b" class="">3-6 Personen die beteiligt sind. </p><p id="0f0633b9-323e-412c-964d-4fcc2bd65bc6" class="">&gt; Moderator <mark class="highlight-gray">(keeper of process)</mark><div class="indented"><p id="29aae7ce-4e12-4dd9-b884-bf0f62a06681" class="">Leiter, bestimmt Ablauf, Auswertung, Korrektur</p></div></p><p id="9b1cd0a0-abbf-480c-bc2b-359c28536c33" class="">&gt; Leser <mark class="highlight-gray">(keeper of focus and pace)</mark><div class="indented"><p id="add587cf-92aa-48da-af3e-37aad1abf4c8" class="">Ausarbeiter, bestimmt wie detailiert es sein sollte</p></div></p><p id="72cc0607-2899-4d8d-a78b-0a99a96e8d30" class="">&gt; Schreiber <mark class="highlight-gray">(preserver of knowledge)</mark><div class="indented"><p id="08c1d7d3-835a-4b5d-aa33-2da86113bdb7" class="">Protokolliert Ablauf</p></div></p><p id="8b6e7eaf-1abd-479c-a670-a7e77a4873e6" class="">&gt; Gutachter<mark class="highlight-gray"> (Reviewer)</mark><div class="indented"><p id="3c60aa5a-4b97-49c6-9458-24ba78b1d963" class="">Erkennt Fehler nach Befehl von Moderator</p></div></p><p id="6033becb-6ee6-4dda-872f-dc613a0b8caa" class="">&gt; Autor <mark class="highlight-gray">(author)</mark><div class="indented"><p id="513ea0ea-ee6d-4233-b1a8-d2567e65a00f" class="">Besitzer des Review-Objekts</p></div></p></div></p></details></li></ul><p id="d4523e74-a25d-4907-88a0-59db6b8202e7" class="">
+</p><ul id="5ccaf2ff-40d0-4447-bf7b-d55fa80c7098" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Test Driven Development TDD</span></summary><p id="61780f67-9998-4803-b512-85aa8f9713a4" class="">Entwicklungs- und Designparadigma: Testen von Programmkomponenten dazu verwendet, den gesamten Prozess der Softwareentwicklung zu leiten.<div class="indented"><p id="c2b3fcc5-dfbc-4bfe-a271-647591fad3c5" class="">Setzt keine Implementierung voraus.</p><p id="0bcdae3a-3232-4e8d-bfdc-a7daa255a97e" class="">Automatisiert.</p><p id="82a458ce-9f0f-4d8e-a211-b040ec7ce5be" class="">Fixer Bestandteil von den meisten agilen Vorgehensmodellen.</p><p id="b541cdf8-7953-4662-a7e6-e9790ef384ff" class="">TDD wird meist im Rahmen agiler Methoden und insbesondere beim Extreme Programming verwendet.</p></div></p><figure id="e711d8bc-8c06-4e3d-b534-2f0e68d8f06d" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2014.png"><img style="width:192px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2014.png"/></a></figure><p id="08bd2dd6-4e6e-43a9-a4b3-3a2fa45dae6e" class="">
+</p><p id="1bc88525-ba37-47d2-9723-14a9dde4b438" class=""><span style="border-bottom:0.05em solid">Ablauf</span><div class="indented"><ol type="1" id="62ed9543-9cfd-4313-9f60-371bc10fb932" class="numbered-list" start="1"><li>Think<p id="7dac03d9-b78e-49d4-a44b-30884b0afffe" class="block-color-gray">Spezifikation / Definition des Tests</p></li></ol><ol type="1" id="9b5b70bd-3ba5-4f92-a4f3-3d90c3ce55d7" class="numbered-list" start="2"><li>Red (Fehlgeschlagen)<p id="94d21cd2-ea9d-4f6a-8594-18831144f76d" class="block-color-gray">Ausführung des Tests → zu testende Klasse existiert nicht</p></li></ol><ol type="1" id="a9188d8f-a35f-48eb-a685-b594c1096c6c" class="numbered-list" start="3"><li>Green (Erfolgreich)<p id="bce1b798-29a1-4d75-b1fe-f88caca8fb68" class="">Implementierung der zu testenden Klasse oder Komponent.</p><p id="08986269-0d9c-4d70-a010-640a300519c7" class="block-color-gray">Versuchen status &quot;green&quot; zu erreichen. </p></li></ol><ol type="1" id="d22facb0-1375-424b-8de7-51cdf704cebe" class="numbered-list" start="4"><li>Refactor<p id="ba0fedc1-6fd1-46be-b590-04f6f6dfc3a5" class="block-color-gray">Nach einer Abänderung / Korrektur muss wieder sichergestellt werden dass der status &quot;grün&quot; ist.</p></li></ol></div></p><figure id="0853fced-39a1-45dd-9485-311bb4babf05" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2015.png"><img style="width:192px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2015.png"/></a></figure></details></li></ul><p id="b7551cb0-3629-4cca-bc04-a1a64d4bb117" class="">
+</p><ul id="44e21788-3b0e-4b30-b27e-aedf8fb2a2e9" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Continuous Integration (CI) beschreiben und skizzieren</span></summary><p id="162129b6-69e8-4f50-95c8-8236a1086518" class="">CI ist eine best practice für das Nutzen des automatisierten build management Systems (zb maven)</p><p id="a60e6c0a-15e1-408c-b0b9-4da4b9cf897c" class="">Automatisiertes: Builden, Testen, Integration, Deployment</p><ul id="2753f6a3-edb0-4e4e-b7f4-bf300d7e4f70" class="bulleted-list"><li style="list-style-type:disc">nur ein einziges Sourcecode-Repository verfügen, mit dem alle Entwickler arbeiten.</li></ul><ul id="6feb6627-969d-4898-83f6-e79925629c79" class="bulleted-list"><li style="list-style-type:disc">Ablauf möglichst schnell</li></ul><ul id="a0679ced-923e-4271-8f76-b769919f513d" class="bulleted-list"><li style="list-style-type:disc">Mindestens 1x täglich committen auf neutralem Rechner → &quot;daily builds&quot;<p id="79b30c34-0a55-44f3-b9eb-aac0f3c09b1b" class="block-color-gray">„neutraler“ CI-Server automatisiert Build und Tests bei jeder Änderung im SCM-System<div class="indented"><p id="f5d7033b-2618-4a2a-b453-520a50a96299" class="">Build-Automatisierungswerkzeuge:<div class="indented"><p id="4976e051-aecd-4921-aa20-ae0af30ab6e7" class="">Entwicklerorientiert: Maven</p><p id="f461c34c-f07b-4af6-92c3-49a4e279795c" class="">Server-basierte IntegratioN: Apache Continuum, Hudson, OpenCIT</p><p id="66f4215a-8a52-4fee-8392-1b2494c72215" class="">CI Server mit: Apache Continuum oder Hudso</p></div></p></div></p></li></ul><ul id="91c875bb-c6d7-4282-8f25-04b8c117566f" class="bulleted-list"><li style="list-style-type:disc">Danach Berichte erstellen und verschicken</li></ul><p id="81bd8e05-9a2c-4a6a-8154-72d83056e2c4" class="">
+</p><p id="68bb59cc-59a5-452c-ab91-c7ead829cb05" class="">Arbeitsablauf:<div class="indented"><ol type="1" id="65c6399d-3ed1-4f4b-9ca3-32b17e9b744c" class="numbered-list" start="1"><li> Entwickler erstellt neue Version im SCM (Commit, Pull-Request...).</li></ol><ol type="1" id="26e3482e-b3db-4435-aeb1-96080a875a36" class="numbered-list" start="2"><li>CI Werkzeug reagiert auf dieses Ereignis, lädt die entsprechende Version.</li></ol><ol type="1" id="7c2a7349-6e50-46c2-9661-8e2ac821f255" class="numbered-list" start="3"><li>Build Tool wird gestartet, compilierter Code wird mit einem Test-System automatisiert getestet.</li></ol><ol type="1" id="53d791e0-1905-4306-93a5-61fa290adf44" class="numbered-list" start="4"><li>Entwickler wird mit Bericht verständigt.</li></ol></div></p><p id="9a7267aa-5b38-4251-8783-01573e2c0e64" class="">
+</p><p id="e9662d7d-a277-40a2-a2ff-4c387718e441" class=""><div class="indented"><figure id="1ca4848f-c58c-4207-b762-6922d71ef740" class="image"><a href="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%203.png"><img style="width:192px" src="Life-Cycle%20(Phasen)%20+%20Qualita%CC%88tssicherung%200d9824c6757c476781a6a38dacb56712/Untitled%203.png"/></a></figure></div></p></details></li></ul><p id="1edc57a3-6bbc-4c65-bf22-be728314fcd0" class="">
+</p><ul id="15465020-d41d-4547-bd5e-381b617f9154" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was bringt TDD in Verbindung mit Continuous Integration?</span></summary><p id="76613aac-3fb9-42a3-8f2e-7398c47344e8" class="">Viele schnelle Unit tests → Integrations-Tests wesentlich einfacher. (bottom-up testing)</p></details></li></ul><p id="bbbcfc9b-d2b1-472f-a692-d532baaf9f5f" class="">
+</p><ul id="c6b2eb07-44fd-48dc-accd-104351600069" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Testarten gibt es?</span></summary><p id="9b7e2ea9-8be2-41cc-95a4-6726de58a0a9" class=""><span style="border-bottom:0.05em solid">Traditioneller Testprozess</span><div class="indented"><p id="5a00298e-3b16-4972-8d54-cad355f40b8f" class="">Bei Anforderungen Tests erstellen → First Test / Test Driven Development</p><p id="b1a054cc-fea8-4414-b025-667fb85f4539" class="">Unterschiedliche Schichten / Sichten → Unterschiedliche Testebenen<div class="indented"><ul id="85f311d4-8848-415e-a03f-7bd9d7a7c828" class="bulleted-list"><li style="list-style-type:disc">Implementierung<p id="28574900-c1eb-4922-a3c6-733670111c6a" class="">Komponenten Tests / Unit-Tests / Klassen-Tests<div class="indented"><p id="b0dea91e-7a7c-46e6-ae20-14e49a54b2f5" class="block-color-gray">(Entwickler Tests, werden meistens von Entwicklern selbst geprüft)</p><p id="235c5f46-e13e-49a4-bed8-6d19910577a1" class="block-color-gray">genaue Lokalisierung</p></div></p></li></ul><ul id="86bf1a04-d5b7-41e7-88b6-c8360569b17e" class="bulleted-list"><li style="list-style-type:disc">Architektur<p id="0f23d517-75e7-46c3-942c-a8382f129501" class="">Integrations Tests<div class="indented"><p id="c5dc9cab-3112-432a-a11c-2e80d7676526" class="block-color-gray">Komponenten zu System oder Subsytem zusammenbauen → Zusammenspiel über Schnittstellen testen, auch externe Systeme die benutzt werden.</p><p id="9cfdc73b-af81-4168-9ccf-4d6b0a23c23f" class="block-color-gray">Manchmal Mock-Objects benötigt um fehlende Komponenten zu simulieren.</p><p id="54b0d02e-7ac4-4770-89c6-8a72740756f6" class="block-color-gray">Automatisiert: Continuous Integration Tests</p></div></p></li></ul><ul id="95486616-c3c7-4135-8909-97f746985570" class="bulleted-list"><li style="list-style-type:disc">Anwender<p id="a6f268e9-1161-4190-96a1-e485b795a67d" class="">Systemtests, Akzeptanztests und Abnahmetests → Verifikation, Validierung<div class="indented"><p id="fa61edb0-91dc-4a26-a3f4-250f3c7863b5" class="block-color-gray">Alles außer Systemtests: In <em>Produktivumgebung </em>vom Kunden (zb OS vom Kunden)</p><p id="a6dbf15a-c443-40e4-8ea3-f4c0caa98fa2" class="block-color-gray">(keine Abnahmetests bei Produkte für den breiten Markt)</p></div></p><p id="b3684224-0ccc-4e01-aa22-6ca3e512824a" class="">Installationstest<div class="indented"><p id="6582f51f-858a-4a77-9642-6d7fb60683b4" class="block-color-gray">Identifizieren von Fehlern während der Installation.</p></div></p></li></ul><ul id="94581f79-6ca5-4223-bb17-64f6b6cce15b" class="bulleted-list"><li style="list-style-type:disc">Regressionstests<p id="3f0851c0-dd8e-42ff-b5e5-dd9b550c1b2e" class="">Bei Änderungen oder Erweiterungen nach einem Test </p></li></ul></div></p></div></p><figure id="56dab872-7217-42e0-a17b-6767b58fca15" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%207.png"><img style="width:192px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%207.png"/></a></figure><p id="18383a12-2cca-4785-8d9c-c24d889970f7" class="">
+</p><p id="2505d2da-771d-4ee4-b9c3-2c86067bc357" class=""><span style="border-bottom:0.05em solid">Äquivalenzklassen-Zerlegung</span><div class="indented"><p id="668ee00b-04f5-48ba-966f-a2570f5bb7de" class="">Mit minimalem Aufwand möglichst hohe case-coverage.</p><p id="12a5d993-10be-4cb3-843c-ef256b0c7b97" class="">Man wählt Repräsentanten.<div class="indented"><pre id="332cf9df-36ba-4042-a876-750df9788743" class="code"><code>18 &lt; Alter &lt;= 65
+
+1.Partition: Alter &lt;= 18 (ungültig)
+2.Partition: 18 &lt; Alter &lt;= 65 (gültig)
+3.Partition: Alter &gt; 65 (ungültig)</code></pre></div></p><p id="26f5c74c-f815-40c9-bfdd-8cd3153af37e" class="">
+</p></div></p><p id="db5568d6-d597-43d4-8dbe-df83184acd11" class=""><span style="border-bottom:0.05em solid">Grenzwertanalyse</span><div class="indented"><p id="46bf1f31-26f6-47ec-bb7c-27927cdf5ca0" class="">Werte aus Grenzbereich wählen</p></div></p><p id="7ceb6492-6967-4a2f-924f-d0460e31b8da" class="">
+</p><h2 id="59d06c2a-7e08-48bb-8b9b-022aef54f705" class="">Testarten / Test Methoden (statisch vs dynamisch)</h2><ul id="c2bcbea7-f291-4129-9935-52ba4ffd6a85" class="bulleted-list"><li style="list-style-type:disc">statische Verfahren → kein Code ausgeführt<p id="ec8b84f5-5770-4ed5-8bac-1a90c684d4fa" class=""><mark class="highlight-gray">Reviews, Inspektionen</mark></p></li></ul><ul id="0343acd8-0f6e-4296-954d-d7fa3f8d1e05" class="bulleted-list"><li style="list-style-type:disc">dynamische Verfahren → Software Tests<p id="149bb61c-ef6c-4a86-aa0d-0397b1213a11" class=""><span style="border-bottom:0.05em solid">White-box</span><div class="indented"><p id="f8854492-3aa4-42f5-bff8-fc5a8c970e12" class="block-color-gray">Whiteboxtests sind meist Modul oder Systemtests</p><p id="bbd61d3a-cf6c-461f-9b5e-4ff64c54d7d3" class="block-color-gray">– Basiert auf SE-Modellen
+– Wissen über innere Struktur notwendig
+– Logik-getrieben →  Überdeckung von Knoten, Kanten, Pfaden </p></div></p><p id="c29812dd-03cc-4c9f-a6fe-7fbaecf715ac" class=""><span style="border-bottom:0.05em solid">Black-box</span><div class="indented"><p id="4695fcaa-bcc9-4a04-a352-79fe76409bf3" class="block-color-gray">innerer aufbau nicht geprüft, nur eingabe - ausgabe (data-driven)</p><p id="8ad1b8af-35d1-4d99-9bea-acfe9a90a3d7" class="block-color-gray">Unit Tests werden meist als Blackbox ausprogrammiert (TDD)
+– Wissen über innere Struktur wird ignoriert
+– Daten-getriebene, Input-Output-getriebene Tests
+– Anforderungsüberdeckung</p><p id="eb0a923f-7497-4ca2-a7c4-18942f3db96f" class="">
+</p></div></p></li></ul><h1 id="d73d0f6c-3ffe-4c3b-9532-0a54c42e0fc1" class="">Teststufen</h1><p id="fe63200b-4654-42c4-8913-448b9312e15b" class="">Stufe bestimmt Testframework, System Tests (z.B. GUI Tests - sehr mühsam)</p><p id="f6e89009-97a6-4b7f-be86-783566619046" class="">Abhängig von Testebene und Anwendungsfall  entweder testen auf<div class="indented"><p id="16f1532f-8f57-4392-b3b8-36b9311c20f6" class=""><em>Funktion (Funktionstest)</em></p><p id="fbd509fb-5cd5-41e2-8d68-a8760170abb0" class=""><em>Last (Lasttest)</em></p></div></p><p id="31aa58b8-cc7f-4eda-b596-3c3a887e7698" class="">
+</p><h2 id="f6e6fa24-834d-4d98-94f5-e21110f3416a" class="">Unit Testing </h2><p id="ca9f6cb2-4f91-44c9-b80a-163c02f5641a" class="">Ziel: Dokumentation von Klassen, genaue Lokalisierung von fehlern </p><p id="e98c03aa-5a94-40f8-bab3-8ceb97650f74" class="">In OOP ist ein Unit eine Klasse oder eine Methode</p><p id="3c4fced5-ae95-4d63-882c-11297668d898" class="">Unit-Tests müssen schnell durchlaufen (Regression-Library), Regressiontest nach Änderungen notwendig</p><figure id="d3b2e042-5b7e-48d5-9294-4cdd72d5119d" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2011.png"><img style="width:132px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2011.png"/></a></figure><p id="a6858ba2-9a4e-4d0d-a905-e7cdc78b72c2" class="">
+</p><h2 id="3f7a8212-5135-4a91-8d3e-b45576c16cab" class="">Module Testing</h2><p id="ffb59014-e51e-4cda-967d-15181779f935" class="">Modultests / Komponententests genau wie Unit Tests</p><p id="0c9d4ba0-a1ae-42df-b11b-63be28f9c0d2" class=""><span style="border-bottom:0.05em solid">Modul</span><div class="indented"><ul id="417664ca-fbe6-42eb-8365-0041569ab10b" class="bulleted-list"><li style="list-style-type:disc">hat eine dokumentierte Spezifikation (API)</li></ul><ul id="6480b27d-7e72-4fc5-bb00-bc28ec5e4331" class="bulleted-list"><li style="list-style-type:disc">ist sichtbar und in Gesamtsystem integriert (z.B. mit Interfaces)</li></ul><ul id="6def571f-d513-407b-9d35-90708961cf56" class="bulleted-list"><li style="list-style-type:disc">Es kann kompiliert/interpretiert und getrennt von anderen Modulen getestet werden (z.B. mit Mocking)</li></ul><p id="3b9a8366-9d1e-4eae-a534-075a898d4e34" class="">
+</p><ol type="1" id="beb3b5f2-e360-4e50-b959-8df3dcb41f0e" class="numbered-list" start="1"><li>Komponenten bieten Interfaces an (provides)</li></ol><ol type="1" id="636844d6-89cc-4f86-97ef-e69a2e159ce9" class="numbered-list" start="2"><li>Komponenten erfordern andere Interfaces (requires)</li></ol><ol type="1" id="402c4932-fa5c-4fbd-948c-2c0baa78d561" class="numbered-list" start="3"><li>Das macht Komponenten zu abstrakten, austauschbaren Modulen</li></ol></div></p><figure id="054628f4-407d-476f-a581-a2dbb982ddb6" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2012.png"><img style="width:132px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2012.png"/></a></figure><figure id="b9c02be7-42be-4a76-acbf-cb54469c66d0" class="image"><a href="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2013.png"><img style="width:132px" src="../Qualita%CC%88tssicherung%20QS%209751f722ff894a86884b3ba25b67f00d/Untitled%2013.png"/></a></figure><p id="647fd653-b9d5-4d06-9df2-dafc810b6e80" class="">
+</p><h2 id="448a29c7-4927-4ac9-86af-476aced310b0" class="">Integration Testing</h2><p id="3e5f91ac-0769-4660-9174-7c56be8de51e" class="">Ziel: Test der Interaktion zwischen Modulen (Zusammenführung)</p><ol type="1" id="b82e52f0-94ac-4475-9882-32f7431aa9fa" class="numbered-list" start="1"><li>„Big Bang“</li></ol><ol type="1" id="fc7a9949-3635-4aad-ba2d-bb26f656f9e0" class="numbered-list" start="2"><li>Inkrementell: Top-Down / Bottom-Up (besser)</li></ol><p id="e5e1e9d9-e5bf-4897-9efb-e2323512c8df" class="">Häufig: Zusammenführung durch Entwickler<div class="indented"><p id="89dee95c-79d0-4909-a638-23f509be9235" class="block-color-gray">– Weniger Aufwand (weniger Stubs/Treiber nötig)
+– Frühere Erkennung von Schnittstellenfehlern
+– Fehler-Lokation besser eingrenzbar (leichteres Debugging) </p><p id="b3065cd9-ed80-4f91-b9f9-e0c36b47b1ae" class="">
+</p></div></p></details></li></ul><p id="ca9fdae3-46a7-47b2-943a-e2302d0593aa" class="">
+</p><ul id="a2aa43b8-e8b5-43e0-9f01-c72b984d27f0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist System Integration und welche Modelle gibt es? Erstellen Sie jeweils eine Skizze und nennen Vor- und Nachteile</span></summary><p id="e405c676-4fb5-4a16-b1e0-ac72f47c866a" class="">Vorgang diese Module / Komponenten in größere (Sub-)Systeme zu integrieren = Systemintegration.</p><p id="455a6e44-2225-401e-8c22-8a2b6724fe02" class="">Es gibt dafür mehrere Strategien / Modelle:</p><p id="208f5714-3f77-43ac-b2db-4c297cd10473" class="">
+</p><ul id="66099fa6-ff2f-4ef7-a163-e57484388362" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Big-Bang</span><p id="ecd28675-1974-4547-aa78-64864ca1689a" class="">Alle Module werden gleichzeitig integriert (=„Big-Bang“)</p><p id="e7b335b7-7858-49ea-9f34-7b90bac3a993" class="">(für kleine Projekte)<div class="indented"><p id="76e31152-0064-4b9f-97b2-2545d2e47218" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Keine Test-Stubs/Driver notwendig - alle Module verfügbar.</p><p id="9a6f9a49-9727-46d4-a8f3-57eb64530edc" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">- </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Fehler schwer zu lokalisieren.</p></div></p></li></ul><ul id="665b39d6-9a57-4c1b-af64-d832a83d25a4" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Top-Down</span><p id="64d15c82-ee54-4e84-b966-49c880a9ef76" class="">Integration: Business Cases → Hardware (Low-level)<div class="indented"><p id="8d92134b-44b6-40a0-b5e8-c722775c8a1d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Ausführbares Produkt-Framework (Demo Prototyp) früh verfügbar.</p><p id="4a578894-8619-467a-8f5d-5317afc08766" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">- </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Test-Stubs</p><p id="e298774d-3c45-4222-bd53-47cf658c5a5d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Instabiles System weil Hardware Integration später</p></div></p></li></ul><ul id="b5b72ae2-0b84-4652-8857-80fa53b1755b" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Bottom-Up</span><p id="6fe357c6-ac48-44b3-b23e-668c44653b3c" class="">Umgekehrt.</p></li></ul><ul id="7d1e5f8a-e228-47f0-8db1-f9363079a45e" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Build</span><p id="015a6c44-3e9a-4780-b9f6-a0a8ba79c1ea" class="">Schrittweise nach Business Cases über alle Layer hinweg.<div class="indented"><p id="24289f5c-6624-4db1-b1af-f01e98260c4c" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Früh Prototyp und Dem</p><p id="2595229a-f3f2-429f-a1e3-7e99b6401ab7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo></mrow><annotation encoding="application/x-tex">+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">+</span></span></span></span></span><span>﻿</span></span> Priorisierung der Anforderungen möglich.</p><p id="c0f6d70b-c23d-47ea-9fe0-ddf8099d9b35" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">- </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></span><span>﻿</span></span> Regressionstests erforderlich, Test-Stubs nicht wiederverwendbar.</p></div></p></li></ul><p id="df7c38bf-d55f-4cfb-b88b-e9f85dbe5d81" class="">
+</p></details></li></ul><p id="5ecd2cdd-ad42-497f-9637-1ea62f6a15b9" class="">
+</p><ul id="99066ead-2158-4519-94fd-057c10d227c9" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Was ist bei der Systemintegration im Hinblick auf die Qualitätssicherung zu beachten? (Lösung unbekannt)</span></summary><p id="97099210-c97e-4a25-86db-6f0a4bc14575" class="">Automation des Buildprozesses → schnelle automatisierte Unit tests, bessere Dokumentation, Code-Quality-Checks.</p><p id="2a44e9e6-16b5-4855-a631-6973367a4082" class="">Vereinfacht Integrationstests.</p><p id="68da626b-9e49-4d13-a70b-db7e86c9c11d" class="">Es ist inkrementelle Bottom-Up Integration vorzuziehen</p><p id="3800a12a-f853-4563-b19c-cb6b72b038c9" class="">
+</p><p id="a2b7d996-a725-4776-b663-5d4a5ca2ca53" class="">
+</p></details></li></ul><p id="ba60d3b4-ba38-423e-ab3f-77bfb3dde46d" class="">
+</p><ul id="ebe7185f-8940-49a8-96d2-16f6ec093fbc" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Welche Rolle spielen Requirements im SE Life-Cycle?</span></summary><p id="90a6ee92-861b-4103-aabd-16d7a38cc685" class="">Requierements (Anforderungen) zeigen die Wünsche des Kunden in Bezug auf das Softwareprodukt
+Anforderungen müssen testbar sein und getestet werden.</p></details></li></ul><p id="8faac779-bbb1-425a-a188-bf814280e658" class="">
+</p><ul id="ff165c5c-2798-4e35-ba7a-b4df8212cded" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Skizzieren und beschreiben Sie den Continuous Integration Arbeitsablauf</span></summary><h2 id="9be87cc8-9b8b-4166-bcf3-ade7900ff787" class="block-color-gray">Continuous Integration CI</h2><p id="6e205cfc-a181-42c9-a624-25e77c49964f" class="block-color-gray">= eine Reihe von Best-Practices, die empfohlen werden für build management:<div class="indented"><p id="d8f79241-7cea-4cd3-a62b-ac56f5b34f7c" class="">Automatisiertes: Builden, Testen, Integration, Deployment</p><ul id="16c425e9-8550-4d98-b7ce-b5084ef7d532" class="bulleted-list"><li style="list-style-type:disc">nur ein einziges Sourcecode-Repository verfügen, mit dem alle Entwickler arbeiten.</li></ul><ul id="1ce30afd-0f85-47aa-9e7e-06d8a72393ad" class="bulleted-list"><li style="list-style-type:disc">Ablauf möglichst schnell</li></ul><ul id="8a14847c-4655-44a1-a3e2-c3890a71bfd3" class="bulleted-list"><li style="list-style-type:disc">Mindestens 1x täglich committen auf neutralem Rechner → &quot;daily builds&quot;<p id="4a8b6310-e10d-483f-a62e-231a24a1587e" class="block-color-gray">„neutraler“ CI-Server automatisiert Build und Tests bei jeder Änderung im SCM-System<div class="indented"><p id="9477660a-d110-4137-8f25-5985fc2cd9e7" class="">Build-Automatisierungswerkzeuge:<div class="indented"><p id="32c3ba04-fd8c-44e9-9805-560f82faf819" class="">Entwicklerorientiert: Maven</p><p id="a6fa248c-a77f-40ca-8390-043043a6dfd0" class="">Server-basierte Integration: Apache Continuum, Hudson, OpenCIT</p><p id="2586d54d-4678-4c94-aa54-8649cdbb018d" class="">CI Server mit: Apache Continuum oder Hudso</p></div></p></div></p></li></ul><ul id="ead90fe9-cf3e-47b4-9e40-999dae43c9e4" class="bulleted-list"><li style="list-style-type:disc">Danach Berichte erstellen und verschicken</li></ul></div></p><p id="4348449c-a3c9-464c-813a-cba83c2e4579" class="">
+</p><figure id="1493059b-e048-4148-810a-f2629705aec2" class="image"><a href="../Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%207.png"><img style="width:240px" src="../Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%207.png"/></a></figure><figure id="4cada2d6-e8fb-4eff-bc5b-58d113b6f14d" class="image"><a href="../Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%208.png"><img style="width:240px" src="../Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%208.png"/></a></figure><p id="5c4b2c92-ea7d-4596-bda3-9877bacc76db" class="">
+</p><p id="7692adaa-b2e6-4506-a3da-fd2b312c902d" class="">Arbeitsablauf:<div class="indented"><ol type="1" id="7f000865-d05b-4713-b2c0-58470f17eb32" class="numbered-list" start="1"><li> Entwickler erstellt neue Version im SCM (Commit, Pull-Request...).</li></ol><ol type="1" id="c0fd5d70-806b-4ece-9662-ec6da56dabe0" class="numbered-list" start="2"><li>CI Werkzeug reagiert auf dieses Ereignis, lädt die entsprechende Version.</li></ol><ol type="1" id="e6acc7c7-f17c-4d58-a0c5-70b232f48a8b" class="numbered-list" start="3"><li>Build Tool wird gestartet, compilierter Code wird mit einem Test-System automatisiert getestet.</li></ol><ol type="1" id="034d3581-96a8-4d25-ab1c-a2f371a6c670" class="numbered-list" start="4"><li>Entwickler wird mit Bericht verständigt.</li></ol></div></p></details></li></ul><p id="e14e17c9-e581-4620-8b83-d3978c4f7ff3" class="">
+</p><ul id="973afc95-61fd-4106-8dd6-afe222ae693e" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Erläutern Sie den Begriff der Systemintegration. Skizzieren und erläutern Sie die vorgestellten Integrationsstrategien und welche Vor- bzw. Nachteile damit verbunden sind</span></summary><p id="cc38ed67-0287-471e-86ea-9bdeb989b2bb" class=""><span style="border-bottom:0.05em solid">System Integration</span><div class="indented"><p id="9014bff9-7f9b-4ea3-98e8-2578b930f7d3" class="">Systeme sind modularisiert und umfassen viele (unit-)getestete Komponenten.</p><p id="10d5d8c3-48f9-4e87-8469-2efdd8d5bb51" class="">Systemintegration = Integration von Komponenten zu größeren (Sub-)Systemen.</p><p id="b7c2999a-504b-4e31-8e8f-8ea0e1f41401" class="">Strategien:<div class="indented"><ol type="1" id="7ebd5545-0769-4b2c-acd2-d12ae677bc13" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Big-Bang Integration</span><p id="aa15eaaa-7b1a-4b12-a8e6-9e0fc8839649" class="">Gleichzeitige Integration von allen Komponenten gleichzeitig</p><p id="53044b7c-cf68-417c-b98d-21fcbd0c54da" class="">Kein Zusatzaufwand</p><p id="cd5bdc84-db5b-4a64-9079-ce8c44d3f528" class="">Fehler sind schwer zu finden, viele Seiteneffekte gleichzeitig, riskant → eher bei kleinen Projekten</p></li></ol><ol type="1" id="b2b36299-11ae-4b02-b2b2-f15fd0faec3d" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Top-Down Integration</span><p id="7b878be9-6aed-4103-9fd0-129378a0f430" class="">Nur bestimmte, eingeschränkte Funktionalität, schrittweise</p><p id="6d6fc5b4-9fea-40ad-a60c-b90b8c23a374" class="">Business Cases Tests → Hardware Tests</p><p id="b60b8f52-d6b5-4283-89da-317881e18091" class="">“<em>Prototypen</em>” für Demo-Zwecke.</p><p id="48d59aaa-9a4a-4ca2-a576-75294cc83e0d" class="">Hoher Aufwand für Test stubs (um die fehlende Funktion zu simulieren) - man kann manche Fehler zu spät finden</p><p id="f8e94a08-21c6-4fa9-a745-3e0253d6f440" class="">Ausführbares Gesamtsystem ist früher verfügbar</p></li></ol><ol type="1" id="2c81812b-e270-4816-8f3d-e87e862cf26c" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Bottom Up Integration</span><p id="b6423f6f-fd51-44f4-b5e9-9dda02cc5729" class="">Nur bestimmte, eingeschränkte Funktionalität, schrittweise</p><p id="6bcb9e62-9dc8-4e60-8b67-833c3f022968" class="">Hardware Tests → Business Cases Tests</p><p id="32156c22-743b-4673-af03-5c770a1a3d4c" class="">Stabiles System (durch Hardware Interfaces)</p><p id="a97443f7-9fd7-4308-9b5e-55d61305f170" class="">Zusätzlicher Aufwand für <em>Prototypen </em>und <em>Test Drivers</em>.</p></li></ol><ol type="1" id="96b74be1-b733-4c6d-8502-39b167a2d974" class="numbered-list" start="4"><li><span style="border-bottom:0.05em solid">Build Integration</span><p id="5966c172-5a4c-4af3-b534-8248dad80c19" class="">Nur bestimmte, eingeschränkte Funktionalität</p><p id="2159876a-a5e6-48b0-bc5c-6f66f163bee6" class="">Phasen-orientierte Integration → eine einzige funktionalität wird durch alle layers durch getestet.</p><p id="1436abda-8c00-444a-a759-75e9ba0374d4" class="">Wiederverwendung von Komponenten kann schwierig sein.</p><p id="24b01cf9-3eb1-411e-b4bb-becb04838275" class="">Benötigt <em>Regressions-Tests</em></p></li></ol></div></p></div></p></details></li></ul><p id="6903662d-7d7c-4db8-82e9-579978ebeef5" class="">
+</p></div></article></body></html>

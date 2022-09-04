@@ -1,0 +1,705 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Authentication, Access Control</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="867fef99-5561-4949-8956-2931bc12be9d" class="page sans"><header><h1 class="page-title">Authentication, Access Control</h1></header><div class="page-body"><h1 id="cc864323-8690-4655-821c-ccc97e33b8c4" class="">Terminology</h1><p id="aea523f4-f206-49bd-9db7-f421101e6183" class=""><mark class="highlight-teal">Responsible Disclosure	</mark>Giving devs time to patch vulnerability before public disclosure</p><p id="41029ac3-a8d2-4a88-ac98-bb37bc229ca1" class=""><mark class="highlight-teal">Functionality</mark>			Expected user behaviour <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Expected system behaviour </p><p id="c1339e44-6b26-435e-900e-5da41c9839a8" class=""><mark class="highlight-teal">Security</mark>				Unexpected user behaviour <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↛</mo></mrow><annotation encoding="application/x-tex">\not \rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> Unexpected system behaviour </p><p id="a332edbf-1c23-4bb4-94c4-b205481be912" class=""><mark class="highlight-teal">Confidentiality			</mark>data only accessible to authorized users</p><p id="2cd0900c-0e72-4e34-a4fe-aa7fec5f0c2f" class=""><mark class="highlight-teal">Privacy				</mark>Users decide what information gets collected from them and by whom  </p><p id="a2d09316-f392-442c-925b-9ba5fa9ef9a3" class=""><mark class="highlight-teal">Integrity</mark>				Data only changed when authorized / System behaves as expected</p><p id="cf759494-4242-4f3b-873f-86e1eeeadd35" class=""><mark class="highlight-teal">Availability			</mark>Service available to users</p><p id="7834d8e9-1c8c-4306-88a8-f67e9d37fccb" class=""><mark class="highlight-teal">Authenticity			</mark>being verified in genuineness (being what one says that one is)</p><p id="65504bf6-13d4-48c5-8aaf-4e6764d242c4" class=""><mark class="highlight-teal">Accountability			</mark>ability to trace actions back to entities in a system (requires traceability)</p><p id="4a2022ae-0338-4b10-9f6d-0f0526fe78b5" class=""><mark class="highlight-teal">CIA Triad</mark>				<span style="border-bottom:0.05em solid">C</span>onfidentiality, <span style="border-bottom:0.05em solid">I</span>ntegrity, <span style="border-bottom:0.05em solid">A</span>vailability - for data and services</p><p id="061be99b-f75e-4fd6-bdb5-245ed9e56e74" class=""><mark class="highlight-teal">Vulnerability</mark></p><p id="9a6b2cdb-6ed9-47f3-99a1-7a2731ce8218" class="">	loss of confidentiality <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> leaky</p><p id="4210b993-8fbf-40e3-b59e-2b4db668d199" class="">	loss of integrity <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> corrupted</p><p id="bfeaa694-ee77-4cef-b4fa-88ba27a52370" class="">	loss of availability <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> unavailable</p><p id="447ceafb-4951-4917-a86a-bc7c50b88acc" class=""><mark class="highlight-teal">Threat</mark></p><p id="1296096f-b998-4f1a-93c3-5068f8a1aa44" class="">	Vulnerability of that can be exploited. If carried out it is an attack.</p><p id="0532ca8b-2638-434d-9a3d-7bb8f83cb530" class=""><mark class="highlight-teal">Attack				</mark></p><p id="af4057fd-0206-4890-a073-b2fd42e13559" class="">	passive			access data without affecting system</p><p id="fdf6939d-4549-445d-89df-e1739f759481" class="">	active			change system / system resources</p><p id="215e55df-9eb8-4585-a824-3b80b177ccf1" class="">	insider			from someone inside the security perimeter</p><p id="e53c3600-a7f9-46e6-b2c4-26fe80abe91f" class="">	outsider			from outsider, unauthorized user</p><p id="9c5841d2-7fa0-4238-b5b8-45448ca83ad9" class="">
+</p><h1 id="f640456d-dbc5-4fd8-9f28-2ebf96df6dd6" class="">Security Principles</h1><p id="6b9c9ffa-0aa0-4bd4-b03d-b12c8c9d4aff" class=""><mark class="highlight-teal">Simplicity				</mark>easier to analyze</p><p id="60a669a6-9491-461e-a59a-e8063a587ba8" class=""><mark class="highlight-teal">Open design</mark>			Avoid security by obscurity, system should be secure even if open source</p><p id="311a885a-c769-46da-a6ad-20e7c07b45d0" class=""><mark class="highlight-teal">Compartmentalization	</mark>isolate resources, functionality - control the communication between them</p><p id="9564a8a0-1624-41e3-8417-de872eb60387" class=""><mark class="highlight-teal">Minimum Exposure		</mark>minimize external interfaces, potential targets</p><p id="84036b31-21b6-4281-86bd-3fa576d137b9" class=""><mark class="highlight-teal">Least privilege			</mark>(= authority to access a resource) for every component and user</p><p id="436993e2-402c-447c-a44b-af209670913e" class=""><mark class="highlight-gray">					</mark><mark class="highlight-blue">confused deputy attack</mark><mark class="highlight-gray">: fooling privileged process to misuse its authority</mark></p><p id="35ae12b2-9845-458c-8886-0cea98354f48" class=""><mark class="highlight-teal">Minimum Trust		</mark>(= assumptions about system), can also mean a total distrust</p><p id="1be2f979-9943-415f-8b89-e11bb473bd52" class=""><mark class="highlight-teal">Max. Trustworthiness	</mark>validating properties, assumptions through proofs</p><p id="3df12bc3-5ea3-4efe-a080-f0413b9719fb" class=""><mark class="highlight-teal">Fail Safe Defaults</mark>		system should start and return to a secure state when a failure occurs	</p><p id="2573119d-96f6-4700-869c-7a254262d24e" class=""><mark class="highlight-teal">Defense in depth		</mark>Not a single point of failure, multiple mechanisms and layers</p><p id="466ef1b7-550e-4b0d-a6f0-6aa448d6b1e2" class=""><mark class="highlight-teal">Complete Mediation</mark>	impossible to bypass access enforcement mechanisms</p><p id="e311d1f0-2e28-404f-a7c8-12622408d620" class=""><mark class="highlight-teal">Traceability			</mark>Implemented through logging. <mark class="highlight-gray">(keeping privacy: pseudonyms, hashing, ...)</mark></p><p id="d46cfdef-88ee-45cf-b8b2-8d257d79a0af" class=""><mark class="highlight-teal">Randomness			</mark>of secrets, keys, passwords </p><p id="34516309-7ec7-4e00-bdec-2a18ed0d1334" class=""><mark class="highlight-teal">Usability				</mark>secure mechanisms must be easy to use</p><h1 id="ec8427d2-b412-4695-af11-0143851fc4db" class="">____________</h1><h1 id="257a8c40-bd8f-4e25-9a54-2ebd51ca5756" class="">Password authentication</h1><p id="68731227-b77f-420b-9f0a-57e79b576632" class=""><mark class="highlight-teal">Identification			</mark>the ID you claim to have</p><p id="c14354a6-20c4-44ba-add9-ac9824ae3291" class=""><mark class="highlight-teal">Authentication		</mark>proving your ID, <mark class="highlight-gray">to get a premission, get authrorized</mark></p><p id="ee6e8dde-f95e-4c34-9675-c0a379b71277" class=""><mark class="highlight-teal">Credentials			</mark>evidence used to prove your ID</p><p id="419fb272-0727-45d3-bcef-39ff0a3a52ca" class="">					<mark class="highlight-gray">pin, biometrics, two-factor-authentification 2FA, hardware tokens, ...</mark></p><p id="004f1dd5-a8dc-4e39-b4d6-71813927d0e5" class="">
+</p><p id="17eb414e-4d62-498c-aee6-dbd63de32487" class=""><mark class="highlight-teal">Unix password system</mark></p><p id="d1be569a-bb94-4a7b-b4be-88ef86faa99e" class="">Passwords must be stored as hashes.</p><p id="f92500e8-5684-4e56-8de6-1e958f7c796b" class=""><mark class="highlight-gray"><code>username: $ id $ salt $ h(salt|password) $</code></mark><div class="indented"><p id="ae3eadd9-04b2-4a9f-bc48-ded85f3692b1" class="block-color-gray"><mark class="highlight-gray"><code>$</code></mark> 		seperator between entry fields</p><p id="b8306bf8-7992-46c4-ab8d-233cdfd46434" class="block-color-gray"><mark class="highlight-gray"><code>id</code></mark><mark class="highlight-gray"> 		</mark>algorithm used for hash: 1 = MD5, 5 = SHA-256, ...</p><p id="096b08a5-641e-4e69-9d4c-fa2e2505f06b" class="block-color-gray"><mark class="highlight-gray"><code>salt</code></mark><mark class="highlight-gray">	</mark>random for every user</p><p id="be976ea4-6740-460e-b56d-0730c16ea956" class="block-color-gray"><mark class="highlight-gray"><code>|</code></mark><mark class="highlight-gray">		</mark>string concatenation</p></div></p><p id="146d35bb-0a0c-4ff8-af91-68a3f9ef2e87" class="">
+</p><p id="352d2876-17c5-4f5d-b4fc-73af2190e21a" class=""><mark class="highlight-teal">Offline dictionary attack</mark><div class="indented"><p id="d8d34624-9082-487b-ac1f-4cf949b55e49" class=""><mark class="highlight-gray">Public read access to password file in unix and its </mark><mark class="highlight-gray"><code>salt</code></mark><mark class="highlight-gray"> strings.</mark> </p><p id="0900e8ac-d400-4087-bc53-b90b62da9814" class="">Computing <mark class="highlight-gray"><code>h(salt|word)</code></mark> with dictionary entries. </p><p id="0381b764-28ab-437c-9ca7-efd59114c400" class="">Defense: hashing password multiple times, key-stretching, encrypting database, access control ...</p></div></p><p id="836c3538-ed33-4b4e-8fe6-25285f5c380b" class=""><mark class="highlight-teal">Online dictionary attack</mark><div class="indented"><p id="833ec750-95ab-4287-b29f-d36d493e38eb" class="">Bruteforcing</p><p id="9351f2c4-5790-4234-b8d6-cebde9a8ab5e" class="">Defense: timeout between guesses, proof of being human, locking account<mark class="highlight-gray"> (= denial of service)</mark></p></div></p><p id="651c7b06-a188-4d54-a75b-cf3fd756dc73" class=""><mark class="highlight-teal">Credential Stuffing Attack</mark><div class="indented"><p id="10a2251e-335b-4f76-8a78-55eea794c5d0" class="">trying one leaked password out on all possible sites.</p><p id="d5373b50-16a2-49cc-ba19-16d570a4e4cb" class="">Defense: password managers <mark class="highlight-gray">(= single point of failure)</mark></p></div></p><h1 id="06af9011-ad49-4f52-90b6-f746a0c3239a" class="">____________</h1><h1 id="717c68c2-3f07-4fcc-bc8e-46f3fc52d767" class="">Access Control </h1><p id="956e3912-4ce9-4503-94a9-075a1a0c90d0" class=""><mark class="highlight-teal">Complete Mediation	</mark>impossible to bypass monitor</p><p id="eb8073eb-0a14-4f7e-9240-902664a2c5a5" class=""><mark class="highlight-teal">Tamperproof			</mark>unauthorized access must be prevented</p><p id="36103aeb-66bd-43dd-a481-446f07276a67" class=""><mark class="highlight-teal">Verifiable				</mark>monitor should be analyzable</p><p id="5998a220-2647-4ebb-a7b4-da153e7b278d" class="">
+</p><p id="f305639d-55ff-4699-b20b-8bce322c1a2a" class="">Assumption: subject is authentified and now wants to be authorized / get privileges.</p><p id="ab1b4c32-48c2-4f6a-a4d4-c9c50265b554" class="">Reference monitor is an &quot;access enforcement mechanism&quot;.</p><p id="22c911a3-ab2e-4e5e-8e33-84f2af358f8f" class="">Security policy also defines how rules can be modified.</p><figure id="bf524afa-fb70-4d38-8c72-be7f3d8d158e" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext mathvariant="sans-serif">subject</mtext><mover><mo stretchy="true" minsize="3.0em">undefined</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mtext mathvariant="sans-serif">access</mtext><mtext> </mtext><mtext mathvariant="sans-serif">request</mtext></mrow></mpadded></mover><munder><munder><mrow><mtext mathvariant="sans-serif">reference</mtext><mtext> </mtext><mtext mathvariant="sans-serif">monitor</mtext></mrow><mo stretchy="true">undefined</mo></munder><mrow><mtext mathvariant="sans-serif">security</mtext><mtext> </mtext><mtext mathvariant="sans-serif">policy</mtext></mrow></munder><mover><mo stretchy="true" minsize="3.0em">undefined</mo><mpadded width="+0.6em" lspace="0.3em"><mrow><mtext mathvariant="sans-serif">if</mtext><mtext> </mtext><mtext mathvariant="sans-serif">authorized</mtext></mrow></mpadded></mover><mtext mathvariant="sans-serif">object</mtext></mrow><annotation encoding="application/x-tex">\textsf{subject} \xrightarrow{\textsf{access request}} \underbrace{\textsf{reference monitor}}_{\textsf{security policy}} \xrightarrow{\textsf{if authorized}}  \textsf{object} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2164409999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord textsf">subject</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel x-arrow"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.022001em;"><span style="top:-3.322em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight x-arrow-pad"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">access request</span></span></span></span></span><span class="svg-align" style="top:-2.689em;"><span class="pstrut" style="height:2.7em;"></span><span class="hide-tail" style="height:0.522em;min-width:1.469em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMaxYMin slice'><path d='M0 241v40h399891c-47.3 35.3-84 78-110 128
+-16.7 32-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20
+ 11 8 0 13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7
+ 39-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85
+-40.5-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5
+-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67
+ 151.7 139 205zm0 0v40h399900v-40z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.01100000000000012em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.578324em;vertical-align:-1.470216em;"></span><span class="mord munder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944399999999997em;"><span style="top:-1.665892em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">security policy</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span class="svg-align" style="top:-2.352em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.548em;min-width:1.6em;"><span class="brace-left" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord textsf">reference monitor</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.648em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.470216em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel x-arrow"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1081079999999999em;"><span style="top:-3.322em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight x-arrow-pad"><span class="mord mtight"><span class="mord text mtight"><span class="mord textsf mtight">if authorized</span></span></span></span></span><span class="svg-align" style="top:-2.689em;"><span class="pstrut" style="height:2.7em;"></span><span class="hide-tail" style="height:0.522em;min-width:1.469em;"><svg width='400em' height='0.522em' viewBox='0 0 400000 522' preserveAspectRatio='xMaxYMin slice'><path d='M0 241v40h399891c-47.3 35.3-84 78-110 128
+-16.7 32-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20
+ 11 8 0 13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7
+ 39-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85
+-40.5-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5
+-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67
+ 151.7 139 205zm0 0v40h399900v-40z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.01100000000000012em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord textsf">object</span></span></span></span></span></span></div></figure><p id="9f41985a-9443-4e25-80b6-2188e5814642" class="">
+</p><p id="13dc0fcb-8eda-468f-94b3-ea1610dd4fb3" class=""><mark class="highlight-teal">Access Control Matrix</mark></p><p id="dae91e91-6fff-4c09-be36-76712e93e5d2" class="">columns: objects, rows: subjects, cells: access rights <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∈</mo></mrow><annotation encoding="application/x-tex">\in</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">∈</span></span></span></span></span><span>﻿</span></span> {read, write, execute} </p><p id="a1ab5806-6bab-4f02-a13e-de456c9349f9" class="">
+</p><div id="84a7101a-10d9-4ae0-9b3e-d411fc8234db" class="column-list"><div id="72c23513-077d-413f-bf0d-7c236ff80f78" style="width:50%" class="column"><p id="0f66e1d1-7eb6-48bc-9222-c68b6841bd51" class=""><mark class="highlight-teal">Access Control List </mark><mark class="highlight-gray">(object centered)</mark></p><p id="ab8c7314-db94-4744-a590-066c2cbf5ca1" class="">linked list: subjects access rights for each file</p><ul id="a24bd28c-41a5-4ea0-971c-20b6054e6ca4" class="bulleted-list"><li style="list-style-type:disc">identification required</li></ul><ul id="89f043c8-a0ad-40cc-8650-52afc86a62e1" class="bulleted-list"><li style="list-style-type:disc">delegation: asking admin to add node </li></ul><ul id="564f0804-fdd8-45f4-9139-a81f578c303c" class="bulleted-list"><li style="list-style-type:disc">revocation: modifying nodes</li></ul></div><div id="a86cac2d-8ead-48de-bbd9-cb9d26beb8e6" style="width:50%" class="column"><p id="90cd5e54-ac00-4627-a42f-0fb650124df9" class=""><mark class="highlight-teal">Token / Capability </mark><mark class="highlight-gray">(subject centered)</mark></p><p id="ba414c0c-09e9-44e6-bc14-69cbf4db25bc" class="">unforgable bit sequence</p><ul id="3634daf0-1487-4055-af26-83ca5cc0fdf4" class="bulleted-list"><li style="list-style-type:disc">identification not required </li></ul><ul id="d277c5d7-f2bd-4957-9c9c-e677b44a2803" class="bulleted-list"><li style="list-style-type:disc">delegation: passing token</li></ul><ul id="611b1e99-c447-491e-9b92-b93ad079688b" class="bulleted-list"><li style="list-style-type:disc">revocation: only with extra bookkeeping</li></ul></div></div><p id="860a68b8-f326-49c2-af64-986bcce4c890" class="">
+</p><h2 id="b61662f7-a1a9-4ca2-888d-a90f3313bab6" class="">Access Control Types</h2><p id="2dcf7fe2-bce2-4aed-b2e7-e4c754b52e7b" class=""><mark class="highlight-teal">Role / Group Based Access Control</mark></p><p id="377d5439-027d-4f2d-9f3c-2f3e101ce15a" class="">Role = Set of users: Administrator, PowerUser, Users, Guest</p><p id="52aee50a-573c-4ae6-9351-2a1549849104" class="">Each role gets own permission, based on role-hierarchy.</p><p id="94005be2-3072-4519-be5d-0f3254032e02" class="">
+</p><div id="490146bb-f326-4b43-b1c2-26c7801be573" class="column-list"><div id="0fd8cfb0-5da9-400b-a3d4-c6bdde7fb35a" style="width:50%" class="column"><p id="15f9018b-3749-446e-904b-9b59441d9cc4" class=""><mark class="highlight-teal">Mandatory Access Control MAC</mark></p><p id="c7261581-048e-4d5e-b885-c1bd210c74c0" class="">Centralized </p><p id="7e8af169-d9d6-4d6c-871d-7b478210b461" class="">Security policy set, modified by admin.</p><p id="c19d132a-720b-4bbe-9666-a54ddb01aa72" class="">Subjects and objects usually labeled with security attributes.</p><p id="51d8e925-55e3-4fdc-a514-9cb5c072d41f" class="block-color-gray"><mark class="highlight-gray">Like office keys (not allowed to be replicated), iris scan, ...</mark></p></div><div id="e74e295a-509b-47a0-9f3b-282f50f17c99" style="width:50%" class="column"><p id="52e53df4-13a6-486c-b136-56e759419d1d" class=""><mark class="highlight-teal">Discretionary Access Control DAC </mark></p><p id="79235dbe-0459-483a-88bc-1cec8f43381e" class="">Decentralized </p><p id="5b4a042e-b5d8-4ac4-92cd-dc0107783338" class="">Subjects can delegate / revoke / modify access rights of objects for which they have certain access rights themselves (own a token)</p><p id="2ebcff4e-b025-49df-8d7f-367cd706751c" class=""><mark class="highlight-gray">Used in Unix implementation</mark></p><p id="015ffc9a-c661-4ac7-bb31-2bac737bb497" class="block-color-gray"><mark class="highlight-gray">Like Flat keys, Laptop password, ...</mark></p></div></div><p id="315e8898-157c-4339-8f6b-dd5d5b2a8660" class="">
+</p><h2 id="bd7c947c-17b2-438a-9957-c001e41f1071" class="">Multi-Level Security Concepts MLS </h2><p id="03cbd521-4e56-4888-a0cf-69dae39adb3e" class="">These policies can not be represented with access matrices.</p><p id="2acdf886-f106-4118-a455-f6aa2ca6d4fe" class=""><mark class="highlight-teal">Bell-LaPadula Model: &quot;No read up, no write down&quot;</mark><div class="indented"><p id="f53e0499-d299-45cc-bfb6-cc3924974fc0" class="">Goal: Data confidentiality <mark class="highlight-gray">(not leaking classified information to unclassified files)</mark></p><p id="9c6c9036-2364-4a08-853c-fe57c42b5a05" class="">Used in military. Sensitivity levels for subjects and objects, creates role-hierarchy.</p></div></p><p id="6572a64c-ecfd-4703-afcb-c0a1a8a346a7" class=""><mark class="highlight-teal">Biba Model: &quot;No read down, no write up&quot;</mark><div class="indented"><p id="5c040c81-341a-46ec-95fd-42064a8bf2f1" class="">Goal: Data integrity</p></div></p><p id="c9777e9d-9b7d-4bd9-affc-033cffaf9633" class=""><mark class="highlight-teal">Conditional Policies</mark><div class="indented"><p id="e4036afd-eead-4310-a3d7-4f21cb5335c9" class="">Temporal			Access based on time.</p><p id="600bec06-3d7d-47ff-a04e-f3448530b450" class="">Context-aware 	Access based on specific context, like location.</p></div></p><p id="a0bd9805-c0bb-4b88-b30d-a936f11a7062" class=""><mark class="highlight-teal">Seperation of Duty</mark><div class="indented"><p id="3bb7c105-4ada-4572-85b2-abc1908949fb" class="">Authorization requires &gt;2 different subjects with different roles.</p></div></p><p id="9d0ea6a7-2486-434c-9295-8591efa0e26b" class=""><mark class="highlight-teal">Chinese Wall Policy</mark><div class="indented"><p id="1ba50fd8-4ced-407e-a971-f3240955c893" class="">No information flow between subjects and objects that would create a conflict of interest.</p></div></p><p id="20952ce1-7f80-4cb2-ac2c-82349ff2bf42" class="">
+</p><h2 id="8834f917-9979-411b-a10f-557d4d9c5694" class="">Unix File System</h2><p id="60ec5fae-13da-46f9-865d-7c79fe052de6" class=""><mark class="highlight-gray">Example for access control.</mark></p><p id="06b31f77-1c3d-4e02-ac60-d4155c7a1ddd" class="">Operation		read <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">r</mi></mrow><annotation encoding="application/x-tex">\mathbf{r}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord mathbf">r</span></span></span></span></span><span>﻿</span></span>, write <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">w</mi></mrow><annotation encoding="application/x-tex">{\mathbf{w}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">w</span></span></span></span></span></span><span>﻿</span></span>, execute <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">x</mi></mrow><annotation encoding="application/x-tex">{\mathbf{x}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">x</span></span></span></span></span></span><span>﻿</span></span></p><p id="792b0508-3985-4c2b-8eb6-60e88f58f963" class="">Object			File - has owner, group</p><p id="10c3a3b0-30ad-4ff0-a9af-9b0ab409a376" class="">Subject			can be owner, group, other - of file</p><p id="36df31de-f39d-43a6-bf2a-779924f57bbb" class="">
+</p><p id="e39d8edb-e49a-4dcf-acde-6155dac6559a" class=""><mark class="highlight-teal">Linux premissions</mark></p><p id="ce08974d-93bd-4505-b8db-d27c09027167" class="">Only <em>owner </em>and <em>root </em>can change permissions. Their privileges can not be delegated / shared.<div class="indented"><p id="a9c7b978-30b1-4dac-98cb-21102dfb492e" class=""><mark class="highlight-gray"><code>chmod &lt;1-7&gt;&lt;1-7&gt;&lt;1-7&gt;</code></mark> to change premissions.</p></div></p><p id="6ff5b138-01a9-4d87-a992-dc987030ca34" class="">Can be set with letters, octal, binary: <div class="indented"><p id="8e6d02a9-c129-4de1-a2d9-0921700c0133" class=""><mark class="highlight-gray"><code>owner - group - everyone</code></mark> → <mark class="highlight-gray"><code>rwx - xr - x</code></mark><mark class="highlight-gray"> </mark>== <mark class="highlight-gray"><code>111 - 101 - 001</code></mark> == <mark class="highlight-gray"><code>755</code></mark><mark class="highlight-gray"> </mark></p><p id="0db23406-afd5-41bd-97fe-49c29af2a0ac" class="">The first role that matches with user gets applied.</p></div></p><p id="baa7cd6b-b225-4f67-a7ea-14b0c22f9476" class="">
+</p><h2 id="8ed70ada-d0a3-488f-813f-8070b4305927" class="">User ID&#x27;s in Unix</h2><p id="2635c1fb-8eac-47b0-a8e7-dfb9cac0c2e0" class="">Each process has three IDs <mark class="highlight-gray">(even more in Linux)</mark></p><p id="19940e65-91f9-48ae-9d4e-ca6a24470d41" class="">Root <mark class="highlight-gray">(id = 0) </mark>is a superuser and has all privileges.</p><p id="eb01d6df-79b9-4da6-a490-da365c30a960" class="">
+</p><p id="e32b712c-713b-4cae-905e-da4aca9366c5" class=""><mark class="highlight-teal">Real user ID (RUID)</mark><div class="indented"><p id="35db2a4d-4901-4ef3-a0be-f15ed21784e4" class="">same as user ID of parent (unless changed)</p><p id="1149cc01-6d8b-4726-aba6-f86aab86afcf" class="">used to determine who started the process</p></div></p><p id="0a55f5c8-7d44-4559-835b-ec4f5c0c3f16" class=""><mark class="highlight-teal">Effective user ID (EUID)</mark><div class="indented"><p id="2d3abb42-9f4a-4c4a-a1aa-11b0f181d753" class=""><mark class="highlight-gray">Used similar to RUID.</mark></p><p id="cc4e3ed5-d105-460a-8bc6-e7c5327e9e48" class="">used to set processes premissions </p><p id="d5f3a75d-fe50-4227-bc3d-0875a3fc41f8" class="">from set user ID bit on the file being executed, or <mark class="highlight-gray"><code>setuid()</code></mark><mark class="highlight-gray"> </mark>system call</p></div></p><p id="3ea51070-2074-4523-81d5-c1ed6ea3525e" class=""><mark class="highlight-teal">Saved user ID (SUID)</mark><div class="indented"><p id="cdaab819-faba-4bd2-ac71-1d1735ecb60c" class="">so previous EUID can be restored</p></div></p><p id="e6b03521-6ef4-4e43-890f-67980c67f2ec" class="">
+</p><p id="76d75d21-6cc8-453d-b221-bb38feb8b284" class=""><mark class="highlight-teal">Fork and Exec</mark><div class="indented"><p id="f7608345-c50f-4454-a61a-42c93ae23b2c" class="">creates a hierarchy through inheriting IDs.</p><p id="64193ba2-888b-44c1-a877-25591dac4d20" class="">Inherit three IDs, except <mark class="highlight-gray"><code>exec</code></mark><mark class="highlight-gray"> </mark>of file with <mark class="highlight-gray"><code>setId()</code></mark> bit</p></div></p><p id="9b864bc4-7b2e-4d09-bd1e-b8151212722c" class=""><mark class="highlight-teal">Setuid system calls </mark>(setuid programming)<mark class="highlight-teal"> </mark><div class="indented"><p id="b5ca270a-c01f-4cac-8f7e-9e89ae12b6b1" class=""><mark class="highlight-gray"><code>seteuid(newid)</code></mark><mark class="highlight-gray"> </mark>can set EUID to RUID, SUID or anything alse as long as ≠ 0 </p></div></p><p id="21dd71e2-4454-401f-b427-09a3fa86fcc0" class="">
+</p></div></article></body></html>

@@ -1,0 +1,710 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Life Cycle (Phasen)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25a28bb1-efcc-4922-baed-d19cb3ce352d" class="page sans"><header><h1 class="page-title">Life Cycle (Phasen)</h1></header><div class="page-body"><nav id="bf505283-0bdc-44ed-bb4c-e43a4f6b0bb4" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8a94dad3-cf2e-4f33-bc35-56370471b2bb">Software Life-Cycle / Phasen / Lebenszyklus</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cbb59dd6-8aca-4cb3-a6af-4e93e08e4fb0">Anforderung &amp; Spezifikation</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bc1c07dd-c917-45a0-9f60-3343638f959d">Projektplanung &amp; Steuerung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#801d7718-94c9-4e31-9be0-15308b7b7859">Entwurf und Design</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#442d2939-0009-45fb-acd3-fe4ab8d428d1">Implementierung und Integration</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1fb618bf-e493-4f0a-ac71-27251993ebeb">Betrieb und Wartung (Evolution)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#51e8c382-dbda-4f88-b5c6-e5665d3390f0">Retirement</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#326328d2-9208-41cd-a24f-81d9d3f09953">Life-Cycle → Vorgehensmodell</a></div></nav><h1 id="8a94dad3-cf2e-4f33-bc35-56370471b2bb" class="">Software Life-Cycle / Phasen / Lebenszyklus</h1><p id="a0bfb718-93d7-4c8a-89be-64acf28a380f" class="">Ablauf eines Software-Entwicklungs-Projektes kann gesamten Lebenszyklus umfassen.</p><figure id="5134fd35-0655-4810-90c9-692b3197718a" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled.png"><img style="width:432px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled.png"/></a></figure><p id="30992c20-05b8-4a8d-842b-a96e16b69c35" class="">
+</p><p id="a98d45f2-3f03-4b70-a6ed-93ad898660b9" class=""><span style="border-bottom:0.05em solid">Vier grobe Phasen</span><div class="indented"><ol type="1" id="46560521-77f0-450c-8c38-41bad37d33ec" class="numbered-list" start="1"><li>Software Spezifikation			<mark class="highlight-gray">Projektdefinition, Planung</mark></li></ol><ol type="1" id="801add18-ede1-4347-9392-9bfc2f00275b" class="numbered-list" start="2"><li>Design und Implementierung		<mark class="highlight-gray">Detailplanung</mark></li></ol><ol type="1" id="9dc0f533-5451-4a3a-a562-a10e9442e5bb" class="numbered-list" start="3"><li>Software Validierung			<mark class="highlight-gray">Überprüfung in Bezug auf Kundenwünsche</mark></li></ol><ol type="1" id="9190283b-d516-44d5-9a64-cda43ffbd352" class="numbered-list" start="4"><li>Software Evoluion				<mark class="highlight-gray">Weiterentwicklung</mark></li></ol></div></p><p id="612a39eb-2b5b-4b97-bd98-21cc2506ce14" class="">
+</p><p id="a97c2cc6-502c-496e-ae1b-477f797f608b" class=""><span style="border-bottom:0.05em solid">Überblick über phasen</span><div class="indented"><ol type="1" id="fe96eea8-204c-4df4-bde0-62a9a8b906ca" class="numbered-list" start="1"><li>Requirements (Anforderungen) - (user/customer view)<p id="b70c9eb4-ed38-4b4f-9900-581f59e51892" class="block-color-gray">Ewartungen von Kunde an Softwareprodukt </p><p id="d870a4aa-06b8-4f27-bba9-3649eab905d3" class="block-color-gray">Anforderungen müssen testbar sein und getestet werden!</p></li></ol><ol type="1" id="c29e9c7f-ee65-45d5-a8ff-0fc0e491c7fc" class="numbered-list" start="2"><li>Specification - (engineering view)<p id="b1180fdd-30ec-44af-899d-7b1a27308de0" class="block-color-gray">Beschreibung für Implementierung</p></li></ol><ol type="1" id="329f66ab-af4f-422f-a1e5-9c8dcf5bee53" class="numbered-list" start="3"><li>Planning (project management)<p id="e12b8519-9c32-4ba0-adc4-affbde42c957" class="block-color-gray">Projektplan, berücksichtigt Zeit, Dauer, Kosten</p></li></ol><ol type="1" id="26d436d9-f1ae-4d7f-9331-0e5b96977fac" class="numbered-list" start="4"><li>Entwurf / Design<p id="123ec447-419e-4768-a2ba-71c98bea052d" class="block-color-gray">Komponentenarchitektur (Komponenten, Packages, Datenbankdesign)</p></li></ol><ol type="1" id="8c7223fc-a506-4093-add2-22db632bf474" class="numbered-list" start="5"><li>Implementierung (Erzeugung des Softwareprodukts) und Testen</li></ol><ol type="1" id="0cd8e750-c7cc-4e9e-985a-766c14c0ffd6" class="numbered-list" start="6"><li>Integration und Testen<p id="a134d824-a280-45d5-84b8-b6e4ec87cd94" class="block-color-gray">Zusammenfügen und testen (integration test) Test der einzelnen Komponenten (unit tests) auf Architektur- und Systemebene.</p></li></ol><ol type="1" id="c189745d-0b95-4149-850d-f069e85efe0b" class="numbered-list" start="7"><li>Operation and Maintenance (Einsatzphase)<p id="ac088458-df1a-401f-a20f-675d90bba7a3" class="block-color-gray">Unterstützung, Erweiterungen während laufenden Betriebes.</p></li></ol><ol type="1" id="7e4e5fb4-f8bc-4e07-a545-d8fb7ab5d1d5" class="numbered-list" start="8"><li>Retirement (Ende des Produktlebenszyklus)<p id="aa6ac6af-ce63-4512-9c00-b289d363e9be" class="block-color-gray">Softwareprodukt wird aus Betrieb genommen</p></li></ol></div></p><p id="89f2cac5-ae2f-49f8-9051-ae0c50c8963f" class="">
+</p><p id="52b0458b-6cea-4329-9d45-2ab931dc8304" class="">Begleitet von:</p><p id="cc60f78c-79f1-4738-9331-b31673e2800d" class=""><span style="border-bottom:0.05em solid">Projektmanagement PM</span><div class="indented"><p id="8d239952-64d4-4d02-b371-253eede4688c" class="">Planung, Kontrolle, Steuerung, Organisation</p><p id="60dcb509-7fdb-49eb-9efd-32620fa6f988" class="">Technische, finanzielle, planerische Aspekte</p></div></p><p id="014615b1-67f2-4a8f-b527-4f08aa323e74" class="">
+</p><p id="609cb5e1-60fc-4ccd-9d2e-8a8560d02bf7" class=""><span style="border-bottom:0.05em solid">Qualitätsmanagement QM</span><div class="indented"><p id="a5e3d6c3-cfa4-4c38-aa7a-84f3a11c88d0" class="">Überprüfung der Qualität (Qualitätssicherung QS) mit Verifikation / Validierung</p><ul id="9dfb06d2-edc1-4d47-b061-85e2341a8d3c" class="toggle"><li><details open=""><summary>Test-Techniken</summary><ul id="cd71cd9b-4fdb-40b5-84e5-fdf8ccbaaedf" class="bulleted-list"><li style="list-style-type:disc">Unit Test<p id="cb700f6e-0a99-49e0-9b01-dc81a3c67517" class="block-color-gray">Komponenten - Umsetzung technischer Spezifikation</p></li></ul><ul id="f760dfd9-93ae-4aab-a375-40e45f0156c7" class="bulleted-list"><li style="list-style-type:disc">Integrationstest<p id="aea857b5-e738-4c85-b86b-4b348e5dfb35" class="block-color-gray">Interfaces und Verbindungen zwischen Komponenten innerhalb des (Sub)Systems</p></li></ul><ul id="689f5744-aaee-4192-ae7e-681c44a14461" class="bulleted-list"><li style="list-style-type:disc">Systemtest<p id="df65a7d2-7154-4a56-9f30-400353686fba" class="block-color-gray">Gesamtsystem</p></li></ul><ul id="0b411cfe-b59c-410c-bb52-6707d253c475" class="bulleted-list"><li style="list-style-type:disc">Regressionstest<p id="9cf6ff9e-ba46-4ffd-9eff-bea3c04634c8" class="block-color-gray">Testen von geänderten Komponenten → Fehler, die durch Änderungen / Fehlerkorrektur, entstanden sind</p></li></ul><ul id="cb5c1333-0ecb-49b0-aedc-b8b031d79afa" class="bulleted-list"><li style="list-style-type:disc">Akzeptanztest<p id="a6efde63-0eb5-42de-9af0-1db205b74d75" class="block-color-gray">ob Kunde akzeptiert</p></li></ul><ul id="b41bb41e-0ddf-4234-8c5c-2fe2b265e99d" class="bulleted-list"><li style="list-style-type:disc">Installationstest<p id="46650c03-0c40-41a2-aec3-3db73acddf83" class="block-color-gray">während Installation</p></li></ul></details></li></ul></div></p><h2 id="cbb59dd6-8aca-4cb3-a6af-4e93e08e4fb0" class="">Anforderung &amp; Spezifikation</h2><p id="7d1fd5d5-e058-4ccc-a11e-23e80e3ec174" class=""><span style="border-bottom:0.05em solid">Stakeholder</span><div class="indented"><p id="d9d8bc8b-7faf-433c-9c4e-fc2d999be87c" class="">Erstellen die Anforderungen</p><ol type="1" id="37781965-24d0-4217-9513-d9303c8be3ac" class="numbered-list" start="1"><li>Kunden (bezahlen software-produkt)<p id="dbbee278-fd58-4963-8cd8-8f11f5c839be" class="">Anforderung: z.B. schnelle und kostengünstige Lieferung</p></li></ol><ol type="1" id="34082775-f374-4ede-92bd-f3af972f1667" class="numbered-list" start="2"><li>Anwender (benutzen)<p id="ada104e0-c6ba-4b66-b37a-ae6deef37123" class="">Anforderung: z.B.: Usability, Einfachheit, Stabilität, usw.</p></li></ol><ol type="1" id="8dcabfe9-8c03-4939-827e-26876930d9b6" class="numbered-list" start="3"><li>Entwickler (erstellen)</li></ol></div></p><p id="b368d358-3e49-43d6-ab87-eb48ae5e4346" class="">
+</p><p id="db4789e1-f4f8-46b8-9cf2-fc79627b3fe3" class=""><span style="border-bottom:0.05em solid">Warum sind Anforderungen wichtig?</span><div class="indented"><p id="a0f90cd5-41ce-4035-8351-0f7d9d10722b" class="">Gemeinsames Verständnis zwischen Stakeholders (Kunde/Anwender, Entwickler, usw.) und Entwickler.</p><p id="bfd2c16e-d8bd-4163-8de4-db2a5487f1ee" class="">Entweder beschrieben oder grafisch dargestellt (UML Diagramm).</p><p id="331dea45-e877-4464-a8f6-58bf9bed7953" class="">Müssen testbar sein (tools: requirements management mit z.B. Doors, Rational Requisite Pro)</p><p id="a9016b52-7b16-4cd4-bc07-9bea7ce5c5e8" class="">
+</p></div></p><p id="e4540888-2b74-4b42-8e27-45bf46bdcc64" class=""><span style="border-bottom:0.05em solid">Anforderungen (Requirements)</span><div class="indented"><p id="1fd6fd6a-f126-4dd9-ac1a-58920e2afb8b" class="">Anforderungs-Phase (Requirements-Definition)<div class="indented"><p id="cc4c913f-d98f-49ab-868f-c52e5c6b1438" class="block-color-gray">Text, Story-board, Feature-lists, UML Use cases (Anwendungsfalldiagramme)</p></div></p><p id="1ec1abac-baa8-4be6-9741-f5219bd18840" class="">Anforderungs-Analyse und Spezifikation<div class="indented"><p id="06c8da4d-5137-4071-9a01-e26429d6ae3a" class="block-color-gray">Berücksichtigung möglichst aller beteiligten Personen (Stakeholder)<div class="indented"><p id="3924a469-3238-4912-a10f-ca3192fb79b0" class="">– Hauptanforderungen (must-be Kritieren).
+– Gewünschte Anforderungen (expected, nicht entscheidend aber wichtig).
+– Optionale Anforderungen (nice-to-have Kriterien).</p></div></p><p id="742852b2-5fdb-452b-94df-27e2c71ed57d" class="block-color-gray">Müssen konsistent und testbar sein </p></div></p><p id="759c5579-f2c6-4926-a992-53597c7a7c7d" class="">In der Praxis ändern sich Anforderungen häufig → Agiler Ansatz</p></div></p><p id="655c6625-f006-4fc0-b09c-b52fb14b6b4f" class="">
+</p><p id="1c4769b6-13c5-4a1b-be42-177bc7db6fd4" class=""><span style="border-bottom:0.05em solid">Anforderungs-Arten</span><div class="indented"><p id="bc6c2c12-88ff-4648-a4d8-d3a9b0fb8609" class="">Funktional			<mark class="highlight-gray">Systemverhalten, Datenformate</mark></p><p id="d7c9f993-53d2-42f7-9b46-92cf10983b9b" class="">Nicht-Funktional		<mark class="highlight-gray">Qualitätsmerkmale, zB Leistungsfähigkeit, UI, Sicherheit</mark></p><p id="99efd61d-624d-43f9-b2e0-064d6146a48a" class="">Design-Bedingung		<mark class="highlight-gray">techn. Rahmenbed., Software Architektur, IDE, verteilte Entwicklung </mark></p><p id="b9348bb7-daae-4bc7-b53f-ac66ad9c6e29" class="">Prozess-Bedingung		<mark class="highlight-gray">Rahmenbedingungen für Vorgehen (Vorgehensmodelle)</mark></p></div></p><p id="f3153a1a-eb56-4772-8125-d438c1410de3" class="">
+</p><p id="f81e86f0-7bc1-44a5-a67b-026423d14845" class=""><span style="border-bottom:0.05em solid">Anforderungsprozess</span><div class="indented"><p id="55956bb9-9791-4da5-8d26-0558b614e66f" class="">Vorgehensmodell für Erhebung von Anforderungen.</p><p id="ed204c20-a81b-4c8f-9f59-7d78cbf80850" class="">Vollständige Erhebung von allen Rollen / Stakeholdern, Prioritisierung, Überprüfung</p><p id="a9b6a5e6-49e9-41b7-a15d-11ce439b44e2" class="">
+</p><p id="3f43e3d2-2ec9-4661-aee2-a8b80ba8cbaf" class="">Phasen:<div class="indented"><ol type="1" id="37f289f3-fb9d-45db-8b11-9257dd59589c" class="numbered-list" start="1"><li>Anforderungserhebung		<mark class="highlight-gray">Sammeln, klassifizieren, prioritisieren</mark></li></ol><ol type="1" id="0e89c283-08e7-44ff-9012-c5a411380aca" class="numbered-list" start="2"><li>Analysephase				<mark class="highlight-gray">Analyse mit UML</mark></li></ol><ol type="1" id="591057b9-8836-4f93-84db-2acf20b23f3c" class="numbered-list" start="3"><li>Spezifikation				<mark class="highlight-gray">Planung für technische Entwicklung</mark></li></ol><ol type="1" id="7d546f11-63c6-4ff9-973c-bd1f044604e1" class="numbered-list" start="4"><li>Validierung				<mark class="highlight-gray">Verifikation, Validierung</mark></li></ol></div></p></div></p><figure id="0c4d7176-25d0-4ed9-b6c8-0b967de38f05" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%201.png"><img style="width:768px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%201.png"/></a></figure><p id="60c8b0c3-26ea-4f58-bfbc-7cf98ea870e0" class="">
+</p><h2 id="bc1c07dd-c917-45a0-9f60-3343638f959d" class="">Projektplanung &amp; Steuerung</h2><p id="5a9f9376-a321-4a96-90a4-af736b0a3891" class="">Aufgabe des Projektmanagements</p><p id="2dc26a23-593c-4fc6-ae86-88e284a6ffaf" class="">Es sind in dieser Phase Anforderung und Spezifikation gegeben</p><p id="70cbf2f5-86d0-46bb-b6c0-aca798d377d1" class="">
+</p><ol type="1" id="9c70b653-6d54-44e9-8e14-c657bd96a05f" class="numbered-list" start="1"><li>Projektplanung (Planungsphase)<p id="1ff12512-1487-4544-ac70-20a6714292c6" class="">Weitere Schritte des Projektes planen, Abhängigkeiten finden:<div class="indented"><p id="873a2622-2c6d-4984-a276-249517294b9c" class=""><em>Prozessabhängigkeit	</em><mark class="highlight-gray">definiert durch Vorgehensmodell</mark></p><p id="449fa31e-1440-465a-acec-c3547ececfcb" class=""><em>Produktabhängigkeit	</em><mark class="highlight-gray">definiert durch Reihenfolge</mark></p></div></p></li></ol><ol type="1" id="f08c12dc-9097-45c0-9b53-cdbd5ce15a40" class="numbered-list" start="2"><li>Projekt-Monitoring und Controlling<p id="0c4a5cb8-411b-4ce1-a7fc-fc9891d45e31" class="">Steuerung nach jeder Iteration</p></li></ol><p id="0661d454-f8ff-45f2-bfaa-0e3a3a37e0af" class="">
+</p><p id="267448c2-fb14-4c28-9df9-c100a7b861dd" class=""><span style="border-bottom:0.05em solid">Artefakte (Dokumente) dieser Phase</span><div class="indented"><p id="8556b28c-ed39-46a1-b3fa-02616cafdf18" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Netzpläne / Pert-Diagramme → stellt Abhängigkeiten dar</p><p id="b55a109e-b71b-44bb-9266-2710604b9ef9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Work-Breakdown-Structure WBS / Projektstrukturplan → Aufteilung in Organisationseinheiten</p><p id="ab2a2235-940c-4e68-99c4-7ec21a829e40" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> GANTT → Zeitliche Abfolge und Daue</p><p id="513416c5-48cc-4613-9350-b16e61976359" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Milestone-Trend-Analysis MTA → setzt Meilensteine und Termine</p></div></p><p id="8a35a02b-0178-4242-8d9d-41e885574520" class="">
+</p><h2 id="801d7718-94c9-4e31-9be0-15308b7b7859" class="">Entwurf und Design</h2><p id="437ae905-f5a7-495e-8ed2-6ab1705857d8" class="">Erstellung aller Artefakte die für die konkrete Implementierung nötig sind.<div class="indented"><p id="897bac74-9628-4d67-a359-9b9ba386cea8" class="">Entwurf	grobe Planung, grobe Architektur, zB Datenbankmodell skizzieren</p><p id="e61a5de3-e0f3-4d78-b0c0-070cf9c4c394" class="">Design	Grobentwürfe werden im Detail ausgearbeitet</p><p id="26c9301f-57d2-4532-88a0-0a19c51a3fbb" class="">
+</p></div></p><p id="063cb99f-7ac8-4402-8ebb-a0d513b3c7a1" class="">&quot;Designspezifikationen&quot; enthalten<div class="indented"><p id="7d9b2f77-66da-4602-a57b-743a3e8be832" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Definition von Architektur, Komponenten, Interfaces, usw → Architecture Tradeoff Analysis Method ATAM um zwischen den Architekturen zu wählen.</p><p id="21092e1b-740f-4a23-88bf-fde6a5ecc469" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Test und Dokumentations-Anforderungen</p></div></p><p id="7b615d54-ff9c-4f9a-8cd5-8454bc3af609" class="">
+</p><p id="79c7e80f-275c-496d-9517-c947beece8c9" class=""><span style="border-bottom:0.05em solid">4+1 Model View</span><div class="indented"><p id="773c8a38-b0f2-4507-9f71-c1235f36a453" class="">Sicht (view) beschreibt Teil der Architektur mit UML diagramm</p></div></p><figure id="88205e10-dd59-4ba5-a137-fc80ed6e29ca" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%202.png"><img style="width:336px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%202.png"/></a></figure><p id="c59de200-2e82-4d6c-992f-192166bee378" class="">
+</p><p id="42e3bc8a-08d9-422b-8e09-14444770d156" class=""><span style="border-bottom:0.05em solid">Design Prinzipien</span><div class="indented"><ol type="1" id="16dfdbd5-1598-4fa2-a29a-1ad4052de68d" class="numbered-list" start="1"><li>Abstraktion</li></ol><ol type="1" id="0f29b3c2-a813-4686-aebd-d0a2b4553918" class="numbered-list" start="2"><li>Kapselung</li></ol><ol type="1" id="5f199206-c9ca-4b6f-9606-b00f87ccc1b4" class="numbered-list" start="3"><li>Trennung von Schnittstelle und Implementierung</li></ol><ol type="1" id="eec0404e-9d7c-4589-84b0-b5177df6ac2c" class="numbered-list" start="4"><li>Dekomposition, Modularisierung</li></ol><ol type="1" id="6f2f517f-893c-45a8-bcd6-3291599344bc" class="numbered-list" start="5"><li>Balance zwischen Kopplung (äußere Abhängigkeit) und Kohäsion (innerer Zusammenhalt) <p id="74573e0b-5ab4-4503-aee5-e919102d920e" class="block-color-gray">Coupling (Kopplung) vs Cohesion (Bindung)<div class="indented"><p id="9f03b3f7-eefc-4154-811b-34931b915268" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Coupling =  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> Abhängigkeit zwischen Komponenten </p><p id="c4cc3205-d4e9-47bb-ab10-43e7ce85dd08" class="">Coheison = innerer Zusammenhalt in einer Komponente. Unabhängigkeit.</p><p id="78f00337-8587-4774-9f87-969f4b1d322c" class="">Ziel: Balance</p><p id="bd7429b6-b5ff-47b8-9326-ca5aea5491cf" class="">UML: Sequence- und Collaboration Diagramms</p></div></p></li></ol><ol type="1" id="fae8f3b3-dcc9-4d1f-a559-bb002edca274" class="numbered-list" start="6"><li>Zentrale vs. verteilte Kontrolle<p id="07db3c7c-d4a2-4bc4-9003-c3ac8414176d" class="block-color-gray">fork = zentral<div class="indented"><p id="e3968124-638f-4c6f-b3f3-39766cafd64c" class="">Anpassung nur an wenigen Objekten nötig - leichtere Wartbarkeit</p><p id="16e67916-cd77-44f6-a188-d89c9fbbdbe6" class="">Hohe Abhängigkeit Systems von diesem Objekt</p><p id="d0abbcc1-b9f9-4dac-8b6c-93e91704716a" class="">Wiederverwendung von Datenobjekten leichter</p></div></p><p id="4fd75b9a-f7c2-4e91-856d-80d4fd42bd04" class="block-color-gray">stair = verteilt / dezentral<div class="indented"><p id="43f57d7c-d5fe-4b7c-ab3d-bee7c21f9f9a" class="">Schrittweise Ausführung von Funktionen, dadurch wechselt die Kontrolle - schwierigere Wartung</p><p id="5fd8e108-871a-49df-9613-1f91ec0a8651" class="">Bessere Wiederverwendbarkeit der Methoden z.B. durch Vererbung</p><p id="3be80af4-e848-4db6-958e-107d540a6b92" class="">Ausfall eines Teiles nicht so schlimm</p><p id="9fb10e02-d115-4a45-8e15-1a36d0956167" class="">Hohe Fehleranfälligkeit</p></div></p></li></ol></div></p><figure id="264ea580-4855-4711-82ba-5b7cb5732d5d" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%203.png"><img style="width:240px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%203.png"/></a></figure><p id="e2390552-e493-4a3a-8e0f-ff9a07555be7" class="">
+</p><p id="89ed3d7a-1cba-4819-babd-93b85de6b3c7" class=""><span style="border-bottom:0.05em solid">Artefakte (Dokumente) dieser Phase</span><div class="indented"><ul id="a004457e-abef-4cdf-805c-5ad666e3e206" class="bulleted-list"><li style="list-style-type:disc">Komponenten Diagramm<p id="9d8fbbaa-7088-482e-ae6a-7e7d0c45f14b" class="">Komponente = logischer Teil / Implementierung der Schnittstelle</p></li></ul><ul id="db7fc342-42a4-4453-8d17-44b6c1324ae7" class="bulleted-list"><li style="list-style-type:disc">Klassen Diagramm</li></ul><ul id="1c778af6-6210-460b-934d-a5f767440aab" class="bulleted-list"><li style="list-style-type:disc">Zustands Diagramm / Aktivitätsdiagramm</li></ul><ul id="ce6671e1-1fe2-4628-8847-49a97c056504" class="bulleted-list"><li style="list-style-type:disc">Datenbankmodell → Extended Entity Relationship Diagramm EER</li></ul><ul id="c059f634-234d-41fe-9213-e63ccd1c174e" class="bulleted-list"><li style="list-style-type:disc">GUI Design</li></ul><ul id="69ff612d-eacc-43ba-85d6-9ddcac549ff3" class="bulleted-list"><li style="list-style-type:disc">Tests auf System und Integrations Ebene</li></ul></div></p><p id="8d417e62-9ef5-49a7-81b1-c611a624bbc8" class="">
+</p><h2 id="442d2939-0009-45fb-acd3-fe4ab8d428d1" class="">Implementierung und Integration</h2><p id="17155c34-fcfb-4085-8a07-27be7864b550" class="">Es stehen Entwurfs und Designdokumente zur verfügung.</p><p id="47602b83-391f-446e-a7ac-1810449241f2" class="">Entwickler programmiert alles was in den Dokumenten.</p><p id="179de648-0b48-4330-b5f6-95a41fd6e0ec" class="">
+</p><p id="dbd4e93f-06f0-4032-8b69-a8948ba5865a" class=""><span style="border-bottom:0.05em solid">Standardisierung</span><div class="indented"><p id="bdf1eb72-fa4e-4edd-8170-c3b30eb85af0" class="">Gemeinsame Normen, Regelungen</p><ul id="bce7c7a0-2f16-4dad-9bbc-a96a131374b2" class="bulleted-list"><li style="list-style-type:disc">Nationale &amp; Internationale Standards</li></ul><ul id="c6088637-b42f-42d1-88d3-c13a4676c81c" class="bulleted-list"><li style="list-style-type:disc">Unternehmensweite Standards</li></ul><ul id="9812c04c-7b7b-4ebe-91bc-08f77be34d55" class="bulleted-list"><li style="list-style-type:disc">Projektspezifische Standards</li></ul><p id="2f727c21-ffe1-4505-a96a-624676feeebe" class="">Vorgaben für</p><ul id="358d496b-0f4d-4602-9434-dd02731f1c3b" class="bulleted-list"><li style="list-style-type:disc">Dokumentationen</li></ul><ul id="c629eec4-82c8-4602-82fd-a5da197b29cb" class="bulleted-list"><li style="list-style-type:disc">Namenskonventionen</li></ul><ul id="b63b011a-608f-41c5-a3c0-6873f7516919" class="bulleted-list"><li style="list-style-type:disc">Formatierungsrichtlinien</li></ul><ul id="203e5955-64c0-4c0a-8ec6-cdd1d9f1e6bd" class="bulleted-list"><li style="list-style-type:disc">Versionierungen<p id="b368d9fa-ba3a-473b-a4e2-fd007c9e33f3" class="block-color-gray">Überblick aller (Teil-)Produkte innerhalb eines Projektes und die Verwendung der letztgültigen Versionen</p></li></ul><ul id="f511e277-b0f3-463c-91b9-af9bf533469d" class="bulleted-list"><li style="list-style-type:disc">Headerblocks in Komponenten (code headers)</li></ul><ul id="4b4d1233-07dc-46b8-a3d9-423a8e49f855" class="bulleted-list"><li style="list-style-type:disc">Kommunikationsprotokolle (Nachricht Format und Inhalt)</li></ul><ul id="0fedcc5f-65b9-4cd2-b566-23193a946e56" class="bulleted-list"><li style="list-style-type:disc">Programmiersprachen (Syntax, Semantik)</li></ul><ul id="4c6614cc-0566-4523-a3b6-382707835d27" class="bulleted-list"><li style="list-style-type:disc">Werkzeuge (Notation wie UML)</li></ul></div></p><p id="de11f82b-2581-4c31-92e3-a61f593d3154" class="">
+</p><p id="ce2c8c13-8391-46eb-8701-45410a4bf2a8" class=""><span style="border-bottom:0.05em solid">Dokumentation</span><div class="indented"><p id="8f224531-6680-4292-ab66-d8f0d3d46e43" class="">Namenskonventionen</p><p id="db5621b3-0bec-4db6-993b-02f8fa59eaf0" class="">Formatierung</p><p id="2020aee1-b3d7-4a41-b903-8d45721f19dd" class="">Dokumentations / Formatierungsrichtlinien</p><p id="c5de3239-74f7-4cfe-9d50-f390e88fc712" class="">Kommentare und Headerblocks</p><p id="6b99fa97-56ef-4685-8555-81a24e27a043" class="">Sinnvolle commit-Nachrichten</p></div></p><p id="592bc539-d9d3-417a-9c03-f1ecc71cca69" class="">
+</p><p id="60544338-9250-4546-a518-362e0575986a" class=""><span style="border-bottom:0.05em solid">Traceability</span><div class="indented"><p id="b7cb759a-4965-4514-bf27-6f1669353a9e" class="">Rückverfolgbarkeit durch gesamten Entwicklungszyklus - Änderungsverfolgung</p><p id="d0b2cae6-7f8a-4da0-be62-43b3e1575025" class="">Informationen aus dem Headerblock → automatisiertes Requirements Tracing z.B. in IDEs</p><ol type="1" id="c62c8505-c02e-4b5b-be74-6db8aac673fb" class="numbered-list" start="1"><li>Zeitlich<p id="675b3e81-afb6-4d3a-91e5-0d98040a7185" class="">Unterschiedliche releases, versionen</p></li></ol><ol type="1" id="e9eee47a-14c5-4944-ad09-4a3e0794ab56" class="numbered-list" start="2"><li>Vertikal<p id="704e942c-58dd-4a26-ae03-176ab2b38877" class="">Beziehungen eines Artefakttyps: <mark class="highlight-gray">z.B. System – Subsystem – Komponente.</mark></p></li></ol><ol type="1" id="682d65fd-233a-4a44-850f-d9459410e0c2" class="numbered-list" start="3"><li>Horizontal<p id="08677bff-4759-4d6c-aacf-39b36b5d0f52" class="">Beziehungen von Entwicklungsartefakten: <mark class="highlight-gray">z.B. Anforderungen – Implementierung – Testfälle</mark></p></li></ol></div></p><p id="5cf7c0e6-e534-4571-820e-58380cb52ac5" class="">
+</p><p id="cf5294d9-cda1-4890-9347-662aa0b9006a" class=""><span style="border-bottom:0.05em solid">Integration</span><div class="indented"><p id="8db08ebf-2d35-4358-9ee7-99ff234fbd2b" class="">Zusammenbauen der Komponenten zu einem größeren Teilsystem / System</p><p id="6bf3c3e4-47ec-412d-bc1c-5a306179fcf5" class="">Integrationstest auf Architekturebene</p><p id="eed94fe6-6574-47b3-ab00-1bee20f7c2a3" class="">
+</p><p id="386c7aa0-f74e-49cf-8c13-364f1b8fab3c" class="">Integrationsstrategien<div class="indented"><p id="9e5ee561-c1aa-4538-a2dc-9e5d84b76573" class="">Bei manchen Strategien „Hilfsmittel“ notwendig, um nicht vorhandene Funktionalität zu simulieren.</p><ol type="1" id="3cf8b0e3-76a0-4372-a591-aa4fd42bb963" class="numbered-list" start="1"><li>Big Bang<p id="26a415d5-992e-4466-a684-e963c8440ab2" class="block-color-gray">Alles auf einmal, viele Seiteneffekte, ungeeignet</p><p id="2ebb49bc-ddad-4d6c-9355-f466b6598c48" class="block-color-gray">Kein Zusatzaufwand</p><p id="ff3b0311-62ba-4883-aa41-be1ef8d62e9a" class="block-color-gray">Fehler sind schwer zu finden, viele Seiteneffekte gleichzeitig, riskant → eher bei kleinen Projekten</p></li></ol><ol type="1" id="548ffac8-3120-44f5-9214-b4e3b865f9fa" class="numbered-list" start="2"><li>Continuous Integration<p id="742da7cb-98b3-488a-aee2-d60fdea45de2" class="block-color-gray">Best-practice, täglich integrieren (daily build mit build management tools)</p></li></ol><ol type="1" id="8040f755-70db-47f9-a4db-6f24f444f6cd" class="numbered-list" start="3"><li>Schrittweise Integration<p id="667abdd7-aa76-4d00-b74c-368771c79385" class="block-color-gray">Wenn Simulation der Komponenten nicht möglich ist</p><ol type="1" id="602a79d4-ad92-42ec-b243-0c63f77aeaea" class="numbered-list" start="1"><li>Top down<p id="d5d0efff-1eb8-4c3e-99a1-92867a4ee1fb" class="block-color-gray">Ausführbares Gesamtsystem ist früher verfügbar</p><p id="9ad1e793-20a4-4f23-93b0-866c7e851bae" class="block-color-gray">Geschäftsfälle / Business Cases → Hardwarenahe Komponenten</p><p id="4a6d9aed-cfb7-4b0b-ba5b-308721d37f4b" class="block-color-gray">Auftraggeber bekommt schnell Prototypen</p><p id="3e31318a-34a7-4e87-b81e-0e6cb6886fe3" class="block-color-gray">Hoher Aufwand für Test stubs (um die fehlende Funktion zu simulieren) - man kann manche Fehler zu spät finden</p></li></ol><ol type="1" id="4a8e4b96-09a2-44e9-b943-ceaacfbae82b" class="numbered-list" start="2"><li>Bottom up<p id="1e7f1404-eced-4eb2-91d0-aa7f84c45d94" class="block-color-gray">Umgekehrt</p><p id="f87a9c91-43c0-4a6b-b5dc-12c7206035f4" class="block-color-gray">Stabiles System (durch Hardware Interfaces)</p><p id="315e4efc-607e-409f-a756-26d65db954e9" class="block-color-gray">Zusätzlicher Aufwand für <em>Prototypen </em>und <em>Test Drivers</em>.</p><p id="e0680ca7-9b09-4762-b08b-11a697ca05a2" class="block-color-gray">Stabiles Fundament, sehr spät Prototyp vefügbar</p></li></ol><ol type="1" id="39692e25-f6fb-439c-b21e-c1e0acc56f5d" class="numbered-list" start="3"><li>Build Inegration (Phasen orientiert)<p id="1930cac2-4a84-40f2-bcbf-68b09db482be" class="block-color-gray">Mischung aus Top down und Bottom up.</p><p id="1812b7bf-5b98-45a1-a0c9-6abc7dc611f5" class="block-color-gray">Prioritisierte Business Cases durch alle Ebenen des Systems.</p><p id="82bb8613-1081-4333-9265-40bd16ba3749" class="block-color-gray">Nur bestimmte, eingeschränkte Funktionalität</p><p id="18d64be0-3fff-4279-aaa9-0f83e54adc82" class="block-color-gray">Benötigt <em>Regressions-Tests</em></p></li></ol></li></ol></div></p></div></p><p id="0edb6d4a-0627-42a0-804e-9c5eb57eb7ba" class="">
+</p><p id="f652a0e3-0f07-4421-bb16-3622b163179f" class=""><span style="border-bottom:0.05em solid">Artefakte (Dokumente) dieser Phase</span><div class="indented"><p id="6922eba3-2f3c-4a97-b414-ebc465e18505" class="">Testberichte (auch Regressionstests = Tests nach Korrekturen)</p></div></p><p id="5329120f-66eb-4c24-8000-130e2ba5ce66" class="">
+</p><h2 id="1fb618bf-e493-4f0a-ac71-27251993ebeb" class="">Betrieb und Wartung (Evolution)</h2><p id="4419bbe9-0fa0-4454-8179-c0e4b897b0ab" class="">Integration ist abgeschlossen.</p><p id="f28757dd-8ab3-4e8f-ba57-755c0176d240" class="">Produkt wird in den <em>operativen Betrieb</em> übergeführt.<div class="indented"><ol type="1" id="1d8eecb9-9aad-4146-ae59-7cd8641dde40" class="numbered-list" start="1"><li>Standard Software		breiter Markt, viele Beta-Tests</li></ol><ol type="1" id="0687aaf5-1597-4666-a2b4-a80d4b5e28c5" class="numbered-list" start="2"><li>Individual Software		formeller Abnahmetest durch Auftraggeber</li></ol></div></p><p id="5480afb2-bba6-4f03-a875-426c85a6e05e" class="">
+</p><p id="871b517b-8d2f-462d-b7dd-851e40fc64a8" class=""><span style="border-bottom:0.05em solid">Abnahme und Einführungsphase</span><div class="indented"><p id="2c9f0a82-06a7-4384-a08d-a698432e6442" class="">Akzeptanztest durch Auftraggeber</p><p id="933cb233-c9f6-42b3-8f25-fdb91c2f0bba" class="">Komplette Übergabe aller Dokumentationen</p></div></p><p id="586dcb86-58e6-451f-a4fd-43ced8968ab5" class="">
+</p><p id="1fce25a1-e34f-4747-b3df-c92a35070a4b" class=""><span style="border-bottom:0.05em solid">Betrieb (Operation)</span><div class="indented"><p id="c3c1f1f7-d1fe-47a7-b2dc-41286f3f3926" class="">
+</p></div></p><p id="c9def39c-7f75-4499-b8ad-ef44722c28e2" class=""><span style="border-bottom:0.05em solid">Wartung (Maintainance)</span><div class="indented"><p id="07c93f10-2562-4f7a-858f-ecf4e5957941" class="">Process-View<div class="indented"><p id="8e46ce36-4bab-412d-9afb-43a811424409" class="block-color-gray">Änderung des Software-Produkts nach Auslieferung (Delivery) und Inbetriebnahme (Deployment bzw. Product Launch).</p></div></p><p id="4ac4c2cc-c96d-4f32-b695-3f972656956a" class="">Activity-View<div class="indented"><p id="957cf5b4-6173-4780-a8d7-5ac1dcf8153f" class="block-color-gray">Wartungs-Aufgabe</p></div></p><p id="1be8301a-1902-45ef-83bd-59b7ed81f3c4" class="">Phase-Oriented-View<div class="indented"><p id="61047982-64fd-4cd8-8338-5ca44bdd0585" class="block-color-gray">Wartungsphase endet mit “Stilllegung” des Softwareproduktes.</p></div></p></div></p><p id="ad3d1400-770a-4ea3-ac77-898120c99a77" class="">
+</p><p id="c2c16b82-1a20-4374-af09-0ab750b11b15" class=""><span style="border-bottom:0.05em solid">Wartungskategorien</span><div class="indented"><p id="a8551ea6-b277-4fff-a71e-93bfe7be8d9d" class="">korrektive Wartung (Correction) → Fehlerbeseitigung</p><p id="816f943a-170c-4f50-a3b6-7cab621ea250" class="">Erweiterungen (Enhancement)</p><p id="9e21c81d-e311-4f1a-8af9-7f062581b772" class="">Reaktiv → durch Anwender / Kunde angestoßen, Änderungswunsch</p><p id="6b28a414-5d2c-46d9-96d5-19e3690add08" class="">Proaktiv → bevor angestoßen wurde</p></div></p><figure id="04e721fb-b6c5-488d-a892-9033ade0cb2c" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%204.png"><img style="width:432px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%204.png"/></a></figure><p id="0405fd16-5988-49bd-8e1a-e7e0e8351093" class=""><div class="indented"><ul id="56e3a016-95d0-42e2-b072-279516220d8d" class="block-color-gray toggle"><li><details open=""><summary>Detailierter</summary><ol type="1" id="0bf90cf6-4184-4c72-a78c-f8e79cc2a6f8" class="numbered-list" start="1"><li>Reaktive Wartung<ol type="a" id="d7267114-8fa1-454d-a7c7-57ee9479a9a8" class="numbered-list" start="1"><li>Korrektiv (Corrective): Bug- und Fehlerkorrektur (patches, workarounds, updates).</li></ol><ol type="a" id="aa06b401-3428-4b41-b628-871917425fc8" class="numbered-list" start="2"><li>Adaptiv (Adaptive): Anpassung an neuen Anforderungen (Hardware, Softwareänderungen).</li></ol></li></ol><ol type="1" id="7fa60af3-642f-4eed-abf9-1cba3e3dcfe5" class="numbered-list" start="2"><li>Pro-Aktive Wartung<ol type="a" id="56724ecb-bd25-4ed0-9c64-cf1f977e3eff" class="numbered-list" start="1"><li>Verbesserung (Perfective): Erweiterungen, Verbesserung der Effizienz.</li></ol><ol type="a" id="111cc989-d39a-4912-be5b-041264c619cc" class="numbered-list" start="2"><li>Vorbeugend (Preventive): Verbesserung für zukünftige Wartung (z.B. Ergänzung der Dokumentation).</li></ol></li></ol></details></li></ul></div></p><figure id="58948803-809c-4745-9b92-f3f8aea379de" class="image"><a href="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%205.png"><img style="width:336px" src="Life%20Cycle%20(Phasen)%2025a28bb1efcc4922baedd19cb3ce352d/Untitled%205.png"/></a></figure><p id="ee516c54-41b9-49ae-b922-d4853002d609" class="">
+</p><p id="ac4ab861-b7f9-40a1-91ae-abed8b372013" class=""><span style="border-bottom:0.05em solid">Wartungsaufwand</span><div class="indented"><p id="a09750c2-41cf-422f-8eb9-f627478d188a" class="">Mehr als 80 % der Wartungsarbeiten für nichtkorrektive Tätigkeiten benutzt.</p></div></p><p id="ca3897db-ae17-484f-b47a-7e613291fd51" class="">
+</p><p id="6714bb6f-19c3-411c-930e-c84d6f85809d" class=""><span style="border-bottom:0.05em solid">Techniken zur Wartung</span></p><ol type="1" id="04a407df-1e03-443a-a8f8-f51b3b036628" class="numbered-list" start="1"><li>Herstellen des Produktverständnisses
+– Gute Dokumentation</li></ol><ol type="1" id="aefbfc3b-9eef-49d8-ba75-a84bbaae06c9" class="numbered-list" start="2"><li>Reengineering
+– Überarbeitung (teuer)</li></ol><ol type="1" id="ca486e1e-e71a-4669-9b36-ce35dbeca51e" class="numbered-list" start="3"><li>Reverse Engineering
+– Komponente und Zusammenhänge analysieren, modellieren (UML-Modelle aus C# Code)</li></ol><p id="7ba53a6a-dea6-4d24-8e45-235f8c59e606" class="">
+</p><p id="edec9792-dd60-4157-a702-061c6a299e85" class=""><span style="border-bottom:0.05em solid">Artefakte (Dokumente) dieser Phase</span><div class="indented"><p id="c4544015-8595-46ea-b34c-cf6c32a70627" class=""><em>Change requests</em> vom Kunden</p><p id="b3e5530a-3c05-4087-87a5-b897981bdacf" class="">Daten aus Issue tracking System</p></div></p><p id="c7c584d7-26a5-4a41-91a4-ef8ee4ae4500" class="">
+</p><h2 id="51e8c382-dbda-4f88-b5c6-e5665d3390f0" class="">Retirement</h2><p id="8ff59ce2-3a5e-4648-858a-c0ee67a80d00" class=""><span style="border-bottom:0.05em solid">Außerbetriebnahme, Stilllegung (Retirement phase)</span><div class="indented"><p id="b00659c3-a48f-4322-822c-660317e7f0b2" class="">Ende der Betriebsphase (Betrieb + Wartung): Stilllegung des Softwareproduktes.</p><p id="bc97ce99-59d9-48bf-b298-86a077a93124" class="">Kontrolliertes Außer-Betrieb-Setzen - Übergang zu Nachfolgeprodukt</p><p id="b6684cf4-e932-46c6-a7a8-057ae8cf7214" class="">Gründe:<div class="indented"><p id="801122cf-fae0-4865-ad3b-9fc6d55e7e8a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Nachfolgeprodukt</p><p id="cb1137f6-3601-4741-aaf1-14290a9e4e2a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Komplettes Redesign</p><p id="555ebb94-4e28-43d0-bf59-aa5452ef094e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Nicht mehr benötigt, Hardware Änderungen</p><p id="ecf1a5d2-a564-43f5-a7c5-e8dbe06d01c4" class="">
+</p></div></p></div></p><h1 id="326328d2-9208-41cd-a24f-81d9d3f09953" class="">Life-Cycle → Vorgehensmodell</h1><p id="e9a35731-29a1-41f3-b9eb-b41daf866cba" class="">Vorgehensmodelle decken eher technische Entwicklung aus den Lebenszyklus-Phasen ab.<div class="indented"><p id="2e0a5b13-fc06-4301-8ea2-7ad9c36f3e44" class="">Definition der Anforderungen → Inbetriebnahme bei Kunden</p></div></p><p id="e8fb7886-e14c-420c-ab01-ef20b1557df1" class="">
+</p><p id="43a5589c-8370-48fb-b79d-ad6ab3ab672a" class=""><span style="border-bottom:0.05em solid">Software-Prozesse / Vorgehensverfahren</span><div class="indented"><p id="a26676f8-2544-483d-8406-8af79f3a8396" class="">Wann sollte welche Software bis zu welchem <em>Freistellungsgrad</em> verfügbar sein?</p><p id="ca8072ca-81a2-420e-a542-e9adacf93ce6" class="">Ablaufplan, Notwendig bei größeren Projekten</p><ol type="1" id="b827234f-9191-4e05-a140-3a64bd587930" class="numbered-list" start="1"><li>Konstruktive Methoden<p id="cd8886f3-d2f6-467e-96d6-bdc554c1408c" class="block-color-gray">Software Produkte machen für: z.B. Spezifikation, Code, Testfälle, Protokolle</p></li></ol><ol type="1" id="930bfabe-41ad-47fb-8a25-04d2ab5b5ecc" class="numbered-list" start="2"><li>Analytische Methoden<p id="611e93c5-e1ce-45e0-aa3c-e416f8d3c61d" class="block-color-gray">Qualitätsüberprüfung: z.B. Reviews, Inspektionen, Tests</p></li></ol><p id="6279b2ab-bd49-4cc6-a0ad-10e3a9122c8d" class="">
+</p></div></p></div></article></body></html>

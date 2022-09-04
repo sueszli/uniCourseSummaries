@@ -1,0 +1,688 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Überblick</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a37005cc-0c06-4c45-a22e-b5021de64856" class="page sans"><header><h1 class="page-title">Überblick</h1></header><div class="page-body"><h1 id="c464f320-2be7-4db5-8811-5e31728a4665" class="">Betriebssystem</h1><p id="cf5609d7-bb7d-4211-b4f7-fcb612f687db" class="">Bietet Abstraktionen, macht Hardware nutzbar.<div class="indented"><p id="287ed01f-0cef-4849-8f3c-e1617dce50cf" class="">&quot;ungestörte&quot; Abarbeitung		Prozess Scheduling</p><p id="c3fe26cc-510c-4d49-857e-e50c6089b6e6" class="">&quot;unendlich&quot; großer Speicher		Speicherverwaltung</p><p id="c418b64a-7d3e-41f7-a9ba-e6cb7cd81ed1" class="">&quot;private&quot; Maschine				Zugriffsschutz, Datensicherheit</p></div></p><p id="3e06d693-ffe7-48a6-927c-7a6f7d171e43" class="">
+</p><p id="4b493ce8-6ed6-4af7-8dae-af5cb047d4e5" class="">Ein Betriebssystem ist <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.10556em;vertical-align:0em;"></span><span class="mord">...</span></span></span></span></span><span>﻿</span></span></p><p id="1a3090b1-2ec3-40d3-a573-26396b7f7c9a" class=""><mark class="highlight-blue">1) Benutzer-Computer-Interface</mark><div class="indented"><p id="a88f6ed9-6085-47d7-98bb-32a1bcf5b733" class="">Verschiedene Abstraktionsniveaus.</p><pre id="bb51439a-d479-41b4-949c-eb1f594af2ff" class="code"><code>          ┌───────────────────┐   User, Programmer
+          │Anwendungsprogramme│
+          |   ┌───────────────┤-- Application programming interface API
+Software  |   │  Libraries    │   
+          |   │   ┌───────────┤-- Application binary interface ABI
+          |   │   │ OS        │   
+--------- ├───┴───┴───────────┤-- Instruction Set Architecture ISA
+          │Ausführungshardware│   
+          │   ┌───────────────┤   
+Hardware  │   │Adr.übersetzung│   OS-Designer
+          ├───┴───────────────│
+					  			...</code></pre><p id="d97e29d2-3553-4b15-a8bd-9a5c99e5b8f7" class="">Interfaces nutzen das darunterliegende.</p><p id="07b84f47-dc23-4d87-b24e-2003a61d2946" class="">API		hohe Abstraktion, hardware unabhängig, source code, library aufrufe</p><p id="21e9fb91-4f90-4b83-97b1-0d7606a34354" class="">ABI		source code compiliert, hardware abhängig</p><p id="41826935-c917-4c2b-b7c1-2aab66da6027" class="">ISA		Bit-Muster von RISC, CISC</p></div></p><p id="783850a0-c880-4a5c-891a-01f7350f6aef" class=""><mark class="highlight-blue">2) Dienstleister</mark><div class="indented"><ul id="928d37a5-56a0-4239-a99e-3c5079de821a" class="bulleted-list"><li style="list-style-type:disc">Programm-Ausführung</li></ul><ul id="dbf9de0e-f1e7-45f4-a8e3-faf620b8dcaf" class="bulleted-list"><li style="list-style-type:disc">Programm-Erstellung<mark class="highlight-gray"> (compiler, debugger, ...)</mark></li></ul><ul id="ef156f6a-63ba-43c1-b495-e86a1a5f892d" class="bulleted-list"><li style="list-style-type:disc">I/O, Filezugriff, Netzwerkkommunikation</li></ul><ul id="840df448-24a2-449d-a04c-4773a0ffc16c" class="bulleted-list"><li style="list-style-type:disc">Zugangskontrolle <mark class="highlight-gray">(Monitoring)</mark></li></ul><ul id="e747dde7-420c-4ee9-9c1c-fb5c3d99cb53" class="bulleted-list"><li style="list-style-type:disc">Fehlererkennung und Behandlung</li></ul><ul id="15b1baee-ce04-4be3-ab31-2626bad42cb0" class="bulleted-list"><li style="list-style-type:disc">Logging <mark class="highlight-gray">(Überwachung, Tuning, Accounting)</mark></li></ul></div></p><p id="ffb5eed2-ab06-4c3e-a8e6-9546a2a58dfe" class=""><mark class="highlight-blue">3) Ressourcen-Manager</mark><div class="indented"><p id="e8b7bc03-dd56-4137-bf85-9a6b4477a578" class="">Ressourcen	<mark class="highlight-gray">CPU, Speicher, Peripherals</mark></p><p id="e73d0484-9326-4118-a9a3-169a88bb59ed" class="">OS braucht selbst Ressourcen.</p><p id="615a5b90-db3d-4b78-88b8-ec6f0bf8e5f1" class="">Gibt Ressourcen ab und ermöglicht Zugriff von Software darauf.</p></div></p><p id="fdb3d312-82a3-43ed-9b88-8b227937399b" class=""><mark class="highlight-blue">4) Virtuelle Maschine</mark><div class="indented"><p id="342639f9-b9ec-4edb-b985-94aec4e58d32" class="">Emulation von Systemen</p></div></p><h1 id="4bbbe704-3721-45d0-9a14-a685b907c63f" class="">________________</h1><h1 id="60562519-a7d3-4f37-a2e2-e0b23342c35b" class="">Geschichte</h1><h2 id="5002f86c-28e0-4b67-bd6c-4e00212cbcb7" class="">Serial Processing</h2><p id="758def4d-a521-4ed3-a1c7-a64e643df979" class="">Kein Betriebssystem</p><p id="81bb46b8-4903-4883-9c08-a09ff6edab95" class="">Direkte Hardware Programmierung</p><p id="e744fc53-c27a-44c1-a3f7-15ad907d9340" class="">Keine Interaktionen<div class="indented"><p id="1da345d2-95fe-4f22-9e09-8ca735aad516" class="">Input	<mark class="highlight-gray">Schalter flippen, Lochkarten, Magnetic Tape </mark></p><p id="730968f9-d0ac-4e81-9a3a-02ff6bb5ef80" class="">Output	<mark class="highlight-gray">Lampen, Drucker</mark></p><p id="2a14279c-8c7c-4c91-bce1-7e61cf5cec0b" class="">
+</p></div></p><p id="4701c181-74e1-4687-b012-ae61961cf0b9" class="">Rechner teuer: Benutzerfreundlichkeit &lt; Maximale Auslastung<div class="indented"><p id="22a86bb2-614e-44b9-a651-cd5d5e62ba77" class="">User hat beschränkte Zeit</p><p id="9f719926-4e18-4799-953a-90446fe9521d" class="">Kommt mit eigenen Daten / Instructions auf Datenträger</p></div></p><p id="d50f796b-abb2-4f00-9ea5-f05c475cd4ff" class="">
+</p><p id="d93dec53-d7ea-422a-83c0-7c42efbb2851" class="">Problem<div class="indented"><ol type="1" id="dcda9d92-f4b7-4d3e-be3c-7b8eb51c1f8e" class="numbered-list" start="1"><li>Bitmuster von Tabellen ablesen und schreiben fehleranfällig</li></ol><ol type="1" id="fc218576-dfdc-4362-a37f-09721b3faa77" class="numbered-list" start="2"><li>Setup für Programme umständlich - viele instructions<p id="1538a25c-6b0a-41a9-bff6-17ca2d541a24" class=""><mark class="highlight-gray">Setup = compiler wählen, ausgabe wählen, </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.10556em;vertical-align:0em;"></span><span class="mord">...</span></span></span></span></span><span>﻿</span></span></mark></p></li></ol></div></p><p id="57965a93-b1eb-4289-9527-e725468d5d79" class="">Lösung<div class="indented"><ol type="1" id="e101ce66-e155-4e46-89a1-27273cbdf589" class="numbered-list" start="1"><li>Libraries für IO</li></ol><ol type="1" id="bfeabb5a-6f2d-42cb-a21b-f572d3daf54d" class="numbered-list" start="2"><li>Spezialisten (Menschen) für Setup anstellen<p id="d87ffcd4-7916-4043-8038-4dc1030f96bc" class="">Monitor: automatisierte Job Ausführung </p></li></ol></div></p><p id="370e09f3-ea32-4528-8ef8-5aff2f593a21" class="">
+</p><h2 id="c5578b49-1709-457d-9035-1478f82769a0" class="">Monitor</h2><p id="222b3bbe-7ed7-440e-ad81-71e2153b9b64" class="">Steuerprogramm, Vorläufer von Betriebssystem</p><p id="af78ac82-8293-49a7-bb7c-0812951f3304" class="">Steht im Speicher, führt Jobs aus, kontrolliert Abläufe</p><p id="007f4445-4d47-4855-b8be-5b4c55dfa859" class=""><mark class="highlight-blue">Besteht aus</mark><div class="indented"><p id="9bea2fb4-792e-4823-ae55-919a580d77d8" class="">Device Driver			<mark class="highlight-gray">IO Libraries</mark></p><p id="61fa631c-22ce-48c2-a6c3-9c4e06f0ec78" class="">Interrupt Processing	<mark class="highlight-gray">Sollte Job nicht terminieren</mark></p><p id="5e766e99-aea4-475b-a3cf-af2414911eb5" class="">Job Sequencing		<mark class="highlight-gray">Job = JCL instructions + Programm</mark></p><p id="2a999d7b-9408-483e-bb3c-20c1e0068bba" class="">JCL Interpreter			<mark class="highlight-gray">JCL = Job Controlling Language (Setup Scripting / Steuerkommandos)</mark></p></div></p><p id="c2957a37-4450-4e30-9725-a0d9ff6e2bfe" class=""><mark class="highlight-blue">Hardware Unterstützung</mark><div class="indented"><p id="9c88f3d3-8c41-4e06-be72-882c3aec4444" class="">Speicherschutz		<mark class="highlight-gray">Monitor code im Speicher ist read-only</mark></p><p id="bef420fa-b333-41c5-8526-38e258cb4556" class="">Timer				<mark class="highlight-gray">Automatisch interruptbei nicht-termination</mark></p><p id="4b3f6318-295c-4839-90eb-be9dcda04589" class="">Priviligierte Instruc.		<mark class="highlight-gray">Instruktionen die der user nicht nutzen darf</mark></p><p id="425bc0f0-9779-4c77-8e92-1e43d8e4a434" class="">Interrupts			<mark class="highlight-gray">Abbruch</mark></p></div></p><p id="e42efe49-07fa-446c-afcb-817e7d7540c8" class=""><mark class="highlight-blue">Batch processing</mark></p><p id="67487805-f0da-4540-ad73-c9edd76829cf" class="">Menge an Jobs (= Batch) hintereinander ausgeführt:<div class="indented"><ol type="1" id="44766339-c07f-4dc6-94c2-118d90f18050" class="numbered-list" start="1"><li>Job aus User Program Area von Eingabegerät lesen, Monitor verlassen</li></ol><ol type="1" id="c055937d-6f26-475f-be39-9da744a81411" class="numbered-list" start="2"><li>JCL Instructions von Job interpretieren</li></ol><ol type="1" id="7fd7d854-2c93-4391-9524-ea5d60c74d67" class="numbered-list" start="3"><li>Programm ausführen</li></ol><ol type="1" id="851fa3ff-d59c-4f58-aa83-b22e7a7c8566" class="numbered-list" start="4"><li>Zurück zum Monitor, Wiederholen</li></ol></div></p><p id="35c6d2bb-a744-41fb-b42b-6f34752e60b4" class="">
+</p><p id="42092ae4-c249-448f-9489-30ec240b020c" class="">Problem: Programme sind entweder CPU- oder IO-lastiger</p><p id="40ac91c5-838f-4a3f-ba1e-39a7f8b9a25b" class="">Lösung: Multiprogramming</p><p id="c7d1a410-38a5-4199-b05d-b702c895b742" class="">
+</p><h2 id="a92aad56-827c-47f8-91a9-38f454cba626" class="">Multiprogramming</h2><p id="fb78fc8d-9db8-4595-8bd1-dd4b7028b67b" class=""><mark class="highlight-blue">/ Multitasking / Multiprogrammed batch systems </mark></p><p id="cfdb84ac-0899-4c3b-b6c8-01fc65590177" class="">Parallelisierung von CPU und IO mit Buffer und IO-interrupts:</p><p id="bb1f7422-ce8f-40cc-bcf1-4ef7d0f3f7a6" class="">Tasks (=Prozesse) benötigen Verwaltung von Speicher, CPU, Ressourcen.</p><p id="bcf8b207-932d-4828-b9f5-9481f2fcf183" class="">Scheduling					<mark class="highlight-gray">Während ein Programm auf IO wartet führen wir ein anderes aus</mark></p><p id="8b416665-df78-4526-a40c-a103c2eb9112" class="">Non-Preemptive-Scheduling		<mark class="highlight-gray">Keine Unterbrechung durch Scheduler</mark></p><p id="27e8dee1-9d3a-4757-82ba-aa5db48b909a" class="">
+</p><h2 id="58d6b398-7cba-4d62-8c4d-05670ad487e0" class="">Time-Sharing Systems</h2><p id="3f69b36a-530d-4e33-bb62-d3bcc51560ba" class="">Multi-User-System			<mark class="highlight-gray">Job batches stückweise ausgeführt, kein User übernimmt CPU alleine</mark></p><p id="6f31e49f-7ce1-45a0-820d-b4a17d1d6c58" class="">Preemptive-Scheduling		<mark class="highlight-gray">Scheduler darf unterbrechen (zb bei IO-Input, Priorität, ...)</mark></p><p id="5a8fd135-75d7-48f9-96dc-b3a54212f741" class="">File System				<mark class="highlight-gray">Leichterer Zugang zu Daten</mark></p><p id="a611f69d-80cd-458f-99e7-6dcfb18b90f5" class="">
+</p><h2 id="37a47c3b-4f6b-4202-995e-7afac4bb2a02" class="">Weitere Entwicklung</h2><ul id="a8c72ee1-bec5-4ef2-aa48-52455def0610" class="bulleted-list"><li style="list-style-type:disc">Billigere Hardware, Personal Computers PCs</li></ul><ul id="595b708c-8eb0-4897-b9f2-85b911251381" class="bulleted-list"><li style="list-style-type:disc">GUIs</li></ul><ul id="f19a9061-baba-4413-b6ad-a3f383d9d44c" class="bulleted-list"><li style="list-style-type:disc">Kommunikation mit Networking, Internet, Security</li></ul><ul id="0803225f-11bf-460e-9dd5-99a113cfaf47" class="bulleted-list"><li style="list-style-type:disc">Multicores statt Singlecores</li></ul><ul id="366d580d-b655-4ed3-96c1-2d9574a34012" class="bulleted-list"><li style="list-style-type:disc"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>…</mo></mrow><annotation encoding="application/x-tex">\dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.12em;vertical-align:0em;"></span><span class="minner">…</span></span></span></span></span><span>﻿</span></span></li></ul></div></article></body></html>

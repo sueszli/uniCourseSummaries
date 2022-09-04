@@ -1,0 +1,699 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Datenmodellierung + ER</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4007b81b-5f85-45f3-b435-6d49531c8371" class="page sans"><header><h1 class="page-title">Datenmodellierung + ER</h1></header><div class="page-body"><nav id="279bc0e0-b0a5-49e9-9338-90af9b3d723f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3aa26bd5-b4ea-4a97-ac2b-5d9dc458e301">Begriffe</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fe95c614-a0f5-4883-9294-4dcbd1b1bfc1">E<strong>ntity Relationship Model (ER Model) </strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#da39f729-7fcb-4d43-8cfe-15cf29576b6f"><strong>Beziehungstypen nach Peter Chen</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5cdab70b-6a63-4b4d-a2fc-bab487be84d6">Die (min,max)-Notation </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c69a2853-180e-48ad-a9f1-cc70b48ce893">Existenzabhängige Entitytypen - schwache Entities </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6e265dad-1424-4b74-805a-31fa7dd79d03">Generalisierung (Vererbung) - is a Beziehung </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#20edd857-9a03-49a0-a13c-bd34504d34f6">Aggregation - part of Beziehung </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5ab5b11f-057a-4c8d-9718-577b27f0bc77">Das relationale Modell </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#18d25a45-6065-40d1-be05-1bd8502eef88">ER Modell → relationales Schema </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#093421e4-6bcd-4c28-beb3-88b31fae6ec3">Relationales Schema optimieren </a></div></nav><p id="be604e06-f19e-4dc4-a94b-d9e9a5e3a29d" class="">
+</p><h1 id="3aa26bd5-b4ea-4a97-ac2b-5d9dc458e301" class="">Begriffe</h1><p id="029b3248-9e04-4f52-bb82-0d0a91cc0bbe" class=""><span style="border-bottom:0.05em solid">Database / Datenbasis</span><div class="indented"><p id="3e0dea07-06af-4985-a92e-f81a5ba9cada" class="">Menge gespeicherter Daten(objekte) in Beziehung zueinander</p><p id="235947b3-6982-4fb9-b7c2-ee4802cae31f" class="">
+</p></div></p><p id="b74c6748-f1d0-4971-84ef-f8ff383fa8a5" class=""><span style="border-bottom:0.05em solid">Database Management System (DBMS)</span><div class="indented"><p id="7beffc46-5bc1-4436-b1ea-a0fa7eaea1f1" class="">Datenbank-Verwaltungssystem / Datenbanksystem
+Alle Programme um auf Datenbasis zuzugreifen und verwalten</p></div></p><p id="79bccb73-6ab3-4f01-9750-38f39d4c3968" class="">
+</p><p id="fb61339e-eddf-4573-92a0-9815e832e0f2" class=""><span style="border-bottom:0.05em solid">Datenmodell</span><div class="indented"><p id="94fff7e2-7d4f-45e1-8c60-6e54318503e9" class="">Wie eine Programmiersprache:</p><ul id="e10e1323-f681-4433-8320-6d66f4764386" class="bulleted-list"><li style="list-style-type:disc">Beschreibung der Datenobjekte</li></ul><ul id="e6b49a4c-cf82-4c5a-bb89-2e0732bfd942" class="bulleted-list"><li style="list-style-type:disc">Anwendbare Operationen und ihre Wirkung</li></ul><p id="fc03bdb2-4857-47bf-8669-e377130c0c68" class="">besteht aus: </p><ol type="1" id="1ce541d5-c3c2-4676-a168-dda4d836e60e" class="numbered-list" start="1"><li>Data definition language DDL </li></ol><ol type="1" id="3dd2e0ce-e735-453f-b079-ab10f8318ce1" class="numbered-list" start="2"><li>Data manipulation language DML → Bildet Datenbankschema, beinhaltet gleichzeitig auch die Query Language (Anfragen Sprache)<p id="5b957fd5-ce18-4a13-894a-b787cbcae556" class="">Beispiel: SQL</p></li></ol><p id="7bdfaf24-d134-490a-a283-09b20e8b449e" class="">
+</p></div></p><p id="2e7dd507-368b-4c14-bd2c-7ff9d9c0acc6" class=""><span style="border-bottom:0.05em solid">Datenbank-Schema</span><div class="indented"><p id="2b1b1526-13a3-4827-a8d0-dbc4c574aecb" class="">Legt die Struktur der abgespeicherten Datenobjekte fest.
+Besteht aus Meta-Daten.</p><p id="0c4dd3ea-a116-4285-a23b-81da872018a2" class="">
+</p></div></p><p id="13c747a0-9b45-4470-9430-74ec9026aa4c" class=""><span style="border-bottom:0.05em solid">Datenbankausprägung</span><div class="indented"><p id="c346f5be-15db-4c46-81fe-8dc3db9d52b7" class="">Aktueller Zustand der Datenbasis.</p><p id="56d78189-2601-45e9-8019-126c28ed31e4" class="">Entspricht der im Schema festgelegten Struktur.</p><p id="068918f1-9bd1-4b4d-9237-dc2cd0849c70" class="">Ändert sich ständig.</p></div></p><p id="9cc0f413-5cd6-4635-ac08-1cd1b77d94be" class="">
+</p><p id="4b0b0fcb-18e1-4263-8609-48bedf334a24" class=""><span style="border-bottom:0.05em solid">Phasen der Datenmodellierung  </span></p><ol type="1" id="1c8e5971-93ce-4957-8f5a-d603c85be975" class="numbered-list" start="1"><li>Ausschnitt aus der realen Welt → konzeptuelles Schema</li></ol><ol type="1" id="30723437-f0c8-43b6-882d-df0422a3397d" class="numbered-list" start="2"><li>Konzeptuelles Schema<p id="3bbd2eb9-2270-48e2-ac09-0fb045d42a31" class="">reine Beschreibungsmodelle, graphische Notation</p><ul id="26fe0833-77e6-46e7-b8d1-358b98dc3c3d" class="bulleted-list"><li style="list-style-type:disc">Entity Relationship ER</li></ul><ul id="2ba34a78-0aaf-4ca6-abcf-a8d09233f78a" class="block-color-gray bulleted-list"><li style="list-style-type:disc">semantisches Datenmodell</li></ul><ul id="1def92db-b07d-43a1-939a-290b81d9a02d" class="block-color-gray bulleted-list"><li style="list-style-type:disc">UML</li></ul></li></ol><ol type="1" id="db331209-df80-42dd-a71c-2bc060666e25" class="numbered-list" start="3"><li>Logische (Implementations-)Datenmodelle / Implementations Schema<p id="01c1f298-c159-4f86-8367-530fdd71ad92" class="">Bildet die Struktur der Tables.</p><ul id="0ea0ab0e-c998-4a8e-ab91-a74a36d2314a" class="bulleted-list"><li style="list-style-type:disc">relationales Datenmodell</li></ul><p id="4ccb9a5d-9e74-4b74-95ed-7eddb5b692e9" class="">(auch andere möglich)</p></li></ol><p id="0327ee5e-7b78-41f4-b85f-93b8154b55af" class="">
+</p><h1 id="fe95c614-a0f5-4883-9294-4dcbd1b1bfc1" class="">E<strong>ntity Relationship Model (ER Model) </strong></h1><ol type="1" id="76544749-c6d3-470e-af7e-837f387abbf2" class="numbered-list" start="1"><li>Entities (Rechtecke)</li></ol><ol type="1" id="6f930ccf-0ed8-4e16-834c-c40826eddf06" class="numbered-list" start="2"><li>Relationships (Rauten)</li></ol><ol type="1" id="4afb5f2c-6f5a-4e92-8382-680af9bf2bd0" class="numbered-list" start="3"><li>Attribute (Kreise oder Ellipsen)<p id="4aff7b13-275b-4f28-8ac5-d9105ccd5404" class="">Werden Entities und Relationships zugeordnet.
+Schlüssel (IDs) werden unterstrichen - jede Entity braucht minimale Menge an Attributen als ID.</p></li></ol><ol type="1" id="8047ae4d-2587-4eff-b4ba-567c240299f8" class="numbered-list" start="4"><li>Rollen<p id="accd480b-795b-4e13-b189-b9512bad7aca" class="">zB in der rekursiven Beziehung <em>voraussetzen </em>werden Rollen zugeordnet (<em>Vorgänger </em>und <em>Nachfolger</em>)</p><figure id="1e1a255c-5b81-4de5-b59e-048e29a5464d" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled.png"><img style="width:240px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled.png"/></a></figure></li></ol><p id="daa4596f-7ee2-483a-b229-164c9a61bcdb" class="">
+</p><h2 id="da39f729-7fcb-4d43-8cfe-15cf29576b6f" class=""><strong>Beziehungstypen nach Peter Chen</strong></h2><p id="af552f6b-4a7d-4c5c-a43d-8669e2120ce9" class="">(untere Schranke also immer 0 und die obere Schranke wird dazugeschrieben)</p><ul id="5db4a106-4652-4318-8759-237fa5ab2fb7" class="bulleted-list"><li style="list-style-type:disc">1:1-Beziehung<p id="f7d9c9fc-43cb-48fc-b892-e4d060fd2850" class="">Gibt die Max Anzahl der Partner an. </p><p id="d005643d-d80a-43a3-b973-00f03c90bcff" class="">zb <em>Heiraten</em> wobei Objekte auch alleine sein können.</p></li></ul><ul id="ee3ab648-9ece-4514-a4c4-72c30597189a" class="bulleted-list"><li style="list-style-type:disc">1:N-Beziehung (= N-1)<p id="c68d6560-0208-41f2-9bd9-455295bf954f" class="">Beispiel: beschäftigen zwischen Firmen und Personen, wenn wir davon ausgehen, dass eine Firma i.A. mehrere Personen beschäftigt, aber eine Person nur bei einer (oder gar keiner) Firma angestellt ist.</p></li></ul><ul id="55ccd63e-1b3f-48cf-9eb1-749782005856" class="bulleted-list"><li style="list-style-type:disc">N:M-Beziehung<p id="a7f7ce66-e571-4d7b-af16-14706a004d95" class=""><span style="border-bottom:0.05em solid">Binäre Beziehungen</span></p><p id="d08606e7-729a-4498-a83b-bfd3ed22f4bc" class="">Beziehungen definieren <em>partielle Funktionen:</em><div class="indented"><p id="9a90c964-6a64-4c47-b924-e33c47e7d63d" class="block-color-gray">Bezeichnung für eine Funktion, die evtl. für manche Werte aus ihrem Definitionsbereich den speziellen Funktionswert „undefiniert“ hat.</p><p id="11f7fd44-5150-4079-966b-2f16967de6e9" class="block-color-gray"><strong><em>Definitionsmenge → Zielmenge </em></strong>(Nicht alle Elemente definiert)</p><p id="304fae3b-7fdc-4854-b093-56143e98fe30" class="block-color-gray">zB: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac></mrow><annotation encoding="application/x-tex">f(x) = \frac{1}{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span></p></div></p><p id="fc2216ea-c0f1-4df2-ae69-80cf6d60d6b8" class=""> Funktionen sind partiell, weil es Entities aus dem Definitionsbereich geben kann, die gar keine Beziehung eingehen.</p><figure id="a05df2cf-bd37-48ba-82d1-e131ee7b6c25" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled.png"><img style="width:192px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled.png"/></a></figure><p id="00104a7b-6be9-42fb-bfbd-7ff762b45b8f" class="">
+</p><p id="148a4c7a-5f83-4188-bfd5-c395fe85d1bc" class=""><span style="border-bottom:0.05em solid">ternäre Beziehungen</span><div class="indented"><p id="96b18fc3-e70a-420b-97f1-f3df6a60fbf5" class=""><span style="border-bottom:0.05em solid">Kardinalitätsangabe N:1:1</span></p><p id="a7289624-897c-42d1-8331-44802b5faa36" class="">dreistellige Beziehung <em>betreuen </em>zwischen den Entitytypen Studenten, Professoren und Seminarthemen<div class="indented"><p id="aba29d0a-68f4-4725-bfaa-d73ac1969f1f" class="block-color-gray">Folgenden partiellen Funktionen müssen gleichzitig gelten:<div class="indented"><p id="23235bcd-3a1a-4830-ab85-b7ef87d17adc" class="">betreuen : Professoren x Studenten —&gt; Seminarthemen
+betreuen : Seminarthemen x Studenten —&gt; Professoren</p></div></p><p id="64598b8b-c966-4e27-bf60-0c3f5ce26e43" class="">Studenten können mehrere Beziehungen haben aber in jeder Bezeihung darf nur 1 Prof und 1 Seminarthema sein.<div class="indented"><p id="ee42b18c-ae2a-4be4-adf3-409bfc649e95" class="">
+</p></div></p></div></p><figure id="21b3baab-093b-423a-9c74-073a5ca9d123" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%202.png"><img style="width:192px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%202.png"/></a></figure><figure id="11b86853-a8f7-4da6-bcb4-10b05bb67024" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%203.png"><img style="width:192px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%203.png"/></a></figure><p id="e4620af5-da02-4925-a2f2-7639fab5cc35" class="">
+</p><p id="8be59cad-bd3a-44f9-883f-1a83573ab662" class=""><span style="border-bottom:0.05em solid">Kardinalitätsangabe N:M:1</span></p><p id="4ae76367-cd9e-4106-bbdb-13f5da79e045" class="">zB nur ein Professor für jede Prüfung als einzige Beschränkung.</p><p id="8f5399af-0ca3-4d46-89df-e8870f30bb03" class="">Mit anderen Worten, zu einem Paar aus Studenten und Vorlesungen soll es maximal einen Professor bzw. eine Professorin als Prüfer geben.<div class="indented"><p id="d9361a1d-c3df-44a0-b808-49727bb454e0" class=""><mark class="highlight-gray">prüfen : Studenten x Vorlesungen —&gt; Professoren</mark></p></div></p><figure id="8c66b5a6-f7aa-49e0-b7ee-a7e2cd27baee" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%201.png"><img style="width:192px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%201.png"/></a></figure><p id="2225df0b-deae-4128-ac79-db8f0a451335" class="">
+</p></div></p></li></ul><h2 id="5cdab70b-6a63-4b4d-a2fc-bab487be84d6" class="">Die (min,max)-Notation </h2><p id="038bb164-d6d4-4abc-9227-b1bb65fb00c7" class=""> nicht nur die Extremwerte</p><p id="99367385-00d2-4410-ab8b-187c6092ea16" class="">Anzahl auf der gegenüber liegenden Seite die Kardinalität an und nicht auf der eigenen Seite des Objekte</p><ul id="601d8ff2-14bd-49d2-8d12-27529d0e245a" class="bulleted-list"><li style="list-style-type:disc">* bedeutet beliebig oft</li></ul><ul id="58a455f9-0159-4407-aec2-0f3629322dda" class="bulleted-list"><li style="list-style-type:disc">(0,*) ist die allgemeinste Angabe</li></ul><p id="f22ed5db-152a-439c-b4b3-48b755b21df1" class="">
+</p><p id="7d76fcf7-8d98-42f7-8c9c-fe5f340543a2" class="">Im Vergleich:<div class="indented"><figure id="5d118cf3-d977-435b-a809-e1886b02515f" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%202.png"><img style="width:336px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%202.png"/></a></figure></div></p><p id="d021969e-2a76-473a-9755-47f6f60a32f2" class="">
+</p><h2 id="c69a2853-180e-48ad-a9f1-cc70b48ce893" class="">Existenzabhängige Entitytypen - schwache Entities </h2><p id="e11a0e9a-176e-491f-bdd1-51ea405231e3" class="">Nicht über eigene ID identifizierbar.<div class="indented"><ul id="74079e0d-b66f-49a2-b65d-8eb1acd78582" class="bulleted-list"><li style="list-style-type:disc">Existenz von übergeordneter Entity abhängig</li></ul><ul id="fec33e9e-71ce-4840-b0cd-9d0eb28459de" class="bulleted-list"><li style="list-style-type:disc">oft nur in Kombination mit dem Schlüssel des übergeordneten Entities eindeutig identifizierbar.</li></ul></div></p><p id="7a481f48-d0bf-4dc2-bedc-3efd5b8a1d1c" class="">Beispiel:<div class="indented"><figure id="392a9c33-f6af-4507-9cef-ff32a018d907" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%205.png"><img style="width:336px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%205.png"/></a></figure></div></p><p id="2304526c-cc6a-404e-922d-f0507b13ce05" class="">
+</p><h2 id="6e265dad-1424-4b74-805a-31fa7dd79d03" class="">Generalisierung (Vererbung) - is a Beziehung </h2><p id="af53a177-7929-436e-961f-488ca6d3feb4" class="">Besondere Art von Beziehung, deshalb Sechseck statt Raute.<div class="indented"><ul id="8f0e086d-526d-48cb-935d-30ca51997139" class="bulleted-list"><li style="list-style-type:disc">disjunkte Spezialisierung<p id="27b759bd-fc99-4cb8-bcc4-ea2340604947" class="">keine Gemeinsamkeiten unter Untertypen</p></li></ul><ul id="f5718758-c3b3-41a0-8bc1-d36b1b41ac98" class="bulleted-list"><li style="list-style-type:disc">vollständige Spezialisierung<p id="d8cbb2be-26f1-436f-9eea-70950dd3c056" class="">Obertyp existiert nicht (hat selbst keine eigenen Elemenet) sondern ist eigentlich die Menge aller Untertypen</p></li></ul></div></p><p id="45659ec5-900a-4b5a-ba4d-fb41c4dc395b" class="">Beispiel:<div class="indented"><figure id="42939056-9718-4a1e-895c-3011570cf577" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%206.png"><img style="width:288px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%206.png"/></a></figure></div></p><p id="4c33ecba-6784-45a6-a676-e8783222a33b" class="">
+</p><h2 id="20edd857-9a03-49a0-a13c-bd34504d34f6" class="">Aggregation - part of Beziehung </h2><p id="14673207-18db-4bb2-9b8d-87cb7269431c" class="">Beispiel:<div class="indented"><figure id="37ec0905-808b-4fd4-a4e3-b257b2627d77" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%208.png"><img style="width:288px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/ER%20Modell%209f444b73fbeb443898e9250880a53665/Untitled%208.png"/></a></figure></div></p><p id="dd14d7ce-d52b-47c1-a37d-386ae0c4ff92" class="">
+</p><h1 id="5ab5b11f-057a-4c8d-9718-577b27f0bc77" class="">Das relationale Modell </h1><p id="f71d9a2b-6ea7-48ea-88a0-2e2ee007d8c7" class="">Mengenorientierte Verarbeitung.</p><p id="00510134-6164-4f14-ac31-93c40dc7bbcf" class=""><mark class="highlight-gray">Metaebene (Schema) → Instanzebene (Ausprägung)</mark></p><p id="5ccbe3d5-ac44-4878-8f81-9f81fe25389f" class="">
+</p><p id="3ff52bb2-117f-4db0-81a8-fd74227a742d" class=""><span style="border-bottom:0.05em solid">Relationsschema Definition </span><div class="indented"><p id="2626e49c-a43e-4414-99e8-a01343c74670" class="">Tabellen sind Relationen:<div class="indented"><p id="9bd51580-9920-4c42-bc3b-b4fecf2c7755" class="">Spalte	<em>Attribute</em> oder <em>Felder</em></p><p id="1809a1a0-a010-47e9-9999-6c4c211e03a8" class="">Zeile	Hier 3 Tupel deren Attributwerte aus String, String, Integer bestehen </p><figure id="65886f0d-a799-465e-8f17-acbf45d6c5aa" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%203.png"><img style="width:288px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%203.png"/></a></figure></div></p><p id="1567c030-b528-419a-9902-ce67165020aa" class="">Der Primärschlüssel <em>Telefon# </em>wurde unterstrichen</p><p id="09dce693-26ac-457a-9e94-a5cedd9ab4d3" class="">
+</p></div></p><p id="c152ac5f-3595-4682-828e-a0711d5c45e4" class="">Relationenschemata spezifiziert durch<div class="indented"><p id="727dc5f2-6248-453a-8512-35b1269a8813" class=""><strong>Telefonbuch : {[Name : string, Adresse : string, Telefon# : integer]}</strong></p><p id="c19ef0c9-6f76-4be6-bf4d-ab393a90fd82" class=""><mark class="highlight-gray">Als eine Menge {...} von Tupeln [...] aufzufassen: {[...]}</mark></p></div></p><p id="b43b3bdf-e91c-4669-9de2-6c6b882f1e7f" class="">
+</p><h2 id="18d25a45-6065-40d1-be05-1bd8502eef88" class="">ER Modell → relationales Schema </h2><p id="98e3b01e-6f42-4e62-80eb-730b4a7199ac" class="">Das relationale Modell hat keine Entities wie im ER Modell sondern nur Relationen.</p><p id="65abf023-c6e3-4e89-9e51-a5a9df0d9f2b" class="">
+</p><p id="743b753a-30de-484e-a358-0985041896c2" class=""><span style="border-bottom:0.05em solid">n-Stellige Beziehungen</span></p><p id="9f612a69-9003-4254-bf1a-fc7e0474ff3e" class="">Beziehung zwischen n Entities:<div class="indented"><p id="c45ea78f-19e3-444d-889a-9587a166c9bc" class="">enthält also alle Schlüsselattribute der Entitytypen (Fremdschlüssel) und zusätzlich die der Beziehung zugeordneten Attribute.</p><figure id="4be5eefa-d558-4d2e-89fa-a66b2e15a9c8" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%204.png"><img style="width:240px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%204.png"/></a></figure><figure id="b3d1ca51-ba79-4469-aa1e-42f3e3d4f256" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%205.png"><img style="width:240px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%205.png"/></a></figure></div></p><p id="9aa5b8f4-79c7-4270-8bf7-da6f84d5f41d" class="">
+</p><p id="6971a9f9-8423-45ae-b5e4-1338fffc549d" class=""><span style="border-bottom:0.05em solid">Beispiel</span><div class="indented"><figure id="79cd4e8c-bf4a-4096-a21e-7740f2960827" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%201.png"><img style="width:288px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%201.png"/></a></figure></div></p><p id="f54963ba-9ee0-4afa-a3ed-c49ff3d378c6" class="">Die 4 Entity Typen:<div class="indented"><figure id="d919d8fd-ddd0-4401-9ba1-c94a4a3c0d98" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%202.png"><img style="width:336px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%202.png"/></a></figure></div></p><p id="88fbe830-00b0-4cb4-91b0-08866b2fc5fb" class="">Die Relationen:<div class="indented"><figure id="d5fa62c1-7d3f-497f-ad05-af5d3c22ab1d" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%203.png"><img style="width:288px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%203.png"/></a></figure></div></p><p id="d071f023-e9f5-454a-a0b2-b75d8a70161c" class="">
+</p><h1 id="093421e4-6bcd-4c28-beb3-88b31fae6ec3" class="">Relationales Schema optimieren </h1><p id="9409d713-c0f5-44ea-8581-ec50e7e18429" class="">Nur möglich für<div class="indented"><ul id="5b8c4d1e-28e4-4bd8-83ae-05ed680f064b" class="bulleted-list"><li style="list-style-type:disc">1:1</li></ul><ul id="3ae003a4-f8b5-43c6-ad61-e9f307527ae0" class="bulleted-list"><li style="list-style-type:disc">1:N / N:1 </li></ul></div></p><p id="6911ab98-6867-4aef-adf3-a61d027716e6" class="">Ansonsten würde es zu Anomalien führen.</p><p id="750fb056-82ae-4d1c-9c6f-b4ced88e7984" class="">Regel: <span style="border-bottom:0.05em solid">Nur</span> Relationen mit gleichem Schlüssel zusammenfassen!</p><p id="2266aee9-ea7a-411d-b994-ff7601b0cbda" class="">
+</p><p id="aca088e0-29db-48da-9ce0-2f145bf8a7db" class=""><span style="border-bottom:0.05em solid">1:N Beziehungen</span></p><p id="f59cd641-5295-41da-bada-2b7406399ce9" class="">Beziehung lesen: Eine Vorlesung kann nur von einem einzigen Dozenten gelesen / veranstaltet werden.<div class="indented"><figure id="568277ca-5a9d-494f-8ad3-a4bae3884cfe" class="image"><a href="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%204.png"><img style="width:192px" src="../../DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e/Relationales%20Modell%20b1597e9c6e2b464a83ac63d3314f4a5c/Untitled%204.png"/></a></figure><p id="97ec4a37-59f1-4b61-8b19-319462992ec1" class="">lässt sich vereinfachen mit der Hilfe eines neuen Attributes bei Vorlesungen: <em>gelesenVon</em></p><figure id="3dd575ff-358e-4234-b796-f7e6b955c86b" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%206.png"><img style="width:192px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%206.png"/></a></figure></div></p><p id="8b11f3e0-f50d-42c7-a52a-bd000ec82449" class="">
+</p><p id="09fd759d-a8ea-4f07-b01d-0ea5dc4677fa" class=""><span style="border-bottom:0.05em solid">1:1 Beziehungen</span></p><p id="878b4b32-e2c4-480f-a4b4-99a2d8f679af" class="">Pro Raum nur ein Prof<div class="indented"><figure id="56db385b-c0ce-487c-8cd7-34ddd87c67ea" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%207.png"><img style="width:240px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%207.png"/></a></figure><figure id="9ee6dbdc-9f9a-43a7-844a-76aa67e15516" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%208.png"><img style="width:144px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%208.png"/></a></figure></div></p><p id="9e5c5360-cb91-49d4-be80-ec749a395a6d" class="">Lässt sich vereinfachen zu:<div class="indented"><figure id="27427cb9-113f-4b50-abf6-42d5b003c67c" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%209.png"><img style="width:192px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%209.png"/></a></figure><p id="c1197a9e-e35c-4a02-b350-398a07a62cd3" class="">oder auch zu</p><figure id="ae04fe1c-03ae-42ba-a288-d4332571a6d0" class="image"><a href="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%2010.png"><img style="width:240px" src="Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371/Untitled%2010.png"/></a></figure><p id="15b26b30-aefa-4f8a-ad69-8b31fa48131f" class="">wobei dann Null-Werte auftreten würden weil nicht alle Räume von Dozenten besetzt werden. (deshalb erste Methode bevorzugen)</p></div></p><p id="7dc55f39-4adc-48ee-bdb6-c3f35616bae5" class="">
+</p></div></article></body></html>

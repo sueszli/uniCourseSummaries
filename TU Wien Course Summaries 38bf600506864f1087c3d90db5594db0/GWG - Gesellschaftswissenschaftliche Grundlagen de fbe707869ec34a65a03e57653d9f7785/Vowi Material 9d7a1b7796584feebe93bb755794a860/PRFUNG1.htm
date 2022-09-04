@@ -1,0 +1,776 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+<title>GWG Prüfungsfragensammlung</title>
+<style type="text/css">
+body {
+	margin:			2em;
+	padding:		0;
+	font-size:		1.1em;
+	font-family:	"Times New Roman", Times, serif;
+}
+h1,
+h2 {
+	color:			#336699;
+	text-align:		center;
+	font-family:	Helvetica, Arial, sans-serif;
+}
+h2 {
+	color:			#6699CC;
+}
+#byme {
+	font-size:		0.7em;
+	text-align:		center;
+	margin-bottom:	3em;
+}
+#suggestions {
+	text-align:		center;
+}
+#container {
+	margin:			10px auto;
+}
+form label {
+	position:		relative;
+	display:		block;
+	margin-bottom:	0.5em;
+	padding-left:	1.5em;
+	line-height:	1.1em;
+}
+form label input {
+	position:		absolute;
+	left:			0;
+}
+.correct {
+	background-color:	#CCFFCC;
+}
+.false {
+	background-color:	#FFCCCC;
+}
+.dunno {
+	background-color:	#FFFFA0;
+}
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+function $() {
+  var elements = new Array();
+
+  for (var i = 0; i < arguments.length; i++) {
+    var element = arguments[i];
+    if (typeof element == 'string')
+      element = document.getElementById(element);
+
+    if (arguments.length == 1)
+      return element;
+
+    elements.push(element);
+  }
+
+  return elements;
+}
+
+Object.extend = function(destination, source) {
+  for (property in source) {
+    destination[property] = source[property];
+  }
+  return destination;
+}
+Object.extend(Array.prototype, {
+  indexOf: function(object) {
+    for (var i = 0; i < this.length; i++)
+      if (this[i] == object) return i;
+    return -1;
+  }
+});
+
+var GWG_Fragen = function() {
+	_private = {
+		container:			$("container"),
+		userSolutions:		new Array(),
+		answeredQuestions:	0,
+		nextQuestion:		function() {
+			var rand;
+			if(this.questions.length == this.answeredQuestions) {
+				return -1;
+			}
+			do {
+				rand = Math.ceil(Math.random()*(this.questions.length)) - 1;
+			} while(this.userSolutions[rand] != null);
+			
+			return {id: rand, answers: this.questions[rand]};
+		},
+		remainingQuestions:	function() {
+			return parseInt(this.questions.length - this.answeredQuestions);
+		},
+		questions: 			new Array(
+			/* 1.te Frage */
+			new Array(
+				new Array(0, "Ziel allen technischen Handelns ist primär die Entwicklung einer gut und möglichst fehlerfreien funtionnierenden Technik."),
+				new Array(1, "Ziel allen technischen Handelns ist primär die menschlichen Lebensmöglichkeiten durch die Entwicklung und sinnvolle Anwendung technischer Mittel zu sichern und zu verbessern."),
+				new Array(0, "Ziel allen technischen Handelns ist es, durch möglichst weitgehende Automatisierung aller Abläufe den Menschen als möglichen Störfaktor auszuschalten.")
+			),
+			new Array(
+				new Array(0, "Das Wissen der Facharbeiter über die Maschinenbedienung war leicht auf Lochstreifen umzusetzen."),
+				new Array(0, "Das NC-Verfahren wurde vom Management und den Ingenieuren primär als Mittel zur Verbesserung der Arbeitsbedingungen gesehen."),
+				new Array(0, "Programmiert wurden die NC-Maschinen meistens durch entsprechend fortgebildete Facharbeiter, dass diese mit dem Produktionsvorgang vertraut waren.")
+			),
+			new Array(
+				new Array(0, "Informatik ist eine Gestaltungswissenschaft. Damit ist hauptsächlich das User-Interface-Design gemeint."),
+				new Array(1, "In Bezug auf den Computer als technisches Substrakt kann Informatik zu den konstruktiven Ingenieurswissenschaften gezählt werden."),
+				new Array(1, "In Bezug auf die Berechenbarkeit kann Informatik als Computing Science verstanden werden.")
+			),
+			new Array(
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen daraus, dass die Modelle, welcher der Entwicklung zugrundeliegen, zuweilen dem Einsatzkontext nicht angemessen sind."),
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen aus der Schwierigkeit, soziale Situationen zu formalisieren."),
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen daraus, dass Modelle in der Einsatzsituation von den Benutzern anders verstanden und genutzt werden können, als es der Absicht der Entwickler in der Entwicklungssituation entspricht.")
+			),
+			/* 5.te Frage */
+			new Array(
+				new Array(1, "Risiken der Technik sind abhängig von der Komplexität sozio-technischer Figurationen."),
+				new Array(0, "Durch eine enge Kopplung läuft ein technisches System besser und mögliche Fehler können schneller behoben werden."),
+				new Array(0, "Je loser die einzelnen Komponenten technischer Systeme gekoppelt sind, umso grösser sind die Risiken einer Fehlfunktion."),
+				new Array(0, "Risiken sind abhängig vom Grad der Koppelung einzelner Komponenten: eine enge Kopplung hilft, Risiko zu minimieren"),
+				new Array(0, "Nebenwirkungen von Technik lassen sich allein technisch beseitigen.")
+			),
+			new Array(
+				new Array(1, "Technik ist Ergebnis eines gesellschaftlich-sozialen Prozesses."),
+				new Array(0, "Technik ist autonome und selbst nur durch die Weiterentwicklung im Bereich der Naturwissenschaften beeinflusste Ursache gesellschaftlicher Veränderungen."),
+				new Array(1, "Technik wirkt auf die gesellschaftlich-sozialen Prozesse, deren Ergebnis sie ist, zurück."),
+				new Array(1, "Technikdeterminismus geht davon aus, dass das Soziale von der Technik bestimmt wird."),
+				new Array(0, "Technik ist eine gegebene unbeeinflussbare Ursache und bewirkt automatisch Veränderungen in den sozialen Beziehungen."),
+				new Array(1, "Technik ist autonom heißt, dass Technik unabhängig von gesellschaftlichen Einflüssen ist.")
+			),
+			new Array(
+				new Array(0, "Die Designsicht der Informatik betont die technisch-logische Komponente des Entwicklungsprozesses."),
+				new Array(0, "Die Designsicht der Informatik begreift die Realisierung von ICT-Systemen und die Softwareentwicklung als Tätigkeit, die auf vorgegebenen Problemen mit fest definierter Anwendung beruht."),
+				new Array(1, "Die Designsicht der Informatik begreift ICT-Entwickler und Programmierer als agents of change.")
+			),
+			new Array(
+				new Array(0, "Benimmstandards und Konventionen sind Bestandteil der Moral, persönliche Vorlieben jedoch nicht."),
+				new Array(0, "Moralische Überlegungen sind dann nicht mehr angebracht, wenn wichtige wirtschaftliche Interessen gefährdet sind."),
+				new Array(0, "Moral ist die Theorie der Ethik.")
+			),
+			new Array(
+				new Array(1, "Es existiert eine wechselseitige Abhängigkeit zwischen Technik und Sozialem."),
+				new Array(1, "Die Informatik ist Teil der Gesellschaft."),
+				new Array(0, "Die Gesellschaft wird von der Informatik bzw. Technik beeinflusst; umgekehrt trifft das allerdings nicht zu.")
+			),
+			/* 10.te Frage */
+			new Array(
+				new Array(0, "Technische Neuerungen und Innovationen ergeben sich automatisch und zwangsläufig aus den naturwissenschaftlichen Gesetzmäßigkeiten als deren Anwendung."),
+				new Array(0, "Neue Technologien bzw. Techniken bewirken unmittelbar Veränderungen in den sozialen Beziehungen, die als soziale Auswirkungen dieser Techniken/Technologien bezeichnet werden."),
+				new Array(0, "Es gibt in der Technikentwicklung und Technikgenese immer eine beste Möglichkeit, wie bestimmte Aufgaben bzw. Anforderungen technisch gelöst werden; und die setzt sich dann automatisch durch.")
+			),
+			new Array(
+				new Array(1, "Am MIT war das NC-Verfahren ein Symbol für Fortschritt und für das Computerzeitalter."),
+				new Array(0, "Das NC-Verfahren setzte sich gegen das Record-Playback-Verfahren durch, da es technisch besser und für die Firmen wirtschaftlicher war."),
+				new Array(0, "Das Numeric-Control-Verfahren setzte sich durch, weil es Werkstattprogrammierung ermöglichte, was zu einer Kompetenzerweiterung der Facharbeiter führte.")
+			),
+			new Array(
+				new Array(1, "Social Informatics hat eine kritische Orientierung."),
+				new Array(0, "Social Informatics hat eine katalytische Orientierung."),
+				new Array(0, "Social Informatics hat eine anomische Orientierung.")
+			),
+			new Array(
+				new Array(1, "Das NC-Verfahren kann als formale Synthetisierung des Produktionsvorganges beschrieben werden."),
+				new Array(0, "Das NC-Verfahren setzte sich durch, da es die Kompetenzen des Facharbeiters in der Werkhalle vergrößerte."),
+				new Array(0, "Das NC-Verfahren kann als Fähigkeitsmultiplikator beschrieben werden.")
+			),
+			new Array(
+				new Array(0, "Der Technikdeterminismus geht von einem Wechselwirkungszusammenhang zwischen Technik und Gesellschaft aus."),
+				new Array(0, "Technikdeterministische Konzepte sind gut geeignet, den Zusammenhang von Technik und Gesellschaft zutreffend zu beschreiben."),
+				new Array(1, "Der Technikdeterminismus begreift Technik als autonome Erscheinung, die unabhängig von sozialen Geschehnissen und gesellschaftlichen Prozessen ist."),
+				new Array(0, "Technikdeterminismus beeinflusste Forschungsfragen sind zum besseren Verständnis von ICTs gut geeignet."),
+				new Array(1, "Technikdeterminismus begreift Technik als von sozialen Beziehungen und Geschehnissen autonome Erscheinungen.")
+			),
+			/* 15.te Frage */
+			new Array(
+				new Array(0, "Das Numeric-Control-Verfahren setzte sich durch, weil es die Werkstattprogrammierung ermöglichte, was zu einer Kompetenzerweiterung der Facharbeiter führte."),
+				new Array(0, "Das Numeric-Control-Verfahren führte automatisch dazu, dass die Arbeiter in der Werkstatt zu Knöpfedrückern reduziert werden."),
+				new Array(1, "Das Management erwartete sich vom Numeric-Control-Verfahren, eine erhöhte Kontroll über den Produktionsprozess zu gewinnen.")
+			),
+			new Array(
+				new Array(0, "Gute Technologie ist eine notwendige und hinreichende Bedingung, um ökonomische und soziale Vorteile hervorzubringen."),
+				new Array(0, "Das Produktionsparadoxon besagt, dass eine höhere Produktivität nicht zwangsläufig einen höheren Gewinn nach sich zieht."),
+				new Array(0, "Mit dem stärker werdenden Computereinsatz in Unternehmen stieg in den 80er Jahren die Produktivität stark an.")
+			),
+			new Array(
+				new Array(0, "Die Büroautomation führte zur Taylorisierung der Kopfarbeit."),
+				new Array(0, "Durch die fortschreitende Büroautomation waren plötzlich weniger qualifizierte Arbeitskräfte vonnöten, da der Computer allein viele Arbeitsaufgaben übernahm."),
+				new Array(1, "Einer der Konsequenzen der Büroautomation bei Sekretärinnen war eine Arbeitsverdichtung.")
+			),
+			new Array(
+				new Array(0, "Wenn ein System bei der Verarbeitung von Daten immer wieder falsche Ergebnisse liefert, spricht man vom System-Bias."),
+				new Array(0, "Wenn ein ICT-System bestimmte aufgrund technischer Unzulänglichkeiten bestimmte Informationen nicht verarbeiten kann, spricht man vom Information-Bias."),
+				new Array(1, "Wenn nicht offen gelegte Annahmen und Prioritäten von vornherein in ein ICTSystem eingebaut werden und dadurch in der Folge bestimmte Personengruppen oder deren Interessen begünstigt werden, spricht man vom User-Bias.")
+			),
+			new Array(
+				new Array(0, "Reflexion ist nur dann erfolgreich, wenn eine 1:1-Umsetzung der Reflexion in die Praxis gelingt."),
+				new Array(0, "Reflexion ist eine Sonderform der institutionalisierten Wissenschaft."),
+				new Array(1, "Reflexion heißt auch, dem unmittelbaren Handlungszwang zu widerstehen.")
+			),
+			/* 20.te Frage */
+			new Array(
+				new Array(0, "Ziel von Organizational Informatics ist die vollständige Automatisierung von Organisationsabläufen."),
+				new Array(1, "Ziel von Organizational Informatics ist die Untersuchung der Rolle und Funktion der Computerisierung bei der Gestaltung von Organisationsstrukturen."),
+				new Array(0, "Ziel von Organizational Informatics ist die Vereinigung aller Informatiker und ITProfessionals in einer Organisation.")
+			),
+			new Array(
+				new Array(0, "Technikorientierte Gestaltungskonzepte zeichnen sich durch dezentralisierte Steuerung aus."),
+				new Array(0, "Technikorientierte Gestaltungskonzepte zeichnen sich dadurch aus, dass Informationen über Systemzustände vor Ort jederzeit abrufbar sind."),
+				new Array(1, "Technikorientierte Gestaltungskonzepte zeichnen sich durch zentrale Kontrolle aus.")
+			),
+			new Array(
+				new Array(0, "Aufgaben- und Rollenverantwortung hat Vorrang vor universalmoralischer Verantwortung (Prinzip: Konkretes vor Allgemeinem)."),
+				new Array(0, "Abwägen von Nutzen gegen Schaden hat Vorrang vor Schadensminimierung."),
+				new Array(0, "Sicherheitstechnische Erfordernisse haben in der Regel Vorrang, ausgenommen wenn ihre Umsetzung unzumutbare wirtschaftliche Nachteile nach sich ziehen würde.")
+			),
+			new Array(
+				new Array(0, "Bei der Technikgestaltung ist es wichtig, die einzelnen Systemkomponenten möglichst eng zu koppeln, um die Risiken zu minimieren."),
+				new Array(0, "Bei der Technikgestaltung ist es wichtig, dem Menschen möglichst wenig Handlungs- und Entscheidungsspielraum einzuräumen, um die Risiken zu minimieren."),
+				new Array(0, "Der Airbus-320-Absturz in Warschau war auf einen Pilotenfehler zurückzuführen, da die Piloten detailiert über die Inputs Bescheid wussten, die dem Computer den Zustand gelandet anzeigen, und trotzdem nicht auf manuelle Steuerung umschalteten."),
+				new Array(0, "Die Ursache des Unfalls des Airbus A-320 in Warschau 1993 lag darin, dass die Piloten 9 Sekunden lang versuchten, den Computer zu übersteuern, was zu einer Verlängerung des Bremswegs führte."),
+				new Array(1, "Die Ursache des Unfalls des Airbus A-320 in Warschau 1993 lag darin, dass bei der Landung sich die Bremssysteme des Airbus durch die Computertechnologie 9 Sekunden lang blockiert wurden und von den Piloten nicht ausgelöst werden konnten."),
+				new Array(0, "Die Firmen-Philosophie von Airbus geht davon aus, dass im Prinzip zwar Computertechnologie automatisch das Flugzeug steuern soll, der Pilot aber jederzeit Eingriffsmöglichkeiten hat und die Automatik over-rulen können soll.")
+			),
+			new Array(
+				new Array(0, "Arbeitsorientierte Gestaltungskonzepte zeichnen sich dadurch aus, dass Menschen als Erweiterung der Maschine gesehen werden."),
+				new Array(2, "Arbeitsorientierte Gestaltungskonzepte zeichnen sich durch gemeinsame Optimierung der Entwicklung und des Einsatzes von Technik, von Organisation und der Qualifikation der Arbeitenden aus."),
+				new Array(0, "Arbeitsorientierte Gestaltungskonzepte zeichnen sich dadurch aus, dass Überlegungen zur Arbeitsorganisation und zur Arbeitstätigkeit der Gestaltung des Einsatzes der Technik nachgeordnet sind.")
+			),
+			/* 25.te Frage */
+			new Array(
+				new Array(0, "Social Informatics beschäftigt sich ausschließlich mit der Mensch-Maschine-Kommunikation."),
+				new Array(1, "Social Informatics ist auf Erkenntnisgewinn orientiert."),
+				new Array(2, "Social Informatics beschäftigt sich mit der informatischen Modellierung sozialer Beziehungen.")
+			),
+			new Array(
+				new Array(0, "Wenn Modelle verkürzen und vereinfachen, sind sie falsch und nicht zu gebrauchen."),
+				new Array(0, "Nur solche vereinfachte Darstellungen der Wirklichkeit (oder von Teilbereichen der Wirklichkeit) werden als Modelle bezeichnet, die immerwährend und ewig gültig sind."),
+				new Array(0, "Modelle sind eindeutige 1:1-Abbilder der Wirklichkeit und ihren Originalen per se eindeutig zugeordnet."),
+				new Array(1, "Modelle erfüllen ihre Ersetzungsfunktion immer für bestimmte handelnde Menschen, sie sind daher immer Modelle für jemanden.")
+			),
+			new Array(
+				new Array(1, "Die Reduktion der Informatik auf formalwissenschaftliche Aspekte vernachlässigt den wichtigsten Gesichtspunkt des Einsatzes der Software und des Computers in sozialen Kontexten."),
+				new Array(0, "Informatik beschäftigt sich ausschließlich mit der Erarbeitung formaler Spezifikation und deren Überführung in korrekte Programme, nicht aber mit dem sozialen Kontext des Einsatzes dieser Programme."),
+				new Array(0, "Da Informatik sich ausschließlich mit der Erarbeitung streng formaler Modelle und der Führung von Korrektheitsbeweisen beschäftigt, ist Informatik als Ganzes eine Teildisziplin der Mathematik.")
+			),
+			new Array(
+				new Array(0, "Weil es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, ist bei Fehlentscheidungen des ICT-Systems nicht der Anwender, sondern der Computer für die Folgen verantwortlich."),
+				new Array(1, "Aus der Tatsache, dass es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, resultieren besondere Sorgfaltspflichten für Informatiker und Gestalter von ICT-Systemen."),
+				new Array(0, "Weil es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, sollen User möglichst wenig belastet werden durch Informationen darüber, die das ICT-System operiert.")
+			),
+			new Array(
+				new Array(1, "Gesellschaft ist die Gesamtheit des Sozialen."),
+				new Array(0, "Technik und Naturwissenschaften sind – weil auf Naturgesetzen beruht – nicht Teil der Gesellschaft."),
+				new Array(0, "Ein wichtiges Charakteristikum von Gesellschaften sind immer wieder auftretenden Zustandsänderungen.")
+			),
+			/* 30.te Frage */
+			new Array(
+				new Array(0, "Der „Produktionssicht“ der Informatik ist die ethische Dimension immanent."),
+				new Array(0, "Die „Produktionssicht“ der Informatik berücksichtigt den sozialen Kontext der Nutzungssituation."),
+				new Array(0, "Die „Produktionssicht“ der Informatik bezieht Überlegungen zu den Konsequenzen der eigenen Produkte bereits in den Entwicklungsprozess mit ein.")
+			),
+			new Array(
+				new Array(0, "Daten sind kontextgebunden und kontextabhängig."),
+				new Array(1, "Wissen wird aus Informationen erzeugt."),
+				new Array(1, "Informationen haben eine Bedeutung für den handelnden Menschen.")
+			),
+			new Array(
+				new Array(1, "Telearbeiter nützen in der Regel die Möglichkeit der Arbeit zu Hause, um den Kontakt zu den anderen Familienmitgliedern zu intensivieren und stärker am familiären Kommunikationszusammenhang teilzunehmen."),
+				new Array(0, "Ein Vorteil der Telearbeit ist es, dass die informelle Kommunikation mit KollegInnen reduziert wird."),
+				new Array(1, "Durch Telearbeit werden Zeiten und Orte für Arbeitstätigkeiten verfügbar, die es davor nicht waren."),
+				new Array(0, "Telearbeit führt zu einer Verringerung des Verkehrsaufkommens."),
+				new Array(0, "Studien belegen eindeutig, dass Computerspiele Jugendliche zunehmend isolieren.")
+			),
+			new Array(
+				new Array(0, "„Invisible programming values“ bezieht sich darauf, dass Ergebnisse von Computerberechnungen auf Grund ihrer Komplexität nicht mehr nachvollzogen werden können."),
+				new Array(1, "„Invisible abuse“ bezieht sich darauf, dass durch die spezifische Struktur von Computersystemen Missbrauch unentdeckt bleibt."),
+				new Array(0, "„Invisible miscalculation“ bezieht sich darauf, dass es durch nicht offen gelegte Vorannahmen und Präferenzen, die in der Planung und Gestaltung von ICTSystemen eingehen, zu ungerechtfertigten Begünstigungen oder Benachteiligungen von Personengruppen kommt.")
+			),
+			new Array(
+				new Array(0, "Das Record-Playback-Verfahren war gut geeignet für größere Firmen."),
+				new Array(0, "Das Record-Playback-Verfahren setzte sich nicht durch, da es zu teuer war."),
+				new Array(1, "Für das Record-Playback-Verfahren benötigten die Firmen keine Programmierer, Mathematiker, Programmiersprachen und Computer.")
+			),
+			/* 35.te Frage */
+			new Array(
+				new Array(1, "Integrierte Technikbewertung bezieht alle relevanten sozialen Akteure von Anfang an mit ein."),
+				new Array(0, "Integrierte Technikbewertung wird auch als reaktive Technikbewertung bezeichnet."),
+				new Array(0, "Integrierte Technikbewertung zielt ab auf eine Technikgestaltung, die sich vorwiegend an technischen Erfordernissen orientiert.")
+			),
+			/* Frage 36 bereits vorgekommen.
+			 * Frage 37 nicht wirklich Multiple choice, deswegen ausgelassen.
+			 * weiter mit Frage 38 */
+			new Array(
+				new Array(1, "„Social informatics“ hat eine analytische Orientierung."),
+				new Array(0, "„Social informatics“ hat eine sozialstatistische Orientierung."),
+				new Array(0, "„Social informatics“ hat eine sozialbehavioristische Orientierung.")
+			),
+			new Array(
+				new Array(1, "Eine der strukturierenden Funktionen der Informations- und Computertechnologien ist die Delokalisierung von Information."),
+				new Array(0, "Eine der strukturierenden Funktionen der Informations- und Computertechnologien ist die Beeinträchtigung der Objektivität von Informationen."),
+				new Array(1, "Eine der strukturierenden Funktionen der Informations- und Computertechnologien ist die Aufhebung der zeitlichen und räumlichen Dimension zugunsten der Gleichzeitigkeit und Zugänglichkeit.")
+			),
+			/* 40.te Frage */
+			new Array(
+				new Array(0, "Software-Ergonomie zielt ausschließlich auf die Gestaltung der Bildschirmoberfläche ab."),
+				new Array(1, "Mit der Entwicklung von Software für Dialogprogramme werden in starkem Maße Handlungs- und Entscheidungsspielräume von Benutzern festgeschrieben."),
+				new Array(0, "Die voranschreitende Büroautomation führte zu einer Tylorisierung der Kopfarbeit.")
+			),
+			/* Frage 41 weiss ich Antwort nicht */
+			new Array(
+				new Array(2, "Das Numeric-Control-Verfahren kann als „Fähigkeits-Multiplikator“ beschrieben werden."),
+				new Array(2, "Das Numeric-Control-Verfahren kann als „Formale Synthetisierung des Produktionsvorgangs“ beschrieben werden."),
+				new Array(2, "Das Numeric-Control-Verfahren setzte sich durch, weil es die Kompetenzen des Facharbeiters in der Werkhalle vergrößerte.")
+			),
+			/* Frage 42 dito */
+			new Array(
+				new Array(2, "Delokalisierung bezeichnet den Verlust der zeitlichen und örtlichen Verankerung von Information."),
+				new Array(2, "Delokalisierung bezeichnet den Verlust des rekonstruierbaren Entstehungszusammenhangs von Information."),
+				new Array(2, "Delekalisierung bezeichnet den Verlust der lokalen Signanz von Information.")
+			),
+			new Array(
+				new Array(1, "Es gibt eine wechselseitige Abhängigkeit von Technologien und sozialen Veränderungen."),
+				new Array(0, "Technik ist quasi autonom und eine gegebenen unbeeinflussbare Ursache technischer Veränderungen."),
+				new Array(0, "Neue Technologien bzw. Techniken „bewirken“ gleichsam automatisch Veränderungen in den sozialen Beziehungen, die dann als „soziale Auswirkungen“ dieser Techniken/Technologien beschrieben werden können."),
+				new Array(1, "Technologie/ Technik trägt den gesellschaftlichen Stempel derer, die sie machen."),
+				new Array(0, "Technische Neuerungen und Innovationen ergeben sich automatisch und zwangsläufig aus den naturwissenschaftlichen Gesetzmäßigkeiten als derer Anwendung."),
+				new Array(0, "Es gibt in der Technikentwicklung und Technikgenese immer eine beste Möglichkeit, wie bestimmte Aufgaben bzw. Anforderungen technisch gelöst werden; und die setzt sich dann auch automatisch durch.")
+			),
+			new Array(
+				new Array(0, "Bei der integrierten Technikbewertung werden technische Systeme im Nachhinein evaluiert und auf die aus ihrem Einsatz resultierenden Konsequenzen hin untersucht."),
+				new Array(1, "Bei der integrierten Technikbewertung geht es um die Einbeziehung von Erkenntnissen über mögliche Auswirkungen technischer Neuerungen in den Entwurf und die Gestaltung von Technik."),
+				new Array(0, "Zentrales Kennzeichen einer integrierten Technikbewertung ist die Integration mathematischer Modelle in den Prozess der Technikbewertung.")
+			),
+			/* 45.te Frage */
+			new Array(
+				new Array(1, "Technikdeterminismus geht davon aus, dass Technik gleichsam automatisch Veränderungen in den gesellschaftlichen Strukturen hervorruft."),
+				new Array(1, "Technikdeterminismus geht von Technik als gegebener und unbeeinflussbarer Ursache aus."),
+				new Array(0, "Technikdeterminismus geht nicht von einer Quasi-Autonomie der Technik aus.")
+			),
+			new Array(
+				new Array(1, "Informationen sind interpretierte Daten."),
+				new Array(0, "Daten sind interpretierte Informationen."),
+				new Array(1, "Informationen sind einzelne Elemente, aus denen Wissen erzeugt wird."),
+				new Array(0, "Informationen können nur auf eine Art interpretiert werden und haben somit für alle handelnden Menschen dieselbe Bedeutung."),
+				new Array(0, "Daten, die in einen Computer eingegeben werden, werden von diesem in Informationen umgewandelt und verarbeitet."),
+				new Array(1, "Daten sind kontextunabhängig und müssen erst interpretiert werden, um sie in Informationen umzuwandeln.")
+			),
+			new Array(
+				new Array(1, "Ziel von „social informatics“ ist die Entwicklung alltagstauglicher Computer- und IT-Systeme."),
+				new Array(0, "Ziel von „social informatics“ ist die Entwicklung spracherkennender Computersysteme, die mit dem Menschen wie menschlicher Gesprächspartner in Interaktion treten können."),
+				new Array(0, "Ziel von „social informatics“ ist die Informatisierung der Gesellschaft.")
+			),
+			new Array(
+				new Array(0, "Eine der an CNC-Maschinen auftretenden neuartige Belastung und Risiken ist erhöhter Stress aufgrund der weiterhin hohen Verantwortung bei weniger Einfluss auf die Maschine."),
+				new Array(1, "Eine der an CNC-Maschinen auftretenden neuartige Anforderungen ist es, auch in „passiven Phasen“ bei der Sache zu sein."),
+				new Array(0, "Eine der an CNC-Maschinen auftretenden neuartige Anforderungen war es, eine „abstrakte Sinnlichkeit“ zu entwickeln.")
+			),
+			new Array(
+				new Array(0, "Technische Geräte determinieren die Interpretation der äußeren Wirklichkeit durch die Menschen."),
+				new Array(1, "Technische Geräte treten im Handlungsvollzug zwischen die Menschen und die äußere Wirklichkeit."),
+				new Array(0, "Technische Geräte strukturieren das Wahrnehmen und Handeln des Menschen.")
+			),
+			/* 50.te Frage */
+			new Array(
+				new Array(0, "Softwaregestaltung geht der Arbeitsgestaltung vor."),
+				new Array(0, "Eines der Prinzipien benutzerorientierter Dialoggestaltung ist die Aufgabenorientierung."),
+				new Array(0, "Eines der Prinzipien benutzerorientierter Dialoggestaltung ist die Aufgabendelokalisierung.")
+			),
+			new Array(
+				new Array(2, "Eine der Bedeutungen des Telefons im Laufe seiner Geschichte war die eines „Informationstransportmittels in eine Richtung“."),
+				new Array(0, "Eine der Bedeutungen des Telefons im Laufe seiner Geschichte war die eines „Quasi-Panoptikums“."),
+				new Array(0, "Eine der Bedeutungen des Telefons im Laufe seiner Geschichte war die eines „Quasi-Radios“.")
+			),
+			new Array(
+				new Array(1, "Risiken der Technik sind abhängig von der Komplexität soziotechnischer Figurationen."),
+				new Array(1, "Risiken der Technik entstehen aus dem Zusammenspiel von Nutzungssituation, Nutzern, Technik und Organisation."),
+				new Array(0, "Risiken der Technik können in der Regel durch eine Verbesserung der Technik beseitigt werden.")
+			),
+			new Array(
+				new Array(0, "Die Programmerstellung bei CNC-Maschinen kann nicht mehr unmittelbar an der Maschine erfolgen."),
+				new Array(0, "CNC-Maschinen unterscheiden sich von traditionellen Werkzeugmaschinen dadurch, dass sie in der Regel verkapselt sind."),
+				new Array(1, "CNC-Maschinen unterscheiden sich von traditionellen Werkzeugmaschinen dadurch, dass ihre Steuerung über Programme erfolgt.")
+			),
+			new Array(
+				new Array(1, "Am Beginn der Moderne wurde Technik in starkem Maße als Mittel zur Verbesserung der Lebensbedingungen der Mensch betrachtet."),
+				new Array(1, "In der Moderne wurde technischer Fortschritt in starkem Maße mit gesellschaftlichem Fortschritt gleichgesetzt."),
+				new Array(0, "Am Beginn der Moderne war ein zentraler Kritikpunkt der Zeitgenossen an der Technik, dass mit dem technischen Fortschritt unvermeidbare Nebenfolgen verbunden sind, welche tendenziell die Vorteile des Fortschritts gefährdeten."),
+				new Array(0, "Am Beginn der Moderne gerieten die unerwünschten Nebenfolgen von Technik verstärkt in das Blickfeld der Aufmerksamkeit."),
+				new Array(0, "Der technologische imperativ ist Kennzeichen der Technik bzw. einer technikimmanenten Logik.")
+			),
+			/* 55.te Frage */
+			new Array(
+				new Array(1, "Das Management erwartete sich vom Numeric-Control-Verfahren, eine erhöhte Kontrolle über den Produktionsprozess zu gewinnen."),
+				new Array(0, "Das Numeric-Control-Verfahren führte quasi-automatisch dazu, dass die Arbeiter in der Werkstatt zu „Knöpfedrückern“ reduziert werden."),
+				new Array(0, "Das Numeric-Control-Verfahren setzte sich durch, weil es vom amerikanischen Geheimdienst unterstützt wurde.")
+			),
+			/* Frage 56 ist bereits vorgekommen (doppelt drin), 
+			 * weiter mit 57 */
+			new Array(
+				new Array(0, "Technik ergibt sich gleichsam automatisch aus der Anwendung naturwissenschaftlicher Gesetzmäßigkeiten."),
+				new Array(1, "Technik ist Ergebnis eines gesellschaftlich-sozialen Prozesses."),
+				new Array(1, "Technik wirkt auf die gesellschaftlich-sozialen Prozesse, deren Ergebnis sie ist, zurück.")
+			),
+			new Array(
+				new Array(1, "Informatik ist Teil der Gesellschaft."),
+				new Array(0, "Es gibt eine unmittelbare, einseitige und eindeutige Wirkung der Gesellschaft auf die Computer- und Informationstechnologien."),
+				new Array(0, "Es gibt eine unmittelbare, einseitige und eindeutige Wirkung neuer Computerund Informationstechnologien auf die Gesellschaft."),
+				new Array(1, "Es gibt einen Wechselwirkungsprozess zwischen Computer- und Informationstechnologien auf der einen und der Gesellschaft (bzw. Sozialem) auf der anderen Seite."),
+				new Array(1, "Es gibt einen Zusammenhang zwischen technischer und gesellschaftlicher Entwicklung.")
+			),
+			new Array(
+				new Array(0, "Technikorientierte Gestaltungskonzepte zeichnen sich durch dezentrale Steuerung aus."),
+				new Array(0, "Technikorientierte Gestaltungskonzepte zeichnen sich dadurch aus, dass Informationen über Systemzustände vor Ort jederzeit abrufbar sind."),
+				new Array(1, "Technikorientierte Gestaltungskonzepte zeichnen sich durch zentrale Kontrolle aus.")
+			),
+			/* 60.te Frage wiedermal doppelt, 
+			 * weiter mit Frage 61 */
+			new Array(
+				new Array(1, "Technik wirkt auf die gesellschaftlich-sozialen Prozesse, deren Ergebnis sie ist, zurück."),
+				new Array(1, "Technik ist Ergebnis eines gesellschaftlich-sozialen Prozesses."),
+				new Array(0, "Technik ist autonome und selbst nur durch die Weiterentwicklungen im Bereich der Naturwissenschaften beeinflusste Ursache gesellschaftlicher Veränderungen.")
+			),
+			/* Frage 62 ist auch bereits vorgekommen, 
+			 * weiter mit 63 */
+			new Array(
+				new Array(0, "Modelle sind eindeutige 1:1-Abbilder der Wirklichkeit und ihren Originalen per se eindeutig zugeordnet."),
+				new Array(0, "Nur solche vereinfachte Darstellungen der Wirklichkeit (oder von Teilbereichen der Wirklichkeit) werden als Modelle bezeichnet, die immerwährend und ewig gültig sind."),
+				new Array(0, "Wenn Modelle verkürzen und vereinfachen, sind sie falsch und nicht zu gebrauchen.")
+			),
+			/* Frage 64 ist doppelt, weiter mit ... */
+			/* 65.te Frage */
+			new Array(
+				new Array(0, "Programmiert wurden die NC-Maschinen meistens durch entsprechend fortgebildete Facharbeiter, da diese mit dem Produktionsvorgang vertraut waren."),
+				new Array(0, "Das Wissen der Facharbeiter über die Maschinenbedienung war leicht auf Lochstreifen umzusetzen."),
+				new Array(0, "Das NC-Verfahren wurde vom Management und den Ingenieuren primär als Mittel zur Verbesserung der Arbeitsbedingungen gesehen.")
+			),
+			new Array(
+				new Array(0, "Ziel von Social Informatics ist die Entwicklung von Lösungen, die primär orientiert sind am technisch Machbaren."),
+				new Array(1, "Social Informatics hat zum Ziel, die eigenen Handlungsoptionen zu vergrößern."),
+				new Array(1, "Ein Ziel von Social Informatics ist es, die Arbeitsproduktivität zu steigern.")
+			),
+			new Array(
+				new Array(0, "Je loser die Komponenten technischer Systeme gekoppelt sind, umso größer sind die Risiken einer Fehlfunktion."),
+				new Array(0, "Durch eine enge Koppelung läuft ein technisches System besser und mögliche Fehler können schneller behoben werden."),
+				new Array(1, "Risiken der Technik sind abhängig von der Komplexität sozio-technischer Figurationen."),
+				new Array(1, "Viele durch technischen Fortschritt entstandenen Risiken lassen sich nicht mehr vom Individuum verringern, sondern müssen global und miteinander diskutiert werden."),
+				new Array(0, "Eng gekoppelte Systeme sind in unserer Zeit unbedingt nötig, um das Risiko von Fehleinschätzungen und damit verbundenen falschen Entscheidungen zu vermindern.")
+			),
+			new Array(
+				new Array(0, "Informatik ist eine Gesellschaftswissenschaft. Damit ist hauptsächlich das User-Interface-Design gemeint."),
+				new Array(1, "In Bezug auf den Computer als technisches Substrat kann Informatik zu den konstruktiven Ingenieurswissenschaften gezählt werden."),
+				new Array(1, "In Bezug auf die Berechenbarkeit kann Informatik als Computing Science verstanden werden.")
+			),
+			/* Frage 69 ist zur Abwechslung mal wieder doppelt, weiter mit ... */
+			/* 70.te Frage */
+			new Array(
+				new Array(0, "Bei P-Programmen (Beispiel: Schachprogramm) und E-Programmen (Beispiel: Airbus-Steuerung) ist die Modellierung relativ unproblematisch, da sie ausschließlich durch ihre formale Beschreibung bestimmt sind und eine formale Spezifikation bereits vorliegt."),
+				new Array(1, "E-Programme (Beispiel: Airbus-Steuerung) behandeln Probleme der realen Welt, kommen in der realen Welt zum Einsatz und haben eine Wechselwirkung mit dem Kontext."),
+				new Array(0, "In der Praxis von Informatikern kommen S-Programme, die wohldefinierte Probleme aus einem Diskurs-Universum behandeln (Beispiel: größter gemeinsamer Teiler zweier ganzer Zahlen), am häufigsten vor.")
+			),
+			new Array(
+				new Array(0, "Die Produktionssicht der Informatik bezieht Überlegungen zu den Konsequenzen der eigenen Produkte bereits in den Entwicklungsprozess mit ein."),
+				new Array(0, "Der Produktionssicht der Informatik ist die ethische Dimension immanent."),
+				new Array(0, "Die Produktionssicht der Informatik berücksichtigt den sozialen Kontext der Nutzungssituation.")
+			),
+			new Array(
+				new Array(0, "Durch das CNC-Verfahren wird die Rückkehr der Kontrolle über den Arbeitsprozess in die Werkstatt verhindert."),
+				new Array(0, "An CNC-Maschinen hat es sich zur Erhöhung der Produktionsqualität bewährt, die Programmiertasten zu blockieren und auf diese Weise zu verhindern, dass die Facharbeiter den vorgegebenen Maschinenlauf stören."),
+				new Array(0, "Bei der Werkstatt-Programmierung von CNC-Maschinen werden die Programme im technischen Büro für die Werkstatt erstellt.")
+			),
+			/* Frage 73 doppelt, 
+			 * weiter mit 74 */
+			new Array(
+				new Array(0, "Die Büroautomation führte zur Taylorisierung der Kopfarbeit."),
+				new Array(1, "Eine der Konsequenzen der Büroautomation bei Sekretärinnen war eine Arbeitsverdichtung."),
+				new Array(0, "Durch die fortschreitende Büroautomation waren plötzlich weniger qualifizierte Arbeitskräfte vonnöten, da der Computer allein viele Arbeitsaufgaben übernahm."),
+				new Array(0, "Durch die Einführung von Computern in Betrieben wurde immer eine effiziente Arbeitserleichterung erreicht."),
+				new Array(0, "Computernutzung in Unternehmen führt automatisch zu Produktionsgewinn."),
+				new Array(0, "Computernutzung in einem Betrieb ermöglicht als Folge einen Abbau der qualifizierten Facharbeiter.")
+			),
+			/* 75.te Frage kommt sogar 3mal vor, 
+			 * weiter mit Frage 76 */
+			new Array(
+				new Array(1, "Information ist kontextgebunden."),
+				new Array(0, "Die Interpretation von Daten ist immer eindeutig."),
+				new Array(1, "Informationen gewinnen ihre Bedeutung erst durch die Interpretation von Menschen.")
+			),
+			new Array(
+				new Array(0, "Mit dem stärker werdenden Computereinsatz in Unternehmen stieg in den 80er-Jahren die Produktivität stark an."),
+				new Array(0, "Das Produktivitätsparadoxon besagt, dass eine höhere Produktivität nicht zwangsläufig einen höheren Gewinn nach sich zieht."),
+				new Array(0, "Gute Technologie ist eine notwendige und hinreichende Bedingung, um ökonomische und soziale Vorteile hervorzubringen.")
+			),
+			new Array(
+				new Array(1, "Das Ziel informatischer Modellierung ist die Modellierung operationaler Modelle, welche die Ausführung von Computerprogrammen steuern."),
+				new Array(1, "Modelle sind vereinfachte Darstellungen der Wirklichkeit (oder von Teilbereichen der Wirklichkeit) im Sinner einer Abstraktion."),
+				new Array(1, "Modelle dienen einem bestimmten Zweck.")
+			),
+			new Array(
+				new Array(1, "Die Reduktion der Informatik auf formalwissenschaftliche Aspekte vernachlässigt den wichtigen Gesichtspunkt des Einsatzes der Software und des Computers in sozialen Kontexten."),
+				new Array(0, "Da Informatik sich ausschließlich mit der Erarbeitung streng formaler Modelle und der Führung von Korrektheitsbeweisen beschäftigt, ist Informatik als Ganzes eine Teildisziplin der Mathematik."),
+				new Array(0, "Informatik beschäftigt sich ausschließlich mit der Erarbeitung formaler Spezifikationen und derer Überführung in korrekte Programme, nicht aber mit dem sozialen Kontext des Einsatzes dieser Programme.")
+			),
+			/* 80.te Frage */
+			new Array(
+				new Array(0, "Ziel allen technischen Handelns ist primär die Entwicklung einer gut und möglichst fehlerfrei funktionierenden Technik."),
+				new Array(1, "Ziel allen technischen Handelns ist primär, die menschlichen Lebensmöglichkeiten durch die Entwicklung und sinnvolle Anwendung technischer Mittel zu sichern und zu verbessern."),
+				new Array(0, "Ziel allen technischen Handelns ist es, durch möglichst weitgehende Automatisierung aller Abläufe den Menschen als möglichen Störfaktor auszuschalten.")
+			),
+			new Array(
+				new Array(0, "Ziel von Social Informatics ist es, die sozialen Beziehungen der Informatiker und IT-Professionals untereinander zu verbessern."),
+				new Array(1, "Ziel von Social Informatics ist es, alltagstaugliche Computer und IT-Systeme zu entwickeln."),
+				new Array(0, "Ziel von Social Informatics ist es, sprachverstehende Computer zu entwickeln, um die Mensch-Computer-Beziehung zu verbessern.")
+			),
+			/* Frage 82 ist doppelt drin, 
+			 * weiter mit Frage 83 */
+			new Array(
+				new Array(0, "Weil es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, sollen User möglichst wenig belastet werden durch Informationen darüber, wie das ICT-System operiert."),
+				new Array(0, "Weil es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, ist bei Fehlentscheidungen des ICT-Systems nicht der Anwender, sondern der Computer für die Folgen verantwortlich."),
+				new Array(1, "Aus der Tatsache, dass es für Laien schwierig ist, die Operationen des Computers im Detail nachzuvollziehen, resultieren besonders Sorgfaltspflichten für Informatiker und Gestalter von IT-Systemen.")
+			),
+			/* Frage 84 ist doppelt drin, weiter mit ... */
+			/* 85.te Frage */
+			new Array(
+				new Array(0, "Technische Neuerungen und Innovationen ergeben sich automatisch und zwangsläufig aus den naturwissenschaftlichen Gesetzmäßigkeiten als derer Anwendung."),
+				new Array(0, "Es gibt in der Technikentwicklung und Technikgenese immer eine beste Möglichkeit, wie bestimmte Aufgaben bzw. Anforderungen technisch gelöst werden; und die setzt sich dann auch automatisch durch."),
+				new Array(0, "Neue Technologien bzw. Techniken bewirken unmittelbar Veränderungen in den sozialen Beziehungen, die als soziale Auswirkungen dieser Techniken/Technologien bezeichnet werden.")
+			),
+			new Array(
+				new Array(0, "Risiken beziehen sich auf Ereignisse, die vom Menschen nicht verantwortet werden können; Gefahren hingegen nehmen Bezug auf Handlungsfolgen, für die Menschen zur Rechenschaft und Verantwortung gezogen werden können."),
+				new Array(0, "Risiken sind in der Regel schicksalhaft und daher nicht zu beeinflussen."),
+				new Array(0, "Gefahren werden von Menschen hergestellt und in Kauf genommen."),
+				new Array(0, "Gefahren sind Bedrohungen und Unsicherheiten hinsichtlich der Folgen kollektiver menschlicher Handlungen."),
+				new Array(1, "Risiken sind individuell oder kollektiv hergestellt und damit z.T. beeinflussbar"),
+				new Array(0, "Risiken sind in der Informatik allen technischer Art!"),
+				new Array(0, "Die Begriffe Gefahr und Risiko sind gleichbedeutend.")
+			),
+			/* Frage 87 doppelt drin, 
+			 * Frage 88 doppelt drin, 
+			 * weiter mit Frage 89 */
+			new Array(
+				new Array(1, "Das Record-Playback-Verfahren war gut geeignet für kleinere Firmen."),
+				new Array(0, "Das Record-Playback-Verfahren setzte sich nicht durch, da es zu teuer war."),
+				new Array(0, "Das Record-Playback-Verfahren wurde von den Managern nicht bloß als Technologie der Metallbearbeitung, sondern als Management-System gesehen.")
+			),
+			/* 90.te Frage */
+			new Array(
+				new Array(1, "Der technologische Imperativ wird direkt durch die technischen Entwicklungen seit Beginn der Moderne induziert."),
+				new Array(1, "In der Spätmoderne erkennen die Menschen stärker als in den Epochen davor auch die Nebenwirkungen des technischen Fortschritts."),
+				new Array(0, "Der technologische Imperativ besagt, dass nicht alles technisch Mögliche auch gebaut werden muss."),
+				new Array(0, "Francis Bacon definierte den technologischen Imperativ Alles, was machbar ist, muss auch gemacht werden und gilt damit als Vorläufer der Moderne."),
+				new Array(0, "Der technologische Imperativ ist kein grundsätzliches Kennzeichen der Technik an sich, sondern nur ein Kennzeichen der Produkte der Technik."),
+				new Array(1, "Eine Folgerung des technologischen Imperativs lautet: Alles, was entwickelt wurde, wird auch eingesetzt.")
+			),
+			new Array(
+				new Array(1, "Das Management versuchte mit der NC-Technologie seine Machtstellung im Unternehmen gegenüber der Werkhalle weiter auszubauen."),
+				new Array(0, "Der Einsatz von NC-Maschinen führt automatisch zu einer Dequalifizierung aller Arbeiter, die in den Werkhallen mit den Maschinen arbeiten."),
+				new Array(0, "Durch den Einsatz von NC Maschinen kam es für die Betriebe zu einer Kostensenkung, da man keine teuren Facharbeiter mehr beschäftigen musste.")
+			),
+			/* weiss ich nicht, glaube a) ist eher falsch */
+			new Array(
+				new Array(2, "ProgrammiererInnen sind prinzipiell verantwortlich für ihr Tun, die Entscheidung darüber liegt aber bei den AuftraggeberInnen."),
+				new Array(0, "ProgrammierenInnen sind nicht direkt moralisch verantwortlich für ihr Tun, es ist unter anderem die Verpflichtung der AuftraggeberInnen, darüber nachzudenken."),
+				new Array(0, "ProgrammiererInnen sollten sich vor allem um die Technik kümmern, die Gedanken über die gesellschaftliche Verantwortung und das Risiko machen sich die Projektleitung und das Management.")
+			),
+			new Array(
+				new Array(0, "Datenmodellierung beeinflusst den institutionellen Bezugsrahmen für Handlungsorientierung und Entscheidungsfindung nicht."),
+				new Array(1, "Datenmodelle tragen zur Aufrechterhaltung einer sozial konstruierten Realität bei."),
+				new Array(0, "Datenmodelle sind immer objektiv und unabhängig von Vorurteilen sowie vom Vorverständnis der Entwickler.")
+			),
+			new Array(
+				new Array(1, "Social Informatics bedeutet unter anderem eine systematische Analyse von ICTs in einem Kontext, der über die rein technische Ebene hinausreicht."),
+				new Array(1, "Die Umsetzung der Erkenntnisse von social Informatics ist erforderlich, um gute Technologie in ökonomischen, sozialen und gesellschaftlichen Fortschritt umzusetzen."),
+				new Array(0, "Social Informatics bedeutet optimierte Produktivitätssteigerung indem ICTs Schritt für Schritt in alle Bereiche unseres sozialen Umfelds eingeführt werden.")
+			),
+			/* 95.te Frage */
+			new Array(
+				new Array(1, "Ethik ist die Theorie der Moral."),
+				new Array(0, "Benimmstandards und Konventionen sind Bestandteil von Moral."),
+				new Array(0, "Computer können ihre Entscheidungen verantworten.")
+			),
+			new Array(
+				new Array(1, "Der Ausdruck Gesellschaft bezeichnet die Summe oder Gesamtheit des Sozialen."),
+				new Array(0, "Als sozio-technische Figuration werden Systeme bezeichnet, in denen technische und menschliche Komponenten vorhanden sind."),
+				new Array(0, "Gesellschaften als soziale Gebilde zeichnen sich durch plötzliche Zustandsänderungen aus.")
+			),
+			new Array(
+				new Array(0, "Informatik ist eine Gestaltungswissenschaft: damit ist hauptsächlich das User Interface-Design gemeint."),
+				new Array(0, "Informatik ist eine konstruktive Ingenieurswissenschaft."),
+				new Array(1, "In Bezug auf die Berechenbarkeit kann Informatik als Computing Science verstanden werden.")
+			),
+			/* Frage 98 ist doppelt, 
+			 * weiter mit Frage 99 */
+			new Array(
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen daraus, dass Modelle in der Einsatzsituation von den Benutzern anders verstanden und genutzt werden können, als es der Absicht der Entwickler in der Entwicklungssituation entspricht."),
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen aus der Schwierigkeit, soziale Situationen zu formalisieren."),
+				new Array(1, "Probleme bei der informatischen Modellierung entstehen daraus, dass die Modelle, welche der Entwicklung zugrunde liegen, dem Einsatzkontext nicht angemessen sind.")
+			),
+			/* 100.te Frage woohoo */
+			new Array(
+				new Array(1, "Informationen gewinnen ihre Bedeutung erst durch die Interpretation von Menschen."),
+				new Array(0, "Die Interpretation von Daten ist immer eindeutig."),
+				new Array(1, "Information ist kontextgebunden.")
+			),
+			new Array(
+				new Array(1, "Die Produktionssicht geht davon aus, dass ein Problem bereits vorgegeben ist, von dem die Entwickler ausgehen."),
+				new Array(1, "In der Designsicht sind die möglichen Konsequenzen des entworfenen Produkts bereits in den Gestaltungsprozess miteinbezogen."),
+				new Array(0, "In der Designsicht steht der fehlerfreie Ablauf des Programms im Vordergrund, der Nutzen für die Anwender ist zweitrangig.")
+			),
+			new Array(
+				new Array(0, "Der Eingriff in automatisierte Prozesse (jeglicher Art) durch den Menschen ist so gering wie möglich zu halten."),
+				new Array(0, "Durch forcierte Automatisierung sind die Risiken (eines Systems) nebenwirkungsfrei beseitigbar."),
+				new Array(1, "Die/Der Entwickler/In hat dafür Sorge zu tragen, dass das erstellte automatisierte System der /dem BenutzerIn gegenüber ausreichen transparent ist.")
+			),
+			new Array(
+				new Array(0, "Ein eindeutiger Befehl von seinem Vorgesetzten enthebt den Informatiker der Verantwortung für Folgen seiner Arbeit."),
+				new Array(0, "Wichtiger als der Aspekt der Verantwortung ist, dass sich ein jeder Informatiker auf jeden Fall dem Fortschritt der Technik verpflichtet fühlen soll."),
+				new Array(1, "Jeder Informatiker trägt unabhängig von Anweisungen seines Auftraggebers Verantwortung für die Folgen seiner Arbeit.")
+			),
+			new Array(
+				new Array(1, "Social Informatics hat eine analytische Orientierung."),
+				new Array(0, "Soxial informatics hat eine katalytische Orientierung."),
+				new Array(0, "Social informatics hat eine sozialdestruktive Orientierung.")
+			),
+			/* 105.te Frage */
+			new Array(
+				new Array(0, "Das Numeric-Cotrol-Verfahren setzte sich durch, weil es die Werkstattprogrammierung ermöglichte, was zu einer Kompetenzerweiterung der Facharbeiter führte."),
+				new Array(1, "Das Management erwartete sich vom NC-Verfahren eine erhöhte Kontrolle über den Produktionsprozess zu gewinnen."),
+				new Array(0, "Das NC-Verfahren führte automatisch dazu, dass die Arbeiter in der Werkstatt zu Knöpfedrückern reduziert werden.")
+			),
+			new Array(
+				new Array(1, "Mitte der 80er Jahre des 20. Jhdt. Gab es von Sekretariatskräften eine starke Ambivalenz gegenüber dem Bürocomputer."),
+				new Array(0, "Der Einsatz von Computern Mitte der 80er Jahren des 20.Jhdt führte zu einer Taylorisierugn der Kopfarbeit."),
+				new Array(0, "Der Einsatz von Computern in den 70er und 80er Jahren des 20. Jhdt. Führte zu höherer Produktivität in großen Firmen und Organisationen.")
+			),
+			new Array(
+				new Array(0, "Der technologische Imperativ ist Kennzeichen der Technik bzw. einer technikimmanenten Logik."),
+				new Array(1, "Am Anfang der Moderne begriff man Technik als Mittel zur Verbesserung der Lebensbedingungen der Menschen."),
+				new Array(0, "Sozio-technische Figurationen sind Beziehungsgeflechte von Menschen, die durch gegenseitige Abhängigkeiten und Bezugnahmen aufeinander gekennzeichnet sind.")
+			),
+			new Array(
+				new Array(0, "Aus der Reflexion gewonnene Erkenntnisse sollten-im Sinne eines optimalen Ressourcen-Einsatzes- unmittelbar 1:1 in die Praxis umsetzbar sein."),
+				new Array(1, "Wissenschaft ist eine Sonderform von institutionalisierter Reflexion."),
+				new Array(0, "Erkenntnisgewinn soll sich immer an der verwertbaren Nützlichkeit orientieren.")
+			),
+			/* Frage 109 kommt doppelt vor, weiter mit ... */
+			/* 110.te Frage */
+			new Array(
+				new Array(1, "Social informatics soll helfen, für die Menschen nutzbare Produkte zu entwickeln."),
+				new Array(0, "Social informatics soll die professionelle Praxis von Informatikern verbessern."),
+				new Array(0, "Social informatics soll die Promotion von Technologie fördern.")
+			),
+			new Array(
+				new Array(0, "Der Gestaltungsansatz des Scandinavian approach klammert die Mitarbeit an der Schaffung gesellschaftlicher Rahmenbedingungen aus seiner Praxis aus."),
+				new Array(0, "Der Gestaltungsansatz des Scandinavian approach orientiert sich ausschließlich an formalen Methoden der Informatik."),
+				new Array(1, "Der Gestaltungsansatz des Scandinavian approach praktiziert eine evolutionäre und kooperative Praxis der Software-Entwicklung.")
+			),
+			new Array(
+				new Array(1, "Ingenieure/Innen verantworten die Folgen ihrer beruflichen Arbeit sowie die sorgfältige Wahrnehmung ihrer spezifischen Pflichten."),
+				new Array(1, "Ingenieure/Innen diskutieren widerstreitende Wertvorstellungen fach- und kulturübergreifend."),
+				new Array(0, "Ingenieure/Innen vermeiden Handlungsfolgen, die zu Sachzwängen und zur Einschränkung selbstverantwortlichen Handelns führen, außer es kann ein Nutzen daraus gezogen werden.")
+			),
+			new Array(
+				new Array(1, "Computersysteme sollten so gestaltet werden, dass Anwender ausreichend informiert sind über die grundsätzlichen Vorgangsweisen und Prinzipien, wie das System funktioniert."),
+				new Array(0, "Computersysteme sollten so gestaltet werden, dass Anwender möglichst wenig informiert sind über die grundsätzlichen Vorgangsweisen und Prinzipien, wie das System operiert, da sie ansonsten allzu sehr verwirrt und irritiert werden."),
+				new Array(0, "Computersysteme sollten so gestaltet werden, dass die Vorannahmen und Prioritätensetzungen, die bei der Entwicklung in das System eingegangen sind, nicht explizit transparent gemacht werden, um Anwender nicht zu verunsichern.")
+			),
+			new Array(
+				new Array(0, "Die Produktionssicht der Informatik berücksichtigt den sozialen Kontext der Nutzungssituation."), 
+				new Array(0, "Die Produktionssicht der Informatik ist die ethische Dimension immanent."),
+				new Array(0, "Die Produktionssicht der Informatik bezieht Überlegungen zu den Konsequenzen der eigenen Sinne.")
+			)
+		)
+	};
+	
+	_public = {
+		answerQuestion:		function(id) {
+			var question = _private.questions[id];
+			var pts = 0;
+			var clicked = new Array();
+			for(i = 0; i < question.length; i++) {
+				clicked[i] = $("answer"+i).checked;
+				if($("answer"+i).checked == question[i][0]) {
+					pts += 2;
+				} else {
+					pts -= 1/2;
+				}
+			}
+			_private.answeredQuestions += 1;
+			_private.userSolutions[id] =  {points: pts,	"clicked": clicked};
+			this.makeQuestion();
+		},
+		checkQuestion:		function(id) {
+			var question = _private.questions[id];
+			for(i = 0; i < question.length; i++) {
+				var prefix;
+				if(question[i][0] == 1) {
+					$("answer"+i).parentNode.className = "correct";
+					prefix = document.createElement("em");
+					prefix.appendChild(document.createTextNode("(richtig) "));
+				} else if(question[i][0] == 0) {
+					$("answer"+i).parentNode.className = "false";
+					prefix = document.createElement("em");
+					prefix.appendChild(document.createTextNode("(falsch) "));
+				} else {
+					$("answer"+i).parentNode.className = "dunno";
+					prefix = document.createElement("em");
+					prefix.appendChild(document.createTextNode("(kA) "));
+				}
+				$("answer"+i).parentNode.insertBefore(prefix, $("answer"+i).nextSibling);
+			}
+		},
+		makeQuestion: 		function() {
+			var question = _private.nextQuestion();
+			if(question == -1) {
+				_private.container.innerHTML = 'Gratulation!<br />'+"\r\n"
+					+'Du bist alle Fragen durchgegangen. <a href="">Nochmal?<\/a>';
+				return;
+			}
+			
+			var answers = new Array();
+			var txt = "";
+			while(answers.length != question.answers.length) {
+				var rand = Math.ceil(Math.random()*(question.answers.length)) - 1;
+				if(answers.indexOf(rand) != -1) {
+					continue;
+				}
+				answers[answers.length] = rand;
+				txt += "\t"+'<label><input type="checkbox" id="answer'+rand+'" />'+question.answers[rand][1]+'<\/label>'+"\r\n";
+			}
+			delete answers;
+			_private.container.innerHTML = "\r\n"+'<h3>Welche der nachfolgenden Aussagen sind richtig? <em>(noch '+_private.remainingQuestions()+' Fragen im Pool)<\/em><\/h3>'+"\r\n"
+				+'<form onsubmit="return false">'+"\r\n"
+				+txt
+				+"\t"+'<br /><br />'+"\r\n\t"
+				+'<input type="button" value="&iquest; Antworten überprüfen ?" onclick="app.checkQuestion('+question.id+')" /> '
+				+'<input type="button" value="Neue Frage" onclick="app.makeQuestion()" /> '
+				+'<input type="button" value="Neue Frage und diese aus Pool entfernen" onclick="app.answerQuestion('+question.id+')" /> '
+				+"\r\n"
+				+'<\/form>'+"\r\n";
+		}
+	};
+	
+	return _public;
+};
+
+window.onload = function() {
+	app = GWG_Fragen();
+	app.makeQuestion();
+};
+/* ]]> */
+</script>
+</head>
+<body>
+
+<h1>Gesellschaftswissenschaftliche Grundlagen der Informatik</h1>
+<h2>Prüfungsfragensammlung</h2>
+<p id="suggestions">Bei Fehlern / Fragen / Unklarheiten bitte <a href="/web/20100329040514/http://informatik-forum.at/showthread.php?t=61985">hier im Informatik-Forum posten</a> (Link öffnet im selben Fenster)</p>
+
+<p id="byme">by Christopher Gabriel</p>
+<div id="container">Loading...<br />JavaScript muss aktiviert sein!</div>
+</body>
+</html>

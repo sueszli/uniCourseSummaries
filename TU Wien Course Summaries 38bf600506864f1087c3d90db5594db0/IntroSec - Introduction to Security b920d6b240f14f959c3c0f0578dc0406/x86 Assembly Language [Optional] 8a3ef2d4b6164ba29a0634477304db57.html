@@ -1,0 +1,692 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>x86 Assembly Language [Optional]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8a3ef2d4-b616-4ba2-9a06-34477304db57" class="page sans"><header><h1 class="page-title">x86 Assembly Language [Optional]</h1></header><div class="page-body"><div><figure id="533506b7-612c-40da-a629-b6cd6c0e6d9f"><div class="source"><a href="03.1-Background_on_Binary_Analysis_(4).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a87eb5d5-2d10-4ac8-86b8-bb9f79bad697/03.1-Background_on_Binary_Analysis_(4).pdf</a></div></figure></div><p id="a1a5afcd-c000-4ab7-b95f-b20e6d9c1473" class=""><a href="http://www.cs.virginia.edu/~evans/cs216/guides/x86.html">http://www.cs.virginia.edu/~evans/cs216/guides/x86.html</a></p><p id="a2cc772a-4bd4-478b-b431-13e2e8094117" class="">
+</p><h1 id="0a7b50d1-c54c-430a-bcb3-1aabf8bc1731" class="">Endianness</h1><p id="573d7b55-2d9b-4c35-a782-6b6764f1b17b" class="">Endianness is the order of bytes of a word of digital data in <span style="border-bottom:0.05em solid">computer memory</span>.</p><ul id="3ff8f386-373f-4ef4-b55f-dac2e4ca25c2" class="bulleted-list"><li style="list-style-type:disc">A big-endian system: stores most significant byte of a word at the smallest memory address.</li></ul><ul id="a48e996f-88ee-472b-827f-2f0162c6b7b6" class="bulleted-list"><li style="list-style-type:disc">A little-endian system: stores least-significant byte of a word at the smallest memory address.</li></ul><p id="c768d99a-c0cf-4b5e-b570-f6e29415102e" class="">
+</p><p id="1f5d1d36-8729-41ac-8d33-b572260255a4" class="">Example:<div class="indented"><p id="ea615fe5-e275-43e5-82f9-a117e4e58a3a" class="">Storing a 32-bit (four byte) integer with the value of <code>0x0A0B0C0D</code>:</p><p id="356f7061-4c9f-4271-a781-397de0f58c71" class="">The integer is broken into four bytes, <code>0x0A</code>, <code>0x0B</code>, <code>0x0C</code>, and <code>0x0D</code>, and the bytes are stored in four sequential byte locations in memory.</p></div></p><div id="c371c97f-0b4d-4e21-9979-677f737a296a" class="column-list"><div id="e927e758-a0b0-40ec-83f8-288a285713c2" style="width:50%" class="column"><figure id="0581f784-ed7e-4421-97fc-c135d2d7daca" class="image"><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Big-Endian.svg/200px-Big-Endian.svg.png"><img style="width:192px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Big-Endian.svg/200px-Big-Endian.svg.png"/></a></figure></div><div id="4fd1e753-8e9a-4e9a-9627-4a90abcb3c0e" style="width:50%" class="column"><figure id="d06c6a58-0785-4f59-88b7-e93b470e2357" class="image"><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Little-Endian.svg/200px-Little-Endian.svg.png"><img style="width:192px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Little-Endian.svg/200px-Little-Endian.svg.png"/></a></figure></div></div><p id="5916f076-23b7-4348-b8be-7eb2cb44b9bd" class="">
+</p><h1 id="80fa66e3-029e-4f25-95e7-2462ce2a2234" class="">C Examples</h1><figure id="50ea0075-e5e6-48a5-b9c3-e52eab3a30c6" class="link-to-page"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/C%20%E2%86%92%20Assembly%2050ea0075e5e648a5b9c3e52eab3a30c6.html">C → Assembly</a></figure><p id="45290a77-7c35-4205-8c5e-e7265cfa1916" class="">
+</p><h1 id="74c39647-7d3c-4222-8c9b-64ea8f0f3c0f" class="">Compiling</h1><ul id="9e0cb1cd-f3dc-4264-b4f0-d43a8e00a2aa" class="toggle"><li><details open=""><summary>Compiling: From C to executables</summary><ol type="1" id="d8998096-1dcd-46ec-ba9b-2f79c78f26c3" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Preprocessing</span><p id="011555c1-d5af-4931-980f-e1046d19e448" class="">preprocessor commands (in C they start with ‘#’) are interpreted<div class="indented"><figure id="27cb9b8e-0b31-4764-9a38-95a531179534" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled.png"/></a></figure></div></p></li></ol><ol type="1" id="4c5e92de-6efe-4bcd-90c8-5737e00dee04" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Compilation</span><p id="b266afa5-698f-4166-8c1b-39746e68e88a" class="">translated into <mark class="highlight-yellow_background">assembly instructions</mark><div class="indented"><figure id="81caf272-6771-41cc-89e2-16f13fb05745" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%201.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%201.png"/></a></figure></div></p></li></ol><ol type="1" id="d074092c-c043-460d-94d7-78893c818e7d" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Assembly</span><p id="45e0e3b6-5ab3-45b0-970c-3c82fa3dafcb" class="">assembly instructions are translated into <mark class="highlight-yellow_background">machine code or object code</mark><div class="indented"><figure id="394752e0-5ea3-4cdc-8a2a-bcfc8cfe33aa" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%202.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%202.png"/></a></figure></div></p></li></ol><ol type="1" id="5a9eac05-e77c-4e08-bd4e-041418053e39" class="numbered-list" start="4"><li><span style="border-bottom:0.05em solid">Linking</span><p id="345f5ae1-2897-4d0f-a217-f8cba5c55c09" class="">multiple object files are combined in a single <mark class="highlight-yellow_background">executable</mark>.</p><p id="f2e65b4f-5001-400d-a137-8754af154f15" class="">In the generated file references (links) to the used library are added.</p><ul id="2109330e-ed41-4b51-adc0-6d5acbd9c079" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">static links</span><p id="c579e863-4d63-425a-8443-3408f6159f72" class="">binaries are complete by themselves and do not depend on any external libraries</p></li></ul><ul id="a2a8cae8-1879-4e69-ac69-6419a6e48c3a" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">dynamic links</span><p id="4cc8111c-3ce9-49af-9a0c-d6974813ed7b" class="">Binaries rely on libraries that are loaded when needed - <em>dynamic relocation</em> of code</p><figure id="fdc583b0-eed6-49e8-8bba-11cf0412bdd3" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%203.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%203.png"/></a></figure></li></ul></li></ol><p id="9a1cf736-5f41-47b6-889c-ee129ba066ee" class="">
+</p></details></li></ul><ul id="d6b59ad7-1317-43d4-aa6a-8a939137fb4a" class="toggle"><li><details open=""><summary>Executable and Linkable Format (ELF)</summary><p id="3e7875a2-0766-4b6c-be23-3a513b7f536f" class="">After assembly we have <mark class="highlight-yellow_background">object files:</mark></p><ol type="1" id="51a4fc46-2b7e-4308-a04b-8591c4cf7499" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Relocatable file</span><p id="d28306dd-2ecd-4572-9db6-644cd75dd9e2" class="">containing code and data that can be linked with other object files to create an executable or a shared object file</p></li></ol><ol type="1" id="34f0c6fa-4430-4105-a2a5-48785a11a4c2" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Executable files</span><p id="457ebc54-0e27-4b90-8dfb-eebcfb18e599" class="">program that can be executed</p></li></ol><ol type="1" id="0227187c-ac94-4c0d-ba73-be4d1ae9b6ec" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Shared object files</span><p id="e2540d27-299a-4b1a-80d1-6a7d131702dc" class="">linked with other object files to obtain another object file</p><p id="df89f86a-e592-4309-9ab7-b5254aca4557" class="">or used by a dynamic linker together with other executable files and object files to create a <mark class="highlight-yellow_background">process image</mark></p><p id="d4859b3b-854e-4561-bfcf-0d0023a8c946" class="">Process image is an executable file required while executing the program. This image usually contains:<div class="indented"><ul id="a62e9383-b0af-4b44-86f6-315539f17344" class="bulleted-list"><li style="list-style-type:disc">Code segment or text segment</li></ul><ul id="b9e5fead-cc57-4cb4-8505-05fbf8a64ed1" class="bulleted-list"><li style="list-style-type:disc">Data segment</li></ul><ul id="e1da1aa3-ae80-4775-b343-9afa1f6709c4" class="bulleted-list"><li style="list-style-type:disc">Stack segment</li></ul><ul id="d6aa99e8-664e-4221-bcc3-59b5fa240b50" class="bulleted-list"><li style="list-style-type:disc">Heap segment</li></ul><p id="c43d57ec-19ca-4c89-be47-fba5175f1bdc" class="">
+</p><figure id="ab3d6ff4-9e99-41e3-8108-c87de75f07d8" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%204.png"><img style="width:144px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%204.png"/></a></figure></div></p></li></ol><p id="701ffd1a-4718-4a25-b394-36a635c20286" class="">
+</p><p id="5539283f-ab18-40bc-b349-6ad601b2789f" class="">Any ELF file is composed by<div class="indented"><p id="47a96bc6-1e9c-4e2f-bb95-bbf5f5b7ec07" class=""><span style="border-bottom:0.05em solid">ELF Header</span><div class="indented"><p id="2279024b-8261-475b-8e4e-6a91df8e770b" class="">describing the file content</p></div></p><p id="ea9f018f-658b-43be-94fa-9715f623ffe3" class=""><span style="border-bottom:0.05em solid">Program header table</span><div class="indented"><p id="c8e0a69a-2b2f-4443-a623-0015d957226d" class="">providing informations on how to create a process image</p></div></p><p id="c895b089-9d19-4323-9a2a-88ecebacc454" class=""><span style="border-bottom:0.05em solid">sequence of Sections</span><div class="indented"><p id="098a4ecb-ec23-4550-b2b9-0aa4725deefa" class="">containing what is needed for linking (instructions, data, symbol table, relocation information, …)</p><figure id="b5811a5a-4aad-483c-9b0c-8604dc62ed79" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%205.png"><img style="width:480px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%205.png"/></a></figure></div></p><p id="2f4807fc-44b4-4bcd-b702-97bf9f439954" class=""><span style="border-bottom:0.05em solid">Section header table</span><div class="indented"><p id="72f9f912-72cd-4cb5-ae5a-63c9f47aa909" class="">with a description of previous sections</p></div></p></div></p></details></li></ul><p id="59ab71d5-3896-4d67-beb7-04aba12ba1de" class="">
+</p><h1 id="ff1e0849-55b8-4036-af28-eedb9abbd086" class="">Assembly Language</h1><p id="bd5f9a04-f4b2-4569-bd75-e138ac485513" class="">Assembly language makes machine code more readable</p><ul id="dd898c92-da9e-457c-a116-2dda3fc890bb" class="toggle"><li><details open=""><summary>Differences </summary><ul id="0c82e5f1-e200-4c51-931e-49bd91b3587d" class="bulleted-list"><li style="list-style-type:disc">computer architecture (eg. x86 vs. ARM)</li></ul><ul id="7b7aeec9-7df4-4562-bc62-5fa3bb8c925d" class="bulleted-list"><li style="list-style-type:disc">32- and 64-bit x86</li></ul><ul id="96b9d7b8-02ad-4cb6-9fcd-d04255a3ef1c" class="bulleted-list"><li style="list-style-type:disc">Intel and AT&amp;T</li></ul><figure id="6ff8ced1-6430-4b8a-aa85-17dda9652077" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%206.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%206.png"/></a></figure><p id="7a96a7e8-9dd7-4961-840b-595c6f1b65c3" class="">32 Bits<div class="indented"><p id="1f0df6f9-978d-4a89-b8e0-2b17796191f8" class="">Every function call pushes all its arguments to the stack</p></div></p><p id="506024d3-e0fb-499a-8b83-e4f6ab44ca5c" class="">64 Bits<div class="indented"><p id="15f67f7b-5da7-4ac6-a56c-10c05f91f07d" class="">Every function call stores the first 6 arguments in <code>RDI</code>, <code>RSI</code>, <code>RDX</code>, <code>RCX</code>, (but not <code>RBX</code> and <code>RAX</code>) <code>R8</code>, <code>R9</code> and pushes extra arguments on the stack</p></div></p></details></li></ul><p id="76dec379-a294-4d14-bef3-6aab0edcec73" class="">
+</p><p id="1df9f1fc-da41-421a-8a4d-934fd7438460" class=""><span style="border-bottom:0.05em solid">Registers</span></p><figure id="8fd057dd-07dc-4e1e-a6b6-fe4f05774f49" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%207.png"><img style="width:576px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%207.png"/></a></figure><p id="478ede55-8d72-409a-8e09-bdb731f02348" class="">
+</p><p id="9f9d27f8-ff48-4c22-bfd8-a015332189b8" class=""><span style="border-bottom:0.05em solid">Pointers</span><div class="indented"><p id="a220f3ca-f405-46e5-b79d-ea81e74fd594" class=""><code>RSP / ESP</code> 	Stack pointer, top of stack address</p><p id="0f778eaa-a2fb-4831-8fd3-5fa97f99e732" class=""><code>RBP / EBP</code> 	Base Pointer, address of current stack frame (defines stack frame with <code>RSP/ESP</code>)</p><p id="92b94ace-3053-4641-add6-d464e316a16b" class="">			Can reference local variables</p><p id="0c7c333b-5daf-45ea-ad79-c5af9fcc217a" class="">			Points directly at the function arguments.</p><p id="902d557a-f6d4-4026-8295-bb405b35c889" class=""><code>RAX / EAX</code> 	Return value of every function <div class="indented"><p id="856d4bc8-6e02-44d2-88ec-e99a627fee27" class="">
+</p></div></p><p id="7849237e-7682-490f-bf36-315127e9da78" class=""><code>RIP / EIP</code> 	Instruction Pointer, not part of stack, points to next instruction.</p></div></p><p id="5de5931c-c436-41c5-ad69-ff4aa7ffb051" class="">
+</p><p id="6dfe48df-5427-4a1a-b817-97b42dbe0578" class=""><span style="border-bottom:0.05em solid">Memory Layout</span><div class="indented"><p id="467a7841-b320-48ce-be93-8ceb9ce019ce" class="">Byte sequences identified by addresses</p><p id="987e714c-32d8-4013-bc75-e6b5655e9654" class="">Types do not exists in memory! Bytes can be interpreted in different ways</p><p id="694d7865-48f6-474c-9c08-4f509df25629" class="">Integers (and pointers) are stored as <em>little-endian</em> words: <code>78 56 34 12</code> <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span> <code>0x12345678</code></p></div></p><figure id="36e3f538-a994-4309-b42b-d1642fa38430" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%208.png"><img style="width:240px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%208.png"/></a></figure><figure id="e55f088d-59a3-4919-bfd0-924d4903f24b" class="image"><a href="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%209.png"><img style="width:384px" src="x86%20Assembly%20Language%20%5BOptional%5D%208a3ef2d4b6164ba29a0634477304db57/Untitled%209.png"/></a></figure><p id="05562f49-b804-43a5-bd45-ab7774340dd9" class="">
+</p><p id="a98e0660-dcb3-4558-ac66-c4950485e26a" class=""><span style="border-bottom:0.05em solid">Stack</span><div class="indented"><p id="f47cc17b-3662-4060-98cb-27b474c8596f" class="">Stack: region of memory where local variables are stored</p><p id="13862d00-ef06-456a-882a-2caff99a1c40" class="">Grows towards lower memory addresses → pushed values have lower addresses</p><p id="90f03dd2-e1bf-45d1-b720-39170e799f75" class="">When a function is called, a <em>stack frame</em> is set up</p></div></p><p id="f93797cf-8e34-4d98-b9d3-c1bdc4351ade" class="">
+</p><p id="9d7be74b-d755-4d7d-9c60-f21ae4f3c277" class=""><span style="border-bottom:0.05em solid">Instructions</span></p><ul id="5d8f6ae1-9da7-40df-9f82-fd203122ba19" class="toggle"><li><details open=""><summary><code>mov &lt;dst&gt;, &lt;src&gt;</code></summary><p id="60a8e4a4-3387-40aa-a099-12d56ac0b6f8" class="">move <code>&lt;dst&gt; := &lt;src&gt;</code></p></details></li></ul><ul id="4be9920b-07b7-4a9b-ba50-c72ad566efe2" class="toggle"><li><details open=""><summary><code>add &lt;dst&gt;, &lt;src&gt;</code></summary><p id="0d55ecfc-1be1-4317-9453-382926b45e5f" class="">add <code>&lt;dst&gt; += &lt;scr&gt;</code></p></details></li></ul><ul id="8a9cc818-125b-462c-a498-7aab2282304f" class="toggle"><li><details open=""><summary><code>sub &lt;dst&gt;, &lt;src&gt;</code></summary><p id="aa3d04f4-9048-4c5f-ada9-d54d411277bf" class="">subtract <code>&lt;dst&gt; -= &lt;scr&gt;</code></p></details></li></ul><ul id="9fa88450-7c84-4562-a3b6-c3d028ce8fd8" class="toggle"><li><details open=""><summary><code>and &lt;dst&gt;, &lt;src&gt;</code></summary><p id="b24d1fb3-2778-4698-b811-5d46cddf212f" class="">logical and <code>&lt;dst&gt; = &lt;dst&gt; &amp;&amp; &lt;src&gt;</code></p></details></li></ul><ul id="f9f2bc25-7866-4606-bc58-978e305e65d6" class="toggle"><li><details open=""><summary><code>push &lt;target&gt;</code></summary><p id="0c827e5d-6180-4be6-b56f-5729811089a6" class="">pushes the value in &lt;target&gt; to the stack</p><p id="fee42a88-6540-47bf-89b6-1ca3bc220dbe" class=""><code>push</code> means</p><pre id="8f554ee7-8d55-46b5-a063-29daa80e52af" class="code"><code>sub esp, Y     ; &quot;allocate&quot; space Y for the new stack item
+mov [esp], X   ; mem[esp] = X </code></pre></details></li></ul><ul id="4d426044-4e4e-4416-be14-9b8d5b463f80" class="toggle"><li><details open=""><summary><code>pop &lt;target&gt;</code></summary><p id="13ffe029-1e7b-45eb-b956-f0acba4d27d5" class="">pops a value from the stack into &lt;target&gt;</p></details></li></ul><ul id="db38b005-a23b-4507-b3bd-6e3d6046ecd5" class="toggle"><li><details open=""><summary><code>cmp &lt;dst&gt;, &lt;src&gt;</code></summary><p id="f0ab80f0-52ae-4bc2-b822-4c8f198ca9e2" class="">compares values: <code>flag ← &lt;dst&gt; -= &lt;scr&gt;</code></p><p id="3d6fe2d8-b8dd-44e2-847f-966e2cef8c27" class="">flags can be checked with conditional operations</p></details></li></ul><ul id="10b190cb-c138-43b0-b7ae-443edf2ec8a8" class="toggle"><li><details open=""><summary><code>call &lt;address&gt;</code></summary><p id="0d2b91d5-fd16-445d-a347-9f807b95fec4" class="">address of next instruction is stored in stack, calls the function at &lt;address&gt;</p><p id="82161b85-1c7f-47a9-8838-494a3a962fd8" class="">then returns to address stored previously in stack</p><p id="e9779848-5fb2-407f-b3d1-aadde0e10ba9" class=""><code>call _MyFunction</code> means</p><pre id="d05f89e8-41f2-4920-912e-4f72db2e7dd1" class="code"><code>push eip + 2   ; return adress is current address + size of two insructions
+jmp _MyFunction</code></pre></details></li></ul><ul id="d77ac703-1f95-44e7-9f7b-b746d16a5659" class="toggle"><li><details open=""><summary><code>ret</code></summary><p id="4f43257e-f3b3-4488-9edc-d3bc6511ae47" class="">pops return adress in stack</p></details></li></ul><ul id="4aeb66e1-06e8-4722-8939-b6d88bba1d99" class="toggle"><li><details open=""><summary><code>leave</code></summary><p id="2b95295d-b30c-48af-976f-5bcfc24c1673" class="">current stack pointer is popped <code>pop &lt;RSP&gt;</code></p><p id="454bab62-5001-46c6-a43e-f012d5e89d00" class="">and then <code>RSP := RBP</code></p></details></li></ul><ul id="48ea5208-45bc-4b2a-9d7e-9f932980ece7" class="toggle"><li><details open=""><summary><code>jle &lt;target&gt;</code></summary><p id="cc37fd69-f6d7-48a4-904b-45ea47e153b7" class="">based on the flags set by cmp</p><p id="5b64bb70-cb9e-4d79-8cad-794c40726ac7" class=""><code>if &lt;src&gt; ≤ &lt;dst&gt; then goto &lt;target&gt;</code> </p></details></li></ul><ul id="5d4cd4a6-bbd0-4253-a638-cda471aedb3e" class="toggle"><li><details open=""><summary><code>jge &lt;target&gt;</code></summary><p id="24ac37c0-c8d3-4405-bb36-611ae22f3d55" class="">based on the flags set by cmp</p><p id="69b29ef8-dd6e-4a5d-af0d-78993d8bb9fd" class=""><code>if &lt;src&gt; ≥ &lt;dst&gt; then goto &lt;target&gt;</code> </p><p id="66cd3077-d9f2-4dd3-9e89-03a4f54d6eb8" class="">
+</p></details></li></ul><ul id="41093291-2fb2-46c7-9b5e-0e776d594227" class="toggle"><li><details open=""><summary><code>jmp &lt;target&gt;</code></summary><p id="2181fdda-e93d-4d2f-82be-3872abc457bc" class="">copies <code>&lt;target&gt;</code> into <code>RIP/EIP</code> instruction pointer register</p><p id="f9e55ce2-572f-4be1-90b1-a5a5ff9e5b9e" class=""><code>goto &lt;target&gt;</code></p><p id="9ed1ee77-74b3-4bc8-9897-b2ed56554c12" class="">
+</p></details></li></ul><ul id="855468d4-92a9-4b20-ace9-5fedc20d5ed1" class="toggle"><li><details open=""><summary><code>lea &lt;dst&gt; &lt;src&gt;</code></summary><p id="0dbefc21-7b98-491e-830e-ad1132fe0b92" class="">stands for &quot;load effective address&quot;</p><p id="8ef21659-a213-4b62-b487-69737fa209e9" class=""><code>&lt;dst&gt; := &lt;src&gt;.address</code></p></details></li></ul><ul id="e49e8744-a510-41dd-83c4-f486c9aca69e" class="toggle"><li><details open=""><summary><code>int &lt;value&gt;</code></summary><p id="46bf29fc-ba0f-4dac-8e67-cacb3854acd9" class="">stands for &quot;interrupt&quot;</p><p id="8e738ff0-3f0e-4df2-aea3-5876a57c91b1" class="">generates software interrupt with given value→ invoke system calls</p></details></li></ul><p id="0f89bded-de7b-4694-9833-95120cbb35ec" class="">
+</p><p id="0a28e900-f879-4115-a5b5-bb779ac8cb8c" class=""><span style="border-bottom:0.05em solid">Addressing modes</span></p><ul id="5253117f-3ecc-4f65-9550-b453ea57b81e" class="toggle"><li><details open=""><summary>Register direct <code>mov eax, ebx</code></summary><p id="23151fcf-4a62-4624-855e-57bb2585003d" class="block-color-gray">Between register contents</p></details></li></ul><ul id="33668d39-4c40-40b2-9de5-4d972e140ca7" class="toggle"><li><details open=""><summary>Register indirect <code>mov DWORD PTR [eax], ebx</code></summary><p id="74ac71bc-0e70-4252-8b30-66d3225eb710" class="block-color-gray">Using content of register as memory location address.</p><p id="d9e1c616-6718-457b-833c-963a2770282e" class="block-color-gray">Used for array-addressing.</p><p id="bc77ba0b-efc2-4764-afa0-945b64db79df" class="block-color-gray"><code>DWORD PTR</code> is like a type: indicates a 32-bit double word pointer</p><p id="1a80a3d4-d182-4818-8e56-a00426c92c7e" class="block-color-gray"><code>mov DWORD PTR [eax], ebx</code> is the same as <code>mov mem[eax], ebx</code> where eax is interpreted as address</p></details></li></ul><ul id="8d756411-0ff0-4d28-85d5-e58b5ef79da2" class="toggle"><li><details open=""><summary>Immediate <code>mov eax, 3</code></summary><p id="3898b746-2fc9-434a-870a-bad4789dad3b" class="block-color-gray"><code>mov eax, 3</code></p></details></li></ul><ul id="518bf5ca-abf2-4a8e-9c4e-2ad1bc41ed81" class="toggle"><li><details open=""><summary>Memory direct <code>mov eax, [0x1234]</code></summary><p id="4b60bf50-9d06-439d-9bbb-009b2a72696e" class="block-color-gray">Use memory address directly</p><p id="867c4f08-23e2-4923-81eb-b2bbb65979c9" class="block-color-gray"><code>mov eax, [0x1234]</code> is the same as <code>mov eax, mem[0x1234]</code></p></details></li></ul><p id="b389baa0-9643-4413-a8ec-6c8a28b7b298" class="">
+</p><h1 id="24b4bfd9-92bf-47c1-8de9-e3b3a59cc702" class="">Binary Analysis</h1><p id="035124c7-29a8-4f63-9c7b-263afa0f4a6c" class="">Goal: Extracting Information from Binary Files ELF</p><p id="ffa74af5-a3ff-4785-9efa-463c3d74bfe7" class=""><span style="border-bottom:0.05em solid">Static analysis</span></p><p id="1cfaf4bd-6a91-4241-aa2a-248a0377a0b7" class="">inspecting the assembly → understanding program logic (tools can infer the program control flow effectively)</p><p id="b40e7ccd-6189-4694-85f6-a520cca1cd40" class="">
+</p><p id="45fe243e-07ec-4dad-a55d-ae0913ef185f" class=""><span style="border-bottom:0.05em solid">Dynamic analysis</span></p><p id="4575930b-e86b-4436-8ee8-f009939d2746" class="">program is run with debuggers (on virtual or real processors) to observe its dynamic behaviour</p><p id="74060333-aa39-4de7-a4ba-a2e42732a99b" class="">
+</p><p id="f9183a8a-5216-47a6-ad40-53b5c040812d" class=""><span style="border-bottom:0.05em solid">Disassembler</span></p><p id="ae7addbb-394c-4395-8a4c-116968bfd705" class="">machine language → assembly language</p><p id="76e0dc3a-648e-4703-a406-be5fc0beba6d" class="">
+</p></div></article></body></html>

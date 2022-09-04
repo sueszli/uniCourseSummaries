@@ -1,0 +1,680 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>XML fundamentals</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2bf84728-e856-4902-b8d5-4dda9ee9e5c6" class="page sans"><header><h1 class="page-title">XML fundamentals</h1></header><div class="page-body"><p id="8f9c473e-8076-4a84-9ca6-621fc85d822d" class="">
+</p><nav id="85843603-cdfa-4aec-95b5-cf92ea70a508" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e2619a1c-d990-4bff-9914-ea1d61800e21">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#87923e25-43de-4559-89fb-9a37d07f94dc">Fundamentals</a></div></nav><p id="ff454ac2-9b8c-4a74-a669-59c381bb8157" class="">
+</p><h1 id="e2619a1c-d990-4bff-9914-ea1d61800e21" class="">Definition</h1><p id="9dd5cf9c-a35e-456b-b1f3-8a9dcaa7ff9a" class=""><mark class="highlight-blue">XML</mark><div class="indented"><p id="e7ff5357-e9db-411b-b053-bbdcc8977272" class="">= extensible markup language</p><p id="b115e60d-12aa-4ecb-a426-2cf210b210b4" class="">W3C standard for document markup</p><ul id="eb5dd7e5-c715-49e8-aa3b-e7acc9017a56" class="bulleted-list"><li style="list-style-type:disc">structural and semantic language / document type<p id="2d5b59db-0634-4200-9d87-aee9fd5bf8ee" class="">static <em>documents </em>that don’t do anything:<div class="indented"><p id="f4d78c8d-c3b7-4851-90ae-8c870e2a853c" class="">not a programming language, network protocol</p><p id="cdb22854-c6ae-4af9-a10f-19fee0408ca2" class="">not a database but can be stored in databases</p></div></p></li></ul><ul id="7079d7ab-eb4b-44b1-b196-59a4eef65209" class="bulleted-list"><li style="list-style-type:disc">plain-text<p id="3f489364-fb6c-4adb-865d-c0323c71c216" class="">portable data, human-readable, machine-readable</p></li></ul><ul id="4f70fe03-df0b-4480-aeb2-511b0cd3f23a" class="bulleted-list"><li style="list-style-type:disc">application-specific, extensible<p id="2641e2e2-7104-4390-80f9-d724ee6d32b4" class="">no fixed set of tags</p><p id="a7c455bb-7d3f-4e21-9200-717d1c7b6321" class="">can be extended to different needs</p></li></ul><ul id="b6456775-7558-482c-98c9-9904d619f173" class="bulleted-list"><li style="list-style-type:disc">parsing<p id="451514fc-06cf-4fcf-ba6b-c0256b3a096e" class="">content gets parsed off of document</p><p id="0e8d3adf-ee92-4406-af74-0ea9935df039" class="">must be well-formd / syntactically correct</p></li></ul></div></p><p id="256d0570-8cb8-4e9c-b12a-e13d40f0f2ca" class="">
+</p><p id="4d92d54c-ccba-400a-a75a-29951ce8a0b0" class=""><mark class="highlight-blue">HTML</mark><div class="indented"><p id="f470e138-4fcf-4d26-b770-25c455f05df9" class="">XML ≠ HTML</p><ul id="a0867826-0f86-4589-847a-1e013464600b" class="bulleted-list"><li style="list-style-type:disc">presentation language</li></ul><ul id="7225d45f-4475-43cf-b515-411b904180cf" class="bulleted-list"><li style="list-style-type:disc">Fixed set of tags with predefined meanings</li></ul><ul id="099b69cd-f6b5-4338-82a6-18b1b6df8793" class="bulleted-list"><li style="list-style-type:disc">not extensible<p id="554d1a6a-6f44-4860-91c3-483db9dad8ea" class="">only used for web pages</p></li></ul></div></p><p id="c93d70b1-8e67-48f5-836f-4a3feac62bfd" class="">
+</p><p id="832f58fd-d839-4e2d-bdb8-5efe56a27f68" class="">
+</p><h1 id="87923e25-43de-4559-89fb-9a37d07f94dc" class="">Fundamentals</h1><p id="e34554f9-0e17-4495-abeb-9599554a5af0" class=""><mark class="highlight-blue">Elements and Tags</mark><div class="indented"><p id="db1051e7-5bf5-4988-ac73-dc7b12ae917d" class="">element = tags + content</p><ul id="256650c5-ec1e-4af6-8ac1-c05bd2b3fa1d" class="bulleted-list"><li style="list-style-type:disc">content can be empty, consist of text, elements or be mixed</li></ul><ul id="9d0eef93-293f-4f03-8f3d-94df4e5dc287" class="bulleted-list"><li style="list-style-type:disc">tags are case-sensitive</li></ul></div></p><figure id="090e9d16-6b73-4f1a-87db-0dd1bce81b5b" class="image"><a href="XML%20fundamentals%202bf84728e8564902b8d54dda9ee9e5c6/Untitled.png"><img style="width:384px" src="XML%20fundamentals%202bf84728e8564902b8d54dda9ee9e5c6/Untitled.png"/></a></figure><p id="9620b54d-b1c7-445b-abc5-e9cd44a3eb03" class="">
+</p><p id="7087f9e9-9cda-4a47-836b-2752cc09844e" class=""><mark class="highlight-blue">Attributes</mark><div class="indented"><p id="0b8e0592-8612-455b-97f8-3ad78a33ca70" class=""><mark class="highlight-gray"><code>&lt;tagName attributeName=&quot;attributeValue&quot;&gt;</code></mark></p><p id="b40b45fc-73fc-42e7-840e-2e981bb841d1" class="">Tags can have multiple attributes</p><ul id="28449fd6-3140-41ee-aabe-73e692cd9419" class="bulleted-list"><li style="list-style-type:disc">attribute order is not significant</li></ul><ul id="8aad344b-aa5c-4e2e-b2f8-1f5370e902c0" class="bulleted-list"><li style="list-style-type:disc">attribute names must be unique</li></ul></div></p><p id="d5671591-481e-407e-8a38-b8826b61f58c" class="">
+</p><p id="42082ccf-3db0-4a61-a2a4-5a16d1e4d486" class=""><mark class="highlight-blue">allowed names</mark><div class="indented"><p id="2817fb20-8ee8-440f-be4b-2da4bdf85f8e" class="">XML names = element names, attribute names, construct names</p><ul id="1d5d741a-7c1c-47cf-b745-1669a738ad36" class="bulleted-list"><li style="list-style-type:disc">alphanumeric (but foreign letters allowed)</li></ul><ul id="6980300a-fca6-4cef-bf55-9839330f53c6" class="bulleted-list"><li style="list-style-type:disc">must start with letter or underscore<p id="87032ede-f80b-4433-8089-59d1771a79eb" class="">some constraints for <mark class="highlight-gray"><code>:</code></mark></p></li></ul><ul id="9a919010-c7a9-41e7-a303-b22312f54292" class="bulleted-list"><li style="list-style-type:disc">must not start with <mark class="highlight-gray"><code>xml</code></mark><mark class="highlight-gray"> </mark>(independent of casing)</li></ul><ul id="bd7494d0-a815-4dc4-ac5e-7418aa8c4349" class="bulleted-list"><li style="list-style-type:disc">no size limit</li></ul></div></p><p id="92cac719-ceb4-4c69-962d-0e31678c065d" class="">
+</p><p id="defcc72b-4305-45bb-be46-3d7f11ac1681" class=""><mark class="highlight-blue">character references</mark><div class="indented"><p id="f00791ff-8481-4b61-96a0-179a43a6cce6" class="">content must not contain <mark class="highlight-gray"><code>&lt;</code></mark>, <mark class="highlight-gray"><code>&amp;</code></mark> but can use character references instead)<div class="indented"><p id="4b63db74-4ed5-4786-9a67-62a6bc857792" class="">(new definitions can be added)</p></div></p><p id="3935b201-5d72-40cf-87a4-6d0f34b51bf4" class="">Mandatory:<div class="indented"><p id="ff56eae0-f5c4-4251-986d-3c4ca5582e91" class=""><mark class="highlight-gray"><code>&amp;lt;</code></mark>	for	<mark class="highlight-gray"><code>&lt;</code></mark> </p><p id="d414907a-bba9-43f0-9f93-ac30a48d5cdb" class=""><mark class="highlight-gray"><code>&amp;amp;</code></mark><mark class="highlight-gray">	</mark>for 	<mark class="highlight-gray"><code>&amp;</code></mark></p></div></p><p id="1083897a-84cb-4105-9645-6a3143fc7f5d" class="">Optional:<div class="indented"><p id="671d33f4-36c1-4c8d-8b9e-454db959dedb" class=""><mark class="highlight-gray"><code>&amp;gt;</code></mark><mark class="highlight-gray">	</mark>for 	<mark class="highlight-gray"><code>&gt;</code></mark></p><p id="d1d42489-d5ff-421e-98bc-420581d0837c" class=""><mark class="highlight-gray"><code>&amp;quot;</code></mark><mark class="highlight-gray">	</mark>for 	<mark class="highlight-gray"><code>&quot;</code></mark></p><p id="415c7707-d55c-4753-8bb5-1cfa00b2c418" class=""><mark class="highlight-gray"><code>&amp;apos;</code></mark><mark class="highlight-gray">	</mark>for 	<mark class="highlight-gray"><code>&#x27;</code></mark></p></div></p></div></p><p id="72b2cb17-e56e-40f0-b292-bc3e1cfcdb8c" class="">
+</p><p id="de0aa385-59b5-4de2-90d1-d31e2ba57137" class=""><mark class="highlight-blue">Comments</mark><div class="indented"><p id="794de593-9c05-44e8-ab7a-2d01bfa953cb" class=""><code><mark class="highlight-gray">&lt;!-- comment --&gt;</mark></code></p><p id="d1e1d1d5-3d1a-4dd4-bb77-5926a9c002ba" class="">not element</p><p id="c0efe7cf-74ad-45ca-8641-0018e470e0fd" class="">comment must not contain <mark class="highlight-gray"><code>--</code></mark></p></div></p><p id="278aae4d-9ce5-49d7-a58e-e9eb3a659322" class="">
+</p><p id="a28f63ad-71fe-48ab-87a1-7626c4f7dc50" class=""><mark class="highlight-blue">Processing Instructions</mark><div class="indented"><p id="be04d1f8-13e1-4e7d-b8d4-1bc037237bbd" class=""><mark class="highlight-gray"><code>&lt;?target instruction?&gt;</code></mark></p><p id="70a75621-3325-4c1b-8e71-99667bd8c63b" class="">ie. <mark class="highlight-gray"><code>&lt;?xml-stylesheet href=&quot;course.css&quot; type=&quot;text/css&quot;?&gt;</code></mark><div class="indented"><p id="93e9a315-539f-47fa-ae05-3096a1ccc13b" class="">not element</p><p id="9ba739eb-5695-48bb-a997-7212c1b14e08" class="">used to to pass information to applications</p><p id="6cfdb2d5-8cb3-4113-9624-34886e6e54fa" class="">the target is the XML name of the application or an identifier</p></div></p></div></p><p id="9fd623fe-a521-43c4-acbd-ef1ef5d6e1f4" class="">
+</p><p id="f3cf8d11-b1dd-403d-924c-7333060f9d0b" class=""><mark class="highlight-blue">XML Declaration</mark><div class="indented"><p id="8a2b1314-20b1-46d8-88aa-a2f6fe97b7a1" class="">first thing in the document</p><p id="36d640b4-d517-43d8-9811-fcf0d6c97742" class="">not element, not processing instruction</p><p id="2ed46833-c4df-4be8-abcf-6ebe69de6f46" class="">should begin with <mark class="highlight-gray"><code>xml</code></mark><mark class="highlight-gray"> </mark>(but optional)</p><p id="a17f5c02-197e-40f1-b0c1-0688f27d43d8" class="">ie. <mark class="highlight-gray"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; standalone=&quot;yes&quot;?&gt;</code></mark><div class="indented"><p id="1f28d5a9-cb25-40c2-bd65-9513df58da08" class=""><mark class="highlight-gray"><code>version</code></mark><mark class="highlight-gray">		</mark>used XML version in document</p><p id="a1040c55-aaa6-416b-a8ec-45ba57f40da5" class=""><mark class="highlight-gray"><code>encoding</code></mark><mark class="highlight-gray">	</mark>used character encoding - default is UTF-8</p><p id="37fed1ff-a4e5-499e-b58b-c12426bd4289" class=""><mark class="highlight-gray"><code>standalone</code></mark><mark class="highlight-gray">	</mark>whether the document uses external declarations - default is no</p></div></p></div></p></div></article></body></html>

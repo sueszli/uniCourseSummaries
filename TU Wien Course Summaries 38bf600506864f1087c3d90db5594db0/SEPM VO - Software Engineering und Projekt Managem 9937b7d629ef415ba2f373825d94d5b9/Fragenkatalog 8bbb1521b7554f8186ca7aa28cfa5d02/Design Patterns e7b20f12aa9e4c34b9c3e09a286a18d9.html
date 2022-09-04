@@ -1,0 +1,729 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Design Patterns</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e7b20f12-aa9e-4c34-b9c3-e09a286a18d9" class="page sans"><header><h1 class="page-title">Design Patterns</h1></header><div class="page-body"><p id="e9e61521-0086-4376-8495-4d0a3f7e0c20" class="">
+</p><ul id="d311ab68-a31c-428e-8c58-f7e548f71201" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">3 Creational Patterns beschreiben.</span></summary><p id="21fe74c6-99ff-48c5-b0b7-acab7d09d19a" class="">• Singleton – Provision of a single instance only
+• Factory – Method in a derived class creates associates
+• Prototype – Factory for cloning new instances from a prototypical instance</p><p id="01516939-4cc0-4b56-b5a5-4016e1589d43" class="">
+</p><p id="d8bc7b79-b2e6-4465-878d-be65516f3d76" class=""><strong>○ Singleton </strong></p><p id="fd0aeb69-8ca7-403c-b0bf-a45fdfa147af" class="">Provision of a single instance only</p><p id="97bbfb04-2734-4e2f-9a5b-d3b63c144ff4" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="d82084b1-f6f0-4778-a1a0-843eac016377" class="">Only one object instance should exist:<div class="indented"><ul id="72b494d1-e3d8-4530-af30-825c1f8cf4e9" class="bulleted-list"><li style="list-style-type:disc">Database access</li></ul><ul id="3d984e1d-89a2-4907-96aa-0f6eeb6148b6" class="bulleted-list"><li style="list-style-type:disc">Id generator</li></ul><ul id="f7754f75-86e4-4925-a6cb-4d0298a4df08" class="bulleted-list"><li style="list-style-type:disc">Logger</li></ul><ul id="6f166400-6f46-4235-b267-90b0e4641cec" class="bulleted-list"><li style="list-style-type:disc">Communication with hardware</li></ul></div></p></div></p><p id="bde905c9-c452-4e61-b982-2a95c4c5fdf5" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="6dd4d60b-3f9e-4f4f-a0c0-7c982a5965b7" class="toggle"><li><details open=""><summary>Example</summary><pre id="3f0ca5c1-838a-41e7-9e92-8ad855efd800" class="code"><code>public class Person {
+	private final Logger LOG = LoggerFactory.getLogger(Person.class);
+	
+	Logger getLogger() {
+		return LOG;
+	}
+}</code></pre><p id="d27c5d59-4dce-46cb-af44-4adc197556ec" class="">In this case <code>LOG</code> is the same object even without static due to the way the LoggerFactory works.</p></details></li></ul></div></p><p id="57d0e1e7-a5c3-4331-ae79-cd34225d6ec9" class="">
+</p><p id="60737b5f-78e1-4de1-8775-0b51e398c737" class=""><strong>○ Factory </strong></p><p id="15200ab2-b714-4a72-86e7-7137b3712da1" class="">Method in a derived class creates associates</p><p id="1bad8474-f47a-4ce3-9d85-9263b800ba39" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="d8a8192b-7314-4976-a7f0-aeccbc50b403" class="">Object creation &amp; configuration is complex</p></div></p><p id="c62999c7-5280-4770-88e3-a5f4fc6cb415" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="99b6fc54-f5bc-4b9b-84d6-64f294b3275e" class="toggle"><li><details open=""><summary>Example</summary><pre id="3dd001b4-0dc1-4d08-b126-04c318fd59f6" class="code"><code>interface Product { float getPrice(); }
+
+public class Milk implements Product {
+	final float price;
+	public Milk(final float price) { this.price = price; } //constructor
+	public float getPrice() { return price; } //getter
+}
+
+public class Sugar implements Product {
+	final float price;
+	public Sugar(final float price) { this.price = price; } //constructor
+	public float getPrice () { return price; } //getter
+}
+
+public class Product Factory {
+	public static Product createProduct(String what){
+		//When sugar is requested, we return sugar:
+		if (what.equals(&quot;Sugar&quot;)) { return new Sugar(1.49F) ; }
+		// When milk is needed, we return milk:
+		else if (what.equals(&quot;Milk&quot;)) { return new Milk(0.99F); }
+		// Otherwise return at least sugar
+		else { return new Sugar(1.49F); }
+	}
+}</code></pre><figure id="a0e4630d-e628-4535-b9df-f3dc78196c12" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%202.png"><img style="width:240px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%202.png"/></a></figure></details></li></ul></div></p><p id="8b3034a5-a890-4097-879d-7eaddf7d4f1b" class="">
+</p><p id="93328b6f-9afb-41cc-a3c8-e75a85ffeafa" class=""><strong>○ Abstract Factory </strong></p><p id="a0678394-03ab-4f9b-a4f4-02ca1ee8637c" class="">Factory for building related objects without specifying their concrete classes</p><p id="b6558adf-75ee-43ad-aa3a-5d8e9f42f695" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="50e276bb-5057-4702-80e1-70bd4098e78f" class="">Achieving higher abstraction by grouping individual factories with a common theme</p></div></p><p id="c58f35aa-f28c-48c1-a6b3-235de29c219b" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="ac622ef1-980b-4410-8f87-20f4f567b452" class="">A group of individual factories that have a common theme</p><p id="f71c73dc-dfbb-48bb-a632-ca0f2ff3cbb1" class="">Two hierarchies → abstract AbstractFactory class provides interface </p><p id="ab894032-864f-4a67-8c94-c76fde0f1dd6" class="">Client only knows abstract interface → Family may grow independently of the client</p></div></p><figure id="5a79794a-5c6c-4d40-8afa-c7824d7000dc" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%203.png"><img style="width:192px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%203.png"/></a></figure><figure id="f697fe28-74bf-462b-88f8-b3a54e1689b5" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%204.png"><img style="width:192px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%204.png"/></a></figure><p id="28aea761-6598-4083-bd47-33c5c62bf86d" class="">
+</p></details></li></ul><p id="333b6eaa-2f0d-4274-8872-6cbb795a7b7b" class="">
+</p><ul id="98719f6e-37da-4109-8d96-dd17efcaa5d0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">4 Structural Patterns beschreiben.</span></summary><p id="8e7b42fd-b620-42f4-8b69-55c942c6c4b8" class="">• Facade – Facade simplifies the interface for a subsystem
+• Adapter – Translator adapts a server interface for a client
+• Proxy – One object approximates another
+• Bridge – Abstraction for binding one of many implementations</p><p id="bd854e30-0bdc-469c-a4a8-15ad3f1edb77" class="">
+</p><p id="8b01698d-9383-4b86-9bef-fb8c972fb1fc" class=""><strong>○ Facade / Facet </strong></p><p id="480a0207-ff80-409a-82de-1e3630952424" class="">Simplifies the interface for a subsystem</p><p id="63da1924-2a39-4823-aed5-bbe05b2b5c2f" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="69593931-1969-4ba1-98b3-54e065e47932" class="">Need simplified access to a complex subsystem</p><p id="baccd60c-6dd1-48d5-8a5f-77bd554e2c13" class="">Provides an abstracted interface of a subsystem</p></div></p><p id="b66ee5b4-2bca-4df1-ac1a-291f1c5a0256" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><ul id="fdeb89c0-27c8-4db3-afbe-83629bcf3687" class="toggle"><li><details open=""><summary>Example</summary><pre id="4b6e9395-4c5a-435a-9b26-348e6a0a0c69" class="code"><code>public class SimpleMail {
+	public static int sendMail(String address, String subject, String body) {
+		int status = 0;
+		... //Complex mail sending operation
+		return status;
+	}
+}</code></pre></details></li></ul></div></p><figure id="1e77cf4b-da68-43f9-9bca-1a4e23199255" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%205.png"><img style="width:144px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%205.png"/></a></figure><p id="6a4a2492-5078-4790-ba59-a3d781bc78f5" class="">
+</p><p id="129ae3c1-be23-449b-9f4d-cb75c3b291b5" class=""><strong>○ Adapter / Translator </strong></p><p id="f6ddac32-f306-48ea-a0ee-c86603f3df8e" class="">Adapts a server interface for a client</p><p id="5f4d836c-5e43-42cc-83e5-34cfc61863b5" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="6f3db9ce-6af0-4074-a360-e20a46c3f049" class="">Need to integrate incompatible external functionality</p></div></p><p id="a7841011-ce88-43ca-aa28-ee0b33545a3a" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="c9184b8c-1661-49d4-b632-ebcc2baacf5a" class="">Translates (data transformation) into a compatible interface</p></div></p><figure id="04a7e5af-5e44-4b8f-92e3-5aa09d486d43" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%206.png"><img style="width:144px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%206.png"/></a></figure><figure id="10657d7c-e131-4dbf-8965-a64ed0845b92" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%207.png"><img style="width:132px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%207.png"/></a></figure><p id="64098376-73ce-458b-9b4e-c7672e0955d9" class="">
+</p><p id="9bd207d3-4c58-466a-a64c-1562bb3becaf" class=""><strong>○ Proxy </strong></p><p id="61a75a08-78b1-4944-b8ab-39ac70721d3c" class="">One object approximates another</p><p id="eea8e241-0642-4513-a6a3-be1026ce34ed" class=""><span style="border-bottom:0.05em solid">Issue</span><div class="indented"><p id="104ca959-ddb1-43ba-973c-e8669709733d" class="">Need to integrate further actions before intended method call</p></div></p><p id="b4ee6a89-4ac7-4a62-9f43-21895e964a4b" class=""><span style="border-bottom:0.05em solid">Solution</span><div class="indented"><p id="9f36e216-056a-46cf-9770-cb655da77145" class="">Extends concept of the delegation pattern</p><p id="20c11761-0f05-485f-b9b0-1300af955d68" class="">Implements interface and acts as a representative of the „original“ implementation</p><p id="ec6f758e-ccc5-4053-a079-87c26df5fd27" class="">Used in: security, logging, caching</p></div></p><figure id="47a655f1-6e36-4dd1-a0ca-3f494e00647c" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%208.png"><img style="width:192px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%208.png"/></a></figure><figure id="c3c43f61-5cab-4c9f-abb1-c79a57b1465e" class="image"><a href="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%209.png"><img style="width:192px" src="../Design%20Patterns%20a66f789dbc3b466aa55f5f6977189b4c/Untitled%209.png"/></a></figure><p id="ae1290a5-5449-47ea-b5dd-d3212eda61ef" class="">
+</p><p id="37244d2b-7b1d-4c79-b226-263e459adc7c" class=""><strong>○ Inversion of Control IoC</strong></p><p id="0598bb64-2196-4976-a1e2-acd580fa10e9" class="">Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p><p id="b72b9d1d-5d1d-4f72-93d2-fccd4becf707" class="">Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p><p id="d947431a-a047-4415-b973-84ffce3c22d9" class="">
+</p></details></li></ul><p id="e92a3348-d95c-48c4-b82d-e32b35ca2b70" class="">
+</p><ul id="47606f85-ab8a-407c-a212-4ae36c0f0a8a" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Beschreiben Sie das Data Access Object Pattern (DAO) anhand eines UML-Diagramms und erläutern Sie dessen Funktionsweise. Wann kommt dieses Pattern typischerweise zum Einsatz?</span></summary><p id="82cb90c1-7129-4825-80fb-d3d3e1439069" class="">Einsatz:<div class="indented"><p id="77441317-86b4-4552-bceb-4dea7e2dacf3" class="">Trennung von Interface/Implementation (mehrere Implementationen möglich</p><p id="11ef5978-531d-4f2c-8b44-fd12566ad2d0" class="">Dependency Injection Systeme (Spring) </p></div></p><figure id="769f57fc-b500-4fae-911c-00d1ce0b6391" class="image"><a href="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled.png"><img style="width:336px" src="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled.png"/></a></figure><figure id="690f7f61-c56f-40ca-bcff-715ec7e03f18" class="image"><a href="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled%201.png"><img style="width:336px" src="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled%201.png"/></a></figure><p id="ae13c3a5-fea8-48a0-af70-a58844391317" class="">Geschäftsmethoden aus der Business Logic layer enthalten keine direkte Interaktion mit Persistenztechnologien wie zB relationalen Datenbanken.</p><p id="eaec1a23-ad36-42da-a9dd-e67a0d9ec7ad" class="">Um Daten (Domänenobjekte) zu persistieren, definiert man Data Access Object DAO Interfaces (mit CRUD befehlen - create, reade, update, delete).<div class="indented"><p id="929d193e-5f0e-4f88-9dd3-ca89e7960332" class="">• Create (insert..())
+• Read (get..(), search..())
+• Update (update..(),save..())
+• Delete(delete..())</p></div></p><p id="0e782bdb-f721-4990-afdf-ae1593299293" class="">Das SQLPersonDAO-Objekt ist eine mögliche Implementierung des PersonDAO-Interfaces.</p></details></li></ul><p id="0c432bd6-5397-4dc0-8d5c-76a6bf0fc256" class="">
+</p><ul id="d7e42e9d-a786-4758-a46d-7e56aafd064b" class="block-color-gray toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid">Wie sieht eine moderene 3-Tier-Architektur aus? Beschreiben Sie die folgenden Fälle: 
+	a) Thin-Client
+	b) Fat-Client. 
+Beschreiben und skizzieren Sie die beiden Architekturvarianten.</span></summary><p id="e32d425d-63ca-47b7-b2d6-4c4ae20af9cb" class="">Moderne 3-Tier-Architektur<div class="indented"><p id="860cfc93-fc20-49c9-be53-15378cd86200" class="">- Präsentationsschicht</p><p id="ec67754c-4e19-46c8-9c10-ed8b9808ef7b" class="">- Anwendungs-/Logikschicht</p><p id="f202626c-b404-42a2-abed-bf4ecfec0536" class="">- Datenschicht</p></div></p><p id="aa7ad67f-c9ae-4fa0-93aa-dab180ef7f22" class="">
+</p><p id="0dd13a74-368b-4510-ab6d-a6c4c0816e50" class="">Thin-Client („Heavy Server“ vs. Server per Layer)</p><p id="23d95bf7-2d95-41dd-ae5e-669e4eb35233" class="">Fat-Client (Data-Server)</p><figure id="bfb11eff-477e-49c4-88f2-37d0ebd08038" class="image"><a href="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled%202.png"><img style="width:1035px" src="Design%20Patterns%20e7b20f12aa9e4c34b9c3e09a286a18d9/Untitled%202.png"/></a></figure></details></li></ul></div></article></body></html>

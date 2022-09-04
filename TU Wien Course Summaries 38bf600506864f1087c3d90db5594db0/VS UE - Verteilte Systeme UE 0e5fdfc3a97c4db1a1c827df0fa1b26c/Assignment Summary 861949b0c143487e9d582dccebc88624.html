@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Assignment Summary</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="861949b0-c143-487e-9d58-2dccebc88624" class="page sans"><header><h1 class="page-title">Assignment Summary</h1></header><div class="page-body"><nav id="660d8321-ef76-4d4a-b74d-7e265d8a5337" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3a067160-879e-4903-8816-38204c4e4cf6">DMAP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3d224c64-f614-4549-9bcf-9c2a5e24ac0b">DMTP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#73afc8e8-0707-4ee5-8469-36ae17413581">Servers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e238f652-29d8-4032-89e5-0cada35f9507">Transfer Server</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1d0eefb9-5449-4e7c-a412-59fee2ad4b8b">Mailbox Server</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fa794fa4-797c-48b2-96c2-79bd3d142f7d">Monitoring Server</a></div></nav><p id="cb3973ca-ccad-4d9c-a9e8-efae40dd810c" class="">
+</p><p id="b1d47ffc-8a9c-4d24-a936-6ff70a02040e" class="">
+</p><p id="39c6ebbf-1371-4c41-80d6-cf97bfbfa92a" class="">Java 11</p><p id="3c271e40-f6ad-45b2-893c-8e44eadeb470" class="">no additional dependencies</p><p id="d6575740-a53c-423f-be80-fd39d032b5aa" class="">encapsulate communication through sockets (InputStream, OutputStream)</p><p id="d02015c5-ea0d-42d3-b657-2ad731c46ea5" class="">Concurrency<div class="indented"><p id="c5f1aa7c-8219-4274-b60a-e28f3ceca24f" class="">Short lived → ExecutorService (ThreadPools) - because making Threads is expensive<div class="indented"><p id="7bdfe3c9-e5bc-4277-8ffb-b25d6dc1fdfc" class="">connections because <mark class="highlight-gray"><code>ServerSocket.accept()</code></mark><mark class="highlight-gray"> </mark>is blocking.</p><p id="43f3be81-abc5-4271-b05c-8df623908d2f" class="">Forwarding mails</p></div></p><p id="b1b87f16-3797-4db9-b268-36586123ff2b" class="">Long lived → seperate threads<div class="indented"><p id="f6045713-9f54-413c-bd19-f618869d815e" class="">accept-loop for server sockets</p></div></p></div></p><p id="98d424a8-5421-4dd5-bc8b-c933204e7663" class="">Application Shell<div class="indented"><p id="33582f6e-8055-4bae-9030-d389b401059a" class="">For administrators to interact with the application itself (ie. <mark class="highlight-gray"><code>shutdown()</code></mark>) in the console window of the running application.</p><p id="e545c2ab-c188-4470-bcb4-11d921eacbe7" class="">Blocks <mark class="highlight-gray"><code>main()</code></mark><mark class="highlight-gray"> </mark>→ see example repository</p></div></p><p id="70ffe06d-0ed1-4f9a-8755-db3badda8e2d" class="">Application Shutdown<div class="indented"><p id="548e181f-8754-4647-926b-e7b213573d7c" class="">Throw <mark class="highlight-gray"><code>StopShellException</code></mark></p><ol type="1" id="18a12527-8db4-4104-9eb6-0855124abd88" class="numbered-list" start="1"><li>Serversockets</li></ol><ol type="1" id="c86fd4ac-9094-4d3a-92a2-f7747d90bb9c" class="numbered-list" start="2"><li>Socket</li></ol><ol type="1" id="1e292b19-913e-4198-b8f3-29b23394beb4" class="numbered-list" start="3"><li>IO</li></ol></div></p><p id="0f5b715d-e716-42d8-ab9d-7e7b46c991ec" class="">
+</p><h1 id="3a067160-879e-4903-8816-38204c4e4cf6" class="">DMAP</h1><p id="20054b39-8a6c-431d-9fba-1f45767a0cfe" class="">DsLab Message Access Protocol DMAP</p><p id="f3e50a49-253b-41da-8efd-2c9a02135bc8" class=""><mark class="highlight-blue">Client requests</mark><div class="indented"><p id="996d09ed-5526-4d85-a66c-6f6427e8f7e5" class=""><mark class="highlight-gray"><code>login &lt;username&gt; &lt;passwort&gt;</code></mark><div class="indented"><p id="cc7fc489-506c-4aca-9b4b-40d4dfcbe170" class="">User must first log in</p></div></p><p id="8d8ab87d-ec9e-4002-949a-40b168fe5a40" class=""><mark class="highlight-gray"><code>list</code></mark><div class="indented"><p id="fb17af58-1c5e-4e87-8a01-e4b8a91870e9" class="">format: <mark class="highlight-gray"><code>&lt;message-id&gt; &lt;sender&gt; &lt;subject&gt;</code></mark></p></div></p><p id="da7cb94a-9908-472e-85b8-67df4c0c41f5" class=""><mark class="highlight-gray"><code>show &lt;message-id&gt;</code></mark></p><p id="90c815db-787b-4484-a103-7405a35154b1" class=""><mark class="highlight-gray"><code>delete &lt;message-id&gt;</code></mark></p><p id="5d8bfe9c-be10-4554-9ebc-5683a3a43f30" class=""><mark class="highlight-gray"><code>logout</code></mark></p><p id="52804864-9fef-4ce5-afa4-2a3890edc3a9" class=""><mark class="highlight-gray"><code>quit</code></mark></p></div></p><p id="e37f6847-bb57-4297-af87-8aa1ba09bba4" class="">
+</p><h1 id="3d224c64-f614-4549-9bcf-9c2a5e24ac0b" class="">DMTP</h1><p id="b97869b5-1c2e-4ecd-8616-df451acecb32" class="">DsLab Message Transfer Protocol DMTP</p><p id="cf950214-e389-4bf7-97ba-eb4544dd1a24" class=""><mark class="highlight-blue">Client requests</mark><div class="indented"><p id="6b1f35f5-24f1-4c7e-98a6-9a588cdd7244" class="">Writing multiple times overwrites previous value</p><p id="1d3284a3-f825-4117-91e2-f9ba080c3f87" class="">Input strings to subject, data are single lines.</p><p id="33fc5077-7ee8-4552-8f9e-24bc6a6efa59" class=""><mark class="highlight-gray"><code>begin</code></mark><div class="indented"><p id="298a0895-0051-45c0-b7b4-ba3e43460be6" class="">Must be called before any other instruction</p></div></p><p id="d99f8414-dec8-49c8-a7b2-aa96a628b64c" class=""><mark class="highlight-gray"><code>to &lt;address, address, ...&gt;</code></mark></p><p id="8eaa0345-cdf7-4377-acdc-6dcf6e39090a" class=""><mark class="highlight-gray"><code>from &lt;address&gt;</code></mark><div class="indented"><p id="5d5fe4d7-359c-4a15-b0ac-2d817ca162fc" class="">Address can be from user from other Mail-Service</p></div></p><p id="6e2a44a1-06c1-474d-b8ef-91b0f56ba512" class=""><mark class="highlight-gray"><code>subject &lt;string&gt;</code></mark></p><p id="dc92a860-9885-446f-a977-5802a4c9233b" class=""><mark class="highlight-gray"><code>data &lt;string&gt;</code></mark></p><p id="011d2e97-ae16-4d89-b266-2b2bddaa841d" class=""><mark class="highlight-gray"><code>send</code></mark></p><p id="89c3ff14-47b6-41ae-8df4-d4f5bccda62c" class=""><mark class="highlight-gray"><code>quit</code></mark><div class="indented"><p id="1a1a1b27-d206-4c0b-8458-511ffafd4de1" class="">Close socket connection</p></div></p></div></p><p id="9fb26f4a-8424-4e4e-942a-312c23c582b5" class="">
+</p><p id="921db581-dce1-427d-b7ac-4de9542467bb" class=""><mark class="highlight-blue">Server responses</mark><div class="indented"><p id="6d5189c3-5be2-4a73-a4f3-b428e3416e61" class="">For undefined instructions: immediately terminate connection.</p><p id="2d50ef5e-e08d-464c-a010-c74bacc82621" class=""><mark class="highlight-gray"><code>ok DMTP</code></mark><div class="indented"><p id="009e474f-483b-4333-ae6a-777101aab06d" class="">initial response telling client that server is ready and speaks DMTP</p></div></p><p id="93eea65e-e55e-4ae3-93b5-8c6235db3411" class=""><mark class="highlight-gray"><code>ok</code></mark><div class="indented"><p id="c874e45c-6f43-4975-b165-c55173fa1d14" class="">valid instruction </p></div></p><p id="ca0895d9-515b-4f35-ac86-1d2408e29a9d" class=""><mark class="highlight-gray"><code>ok &lt;number of accepted recipients&gt;</code></mark><div class="indented"><p id="04e4683b-63ad-4b92-8302-a02e8e130415" class="">as a response to <mark class="highlight-gray"><code>to &lt;address, address, ...&gt;</code></mark></p><p id="9be4a4e8-0c1a-41ba-a736-ba94e4d4d341" class="">Number of accepted messages depend on server type.<div class="indented"><p id="a18f64fe-3f31-4f17-a79d-53661284d76a" class="">Transfer servers<div class="indented"><p id="f27db1b1-31a6-4731-a2cb-03571246d661" class="">accept any recipients.</p></div></p><p id="4214ff99-fdcd-4a38-b10d-a458401a70ee" class="">Mail servers<div class="indented"><p id="8ea0fce1-7df1-4a54-879d-dc019c1f4500" class="">only accept recipients of the domain they manage.</p><p id="152dcd05-7e82-4249-839f-f8d1bc0b2828" class="">otherwise show error. </p></div></p></div></p></div></p><p id="b52eaab7-a92f-4d54-8cc0-9a8435417ce3" class=""><mark class="highlight-gray"><code>error &lt;explanation&gt;</code></mark></p><p id="52e448b7-3ac1-4bcc-9794-2ecbdeb2f61f" class=""><mark class="highlight-gray"><code>ok bye</code></mark><div class="indented"><p id="d900b5d0-c659-41af-8ad3-641f08aead56" class="">response to <mark class="highlight-gray"><code>quit</code></mark></p></div></p></div></p><p id="634258d7-45fa-41c6-8897-1ebfcaf84053" class="">
+</p><p id="9c031960-be75-4587-bde7-33a50e1739c7" class="">
+</p><p id="6589241b-ecc5-4742-9396-a53358b8ee90" class="">
+</p><p id="e6fec46b-ff53-49f9-8182-61acf669559d" class="">
+</p><p id="1f50cde1-1187-48fc-8b24-d482f80b02ee" class="">
+</p><h1 id="73afc8e8-0707-4ee5-8469-36ae17413581" class="">Servers</h1><figure id="e9123809-0e8d-4767-b76e-bf0f61d7d7b1" class="image"><a href="Assignment%20Summary%20861949b0c143487e9d582dccebc88624/Untitled.png"><img style="width:576px" src="Assignment%20Summary%20861949b0c143487e9d582dccebc88624/Untitled.png"/></a></figure><p id="23a4de94-bab1-40f3-b7eb-8078c0b42af9" class="">
+</p><h2 id="e238f652-29d8-4032-89e5-0cada35f9507" class="">Transfer Server</h2><p id="3b77e64f-c813-4380-a807-6a7690e3f1b2" class="">Receives mails from users outside of the mailservice, transfers the messages to mailbox servers.</p><p id="6abb6f6d-f662-4f83-bcd9-f0c9a2653225" class="">Accepts any recipient.</p><p id="db499721-9cb1-42f4-8656-cc3ef381971e" class="">Implements DMTP (as client and server)</p><hr id="f2c2c863-8154-479b-a4a2-322bce6a8bf0"/><p id="226e6809-5b66-43f1-99d4-4042d2eb77db" class=""><mark class="highlight-blue">Domain lookup</mark><div class="indented"><p id="9d890cf5-63c9-4d36-96fd-59f46adb0eca" class="">find mailboxes to forward messages to.</p><p id="6b939dfe-10db-4640-93ec-faacd0dbd06a" class="">replay received messages to all of them.</p></div></p><p id="b487cbde-2218-4cf7-b414-b449b3b82f03" class=""><mark class="highlight-blue">Reporting to Monitoring Server</mark><div class="indented"><p id="df324d9a-efb6-411d-ada3-54157b4a9c5b" class="">For each sent message - UDP packet:<div class="indented"><p id="15cc6ccf-904a-4ce2-aaa5-62728ef6e097" class=""><mark class="highlight-gray"><code>&lt;host of transfer server&gt;:&lt;port&gt; &lt;senders email-address&gt;</code></mark></p></div></p></div></p><p id="cc3e00fa-299a-4e80-a086-6c9efbf9bfc6" class=""><mark class="highlight-blue">Message delivery failure</mark><div class="indented"><p id="5a7cc0ac-20a5-4ae6-9a07-800530191515" class="">If no domain found after domain-lookup:<div class="indented"><p id="bac4e3f0-1f3d-4155-b0b6-084853fea7d5" class="">ie. error-mail to sender, domain lookup failed (no server found)</p><p id="0d6e1796-03a2-4795-b294-4b4bcfce910b" class="">(If the sender couldn&#x27;t be found, ignore)</p></div></p><p id="1d794016-2313-4aba-ab0c-2de577b07dc8" class="">Send error-message-mail back to the sender notifying<div class="indented"><p id="c0f2e878-47c5-474b-adaf-b5341a545913" class="">address of transfer server: <mark class="highlight-gray"><code>mailer@[IP]</code></mark></p></div></p><p id="245c0aa1-7e5a-4aeb-b6f8-052477c5b78d" class="">If the error delivery failed, discard error message</p></div></p><p id="238349b8-a017-4bd7-af7e-764c09ace3cf" class="">
+</p><p id="ef9e5dfb-de03-4880-a742-80db29d67226" class="">
+</p><h2 id="1d0eefb9-5449-4e7c-a412-59fee2ad4b8b" class="">Mailbox Server</h2><p id="77fbcffa-1aee-4591-b374-e23a13255242" class="">Users can read / delete messages, not send them.</p><p id="b4026708-afc0-4766-bbdf-d9bb8bad82b1" class="">Implements DMTP (as server only), DMAP</p><p id="e0714d32-a179-4254-85e8-e408327ff165" class="">Database is persistent.</p><p id="9a115439-7f4b-4899-9f23-9d87553a15fb" class="">Recipients must be from <em>this</em> server.<div class="indented"><p id="18c8fdda-7eae-4ccf-a688-0b786bcda539" class="">Else they are ignored</p></div></p><p id="7d4e88d9-b30e-4181-b0db-598ca52a4386" class="">
+</p><p id="ebd59f00-59d9-4369-9942-d17aa5136078" class="">
+</p><h2 id="fa794fa4-797c-48b2-96c2-79bd3d142f7d" class="">Monitoring Server</h2><p id="adad426a-162c-48a0-a440-72c46c8ef793" class="">Usage statistics, via UDP</p><p id="d5f74192-b78d-4939-b8b0-c134e86b5de3" class="">Preventing server abuse (ie. DDOS)<div class="indented"><p id="89a37b77-e8ee-46ad-a4c1-15c601b7777f" class="">Receives usage statistics with UDP socket.</p><p id="92934abf-5131-4360-8bab-047d6f3d5c43" class=""><mark class="highlight-gray"><code>&lt;host of transfer server&gt;:&lt;port&gt; &lt;senders email-address&gt;</code></mark></p></div></p><p id="88382766-d052-4476-89b3-d506a0c8d2fe" class="">
+</p><p id="25149a47-d6c9-425e-b44f-db7cf4595343" class=""><mark class="highlight-gray"><code>addresses</code></mark><div class="indented"><p id="be69540f-52b2-42d2-815a-a704ed2e95aa" class="">lists all senders and # messages they have sent</p><p id="af53ecc9-9bed-47a7-b84c-d93bf6cb67e8" class=""><mark class="highlight-gray"><code>&lt;senders email-address&gt; #</code></mark></p></div></p><p id="b32b8d94-8435-469e-9e84-ba7a7dcb0062" class=""><mark class="highlight-gray"><code>servers</code></mark><div class="indented"><p id="0d20041a-e1b5-46ed-88b9-64b1750fff21" class="">lists all transfer servers and the # messages sent over them.</p><p id="a7ccacb2-5863-4948-9728-7c369b206ed3" class=""><mark class="highlight-gray"><code>&lt;host of transfer server&gt;:&lt;port&gt; #</code></mark></p></div></p><p id="adb5a524-b1f6-4267-8464-34774180d1b0" class="">
+</p></div></article></body></html>

@@ -1,0 +1,808 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="faf4c304-e1cd-477d-bb8a-6e5d130230e5" class="page sans"><header><h1 class="page-title">HTML</h1></header><div class="page-body"><nav id="f654e158-d669-44f2-8ada-99e5aabd9b6d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#17847203-da30-40ae-ad3f-f62260a104b5">HTML</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#803e6057-ab71-4d65-b203-bc07d6477798">Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b6b10c6-bea5-4183-9902-70f7b102760e">Sending Forms</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#092fde86-e0cd-4cf4-864a-a71a330f38c4">Element Semantics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a9873b2e-16ce-43d9-8c4e-e5ec7396340c">Universal Accessibility</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6e5918c-42ac-4a74-8e86-86e8c03591ae">Good Practice - Examples</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#180ffbae-fcf1-4d38-a393-261b2b886d92">Bad Practice - Examples</a></div></nav><p id="76ac96f1-3327-4699-a5a7-97aadaecfc63" class="">
+</p><h1 id="17847203-da30-40ae-ad3f-f62260a104b5" class="">HTML</h1><p id="77f56c30-57cf-43ac-8b39-f2a25e0607c5" class="">Hyper Text Markup Language</p><p id="23352c79-73dd-4b45-81a4-f515ad19cb6d" class="">Standardized by the W3C - currently HTML 5</p><p id="f56ab247-b19f-44eb-a956-813a2bd42d28" class="">Describes structure and content of a document</p><p id="43c9503a-74c0-44e9-b4c1-520f1fac16e8" class="">Machine and human readable</p><p id="5815d723-edca-4d46-9c5d-0f935be53b66" class="">
+</p><h1 id="803e6057-ab71-4d65-b203-bc07d6477798" class="">Syntax</h1><p id="af3eb617-cf4d-4735-9790-14e0a74cca39" class=""><span style="border-bottom:0.05em solid">Structure</span><div class="indented"><pre id="b32431a8-d043-4d6e-a720-0841159635e5" class="code"><code>&lt;!DOCTYPE	html&gt;   -&gt; document type
+&lt;html&gt;            -&gt; document element (single root element)
+		&lt;head&gt;        
+				&lt;meta	charset=&quot;utf-8&quot;/&gt;
+				&lt;meta	name=&quot;author&quot;	content=&quot;WE&quot;/&gt;
+				&lt;title&gt;Title&lt;/title&gt;
+		&lt;/head&gt;
+		&lt;body&gt;
+				&lt;h1&gt;First	order	header&lt;/h1&gt;
+				&lt;p&gt;Paragraph	content&lt;/p&gt;
+		&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></p><p id="87f0dfe5-a80a-45c3-9f70-48fa057b5632" class="">
+</p><p id="d9fcb395-5565-4f29-87f1-caa47eed0b34" class=""><span style="border-bottom:0.05em solid">Document type</span><div class="indented"><p id="069b9545-e10c-4fe3-8292-8be97ed4347f" class="">HTML, XHTML (XML), &quot;Quirks mode&quot;</p><pre id="8483e875-286d-48f7-9816-8e04aa1d14c4" class="code"><code>&lt;?xml	version=&quot;1.0&quot;	encoding=&quot;UTF-8&quot;?&gt;</code></pre><pre id="aaa25a38-39a6-466d-912e-c623164e894f" class="code"><code>&lt;!DOCTYPE	html PUBLIC	&quot;-//W3C//DTD	XHTML	1.1//EN&quot; http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</code></pre><p id="3b2facb7-64e6-46ec-98dd-2e5e79d27e58" class="">
+</p></div></p><p id="1e7177fb-7a56-45d1-86ce-7ab8825071e7" class=""><span style="border-bottom:0.05em solid">Element</span><div class="indented"><pre id="0110afc9-2d30-4f14-872f-2791646901b1" class="code"><code>&lt;tagname attribute=&quot;value&quot;&gt;content&lt;/tagname&gt;</code></pre><p id="1f93f069-853c-4933-996f-442ec0ad9edd" class="">tag name is the elements name</p><p id="5431d1d7-87f7-4e8a-b572-e13d0ae4533b" class="">content between &quot;start tag&quot; and &quot;end tag&quot;</p><pre id="76e62e81-6d84-4867-87d3-ba9ea1a5567b" class="code"><code>&lt;div
+		id=&quot;someID&quot;
+		class=&quot;someClass&quot;				
+		title=&quot;Text	displayed	as tooltip&quot;							
+		lang=&quot;en&quot;
+		data-loaded=&quot;false&quot; 
+		style=&quot;display:block;&quot;&gt;
+Content &lt;/div&gt;</code></pre></div></p><p id="5045452d-8793-47ca-9d0d-b8fb4d87432d" class="">
+</p><p id="b0bec64c-cc1f-43ce-9fe8-48de3d427d24" class=""><span style="border-bottom:0.05em solid">Generic Elements</span><div class="indented"><p id="53742eaf-5e3a-4cb7-bf19-d48554d2ca32" class="">Block element		takes up full width, forced line break</p><p id="d020d6b7-e9ae-4db7-b410-d511cebcd37e" class="">				<code>&lt;h1&gt;, &lt;p&gt;, &lt;div&gt;, &lt;section&gt;,…</code></p><p id="284407b3-0edf-4881-a739-83a5023a71d5" class="">Inline element		takes up as much as necessary</p><p id="cebffc7c-16cf-4c4f-8794-20cc88628f73" class="">				<code>&lt;span&gt;, &lt;a&gt;, &lt;em&gt;, &lt;strong&gt;,…</code></p></div></p><p id="241b0294-c713-4d16-953c-b370c10737fd" class="">
+</p><p id="37204fc5-fcb8-4229-94db-1fb66de1f325" class=""><span style="border-bottom:0.05em solid">Grouping Elements</span><div class="indented"><pre id="fff2fd8d-296b-476b-8d79-afb81d7e9521" class="code"><code>&lt;p&gt;Lorem	ipsum	dolorem	sit	amet…&lt;/p&gt;
+Contact:	&lt;address&gt;Name:	Jane	Doe&lt;/address&gt;
+&lt;pre&gt;public static void main(){}&lt;/pre&gt;
+&lt;figure&gt;
+		&lt;blockquote&gt;Any	idiot	can	put	up	a	website.&lt;/blockquote&gt;
+		&lt;footer&gt;
+					&lt;figcaption&gt;Some	quote&lt;/figcaption&gt;
+					&lt;cite&gt;Patricia	Briggs&lt;/cite&gt;
+		&lt;/footer&gt;
+&lt;/figure&gt;
+&lt;ul&gt;
+		&lt;li&gt;Some	element&lt;/li&gt;
+		&lt;li&gt;Another	element&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+		&lt;li&gt;First	element&lt;/li&gt;
+		&lt;li&gt;Second	element&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div></p><p id="4de46896-ea27-43f2-bf99-5d234f96cb77" class="">
+</p><p id="aeca85f6-ce96-4d4e-9c3c-deb4c10edd64" class=""><span style="border-bottom:0.05em solid">Links and Anchors</span><div class="indented"><p id="cb9c7934-e897-4f72-a49f-d808f86c445d" class="">Links refer to documents or elements within other documents.</p><p id="9186cc0c-6d79-4b4c-b570-1e29017c4a5d" class="">Anchors define bookmarks within a document, which can be used by links with fragments.</p><pre id="de257be3-b3f0-4f1d-9d06-a36e466cf162" class="code"><code>&lt;a href=&quot;http://www.w3.org/html&quot;&gt;HTML	Standard&lt;/a&gt;
+&lt;a href=&quot;index.html#registration&quot;&gt;Registration&lt;/a&gt;
+&lt;a href=“#timetamble”&gt;Timetable/Lectures&lt;/a&gt;</code></pre><pre id="5f27bc28-1cb1-422a-b860-fcea9087c402" class="code"><code>&lt;a name=&quot;name1&quot;&gt;Link text&lt;/a&gt;
+&lt;a id=&quot;id1&quot;&gt;Link text&lt;/a&gt;</code></pre></div></p><p id="2b96e0da-364d-4f83-922b-ec976ab02900" class="">
+</p><p id="273a0954-c424-46d8-975b-635bab50a77b" class=""><span style="border-bottom:0.05em solid">Forms</span><div class="indented"><pre id="1d313adf-8156-4a1f-878e-8f38049094bf" class="code"><code>&lt;input type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+
+&lt;input type=&quot;checkbox&quot; name=&quot;…&quot; value=&quot;…&quot; /&gt;
+
+&lt;input type=&quot;radio&quot; name=&quot;…&quot; value=&quot;…&quot; /&gt;
+
+&lt;select&gt;
+		&lt;option value=&quot;option1&quot;&gt;option1&lt;/option&gt;
+		…
+&lt;/select&gt;
+
+&lt;input type=&quot;text&quot;/&gt; &lt;input type=&quot;password&quot; /&gt;
+
+&lt;textarea type=&quot;text&quot; rows=&quot;2&quot; cols=&quot;50&quot;&gt; &lt;/textarea&gt;
+
+&lt;input type=&quot;file&quot;/&gt;
+
+&lt;input type=&quot;hidden&quot; name=&quot;…&quot; value=&quot;…&quot; /&gt;
+
+
+&lt;!-- New in HTML 5 --&gt;
+&lt;input	list=&quot;browsers&quot;	/&gt;	
+&lt;datalist	id=&quot;browsers&quot;&gt;
+			&lt;option	value=&quot;IE&quot;	/&gt;
+			&lt;option	value=&quot;Firefox&quot;	/&gt;
+			&lt;option	value=&quot;Chrome&quot;	/&gt;
+&lt;/datalist&gt;
+
+&lt;input	type=&quot;number&quot;	min=&quot;1&quot;	max=&quot;5&quot;	/&gt;
+
+&lt;input	type=&quot;text&quot;	placeholder=&quot;First	name&quot;	/&gt;
+</code></pre></div></p><p id="1a3c981e-7cac-45f1-a29c-376c836b3b6e" class="">
+</p><p id="2ba83d3b-cd20-4540-b5dd-31f1461b7930" class=""><span style="border-bottom:0.05em solid">Grouping Forms</span><div class="indented"><pre id="3bc89280-daa7-4515-85a3-1f0c8f16bfe0" class="code"><code>&lt;fieldset&gt;
+		&lt;legend&gt;Choose your favourite course&lt;/legend&gt;	
+		&lt;p&gt;
+				&lt;input type=&quot;radio&quot;	id=&quot;we&quot;	name=&quot;course&quot;&gt;
+				&lt;label for=&quot;we&quot;&gt;Web	Engineering&lt;/label&gt;
+		&lt;/p&gt;
+		&lt;p&gt;
+				&lt;input type=&quot;radio&quot;	id=&quot;ssd&quot;	name=&quot;course&quot;&gt;
+				&lt;label for=“ssd”&gt;Semi-structured	Data&lt;/label&gt;
+		&lt;/p&gt;
+&lt;/fieldset&gt;</code></pre></div></p><figure id="69b74f15-f47b-43fa-afc6-842edef3d8dd" class="image"><a href="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled.png"><img style="width:192px" src="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled.png"/></a></figure><p id="5a34bd2f-72c6-49d5-8604-7e470235ad6f" class="">
+</p><h1 id="9b6b10c6-bea5-4183-9902-70f7b102760e" class="">Sending Forms</h1><p id="d140ea0f-5aae-42c2-bc51-97a8cc5cba88" class="">HTML forms only allow GET and POST requests.</p><p id="012eb4f3-7d24-4303-b38b-560a35292454" class="">
+</p><p id="38ee1439-ebb9-420d-b707-5505984e8469" class="">Example</p><pre id="e2687690-1fbf-4be6-982e-6ef47da9d078" class="code"><code>&lt;!DOCTYPE	html&gt;
+&lt;html&gt;
+		&lt;head&gt;
+				&lt;title&gt;A	HTML5	Document&lt;/title&gt;
+		&lt;/head&gt;
+		&lt;body&gt;
+				&lt;p&gt;This	is	a	sample	&lt;a href=&quot;...&quot;&gt;HTML	5&lt;/a&gt;	document.&lt;/p&gt;
+				&lt;form action=“/processForm” method=&quot;post&quot;&gt;
+						&lt;p&gt;
+								&lt;label for=&quot;userName&quot;&gt;Your	name:&lt;/label&gt;
+								&lt;input type=&quot;text&quot; id=&quot;userName&quot; name=&quot;userName&quot; /&gt;
+						&lt;/p&gt;
+						&lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;Submit the form&quot; name=&quot;action&quot; /&gt;&lt;/p&gt;
+				&lt;/form&gt;
+		&lt;/body&gt;
+&lt;/html&gt;</code></pre><figure id="f66cc6e0-e0c7-4f18-994b-6cb0e8257835" class="image"><a href="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%201.png"><img style="width:240px" src="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%201.png"/></a></figure><p id="809a5a60-9e69-4e86-a7d0-15e7307ca4d9" class="">
+</p><p id="32da96e4-258a-470f-9b3c-e562a051d495" class="">Process<div class="indented"><ol type="1" id="55ff2e67-a85f-413a-a1c9-32146b1010ef" class="numbered-list" start="1"><li>Filling form out<p id="d65b7070-c21b-4b70-b078-dcd1b66bfef5" class=""><mark class="highlight-gray">[ Your Name: Yahya ]</mark></p></li></ol><ol type="1" id="0ce68e53-b8aa-41e3-afbc-3cf12968d335" class="numbered-list" start="2"><li>pressing submit</li></ol><ol type="1" id="f1af974c-6281-49f9-b87b-1829cab4a22e" class="numbered-list" start="3"><li><code>POST</code> request with data as message body<p id="6b4903ae-b5af-480d-b12c-662e44ea6b7d" class=""><mark class="highlight-gray">userName=&quot;Yahya&quot;</mark></p></li></ol><ol type="1" id="65c273e1-97d6-4275-880d-febe5d804847" class="numbered-list" start="4"><li>Web Server responds with another HTML</li></ol></div></p><p id="822966d3-7bfa-4419-8629-7cb810bf0698" class="">
+</p><h1 id="092fde86-e0cd-4cf4-864a-a71a330f38c4" class="">Element Semantics</h1><p id="5a65911d-72db-48e9-8a6e-b78aafceeb59" class="">For accessibility, search engines, maintainability.</p><pre id="56dc9188-efc6-43db-bbcd-e6888f269428" class="code"><code>&lt;div id=&quot;header&quot;&gt;...&lt;/div&gt;    --&gt;    &lt;header&gt;...&lt;/header&gt;</code></pre><p id="b78ad04b-f8e4-4e35-86a3-47f74593daa8" class=""> correct use of headings <mark class="highlight-gray"><code>&lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;, ...</code></mark></p><p id="6a744f1b-1775-4a08-a556-23425f2a2752" class="">Using <mark class="highlight-gray"><code>&lt;em&gt;</code></mark> to emphasize</p><p id="97d7298c-f113-49fc-8455-8fc8c5fe4688" class="">
+</p><p id="37c19993-8904-4083-ba30-5c4584e045ff" class=""><span style="border-bottom:0.05em solid">Content Structure</span></p><figure id="30f93461-d567-4549-9f1a-2a8ce41e91d8" class="image"><a href="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%202.png"><img style="width:240px" src="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%202.png"/></a></figure><p id="2b0e2469-8bd3-43f2-bae1-f70d89e1df31" class="">
+</p><h1 id="a9873b2e-16ce-43d9-8c4e-e5ec7396340c" class="">Universal Accessibility</h1><p id="b6c3e898-6add-4436-8e78-16c662dd31cf" class="">Common Disabilities<div class="indented"><ul id="6aa615f0-6589-4e35-97f8-3fc3bad79d9b" class="bulleted-list"><li style="list-style-type:disc">Vision Problems</li></ul><ul id="e2d4a6ce-329f-4753-a527-f37418bdf664" class="bulleted-list"><li style="list-style-type:disc">Hearing Problems</li></ul><ul id="d4936cbc-834a-41be-842f-8dbc2502be9f" class="bulleted-list"><li style="list-style-type:disc">Movement Problem</li></ul><ul id="0aac6130-23e9-4426-bf89-7865bd0b535c" class="bulleted-list"><li style="list-style-type:disc">Reading Difficulty</li></ul></div></p><p id="408b98ca-9e84-4679-a5bf-1aee174dc041" class="">
+</p><p id="dce08e6a-de28-4002-8a55-f6e8807f370b" class="">Web Content Accessibility Guidelines (WCAG 2.0):</p><p id="a98180c2-379f-4964-93ca-27f12b6b2c17" class=""><span style="border-bottom:0.05em solid">Four Principles of Accessibility</span><div class="indented"><ol type="1" id="62f96084-611e-4a87-ac7c-8bb77f4c1656" class="numbered-list" start="1"><li><mark class="highlight-teal">Perceivable </mark>(for audio-visual impaired people)<p id="4e4f70d7-b4e0-472b-ac36-d30cb00cc0b5" class="">alt Attribute: <mark class="highlight-gray"> </mark><mark class="highlight-gray"><code>&lt;img alt=&quot;Man walking dog down the street&quot; …&gt;</code></mark></p><p id="4d0af1a5-e26f-45c1-b774-bde53b8bf150" class="">Use proper semantics</p></li></ol><ol type="1" id="38f205b2-5667-40eb-9871-d8fab3e5d85b" class="numbered-list" start="2"><li><mark class="highlight-teal">Operable</mark><p id="be90215d-516f-41c1-9c74-fd2332346147" class="">Can all functions be performed with a keyboard? Is completing tasks easy?</p></li></ol><ol type="1" id="162d9625-40d4-4d03-9b8c-da4309cc7e39" class="numbered-list" start="3"><li><mark class="highlight-teal">Understandable</mark><p id="2e194546-aed2-4de7-b427-7d3d6bac1530" class="">Is text clearly written? Do my navigation and forms flow intuitively?</p></li></ol><ol type="1" id="c99599b5-da03-4103-a617-f1c6e91df86c" class="numbered-list" start="4"><li><mark class="highlight-teal">Robust</mark><p id="463bb2a6-7c9b-4878-afba-4bcc033266e2" class="">compatible with future technologies, assistive technologies, most devices, slow devices, slow internet connection</p></li></ol></div></p><p id="3e3b86d4-934d-4a78-9d46-49492c6c0406" class="">
+</p><h2 id="b6e5918c-42ac-4a74-8e86-86e8c03591ae" class="">Good Practice - Examples</h2><p id="375f824a-3302-4c37-9130-562f33d199f7" class="">Using CSS to <em>hide (a portion of the link)</em> text<div class="indented"><pre id="9c7b7964-0078-4709-9457-0fad7d870eeb" class="code"><code>.accessibility {	position:	absolute;
+									left:	-10000px; /*	off	screen	*/
+									width:	1px;
+									height:	1px;
+									overflow:	hidden; }</code></pre></div></p><p id="ef35da30-f6f9-4074-93e6-261875272da2" class="">
+</p><p id="9713d3b8-4b4e-400d-ac29-8e7f2160f025" class="">Supplementing link text with the <em>title </em>attribute (H33)<div class="indented"><pre id="7e74e7d7-ddc0-4344-a06e-4d3546185d53" class="code"><code>&lt;a href=&quot;http://example.com/WORLD/africa/kenya.elephants.ap/index.html&quot;
+ title=&quot;Read more about failed elephant evacuation&quot;&gt;
+ Evacuation Crumbles Under Jumbo load
+&lt;/a&gt;</code></pre></div></p><p id="552815f6-daef-4c64-994b-66f0b15c7855" class="">
+</p><p id="978f020c-be41-4090-b687-8a8c21574382" class="">Using alt attributes on img elements (H37)<div class="indented"><pre id="5cc60b87-0ecc-40fe-b858-aac0471c2da4" class="code"><code>&lt;img src=&quot;ipa-logo.jpg&quot; alt=&quot;Interactive Programming and Analysis Lab&quot; /&gt;</code></pre></div></p><p id="8e3b9c03-3220-472f-a402-e5d262e7334a" class="">
+</p><p id="9a62c280-4f16-45f6-9fb2-111abaf56869" class="">Using semantic markup to mark emphasized or special text (H49)<div class="indented"><pre id="3654b664-ba61-4e83-ac2c-d7f38500ab72" class="code"><code>What she &lt;em&gt;Evacuation&lt;em&gt; meant to say was...
+This is an excerpt from &lt;cite&gt;The story of my life&lt;/cite&gt;: ...</code></pre><p id="79ba245f-508e-4bd6-b10c-f7c24d036861" class="">
+</p></div></p><h2 id="180ffbae-fcf1-4d38-a393-261b2b886d92" class="">Bad Practice - Examples</h2><pre id="988e64ee-1f27-4a29-8221-bab58a1f5484" class="code"><code>...
+&lt;form action=&quot;/login&quot;&gt;
+		&lt;p&gt;
+		&lt;font color=&quot;#29672D&quot;&gt;&lt;b&gt;Login	form
+		&lt;table&gt;
+				&lt;td&gt;User name &lt;br&gt;
+						Password
+				&lt;td&gt;
+				&lt;td&gt; &lt;input name=&quot;1&quot;&gt; &lt;br&gt;
+						 &lt;input name=&quot;2&quot;&gt;
+		  			 &lt;input type=&quot;submit&quot; value=&quot;submit&quot;&gt;
+		&lt;/table&gt;
+		&lt;span&gt;not	registered?	click	&lt;a href=&quot;register&quot;&gt; here
+&lt;/form&gt;
+...</code></pre><figure id="d04ed212-83ad-46fb-9d1d-3be4c54e7f37" class="image"><a href="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%203.png"><img style="width:288px" src="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%203.png"/></a></figure><p id="35535b39-78ab-4ae9-b7a4-82e86cad4ba7" class="">
+</p><p id="ed266141-2bc0-4fab-8fe5-af874b210e84" class=""><span style="border-bottom:0.05em solid">Issues with:</span><div class="indented"><ul id="792d4c97-7702-4618-a8f4-6ee99e576373" class="bulleted-list"><li style="list-style-type:disc">Screen Reader Linearization →  (no logical) binding of label and field - Where do I fill in what?</li></ul><ul id="ce734ce0-165d-4b4b-86c2-e84a09637145" class="bulleted-list"><li style="list-style-type:disc">Color blindness and myopia</li></ul><ul id="75cba519-27f3-4e08-9329-355c99cb0c64" class="bulleted-list"><li style="list-style-type:disc">Understanding what &quot;here&quot; means → Link title is just &quot;here&quot; </li></ul><ul id="84374690-f716-4606-bb99-46b8ff8e4c87" class="bulleted-list"><li style="list-style-type:disc">No semantics of &quot;Login form&quot; → Only increased size</li></ul></div></p><p id="5ecdcd1a-d1b6-468d-9056-e39548c8195f" class="">
+</p><figure id="22ce2756-358d-4cf1-9361-77a8c6e5122a" class="image"><a href="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%204.png"><img style="width:240px" src="HTML%20faf4c304e1cd477dbb8a6e5d130230e5/Untitled%204.png"/></a></figure></div></article></body></html>

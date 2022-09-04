@@ -1,0 +1,712 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTTP</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a1ee82e5-6be1-4000-ae81-0347e0fbe6f8" class="page sans"><header><h1 class="page-title">HTTP</h1></header><div class="page-body"><p id="26490519-d507-40b2-86da-c62ebc7196ea" class=""><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview">https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview</a></p><p id="aa35c9eb-e790-41a2-89d1-2e6eac60dd4d" class="">
+</p><nav id="01d0530a-23f5-4559-a543-474cb93240ec" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1dd4fcb6-66f6-49ec-9a98-54f11ed0d133">The Internet</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#da0530bc-fe58-4bd9-987e-8616e97113a0">Client - Web Server</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c9e071a0-282e-4c5d-95f3-db0dfc420a13">URL</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ed1e79d1-fef9-4d08-bbb5-d8ea691e150c">HTTP</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c692dd49-fb9e-468b-8830-6949e6e61d7b">HTTP request</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c45bb0a2-3a0f-4518-a291-5153a79a910b">HTTP response</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a170a91d-24f1-4c26-9257-b09d11f694dc">Using HTTP</a></div></nav><p id="65d9f1a3-fea3-4e6a-a485-935b5df9225e" class="">
+</p><h1 id="1dd4fcb6-66f6-49ec-9a98-54f11ed0d133" class="">The Internet</h1><p id="4bd90dc7-1d58-4140-af9d-b8a9fd304614" class="">Global system of interconnected computer networks that use the Internet protocol suite (TCP/IP)<div class="indented"><p id="49a26850-7b1c-4d47-893d-95e6c8868d53" class="">IP is the part that obtains the address to which data is sent.</p><p id="ed4f6e85-8bc2-48b8-be34-2da606e7b441" class="">TCP is responsible for data delivery once that IP address has been found.</p></div></p><p id="b8d4bb3d-7831-4210-8075-265b2d75e6e6" class="">
+</p><p id="d86d5365-ccaf-436d-b849-36b53b87f456" class="">IP (Internet Protocol)<div class="indented"><p id="48fc34f4-27fd-445a-817d-11d1be8a66bc" class="">Delivers packets of data across network boundaries</p><p id="6738ec94-3d9e-4d63-bd3d-6d5e4a0ee188" class="">devices have IP Addresses</p></div></p><p id="62eba106-e4d0-47cc-abcf-3b87a05cd38d" class="">
+</p><p id="d8d3ce39-5688-41c2-ad83-8b2874d55d0d" class="">TCP (Transmission Control Protocol)<div class="indented"><p id="0fad53f4-a8d5-4b54-9ce4-cde446c51899" class="">connection oriented</p><p id="94bad6d6-2e7e-4fa6-8a1d-45949ff90c03" class="">establishes a point-to-point connection between exactly two entities in the network</p></div></p><p id="b4c9b2a3-5272-44c1-aede-f857ef7e1271" class="">
+</p><h1 id="da0530bc-fe58-4bd9-987e-8616e97113a0" class="">Client - Web Server</h1><ol type="1" id="9e806ff6-6e81-4416-9b5e-215ea0c37334" class="numbered-list" start="1"><li>Client (Browser or other Servers / Devices)<p id="4ceae0e4-c00c-4c2b-a9c9-681fb41cd3e8" class=""><mark class="highlight-gray"><code>https://www.google.at</code></mark><mark class="highlight-gray"> </mark>→ Domain Name System DNS → 172.217.23.227 → HTTP Request for Web Resource</p></li></ol><ol type="1" id="7e3ecd77-af58-4472-b0bf-7a66ddedff5b" class="numbered-list" start="2"><li>Multiple Layers and Proxies (see traceroute)<p id="63921dfd-067e-45c5-a5bd-6e6b1ef85ca7" class="">Caching, filtering, load balancing...  by routers, modems,...</p></li></ol><ol type="1" id="6b3940d7-3e2a-492f-953e-a19744c3ca98" class="numbered-list" start="3"><li>Server<p id="446b6f13-5854-4599-9e53-d6994ab554f3" class="">HTTP Response with web resource or error</p><p id="e6aefd71-42a2-4b17-8ab7-e2671e404d95" class="">Can be a collection of servers, sharing the load</p></li></ol><p id="80137d42-275d-48fe-abeb-334b1a4ba9a8" class="">
+</p><p id="fbfd15ce-576d-4c1a-a3f9-a780373af1ae" class="">Resource<div class="indented"><p id="7ab93665-7dca-45f1-b19a-81bc469a1e41" class="">HTML files, documents, images, etc. → make up complete document</p><p id="3dbae46c-dbcf-4f7a-ac43-6d4c8da588f1" class="">Concept for nodes in hypertext</p><p id="e06fd91f-93c2-4167-9f37-b99c017e0c19" class="">A Web page is a hypertext document: parts of displayed text are links to other pages of the Web.</p><p id="63f7740b-9bc7-4eb2-80f5-e75c52c269ed" class="">
+</p></div></p><h1 id="c9e071a0-282e-4c5d-95f3-db0dfc420a13" class="">URL</h1><p id="45480da3-2b59-4006-bc3b-aec9a8aa32ca" class="">Uniform Resource Locator URL<div class="indented"><p id="6ab4d95c-ab7e-4606-a43b-28567f9db2cb" class="">For identiying resources</p><p id="b25a29f6-a1c4-4dec-b8cb-26cf83481695" class="">Subtype of Uniform Resource Identifier URI</p><p id="96fb3f85-2701-4d75-ae33-d70bd8191de1" class=""><code>&lt;scheme&gt;://[&lt;user&gt;[:&lt;password&gt;]@]&lt;server&gt;[:&lt;port&gt;]/[&lt;path&gt;][?&lt;query&gt;][#&lt;fragment&gt;]</code></p><p id="b07cd376-6b8e-4211-a626-37cc911428d1" class=""><mark class="highlight-gray"><code>https://usr:pwd@tennis-club-wieden.at:3000/members/rackets?year=2020#vintage</code></mark><mark class="highlight-gray"> </mark></p><p id="f1f25ae7-a98e-4771-becc-442afa7c7d3d" class="">scheme		http(s), ftp, mongodb,...</p><p id="d6df62cd-b6e8-4ca2-9778-dc7fb3ace32e" class="">user,pwd		optional</p><p id="31c2dedc-a979-492d-af00-797011a9bf6c" class="">server		domain name / IP address</p><p id="7c8cf1d5-1d72-4433-967a-e702a8bdc05f" class="">port			at which server is listening</p><p id="46cb49df-ff37-46cb-b5bf-71f1b62c1980" class="">query		parameters passed to server</p><p id="0ba5b22c-7625-4ad2-a2e7-e64ce95e80b5" class="">fragment		only used by clients to name part of the resource</p></div></p><p id="01f81330-1148-4869-a1b8-30def59b3f5c" class="">
+</p><p id="e4119e1e-1d6d-444e-8e9e-f8ee72d10c2d" class="">Host Name vs. Domain Name<div class="indented"><p id="33fe2fdb-7e66-4201-8078-457d69137fbf" class=""><a href="http://hostname.domainName.com"><mark class="highlight-gray"><code>hostName.subdomainName.domainName.com</code></mark></a></p><p id="a66f865a-7a38-469f-a6a9-77294550fa6b" class="">The host name would consist of either &quot;www&quot; where the global internet is the host, or some proprietary network name that represents the host – for example, if the school uses a custom internal network called &quot;myAUnet&quot; then &quot;myAUnet&quot; would be the host name.</p></div></p><p id="49160ab8-eb11-45db-8685-d20793193456" class="">
+</p><h1 id="ed1e79d1-fef9-4d08-bbb5-d8ea691e150c" class="">HTTP</h1><p id="26dfa1b3-7df7-404c-b84b-653fe42a8d3d" class="">Hyper Text Transfer Protocol HTTP<div class="indented"><p id="fdfcd607-8585-4151-81d9-211278822c38" class="">Synchronous request-response protocol</p><p id="2a54e509-d32e-40f1-9d97-1277ba6c67e9" class="">Builds upon TCP</p><p id="0c5310e5-7274-495a-8387-97f61f0c7789" class="">Stateless (each request-response pair is independent, no permanent connection between server and browser → allows for a high number of users per server)</p></div></p><p id="2a89fb54-19cd-43e1-8a2b-ee940f7f7e87" class="">
+</p><p id="5dc2a7ec-b50d-4415-8405-68a30411b628" class="">HTTPS<div class="indented"><p id="c1d61cd3-972d-441c-988e-768b76b91fd5" class="">Uses TLS connection (Transport Layer Security) - encrypts data</p></div></p><p id="575f6c55-972f-4d11-8560-7ba4a88a00ae" class="">
+</p><h2 id="c692dd49-fb9e-468b-8830-6949e6e61d7b" class="">HTTP request</h2><p id="5b3d3f7d-e62d-43af-9dc3-e9082b583d6f" class="">Before any request a TCP connection is established.</p><p id="eb404628-abd9-4ca9-ae06-2c4cc24bee19" class="">
+</p><p id="c14f5610-5f5f-43cd-bdd8-455c82b44768" class=""><span style="border-bottom:0.05em solid">Type / method</span><div class="indented"><p id="9c618d3f-22b4-4efb-a4c2-1c6e36b411ef" class="block-color-gray">OPTIONS, TRACE, HEAD, CONNECT access to the metadata of the servers, the Internet connection, the resource, etc.</p><p id="ad044cf6-b092-4f14-a326-38a47e3cf44b" class="">POST	Create</p><p id="36ed707a-e896-4753-8963-0c4d4dde69d6" class="">GET		Read </p><p id="9eb7b315-74c1-45c3-bf97-c3a1aa51edfb" class="">PUT		Update / Replace</p><p id="fdea0781-1fed-41e7-8759-4bf49631cc69" class="">PATCH	Update / Modify</p><p id="f6196419-4cc5-4b11-944d-5a9335a69971" class="">DELETE	Delete</p></div></p><p id="fa886e36-92d6-46aa-8a17-24f2fcfd7d7e" class="">
+</p><p id="7948559e-80aa-4278-8ef8-0e55c4091b36" class="">Side effects<div class="indented"><p id="e73ed967-1b13-4b89-aba3-d90b517f31f2" class="">Have some: POST, PUT, PATCH DELETE</p><p id="248ebb4c-a277-49d6-8db1-c8f4f454fd54" class="">Have none: GET</p><p id="2ca26e43-90c3-4f26-a18b-86e3c5fda580" class="">Same effect even with multiple executions: PUT, DELETE</p></div></p><p id="61e0cc6a-23f2-4fbf-9780-402ea1bc15a3" class="">
+</p><p id="ba8ce678-c534-4e3a-9833-8310e5b6d415" class=""><span style="border-bottom:0.05em solid">application metadata</span><div class="indented"><p id="cb77f025-7e2f-4aa2-b5d1-bee92ed6db4b" class="">Preferred data type and language</p></div></p><p id="7084b2a8-8aff-4dab-923d-cbc554c262b3" class="">
+</p><p id="f2b13e04-fbc2-4686-baaf-2de0701cf0eb" class=""><span style="border-bottom:0.05em solid">request metadata</span></p><p id="427f8f1b-34f8-4420-aa64-a8958422a974" class="">
+</p><p id="10bc28a9-94ff-489c-95e9-65a8d475f1c8" class=""><span style="border-bottom:0.05em solid">Application data / message body</span><div class="indented"><p id="efa95129-061a-4965-bda5-281d0d3ab37e" class="">sent by some methods</p><p id="0a3bce93-0e22-4251-84b5-b0fea19e552f" class="">about the sent / recieved data type in the header</p></div></p><figure id="0bdbc2ab-6e1a-4d13-9a29-ca635d7b1261" class="image"><a href="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled.png"><img style="width:240px" src="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled.png"/></a></figure><p id="d65879bf-4b63-4759-8ecf-556cfff516a5" class="">
+</p><h2 id="c45bb0a2-3a0f-4518-a291-5153a79a910b" class="">HTTP response</h2><p id="98f2042c-4ba1-47a1-82fc-7fb5b7f74fae" class="">Followed by request.</p><p id="b03388b1-0a7e-4f56-944f-26aa428418a2" class="">
+</p><p id="e87d2cf7-1328-4a02-b3e9-a17f0836dfcc" class=""><span style="border-bottom:0.05em solid">status code</span><div class="indented"><p id="126de58f-82a2-4782-ae8a-87d807b4ad27" class="">1xx		Informational</p><p id="c82875bb-399b-4875-b076-824ef82de663" class="">2xx		Success</p><p id="9f70c33a-2d24-45fd-b507-cb3de936c6e1" class="">3xx		Redirected</p><p id="57601bee-7029-44ba-bfbe-4c3a371d71fc" class="">4xx		Client Error</p><p id="10c9ad9a-37f9-4910-9756-f6056089a3f2" class="">5xx		Server Error</p></div></p><p id="aa169bdd-c8d5-461a-8843-5b00872ad741" class="">
+</p><p id="8c346b68-2296-4a53-8cb5-b6b5e7b5dae2" class=""><span style="border-bottom:0.05em solid">application data / body</span></p><p id="b9c313ac-cb62-4e75-8826-146c2056a5a3" class="">
+</p><p id="e1654bce-2952-4e52-94e8-347b73f17ace" class=""><span style="border-bottom:0.05em solid">application metadata</span><div class="indented"><p id="94f9b217-b268-4869-921f-11a58af8573a" class="">Data type, encoding of body (&quot;content-type&quot;)</p><p id="9d58f43d-b3d9-491b-81e3-143022433ccb" class="">Caching, expiring date (&quot;expires&quot;)</p><p id="dc726681-7df7-43aa-a14f-b82cceea5910" class="">Current URL of the resource and last modified (&quot;last modified&quot;)</p><p id="6a2b7ff2-af81-4aa2-8cc3-919ac3358b47" class="">Cookies (&quot;set-cookie&quot;)</p></div></p><p id="3f62dfaa-e3ef-4f4d-8dee-6704537f1a9c" class="">
+</p><p id="2c646fe3-779f-4012-ad09-977e39a6a39f" class=""><span style="border-bottom:0.05em solid">response metadata</span><div class="indented"><p id="489ada2f-9eca-41b1-a5c8-169e2b3c966d" class="">Server, TCP connection state, date</p></div></p><figure id="2ac5ac2e-b835-4194-bf61-3adea79360f6" class="image"><a href="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%201.png"><img style="width:240px" src="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%201.png"/></a></figure><p id="c776430b-e4cd-44ae-954e-41d4f9f9c418" class="">
+</p><h1 id="a170a91d-24f1-4c26-9257-b09d11f694dc" class="">Using HTTP</h1><ul id="f24d35a7-acd2-4394-ab9c-2cfeeea7e558" class="toggle"><li><details open=""><summary>Use postman or Curl</summary><p id="7ec6de46-7153-42b6-9405-9798eb6b41c4" class=""><strong>Network traffic</strong><div class="indented"><ol type="1" id="d88fae26-b92e-437f-b62e-64794fea39a0" class="numbered-list" start="1"><li>Chrome developer tools: <code>Ctrl + Shift + I</code></li></ol><ol type="1" id="608b4ef9-d8c5-41bb-8edd-93111231f638" class="numbered-list" start="2"><li>Open Network tab</li></ol><ol type="1" id="f3487ac5-89f5-4d4f-a824-806a79a81ab2" class="numbered-list" start="3"><li>Open Website: <a href="http://www.example.com/index.html">http://www.example.com/index.html</a></li></ol><ol type="1" id="84668bd2-a318-4ca2-a5bc-f2a9407081ab" class="numbered-list" start="4"><li>Open fetched html under the <code>Name</code> Tab and then:<p id="c0c49049-2218-49e2-83ef-fe8be29d3771" class=""><code>Headers</code> Tab</p><figure id="bc96f7c8-1031-49f8-82c4-71f49b662a18" class="image"><a href="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%202.png"><img style="width:480px" src="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%202.png"/></a></figure><p id="3ce26c72-d5ac-4a7e-9204-16f8b0eb95d7" class=""><code>Response</code> Tab (HTML content)</p><figure id="68326ad2-3b0d-46fa-a587-2c8ac53242ae" class="image"><a href="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%203.png"><img style="width:480px" src="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%203.png"/></a></figure><p id="ef51e5a7-509c-4de2-9ea0-90e0bc9d67bc" class="">
+</p></li></ol></div></p><p id="5e3440b7-e81e-4b9b-9357-c9b089fe207a" class=""><strong>Ping</strong><div class="indented"><p id="1f5b1847-2748-4e6c-a9c4-d7d78e2f3f6f" class="">icmp protocol sends short messages and checks the respond time</p></div></p><p id="9e54544b-1a98-4803-a671-1bd3392e5dda" class="">
+</p><p id="036f3bf3-f504-439a-80e3-5df8e94fe361" class=""><strong>Traceroute</strong><div class="indented"><p id="2028da7e-aefb-4e72-ac97-27c70975f8c6" class="">Shows all (proxies, routers) middle men between you and the server.<div class="indented"><p id="142ab0e6-f4aa-4940-bca2-76c2ebe8d3f6" class="">In windows: Trace rt</p></div></p></div></p><p id="06b78d70-941c-4d13-a2b6-88235561143d" class="">
+</p><p id="1d77d0e5-5ff0-4edc-a0fc-88ced444eb20" class=""><strong>RequestBin.com</strong><div class="indented"><p id="9650f136-1ab8-4079-b167-191e130ba5f2" class="">Allows you to set up a Server that observes all requests.</p></div></p><p id="dd8b1bf8-0b1b-47af-a593-3a7c76aa3df7" class="">
+</p><p id="46fc427e-eb61-4fdf-88bb-82b5eaf20a30" class=""><strong>Sending requests with curl</strong><div class="indented"><ul id="1a583d1c-60ed-4ba8-b7ff-ab81cfae30b9" class="bulleted-list"><li style="list-style-type:disc"><code>curl &lt;URL&gt;</code> sends a get request</li></ul><ul id="c2c9c8c7-f3a1-41c6-aa59-44daa5d7956f" class="bulleted-list"><li style="list-style-type:disc"><code>curl --head URL</code> returns the response head</li></ul><ul id="a6289e19-9584-4142-900a-f843148862b1" class="bulleted-list"><li style="list-style-type:disc"><code>URL = &quot;&lt;URL&gt;&quot;</code> stores URL in variable - (this can be also done in the command line by saying export URL= &lt;URL&gt;)
+<code>echo $URL</code>  checks URL value
+<code>curl $URL - v</code> sends a get request but in a more verbose mode: shows all middle men before returning the response head</li></ul><ul id="fcc318ce-23f6-4832-a2dd-ff55646a1b88" class="bulleted-list"><li style="list-style-type:disc"><code>curl -X GET $URL</code> sends get request</li></ul><ul id="97ca1f87-e14e-4793-b517-2a808620231e" class="bulleted-list"><li style="list-style-type:disc"><code>curl -v -d &#x27;{&quot;name&quot;: &quot;Jurgen&quot;, lastname: &quot;Ciro&quot; }&#x27; -H &quot;Content-Type: application/json&quot; $URL</code> sends post request</li></ul><ul id="d0ac3d15-9e02-4346-a74e-4ef2ff19a80d" class="bulleted-list"><li style="list-style-type:disc"><code>curl -X PUT -H &quot;Authorization: Basic XYZ&quot; $URL</code> sends put request with custom header</li></ul><p id="31ef25a9-e9b9-4137-84a8-273fab368ab2" class="">
+</p><p id="a3cee108-6a65-4b4f-afad-555afdfc3418" class=""><span style="border-bottom:0.05em solid">In summary:</span><div class="indented"><p id="cb7749da-e937-4652-9a6c-837f5da27189" class="">-v = verbose</p><p id="b36f08f8-1a0c-4730-a812-dc116b2e2c35" class="">-H sets requests headers (in example above: content type)</p><p id="9927af88-500a-48f3-b3ec-1f596f8f65fb" class="">-d sets request body (data)</p><p id="7c100ea6-accb-416b-a1ca-c83d1ce5f37a" class="">-X sets the request method <div class="indented"><figure id="74ca9bed-1fa1-4fef-a235-de4207202265" class="image"><a href="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%204.png"><img style="width:336px" src="HTTP%20a1ee82e56be14000ae810347e0fbe6f8/Untitled%204.png"/></a></figure></div></p></div></p></div></p></details></li></ul><ul id="63b74e1b-cde4-4136-86d0-34faf67969c4" class="toggle"><li><details open=""><summary>HTTP Live Demo Summary</summary><p id="792defae-b22c-4b7d-bf17-b3edc4d7cc12" class="">• A variety of HTTP requests with curl:
+• Retrieving textual data and displaying
+- Response headers in (1),
+- and verbose output (TCP information, request and response headers (2)</p><p id="a21655c0-68aa-4bcd-9828-c1c432dc1b01" class="">
+</p><p id="d98a4359-350e-4236-9665-7c0ede927d99" class="">Overall goal here is to show the different content types
+(1) curl --head http://people.csail.mit.edu/jcito/we/some_text.json
+(2) curl -v http://people.csail.mit.edu/jcito/we/some_text.txt
+• Create a request bin to display - I am replacing the actual URL with $URL here (this can be also done in the command line by saying export URL= https://enkuj0njhbzm.x.pipedream.net/)
+-v = verbose, -H sets requests headers, -d sets request body, -X sets the request method</p><p id="8c5f0f8a-54ac-4f38-ac79-85d650b3ace0" class="">
+</p><p id="a41666fe-a0e4-47ae-9de6-a54bba0e657f" class="">• Show GET: curl -v -X GET $URL</p><p id="b2e96ad2-4ce1-4954-be9c-d1231daffc8e" class="">
+</p><p id="ceb94e39-19f2-4601-b003-5147f24c7fb8" class="">• Show POST: curl -v -d &#x27;{ &quot;name&quot;: “Jurgen”, lastname: “Cito” }&#x27; -H &quot;Content-Type: application/json” $URL</p><p id="86cba088-2385-472a-aa8a-2efea75fb01a" class="">
+</p><p id="ba838da1-05b7-441f-8d0e-11c800faec47" class="">• Show PUT with custom header: curl -X PUT -H “Authorization: Basic XYZ” $URL</p><p id="b4a8cf03-820c-4414-9e66-2a247b7cacb1" class="">
+</p><p id="0b65cd74-ad36-414b-8e9c-969a50a228da" class="">• Go to Chrome and open More Tools -&gt; Developer Tools, select tab “Network” (check “Disable Cache”)</p><p id="62c1d960-92d4-4d6d-943e-b9092f091f37" class="">
+</p><p id="055b0b8f-2540-4df1-8132-678716ff94d5" class="">• Go to website of your choosing and see a horde of HTTP requests coming in</p></details></li></ul><p id="8eb6be4b-8861-4013-9f03-b2b9ade0636e" class="">
+</p></div></article></body></html>

@@ -1,0 +1,789 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Create, insert, delete, update (und Datenintegrität)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="df4db8d1-9cf1-4ed1-9c69-c5d1a48aeed8" class="page sans"><header><h1 class="page-title">Create, insert, delete, update (und Datenintegrität)</h1></header><div class="page-body"><p id="a371df99-6947-4b49-8a65-1023fc316467" class="">
+</p><nav id="a3ea714b-0387-41c9-b9e7-289b2965e770" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#85fe7d19-4e74-4eba-a495-e7dc84afb130">Datentypen</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2a1bcf13-959b-439e-8e9d-e44a1dbf15c4">Manipulate Tables</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5ebff2fa-9286-44f9-aa28-e24bf90aff0a">Manipulate Tuples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#72d7411b-0751-4613-b3b5-998f73d9c51d">Integritätsbedingungen</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4104a3ae-0fc7-43c4-b4a2-648e8197b312">In SQL</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ab7c3f4c-09a8-4591-9ada-cb68823da66d">Einfügen mit zyklischen Abhängigkeiten</a></div></nav><p id="b36d0970-9e30-41e2-bf3e-eb09b4788543" class="">
+</p><p id="ef26179e-db0c-4c1e-ba0a-3ae24385d4d0" class="">
+</p><h1 id="85fe7d19-4e74-4eba-a495-e7dc84afb130" class="">Datentypen</h1><p id="8835267e-fe1d-4d25-8b79-7775ca187d1b" class=""><mark class="highlight-blue">Datentypen / Attribut-Domäne</mark><div class="indented"><p id="0316068b-6152-41a6-9012-e780022d5005" class="">Zahlen				<mark class="highlight-gray"><code>numeric(p, s)</code></mark>, <mark class="highlight-gray"><code>integer</code></mark>, <mark class="highlight-gray"><code>int</code></mark></p><p id="c3d22070-3318-4ba4-9a84-82c116849f77" class="">Zeichenketten			<mark class="highlight-gray"><code>character(n)</code></mark><mark class="highlight-gray"> </mark>/ <mark class="highlight-gray"><code>char(n)</code></mark>, <mark class="highlight-gray"><code>character varying(n)</code></mark>, <mark class="highlight-gray"><code>varchar(n)</code></mark></p><p id="686e0741-98a9-4049-9827-2767790ef51e" class="">Datums-Typ			<mark class="highlight-gray"><code>date</code></mark></p><p id="eb19097d-bae8-4428-9d00-b50579ce9d14" class="">Große datenmengen	<mark class="highlight-gray"><code>blob</code></mark>, <mark class="highlight-gray"><code>raw</code></mark>, <mark class="highlight-gray"><code>clob</code></mark></p><p id="c3e3ad35-cefb-4d7e-949c-45c9a5286e17" class="">xml (xml Dokumente)</p></div></p><p id="ec435ea1-2289-45f9-8e0d-37716f255f2f" class="">
+</p><p id="50a76ed1-7ff1-48ba-92f0-9443172ec438" class="">
+</p><p id="5b19cb21-fc21-4c83-a52b-8185b2a211a4" class="">
+</p><p id="3e33552a-bfb0-4dbc-b6f0-4bd27c64ac7c" class="">
+</p><p id="2d84b849-c7a2-48c6-a484-fe1f0efbaf5d" class="">
+</p><h1 id="2a1bcf13-959b-439e-8e9d-e44a1dbf15c4" class="">Manipulate Tables</h1><p id="8336727a-ecec-4fd0-927d-48c6c1bc1d96" class=""><mark class="highlight-blue">Create</mark><div class="indented"><pre id="7b85b132-ac94-456d-b709-502a5f14a053" class="code"><code>create table ProfessorIn (
+	PersNr integer primary key ,
+	Name varchar (10) not null ,
+	Rang character (2)
+);</code></pre></div></p><p id="bbbc2855-4869-406a-977f-d191d35447c5" class="">
+</p><p id="9b33f1fd-20bd-45b8-aec9-9aa651d950f4" class=""><mark class="highlight-blue">Update</mark><div class="indented"><pre id="80730cad-8b72-486e-b65e-0affab07bb19" class="code"><code>alter table ProfessorIn rename to Vortragende;
+alter table ProfessorIn add Raum integer;
+alter table ProfessorIn drop Raum;
+alter table ProfessorIn alter Name type varchar (30);</code></pre></div></p><p id="2a2fd62d-3ca4-45e7-a01b-35984402990c" class="">
+</p><p id="d9618381-4818-431a-918c-c398d297873d" class=""><mark class="highlight-blue">Delete</mark><div class="indented"><pre id="1a58c6ef-3a8c-4033-a046-b398eeed720a" class="code"><code>drop table ProfessorIn;</code></pre></div></p><p id="1ace8417-6024-48fe-8a82-5c1629b5db73" class="">
+</p><p id="356181fa-ebc4-48eb-bda4-cbe72fed5336" class="">
+</p><p id="86aedcb0-c251-40a1-b86e-a7650b9f0f84" class="">
+</p><p id="4b990b59-5525-4326-b912-859a58037eec" class="">
+</p><p id="6bc2e9bd-481d-46c7-acd8-49ae919e89ad" class="">
+</p><h1 id="5ebff2fa-9286-44f9-aa28-e24bf90aff0a" class="">Manipulate Tuples</h1><p id="0d5af34d-211b-441f-b3a7-d64dda951e0b" class=""><mark class="highlight-blue">Create</mark><div class="indented"><pre id="bf27bded-b76a-41e0-b127-c44e343fc3c1" class="code"><code>insert into ProfessorIn values (2136 , &#x27;Curie&#x27;, &#x27;C4&#x27;, 36);
+insert into ProfessorIn value
+			(2125 , &#x27;Sokrates&#x27;, &#x27;C4&#x27;, 226),
+			(2126 , &#x27;Russel&#x27;, &#x27;C4&#x27;, 232);</code></pre><pre id="4d42b96d-1f42-45f1-96b6-19b01da75d15" class="code"><code>insert into hören
+select MatrNr, VorlNr
+from StudentIn, Vorlesung
+where Titel = &#x27;Logik&#x27;;</code></pre></div></p><p id="16791fd9-964d-4af2-99ef-13e354fcae15" class="">
+</p><p id="02ddda50-532e-446e-83ee-ad0830ede5db" class=""><mark class="highlight-blue">Update</mark><div class="indented"><pre id="dbe30ed7-5e46-46fc-a563-51d74f873782" class="code"><code>update StudentIn
+set Semester = Semester + 1;</code></pre><pre id="ae060e37-64f3-480c-91ca-308c284c528e" class="code"><code>update ProfessorIn
+set Rang = &#x27;C2&#x27;
+where Rang = &#x27;C3&#x27; and PersNr &gt; 2500;</code></pre></div></p><p id="f8b11dbe-ed48-4839-85bf-c08f0f8a6769" class="">
+</p><p id="6cb7d3cd-aa10-46de-b984-afb066725f9e" class=""><mark class="highlight-blue">Delete</mark><div class="indented"><pre id="dbf99ea0-62ef-4199-813b-35c85509cb57" class="code"><code>delete from ProfessorIn
+values (2137 , &#x27;Kant&#x27;, &#x27;C4&#x27;, 7);</code></pre><pre id="c880086b-4ca5-49c7-a7ca-2c01a32850a0" class="code"><code>delete from ProfessorIn where PersNr = 2137;</code></pre></div></p><p id="60a30f89-f572-450f-97d2-e29fb554df50" class="">
+</p><p id="fa61c425-1c6f-460c-8a8e-587375904d9d" class="">
+</p><p id="1d651868-49e0-457e-9f38-f9fc675b16ec" class="">
+</p><p id="3df191df-1288-4c3a-8a37-6bf1d6de93b5" class="">
+</p><p id="f58b5c29-611d-4536-b6b3-ecb488ed1258" class="">
+</p><h1 id="72d7411b-0751-4613-b3b5-998f73d9c51d" class="">Integritätsbedingungen</h1><p id="0e5ae031-83ca-41f8-85aa-884f2e347bbb" class=""><mark class="highlight-blue">Dynamisch	</mark>Constraints an DB Zustandsänderungen</p><p id="d03c1861-b922-46e6-9605-57dd503c296d" class=""><mark class="highlight-blue">Statisch		</mark>Constraints an DB Zuständen selbst</p><p id="4fedc516-f076-450b-a739-09be0a6e78b2" class=""><mark class="highlight-blue">Semantisch	</mark>aus der modellierten Welt.</p><p id="52642545-8c33-4499-a7d5-2565106eb047" class="">
+</p><p id="c383261e-3f25-40df-9f70-ef99e96022a6" class=""><em>zB bekannte implizite Bedingungen:</em><div class="indented"><p id="ec2a1734-aa97-40c5-9e73-ed4534074c5c" class="">IDs							müssen eindeutig sein</p><p id="4e6be638-f565-4916-8808-0d1ca43ccb1b" class="">Kardinalitäten					aus ER Modell werden eingehalten (durch Relationenmodell)</p><p id="ec45a42f-e4ab-4d0a-88dd-49f1afc1266c" class="">Attribut-Domänen 				Datentypen und Wertebereiche</p><p id="bd53b46e-f840-4b96-983b-2bf2e6ccfdef" class="">Inklusion bei Generalisierung		Untertypen Entities müssen auch im Obertyp enthalten sein</p></div></p><p id="afc0f008-0000-43bd-8a23-28756b4dfdad" class="">
+</p><p id="5169162e-d70f-4f95-ad40-2dd1246f0463" class="">
+</p><h2 id="4104a3ae-0fc7-43c4-b4a2-648e8197b312" class="">In SQL</h2><p id="62014e43-90bc-4b30-bcc9-3f50bae9fe09" class="">Bei Definition: <mark class="highlight-gray"><code>CREATE TABLE</code></mark></p><p id="e667715c-6cb0-4a26-8e64-38168428cefb" class="">Nachträglich hinzugefügt oder entfernt: <mark class="highlight-gray"><code>ALTER TABLE ADD/DROP</code></mark></p><p id="c22f7456-286c-4f1f-aa1d-3d522d0572db" class="">
+</p><p id="697ba74a-7f67-4bf8-8254-a5d396d40a3f" class=""><mark class="highlight-gray"><code>unique( att, att, ...)</code></mark><mark class="highlight-gray">			</mark>Schlüssel-Kandidaten</p><p id="5674c0d1-d44f-4bb5-9ca9-8cfc0c90fdca" class=""><mark class="highlight-gray"><code>not null</code></mark><mark class="highlight-gray">						</mark>keine Null-Werte</p><p id="e3ce0253-cee1-4300-a3b3-ebd18ed26fb7" class=""><mark class="highlight-gray"><code>default</code></mark><mark class="highlight-gray">							</mark>Angabe von Default-Werten</p><p id="c08a4c33-e790-499e-aebf-92f800d809db" class=""><mark class="highlight-gray"><code>check</code></mark><mark class="highlight-gray">							</mark>statische Überprüfung (mit <mark class="highlight-gray"><code>constraint</code></mark><mark class="highlight-gray"> </mark>benennen)</p><p id="60d37003-ef99-45a4-80db-f3d40e7b8e89" class=""><mark class="highlight-gray"><code>primary key( att, att, ...)</code></mark><mark class="highlight-gray">		</mark>Primärschlüssel</p><p id="a44a419e-1187-4ee6-8720-cccae53c6b70" class=""><mark class="highlight-gray"><code>foreign key( att, att, ...)</code></mark><mark class="highlight-gray">		</mark>Fremdschlüssel</p><p id="cfe55093-7ff1-4363-aac9-5593e413ad10" class=""><mark class="highlight-gray"><code>references( table name )</code></mark><mark class="highlight-gray">			</mark>Tabelle auf die verwiesen wird</p><p id="dad5a773-048c-4144-b9b9-f129709344d3" class="">
+</p><p id="7a62b4c1-172b-4bd3-aa73-054d0ef81567" class=""><mark class="highlight-blue">Beispiel</mark><div class="indented"><pre id="ae1faf54-cb6a-4eae-bbd4-cb7f7975a40a" class="code"><code>create table Student(
+		MatrNr integer primary key,
+		Name varchar(30) not null,
+		Semester integer default 1
+			check (Semester between 1 and 13) -- muss immer true sein
+);</code></pre><pre id="8bf8402f-3136-489d-8df7-2740025b9a63" class="code"><code>create table prüfen (
+		MatrNr integer,
+		VorlNr integer,
+		PersNr integer
+		Note numeric(2,1)
+				check(Note between 0.7 and 5.0),
+
+		primary key(MatrNr, VorlNr),
+		constraint vorherhören -- damit Fehlermeldungen deutlicher sind
+			check(exists (select * from hören h where
+												where h.VorlNr = prüfen.VorlNr and h.MatrNr = prüfen.MatrNr
+			))
+);</code></pre></div></p><p id="fb289f8d-4362-4db6-8ea7-03f2d4865e16" class="">Bei referentieller Integrität:<div class="indented"><pre id="0dccff09-c425-47c9-89ee-d54b2d8fd1df" class="code"><code>on update / on delete { no action | cascade | set null | set default }</code></pre><p id="05d9a97c-8be8-4dca-b89b-c1a38b0d6b59" class="">Kaskadierendes Löschen durch <mark class="highlight-gray"><code>on delete cascade</code></mark> </p><pre id="4a3c5a99-c5ac-4eac-924f-93d0d1d7d33a" class="code"><code>create table Professoren (...);
+create table Vorlesungen (
+		...
+		gelesenVon integer[foreign key] references Professoren
+																		on update cascade -- änderungen werden mitübertragen
+																		on delete set null -- beim Löschen auf null setzen
+);</code></pre></div></p><p id="cc0a4f24-a421-4a6f-b3e2-7d90a5959239" class="">
+</p><p id="602124bb-2735-4d2a-9881-92b9c59728ce" class=""><mark class="highlight-blue">Referentielle Integrität</mark><div class="indented"><p id="1cee5e84-66b1-4c38-a9fd-3fa028e825a3" class="">Fremdschlüssel entweder auf existierende Tupel<div class="indented"><p id="90e183ee-d34e-4d2a-ba41-5e0fa3ab8330" class="">in anderer Tabelle <mark class="highlight-gray">(≠ dangling reference)</mark></p><p id="e9418336-81ab-40cb-9c0e-2c0e10196682" class="">oder <mark class="highlight-gray"><code>null</code></mark>.</p></div></p></div></p><p id="536c7889-7b67-408c-9fa3-0fe8f772f1ff" class="">
+</p><p id="fdf27f7e-94d9-4832-95a8-99818e5e1acd" class="">
+</p><p id="78bee2e4-3e6b-4644-8344-e041e79cf427" class="">
+</p><p id="3a4c9111-b43a-41f7-b9d9-7bea36565c9f" class="">
+</p><p id="09d6f590-f5ed-4672-87bb-b5f7d792a715" class="">
+</p><h1 id="ab7c3f4c-09a8-4591-9ada-cb68823da66d" class="">Einfügen mit zyklischen Abhängigkeiten</h1><p id="84fb8542-9ac3-4b12-a99a-6a82b07be2b3" class="">Problem: &quot;What came first? The chicken or the egg?&quot; <div class="indented"><p id="3f145598-abd5-4a0c-9aa4-cc65deeaf542" class="">Fehlermeldungen:</p><pre id="10400c1d-f942-4964-b8a8-3576b82b3b91" class="code"><code>create table chicken (
+		cID integer primary key,
+		eID integer references egg;
+);
+
+-&gt; ERROR: relation &#x27;&#x27;egg&#x27;&#x27; does not exist</code></pre><pre id="536526d0-55d3-48a1-bb51-3716339ee511" class="code"><code>create table egg (
+		eID integer primary key,
+		cID integer references chicken;
+);
+
+-&gt; ERROR: relation &#x27;&#x27;chicken&#x27;&#x27; does not exist</code></pre><pre id="0586841c-d5f9-4bed-a9f5-b0c30991be28" class="code"><code>insert into chicken values (1,11);
+
+-&gt; ERROR: insert or update on table &#x27;&#x27;chicken&#x27;&#x27; violates foreign key constraint &#x27;&#x27;chickenrefegg&#x27;&#x27;
+-&gt; DETAIL: Key (eid)=(11) is not present in the table &#x27;&#x27;egg&#x27;&#x27;;</code></pre></div></p><p id="682d5813-4fec-4f5f-9220-ea55980353f6" class="">
+</p><p id="2c2bdaa5-3cb8-4a3d-bf5e-24d18e2314ce" class="">Lösungen:<div class="indented"><ol type="1" id="40fc4829-9b51-416c-8894-855097f812de" class="numbered-list" start="1"><li>Definition vom foreign key in der ersten Tabelle, dass man anlegt:<p id="d69c81d7-1113-422e-9ed7-3b82ab6d9755" class="">Nachträglich anlegen mit <mark class="highlight-gray"><code>ALTER TABLE</code></mark></p><p id="7f0470b8-8eee-42b8-ba9b-fb68f9e5f307" class=""><mark class="highlight-gray">Beispiel</mark><div class="indented"><pre id="26600aa7-239f-4406-9ef8-84b44ecb0e60" class="code"><code>create table chicken (
+		cID integer primary key,
+		eID integer references egg;
+);
+
+create table egg (
+		eID integer primary key,
+		cID integer references chicken;
+);
+
+alter table chicken
+		add constraint chickenrefegg foreign key (eID) references egg;
+</code></pre></div></p><p id="31e91f7a-2702-428e-ad2d-eed75f8464e9" class="">
+</p></li></ol><ol type="1" id="89e95400-086b-4c05-bc24-59aabfbbe376" class="numbered-list" start="2"><li>Neue Tupel einfügen:<p id="0cd5197d-a87d-487b-a4e0-e03cb5bd8a41" class="">Mit <mark class="highlight-gray"><code>DEFERRED</code></mark><mark class="highlight-gray"> </mark>Transaktion<div class="indented"><p id="d4707ac5-b0c6-4053-8fa1-7976e6d42a62" class="">Man kann bestimmen ab welchem Zeitpunkt der Transaktion die constraints geprüft werden.</p><pre id="cad5f991-5e88-4b42-8697-38516020eb62" class="code"><code>[DEFERRABLE | NOT DEFERRABLE] -- am Transaktionsende vs. sofort überprüfen
+			[INITIALLY DEFERRED | INITIALLY IMMEDIATE]</code></pre></div></p><p id="6cc527d0-29c2-4a23-8cf8-440034bd6533" class=""><mark class="highlight-gray">Beispiel</mark><div class="indented"><pre id="85855519-1ebc-4b74-828e-8ce3939617df" class="code"><code>create table chicken (
+		cID integer primary key,
+		eID integer references egg;
+);
+
+create table egg (
+		eID integer primary key,
+		cID integer references chicken;
+);
+
+alter table chicken
+		add constraint chickenrefegg foreign key (eID) references egg
+																		initially deferred deferrable;
+
+begin;
+		insert into chicken values(1, 11);
+		insert into egg values(11, 1);
+commit;</code></pre></div></p><p id="5a8e6556-5e61-4ffb-8ba5-106ad40a1867" class="">
+</p></li></ol><ol type="1" id="6077038e-c7cd-4f64-aa7d-1f65e5964c38" class="numbered-list" start="3"><li>Tabelle löschen:<p id="cf254a91-48af-4512-a88e-0e17d8353dcf" class="">Manuell entfernen mit <mark class="highlight-gray"><code>DROP CONSTRAINT</code></mark><mark class="highlight-gray"> </mark> <div class="indented"><pre id="a0150964-b61f-43b2-9451-8445149cc5c4" class="code"><code>ALTER TABLE tablename DROP CONSTRAINT constraintname;</code></pre></div></p><p id="578f9eba-7c3c-4b4b-896a-550306fddad3" class="">Automatisch entfernen mit <mark class="highlight-gray"><code>CASCADE</code></mark> <div class="indented"><pre id="6aa25b3b-7551-4197-ae07-b7c066be565b" class="code"><code>DROP TABLE tablename CASCADE;</code></pre></div></p><p id="17e94f3d-4eb4-42b3-b3a9-5abe99aba274" class=""><mark class="highlight-gray">Beispiel</mark><div class="indented"><pre id="2e0da85f-8018-4eff-8981-a61aa4de3368" class="code"><code>ALTER TABLE chicken DROP CONSTRAINT chickenrefegg;
+DROP TABLE egg CASCADE;</code></pre></div></p></li></ol></div></p></div></article></body></html>

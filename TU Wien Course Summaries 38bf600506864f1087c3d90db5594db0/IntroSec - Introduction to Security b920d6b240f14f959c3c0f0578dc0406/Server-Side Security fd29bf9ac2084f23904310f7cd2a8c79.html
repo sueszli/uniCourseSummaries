@@ -1,0 +1,707 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Server-Side Security</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="fd29bf9a-c208-4f23-9043-10f7cd2a8c79" class="page sans"><header><h1 class="page-title">Server-Side Security</h1></header><div class="page-body"><figure id="fc2e72fd-2b1b-4669-a38c-abdadaca12ba" class="link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/Web%20Basics%20fc2e72fd2b1b4669a38cabdadaca12ba.html"><span class="icon">📎</span>Web Basics</a></figure><figure id="3a156189-991e-4853-9c93-1867d9968a88" class="link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/PHP%20Syntax%203a156189991e48539c931867d9968a88.html"><span class="icon">📎</span>PHP Syntax</a></figure><figure id="b7e23076-ccae-4936-a29c-38c0b702a3e5" class="link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5.html"><span class="icon">📎</span>SQL Syntax </a></figure><p id="7a2d1cfd-492e-4a14-bef6-9ef806dc6ec8" class="">
+</p><nav id="81fcb67c-7ddc-4f19-87e4-f3ac1144e2fe" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e428e6f-cd0c-456f-835e-a88345131667">Attack Types</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36d6a211-a9dd-4c96-895e-1f6cef40e19c">____________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#edbdabb7-3b99-491c-bcb6-cfc7f03cc698">File path traversal</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#13df3a9a-9b86-49c8-8cc9-bfbb97deface">Remote Code Execution RCE</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d5ec42e5-f796-4e68-9b96-4d7f9db3927e">SQL injection</a></div></nav><h1 id="8e428e6f-cd0c-456f-835e-a88345131667" class="">Attack Types</h1><p id="2ebaf4ae-acdd-4597-841b-4ecfbad35ae9" class=""><mark class="highlight-teal">Malware Attacker (Client)</mark></p><p id="8f261905-3df5-4072-9477-724686739f36" class="">Malicious code executed directly on victim’s computer or browser (software bugs, malware, …).</p><p id="af772bb6-b2a3-4908-9b79-f1a608caac75" class=""><mark class="highlight-gray">ie. XSS, CSRF</mark></p><p id="3cbe49c6-7f49-4eee-a743-74e20e034de1" class="">
+</p><p id="82a65e3e-ab27-4229-93ad-db3664f6706d" class=""><mark class="highlight-teal">Network Attacker (Network)</mark></p><ul id="b83db137-a4c5-4a75-91e1-bcf7f88a59da" class="bulleted-list"><li style="list-style-type:disc">passive					wireless eavesdropper</li></ul><ul id="a7835b28-ae6a-4830-b523-7a9055e17bd2" class="bulleted-list"><li style="list-style-type:disc">active					evil wifi-router, dns poinsoning</li></ul><p id="2fa77035-a02d-4a25-91bd-7d843da26cdc" class="">
+</p><p id="3cf9c0d8-35b6-43ea-b5dc-58ef258b76ea" class=""><mark class="highlight-teal">Web Attacker (Server) </mark></p><p id="c9c4aac1-f7c0-4bcd-8fba-a238519963cd" class="">Attacker controls domain <mark class="highlight-gray"><code>attacker.com</code></mark> with a valid TLS certificate that the user visits.</p><p id="1c6e82ae-c8cb-4426-9d82-094931979f62" class="">ie:</p><ul id="794c4123-fb76-4ebf-bd6f-4c95b15f3e49" class="bulleted-list"><li style="list-style-type:disc">gadget attacker			html-iframe (embedded page) with malicious content</li></ul><ul id="5dcf0863-74cf-4cb0-ab24-2f1e8cb40016" class="bulleted-list"><li style="list-style-type:disc">related-domain-attacker		related domain of the target website, ie. <mark class="highlight-gray"><code>attacker.example.com</code></mark></li></ul><h1 id="36d6a211-a9dd-4c96-895e-1f6cef40e19c" class="">____________</h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d58662b0-66d9-45f6-8c5e-216f03315d50"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">All examples for server-side attacks below are user input validation vulnerabilities.</div></figure><h1 id="edbdabb7-3b99-491c-bcb6-cfc7f03cc698" class="">File path traversal</h1><p id="adb53d06-55c2-40ef-9844-b19186040df2" class="">
+</p><p id="6a9b66b3-f07e-4a96-8528-1e06bbf3c7ac" class=""><mark class="highlight-teal">Vulnerable code</mark></p><p id="b509c949-add8-4329-8cc2-9fb0121efbd3" class="">Webserver with standard webroot: <mark class="highlight-gray"><code>/var/www/html</code></mark><mark class="highlight-gray"> (topmost directory, stores directory pages, some text files, PHP script itself)</mark>.</p><pre id="9ffcf1bd-8937-45a7-b6d7-b7319f739796" class="code"><code>&lt;?php
+ echo file_get_contents(&quot;pages/&quot; . $_GET[&quot;page&quot;]);
+?&gt;</code></pre><p id="d718011a-a833-4785-861d-a24e708443ff" class="">
+</p><p id="756859f2-5641-4d5b-aded-7db93ed7b00e" class=""><mark class="highlight-teal">Attack</mark></p><p id="26808373-b4d7-48c9-977a-f20301915cf5" class="">Allows an attacker to read arbitrary files.</p><p id="2ee9d184-4daa-42e3-9e57-655582c1a612" class="">We can climb up with <mark class="highlight-gray"><code>../</code></mark>, get access to any file on the web server.</p><pre id="d58bdeb2-0c62-49f5-87c4-11256cbadd21" class="code"><code>GET /show.php?page=../../../etc/passwd HTTP/2
+Host: example.com</code></pre><p id="5690376e-f547-48a7-b815-f31f4a8d7cd6" class="">
+</p><p id="03ded636-1531-4236-b5b1-c61a89318f3a" class=""><mark class="highlight-teal">Prevention: Defense in Depth </mark><mark class="highlight-gray">(choose multiple defense mechanisms)</mark></p><ol type="1" id="584067fb-744e-4e15-b8d4-21ae4dea32ae" class="numbered-list" start="1"><li>Not using user controlled input for filenames</li></ol><ol type="1" id="aaf81c63-d6b9-4d35-9854-5d4c92bf47b1" class="numbered-list" start="2"><li>Validating, filtering user input<p id="c4468e74-2f64-4815-ba0b-3169f7ba07ee" class="">only allow file names from static list</p><p id="ff9fca55-897f-48ce-9a34-73135d1208ad" class="">compare them with canonical path</p><ul id="45d6fc0b-6510-43cb-92a7-246ae4402a3b" class="block-color-gray toggle"><li><details open=""><summary>example</summary><pre id="03b84f93-addf-4c58-a62e-729aa0bc9f68" class="code"><code>&lt;?php
+	$pdir = &quot;/var/www/html/pages/&quot;;
+	$file = realpath($pdir . $_GET[&quot;file&quot;]); &lt;- concatenates user input to path
+	 
+	if ($file !== false &amp;&amp; strncmp($file, $pdir, strlen($pdir)) === 0) { &lt;- canonical path
+		echo file_get_contents($file);
+	} else {
+		echo &quot;Error: invalid input&quot;;
+	}
+?&gt;</code></pre></details></li></ul></li></ol><ol type="1" id="b55dfec6-6954-4f52-89f2-0f295388c0a7" class="numbered-list" start="3"><li>Reduced web server privileges<ul id="beb53548-0ef5-45aa-be4c-800e737b95c6" class="bulleted-list"><li style="list-style-type:disc">Restrict access of web server to its own directory</li></ul><ul id="f6484e8a-41fb-4569-8a2d-6e2cad8df3f2" class="bulleted-list"><li style="list-style-type:disc">Sandbox environments to enforce boundary between web server and the OS</li></ul></li></ol><p id="cb02de5b-5d2b-4d1d-a3e0-72dadf58ba4c" class="">
+</p><h1 id="13df3a9a-9b86-49c8-8cc9-bfbb97deface" class="">Remote Code Execution RCE</h1><p id="f75425b2-26d0-4570-beec-0507702f6f58" class="">Code &amp; Command injection</p><p id="03ebb82a-dabd-43ad-bde8-800dd1797eb2" class=""><mark class="highlight-teal">Vulnerable code</mark></p><p id="3271e227-d89d-448c-a20c-9d9dd29605b7" class="">Most languages have functions to execute system commands</p><p id="c48c7cd5-5164-477a-9998-072bacc0f112" class=""><mark class="highlight-gray"><code>system()</code></mark><mark class="highlight-gray"> </mark>in PHP: processes function arguments as shell commands</p><p id="40062c77-7639-4a92-bec0-ec917361fe59" class="">uses <mark class="highlight-gray"><code>system</code></mark> to ping an IP address provided by the user via the ip query variable</p><pre id="e1632f6e-dee6-4b78-afba-16818027a73a" class="code"><code>&lt;?php
+	system(&quot;ping -c 4 &quot; . $_GET[&quot;ip&quot;] . &quot; -i 1&quot;);
+?&gt;</code></pre><p id="e2f44d88-7714-42e9-a0c7-09a1353ca25e" class=""><mark class="highlight-gray"><code>eval</code></mark><mark class="highlight-gray"> </mark>automatically evaluates strings as PHP code</p><pre id="1c89cee2-b074-4864-864e-c91dce316a57" class="code"><code>&lt;?php
+	eval(&quot;echo &quot; . $_GET[&quot;expr&quot;] . &quot;;&quot;);
+?&gt;</code></pre><p id="a92a311d-b35f-4566-affb-ece4263f26d3" class="">
+</p><p id="a4350734-d1ab-43f3-bb05-4d4635199253" class=""><mark class="highlight-teal">Attack</mark></p><p id="5b1eade3-9a06-44e4-b17e-a10fda3553f8" class="">Allows remote code execution, reading sensitive files.</p><p id="bb7f59ba-9be4-4f14-a292-6c58acf88453" class=""><mark class="highlight-gray"><code>;</code></mark><mark class="highlight-gray"> to combine multiple commands in a single line</mark></p><p id="5a200ab6-3e70-4a8e-8948-df6ba133858f" class=""><mark class="highlight-gray"><code>#</code></mark><mark class="highlight-gray"> to commend out the rest</mark></p><pre id="3168fcaf-dbe5-4b06-a704-3a1b78f5aa91" class="code"><code>GET /ping.php?ip=8.8.8.8; cat /etc/passwd # HTTP/2
+Host: example.com</code></pre><pre id="07e05d40-bfa4-45ed-a68b-40576657b87b" class="code"><code>GET /calc.php?expr=file_get_contents example.com (&#x27;/etc/passwd&#x27;) HTTP/2
+Host: example.com</code></pre><p id="5c3a0085-4ecf-4b11-abc8-10a02204353e" class="">
+</p><p id="c45e4664-3d68-44c2-b833-059904604e0c" class=""><mark class="highlight-teal">Prevention</mark></p><ul id="660993c4-59d4-4555-80b0-c95e24fa4c0c" class="bulleted-list"><li style="list-style-type:disc">not using functions that dynamically evaluate strings as code, execute commands - rewrite the code entirely</li></ul><ul id="d589cc38-7427-45bb-b6d5-fce489b31e02" class="bulleted-list"><li style="list-style-type:disc">User input validation<p id="5d52d774-da82-425e-a4c9-620dd1a6501e" class="">escape all special characters with a special meaning for the interpreter (ie <mark class="highlight-gray"><code>;</code></mark>, <mark class="highlight-gray"><code>#</code></mark>, .. for bash)</p></li></ul><ul id="abb92d23-b8c7-4561-9a37-4ff75af2de84" class="bulleted-list"><li style="list-style-type:disc">Reduced web server privileges, sandbox environments</li></ul><p id="161032a4-1d20-452f-97b4-bb7b0300feab" class="">
+</p><h1 id="d5ec42e5-f796-4e68-9b96-4d7f9db3927e" class="">SQL injection</h1><p id="3c81c48b-15b4-43fe-bf4f-e16de35d7ddd" class="">Not exclusively a web attack - Instance of a code injection vulnerability in the context of databases.</p><ul id="591ace21-4930-44ee-b7d9-1d472ce9895d" class="bulleted-list"><li style="list-style-type:disc">read sensitive data</li></ul><ul id="f872bb87-deb4-4494-a908-9b1f20b9fbe0" class="bulleted-list"><li style="list-style-type:disc">damage the data integrity, drop tables, add / delete entries</li></ul><p id="a853bdb8-8e62-4a8b-b627-e1831ab201ea" class="">
+</p><p id="932a5255-4257-41f8-8614-f958153e3a75" class=""><mark class="highlight-teal">First-Order Injections</mark></p><p id="1c58f5a9-5673-4249-8660-74a899073573" class="">User input as part of query. The user can directly change the query.</p><figure id="85862eed-2374-4691-9a04-62cc1aacd3fa" class="block-color-gray link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/Example%201%2085862eed237446919a0462cc1aacd3fa.html"><span class="icon">📎</span>Example 1</a></figure><figure id="500dd6ad-fe25-4d0c-ba7a-e6cce9d2635e" class="block-color-gray link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/Example%202%20500dd6adfe254d0cba7ae6cce9d2635e.html"><span class="icon">📎</span>Example 2</a></figure><p id="c7f9c0d8-e0e3-4aa0-9d73-0fdab6908b6c" class="">
+</p><p id="4db6ce7f-1605-4961-bcf5-10ca91958ed1" class=""><mark class="highlight-teal">Reading Database Metadata</mark></p><p id="73e5a895-23a0-4324-96ae-85d3fc0a90bf" class=""><mark class="highlight-gray"><code>information_schema.tables</code></mark>		names of various tables</p><p id="8bdcb4ff-318a-45fc-ac83-c5c5b07d2dfa" class=""><mark class="highlight-gray"><code>information_schema.columns</code></mark>		names, types, ... of various table columns</p><p id="5cf38fa9-f6a0-48c4-afcb-6fb238eb5c96" class="">
+</p><p id="f9afdf74-83f8-47de-9040-2bfe1a952bff" class=""><mark class="highlight-teal">Second-Order Injections (Stored SQL injections)</mark></p><p id="e2872cd4-429d-4f41-9d5c-d70c4a25f256" class="">Some applications validate user input but not data coming from the database.<div class="indented"><ol type="1" id="44458c3c-ac67-40ee-9c39-60b8b79ef479" class="numbered-list" start="1"><li>store payload in the database</li></ol><ol type="1" id="292c18de-c2ae-42ca-9140-90b2d21f3c0e" class="numbered-list" start="2"><li>then use it to perform the attack</li></ol></div></p><figure id="e25df6b5-fbc9-4b77-b3b3-007abe540d26" class="block-color-gray link-to-page"><a href="Server-Side%20Security%20fd29bf9ac2084f23904310f7cd2a8c79/Example%202%20(continued)%20e25df6b5fbc94b77b3b3007abe540d26.html"><span class="icon">📎</span>Example 2 (continued)</a></figure><p id="0bd55a28-89b7-4af7-844b-ff311bad7e8c" class="">
+</p><p id="09ebd3e9-422d-41de-ad11-34796ebc4c26" class=""><mark class="highlight-teal">Prevention</mark></p><p id="98d81423-2d3d-4ef4-b3cd-c7a345973b2b" class="">prepared statements<div class="indented"><pre id="702f5f68-0567-45e1-95bd-41b91073abd6" class="code"><code>&lt;?php
+	$db = new PDO(CONNECTION_STRING, DB_USER, DB_PASS);
+	$query = &quot;SELECT * FROM users WHERE user = ? AND password = ?&quot;; // &quot;?&quot; as parameter
+	$sth = $db-&gt;prepare($query);
+	...
+?&gt;</code></pre></div></p><p id="77d1d3b9-253f-4b2a-a0bf-f90846565b34" class="">whitelisting approaches<div class="indented"><p id="b58b5eb4-49f7-4927-a92b-554f91ed3a6b" class="">Only when prepared statements cannot be used <mark class="highlight-gray">(ie., when the input is the name of the table to be used in </mark><code><mark class="highlight-gray">FROM</mark></code><mark class="highlight-gray"> or </mark><code><mark class="highlight-gray">ORDER BY</mark></code><mark class="highlight-gray">)</mark></p><p id="c6ab4ae3-d653-45a8-a8ca-396c866a2fa5" class="">Only allowing safe characters like letters, digits and underscore.</p></div></p><p id="d221780b-c3f8-4ab7-899d-9bdae67e46cf" class="">Defense-in-depth protection<div class="indented"><p id="6c5cd164-a48b-441e-9a3e-78918dac2b8d" class="">Restricting access to sensitive tables (only when not required for functionality).</p></div></p><p id="1d6eb83e-14d1-4d24-b8e4-22b738313f81" class="">
+</p></div></article></body></html>

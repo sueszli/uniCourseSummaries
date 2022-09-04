@@ -1,0 +1,720 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DTD</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d433e34b-6233-46c8-9561-e666bd2df873" class="page sans"><header><h1 class="page-title">DTD</h1></header><div class="page-body"><figure id="d00534cb-2ed5-44e4-a446-24a2824dc313" class="link-to-page"><a href="DTD%20d433e34b623346c89561e666bd2df873/Examples%20d00534cb2ed544e4a44624a2824dc313.html"><span class="icon">📎</span>Examples</a></figure><p id="e91c023d-6c74-4b3f-b50d-7ca861bcc9ec" class="">
+</p><nav id="6a7f6854-7658-4d79-816c-6c96b4415e36" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3683fcbb-7909-469c-86d5-fa64380f29b9">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0be42459-cfeb-435a-adcf-840129492cea">1) Element declaration</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bca3abed-54a9-4577-8a0b-ec415c5df535"><mark class="highlight-gray"><code>&lt;!ELEMENT elementName </code></mark><code>specification</code><mark class="highlight-gray"><code>&gt;</code></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1358c899-e07e-4ae6-9ad9-2a01d7d43c56">2) Attribute declaration</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f69cf414-3d3c-4139-8a7f-636101a01ba2"><mark class="highlight-gray"><code>&lt;!ATTLIST elementName attributeName</code></mark><code> attributeType attributeDefault</code><mark class="highlight-gray"><code>&gt;</code></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#66621670-3890-4877-b517-f4c533068896">3) Entity declaration</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a22a2173-7f08-4fab-9af0-89638d1b7301"><mark class="highlight-gray"><code>&lt;!ENTITY </code></mark><code>shortcut &quot;expanded name&quot;</code><mark class="highlight-gray"><code>&gt;</code></mark></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#081519eb-9836-47b2-8436-0668455068a1">Declaring the DTD</a></div></nav><p id="d223452d-0466-4614-9235-477906f8df70" class="">
+</p><h1 id="3683fcbb-7909-469c-86d5-fa64380f29b9" class="">Definition</h1><p id="73845015-9dce-479d-8b7b-eac9d368640e" class=""><mark class="highlight-blue">XML application</mark><div class="indented"><p id="7204fe46-c4ab-4de2-800d-29b7ac2c9999" class="">fixed set of tags for a specified application / use case</p></div></p><p id="e20032ae-697d-4b86-bb42-540fb8ae5df5" class="">
+</p><p id="833ed958-5a35-49ee-8a17-a80c0fa4f4c3" class=""><mark class="highlight-blue">DTD</mark><div class="indented"><p id="f4995216-afe2-4ff1-baf8-af176d25aed4" class="">= Document type definition</p><ul id="dff3f5e7-17fb-41c6-a5cd-1826d21534a7" class="bulleted-list"><li style="list-style-type:disc">specification / schema language<p id="b8aac26c-bbf1-4a3b-b0ca-a1fadd2529b1" class="">validates XML documents</p><p id="c7eda9e2-1ff5-4510-b152-5952626d4c21" class="">lists all elements and attributes of documents</p></li></ul><ul id="29b54046-7e13-4c56-952c-a5ed05a811b3" class="bulleted-list"><li style="list-style-type:disc">Not in XML syntax</li></ul></div></p><p id="a0f43994-d067-4507-8de0-dd90c4094fc0" class="">
+</p><p id="fafda924-115e-43c8-8999-8b22c3e6be81" class=""><mark class="highlight-blue">Limitations of DTD</mark><div class="indented"><ul id="4d2c789f-e13e-4467-97c9-810d46836978" class="bulleted-list"><li style="list-style-type:disc">No control over exact number of children</li></ul><ul id="574d6573-9067-4995-8e78-b877b6e57c43" class="bulleted-list"><li style="list-style-type:disc">Limited data types</li></ul><ul id="cb9244f0-face-4d87-87ad-10e268386aa8" class="bulleted-list"><li style="list-style-type:disc">No inheritance</li></ul><ul id="93519442-96ea-4642-a93f-f15ed7b223d4" class="bulleted-list"><li style="list-style-type:disc">No support for namespaces</li></ul></div></p><p id="23854bc5-e071-448b-ac02-ea105d9409f0" class="">
+</p><p id="e7aa4328-5aab-4d36-93b5-3709d80b1166" class="">
+</p><h1 id="0be42459-cfeb-435a-adcf-840129492cea" class="">1) Element declaration</h1><h3 id="bca3abed-54a9-4577-8a0b-ec415c5df535" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT elementName </code></mark><code>specification</code><mark class="highlight-gray"><code>&gt;</code></mark></h3><p id="054824b2-b3a1-4616-a0a6-05017b6b616a" class="">
+</p><p id="5aee1a50-08a6-4db8-b385-bf8c1197d222" class=""><mark class="highlight-blue">Empty</mark><div class="indented"><p id="49e93b90-9ed9-45cc-9202-4a5b43bfdb59" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT elem </code></mark><code>EMPTY</code><mark class="highlight-gray"><code>&gt;</code></mark></p><p id="745660db-fee9-42a1-ae35-9f1e987ae59f" class="">allows <mark class="highlight-gray"><code>&lt;elem&gt;&lt;/elem&gt;</code></mark> or <mark class="highlight-gray"><code>&lt;elem/&gt;</code></mark> </p></div></p><p id="4a975ae8-e749-4641-ba54-009bd021fb8c" class="">
+</p><p id="d4f21ee3-dde3-482b-b313-c98280e785a1" class=""><mark class="highlight-blue">No restrictions</mark><div class="indented"><p id="838ce573-b416-489e-a6a2-9127045d5919" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT elem </code></mark><code>ANY</code><mark class="highlight-gray"><code>&gt;</code></mark></p><p id="57b9918a-398b-4263-b1c8-6d1e92340dc9" class="">allows any child that was <em>declared</em> before</p></div></p><p id="33eb6eaa-f137-4afb-b958-f854f0d2baab" class="">
+</p><p id="b22b853b-2c93-4ac3-9062-9d243a56348c" class=""><mark class="highlight-blue">String only</mark><div class="indented"><p id="3e08d0fb-40d5-4751-8aa3-a9e4f3bc2d8f" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT name </code></mark><code>(#PCDATA)</code><mark class="highlight-gray"><code>&gt;</code></mark></p><p id="0a9a6678-16f3-4204-a48b-d4d42e018605" class="">only <em>parsed character data</em>, no children</p></div></p><p id="9ff995cd-4e0f-4acb-9ff0-8e151d06abf8" class="">
+</p><p id="3a83a827-2681-4b64-9b3c-3dd8e9c31565" class=""><mark class="highlight-blue">Fixed set of children</mark><div class="indented"><p id="149dc23e-ed4b-4be8-b278-306553ebaafb" class="">Only a one child per element, nothing else<div class="indented"><p id="833b7857-7fec-4e37-b42d-daefc1e5ff7b" class=""><mark class="highlight-gray">parent: </mark><mark class="highlight-gray"><code>&lt;!ELEMENT parent </code></mark><code>(child)</code><mark class="highlight-gray"><code>&gt;</code></mark></p><p id="ccc6677c-076d-4fdf-aeef-49356950098b" class=""><mark class="highlight-gray">child: </mark><mark class="highlight-gray"><code>&lt;!ELEMENT child </code></mark><code>(#PCDATA)</code><mark class="highlight-gray"><code>&gt;</code></mark></p></div></p><p id="c5f85114-92cf-43a4-b05a-fd63139c3ae0" class="">Only two child elements, nothing else<div class="indented"><p id="d371ff09-41ce-4112-b99a-2077b4fb82ac" class=""><mark class="highlight-gray">parent: </mark><mark class="highlight-gray"><code>&lt;!ELEMENT person (first, last)&gt;</code></mark></p><p id="c0b31e5d-a0d1-4513-96d6-eb1f4f982b53" class=""><mark class="highlight-gray">child 1: </mark><mark class="highlight-gray"><code>&lt;!ELEMENT first (#PCDATA)&gt;</code></mark></p><p id="56f3f09e-4134-4cb7-8260-d365efed4c32" class=""><mark class="highlight-gray">child 2: </mark><mark class="highlight-gray"><code>&lt;!ELEMENT last (#PCDATA)&gt;</code></mark></p></div></p><p id="d3bbde34-4aae-4cc4-860e-eb08975d5f2f" class="">Can also be used for enums<div class="indented"><p id="8a7d4406-9646-4fa4-8d7a-855f3b177ca3" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT day (Mon | Tue | Wed)&gt;</code></mark></p><p id="04dddd7c-4762-4dde-87b9-390679bff43d" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT Mon (#PCDATA)&gt;</code></mark></p><p id="d7d78106-06a4-428b-aadc-ce5d4012679e" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT Tue (#PCDATA)&gt;</code></mark></p><p id="86a76e44-fba5-47e2-bc2b-164b5bbc84ae" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT Wed (#PCDATA)&gt;</code></mark></p></div></p><p id="6a800c74-77bd-4ba4-aceb-b8060c6bbed0" class="">
+</p></div></p><p id="a5293284-ea6a-497d-b2e2-f0bfd35f7e23" class=""><mark class="highlight-blue">Mixed content</mark><div class="indented"><p id="24c45c25-960d-472d-83a5-3093a63ed545" class=""><mark class="highlight-gray"><code>&lt;!ELEMENT definition </code></mark><code>(#PCDATA | child)*</code><mark class="highlight-gray"><code>&gt;</code></mark></p><p id="06479076-c5cc-4b9e-a016-c2dda5e94657" class="">combination of text and elements</p></div></p><p id="cc34432a-c6fa-4eb0-8e66-73262ce2080d" class="">
+</p><p id="d6c7be2d-8683-445b-9954-9262229e07de" class=""><mark class="highlight-blue">Setting number of children</mark><div class="indented"><p id="64b43b95-c761-4251-bfd4-faea34531161" class="">Occurrence indicators <code>?</code>, <code>*</code>, <code>+</code><div class="indented"><p id="15d2a169-4f81-4858-9ad3-62066142bd30" class=""><mark class="highlight-gray"><code>child?</code></mark>	zero or one</p><p id="a34599d4-c4b0-4a54-91bc-4fc64cea8116" class=""><mark class="highlight-gray"><code>child*</code></mark>	zero or more</p><p id="723f214a-281c-4327-8e3b-a34fdd44946c" class=""><mark class="highlight-gray"><code>child+</code></mark>	one or more</p></div></p><p id="a02612c9-cb7d-4e0a-9acd-ed5d6bdae1a0" class="">Can be used for more complex expressions</p></div></p><figure id="276734f0-6afe-489e-bb88-db551286e7c5" class="image"><a href="DTD%20d433e34b623346c89561e666bd2df873/Untitled.png"><img style="width:240px" src="DTD%20d433e34b623346c89561e666bd2df873/Untitled.png"/></a></figure><p id="92421985-b981-4fd1-99b1-752dd2ddaa84" class="">
+</p><p id="37161b5c-4372-4332-8729-a69342ca1740" class=""><mark class="highlight-blue">Namespaces</mark><div class="indented"><p id="ffdf95bb-e524-4fa5-abc6-23d16676521a" class="">The validator does not care about name spaces - they make no difference</p><ul id="394b35b4-1bf3-4fbc-bca7-49bf6a695ea4" class="toggle"><li><details open=""><summary>Example</summary><pre id="a4247727-a88b-44e1-a85a-4bce9a1c2a67" class="code"><code>&lt;!ELEMENT course (title, assessment, univ:assessment)&gt;
+&lt;!ATTLIST course xmlns CDATA #FIXED &quot;www.oeh.ac.at&quot;&gt;
+&lt;!ATTLIST course xmlns:univ CDATA #REQUIRED&gt;
+&lt;!ELEMENT title (#PCDATA)&gt;
+&lt;!ELEMENT assessment (#PCDATA)&gt;
+&lt;!ELEMENT univ:assessment (#PCDATA)&gt;</code></pre><pre id="ea6403a8-1b6d-4e17-9911-6ae9c84a22df" class="code"><code>&lt;!-- Students&#x27; and University&#x27;s Evaluation --&gt;
+&lt;course
+	xmlns=&quot;www.oeh.ac.at&quot;
+	xmlns:univ=&quot;www.tuwien.ac.at&quot;&gt;
+
+	&lt;title&gt; SSD &lt;/title&gt;
+	&lt;assessment&gt; Fair &lt;/assessment &gt;
+	&lt;univ:assessment&gt; Elective &lt;/univ:assessment &gt;
+&lt;/course&gt;</code></pre><p id="975652ff-2a03-4969-b2bb-6bad89f5eef5" class="">
+</p></details></li></ul></div></p><p id="7770cd27-8c65-46a0-8967-bf1fbb280bc0" class="">
+</p><p id="f6282644-a4cc-4a56-8de3-4464d15bb911" class="">
+</p><h1 id="1358c899-e07e-4ae6-9ad9-2a01d7d43c56" class="">2) Attribute declaration</h1><h3 id="f69cf414-3d3c-4139-8a7f-636101a01ba2" class=""><mark class="highlight-gray"><code>&lt;!ATTLIST elementName attributeName</code></mark><code> attributeType attributeDefault</code><mark class="highlight-gray"><code>&gt;</code></mark></h3><p id="22072525-921c-47dc-b57a-fd36b5d5d71d" class="">
+</p><p id="40a6810a-f772-4b30-b9ac-251b0f144e77" class=""><mark class="highlight-blue">Attribute types</mark><div class="indented"><p id="353c3ac8-7da5-4468-9901-01ab4a2037c6" class=""><code>(...|...)</code><mark class="highlight-gray">	</mark>only one of the two given values allowed</p><p id="9e91d5a6-91c7-473d-baa7-f2bda9a7a68a" class=""><code>CDATA</code><mark class="highlight-gray">		</mark>any string</p><p id="bb218616-7172-4c26-aadb-75e02dcea4fb" class=""><mark class="highlight-gray"><code>NMTOKEN</code></mark><mark class="highlight-gray">		</mark>name token = legal XML-names, that can start without letter, underscore</p><p id="1d74d4c7-6d7e-4818-9d66-c18679fba4d9" class=""><mark class="highlight-gray"><code>NMTOKENS</code></mark><mark class="highlight-gray">	</mark>list of nmtokens, seperated by spaces</p><p id="d0b49a1f-9c12-475b-871a-2efca6e562aa" class=""><code>ID</code>			must be unique (only used once in element)</p><p id="29da9bb4-f92d-4ab1-9e65-dba3ae5d8e65" class=""><code>IDREF</code>		must be ID from other element</p><p id="4d8f15b5-62b9-40ca-8bea-57f9036b2157" class=""><mark class="highlight-gray"><code>IDREFS</code></mark><mark class="highlight-gray">		</mark>list of IDREFs, seperated by spaces</p><p id="d575c894-8525-4995-a402-06f7a1332553" class=""><mark class="highlight-gray">…			</mark><mark class="highlight-gray"><em>read XML in a Nutshell, Chapter 3 for more details</em></mark></p></div></p><p id="c22057b4-ead2-439f-821e-188af296034d" class="">
+</p><p id="e6274975-f1e1-4e68-b075-014c8a716765" class=""><mark class="highlight-blue">Attribute defaults</mark><div class="indented"><p id="6d6ee2cd-6b6d-40e2-9285-71ef1b14f6ee" class=""><code>#IMPLIED</code><mark class="highlight-gray">		</mark>optional</p><p id="595f6e1f-6d2d-48b8-a389-ae5a090cf4b0" class=""><code>#REQUIRED</code><mark class="highlight-gray">		</mark>required</p><p id="ecbcd2b4-4771-41de-b6ff-ea2fe1d349e9" class=""><code>#FIXED value</code><mark class="highlight-gray">		</mark>default value, assigned everywhere, can’t be changed</p><p id="b985165a-b849-427a-a93f-ebbaea36eeb6" class=""><code>value</code>			default value, can be changed</p></div></p><p id="2df68ac3-90ef-463d-b49f-b767ddb348d7" class="">
+</p><p id="a0e28216-9692-4a86-a1e5-bd0c74d43101" class="">
+</p><h1 id="66621670-3890-4877-b517-f4c533068896" class="">3) Entity declaration</h1><h3 id="a22a2173-7f08-4fab-9af0-89638d1b7301" class=""><mark class="highlight-gray"><code>&lt;!ENTITY </code></mark><code>shortcut &quot;expanded name&quot;</code><mark class="highlight-gray"><code>&gt;</code></mark></h3><p id="05071e17-5b62-499c-8c4c-8b05d5eec456" class=""><mark class="highlight-blue">Entity declaration</mark><div class="indented"><p id="e1f95e66-e86b-4594-8213-4b6796da5d21" class="">We can add more to the 5 predefined XML entities: <mark class="highlight-gray"><code>lt</code></mark>, <mark class="highlight-gray"><code>gt</code></mark>, <mark class="highlight-gray"><code>amp</code></mark>, <mark class="highlight-gray"><code>quot</code></mark>, <mark class="highlight-gray"><code>apos</code></mark></p><p id="c527368b-2ec6-47c3-b6a0-314ed3dc0a07" class=""><mark class="highlight-gray">ie. </mark><mark class="highlight-gray"><code>&lt;!ENTITY ssd &quot;Semi-structured Data&quot;&gt;</code></mark><mark class="highlight-gray"> then we use </mark><mark class="highlight-gray"><code>&amp;ssd;</code></mark><mark class="highlight-gray"> instead of typing it out</mark></p></div></p><p id="d5ff2bca-68b3-46b7-bc06-89c7cfcec519" class="">
+</p><p id="ec846321-f232-40a1-8b64-091f7b7854d6" class="">
+</p><h1 id="081519eb-9836-47b2-8436-0668455068a1" class="">Declaring the DTD</h1><p id="59086dce-0939-42de-9300-8e86f660556c" class=""><mark class="highlight-blue">Document type declaration (≠ DTD)</mark></p><p id="d2f33675-8bf2-4cc7-98b1-d1545f2f7326" class=""><mark class="highlight-gray">Referencing the DTD after the XML declaration</mark><div class="indented"><ol type="1" id="0f2fcc8d-88a3-4d19-8a56-74580a927a5e" class="numbered-list" start="1"><li><em>Using URL or local path</em><pre id="28609ba8-a83c-4c27-b0ca-999a744b0481" class="code"><code>&lt;!DOCTYPE person SYSTEM &quot;http://www.mysite.com/dtds/person.dtd&quot;&gt;
+&lt;!DOCTYPE person SYSTEM &quot;/dtds/person.dtd&quot;&gt;
+&lt;!DOCTYPE person SYSTEM &quot;person.dtd&quot;&gt; &lt;!--If in the same directory--&gt;</code></pre><p id="c3b0068a-ef71-4519-805b-138b45edc434" class="">Keyword <mark class="highlight-gray"><code>SYSTEM</code></mark><mark class="highlight-gray"> </mark>if it is user-defined, <mark class="highlight-gray"><code>PUBLIC</code></mark><mark class="highlight-gray"> </mark>if its publically available</p><pre id="5169377a-67cb-454f-8d81-a5596ce9d057" class="code"><code>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;xhtml11.dtd&quot;&gt;</code></pre><p id="81b020e7-87e7-44d8-9f22-26d4a526ea9e" class="">
+</p></li></ol><ol type="1" id="75c98aa8-47b3-4caf-a021-f57de1702a1a" class="numbered-list" start="2"><li><em>Fully defining DTD in the same document</em><pre id="f11e5010-6f34-448d-8e2e-87158c3391ac" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;!DOCTYPE person [
+	&lt;!ELEMENT person (name, tel, fax, email+)&gt;
+	&lt;!ELEMENT name (first, last)&gt;
+	&lt;!ELEMENT email (#PCDATA)&gt;
+]&gt;
+...</code></pre><p id="6ff25274-a7db-469a-8e7a-aa4aacb1c70a" class="">
+</p></li></ol><ol type="1" id="53958148-4b3b-47a1-b1b9-d771b44c472d" class="numbered-list" start="3"><li><em>Partially defining DTD in the same document</em><p id="55fe1e79-3321-4b00-999d-0a345eb9be55" class="">DTD = internal DTD subset + external DTD subset</p><pre id="400a760b-f688-4eb2-877b-282e362201a3" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE person SYSTEM &quot;person_text.dtd&quot; [
+	&lt;!ELEMENT person (name, tel, fax, email+)&gt;
+	&lt;!ELEMENT name (first, last)&gt;
+]&gt;
+...</code></pre><pre id="ca1872f9-2432-40be-9781-e92a1ff89003" class="code"><code>&lt;!ELEMENT email (#PCDATA)&gt;</code></pre><p id="baf730bc-842c-4993-9504-bbfbc024c0f5" class="">
+</p></li></ol></div></p></div></article></body></html>

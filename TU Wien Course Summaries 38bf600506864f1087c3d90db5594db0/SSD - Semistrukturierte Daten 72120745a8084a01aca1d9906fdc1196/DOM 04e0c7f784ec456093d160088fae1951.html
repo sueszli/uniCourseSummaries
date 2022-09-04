@@ -1,0 +1,828 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DOM</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="04e0c7f7-84ec-4560-93d1-60088fae1951" class="page sans"><header><h1 class="page-title">DOM</h1></header><div class="page-body"><p id="e43cc092-8afd-4376-87c4-21be1db4b130" class="">
+</p><nav id="bcd332b2-1e58-46b3-ad73-d758af9100fe" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e0818a01-668b-4e3c-8662-ca47263fe5ed">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#faf674e5-8db0-4a25-b446-a8e94cd9ac6d">Node Interface</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c1a484bc-2e3c-4c85-8e9b-9905d185394e">Example</a></div></nav><p id="aca5b44a-ac0d-40e9-ac38-37b86f217083" class="">
+</p><h1 id="e0818a01-668b-4e3c-8662-ca47263fe5ed" class="">Definition</h1><p id="2709c01a-122a-4e08-819a-7460947701b1" class=""><mark class="highlight-blue">DOM</mark><div class="indented"><p id="3bdaac08-855c-42e7-bd23-9b8eda504fdd" class="">= Document Object Model</p><p id="d1847cba-688c-4bc0-b1f1-b6a0475a333c" class="">Tree-based parser</p><p id="44293a4b-34a8-4a59-a9e9-90e800bb2958" class="">converts document into XML DOM-object that can be accessed via the API.</p><p id="7f596fd2-fd4e-47a1-8f0a-d60f6c03a0cc" class="">W3C standard for reading, changing, adding, deleting XML elements.</p></div></p><p id="af94c11e-2f66-4311-8cd9-cdc64d6f56cc" class="">
+</p><p id="cc32d18d-ee5a-4673-91c7-693f01c8a4c6" class=""><mark class="highlight-blue">Tree based Parser</mark><div class="indented"><p id="b79973ed-ff6e-419d-9f32-be6dd54e937d" class="">Map XML document to internal tree structure in main memory.</p><p id="7765ba06-f719-4f86-827b-aaae2cb7af99" class="">App can read structure from main memory.</p><p id="9b9a599f-343a-4c1f-98a1-6dad55dbf256" class="">Used for small documents with ready-made data structure</p><ul id="7552dd32-8a47-44f9-a186-00b075416c42" class="bulleted-list"><li style="list-style-type:disc">Random access</li></ul><ul id="bb6125d9-7da4-477f-861c-f3d5afbc03d3" class="bulleted-list"><li style="list-style-type:disc">Slow</li></ul><ul id="f796b2b4-76ae-4b04-beef-084b676fef4b" class="bulleted-list"><li style="list-style-type:disc">Occupied memory constant to document size</li></ul></div></p><figure id="61744b49-106d-47b6-8c34-2a1530406527" class="image"><a href="DOM%2004e0c7f784ec456093d160088fae1951/Untitled.png"><img style="width:192px" src="DOM%2004e0c7f784ec456093d160088fae1951/Untitled.png"/></a></figure><p id="8c1b4493-9f9c-4eff-92b3-008f7f52c9d4" class="">
+</p><h1 id="faf674e5-8db0-4a25-b446-a8e94cd9ac6d" class="">Node Interface</h1><p id="7491b6f3-0c67-43b4-ab32-09ae3cc99d7c" class=""><mark class="highlight-blue">Loading an XML </mark><mark class="highlight-blue"><code>Document</code></mark></p><pre id="b168ca7b-9199-4e13-b7e8-005aa714faa9" class="code"><code>import javax.xml.parsers.*;
+import org.w3c.dom. *;
+public class Course {
+
+	public static void main(String[] args) throws Exception {
+		//factory instantiation: API that enables applications to obtain a parser that
+		//produces DOM object trees from XML documents
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	
+		//validation and namespaces
+		factory.setValidating(true);
+		factory.setNamespaceAware(true);
+	
+		//parser instantiation
+		//API to obtain DOM document instances from XML documents
+		DocumentBuilder builder = factory.newDocumentBuilder();
+	
+		//install ErrorHandler
+		builder.setErrorHandler(new MyErrorHandler());
+	
+		//parsing instantiation (code below is written from this line onwards)
+		Document coursedoc = builder.parse(args[0]);
+	}
+}</code></pre><p id="7a613b52-73a1-4776-b120-d354e6572061" class="">
+</p><p id="27bef537-4f58-4de9-b0a0-5e3463ad9752" class="">The <mark class="highlight-gray"><code>Node</code></mark><mark class="highlight-gray"> </mark>interface is the datatype of the entire DOM.<div class="indented"><p id="848ea2c5-6e13-497a-b1af-161c64492eb3" class="">More specific subinterfaces inherit from it: <mark class="highlight-gray"><code>Document</code></mark>, <mark class="highlight-gray"><code>Element</code></mark>, <mark class="highlight-gray"><code>Attr</code></mark>, <code><mark class="highlight-gray">Text</mark></code>, ...</p></div></p><p id="320e6289-d723-47bc-b405-756d74bda0b2" class="">
+</p><p id="7a153d92-848e-4084-a73e-5dd34c9256d5" class=""><mark class="highlight-blue">Example</mark><div class="indented"><ul id="94205e87-6874-4607-a850-6ba623aee534" class="toggle"><li><details open=""><summary>Visit all child nodes of “courses.xml”</summary><pre id="eb1b9b90-c89d-4352-9377-d2aa9bf4da3a" class="code"><code>visitNode(coursedoc.getDocumentElement());
+
+private void visitNode(Node node) {
+	//iterate over all children
+	for (int i = 0; i &lt; node.getChildNodes().getLength(); i++) {
+		//recursively visit all nodes
+		visitNode(node.getChildNodes().item(i));
+	}
+}</code></pre></details></li></ul></div></p><p id="44d92eb0-366a-4858-9b8a-c1c5d06950e2" class="">
+</p><p id="6b8ef86c-3caa-43fa-bd30-cda198b6fa27" class=""><mark class="highlight-blue">Node Interface</mark><div class="indented"><p id="70a6edd5-5a53-43ac-997b-e9eded9f3bcb" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Node.html">https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Node.html</a></p></div></p><p id="736e5464-44f4-4c2e-a266-f6df61cddaa8" class=""><mark class="highlight-blue">Document Methods (child interface of Node)</mark><div class="indented"><p id="5c1a9b32-8d22-414a-af5f-b72062b48f24" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Document.html">https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Document.html</a></p></div></p><p id="e6c062ad-64bb-4e81-818d-6bde2478c6e9" class=""><mark class="highlight-blue">Element Methods (child interface of Node)</mark><div class="indented"><p id="0dca4c15-6c17-4894-97b8-4026a27c5e0f" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Element.html">https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Element.html</a></p></div></p><p id="627df79c-a1b5-4cd9-a318-82c33d5bf079" class=""><mark class="highlight-blue">Attr Methods (child interface of Node)</mark><div class="indented"><p id="eaef42aa-6275-462c-9a2e-09adc8814bce" class=""><a href="https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Attr.html">https://docs.oracle.com/javase/8/docs/api/org/w3c/dom/Attr.html</a></p></div></p><p id="28874f1c-900b-47df-94b3-a2273fc8f213" class="">
+</p><p id="f95a33f6-c8b1-4c94-8123-1c7ff4cdc5a9" class="">
+</p><h1 id="c1a484bc-2e3c-4c85-8e9b-9905d185394e" class="">Example</h1><pre id="0375219d-1300-40cd-9967-3cd24d7da303" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;courses&gt;
+	&lt;course semester=&quot;Summer&quot;&gt;
+		&lt;title&gt; Semi-structured Data (SSD) &lt;/title&gt;
+		&lt;day&gt; Thursday &lt;/day&gt;
+		&lt;time&gt; 09:15 &lt;/time&gt;
+		&lt;location&gt; HS8 &lt;/location&gt;
+	&lt;/course&gt;
+&lt;/courses&gt;</code></pre><pre id="f71dfce6-6c32-46f6-8c77-12533bca8d91" class="code"><code>courses:
+course: semester=&quot;Summer&quot;
+title: &quot;Semi-structured Data (SSD)&quot;
+day: &quot;Thursday&quot;
+time: &quot;09:15&quot;
+location: &quot;HS8&quot;</code></pre><ul id="0636db2d-d73b-4c68-afdf-c95194815e12" class="toggle"><li><details open=""><summary>Reading document</summary><pre id="4c828de6-6b37-4bce-b6ca-3a96653c3e57" class="code"><code>import jave.io.*;
+import javax.xml.parsers.*;
+import org.w3c.dom. *;
+
+public class Course {
+
+	public static void main(String[] args) throws Exception {
+		// ... see above ...
+
+		Document coursedoc = builder.parse(args[0]);
+
+		//call visit node starting from the root node
+		visitNode(coursedoc.getDocumentElement());
+	}
+
+	//the recursive method visitNode
+	private static void visitNode(Node node) {
+		//element nodes
+		if (node.getNodeType() == Node.ELEMENT_NODE) {
+			System.out.print(&quot;\n&quot; + node.getNodeName() + &quot;: &quot;);
+			NamedNodeMap attributes = node.getAttributes();
+			
+			if (attributes != null) {
+				for (int i = 0; i &lt; attributes.getLength(); i++) {
+					System.out.print(attributes.item(i) + &quot; &quot;);
+				}
+			}
+		}
+	
+		//text nodes
+		if (node.getNodeType() == Node.TEXT_NODE &amp;&amp; !node.getTextContent().trim().isEmpty()) {
+			System.out.print(&quot;\&quot;&quot; + node.getTextContent().trim() + &quot;\&quot;&quot;);
+		}
+	
+		// visit child nodes
+		NodeList nodelist = node.getChildNodes();
+		for (int i = 0; i &lt; nodelist.getLength(); i++) {
+			visitNode(nodelist.item(i));
+		}
+	}
+}</code></pre></details></li></ul><ul id="58f32ff2-524c-44ff-ab0a-17a98a78ba41" class="toggle"><li><details open=""><summary>Create and validate document</summary><pre id="c7a150a5-a92d-430c-bac2-03fd060020da" class="code"><code>import java.io.File;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.*;
+public class Course {
+
+	public static void main(String[] args) throws Exception {
+		// ... see above ...
+
+
+		/*
+		* CREATE DOCUMENT
+		*/
+		Document coursedoc = builder.newDocument();
+
+		//create all the necessary elements
+		Element courses = coursedoc.createElement(&quot;courses&quot;);
+		Element course = coursedoc.createElement(&quot;course&quot;);
+		course.setAttribute(&quot;semester&quot;, &quot;Summer&quot;);
+		Element title = coursedoc.createElement(&quot;title&quot;);
+		title.setTextContent(&quot;Semi-structured Data (SSD)&quot;);
+
+		//append the children in a bottom-up-order
+		course.appendChild(title); course.appendChild(day);
+		course.appendChild(time); course.appendChild(location);
+		courses.appendChild(course);
+		coursedoc.appendChild(courses);
+
+
+		/*
+		* VALIDATE
+		*/
+		//validate the new document against a schema
+		//load XML Schema
+		File schemaFile = new File(&quot;schema.xsd&quot;);
+		SchemaFactory factory= SchemaFactory(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+		Schema schema = schemaFactory.newSchema(schemaFile);
+		// Create Validator and validate
+		Validator validator = schema.newValidator();
+		try{
+			validator.validate(new DOMSource(coursedoc));
+		} catch (SAXException ex) {
+			exit(&quot;Created document not valid:&quot; + ex.getMessage());
+		}
+
+
+		/*
+		* WRITE INTO A FILE
+		*/
+		//write the document into a file
+		//factory instantiation
+		TransformerFactory tfactory = TransformerFactory.newInstance();
+		//transformer instantiation
+		Transformer transformer = tfactory.newTransformer();
+		//create a new input XML source
+		DOMSource source = new DOMSource(coursedoc);
+		//construct a stream result
+		StreamResult result = new StreamResult(new File(&quot;courses.xml&quot;));
+		//actual transformation
+		transformer.transform(source, result);
+		System.out.println(&quot;File saved!&quot;);
+	}
+}</code></pre><p id="2083c742-cf13-4c3e-97ea-2ca41ec420f1" class="">
+</p></details></li></ul><p id="5898bdb2-37fb-405e-a92d-5fc612b05135" class="">
+</p></div></article></body></html>

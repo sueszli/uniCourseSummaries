@@ -1,0 +1,703 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Modellierung</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="74e4aedf-3d3e-4bac-b423-5f79d4f5843f" class="page sans"><header><h1 class="page-title">Modellierung</h1></header><div class="page-body"><nav id="dfc0a835-6bed-40b0-b4f9-28850e46c36c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bd86ce7c-a85a-475f-9888-fb4a1d22c4f3">Abstraktion der Domäne </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5a9cfd14-51bf-46df-b877-7cd6edd46c6a">Unified Modeling Language UML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cbc668cc-8661-463a-9e22-304148c29128">Paketdiagramme (package diagrams) </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#666840e8-f7ed-4b60-9ec9-12697db9b9f2">Anwendungsfalldiagramme (use-case diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#664cbbe0-d02e-4fe2-8d75-5d8467c47ca4">Klassendiagramm (class diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92ed5a46-99e9-459d-a51b-86d726c01063">Komponentendiagramme (component diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#11fa6bf0-a15a-42f4-8a8b-a4999fb1e6ae">Aktivitätsdiagramme (activity diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cc6f9aac-9574-41b0-b309-53312d310618">Sequenzdiagramme (sequence diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#87b82049-fe61-450f-80aa-e8167827d4e9">Zustandsautomaten (state machine diagrams)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9fcd9281-b4bc-499c-a2c1-1ae598b0bfad">Entity-Relationship-Modell</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#483786af-682c-41dc-a3e5-976017a24bd0">IDEFØ: Daten- und Kontrollfluss </a></div></nav><p id="f0ffee50-3dd6-4f26-b9f8-0984494142c1" class="">
+</p><h2 id="bd86ce7c-a85a-475f-9888-fb4a1d22c4f3" class="">Abstraktion der Domäne </h2><p id="de878918-bb74-4e08-b4e8-1f43041f0330" class="">Ziel: Herstellung konsistenter Sichten, Entwurf eines Systems.</p><p id="8a8af820-5521-4f8b-92d4-07ab149ba014" class="">Anforderungen → Modelle → Daten/Komponenten/Testspezifikationen.</p><p id="68907cd0-65bd-4d2e-b313-44917c1c5fe8" class="">
+</p><p id="d561941b-63f1-43fc-ba47-fa6f859853f8" class="block-color-gray"><span style="border-bottom:0.05em solid">Domäne / Problemdomäne / Anwendungsdomäne</span><div class="indented"><p id="f70a77fb-fc07-4bc4-9518-92b732f5d84c" class="">Abgrenzbares Problemfeld Einsatzbereich für Computersysteme oder Software.</p><p id="a265150c-1d55-4a8a-bb62-7fccbad0a040" class="">Spezielle Anforderungen an ein technisches System je nach Fachgebiet.</p><p id="bfe27c42-c80f-40fa-9bad-3379336d525e" class="">
+</p></div></p><p id="dab69204-6bd2-4447-b98f-3739c3134a46" class="block-color-gray"><span style="border-bottom:0.05em solid">Konzeptionelle Modellierung</span><div class="indented"><p id="a4bac697-7dd1-407a-97c8-558750b4b1a6" class="">Abstrakte Repräsentation</p><p id="73376653-b67e-4833-80e9-31258b9794b9" class="">Zeigt Struktur und Verhalten des zu entwickelnden Softwaresystems</p></div></p><p id="50ac8b59-9e78-43db-8cde-95f0c86f5dbb" class="">
+</p><p id="4bb52e6c-47bc-4e29-b3ec-66170fd6eb33" class=""><span style="border-bottom:0.05em solid">Modelle</span><div class="indented"><p id="f321223d-a2e7-4ded-a477-e12c721f1540" class="">&quot;Realitätsausschnitt&quot; einer Problem-Domäne.</p><p id="eaa25047-6f48-4e72-85af-797c9c679c48" class="">Überblick, Kommunikation im Team (Modellierungssprachen).</p><p id="39c40921-0baa-4f9e-ab2d-ecde63091f84" class="">Abstraktionsprinzip: Information Hiding und Vererbung.</p></div></p><p id="af25c067-8ee3-4e5d-a33d-ddfa846cc162" class="">
+</p><p id="5601b1b5-1657-423a-980a-eb324a82503b" class="block-color-gray"><span style="border-bottom:0.05em solid">Modellierungs-Werkzeuge</span><div class="indented"><p id="1df8c493-f6b4-4c53-a3ea-b684ec5d70a5" class="">Vorteile:<div class="indented"><ul id="19e6084f-d150-4276-a2b3-d765778d164f" class="bulleted-list"><li style="list-style-type:disc">Vorgabe der Modellstruktur, Konsistenzprüfer</li></ul><ul id="f43ec28e-fc67-4f16-9ad2-b04c65c800c7" class="bulleted-list"><li style="list-style-type:disc">Sourcecode-Generierung</li></ul><ul id="5174c0ad-5626-4637-8bbe-b573e6b91253" class="bulleted-list"><li style="list-style-type:disc">besser Präsentationstauglich</li></ul><ul id="6534f9cf-48d0-4727-aa99-c2b00ab864fd" class="bulleted-list"><li style="list-style-type:disc">handlich bei grösseren Modellen, z.B. mehrere Diagramme für ein Modell</li></ul></div></p><p id="4f63a252-188d-4841-a34d-7ad99a636864" class="">Nachteil:<div class="indented"><ul id="82f2d9c6-f72d-4806-ad93-5f26854ee16e" class="bulleted-list"><li style="list-style-type:disc">Erstellung von Prototypen langsam, einschränkend</li></ul></div></p></div></p><p id="d8a6458e-0e51-48a6-bc95-2db1caecbe90" class="">
+</p><p id="f7303d3c-1277-4098-9350-ba37b8106863" class=""><span style="border-bottom:0.05em solid">Modell ≠ Diagramm</span><div class="indented"><p id="0e6c59e8-e983-408e-849b-87abe65dfe53" class="">Diagramme stellen einen unvollständigen Teil der des Software-System-Modells dar</p><p id="a706b148-8ab4-4ea8-b584-bb774941bf31" class="">Modell kann viele Diagramme haben.<div class="indented"><p id="21f83625-860c-42d7-850d-a4f612bdc833" class=""><mark class="highlight-gray">Normalerweise wenige / im besten Fall ein einziges Modell für ein Projekt.</mark></p></div></p><p id="44385293-26a9-4a97-8ceb-076e95310362" class="">Elemente in unterschiedlichen Diagrammen können sich auf ein und dasselbe Modellelement beziehen.</p><p id="c8e18f7e-411b-4513-b691-9e9c89a7b386" class="">Jede Phase im Entwicklungsprozess erfordert eine andere Abstraktionsebene in den Modellen</p></div></p><p id="88c03158-8ac2-480d-abf8-460801d34b4a" class="">
+</p><p id="5db4def9-6ce7-4ffe-ba00-7b5ab37450e5" class=""><span style="border-bottom:0.05em solid">Diagramme</span><div class="indented"><ol type="1" id="a45d6b70-8148-4c9d-8f9f-0dabd9f68d29" class="numbered-list" start="1"><li>Übersichts-Diagramme<p id="eb00f65c-bf4f-4881-aead-55ab3c57c9ec" class="block-color-gray">Übersicht</p><p id="a456ae6a-d602-4ad9-a045-52dea623a91a" class="block-color-gray">Kommunikation mit Menschen außerhalb des Projekts</p></li></ol><ol type="1" id="92ba8c76-07fe-412d-bc72-0a489b61868f" class="numbered-list" start="2"><li>Technische Diagramme<p id="5b66e9bb-49f5-4579-aee5-830471b1189d" class="block-color-gray">Kommunikation mit Entwicklern</p></li></ol></div></p><p id="72859e3d-bee1-4dff-97e0-b47340f07a8f" class="">
+</p><h1 id="5a9cfd14-51bf-46df-b877-7cd6edd46c6a" class="">Unified Modeling Language UML</h1><p id="e61c10ba-fd1a-4fd0-971a-4c722c904a3a" class=""><span style="border-bottom:0.05em solid">Strukturdiagramme (structure diagrams)</span><div class="indented"><p id="f256cd06-3eb7-4cf3-bd8d-123d00b17169" class="">statische Zusammenhänge → statische Modelle (&quot;immer&quot;)</p><ul id="c4faccd7-a802-4a55-ac0f-ee6ad12606cd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Klassendiagramm (class diagrams)</mark></li></ul><ul id="83591659-3025-4212-a4db-a1107fa49807" class="bulleted-list"><li style="list-style-type:disc">Komponentendiagramme (component diagrams)</li></ul><ul id="f36d48eb-b03a-4f26-871e-b42a3bb5f501" class="bulleted-list"><li style="list-style-type:disc">Kompositionsstrukturdiagramme (composite structure diagrams)</li></ul><ul id="c5b96658-41d2-46cc-8949-a1259b06ccea" class="bulleted-list"><li style="list-style-type:disc">Objektdiagramme (object diagrams)</li></ul><ul id="1da3030d-d692-46b5-8026-83f5393bb326" class="bulleted-list"><li style="list-style-type:disc">Verteilungsdiagramme (deployment diagrams)</li></ul><ul id="fa1870cf-d214-4d52-adbd-0623bafa0127" class="bulleted-list"><li style="list-style-type:disc">Paketdiagramme (package diagrams)</li></ul><p id="a814e22b-400b-4f23-aa38-1c8fd2dc109d" class="">
+</p></div></p><p id="0e72cc3a-8b42-49c2-8f59-6360e2e3fa90" class=""><span style="border-bottom:0.05em solid">Verhaltensdiagramme (behavior diagrams)</span><div class="indented"><p id="2ed825f4-e7c4-413c-a052-ac395b974abc" class="">dynamische Zusammenhänge → dynamische Modelle (&quot;wenn-dann&quot;)</p><ul id="9a2cc3c2-40ad-43bf-8e7f-0888b11d1291" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Aktivitätsdiagramme (activity diagrams)</mark></li></ul><ul id="788e06ed-a131-438e-b241-81a9ff4c757f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Anwendungsfalldiagramme (use-case diagrams)</mark></li></ul><ul id="ce511de4-746b-4ac8-a9c6-c0a0c2acb57e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Zustandsautomaten (state diagrams)</mark></li></ul></div></p><p id="d586ac77-dc28-40a9-a886-af121c196180" class=""><div class="indented"><p id="96f3d733-ead4-4714-a7a9-b4aa0b4bd62d" class=""><span style="border-bottom:0.05em solid">Interaktionsdiagramme</span><div class="indented"><p id="c294edc7-c722-4c67-8c10-3cd7c536d43c" class="">zeitliches Verhalten</p><ul id="0ebc2c76-f57c-4a97-85ae-7873da0c918d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Sequenzdiagramme (sequence diagrams)</mark></li></ul><ul id="c6ff4971-4c25-491e-bfd6-d5f88a40cdd1" class="bulleted-list"><li style="list-style-type:disc">Kommunikationsdiagramme (communication diagrams)</li></ul><ul id="d4b97f9e-4dad-4b02-8597-0e97175e34b5" class="bulleted-list"><li style="list-style-type:disc">Interaktionsübersichtsdiagramme (interaction overview diagrams)</li></ul><ul id="60f9b60a-9b12-4006-a17f-55298c2f73e1" class="bulleted-list"><li style="list-style-type:disc">Timing-Diagramme (timing diagrams)</li></ul></div></p></div></p><figure id="3ff9e6cc-f9e8-41da-b6dd-6408f50e2b95" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled.png"><img style="width:576px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled.png"/></a></figure><p id="83457042-fefc-438b-9629-dfe1ab3b87aa" class="">
+</p><h2 id="cbc668cc-8661-463a-9e22-304148c29128" class="">Paketdiagramme (package diagrams) </h2><p id="7381240c-5de8-4406-95ff-ae3dbe1ba735" class="">Dienen dazu das Modell zu strukturieren / einzuteilen.</p><p id="7d5ef781-66fb-4b01-9d6c-d1860ece1185" class="">
+</p><p id="83a419a5-8f38-4db5-b954-4bfe85ee06b6" class=""><span style="border-bottom:0.05em solid">Abhängigkeiten</span><div class="indented"><ul id="4693815f-9568-4cd1-a92f-2534fa69a47b" class="bulleted-list"><li style="list-style-type:disc">access<p id="5b93ee97-0eb3-4fd4-9d8d-af787e68622a" class=""><mark class="highlight-gray">Zugriff, aber wird nicht importiert, vollständiger Paketname bei Aufrug</mark></p></li></ul><ul id="ea5c4f61-eb47-43b5-8a42-50f539b54c5b" class="bulleted-list"><li style="list-style-type:disc">import<p id="52998688-2b34-41cb-a3e5-7a4026204828" class=""><mark class="highlight-gray">Zugriff, Namespace importiert</mark></p></li></ul><ul id="f13a2db4-0856-41f8-a279-61ed683f9588" class="bulleted-list"><li style="list-style-type:disc">merge<p id="e49b7835-15be-4b8d-8d19-90509c79c1bc" class=""><mark class="highlight-gray">Wird importiert aber es gibt namen die gleich sind, deshalb vollständigen Namen benutzen</mark></p></li></ul></div></p><figure id="c19009b7-bb46-45b3-8a49-a835a98302ce" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%201.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%201.png"/></a></figure><figure id="a34d9ca7-8e5c-466e-97fd-ddfdea97c0cf" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%202.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%202.png"/></a></figure><p id="33322cf1-c5b4-453b-883f-7afdbc366a59" class="">
+</p><p id="e0a28f60-4bcc-49eb-8094-980015462e40" class=""><span style="border-bottom:0.05em solid">Schichtendiagramme</span></p><p id="7f1c222d-239d-4ebf-b200-be23e6915266" class="">Übersichtsdiagramme, sehr wenig Information.<div class="indented"><p id="cea6c11b-ddf4-4547-a9f7-aa85b856e4af" class="">&gt; technischen Artefakte (Komponenten) in Pakete bzw. Schichten.</p><p id="ae19cd99-10ef-4af4-ab27-a3f080de825c" class="">&gt; Abhängigkeiten der Schichten zueinander mit Dependency-Pfeilen</p></div></p><figure id="c7554253-4cf1-4c16-b381-0ac3aa0b5ed7" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%203.png"><img style="width:336px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%203.png"/></a></figure><p id="c98d399e-1335-44a9-8067-289e43ee730c" class="">
+</p><h2 id="666840e8-f7ed-4b60-9ec9-12697db9b9f2" class="">Anwendungsfalldiagramme (use-case diagrams)</h2><p id="815fbe12-64cd-4277-bd36-aac9c8b43474" class="">Erfassung der Anforderungen.</p><p id="56c4b141-8f89-49ef-9aa3-0125464031f8" class="">Kommt mit einer genauen textuellen Beschreibung der Anwendungsfälle.</p><p id="34995c8f-09b5-48f7-898b-aafc9a05c00e" class="">
+</p><p id="a186313b-3421-4c83-b3cf-4f074a4bedbe" class=""><span style="border-bottom:0.05em solid">Anwendungsfall</span><div class="indented"><p id="1275d798-fb00-4f0e-af17-6242565b0b99" class="">Ovale, Name ist ein Verb</p></div></p><p id="3e1a1b07-84d1-4a66-85ab-8ed31b43c6d9" class=""><span style="border-bottom:0.05em solid">Subjekt</span><div class="indented"><p id="e15c7280-c262-42a0-8b1e-b57ec0b04e65" class="">System / Subsystem mit Anwendungsfällen</p></div></p><p id="d0dcfc59-449c-46fa-8579-8286ccaf8d00" class=""><span style="border-bottom:0.05em solid">Akteur</span><div class="indented"><p id="83f01375-6eb7-49ad-b7a4-d5581feba454" class="">Interagiert mit Subjekt mit <em>Assoziationen</em>.</p><p id="a58c2b05-95fa-4096-94fd-e769a4cad9e3" class="">Können von anderen Akteuren Erben.</p></div></p><p id="3cac591a-281a-4eac-8757-5e288da3f24c" class=""><span style="border-bottom:0.05em solid">Abhängigkeit</span><div class="indented"><p id="e4775eee-c034-4f77-9fbe-e6e29b13f19f" class=""><code>include</code> - Anwendung auf die der Pfeil zeigt wird immer ausgeführt (wie Methodenaufruf innerhalb einer anderen Methode)</p><p id="15c16225-7dd8-44fa-9868-8a672f38cb5a" class=""><code>extend</code> - (Pfeil wird umgekehrt gezeichnet!) Anwendung auf die der Pfeil zeigt ist die erbende Anwendung die quasi mit dem Pfeil Zugriff auf die Funktionen des Vererbers bekommt.</p></div></p><p id="cfe5766a-67a1-44e3-9d20-2cda5da5b557" class=""><span style="border-bottom:0.05em solid">Extension Points</span><div class="indented"><p id="832e7148-1d3e-4123-a86e-5424fc97e88a" class="">Linie durch die Mitte der Anwendung die erbt.</p></div></p><figure id="694021d8-df65-44b4-9035-0d5866b838ad" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%204.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%204.png"/></a></figure><p id="6c5dc7a9-1208-4417-bec3-e48c69624636" class="">
+</p><p id="b96d89f4-37a4-4d71-a179-03c1b159d07f" class=""><span style="border-bottom:0.05em solid">Schrittweise Verfeinerung der Anforderungen</span><div class="indented"><ol type="1" id="3759a633-47c1-4bcc-8b60-da7b9b01988a" class="numbered-list" start="1"><li>Enterprise goals<p id="fef3286c-fe1a-4ded-a4b0-18b35ed263ec" class="">Anforderungen an Unternehmen (zB Datenexport nach xy)</p></li></ol><ol type="1" id="361f0741-163a-4557-a964-a2604a7acf84" class="numbered-list" start="2"><li>User goals<p id="324f4f4d-9608-47e1-b634-1b1f9835fec1" class="">Aus der Domäne herausgeholt → Anforderungen an Software</p></li></ol><ol type="1" id="a8513844-26f6-4643-a24d-e52f6a93a9f8" class="numbered-list" start="3"><li>System goals<p id="94bafc09-0ba2-4bdf-ae4c-8468c1076d54" class="">Anwendungsfälle, die vom Akteur „System“ bzw. „Administrator“ durchgeführt werden</p></li></ol></div></p><p id="c900bb16-d572-439a-b23e-25e6de16e275" class="">
+</p><p id="67a282fe-e61a-47c6-b299-6a13945ff91d" class=""><span style="border-bottom:0.05em solid">Textuelle Beschreibung</span></p><figure id="6aacc8d8-8211-43c5-9ded-9b82895072e4" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%205.png"><img style="width:480px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%205.png"/></a></figure><p id="3a086a08-242d-4d69-a866-f4add3eb240c" class="">
+</p><h2 id="664cbbe0-d02e-4fe2-8d75-5d8467c47ca4" class="">Klassendiagramm (class diagrams)</h2><p id="7c0d953d-6f1b-4f60-b77c-ae9906d535a2" class=""><span style="border-bottom:0.05em solid">Klassenart</span><div class="indented"><p id="c66d0ba9-4543-4496-bb0e-fa7ee562b7b4" class="">in Stereotypen <code>&lt;&lt; ... &gt;&gt;</code> steht die Art der Klasse.</p></div></p><p id="85439879-cc17-4b1f-8ea3-3ae3667b1a62" class=""><span style="border-bottom:0.05em solid">Klasse</span><div class="indented"><pre id="ed9f3ad3-5b65-4aa6-800b-8b65c3cb50fe" class="code"><code>Public     + Sichtbar für jedes Element das die Klasse sieht
+Protected  # Sichtbar für Elemente der Klasse und ihrer Subklassen
+Private    - Sichtbar für Elemente der Klasse
+Package    ˜ Sichtbar für Elemente im selben Paket wie die Klasse</code></pre></div></p><figure id="5d0e65e5-e594-4b34-85ad-a89d86f215d1" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%206.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%206.png"/></a></figure><p id="6cc9603a-6885-4377-89bb-b3b344aa9028" class=""><span style="border-bottom:0.05em solid">Attribute</span><div class="indented"><pre id="5b5431a6-c562-42a8-a2fb-1bae30f19b8e" class="code"><code>sichtbarkeit attributName : Typ [ multiplizität ] = defaultWert { eigenschaften }</code></pre><p id="bc4a5cbf-1ccd-4de4-ad63-b046bccc2bf6" class="">konkret</p><pre id="a60af97f-744b-451c-bf7b-5b6183dc830a" class="code"><code>-foo : int = 0 { not null }</code></pre></div></p><p id="e3df29b3-0877-4946-8851-5b51fcdb3135" class=""><span style="border-bottom:0.05em solid">Methoden</span><div class="indented"><pre id="8f4ce164-a0e6-4966-b7f4-4c0f0d1f42f6" class="code"><code>sichtbarkeit methodenName ( parameterName : Typ ) : rückgabeTyp { eigenschaften }</code></pre><p id="4f700bae-c1b0-42a4-b2e6-101f98f997a3" class="">konkret</p><pre id="c2d1471a-708b-4efc-89c7-a83b3c44ae48" class="code"><code>+setFoo( foo : int ) : void { reentrant }</code></pre></div></p><p id="99a4b118-54e1-4985-99eb-360c4dd092a6" class=""><span style="border-bottom:0.05em solid">Abhängigkeiten / Generalisierungen</span></p><figure id="a7b1c251-3319-4bd2-8e1f-5087a3928641" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%207.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%207.png"/></a></figure><p id="b6bc34c9-6fe7-4c56-843c-7959e3770203" class=""><span style="border-bottom:0.05em solid">Assoziationen</span><div class="indented"><p id="04835352-c4c9-4e10-bfd7-a034cbf453a7" class="">Kann auch eine eigene Assoziationsklasse sein</p></div></p><figure id="ea5d9d7c-c088-4878-b822-760d902486a9" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%208.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%208.png"/></a></figure><p id="b6594abc-e894-4720-b67a-4d85458f33a6" class=""><span style="border-bottom:0.05em solid">Komposition</span><div class="indented"><p id="7643d4d8-7ece-4ac5-a858-e7a6ece8bde7" class="">Immer eine 1..* Beziehung</p><p id="54524346-6821-4ca9-b58b-cab54d0a3b56" class="">Sollte das Ganze gelöscht werden, müssen Bestandteile auch gelöscht werden</p></div></p><p id="3c8651f9-a6d6-46da-ba31-f7710fb55c84" class=""><span style="border-bottom:0.05em solid">Aggregation</span><div class="indented"><p id="33c7c248-1b36-4d37-a57a-fcea1536200b" class="">Kann Teil von mehreren Dingen sein und nach einem Löschvorgang weiterexistieren</p></div></p><p id="92d31feb-1f32-44e2-b3c4-765f56675699" class="">
+</p><p id="9acaaa8f-7760-44ea-a1cc-0babc30b234f" class=""><span style="border-bottom:0.05em solid">Sichten beim Entwicklungsprozess</span></p><figure id="754faab6-2b31-41fc-b7ec-4795febe99b6" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%209.png"><img style="width:240px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%209.png"/></a></figure><ol type="1" id="f9338aeb-9a94-4c7c-b2fd-60a3ea0e2c4a" class="numbered-list" start="1"><li>Konzeptuelle Sichtweise / Domänenmodell<p id="1802ea72-9a4d-4c60-8ddb-231731df987c" class="block-color-gray">In der Analysephase, nicht detailiert</p><p id="e9d405e9-3c3e-40b7-93a8-9f1ba9d65d25" class="block-color-gray">Klassen untersuchen Konzepte aus der Domäne</p></li></ol><ol type="1" id="82702a61-ddbc-4c71-82a0-ff01ee78bf8a" class="numbered-list" start="2"><li>Spezifizierende Sicht / Komponentendiagramm<p id="b9570455-cca9-415d-a0be-5c43bab4e5f7" class="block-color-gray">Architektur</p></li></ol><ol type="1" id="3c5a161b-02c5-4ce6-92a8-e61839d0b7b7" class="numbered-list" start="3"><li>Klassendiagramm<p id="4cffdaa6-7a56-4817-be07-e3b010cf15ef" class="block-color-gray">Implementierung (Meistens gegen Ende aus dem Source Code erstellt)</p></li></ol><p id="98e8067b-7cc1-485f-bede-7e7357d57c45" class="">
+</p><h2 id="92ed5a46-99e9-459d-a51b-86d726c01063" class="">Komponentendiagramme (component diagrams)</h2><p id="2d07fa2b-21e6-4a74-8336-67acfbd13a9c" class="">Struktur zur Laufzeit.</p><p id="827164fd-81d9-455d-b29f-d7e88911a4f1" class="">Spezifizierende Sicht, System unterteilt in Komponenten (enthalten Klassen).</p><p id="5be3e829-4cec-428a-8235-50099a79aa4b" class="">Implementierung ignoriert, als Black-box.</p><p id="ef8574ae-41ab-44bf-93d6-25ed398f0a62" class="">Wichtig: Schnittstellen</p><p id="e4fc455d-84a3-4326-a3b7-c8b425b8be1f" class="">
+</p><p id="a49c1219-5a81-435a-9b4a-bdafbb24fa9c" class=""><span style="border-bottom:0.05em solid">Komponenten</span><div class="indented"><p id="b9b6e0b7-6328-475a-8024-4ba6cf85a2d8" class="">Rechteck mit Komponenten-Symbol rechts oben.</p></div></p><figure id="6bd84fa9-4e28-40a7-a1eb-b69f09bee9f0" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2010.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2010.png"/></a></figure><p id="247c97a0-04df-4aa4-b91f-95c1d2afbc30" class=""><span style="border-bottom:0.05em solid">&quot;Lollipop-Notation&quot;</span></p><figure id="c918f4a2-e4e2-4b9c-88b0-993bfcb76a88" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2011.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2011.png"/></a></figure><p id="214493b4-e413-44da-abc9-a62fe207e6f3" class="">
+</p><h2 id="11fa6bf0-a15a-42f4-8a8b-a4999fb1e6ae" class="">Aktivitätsdiagramme (activity diagrams)</h2><p id="3c39c068-6f15-4d12-8383-b8be24e8557f" class="">Verhalten des Systems.</p><p id="9088bdf6-3295-40d5-ba66-1c5847b5e215" class="">Geeignet für Methoden.</p><figure id="1128d68b-b665-4d2e-94db-a982990942bb" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2012.png"><img style="width:384px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2012.png"/></a></figure><p id="35eec432-6eb6-4b0e-95ae-f174b32d52ca" class=""><span style="border-bottom:0.05em solid">Aktionen</span><div class="indented"><p id="143c1ae1-d5fb-4177-9c60-dd7dbf595622" class="">Atomar</p><p id="817b5e58-c1f8-433e-960b-accdabda32ed" class="">Kann den Zustand des Systems ändern oder Nachrichten verschicken.</p></div></p><p id="20afa1d5-232e-4996-b051-da648ec04daf" class=""><span style="border-bottom:0.05em solid">Aktivität</span></p><p id="e33a89f9-2993-43db-8793-396e85a55f86" class="">Nicht atomar.</p><p id="93a669ae-666f-4d78-bbe1-5efec1592382" class="">Eine Aktivität enthält einen Kontrollfluss, Aktionen, andere Aktivitäten.<div class="indented"><p id="5baa78ce-3c49-4951-a414-0ba8e6adbcda" class="">Zoomt man in eine Aktivität hinein, findet man ein anderes Aktivitätsdiagramm, das einen detaillierteren Kontrollfluss der jeweiligen Aktivität beschreibt.</p></div></p><p id="7792d8d0-bcf5-4e0b-b4c0-2b9a00e325b6" class="">
+</p><h2 id="cc6f9aac-9574-41b0-b309-53312d310618" class="">Sequenzdiagramme (sequence diagrams)</h2><p id="f1f06ac7-4b04-4501-8240-1369e5c63133" class="">Informationsaustausch / Kommunikation</p><p id="ca19c8e7-1492-4b90-829c-dc979bf25b46" class="">Geeignet für Logik von Services und Methoden.</p><figure id="a9785dec-118d-4ea3-a1e4-db782218de40" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2013.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2013.png"/></a></figure><p id="a10647a2-3d32-4d17-a8a6-90acd9c2c989" class=""><span style="border-bottom:0.05em solid">Classifier</span><div class="indented"><p id="ccb54ff9-42d2-426d-807a-3ccaeb4b53e2" class="">Interaktion zwischen mehreren Classifiern (Klassen, Anwendungsfällen oder Akteuren) oder Instanzen.</p></div></p><p id="6315ccff-e5a2-435d-93c9-30b4f4a02b29" class=""><span style="border-bottom:0.05em solid">Lebenslinien</span><div class="indented"><p id="166c4650-dfbf-406e-a223-8e873b68395a" class="">Zeigen Lebensdauer eines Objektes</p></div></p><p id="9d10d77b-9276-4862-abe1-70825d8c7755" class=""><span style="border-bottom:0.05em solid">Aktivierungsbalken</span><div class="indented"><p id="98929a95-aad6-4394-b443-2872b702c285" class="">Rechtecke auf der Lebenslinie</p><p id="86e18f21-5f17-4f48-bbc3-d7fb904e064a" class="">Zeigen aktives Ausführen einer Nachricht</p></div></p><p id="23b22fb2-c29b-4375-8779-76cb75dc44fc" class=""><span style="border-bottom:0.05em solid">Nachrichten</span><div class="indented"><ul id="34ad97d2-88ed-465d-b43b-1a6971b20fb2" class="bulleted-list"><li style="list-style-type:disc">synchrone Nachrichten<p id="f1a6d336-4d8d-4276-8cd9-db97e38fb8e6" class="">Sender wartet auf Antwort</p></li></ul><ul id="7c72ec41-d316-4419-bea2-ec99707fba03" class="bulleted-list"><li style="list-style-type:disc">asynchrone Nachrichten</li></ul><ul id="f7e878a4-8d34-422f-91c9-8bb53c41a051" class="bulleted-list"><li style="list-style-type:disc">Antworten</li></ul></div></p><p id="d11b675e-b585-449d-841d-515975248297" class=""><span style="border-bottom:0.05em solid">Fragmente</span><div class="indented"><p id="fdeb3c6a-a3de-4033-a9a8-15b9771194e2" class="">Bestimmte Logik für Nachrichten</p><p id="c6795b25-76ac-4841-8829-e99903c55b34" class=""><code>alt</code>: Fragment für if-else-then</p><p id="38918aa9-792f-423a-af53-c7b2507c546a" class=""><code>opt</code>: switch, nur ausgeführt wenn Bedingung wahr</p><p id="d159a2e5-fcec-458a-9012-9a6596c419d5" class=""><code>loop</code>: schleife, so lange ausgeführt wie Bedingung wahr</p><p id="250342aa-1a85-473f-8afd-658b7c30396b" class=""><code>ref</code>: Referenz zu einem anderen Sequenzdiagramm</p></div></p><p id="12731195-a686-4378-8140-7bf005422681" class="">
+</p><h2 id="87b82049-fe61-450f-80aa-e8167827d4e9" class="">Zustandsautomaten (state machine diagrams)</h2><p id="7dad9fbf-e6cb-4fdf-8ef1-e804691bbcc3" class="">Alle möglichen Folgen von Zuständen eines Modellelements (meistens Objekt).</p><figure id="62fc303a-ef26-4adf-9a85-651a358eef29" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2014.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2014.png"/></a></figure><p id="60c55e21-7705-4b36-972d-b0edb6be8ee5" class="">Übergang zwischen Zuständen mit <em>Transitionen</em>.</p><p id="d5633b3a-37f9-4464-8c76-5e2a9ae11dcb" class=""><span style="border-bottom:0.05em solid">Zustand</span><div class="indented"><ul id="205ef1c9-90d0-48be-8cb9-f9c865358685" class="bulleted-list"><li style="list-style-type:disc">Einfacher Zustand<p id="1fc78646-f2ce-4934-8edc-ce504c873ded" class="">Zustände ohne Subzustände, zb Endzustand</p></li></ul><ul id="488696f8-235c-46b9-b4a1-b11045988d52" class="bulleted-list"><li style="list-style-type:disc">Pseudo Zustand / Transienter Zustand<p id="c565bde8-49ac-49bc-ba30-cc28485a8868" class="">Zustand in denen System nicht bleibt, zb Initialzustand, Verzweigungen</p></li></ul><ul id="7dd7d7c1-847e-44d7-9f70-ca8e0018b862" class="bulleted-list"><li style="list-style-type:disc">Komplexer Zustand<p id="26ee5e73-60bf-427a-b416-4ffd4a5a8302" class="">Enthalten Subzustände</p></li></ul></div></p><p id="aacaa65a-ab78-404f-841c-0c1d8c69303f" class=""><span style="border-bottom:0.05em solid">Aktivitäten</span><div class="indented"><p id="3dab6c29-6492-4eac-a9d8-57095b57f608" class="">Zustände können Aktivitäten auslösen.</p><pre id="830b938c-9703-4fc9-890a-ba1af9c7c767" class="code"><code>Aktivität             Ausführung innerhalb eines Zustands
+-----------------------------------------------------------------------------
+entry / aktivität     beim Eingang in den Zustand ausgeführt.
+exit / aktivität      beim Verlassen des Zustands ausgeführt.
+do / aktivität        wird ausgeführt, Parameter sind erlaubt.
+event / aktivität     behandelt Ereignis innerhalb des Zustands.</code></pre></div></p><p id="b515c124-96bd-49b2-ba5d-0e26e9d1b218" class=""><span style="border-bottom:0.05em solid">Zustandsübergang / State transition</span><div class="indented"><p id="f31f79b8-4441-4dff-8c5a-0b16bd16d410" class="">Erfolgt wenn Bedingung / guard erfüllt ist.</p></div></p><p id="ca18987f-ed91-49f7-ae43-76f220c78aaa" class=""><span style="border-bottom:0.05em solid">Komplexer Zustand</span><div class="indented"><ul id="27ce0255-b1a7-42c9-b352-825e30654b4b" class="bulleted-list"><li style="list-style-type:disc">UND-Verfeinerung → nebenläufige subzustände</li></ul><ul id="1ae8efd1-c4d9-4356-a986-722d8aa5fc2d" class="bulleted-list"><li style="list-style-type:disc">ODER-Verfeinerung → getrennte subzustände</li></ul></div></p><p id="2c4abf9f-6826-4259-8bbb-6ae7cdee7e66" class="">
+</p><h1 id="9fcd9281-b4bc-499c-a2c1-1ae598b0bfad" class="">Entity-Relationship-Modell</h1><p id="481d5cf9-4af9-457f-b198-f01e45530e09" class="">Für Datenabankmodellierung</p><p id="0ee08838-f23d-4dcc-b657-bc8f63ffab35" class="">Lässt sich in Kombination mit dem Klassendiagramm benutzen</p><figure id="4007b81b-5f85-45f3-b435-6d49531c8371" class="link-to-page"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Datenmodellierung%20+%20ER%204007b81b5f8545f3b4356d49531c8371.html">Datenmodellierung + ER</a></figure><p id="15b76594-6c3e-467b-b7f7-89acaa76d316" class="">
+</p><p id="6f01d369-6e5d-4efc-84ae-2c0e56896cc9" class=""><span style="border-bottom:0.05em solid">Bezeichnungen</span><div class="indented"><p id="b5982989-e1bc-4097-93da-853c768dfe92" class="">Extended Entity Relationship Model (EER-Model)</p><p id="bace75af-b41b-4314-9148-523680b15d71" class="">Entity Relationship Diagram (ERD)</p><p id="ae38eebd-af45-453f-8909-7604f5194574" class="">Dritte Normalform 3NF <div class="indented"><p id="94237f84-f500-4447-a9d2-4ed65c8ae18b" class="">Eine Form die erreicht werden kann wenn bestimmte Bedingungen eingehalten werden</p></div></p></div></p><p id="f1c9783c-d88e-460d-bb11-03fe093b2ba5" class=""> </p><p id="40bdb0c2-9142-4822-8ab5-85c89a4bd7b6" class=""><span style="border-bottom:0.05em solid">Entity Relationship mit UML</span><div class="indented"><p id="ee79f280-72b4-4b02-8af5-06aab6fe7f9e" class="">Typen (VARCHAR, INTEGER, BOOL, FLOAT etc.)</p></div></p><figure id="cfd4eca2-0056-49d2-a516-762564b8e8ab" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2015.png"><img style="width:192px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2015.png"/></a></figure><h1 id="483786af-682c-41dc-a3e5-976017a24bd0" class="">IDEFØ: Daten- und Kontrollfluss </h1><p id="1bfe0b80-6b4c-4351-86ad-341f6349010b" class="">Top-Down Modell</p><p id="d06bf5f5-3e6d-49bf-a683-70b462be0925" class="">Modellierung des Problembereichs</p><p id="80e004d4-f2c7-43c2-ae36-e7833e5f7845" class="">Datenfluss (<mark class="highlight-blue">Daten-Token</mark>)</p><p id="58030037-6938-4b8a-816c-2979675d7f25" class="">Kontrollfluss (<mark class="highlight-teal">Kontroll-Token</mark>)</p><figure id="00a01eb0-c9dd-482c-92e8-27da838d7eda" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2016.png"><img style="width:288px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2016.png"/></a></figure><figure id="04f6399a-6a70-402e-b837-0624d11c8540" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2017.png"><img style="width:240px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2017.png"/></a></figure><figure id="1826870c-4305-40f2-bd7c-1096e5e98e2d" class="image"><a href="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2018.png"><img style="width:240px" src="Modellierung%2074e4aedf3d3e4bacb4235f79d4f5843f/Untitled%2018.png"/></a></figure><p id="24329732-682d-4493-b7bd-e0c3d72b6e84" class="">
+</p></div></article></body></html>

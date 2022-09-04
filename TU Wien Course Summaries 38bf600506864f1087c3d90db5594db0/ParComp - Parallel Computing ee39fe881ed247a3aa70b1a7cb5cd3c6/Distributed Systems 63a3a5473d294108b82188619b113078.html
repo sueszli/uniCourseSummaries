@@ -1,0 +1,717 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Distributed Systems</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="63a3a547-3d29-4108-b821-88619b113078" class="page sans"><header><h1 class="page-title">Distributed Systems</h1></header><div class="page-body"><p id="1c0308aa-7eb8-4a2a-ac27-6ee26a9cbea8" class="">
+</p><nav id="6b518b20-6e67-422f-9552-bc9495d75c55" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#20510928-3182-4090-b134-081d75c22356">Models</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#92751474-d724-4c1f-8599-cc6234dd74a1">Network properties</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#145a69a4-878f-404b-bdb0-0acbf2029b13">Graph</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e978e3f3-678c-4486-983c-5e581db4c255">Broadcast</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2af5430f-26fd-4a17-a2d4-b04b5225ce04">Examples</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#faf8e010-a7f9-4d60-9531-34769fbb7ef9">Topologies</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#dda17eed-5514-443c-b6d6-a9f725c46124">Routing terminology</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07c5dade-4897-4b99-9dbb-d02cdedf799a">Transmission cost model</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dff5e8c6-ec79-4ab2-aecf-54240776e2e2">Pipelining</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6d80ddac-1b84-425e-b034-bcf25bfd4ac2">Architectures</a></div></nav><p id="f749e4eb-73e7-4011-8836-3229b4c83725" class="">
+</p><h1 id="20510928-3182-4090-b134-081d75c22356" class="">Models</h1><p id="907937c3-72dd-4526-91b7-eae801809972" class=""><mark class="highlight-blue">Naive distributed memory system - architecture</mark><div class="indented"><p id="8e50295e-1c65-4c21-bf21-81fdd8181815" class="">Distributed memory PRAM:<div class="indented"><p id="1b18ddf5-347c-4db5-86ef-a1898544143d" class="">Single processors.</p><p id="02549e02-5e59-4ce8-aa81-d117275db5cf" class="">Communication / interconnection network → Network properties determine communication performance.</p><p id="e51f62b1-3441-4757-b58e-983e348d4c77" class="">Local and distributed memory.</p></div></p></div></p><figure id="b4c037e5-807a-47b0-a395-8e73ab6eb5dd" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled.png"><img style="width:144px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled.png"/></a></figure><p id="5ccc396e-facd-4d93-a302-f16529ff5896" class="">
+</p><p id="61078ab2-01e2-4f4b-81fb-4ab233a3f6e1" class=""><mark class="highlight-blue">Naive distributed memory system - parallel programming model</mark><div class="indented"><p id="e636232a-d728-426a-93c2-258b17144bf0" class="">Independent, non synchronized processes <mark class="highlight-gray">executed by processors</mark>.<div class="indented"><p id="0e02a1f2-6a89-43d8-a052-6a167e939107" class="">Locally stored program on local data.</p><p id="2bbf481e-91fd-4920-8431-25d079f2c921" class="">Interaction with other processes exclusively via explicit communication.</p></div></p><hr id="74a3c0fc-8ae6-42f8-ad9b-488d09476573"/><p id="84d43880-2472-4898-8de5-5793015f858d" class="">Models:</p><ul id="7d579e61-63c7-4627-898b-63024813ba4e" class="bulleted-list"><li style="list-style-type:disc"><em>Communication driven (in this course)</em><p id="1b7fe757-0731-4d04-ac5b-d0839037c2c2" class="">explicit message passing between processors (pairs or groups).</p><p id="ec88b6d8-32e7-4fa1-85d8-0c70d307e47c" class="">ie. MPI, PVM, Occam, ...</p></li></ul><ul id="990461c3-3d7d-4780-b25a-e8b43fc2c2b4" class="block-color-gray bulleted-list"><li style="list-style-type:disc"><em>Data distribution driven</em><p id="46ab39a1-fccf-49a5-8aa3-503c37999537" class="">Partitioned Global Address Space (PGAS) and data structures over preocessors.</p><p id="ac68c0f7-961f-4507-84dd-249556895cc1" class="">implicit communication through data access.</p><p id="1f5cc127-33a0-4faa-b9ee-943f94c8ec40" class="">ie. UPS, Titanium, Chapel, X10, Global Arrays, HPF</p></li></ul></div></p><p id="dc9c3908-7d61-4c61-8256-abef4cdf34a5" class="">
+</p><p id="2fd1e3bd-a5dc-4789-b977-34901850e1ee" class=""><mark class="highlight-blue">Cost model</mark><div class="indented"><p id="148cc047-fba3-451e-b2ef-2d3eab727bd9" class="">Communication (needs its own cost model: cost model for network communication)</p><p id="77726643-9cf3-4a1c-8e32-16abdbcd736d" class="">Local vs. non-local memory access</p><p id="5cfcba8d-5ea4-4bb6-81f4-c1f837882c45" class="">Local memory hierarchy (caches)</p></div></p><p id="8cbdf899-07d4-4a90-8c45-f6204450284a" class="">
+</p><h1 id="92751474-d724-4c1f-8599-cc6234dd74a1" class="">Network properties</h1><p id="f4e3a8f8-b7ce-49d2-9866-5538d3d9cea0" class=""><mark class="highlight-blue">Network properties</mark><div class="indented"><ul id="232b9063-1f27-44a8-a723-d608ae5fcda1" class="bulleted-list"><li style="list-style-type:disc">Structure				Network topology</li></ul><ul id="cd2f703a-0fe1-49c0-af3e-491202a8e26f" class="bulleted-list"><li style="list-style-type:disc">Capabilities			Possible operations per network component</li></ul><ul id="7e31cc6a-312f-4f55-8e50-ecf5ed38cfdc" class="bulleted-list"><li style="list-style-type:disc">Routing techniques		</li></ul><ul id="0528c0ea-1a3b-4d51-b350-7d09e7e596ea" class="bulleted-list"><li style="list-style-type:disc">Switching strategy		</li></ul><ul id="2d15ce0c-84f9-4f16-99f2-e73edb79e3d2" class="bulleted-list"><li style="list-style-type:disc">Cost					Latency, Bandwidth</li></ul></div></p><p id="439e0741-040f-4b64-b871-4f840d41bc0f" class="">
+</p><p id="207c0dd2-8da8-4cd2-a226-5ac6ddb5967a" class=""><mark class="highlight-blue">Network latency</mark><div class="indented"><p id="5029d931-85d2-47c9-9894-e5525d14eaef" class="">Time until first data element arrives from source to destination processor.</p></div></p><p id="43deeef1-b112-4fab-96c0-334fe534ef8b" class=""><mark class="highlight-blue">Network bandwidth</mark><div class="indented"><p id="e48f4845-f6a7-4870-9acc-32a314d2db69" class="">How many data elements can be transferered from source to destination processor per time unit (GBytes / second)</p></div></p><p id="febe58d1-2e27-4c3f-b3aa-1ec93162f1b3" class="">
+</p><p id="7a35cbde-fed8-438c-92b6-67d3a836431b" class=""><mark class="highlight-blue">k-ported</mark><div class="indented"><p id="67f4f840-e2e5-4b26-8ab3-8445c0e6d62d" class="">1-ported commun. system	processor can send/receive to max 1 other processor</p><p id="5d54f9e5-6780-45bc-980e-feb5c6b1b4bd" class="">k-ported commun. system	processor can send/receive to max k other processors</p></div></p><p id="3c2cf310-d6f3-471c-be1f-2aa7d235f37a" class="">
+</p><p id="58eab59b-a4ec-4e38-8e14-54f4a785e2ab" class=""><mark class="highlight-blue">Direction</mark><div class="indented"><p id="6fbba1a4-e144-46f3-a7ba-655ae7751459" class="">Uni-directional	processor can send xor receive in each communication step</p><p id="09536782-107a-4a9d-a3b1-ed51f6e207d9" class="">Bi-directional		processor can send and receive in each communication step<div class="indented"><ul id="9a440783-8036-4ca8-a5dd-0b0a065f31fe" class="bulleted-list"><li style="list-style-type:disc">from/to the same sender/recipient (telephone model)</li></ul><ul id="445d7efd-5990-4ccc-a6e5-b0ffdd490f64" class="bulleted-list"><li style="list-style-type:disc">from/to different senders/recipients (send-receive model)</li></ul></div></p></div></p><p id="33dfc71d-6691-4df5-9cb5-f0be4989d9fb" class="">
+</p><h2 id="145a69a4-878f-404b-bdb0-0acbf2029b13" class="">Graph</h2><p id="d20368ad-c2ab-4550-889b-b7cb1776e394" class=""><mark class="highlight-blue">Topology</mark><div class="indented"><p id="3ecc3ab1-d5c8-421e-b6de-00d5c5038564" class="">Modeled as directed or undirected graph <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><mi>V</mi><mo separator="true">,</mo><mi>E</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small G=(V,E)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">G</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.22222em;">V</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05764em;">E</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>.<div class="indented"><p id="373ea811-71b6-4c2c-a600-7bdb830481a8" class="">Nodes <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>V</mi></mstyle></mrow><annotation encoding="application/x-tex">\small V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.22222em;">V</span></span></span></span></span><span>﻿</span></span>		network elements: processors, network switches, ...</p><p id="666e79ba-e5dc-4ab3-ba5f-be9ca49c9575" class="">Edges <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>E</mi></mstyle></mrow><annotation encoding="application/x-tex">\small E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05764em;">E</span></span></span></span></span><span>﻿</span></span>		uni or bi-directed link: cable, optical connection, ...</p></div></p></div></p><p id="fc437c38-c0ea-4b2d-8d2f-3d50e42140e8" class="">
+</p><p id="921f4a6e-0468-4e2b-8901-f26e9b6a29fd" class=""><mark class="highlight-teal">path(u,v)</mark><div class="indented"><p id="a5dc8322-5ed2-4a5a-b195-6f3ed27b1960" class="">path from node <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>u</mi></mstyle></mrow><annotation encoding="application/x-tex">\small u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">u</span></span></span></span></span><span>﻿</span></span> to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>v</mi></mstyle></mrow><annotation encoding="application/x-tex">\small v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span></span></span></span></span><span>﻿</span></span>: length of shortest path.</p><p id="a000e531-dd96-4c04-9418-2c1d19437a38" class=""><mark class="highlight-gray">Shortest path between two nodes = lower bound for their latency.</mark></p></div></p><p id="7a4413ac-5f67-4220-93fa-d4ed8077718f" class=""><mark class="highlight-teal">diameter(G)</mark><div class="indented"><p id="11f3824e-b5bc-447d-ba74-d9b9baefa346" class="">Max length of shortest path in graph.<div class="indented"><p id="b9049820-b165-4649-b1e7-7be5e8f9642d" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>diameter</mtext><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">∀</mi><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>∈</mo><mi>V</mi><mo>:</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mtext>shortest path</mtext><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo><mi mathvariant="normal">∣</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{diameter}(G) = \forall u,v\in V: \max (|\text{shortest path}(u,v)|)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">diameter</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">G</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord sizing reset-size6 size5">∀</span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mop sizing reset-size6 size5">max</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mord text sizing reset-size6 size5"><span class="mord">shortest path</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">∣</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="16a8dde8-94dc-49b6-be76-00a87f8040d9" class=""><mark class="highlight-gray">Diameter of graph = lower bound for number of rounds for collective communication operations.</mark></p></div></p><p id="c822e9cd-15d7-4bc6-bf04-f667c3a13c7c" class=""><mark class="highlight-teal">degree(G)</mark><div class="indented"><p id="1b17367c-cb1e-4839-84b5-5a7a06e6686e" class="">Max number of edges of any node in graph.<div class="indented"><p id="5369bfbd-f571-41d7-95a2-13408a8a6300" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>degree</mtext><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">∀</mi><mi>v</mi><mo>∈</mo><mi>V</mi><mo>:</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mtext>edges</mtext><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{degree}(G) = \forall v\in V: \max (\text{edges}(v))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">degree</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">G</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.660186em;vertical-align:-0.035190000000000006em;"></span><span class="mord sizing reset-size6 size5">∀</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mop sizing reset-size6 size5">max</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord text sizing reset-size6 size5"><span class="mord">edges</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mclose sizing reset-size6 size5">))</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="3d28da95-84d3-4ad9-9000-0f476c4d4844" class=""><mark class="highlight-gray">Degree of graph = “cost factor”, potential for more simultaneous communication (multi-port)</mark></p></div></p><p id="f581cf4d-327e-4404-bc6e-9c1b34a23902" class=""><mark class="highlight-teal">bisection-width(G)</mark><div class="indented"><p id="05128313-be60-43a0-97ed-09aedaed90de" class="">Min number of edges to remove to partition graph into two roughly equal-sized, disconnected parts.<div class="indented"><p id="4a7c0f6c-9d20-47f5-ae0d-8de960a35bdf" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>bisection-width(G)</mtext><mo>=</mo><mi>min</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi mathvariant="normal">∣</mi><mo stretchy="false">{</mo><mtext> </mtext><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>E</mi><mtext> </mtext><mi mathvariant="normal">∣</mi><mtext> </mtext><mi>u</mi><mo>∈</mo><msub><mi>V</mi><mn>1</mn></msub><mo separator="true">,</mo><mtext> </mtext><mi>v</mi><mo>∈</mo><msub><mi>V</mi><mn>2</mn></msub><mtext> </mtext><mo stretchy="false">}</mo><mi mathvariant="normal">∣</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{bisection-width(G)} = \min(|\{~(u,v) \in E ~|~u \in V_1,~ v\in V_2~\}|)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">bisection-width(G)</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mop sizing reset-size6 size5">min</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5">∣</span><span class="mopen sizing reset-size6 size5">{</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05764em;">E</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7899930000000001em;vertical-align:-0.174996em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.22222em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.22222em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mclose sizing reset-size6 size5">}</span><span class="mord sizing reset-size6 size5">∣</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="eec25b48-4098-4f59-b9d1-18c2a07bf3e5" class="">where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">∣</mi><msub><mi>V</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><mo>=</mo><mi mathvariant="normal">∣</mi><msub><mi>V</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi></mstyle></mrow><annotation encoding="application/x-tex">\small |V_1| = |V_2|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">∣</span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.22222em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord sizing reset-size6 size5">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">∣</span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.22222em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord sizing reset-size6 size5">∣</span></span></span></span></span><span>﻿</span></span>.</p></div></p><p id="1aed003c-d16a-46bc-862b-d8bb0f72158c" class="">NP-hard problem (graph partitioning).</p></div></p><p id="700e77d2-9c6d-4464-a47f-cd97c6134cd9" class=""><mark class="highlight-gray">Bisection-width of graph = Lower bound for transpose operations (Each processor has to exchange information with every other one.)</mark></p></div></p><p id="f240a42c-30eb-4a23-8543-c253e32e7eed" class="">
+</p><p id="2b957b3b-4a5a-42ba-9397-e6112f7d7022" class=""><mark class="highlight-blue">Directed network</mark><div class="indented"><p id="07c5249e-4c88-440c-b08e-037959e9c17e" class="">Only elements are processors (no switch nodes)</p><p id="e8615a44-4e19-4f90-acc5-5f7172288a82" class="">ie. mesh/torus, ring, hypercube, Kautz-network, ...</p></div></p><p id="c54ea88e-554b-4ff9-b841-6446d64e24a8" class=""><mark class="highlight-blue">Indirected network</mark><div class="indented"><p id="fb82f62f-7c3d-4afe-a662-82e57ec0e5b8" class="">Processors connected via dedicated switch nodes</p><p id="8dbde1b8-0aea-4e76-88d9-bc51d6389045" class="">Fat tree, Clos network (InfiniBand), butterfly network, dragonfly network, ...</p></div></p><p id="7bdf70ae-faa8-4776-b88f-cb47516aa18a" class="">
+</p><p id="bb9bc6d6-04a6-4059-84d0-96bc0569391c" class="">
+</p><h1 id="e978e3f3-678c-4486-983c-5e581db4c255" class="">Broadcast</h1><p id="4bb927d8-21ee-4814-b126-a3541b0eabe1" class=""><mark class="highlight-blue">Broadcast problem (in communication network)</mark><div class="indented"><p id="fc9b6bf1-c7b8-48fb-8415-d2e8533b77c5" class="">Collective operation.</p><p id="4867a95f-d414-4f97-8f64-599779d898e8" class="">One processor (root) wants to communicate data to all other processors.</p><p id="54e9f29f-bf83-45af-bf5d-6cfeaddbd8a6" class=""><mark class="highlight-gray">Assumption: All other processors know which processor is root.</mark></p></div></p><p id="5be5e026-2d12-4fc8-9d3b-8b39741a801b" class=""><mark class="highlight-blue">Broadcast problem model</mark><div class="indented"><p id="36b6d988-53ee-427a-880b-11aa8741cbd0" class="">All processors start at the same time - and are synched in rounds.</p><p id="8dbc63d2-2476-495b-be3b-3c3c58531a0f" class="">In each round <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>p</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(p/2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> processors can communicate <mark class="highlight-gray">(limited by topology)</mark>.</p><p id="adb8dc61-2e66-4adb-b6a0-e0902459b4c3" class="">Cost of each round:<div class="indented"><ol type="a" id="5b8c1171-002b-4808-86ba-791e6b5ead98" class="numbered-list" start="1"><li>= largest message sent.</li></ol><ol type="a" id="0e13a33c-0865-4b6b-882b-8d98f8ff867b" class="numbered-list" start="2"><li>= max number of messages sent/received over by each processor.</li></ol></div></p><hr id="53fa9cef-2e15-41f8-a51f-f0eb35abfbec"/><p id="512e9ca2-f796-4e72-a33b-35c2d066488f" class="">We want to determine the lower bound for the algorithm.</p></div></p><p id="0ec083ef-7ef8-4cc3-a422-0bdcb3eb230a" class="">
+</p><p id="68f2674f-5400-4c51-b4cb-b028bf7f4b46" class=""><mark class="highlight-blue">Recursive/binomial tree broadcast algorithm</mark><div class="indented"><pre id="de3fa893-bac1-4cfc-8732-cc4e8280272b" class="code"><code>if |V|=1 done
+
+Partition processors into two roughly equal-sized sets V1 and V2
+
+Assume root r1 in V1, choose a pseudo-root r2 in V2
+	Send data from r1 to r2
+	Recursively broadcast in V1 and V2</code></pre><p id="a8102116-7a1f-40ad-899b-211825fcaa26" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Ω</mi><mo stretchy="false">(</mo><mo stretchy="false">⌈</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">⌉</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small\Omega( \lceil \log_2(p) \rceil) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mord sizing reset-size6 size5">Ω</span><span class="mopen sizing reset-size6 size5">(⌈</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)⌉)</span></span></span></span></span><span>﻿</span></span> rounds are needed to solve this problem.  </p><p id="b019f7d3-ecbf-4fed-bf01-233b1610c8a0" class=""><mark class="highlight-teal"><strong>1</strong></mark><mark class="highlight-teal">-ported network</mark><div class="indented"><ul id="2b1680d6-0476-4708-a7f4-611ea9dc269f" class="toggle"><li><details open=""><summary>Rounds: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mo stretchy="false">⌈</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">⌉</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \Theta(\lceil \log_2(p) \rceil)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mord sizing reset-size6 size5">Θ</span><span class="mopen sizing reset-size6 size5">(⌈</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)⌉)</span></span></span></span></span><span>﻿</span></span></summary><p id="42def367-52cd-4a47-949f-e3a12ab639f0" class="">Assume communication in synchronized rounds.</p><p id="509f4c1b-6c1a-4b92-a839-481ce4892436" class="">After data is sent from <mark class="highlight-gray"><code>r1</code></mark><mark class="highlight-gray"> </mark>to <mark class="highlight-gray"><code>r2</code></mark>, the two problems take half the original size and are solved independently.</p><p id="a65bd598-a1ea-474b-a786-2203418b1b2f" class="">Information theoretic argument:<div class="indented"><p id="cd3a371d-4ba4-4b38-b1f5-032fafc88506" class="">In each round the number of processors that have data can at most double (by sending data to where data was not before).</p></div></p><p id="37809d1a-e0f1-405b-a0d9-c806fe3b2738" class=""><mark class="highlight-gray">Notice that: </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">⌈</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">⌉</mo><mo>&gt;</mo><mtext>diameter</mtext><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \lceil \log_2(p) \rceil &gt; \text{diameter}(G)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mopen sizing reset-size6 size5">⌈</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)⌉</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">diameter</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">G</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray">, this is because we can only send data to one other node at a time.</mark></p><p id="a64701ee-375f-4c03-92e7-966eebd73bc9" class="">This algorithm has the lowest number of possible rounds as its lower and upper boundary, therefore <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Θ</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \Theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">Θ</span></span></span></span></span><span>﻿</span></span>.</p><p id="c5ef28f4-74a9-42ee-aa09-64abc84cb672" class="">
+</p></details></li></ul></div></p><p id="8c5e8864-8306-47bd-ac02-83103f8f3524" class=""><strong><mark class="highlight-teal">k</mark></strong><mark class="highlight-teal">-ported network</mark><div class="indented"><p id="4c0d101c-7730-4dad-a96c-a78748d7e37f" class="">Rounds: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mo stretchy="false">⌈</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mstyle mathcolor="pink"><mi>k</mi><mo>+</mo><mn>1</mn></mstyle></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">⌉</mo><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \Theta(\lceil \log_{\textcolor{pink}{k+1}}(p) \rceil)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.959994em;vertical-align:-0.284994em;"></span><span class="mord sizing reset-size6 size5">Θ</span><span class="mopen sizing reset-size6 size5">(⌈</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20185333333333327em;"><span style="top:-2.338893333333333em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;color:pink;">k</span><span class="mbin mtight" style="color:pink;">+</span><span class="mord mtight" style="color:pink;">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.31666em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)⌉)</span></span></span></span></span><span>﻿</span></span></p><p id="e812610e-4fc7-41e4-b9f1-d5949bb33a7e" class=""><mark class="highlight-gray">same reason as above</mark></p></div></p></div></p><p id="8eb2f25a-3eca-4806-b667-57856c5d76a1" class="">
+</p><h2 id="2af5430f-26fd-4a17-a2d4-b04b5225ce04" class="">Examples</h2><p id="9a89339c-f62d-4b6c-b34d-e98498beb500" class="">Diameter of graph determines broadcast complexity.<div class="indented"><p id="015e46af-91d8-45ec-b8a7-d5cfbefd05c0" class=""><mark class="highlight-blue">Best case: 	</mark>fully connected network (optimal diameter)</p><p id="701f475b-49aa-4fe3-84f6-2fb4675c36fc" class=""><mark class="highlight-blue">Worst case:</mark> 	Linear array, ring, tree</p></div></p><p id="bd1eace2-b018-478a-831e-f1d2a79240a1" class="">
+</p><p id="fa48530e-c054-40f3-8dc0-d3d2d5fa5bc8" class="">
+</p><h1 id="faf8e010-a7f9-4d60-9531-34769fbb7ef9" class="">Topologies</h1><p id="cacb9fae-b1e0-4671-bf41-bf90be813f64" class=""><mark class="highlight-blue">Fully connected network</mark><div class="indented"><p id="06ef9bd1-8b5c-440e-bd0d-2bdf7f01577a" class=""><mark class="highlight-gray">All processors are directly connected to eachtother.</mark></p><p id="c7162886-ad59-4bec-9137-e78c0bc0dfd3" class="">links = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msup><mi>p</mi><mn>2</mn></msup><mo>−</mo><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small p^2-p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.88836em;vertical-align:-0.174996em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span><mark class="highlight-gray"> </mark></p><p id="14d76e8c-12f1-46af-b2db-1e4442fce1f0" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span></p><p id="87e1cd35-1414-412e-8832-3b106ebd1cb8" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">(</mo><mi>p</mi><mi mathvariant="normal">/</mi><mn>2</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mstyle></mrow><annotation encoding="application/x-tex">\small (p/2)^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.938364em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="7850124f-3cfe-420a-b7a4-48e1f362b009" class="">degree = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi><mo>−</mo><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6999930000000001em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="66d25bbc-a0eb-41a8-9e6a-e944c25d3446" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%201.png"><img style="width:96px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%201.png"/></a></figure><p id="d880a391-50c1-4466-96d1-590dba488770" class=""><mark class="highlight-blue">Linear array</mark><div class="indented"><p id="68efd69f-77d7-4a94-805e-41f144d0cd40" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi><mo>−</mo><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small p-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6999930000000001em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span></p><p id="ecff82e2-ce43-44a3-a638-8a647b6aea96" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="ac68eb8c-be6c-493b-b73c-cf1de6b141f4" class=""><mark class="highlight-gray">removing one link disconnects network</mark></p></div></p><p id="39292449-8301-49de-939b-25e67cc25ec4" class="">degree = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="2116636e-f5c1-472f-8089-12e2aff578e8" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%202.png"><img style="width:96px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%202.png"/></a></figure><p id="b317179e-4dc5-48e3-a41f-41808e706d7e" class=""><mark class="highlight-blue">Ring</mark><div class="indented"><p id="ef548ec7-395c-4eab-b380-1cc67f54df3c" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi><mi mathvariant="normal">/</mi><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small p/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mord sizing reset-size6 size5">/2</span></span></span></span></span><span>﻿</span></span></p><p id="92e54b8e-73a1-44b3-a0be-c162fa82b923" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="8800f46f-8272-4bc5-802d-b4b50d2da3a9" class=""><mark class="highlight-gray">removing two links disconnects network</mark></p></div></p><p id="7a1612b9-e9b0-479d-8d0c-7d989e15af39" class="">degree = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="43027b49-5a67-42cb-84a0-250c5269e979" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%203.png"><img style="width:96px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%203.png"/></a></figure><p id="f8ea0f5d-f138-4d9f-8f7f-1d7467552306" class=""><mark class="highlight-blue">Tree</mark><div class="indented"><p id="4ee9e83a-4f5e-48cc-b462-bf3c1f43148d" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mo>⋅</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>p</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small 2 \cdot \log_2((p+1)/2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">((</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="9cc83223-5788-4edd-8fb6-532b9ec4a600" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>1</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="72e96fd9-a6f0-49db-8cc4-b8d4d47bc288" class=""><mark class="highlight-gray">removing one link disconnects network</mark></p></div></p><p id="0a96db21-c9bb-48f2-aed2-43c0ae6cac84" class="">degree = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>3</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">3</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="110adac8-12b8-4f72-9071-c0a8fed60c07" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%204.png"><img style="width:120px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%204.png"/></a></figure><p id="3d594431-7cc1-4518-bcdb-ac8fdbb1dde6" class=""><mark class="highlight-blue">Mesh</mark><div class="indented"><p id="e40d4ffe-4cbf-4d25-ac11-5042fe70d100" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>d</mi><mo>⋅</mo><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mi>d</mi></mrow></msup></mstyle></mrow><annotation encoding="application/x-tex">\small d \cdot (p-1)^{1/d}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0017em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.863em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">1/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="78935cb2-b58f-417d-9c30-4b89d3f947d7" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msup><mi>p</mi><mrow><mo stretchy="false">(</mo><mi>d</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>d</mi></mrow></msup></mstyle></mrow><annotation encoding="application/x-tex">\small p^{(d-1)/d}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9516960000000001em;vertical-align:-0.174996em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.863em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">d</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mord mtight">/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> <div class="indented"><p id="b58c36e3-176a-4c92-aa9e-7f5e76b8cb7a" class=""><mark class="highlight-gray"> bisection bandwidth determines transpose/alltoall complexity</mark></p></div></p></div></p><p id="1dcc8b5e-be09-4968-bf74-86c7cdc0eec8" class="">
+</p><p id="93e2ce78-d620-48d0-9c2f-17652282effd" class=""><mark class="highlight-blue">Torus (regular, 2D)</mark><div class="indented"><p id="cda90141-c9f4-4fdf-bdd8-124901a0b75f" class=""><mark class="highlight-gray">“wrap around”: nodes on the “edges” of 2D shape are all connected.</mark></p><p id="fa83b4b0-7ef6-4586-8c1d-65908cd3dc0f" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>d</mi><mo>⋅</mo><mo stretchy="false">⌊</mo><mo stretchy="false">(</mo><mi>p</mi><mi mathvariant="normal">/</mi><mn>2</mn><msup><mo stretchy="false">)</mo><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mi>d</mi></mrow></msup><mo stretchy="false">⌋</mo></mstyle></mrow><annotation encoding="application/x-tex">\small d \cdot \lfloor (p/2)^{1/d}\rfloor</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0017em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">⌊(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mord sizing reset-size6 size5">/2</span><span class="mclose sizing reset-size6 size5"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.863em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">1/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span><span class="mclose sizing reset-size6 size5">⌋</span></span></span></span></span><span>﻿</span></span></p><p id="e2978ed9-98a0-4bf9-874d-f2de0f849ce3" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn><mo>⋅</mo><msup><mi>p</mi><mrow><mo stretchy="false">(</mo><mi>d</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mi>d</mi></mrow></msup></mstyle></mrow><annotation encoding="application/x-tex">\small 2\cdot p^{(d-1)/d}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9516960000000001em;vertical-align:-0.174996em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.863em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">d</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mord mtight">/</span><span class="mord mathnormal mtight">d</span></span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span><div class="indented"><p id="771f6e76-657f-451a-849a-3cb0e52b9786" class=""><mark class="highlight-gray"> bisection bandwidth determines transpose/alltoall complexity</mark></p></div></p></div></p><figure id="f104c345-0b6c-48a7-bab1-9ae0ff70ca0a" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%205.png"><img style="width:108px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%205.png"/></a></figure><p id="488d0ea4-f890-4b29-acdc-dc5dec3d2fff" class=""><mark class="highlight-blue">Hypercube</mark><div class="indented"><p id="aff7e3f6-d019-4086-9640-87b885bff6a6" class="">diameter = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>d</mi><mo>=</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small d = \log_2 (p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p><p id="6cce5b93-f30b-443e-a7fb-842b382800da" class="">bisection width = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>p</mi><mi mathvariant="normal">/</mi><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small p/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mord sizing reset-size6 size5">/2</span></span></span></span></span><span>﻿</span></span> </p><p id="89832aa2-854d-4ff4-960b-aeedccebd2fc" class="">degree = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>d</mi><mo>=</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small d = \log_2 (p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><figure id="818e31e7-526b-420c-b1d9-aba50efdeaf9" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%206.png"><img style="width:192px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%206.png"/></a></figure><p id="a316ab97-9238-4207-968d-6e9e09a51d4b" class="">
+</p><p id="e459e548-7161-4926-8885-2ed159c227cc" class="">
+</p><h1 id="dda17eed-5514-443c-b6d6-a9f725c46124" class="">Routing terminology</h1><p id="1240808c-37af-44e7-8139-26c3a348c60e" class="">Source (processor) wants to send message to destination (processor).</p><p id="37cca3f8-811d-4617-8fb7-b297a14c5b39" class="">
+</p><p id="1bd7b891-de8b-4ef3-82af-aeeba05ef196" class=""><mark class="highlight-blue">Routing protocol</mark><div class="indented"><p id="568f6b64-9e36-4881-8f42-e0b2b0887593" class="">We need an algorithm that finds a path (and considers traffic).</p></div></p><p id="7cd1a984-f15c-45dd-80f6-760b914febda" class="">
+</p><p id="7f987d84-f7f5-4896-8f76-39e802a55d76" class=""><mark class="highlight-blue">Correctness</mark><div class="indented"><p id="85ec023f-0fbd-407f-8854-d41752cdd70a" class="">Routing protocol must be deadlock free.</p><p id="1866165e-d2d7-46b5-a197-7fe839f56d60" class="">Sent messages must arrive (even with traffic).</p></div></p><p id="e9c7f56c-1b37-4863-b5b3-564d0f6ad2fa" class=""><mark class="highlight-blue">Perfromance</mark><div class="indented"><p id="cec0ab96-ada3-4c22-93f0-cac9a30a0930" class="">Delays must be minimized.</p><p id="7b114a0d-56ed-4b43-81ec-56668ae8f0fc" class="">Contention (”hot spots”) must be avoided.</p><p id="98533906-801d-4d10-88b9-7f2fef40c830" class="">Shared buffers (bound buffers) must be used. </p></div></p><p id="26800f92-f3f4-4ee7-a888-d2a2ab12fba2" class="">
+</p><p id="2bb53742-de7c-4c9b-89a2-132fedc42b31" class=""><mark class="highlight-blue">Deterministic (oblivious) routing</mark><div class="indented"><p id="6384e0cc-63bc-4b44-b4b3-8ec2c57daf96" class="">Message path only determined by source, destination, static network properties.</p></div></p><p id="0476dfd7-0537-40b6-a102-7e5f78adbcd8" class=""><mark class="highlight-blue">Adaptive routing</mark><div class="indented"><p id="efd7d86a-08aa-4dd3-b4ca-c9d1f13a3622" class="">Message path determined dynamically (ie. based on traffic)</p></div></p><p id="a8ceac68-5f02-46cd-8744-66e534e68ce0" class=""><mark class="highlight-blue">Minimal routing algorithm</mark><div class="indented"><p id="8cbb35ea-6532-465f-95aa-153d49245252" class="">Route is shourtest path</p><p id="afdd8dd3-d931-48ff-b8e1-c5c4decc00e1" class="">(non minimal algorithm might choose longer paths ie. to avoid hot-spots)</p></div></p><p id="259dfcee-b7b7-434e-a7af-4c323e796f24" class="">
+</p><p id="1bbd4ca6-8f12-469d-8ab3-b600a786de8b" class=""><mark class="highlight-blue">Circuit switching</mark><div class="indented"><p id="999277c2-dda8-4feb-ae24-3067b6bf3657" class="">Entire path is reserved for the duration of the entire transmission</p></div></p><p id="0e64f2b9-74aa-46fa-bce5-543147621d7e" class=""><mark class="highlight-blue">Packet switching</mark><div class="indented"><p id="a0284582-475e-4cde-b9db-6fefe09af8b9" class="">Message partitioned into smaller packets that can be transfered independently (they may not arrive in order)</p></div></p><p id="1e3b765d-78d0-42df-9bfa-2a78e9837233" class=""><mark class="highlight-blue">Store-and-forward</mark><div class="indented"><p id="a09a8478-f01c-461e-9352-7e458e45220a" class="">Each node on path stores whole packet (message) before forwarding.</p></div></p><p id="6002e7ff-b497-4e1c-a485-432de7927504" class="">
+</p><p id="2b098e71-0c50-4582-8f7e-14705bc43600" class="">
+</p><h1 id="07c5dade-4897-4b99-9dbb-d02cdedf799a" class="">Transmission cost model</h1><p id="ab33d41f-432c-40dc-ad28-52663c010ccb" class=""><mark class="highlight-blue">Cost of transmission over a single edge</mark><div class="indented"><p id="7737461e-9166-4c83-bf6d-a1f167d617e9" class="">Cost of transmitting data / communicating along a single edge <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>E</mi></mstyle></mrow><annotation encoding="application/x-tex">\small (u,v) \in E</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05764em;">E</span></span></span></span></span><span>﻿</span></span> is linear in <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span>:<div class="indented"><p id="babd9646-dba8-4adc-9c85-420ff871f03f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">\alpha + \beta \cdot m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="d75a78b8-6937-4240-bd52-528abb6c9fef" class="">where:<div class="indented"><p id="03cfabb5-d8f6-4b1a-a5b2-5458afb89fad" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span>	size of transmitted data</p><p id="93983e88-c47a-4d1e-8423-77d5b9d8788f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>α</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span></span></span></span></span><span>﻿</span></span>	”start-up” latency constant</p><p id="93871973-9f04-44b8-ae27-6eea8b1da848" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>β</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span></span></span></span></span><span>﻿</span></span>	time per unit (byte) constant</p></div></p><hr id="4247c471-21bf-46f6-b2ee-170898b365fc"/><p id="504d0690-6bfe-4c40-bf21-fd626eb84ef8" class="">In this model:<div class="indented"><ul id="2466a826-fb72-4c6a-85d7-72fd5a4d0414" class="bulleted-list"><li style="list-style-type:disc">both processors <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>u</mi><mo separator="true">,</mo><mi>v</mi></mstyle></mrow><annotation encoding="application/x-tex">\small u,v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5625em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5">u</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.03588em;">v</span></span></span></span></span><span>﻿</span></span> are involved during the whole transmission.</li></ul><ul id="d3ef7f6c-04be-4ec7-8b53-eeb6578fddb8" class="bulleted-list"><li style="list-style-type:disc">using recursive broadcast algorithm (see above) therefore: <p id="2b7c6578-2596-4a6b-b3c9-b9e23832e911" class="">time complexity: 	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>⋅</mo><munder><munder><mrow><mo stretchy="false">(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi><mo stretchy="false">)</mo></mrow><mo stretchy="true">undefined</mo></munder><mtext>cost for single edge</mtext></munder></mstyle></mrow><annotation encoding="application/x-tex">\small T(m) = (\log_2(p)) \cdot \underbrace{(\alpha + \beta \cdot m)}_{\text{cost for single edge}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">))</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.196528em;vertical-align:-1.5215280000000002em;"></span><span class="mord munder sizing reset-size6 size5"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7499999999999998em;"><span style="top:-1.4390399999999999em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">cost for single edge</span></span></span></span></span><span style="top:-2.9999999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.75em;"><span class="svg-align" style="top:-2.102em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="height:0.548em;min-width:1.6em;"><span class="brace-left" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal">m</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.898em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.690586666666667em;"><span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p></li></ul></div></p></div></p><p id="32242308-7e01-4b06-969b-2d537f14a415" class="">
+</p><h2 id="dff5e8c6-ec79-4ab2-aecf-54240776e2e2" class="">Pipelining</h2><p id="928a2e43-4a68-455a-ab8d-4038a9811e06" class=""><mark class="highlight-blue">Fully connected network</mark><div class="indented"><p id="f970ea49-674c-4eb5-99fa-73a33b7ffd16" class="">lower bound <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi mathvariant="normal">Ω</mi></mstyle></mrow><annotation encoding="application/x-tex">\small \Omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">Ω</span></span></span></span></span><span>﻿</span></span> of broadcast in linear cost, fully connected network:<div class="indented"><p id="ab8ee97b-b0c2-4fb6-9c48-d23d5808fe82" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>=</mo><mstyle mathcolor="gray"><mi mathvariant="normal">Ω</mi></mstyle><mstyle mathcolor="gray"><mo stretchy="false">(</mo></mstyle><mtext>  </mtext><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo>⋅</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext>  </mtext><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi><mo stretchy="false">)</mo><mtext>  </mtext><mstyle mathcolor="gray"><mo stretchy="false">)</mo></mstyle></mstyle></mrow><annotation encoding="application/x-tex">\small T(m) = \textcolor{gray}\Omega\textcolor{gray}(~~\max(\alpha \cdot \log_2(p), ~~\alpha + \beta \cdot m)~~\textcolor{gray})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5" style="color:gray;">Ω</span><span class="mopen sizing reset-size6 size5" style="color:gray;">(</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mop sizing reset-size6 size5">max</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mspace nobreak sizing reset-size6 size5"> </span><span class="mclose sizing reset-size6 size5" style="color:gray;">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="f2757b7b-758f-436e-aaba-33a6fd23c25f" class="">where:<div class="indented"><p id="2c4af307-91c1-4c40-9f56-c475a4ce252f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \log_2(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>		total communication rounds</p><p id="2aefed38-d68b-4c05-98a5-a9ef89b40ef7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>α</mi><mo>⋅</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \alpha \cdot \log_2(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.400005em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span>	start-up latency multiplied by total communication rounds</p><p id="6c312371-7dba-4eaa-93b6-aa0ca777eb26" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small\alpha + \beta \cdot m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.599994em;vertical-align:-0.07499700000000001em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span>	transfer cost for a single edge</p></div></p><hr id="d5a1925f-3542-4a2a-b8e6-053d8a61e34f"/><p id="5d7d6249-7d80-46c1-bd36-ba805b680606" class="">Notice that it isn’t <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mstyle mathcolor="gray"><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo></mstyle><mo stretchy="false">(</mo><msub><mrow><mi>log</mi><mo>⁡</mo></mrow><mn>2</mn></msub><mi>p</mi><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mi>m</mi><mo stretchy="false">)</mo><mstyle mathcolor="gray"><mo separator="true">,</mo><mtext>  </mtext><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi><mo stretchy="false">)</mo></mstyle></mstyle></mrow><annotation encoding="application/x-tex">\small \textcolor{gray}{\max(}(\log_2 p)(α+βm)\textcolor{gray}{, ~~\alpha + \beta \cdot m)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.909996em;vertical-align:-0.23499599999999998em;"></span><span class="mop sizing reset-size6 size5" style="color:gray;"><span style="color:gray;">m</span><span style="color:gray;">a</span><span style="color:gray;">x</span></span><span class="mopen sizing reset-size6 size5" style="color:gray;">(</span><span class="mopen sizing reset-size6 size5">(</span><span class="mop sizing reset-size6 size5"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16852em;"><span style="top:-2.3388933333333335em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.26110666666666665em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mpunct sizing reset-size6 size5" style="color:gray;">,</span><span class="mspace nobreak sizing reset-size6 size5" style="color:gray;"><span style="color:gray;"> </span></span><span class="mspace nobreak sizing reset-size6 size5" style="color:gray;"><span style="color:gray;"> </span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;color:gray;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5" style="color:gray;">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;color:gray;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5" style="color:gray;">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="color:gray;">m</span><span class="mclose sizing reset-size6 size5" style="color:gray;">)</span></span></span></span></span><span>﻿</span></span>.</p><p id="632fd966-3679-4386-86ed-986789d94dd7" class="">This is because <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span> does not have to be sent as one unit and algorithms can do “pipelining”.</p></div></p><p id="c031424d-5774-44ce-a853-2b51a19c5aa4" class="">
+</p><p id="f8686059-5a05-4de8-9532-9ac96f7d9a0b" class=""><mark class="highlight-blue">Store-and-forward routing</mark><div class="indented"><p id="b56a638c-d1b1-4bab-b955-509fb0cb1223" class="">Transmission time via “store-and-forward”:<div class="indented"><p id="bc36aa58-0b59-4042-a6b1-649d9e9b5e91" class="">Each node on path stores whole packet (message) before forwarding.</p></div></p><p id="b3ba44aa-0318-42c4-99cf-a3c2fd8f46c2" class="">Path of length <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>l</mi></mstyle></mrow><annotation encoding="application/x-tex">\small l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.01968em;">l</span></span></span></span></span><span>﻿</span></span>:<div class="indented"><p id="7a4c3043-6635-4611-b26c-fc6bedc077f1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>=</mo><mi>l</mi><mo>⋅</mo><mo stretchy="false">(</mo><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>m</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small T(m) = l \cdot (\alpha + \beta  \cdot m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="38481bc6-f41f-4071-b940-cafc0eef6189" class="">Now when also pipelining with packet size <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>b</mi></mstyle></mrow><annotation encoding="application/x-tex">\small b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.624996em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">b</span></span></span></span></span><span>﻿</span></span>:<div class="indented"><p id="b15e9bc9-d2fa-431c-af77-f3fa536c1ce9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mo stretchy="false">⌈</mo><mi>m</mi><mi mathvariant="normal">/</mi><mi>b</mi><mo stretchy="false">⌉</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \lceil m / b \rceil</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">⌈</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">b</span><span class="mclose sizing reset-size6 size5">⌉</span></span></span></span></span><span>﻿</span></span> = total num of packets</p><p id="6f7cb5e7-4bcc-49b8-ae61-7e4787137894" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>T</mi><mo stretchy="false">(</mo><mi>m</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>l</mi><mo>−</mo><mn>1</mn><mo>+</mo><mi>m</mi><mi mathvariant="normal">/</mi><mi>b</mi><mo stretchy="false">)</mo><mi>α</mi><mo>+</mo><mo stretchy="false">(</mo><mi>l</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>β</mi><mi>b</mi><mo>+</mo><mi>β</mi><mi>m</mi></mstyle></mrow><annotation encoding="application/x-tex">\small T(m) = (l-1+m/b)α +(l-1)βb+βm
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.13889em;">T</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.654993em;vertical-align:-0.07499700000000001em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">m</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">b</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mclose sizing reset-size6 size5">)</span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mord mathnormal sizing reset-size6 size5">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.799992em;vertical-align:-0.174996em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.05278em;">β</span><span class="mord mathnormal sizing reset-size6 size5">m</span></span></span></span></span><span>﻿</span></span></p></div></p><p id="8b16aabb-dc79-4328-af96-14f43a4686fa" class="">We have to optimize for the best packet size.</p></div></p><figure id="885c21f4-84fc-42eb-aa75-d59414b956ca" class="image"><a href="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%207.png"><img style="width:336px" src="Distributed%20Systems%2063a3a5473d294108b82188619b113078/Untitled%207.png"/></a></figure><p id="6f5ca89c-7309-407c-8baf-52c808596715" class="">
+</p><p id="522d55c4-1aab-4b33-addc-e31b78731dfd" class="">
+</p><h1 id="6d80ddac-1b84-425e-b034-bcf25bfd4ac2" class="">Architectures</h1><p id="08596a21-c763-41f1-9c1b-ab66c3ea12de" class=""><mark class="highlight-blue">Hybrid / hierarchical parallel architectures</mark><div class="indented"><p id="7538d7b4-c3a9-4d4d-be05-44d98fc1b891" class="">Processing elements organized hierarchically:<div class="indented"><p id="a4043d46-320b-4e34-b29b-b1dec160b5e3" class="">Nodes are not a single processor anymore but multi-processor systems with shared memory.</p><p id="94c60d99-6741-463c-8976-7155915ea888" class="">ie. traditional SMP clusters.</p><p id="b03ef39b-4843-4033-bdd8-5cd46dd921f8" class="">Alternatively: <em>Multiple </em>multi-processor systems as a single node.</p></div></p><hr id="9f6ee8e9-0185-4830-99bd-8a2ca3c1abe9"/><p id="7fcadc1b-7efa-4c18-b58a-2e45684758bc" class="">Problem: <mark class="highlight-teal">Network bottleneck</mark><div class="indented"><p id="86d944b5-7379-418c-b667-d4df7d1986f7" class="">Number of cores &gt; number of ports</p></div></p></div></p><p id="26d5b9b5-00ad-4142-b4b6-44a391742e2c" class="">
+</p><p id="c0ca3320-0e5e-49be-8742-017453595c82" class="">Sometimes when shared memory systems get complex, it can be reasonable to treat them as distributed systems.</p><p id="4eef1fcc-d619-4cd4-ad04-efac2f8543ef" class="">Then programming must be done while keeping locality in mind.</p></div></article></body></html>

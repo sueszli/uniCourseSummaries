@@ -1,0 +1,813 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SQL Exercise</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="87526807-d439-4504-9b99-d54d12c8a11c" class="page sans"><header><h1 class="page-title">SQL Exercise</h1></header><div class="page-body"><p id="d3f52778-61a0-4e44-9191-17b3dfd31fd1" class=""><a href="https://tuwel.tuwien.ac.at/mod/extserver/view.php?id=1279620">https://tuwel.tuwien.ac.at/mod/extserver/view.php?id=1279620</a></p><p id="d7268349-aba5-4c71-90f7-808b39967b8d" class="">
+</p><figure id="14ff70b3-efb3-4266-95e4-fc92c65c1217" class="image"><a href="SQL%20Exercise%2087526807d43945049b99d54d12c8a11c/Untitled.png"><img style="width:816px" src="SQL%20Exercise%2087526807d43945049b99d54d12c8a11c/Untitled.png"/></a></figure><p id="07f5106c-28ce-4d9a-8331-add7fff4c944" class="">
+</p><p id="d13553ab-008c-491b-a9fb-9bcde8deb12c" class=""><mark class="highlight-gray"><code>arbeitende (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">betrname</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">personname</span></code></mark><mark class="highlight-gray"><code>, anstellungstyp)</code></mark><div class="indented"><p id="0f31f973-a471-41b5-88aa-4f397e8e6925" class="">btrname references betrieb (name)</p></div></p><p id="b9004ab2-3886-44e4-a1b4-c78004881451" class=""><mark class="highlight-gray"><code>barsch (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">id</span></code></mark><mark class="highlight-gray"><code>, untergattung)</code></mark><div class="indented"><p id="847863a1-1934-48e9-abf0-33df3ef6bd58" class="">id references fisch (id)</p></div></p><p id="f44c9db2-9474-4f2c-83aa-64b3a473f5a5" class=""><mark class="highlight-gray"><code>betrieb (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">name</span></code></mark><mark class="highlight-gray"><code>, land)</code></mark></p><p id="80d01225-8e0a-417f-9aff-f185b110f0ab" class=""><mark class="highlight-gray"><code>boot (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">name</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">kennnr</span></code></mark><mark class="highlight-gray"><code>, kapazität)</code></mark><div class="indented"><p id="b1dbb563-7e47-4ec7-84b0-42ad76e80550" class="">name references betrieb (name)</p></div></p><p id="fb3391ba-52b1-4f20-b3e4-79bfcb20ff42" class=""><mark class="highlight-gray"><code>eigentuemer (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">besitzer</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">zweigstelle</span></code></mark><mark class="highlight-gray"><code>)</code></mark><div class="indented"><p id="2a7d5db8-c0b2-4400-b622-c4a49a44fa3a" class="">both reference betrieb (name)</p></div></p><p id="f4411cf1-c087-411e-a429-090bc192f790" class=""><mark class="highlight-gray"><code>fisch (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">id</span></code></mark><mark class="highlight-gray"><code>, länge, gefangenam, gefangenvon)</code></mark><div class="indented"><p id="be276e26-e8c4-486d-8957-480a1265eec9" class="">gefangenvon references betrieb (name)</p></div></p><p id="5048c62c-080b-4a89-bfdf-4955d34cc16a" class=""><mark class="highlight-gray"><code>großhandelsfirma (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">name</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">steuerid</span></code></mark><mark class="highlight-gray"><code>, umsatz, land)</code></mark></p><p id="cfd85dcf-b3d8-42a8-96e6-4782fa544f2d" class=""><mark class="highlight-gray"><code>konsument (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">name</span></code></mark><mark class="highlight-gray"><code>, art, land)</code></mark></p><p id="10574c0e-491d-41f4-89ce-94987c8761eb" class=""><mark class="highlight-gray"><code>lachs (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">id</span></code></mark><mark class="highlight-gray"><code>)</code></mark><div class="indented"><p id="a39cc015-9084-48d6-92e5-cdeb196751d6" class="">id references fisch (id)</p></div></p><p id="622fdd90-bf62-4136-878a-e6ee13bdbbb8" class=""><mark class="highlight-gray"><code>thunfisch (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">id</span></code></mark><mark class="highlight-gray"><code>, färbung)</code></mark><div class="indented"><p id="a69abb09-3926-4d06-8c38-6402fcedd805" class="">id references fisch (id)</p></div></p><p id="7fd4b835-1811-4b8c-b183-3d34da057ea7" class=""><mark class="highlight-gray"><code>verkauft (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">konsument</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">ghname</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">ghsteuerid</span></code></mark><mark class="highlight-gray"><code>, anzahl)</code></mark><div class="indented"><p id="0b215529-b899-4ceb-94d7-4a47a87c1b98" class="">ghname, ghsteuerid references großhandelsfirma</p><p id="549e0c03-444c-421d-8478-876a150111e6" class="">konsument references konsument (name)</p></div></p><p id="e3b0d56a-bd30-4f14-8328-505b1d4f6b52" class=""><mark class="highlight-gray"><code>vertrieb (</code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">ghname</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">ghsteuerid</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">betrieb</span></code></mark><mark class="highlight-gray"><code>, </code></mark><mark class="highlight-gray"><code><span style="border-bottom:0.05em solid">konsument</span></code></mark><mark class="highlight-gray"><code>, stückpreis)</code></mark><div class="indented"><p id="ce922227-43d6-423d-b18c-2ee55af23226" class="">betrieb references betrieb (name)</p><p id="863cd5c1-d817-4a13-8903-22478487334c" class="">ghname, ghsteuerid references großhandelsfirma</p><p id="a4be024b-9e68-4475-b64f-ba46bc0e582c" class="">konsument references konsument (name)</p></div></p><p id="2f748f60-ed50-45d9-b7d7-d662dcaffd7e" class="">
+</p><p id="26f3866d-2aaf-495d-993c-ea6322a248be" class=""><mark class="highlight-blue">Aufgaben</mark></p><ul id="88fdff82-fe83-4cab-80b6-292bf694484f" class="toggle"><li><details open=""><summary>Aufgabe 1.1</summary><pre id="0dd75879-b290-44be-9c38-086282bfc5ac" class="code"><code>select distinct name, land
+from betrieb, fisch
+where fisch.gefangenvon = betrieb.name
+order by name asc</code></pre><pre id="4882a629-72c9-4ca2-94a0-4f4eed50c921" class="code"><code>select distinct name, land
+from betrieb inner join fisch on betrieb.name = fisch.gefangenvon
+order by name asc</code></pre><pre id="535145e0-57ac-4ef7-aac3-9fbd9a1309f2" class="code"><code>select distinct name, land
+from betrieb join fisch on betrieb.name = fisch.gefangenvon
+group by betrieb.name
+order by name asc</code></pre></details></li></ul><ul id="00ee8765-3407-44b7-bd2b-ce29a1a240f6" class="toggle"><li><details open=""><summary>Aufgabe 1.2</summary><pre id="2ea0f090-cb8b-4fb5-aea1-4bafc0e27035" class="code"><code>select name, land
+from betrieb join fisch on betrieb.name = fisch.gefangenvon
+group by name
+having count(*) &gt; 90
+order by name asc</code></pre></details></li></ul><ul id="ee8d184b-e120-4de3-b704-ad876549d6a7" class="toggle"><li><details open=""><summary>Aufgabe 2.1</summary><pre id="b9e2030d-ad4e-493f-a0fc-d565b004c187" class="code"><code>select name, steuerid, count(konsument) as countKonsument
+from großhandelsfirma join verkauft
+    on name = ghname and steuerid = ghsteuerid
+group by name, steuerid
+order by countKonsument desc</code></pre></details></li></ul><ul id="6549a6e7-0159-4b9f-91cb-5e8c6c7edada" class="toggle"><li><details open=""><summary>Aufgabe 2.2</summary><p id="a773206b-5a6e-4ec2-a32d-a045bd251b76" class="">Falsch:</p><p id="1dc40ab7-a850-4275-b8d6-f3047cdaef93" class="">Filtert nach Konsumenten die insgesamt mehr als 20.000 Fische gekauft haben </p><pre id="161ddf3a-1e7a-419a-baf8-f934bb495ab1" class="code"><code>select konsument, sum(anzahl)
+from verkauft
+group by konsument
+having sum(anzahl) &gt; 6000</code></pre><pre id="10216c43-1463-4160-b677-42855eb06b60" class="code"><code>select *
+from verkauft join (
+        select konsument as k2
+        from verkauft
+        group by konsument
+        having sum(anzahl) &gt; 20000
+    ) as verkauft2
+    on konsument = k2
+</code></pre><pre id="b67adbbd-6d71-4d02-94ac-39821c62d07e" class="code"><code>select name, steuerid, count(konsument) as countKonsument
+from großhandelsfirma join (
+    select *
+    from verkauft as v1 join (
+        select konsument as k2
+        from verkauft
+        group by konsument
+        having sum(anzahl) &gt; 20000
+    ) as v2
+    on konsument = k2
+    ) as verkauft
+    on name = ghname and steuerid = ghsteuerid
+group by name, steuerid
+order by countKonsument desc</code></pre><p id="fe6bf0c3-0daf-4241-976c-8e66adc112b0" class="">
+</p><hr id="675305cc-0c58-4141-ae32-37f82f5cf0d2"/><p id="98995393-ea4f-4202-b470-63cbd60e1778" class="">
+</p><p id="bad10d94-07c5-4572-bb77-3744f342bbfc" class="">Richtig:</p><p id="35e17487-762b-428a-8d99-02ec72127c6d" class="">Filtert nach Konsumenten, an die die jeweilige Firma mehr als 20.000 Fische verkauft hat</p><pre id="1e9addfc-dc9c-41c6-b906-2a67936b5711" class="code"><code>select name, steuerid, count(konsument) as countKonsument
+from großhandelsfirma join verkauft 
+    on name = ghname
+group by name, steuerid
+having sum(anzahl) &gt; 20000
+order by countKonsument desc</code></pre><p id="6c076600-e33f-416a-a138-c204e6267b9c" class="">
+</p></details></li></ul><ul id="16cf2548-d64c-4900-8773-3eda85f18075" class="toggle"><li><details open=""><summary>Aufgabe 3.1</summary><pre id="39f7e9ab-5147-4343-af95-3659b32bb6e4" class="code"><code>select name, kennnr
+from boot join arbeitende on
+    name = betrname
+group by name, kennnr
+order by kennnr, name</code></pre></details></li></ul><ul id="fd87d034-9857-42e8-a408-17c9997319ef" class="toggle"><li><details open=""><summary>Aufgabe 3.2</summary><pre id="530e6c5e-711c-4199-a245-cf50696a8bae" class="code"><code>select name, kennnr
+from boot, arbeitende
+where name=betrname and kapazität &gt; 10
+group by name, kennnr
+having count(personname) &lt; 7
+order by kennnr asc, name asc</code></pre></details></li></ul><ul id="18c1187a-cbd6-4292-83ac-fb5d0110c524" class="toggle"><li><details open=""><summary>Aufgabe 4.1</summary><pre id="17827021-cf19-46e9-bfcf-543a2bc0b2da" class="code"><code>select name as betriebsName, count(*) as anzahlBoote
+from boot
+group by name
+having count(*) between 1 and 3</code></pre><pre id="64a8ce33-79cb-4394-8093-14f4c1916bfc" class="code"><code>select name as dreiBootBetrieb
+from boot
+group by name
+having count(*) between 1 and 3</code></pre><pre id="40a33b37-c515-4f3f-abcb-adb42c42c001" class="code"><code>select *
+from vertrieb join (
+      select name
+      from boot
+      group by name
+      having count(*) between 1 and 3
+   ) as sqbetrieb
+   on sqbetrieb.name = betrieb</code></pre><pre id="662cac2d-5049-4cd2-a939-5a4f5bcfadb9" class="code"><code>select distinct b.name, coalesce(v.ghname,&#x27;keine Firma vorhanden&#x27;) ghname
+from (select be.name
+      from betrieb be join boot bo on be.name=bo.name
+      group by be.name
+      having count(*) between 1 and 3) b 
+         left outer join vertrieb v on b.name=v.betrieb
+order by b.name desc, ghname desc</code></pre></details></li></ul><ul id="5d6fc0c6-f9f1-4894-8b6f-b0c92ff3b4f6" class="toggle"><li><details open=""><summary>Aufgabe 4.2</summary><pre id="8e7cd143-a826-48da-af7b-5f003bcdca26" class="code"><code>select be.name, count(distinct ghname)countVertrieb
+from (betrieb b left outer join eigentuemer e on b.name=e.besitzer)be join vertrieb v on v.betrieb=be.name or v.betrieb=be.zweigstelle
+group by be.name
+order by be.name</code></pre></details></li></ul><ul id="800a35db-fc04-487a-9865-2e2de514e774" class="toggle"><li><details open=""><summary>Aufgabe 5.1❔</summary><pre id="caa47400-ad2f-456d-897b-c0ca4491bdce" class="code"><code>select name as betrieb, round(avg(kapazität), 2)
+from boot natural join betrieb
+group by name</code></pre></details></li></ul><ul id="fcfa4c38-7cef-440c-bfbc-428257a0494f" class="toggle"><li><details open=""><summary>Aufgabe 5.2</summary><p id="40b559b5-8118-4542-8f37-5d62cb66b98f" class="">Ohne Fisch</p><pre id="4220c23f-9762-470e-8309-1aec2bdef567" class="code"><code>select
+    name,
+    round(avg(kapazität), 2) as avgKapazität,
+    ((count(*) * 100.0)/(select count(*) from arbeitende where anstellungstyp = &#x27;employee&#x27;)) as ap
+from (boot bo natural join betrieb be) inner join arbeitende a
+on name = betrname
+group by name</code></pre><p id="063212a0-cd37-4446-8e46-c3152c6d3157" class="">
+</p><p id="1c68a859-8e18-4686-9036-079a94cac94f" class="">Alle Zeilen</p><pre id="1dbdee00-c951-4d07-89ef-79ffe5605ca8" class="code"><code>select *	
+from
+	boot bo natural join betrieb be
+	join arbeitende a on name = betrname 
+	join fisch f on name = gefangenvon</code></pre><p id="ec670c30-0c7e-4c8b-bbca-08f8a66344b2" class="">
+</p><pre id="88f72575-645b-48f3-8494-6c14a0dee71d" class="code"><code>select
+	name,
+	round(avg(kapazität), 2) as avgKapazität,
+	round(
+			(count(*) * 100.0)/
+			(select count(*) from arbeitende where anstellungstyp = &#x27;employee&#x27;)
+		,2) as arbeitendeProzent
+
+from
+	boot bo natural join betrieb be
+	join arbeitende a on name = betrname 
+	join fisch f on name = gefangenvon
+
+group by name
+order by name</code></pre><p id="892b461f-80f5-47cf-8186-cdc4de86f1ca" class="">
+</p><pre id="61d695e4-d743-41ca-ba5f-70ab8b4499e2" class="code"><code>select 
+  b.name, 
+  avg(bo.kapazität) as avgKapazität, 
+  round(
+    count(a.personname) * 100.0 / (
+      select 
+        count(*) 
+      from 
+        arbeitende 
+      where 
+        anstellungstyp = &#x27;employee&#x27;
+    ), 
+    2
+  ) as arbeitendeProzent, 
+  round(
+    (
+      select 
+        count(*) 
+      from 
+        fisch 
+      where 
+        gefangenam &gt; current_timestamp - interval &#x27;30 day&#x27;
+    ), 
+    2
+  ) as countFisch 
+from 
+  betrieb b 
+  join boot bo on b.name = bo.name 
+  join arbeitende a on b.name = a.betrname
+	full outer join fisch f on f.gefangenvon = b.name 
+group by 
+  b.name, 
+  bo.kapazität;</code></pre><p id="63a63a39-272e-4fc7-8fdb-68768ddcfd0d" class="">
+</p></details></li></ul><ul id="925c3407-e55b-4297-8a12-5d57c1ce3371" class="toggle"><li><details open=""><summary>Aufgabe 5.3</summary></details></li></ul><ul id="8f762401-4f79-4db9-93d6-213c68ff6dde" class="toggle"><li><details open=""><summary>Aufgabe 6</summary></details></li></ul><ul id="bf889501-958a-4104-8110-6f8c5a1bf802" class="toggle"><li><details open=""><summary>Aufgabe 7</summary></details></li></ul><ul id="ee895daa-fe4c-4225-ae25-3a22cc61916c" class="toggle"><li><details open=""><summary>Aufgabe 8</summary></details></li></ul><ul id="9641b4bb-6016-49d6-827e-c12287f27bad" class="toggle"><li><details open=""><summary>Aufgabe 9</summary></details></li></ul><ul id="022128c3-e832-41d5-b7b9-7550624bc779" class="toggle"><li><details open=""><summary>Aufgabe 10</summary></details></li></ul></div></article></body></html>

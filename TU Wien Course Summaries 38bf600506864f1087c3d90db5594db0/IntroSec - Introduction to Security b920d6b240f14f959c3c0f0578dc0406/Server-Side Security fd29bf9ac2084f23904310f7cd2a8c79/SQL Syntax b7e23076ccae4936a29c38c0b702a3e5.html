@@ -1,0 +1,784 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>SQL Syntax </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b7e23076-ccae-4936-a29c-38c0b702a3e5" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📎</span></div><h1 class="page-title"><strong>SQL Syntax </strong></h1></header><div class="page-body"><figure id="7d5ec4f9-bb4b-4435-b421-83ce19312cab"><a href="https://sqlbolt.com/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">SQLBolt - Learn SQL - Introduction to SQL</div><div class="bookmark-description">Welcome to SQLBolt, a series of interactive lessons and exercises designed to help you quickly learn SQL right in your browser. SQL, or Structured Query Language, is a language designed to allow both technical and non-technical users query, manipulate, and transform data from a relational database.</div></div><div class="bookmark-href"><img src="https://sqlbolt.com/cs/images/favicon.png" class="icon bookmark-icon"/>https://sqlbolt.com/</div></div></a></figure><p id="dfd6e1d1-387d-47c0-9ffa-550227e749f8" class="">
+</p><nav id="617fb70b-7a9c-4492-82a1-b07dda8eb868" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#67af70fb-2f10-4a3d-b2b9-5cd1ba68e702">About SQL</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f8f62543-be8b-46a3-ad33-61b253f07d11">Select queries</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1f15b4a8-6ded-4aca-a220-4c2449bb2cf2">select - <strong>statements / queries </strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#41ba6127-0ba2-431a-b74d-a256b56e28ac">where - <strong>constraints and string matching</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9b537f0-62c6-4875-8fa6-a0ac626430b7">distinct - remove duplicates</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0253c5d2-5b1b-4823-9a64-f00da6e576e3">order by - sort results, set limit and offset</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3dafdd62-c4cc-4b88-8252-681e9535d4b0">join - multi table queries</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#72d1b89e-a42b-4690-9594-1e2752707489">as - queries with expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1516e07c-2332-4383-bdb2-812cd430d050">functions - aggregate expressions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6a32275c-a7c6-49a3-8d6c-439821ead38a">group by - grouping</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#82c82d90-e065-40f0-9cb3-69a1aa196d0d">Summary: A complete query </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4dbcbedb-e586-4821-8ce9-82a28c99bfc7">Bonus: Matching character strings in the WHERE clause</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e5dab93c-e3dc-4c95-a9d6-ca6824529635">Insertion of data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#af95ed55-522f-4e32-a3c3-e9ebbbc4e805">SQL schema</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#93aa842c-cb2b-4ed3-b784-05a932ed549b">insert - inserting new data</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f935ea2-04fd-489a-9013-ac45eb4452a6">update - updating rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e96ed84d-7ee5-472c-9b28-f19b9f6463dc">delete - deleting rows</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#24fdb35f-1cf3-45ae-b2b3-b9ee6968b084">create table - defining table schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#162c38fb-c309-4410-80fb-d183a5286642">alter table - changing database schemas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#773b8179-024f-4163-8db7-d9752e1ecbbf">drop table - removing database schema</a></div></nav><p id="a3148b85-da5d-49b4-8456-1b3acbf2e944" class="">
+</p><hr id="66209400-ccf5-4d35-b76b-5e2e7c2db211"/><h2 id="67af70fb-2f10-4a3d-b2b9-5cd1ba68e702" class="">About SQL</h2><p id="35dfc776-6371-46d0-95f4-9e715cd87b4f" class="">is a language designed to allow users query, manipulate, and transform data from a <span style="border-bottom:0.05em solid">relational database</span>. </p><p id="4756228d-385c-4826-b725-9cac45c99477" class=""><mark class="highlight-gray">There are many popular SQL databases including SQLite, MySQL, Postgres, Oracle and Microsoft SQL Server. All of them support the common SQL language standard,</mark></p><p id="7e8009b0-01d9-47da-8fc4-3419d05f6c25" class="">
+</p><p id="28d5ea85-f07e-4660-a0dc-916d9eb00d47" class=""><strong>Relational Databases</strong></p><p id="2055af07-221c-4f37-bfaa-cd9c327bcdd0" class="">A relational database represents a collection of related (two-dimensional) tables.</p><p id="db04408f-5365-4e3a-a329-a99b74983891" class="">
+</p><h2 id="f8f62543-be8b-46a3-ad33-61b253f07d11" class="">Select queries</h2><h3 id="1f15b4a8-6ded-4aca-a220-4c2449bb2cf2" class="">select - <strong>statements / queries </strong></h3><p id="da5c6b60-5fd6-47c0-be3d-41658b4c6413" class="">show entire table<div class="indented"><pre id="c67b72e8-d1b6-4140-8999-a083089ed11b" class="code"><code>SELECT *
+FROM myTable;</code></pre><p id="a4575713-7b15-4455-ba8e-783398ad8c15" class="">
+</p></div></p><p id="c7a141c7-8c1f-429a-ba34-a5ccac193403" class="">
+</p><p id="a630971a-16b4-4347-b051-7f78d7acd421" class="">select query for a specific column<div class="indented"><pre id="43f0a871-e190-445e-a75c-216803d54595" class="code"><code>SELECT column0, column1, ...
+FROM myTable;</code></pre></div></p><p id="18bcc5d0-98e6-405d-b2db-ad655c52467e" class="">
+</p><h3 id="41ba6127-0ba2-431a-b74d-a256b56e28ac" class="">where - <strong>constraints and string matching</strong></h3><p id="178532d0-6e1f-4892-ae50-d5198c13b6bd" class="">Select query with constraints<div class="indented"><pre id="1ab7523b-9b1c-471b-be3c-21ae0a8152cb" class="code"><code>SELECT column0, column1, …
+FROM myTable
+WHERE condition
+    AND/OR another_condition
+    AND/OR …;</code></pre><figure id="3c677dbd-592b-4e01-9469-b086d79ef925" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled.png"><img style="width:672px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled.png"/></a></figure></div></p><p id="3ee6e3da-888f-4e26-bd58-ed106c9e2ba6" class="">
+</p><p id="533f2c70-377c-4243-8010-d0a77fda914e" class="">String Matching<div class="indented"><figure id="5f204e9d-60a0-47ef-9f31-1d36f714d902" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%201.png"><img style="width:1026px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%201.png"/></a></figure></div></p><p id="4bb96bc4-fbe2-4257-9954-1b214f9bb170" class="">
+</p><p id="bcda6978-d440-44ba-9d67-671da04372e6" class="">avoiding NULL values<div class="indented"><pre id="11041297-f5d5-48e2-a43e-22a18cd35eb1" class="code"><code>SELECT column0, column1, …
+FROM mytable
+WHERE column0 IS/IS NOT NULL
+AND/OR another_condition
+AND/OR …;</code></pre></div></p><p id="3f4b5ab2-90b4-4daa-abbb-1ff2d75ca5d3" class="">
+</p><h3 id="d9b537f0-62c6-4875-8fa6-a0ac626430b7" class="">distinct - remove duplicates</h3><p id="75477a83-afb4-493c-affd-a132c592f811" class="">Only select unique results<div class="indented"><pre id="4eea211e-7d13-4182-aab8-b447235b1b37" class="code"><code>SELECT DISTINCT column0, column1, …
+FROM mytable
+WHERE condition(s);</code></pre></div></p><p id="0b006784-1037-4bdd-8665-d7cc9794a113" class="">
+</p><h3 id="0253c5d2-5b1b-4823-9a64-f00da6e576e3" class="">order by - sort results, set limit and offset</h3><p id="16a75c9c-62cd-419c-ac4f-26efcb1633f3" class="">SQL provides a way to sort your results by a given column in ascending or descending order<div class="indented"><pre id="6fe28a87-137f-4eda-9d4a-3b9a89c9ed92" class="code"><code>SELECT column0, column1, …
+FROM mytable
+WHERE condition(s)
+ORDER BY column0 ASC/DESC;</code></pre></div></p><p id="33265783-c9b4-40a9-8452-a8b1df8dc9a7" class="">
+</p><p id="9073f6bf-5fbf-4bb9-a941-4d8f38a9ceec" class="">Using LIMIT and OFFSET clauses to indicate to the database the subset of the results you care about<div class="indented"><p id="0a1e8fd5-2ebb-4387-9530-e1e8d89c9c39" class="">LIMIT: number of rows to return</p><p id="e2e34733-4b23-45b7-9fc1-9f984056cf05" class="">OFFSET: where to begin counting the rows from</p><p id="5e6c9303-791c-4f52-acd1-295c246818ba" class=""><mark class="highlight-gray">If you think about websites like Reddit or Pinterest, the front page is a list of links sorted by popularity and time, and each subsequent page can be represented by sets of links at different offsets in the database.</mark></p><pre id="ad807802-58e8-47f0-a227-5b340621db9f" class="code"><code>SELECT column0, column1, …
+FROM mytable
+WHERE condition(s)
+ORDER BY column0 ASC/DESC
+LIMIT num_limit OFFSET num_offset;</code></pre></div></p><p id="d9fd501c-5746-4cd5-942f-6dd9a0257b42" class="">
+</p><h3 id="3dafdd62-c4cc-4b88-8252-681e9535d4b0" class="">join - multi table queries</h3><p id="13593800-1bd2-4b21-a81c-ab72a0c5564b" class="">Entity data in the real world is often broken down into pieces and stored across multiple orthogonal tables using a process known as <span style="border-bottom:0.05em solid">normalization</span>.</p><p id="b294c3f4-f075-432b-89db-b0e32f569369" class="">Tables that share information about a single entity need to have a <span style="border-bottom:0.05em solid">primary key</span> that identifies that entity uniquely across the database.</p><p id="9653946c-bf42-4254-942e-a3909f6d0a4d" class="">
+</p><p id="e8ead451-f789-4907-b9b7-2235295eb02a" class="">INNER JOIN (or JOIN) to create a result row with the combined columns from both tables.<div class="indented"><pre id="1faa7b95-8b54-477d-8ae7-24177e844d9b" class="code"><code>SELECT column0, column1, …
+FROM mytable
+INNER JOIN another_table 
+    ON mytable.id = another_table.id
+WHERE condition(s)
+ORDER BY column0, … ASC/DESC
+LIMIT num_limit OFFSET num_offset;</code></pre></div></p><p id="22d43890-6e21-44a9-9b1d-7e5bcad7047f" class="">
+</p><p id="d3d3a485-1b2e-4b06-93e5-7869fff5be5d" class="">If the two tables have asymmetric data, which can easily happen when data is entered in different stages, then we would have to use a LEFT JOIN, RIGHT JOIN or FULL JOIN instead to ensure that the data you need is not left out of the results.<div class="indented"><p id="160cd4a5-3b15-4638-b3c1-bef96db73978" class=""><mark class="highlight-gray">the OUTER keyword is really kept for SQL-92 compatibility</mark></p><pre id="36cc9e14-0612-45b5-9912-051b431c8cbb" class="code"><code>SELECT column0, column1, …
+FROM mytable
+INNER/LEFT/RIGHT/FULL JOIN another_table 
+    ON mytable.id = another_table.matching_id
+WHERE condition(s)
+ORDER BY column, … ASC/DESC
+LIMIT num_limit OFFSET num_offset;</code></pre></div></p><figure id="1ffe58b1-5fd4-46ed-8c0d-0c056c2ca651" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%202.png"><img style="width:624px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%202.png"/></a></figure><p id="d7fb2bdc-b042-493e-bbe4-76d655512402" class="">
+</p><h3 id="72d1b89e-a42b-4690-9594-1e2752707489" class="">as - queries with expressions</h3><p id="5fc46530-c1ff-45a2-982c-1311574fb4f0" class="">We can create a new column based on a self defined expression:<div class="indented"><pre id="e2f68e7d-af77-4e98-8811-4bb0c2a9175a" class="code"><code>SELECT particle_speed / 2.0 AS half_particle_speed
+FROM physics_data
+WHERE ABS(particle_position) * 10.0 &gt; 500;</code></pre><pre id="fcf5c999-e679-4b01-bf81-60043659b97d" class="code"><code>SELECT column AS better_column_name, …
+FROM a_long_widgets_table_name AS mywidgets
+INNER JOIN widget_sales
+  ON mywidgets.id = widget_sales.widget_id;</code></pre></div></p><p id="7647722f-d572-4a7a-a385-8e06cd012d87" class="">
+</p><h3 id="1516e07c-2332-4383-bdb2-812cd430d050" class="">functions - aggregate expressions</h3><p id="669454b3-b07f-4cfd-8015-266a29297d41" class="">Functions used on columns<div class="indented"><pre id="98eb34dd-4e62-4ccd-b794-7e1f223273bd" class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+FROM mytable
+WHERE constraint_expression;</code></pre><figure id="6ea1ecdd-eef5-4fb6-b575-726881e28913" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%203.png"><img style="width:1231px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%203.png"/></a></figure></div></p><p id="02c042da-0c90-4aa9-9a45-d44be836551e" class="">
+</p><h3 id="6a32275c-a7c6-49a3-8d6c-439821ead38a" class="">group by - grouping</h3><p id="ea78087b-8074-451a-80e0-45680ef98b07" class="">Using aggregate functions on groups</p><p id="655e6f1a-2698-4527-8f96-8db49f4f3042" class="">The GROUP BY clause works by grouping rows that have the same value in the column specified.<div class="indented"><pre id="1d26b268-fec2-4b4f-9db4-f65256b8e6c7" class="code"><code>SELECT AGG_FUNC(column_or_expression) AS aggregate_description, …
+FROM mytable
+WHERE constraint_expression
+GROUP BY column0;</code></pre><p id="835b9661-6860-4b47-8307-298f8e99c0d1" class="">all groups with same val in column0</p><p id="3ba7de33-19b6-4f20-bd6b-723940b44d3c" class="">
+</p></div></p><p id="4010cf5e-0266-40a4-9542-606d70bae6c3" class=""><span style="border-bottom:0.05em solid">HAVING</span> is like the WHERE clause but for groups (its executed to filter <em>before</em> the groups are formed).<div class="indented"><pre id="2633cad4-ae61-4ad8-9fc7-feed51e2acf8" class="code"><code>SELECT group_by_column, AGG_FUNC(column_expression) AS aggregate_result_alias, …
+FROM mytable
+WHERE condition
+GROUP BY column0
+HAVING group_condition;</code></pre></div></p><p id="c5341c9d-f664-452a-b2f1-9e8dc6ecbf36" class="">
+</p><h3 id="82c82d90-e065-40f0-9cb3-69a1aa196d0d" class="">Summary: A complete query </h3><p id="0d88bc1e-a89a-4545-b4e7-7023d5edf61f" class="">A complete query:<div class="indented"><pre id="4bd79dde-9346-44be-8506-92e53ac74fb3" class="code"><code>SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+FROM mytable
+  JOIN another_table
+    ON mytable.column = another_table.column
+WHERE constraint_expression
+GROUP BY column
+HAVING constraint_expression
+ORDER BY column ASC/DESC
+LIMIT count OFFSET COUNT;</code></pre></div></p><p id="ab4b57f6-bef8-46b2-94f8-e878362178c7" class="">
+</p><p id="0a16c9f7-3b7b-41b9-a0e0-386a5809b1d6" class="">Because each part of the query is executed sequentially, it&#x27;s important to understand the order of execution so that you know what results are accessible at different time frames.</p><p id="b81d6ec1-47fe-4340-b114-7bee8cbbf55b" class="">1. <code><strong>FROM</strong></code> and <code><strong>JOIN</strong></code>s <div class="indented"><p id="d0c0ece7-d769-4f7e-a24f-6e53c08334e1" class="">The <code><strong>FROM</strong></code> clause, and subsequent <code><strong>JOIN</strong></code>s are first executed to determine the total working set of data that is being queried.</p></div></p><p id="d82f9a94-a890-4f4b-a97b-d36ba068dd8c" class="">2. <code><strong>WHERE</strong></code><strong> </strong><div class="indented"><p id="be1cbe7e-b1c1-4be8-b796-812146bb93ba" class="">Once we have the total working set of data, the first-pass <code><strong>WHERE</strong></code> constraints are applied to the individual rows, and rows that do not satisfy the constraint are discarded.</p><p id="de10c9da-4930-4b69-ad07-69ff3534372f" class=""><mark class="highlight-gray">Aliases in the </mark><mark class="highlight-gray"><code><strong>SELECT</strong></code></mark><mark class="highlight-gray"> part of the query are not accessible in most databases since they may include expressions dependent on parts of the query that have not yet executed.</mark></p></div></p><p id="40032b3b-f099-4ad9-ad17-2dc109952b03" class="">3. <code><strong>GROUP BY</strong></code><strong> </strong><div class="indented"><p id="ebf117d7-bf66-4f5f-beb7-8b934dafcec3" class="">The remaining rows after the <code><strong>WHERE</strong></code> constraints are applied are then grouped based on common values in the column specified in the <code><strong>GROUP BY</strong></code> clause.</p></div></p><p id="1e1a82bb-b7a5-431f-a3d5-0d281d1cf8c0" class="">4. <code><strong>HAVING</strong></code><strong> </strong><div class="indented"><p id="868a7b4a-3d48-4b7a-8db7-6396ecf94d13" class="">If the query has a <code><strong>GROUP BY</strong></code> clause, then the constraints in the <code><strong>HAVING</strong></code> clause are then applied to the grouped rows, discard the grouped rows that don&#x27;t satisfy the constraint.</p></div></p><p id="4a4dca7b-9dd5-4164-87a0-72d376e6e708" class="">5. <code><strong>SELECT</strong></code><strong> </strong><div class="indented"><p id="34c274e1-7efa-45fb-aefa-72488246a704" class="">Any expressions in the <code><strong>SELECT</strong></code> part of the query are finally computed.</p></div></p><p id="d0f13019-c143-4cd0-b755-79f8fce15a71" class="">6. <code><strong>DISTINCT</strong></code><strong> </strong><div class="indented"><p id="bb5dae3f-289e-4ec6-be81-f9145d347941" class="">Of the remaining rows, rows with duplicate values in the column marked as <code><strong>DISTINCT</strong></code> will be discarded.</p></div></p><p id="84fb1f99-6274-4580-bd16-d42a166b0bc9" class="">7. <code><strong>ORDER BY</strong></code><div class="indented"><p id="7565ce29-9c9f-4cd6-81a9-7333e73f3bcf" class="">If an order is specified by the <code><strong>ORDER BY</strong></code> clause, the rows are then sorted by the specified data in either ascending or descending order.</p><p id="634785e4-d320-4b9f-9047-41105dbc33b9" class=""><mark class="highlight-gray">Since all the expressions in the </mark><mark class="highlight-gray"><code><strong>SELECT</strong></code></mark><mark class="highlight-gray"> part of the query have been computed, you can reference aliases in this clause.</mark></p></div></p><p id="aa13c903-8e5c-4af0-b8b5-909b78ba35b3" class="">8. <code><strong>LIMIT</strong></code> / <code><strong>OFFSET</strong></code><div class="indented"><p id="e35f913d-e83b-4390-a4e2-5ef954deb5e6" class="">Finally, the rows that fall outside the range specified by the <code><strong>LIMIT</strong></code> and <code><strong>OFFSET</strong></code> are discarded, leaving the final set of rows to be returned from the query.</p><p id="ed52df38-9d5a-4d81-a54b-e0ecf1720c3f" class="">
+</p></div></p><h3 id="4dbcbedb-e586-4821-8ce9-82a28c99bfc7" class="">Bonus: Matching character strings in the WHERE clause</h3><p id="b374134e-ce63-41ab-b203-621436ccb48a" class="">The LIKE keyword indicates that the following character string is a matching pattern.<div class="indented"><pre id="4d38aa3f-fa55-45b3-a298-1f12ab745c64" class="code"><code>SELECT Surname
+   FROM Contacts
+   WHERE Surname LIKE &#x27;Mc%&#x27;;</code></pre><p id="c3144d69-20a9-4f56-a1a4-0e7771e1c97e" class=""><code>Mc%</code>: Search for every name that begins with the letters Mc → McEvoy</p><p id="a4fd558e-bcbe-4fbf-a41e-0cc3b2b022fe" class=""><code>%en%</code>: Search for every name containing the letters en → Pettengill, Lencki, Cohen</p></div></p><p id="ad937336-dc03-4b6e-8d79-b3e5f0374e4b" class="">To make queries case insensitive:<div class="indented"><p id="70ca079d-2003-4983-ba14-fc879aae5a48" class="">Lets say only the entry Pedro is available → we have to format every query to lower and then search:</p><pre id="a874ce95-f1d7-4829-b1dc-c6857a6c383c" class="code"><code>SELECT * FROM HORSE WHERE lower(name)=&#x27;pedro&#x27;</code></pre></div></p><p id="3fed6e4f-68e5-4a89-8c5f-bfbe729d0eea" class="">
+</p><h2 id="e5dab93c-e3dc-4c95-a9d6-ca6824529635" class="">Insertion of data</h2><h3 id="af95ed55-522f-4e32-a3c3-e9ebbbc4e805" class="">SQL schema</h3><p id="916124f4-c1cb-454d-afeb-372c5765458a" class="">We previously described a table in a database as a two-dimensional set of rows and columns, with the columns being the properties and the rows being instances of the entity in the table. In SQL, the database schema is what describes the structure of each table, and the datatypes that each column of the table can contain.<div class="indented"><p id="26262925-dfd6-429d-8c63-184934ba3fe8" class="block-color-gray">For example, in our <strong>Movies</strong> table, the values in the <em><strong>Year</strong></em> column must be an Integer, and the values in the <em><strong>Title</strong></em> column must be a String.</p></div></p><p id="c42752de-42be-4920-930e-140f7d35e069" class="">
+</p><h3 id="93aa842c-cb2b-4ed3-b784-05a932ed549b" class="">insert - inserting new data</h3><p id="cda27bf5-476a-45ae-bd40-d0349db227c3" class="">declares which table to write into, the columns of data that we are filling, and one or more rows of data to insert. In general, each row of data you insert should contain values for every corresponding column in the table. You can insert multiple rows at a time by just listing them sequentially.<div class="indented"><pre id="baccc78f-e4e6-47a6-bd21-a32ae74e88e1" class="code"><code>INSERT INTO mytable
+VALUES (value_or_expr, another_value_or_expr, …),
+       (value_or_expr_2, another_value_or_expr_2, …),
+       …;</code></pre><p id="6fd39116-714d-4c5a-837e-ffa0e192f0ba" class="">In some cases, if you have incomplete data and the table contains columns that support default values, you can insert rows with only the columns of data you have by specifying them explicitly.</p><pre id="27f228b2-78e5-4912-8818-ce406ab60f75" class="code"><code>INSERT INTO mytable
+(column0, column1, …)
+VALUES (value_or_expr, another_value_or_expr, …),
+      (value_or_expr_2, another_value_or_expr_2, …),
+      …;</code></pre></div></p><p id="fa73c091-3693-49d7-b114-41fb5d3e1906" class="">
+</p><h3 id="4f935ea2-04fd-489a-9013-ac45eb4452a6" class="">update - updating rows</h3><p id="45a67764-8469-4de4-a533-8e57ea40c3dc" class="">Update statement<div class="indented"><pre id="7c64d18d-52a8-4321-b871-be5ab4ae23e8" class="code"><code>UPDATE mytable
+SET column0 = value_or_expr, 
+    column1 = another_value_or_expr, 
+    …
+WHERE condition;</code></pre></div></p><p id="ca8d397b-d356-4e69-a723-b252cdb9fccb" class="">
+</p><h3 id="e96ed84d-7ee5-472c-9b28-f19b9f6463dc" class="">delete - deleting rows</h3><p id="0fb3ded4-c77a-4785-a53f-e7a8fed07f5a" class="">To remove rows<div class="indented"><pre id="4ba8a76e-afd5-4796-b0fd-054b295db3fd" class="code"><code>DELETE FROM mytable
+WHERE condition;</code></pre><p id="5d3e5cc4-0dad-428f-b246-d1b8be19e050" class="">
+</p></div></p><h3 id="24fdb35f-1cf3-45ae-b2b3-b9ee6968b084" class="">create table - defining table schemas</h3><p id="911b7bac-0801-461f-a03a-9af735c5b58f" class="">you can create a new database table using the CREATE TABLE statement. (default value is optional)<div class="indented"><pre id="1ea7ee3e-2f7e-49c4-ba23-895bc2e3cd5a" class="code"><code>CREATE TABLE IF NOT EXISTS mytable (
+    column DataType TableConstraint DEFAULT default_value,
+    another_column DataType TableConstraint DEFAULT default_value,
+    …
+);</code></pre></div></p><p id="3fae1c1c-d1f6-4284-a4b1-7bf80024c7cb" class="">
+</p><p id="8dd90404-f064-46d2-b6b4-1347cd867231" class="">Example:<div class="indented"><pre id="9bb02c9e-3c1c-4ffa-9d77-3da146a38ea0" class="code"><code>CREATE TABLE movies (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    director TEXT,
+    year INTEGER, 
+    length_minutes INTEGER
+);</code></pre></div></p><p id="02952df9-80b8-4caf-929c-0fbbd7cd0bf5" class="">
+</p><p id="e5dfe331-5c3f-4f54-91cf-717874356a86" class="">Datatypes:<div class="indented"><figure id="c2254929-daae-4744-afeb-111a228660fe" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%204.png"><img style="width:753px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%204.png"/></a></figure></div></p><p id="e6368e77-23c7-4fa2-a2d7-749c3dcc0305" class="">
+</p><p id="fe37709e-cc6a-42b5-ab69-b3b790ab1c2d" class="">Table constraints:<div class="indented"><figure id="025a8686-b367-4ba0-9ff3-ea1712419183" class="image"><a href="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%205.png"><img style="width:741px" src="SQL%20Syntax%20b7e23076ccae4936a29c38c0b702a3e5/Untitled%205.png"/></a></figure></div></p><p id="ab7db172-aec1-4c1b-98d6-68ce417eab89" class="">
+</p><h3 id="162c38fb-c309-4410-80fb-d183a5286642" class="">alter table - changing database schemas</h3><p id="b05258c7-5990-4604-b959-83dd08ffdc19" class="">Adding a column:<div class="indented"><pre id="f355ec08-0023-4bfe-bceb-1f5807a34e93" class="code"><code>ALTER TABLE mytable
+ADD column0 DataType OptionalTableConstraint DEFAULT default_value;</code></pre></div></p><p id="6be35b30-0162-4536-9c1b-516b7567b040" class="">
+</p><p id="47d04f61-d344-4bce-b8c3-0aa6b963b779" class="">Removing columns:<div class="indented"><pre id="43bf98ef-90f0-4107-ae9d-3348d660b2d2" class="code"><code>ALTER TABLE mytable
+DROP column_to_be_deleted;</code></pre></div></p><p id="bcdc7bdd-c671-4951-bdf6-f68cc47278df" class="">
+</p><p id="45e27714-8363-4148-becf-1015fcf9ee9f" class="">Renaming table:<div class="indented"><pre id="ab06c742-6311-430e-9097-b8aebbee1212" class="code"><code>ALTER TABLE mytable
+RENAME TO new_table_name;</code></pre></div></p><p id="55f2ab5a-c9df-40ab-8008-bf12534b9161" class="">
+</p><h3 id="773b8179-024f-4163-8db7-d9752e1ecbbf" class="">drop table - removing database schema</h3><p id="1c30e79e-728a-4559-b649-e36037324d53" class="">To delete entire table<div class="indented"><pre id="dfa3aae9-edf3-4313-ab37-6351c2bb20fe" class="code"><code>DROP TABLE IF EXISTS mytable;</code></pre></div></p><p id="748b4ce5-2fdb-4f75-a6e1-121adebb3b77" class="">
+</p></div></article></body></html>

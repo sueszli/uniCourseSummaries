@@ -1,0 +1,711 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>People Management</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c20b7b7a-b684-4e1f-95bd-4af1d69f97a4" class="page sans"><header><h1 class="page-title">People Management</h1></header><div class="page-body"><p id="14dd8880-54f5-4d74-8cad-633774e71439" class=""><span style="border-bottom:0.05em solid">People Management</span><div class="indented"><p id="024b7904-32e1-4eb1-ab11-af09d63efa1c" class="">Motivation, Produktivität, Teamstrukturen</p></div></p><p id="3a104224-34f9-4b37-bb4a-33676455498d" class="">
+</p><h2 id="a9c0d28b-0df1-470b-b7b5-f268e2e8d77f" class="">Motivation</h2><p id="ad4ff645-8533-4c43-9af4-024be28361e6" class=""><span style="border-bottom:0.05em solid">Motivation</span><div class="indented"><p id="13a9f6fd-b524-451f-9b4b-790f3ab107fb" class="">Summe der Beweggründe → beeinflussen Handlung</p><ol type="1" id="79e4875e-f943-48dd-96ba-ad600363a897" class="numbered-list" start="1"><li>extrinsische Motivation (von außen)	äußere Zwänge (Strafen)</li></ol><ol type="1" id="a0c89f9a-c444-421e-b69e-f4b82bf94701" class="numbered-list" start="2"><li>intrinsische Motivation (von innen)	von einer Aufgabe ausgehenden Anreize</li></ol></div></p><p id="f1449580-f673-4aec-b263-4bb99caaca52" class="">
+</p><p id="6b5ba026-eb87-429f-a463-23121a8a1bd1" class=""><span style="border-bottom:0.05em solid">Motivationstheorien</span><div class="indented"><ol type="1" id="a1e1199f-762b-4757-b4d1-d348f5463886" class="numbered-list" start="1"><li>Prozesstheorien
+<mark class="highlight-gray">bestimmtes Verhalten gewählt zum erreichen vom Ziel</mark></li></ol><ol type="1" id="0c9e957d-48b7-47e5-a9d3-c8ee1a132055" class="numbered-list" start="2"><li>Inhaltstheorien
+<mark class="highlight-gray">Bedürfnisse, Antriebe und Ziele</mark><ol type="a" id="b3e969ec-0713-4d28-8583-a6b633ae9970" class="numbered-list" start="1"><li>Monothematische Theorien (heute nicht mehr relevant)<p id="9f6ba823-3274-40f7-93c8-e6e598e6d879" class="block-color-gray">Einziges Motiv bestimmt das Verhalten</p><p id="c1a14784-7b8e-4af9-a695-6e80d64fc46e" class="block-color-gray">Bsp.: Freud: Sexualtrieb, Adler: Minderwertigkeitskomplex</p></li></ol><ol type="a" id="6b712c68-0b83-4d56-99e0-f1b6d20ec423" class="numbered-list" start="2"><li>Polythematische Theorien:<p id="aa93382e-f6f9-4281-8959-5099d29fa180" class="block-color-gray">Mehrere Grundmotive </p><p id="2bcc4430-75a4-4e8b-beeb-ea850c4af036" class="block-color-gray">Verschiedene Triebe mit Rangordnung und Stärke basierend auf mehreren Bedürfnissen.</p></li></ol></li></ol><p id="55b9f0b4-0ff1-429f-9e39-9a54e01c50ae" class="">
+</p></div></p><p id="4834e4e6-4fbe-4745-a5d5-a71c740283e9" class=""><span style="border-bottom:0.05em solid">Prozesstheorien</span><div class="indented"><p id="45212a62-e75a-40ab-8049-108226f901f2" class="">Einflussfaktoren des Motivationsprozesses:</p><ul id="e11046b4-6a71-4d67-8e51-f6f8d54803ee" class="bulleted-list"><li style="list-style-type:disc">Anspruchsniveau (Erwartungen)<p id="5db8c3f1-52df-441e-be74-4f1c92d0437f" class="block-color-gray">Erwartung an die eigene Leistung, an Belohnung</p><p id="d6071f72-268c-44bb-b1b3-2af3076a3b38" class="block-color-gray">Niveau wird von selbst angehoben</p></li></ul><ul id="6f48d93f-4dfc-449c-89f1-51bd42b1df37" class="bulleted-list"><li style="list-style-type:disc">Persönliche Einstellung (Grundhaltung)<p id="2fcf4750-7e73-4112-a773-f9a617765928" class="block-color-gray">Haltung gegenüber Umfeld und Problem</p><p id="4e3f1d5e-900c-4ca0-83bd-94533864f1fa" class="block-color-gray">Negative Einstellungen → Frustration</p></li></ul><ul id="4d5c2507-15cb-4c6b-9594-f4b814419eda" class="bulleted-list"><li style="list-style-type:disc">Individuelle Einflussfaktoren<p id="8a0acf8f-f6ad-4744-9ac1-8e4bfef6b620" class="block-color-gray">Subjektive Abschätzung der Chancen und Risiken, der eigenen Fähigkeiten basierend auf Erwartungen.</p></li></ul><p id="baaae8d2-5f38-4f2f-9e02-a851b411a7f4" class="">
+</p><p id="8d6fd5b0-7197-4044-91e5-3d67b2baf562" class="">Gleiche Anreize → unterschiedliche Motivationen, Reaktionen bei unterschiedlichen Personen.<div class="indented"><p id="b5e3a23c-8a99-4129-9f50-0fdd3e4b46cb" class="block-color-gray">Motivation derselben Person abhängig vom jeweiligen Zeitpunkt (Tagesverfassung) und zuvor gemachten Erfahrungen</p></div></p><p id="1445f387-8244-40c2-b0c1-3172d95e6cc7" class="">
+</p><p id="53d292f2-8a2e-4f92-9618-417052ea708f" class="">Deshalb:<div class="indented"><p id="f2058ae4-c641-4e69-9a8f-87398fe07420" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Auf Tagesverfassung reagieren</p><p id="46f6c22d-dab4-4743-aafd-609e77c9db70" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Mitarbeiter lernen aus ihren Erfahrungen</p><p id="70bd6a98-6e95-40ca-806d-6a699448816b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Mitarbeiter wertschätzen</p></div></p></div></p><p id="641e79ef-2ef0-4b38-b57d-14cead4e85f2" class="">
+</p><p id="7272f11b-9459-482a-a178-5274acc02b5a" class=""><span style="border-bottom:0.05em solid">Wichtige polythematischen Inhaltstheorien</span><div class="indented"><p id="b92d7a56-cccd-4dd6-8d64-69f3a868887e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> ERG-Modell (Existence, Relatedness, Growth)</p><p id="5f97fbf3-be51-433c-b9a8-9a82488718e3" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Zweidimensionale Arbeitszufriedenheitstheorie von Herzbe</p><p id="4f0d71b5-4ebc-482c-89cd-9d88f912078a" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Motivationspyramide von Maslow (alt und überholt)<div class="indented"><p id="585f42b1-a31c-4e3f-b3a9-ba6d69b56353" class="">Erst wenn eine Stufe in einem gewissen Ausmaß befriedigt ist, wird die darauf aufbauende verfolgt.<div class="indented"><figure id="1b77fbe4-df17-448f-b7fe-0adda5de5cfe" class="image"><a href="People%20Management%20c20b7b7ab6844e1f95bd4af1d69f97a4/Untitled.png"><img style="width:384px" src="People%20Management%20c20b7b7ab6844e1f95bd4af1d69f97a4/Untitled.png"/></a></figure></div></p><ol type="1" id="b1e5f38f-a5dd-4bb7-89c0-020c67e0e6cb" class="numbered-list" start="1"><li>Physiologische
+<mark class="highlight-gray">Grund- oder Existenzbedürfnisse</mark>
+<mark class="highlight-gray">“lebensnotwendige” Bedürfnisse wie Schlaf, Nahrung</mark></li></ol><ol type="1" id="abedf1e8-4148-494e-b898-7718bc6c6e0d" class="numbered-list" start="2"><li>Sicherheit
+<mark class="highlight-gray">Absicherung der Person - Schutz des Lebens, des Eigentums, Lebensstandards, Schutz vor Arbeitslosigkeit, Unfallfolgen bis hin zur Altersvorsorge</mark></li></ol><ol type="1" id="3a8a3b1d-5d77-4da7-8a5d-dcec6d83c263" class="numbered-list" start="3"><li>Sozial
+<mark class="highlight-gray">Gruppenzugehörigkeit, soziale Akzeptanz, Freundschaft, Zuneigung, etc.</mark></li></ol><ol type="1" id="a030bb3d-1538-4038-bfd9-b4c3ab501686" class="numbered-list" start="4"><li>Achtungsbedürfnis
+<mark class="highlight-gray">Selbstachtung, Fremdachtung → Erleben der eigenen Leistung, Anerkennung, Status</mark></li></ol><ol type="1" id="192f4327-92e3-441d-833a-1615e2129029" class="numbered-list" start="5"><li>Selbstverwirklichung
+<mark class="highlight-gray">Zu verwirklichen, was es potentiell ist → Einfluss auf Umwelt nehmen, sie gestalten.</mark><p id="1bd26e35-8b6e-4994-9229-9dd212d68bd9" class=""><mark class="highlight-gray">Ab dieser Stufe kommt es zu einer gewissen Eigendynamik: je stärker dieses Bedürfnis befriedigt wird, desto bestimmender wird es für das Verhalten.</mark></p></li></ol></div></p></div></p><h2 id="688343e3-6261-4155-850f-f9024d1d7e3a" class="">Produktionsfaktor Mensch</h2><p id="9325aefc-89cc-46cb-af74-80d3d7423553" class=""><span style="border-bottom:0.05em solid">Produktivität</span><div class="indented"><p id="18204e6e-4b21-4435-86ac-184bfdbfddff" class="">Leistung ÷ aufgewendete Zeit</p></div></p><p id="215d6453-8e94-4349-bba7-aa02b254f145" class="">
+</p><p id="95502fb0-f066-4522-aea8-8c1dcb632d2d" class=""><span style="border-bottom:0.05em solid">Produktivitätssteigerung</span><div class="indented"><ul id="0b2362aa-60cf-4e87-b769-add390614f8c" class="bulleted-list"><li style="list-style-type:disc">Mehr von Personal fordern und automatisieren</li></ul><ul id="991d9ffa-00b3-4258-af59-5d064a879277" class="bulleted-list"><li style="list-style-type:disc">Qualitätsmaßstäbe reduzieren</li></ul><ul id="43bc7eb0-0bb0-4659-adff-f8a7e4528e2f" class="bulleted-list"><li style="list-style-type:disc">Vorgehensweisen standardisieren</li></ul><p id="9b39cd52-4dcc-4610-ab02-3cf7c5ac95ef" class="">langfristig kontraproduktiv → verringern Arbeitszufriedenheit und erhöhen Fluktuation.</p></div></p><p id="e2d969b2-1225-4627-9b33-15a631b3b72d" class="">
+</p><p id="453002a1-39f4-4ec1-a978-5c16b31951bf" class=""><span style="border-bottom:0.05em solid">Fluktuation</span><div class="indented"><p id="3fe36333-d41b-4303-8a03-5c5a97c4a38a" class="">Meistens Fluktuationszahlen 33% - 80%</p><p id="f300ded5-1ff1-4937-aa76-c601f6c21ef4" class="">durchschnittliche Beschäftigungszeit zwischen 15 und 38 Monaten</p><p id="13215cd7-7a95-4d4a-b962-3d41c6e5a674" class="">Mitarbeiter mit hoher Fluktuation: kurzfristige Arbeitsmoral, sind nicht lange beim Unternehmen</p></div></p><p id="96eadd66-47df-4c61-be64-f14e275df7f0" class="">
+</p><p id="2e956a8b-52c0-4e0e-9a9f-3749ab79be18" class=""><span style="border-bottom:0.05em solid">Austausch der Mitarbeiter teuer</span><div class="indented"><p id="856c5c52-b110-4342-8d09-fa055fc96036" class="">Durchschnittlichen Beschäftigungsdauer: 2 Jahren deshalb Neueinstellung 20% der Personalkosten!<div class="indented"><p id="96df37e2-7e8d-458a-b533-4f89567730e1" class="block-color-gray">Suche: 2 Monatsgehälter Fixkosten an HR</p><p id="dff743e0-860e-4cf7-a142-c2ecde383dc3" class="block-color-gray">Einarbeitung: 3 Monatsgehälter</p><p id="77e5550d-4ea3-404c-8d8e-a2bdefa0df07" class="block-color-gray">Eingewöhnung der bestehenden Mitarbeiter</p></div></p></div></p><p id="f98b55a8-cbc8-4013-9f89-f590699d8f01" class="">
+</p><p id="cf667bc4-b2f7-4105-b11e-6cb72a01c362" class=""><span style="border-bottom:0.05em solid">Produktivitäts-Studien für Informatiker: &quot;Kriegsspiele für Programmierer&quot;</span><div class="indented"><p id="6759219d-9185-4afd-a00c-43d56cd8916e" class="block-color-gray">Wettbewerb Programmier- und Testaufgaben.</p><p id="112e417b-4508-41f6-90b7-30976c70577e" class="block-color-gray">2 Programmierer aus einer Firma = Team.</p><p id="91c86661-dab9-4896-90c9-f28e6bf965c3" class="block-color-gray">Die Teammitglieder stehen in Konkurrenz zueinander und zu den übrigen Teams.</p><p id="823f4767-1d51-4802-9d0c-583fd28b6a72" class="block-color-gray">Die Teams arbeiten in ihrer gewohnten Umgebung, zu ihrer normalen Arbeitszeit, mit den gewohnten Programmiersprachen, Werkzeugen und Rechnern</p><p id="f46dad81-11e5-4c21-902d-50b4e1d57415" class="">
+</p><p id="31610d6f-67c8-4eeb-91fd-23df8a734ad3" class=""><span style="border-bottom:0.05em solid">Ergebnisse</span><div class="indented"><ul id="473a4496-572a-4f2c-816e-5d7396300364" class="bulleted-list"><li style="list-style-type:disc">Die Besten waren 10x besser als die schlechtesten, 2.5x besser als der
+Durchschnitt in fast jede Leistungsmetrik (e.g. benötigte Zeit, Anzahl der Fehler)</li></ul></div></p></div></p><p id="0ed956f5-6b4d-4c90-ac3d-5a0b469aba75" class=""><div class="indented"><p id="12d43a38-9244-46f1-8e67-aa7a821224be" class=""><span style="border-bottom:0.05em solid">Faktoren ohne Einfluss auf Produktivität</span><div class="indented"><ul id="1fe75586-8f78-4145-a0ee-bcf4817c097d" class="bulleted-list"><li style="list-style-type:disc">Programmiersprache
+<mark class="highlight-gray">außer die Assembler-Programmierer</mark></li></ul><ul id="58c1aeb0-ea4c-45da-a600-393d7bde9a97" class="bulleted-list"><li style="list-style-type:disc">Berufserfahrung
+<mark class="highlight-gray">Kein Zusammenhang zwischen Berufserfahrung vs. erbrachte Leistungen.
+Außer Personen, die weniger als 6 Monate Erfahrung hatten.</mark></li></ul><ul id="ef93a3d7-363d-49e0-942a-7099c58399c6" class="bulleted-list"><li style="list-style-type:disc">Anzahl der Fehler</li></ul><ul id="a373a261-2d52-47db-a59c-44012a78dc4e" class="bulleted-list"><li style="list-style-type:disc">Gehalt
+<mark class="highlight-gray">Nur sehr schwache Beziehung zwischen Gehalt und Leistung: bessere Hälfte verdiente ca. 10% mehr als die schlechtere Hälfte.</mark></li></ul></div></p></div></p><p id="7e52b680-65de-4a2e-89a7-81dabd670a2f" class=""><div class="indented"><p id="ab899350-e08a-46a7-8acd-d2a612549eed" class=""><span style="border-bottom:0.05em solid">Faktoren mit Einfluss auf Produktivität</span><div class="indented"><ul id="a8f77f64-ef0d-468d-b68a-fa0c60e202a4" class="bulleted-list"><li style="list-style-type:disc">Teampartner
+<mark class="highlight-gray">gleiches Umfeld, gleiche Firmenkultur = fast identische Leistungen</mark></li></ul><ul id="50413d26-cdf2-4db4-8078-0fd26f97478a" class="bulleted-list"><li style="list-style-type:disc">Arbeitsplatz
+<mark class="highlight-gray">Qualität des Arbeitsplatzes (in der Arbeit) → !! sehr wichtig</mark></li></ul></div></p></div></p><p id="e1fcaf99-5530-4b75-b2c0-d7995656cd86" class="">
+</p><p id="5ae373f8-fb27-4c56-9082-e58f11c6dc79" class=""><span style="border-bottom:0.05em solid">Arbeitsplatz-Gestaltung</span><div class="indented"><p id="a7ccabc8-c602-4c28-8f3a-725999f713a2" class="">Arbeiter dürfen nicht gestört werden</p><p id="a08e6193-eb1d-4a10-82c2-ac8ab2f3bbc1" class="">Umwelt (U)-Faktor: Flow</p><p id="f5164577-c9e6-4202-957a-b377c006b0f2" class="">es braucht ca. 15 Minuten ungestörter Konzentration, um diesen Zusand zu erreichen.</p><figure id="06d31158-0c5d-4294-8518-2385ca068c94" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>U</mi><mo>=</mo><mfrac><mrow><mi>u</mi><mi>n</mi><mi>g</mi><mi>e</mi><mi>s</mi><mi>t</mi><mover accent="true"><mi>o</mi><mo>¨</mo></mover><mi>r</mi><mi>t</mi><mi>e</mi><mtext> </mtext><mi>S</mi><mi>t</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>n</mi></mrow><mrow><mi>S</mi><mi>t</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>n</mi><mtext> </mtext><mi>k</mi><mover accent="true"><mi>o</mi><mo>¨</mo></mover><mi>r</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>l</mi><mi>i</mi><mi>c</mi><mi>h</mi><mi>e</mi><mi>r</mi><mtext> </mtext><mi>A</mi><mi>n</mi><mi>w</mi><mi>e</mi><mi>s</mi><mi>e</mi><mi>n</mi><mi>h</mi><mi>e</mi><mi>i</mi><mi>t</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">U = \frac{ungestörte \space Stunden}{Stunden \space körperlicher \space Anwesenheit}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.25188em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">St</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mspace"> </span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">o</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">¨</span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">c</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mspace"> </span><span class="mord mathnormal">A</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">ese</span><span class="mord mathnormal">nh</span><span class="mord mathnormal">e</span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">es</span><span class="mord mathnormal">t</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">o</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">¨</span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mspace"> </span><span class="mord mathnormal">St</span><span class="mord mathnormal">u</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure></div></p><h2 id="cba0cf51-a94e-4ea2-b78f-2d4bbe01eba7" class="">Auswahl von Mitarbeitern</h2><ol type="1" id="79589ffb-a3d9-476c-926d-e1ce21170089" class="numbered-list" start="1"><li>Job specification
+<mark class="highlight-gray">• Anforderungen des Jobs</mark></li></ol><ol type="1" id="a4a085bf-a952-4b21-8164-01337e0bc974" class="numbered-list" start="2"><li>Job holder profile
+<mark class="highlight-gray">• Anforderungen an Arbeiter (e.g. Qualifikationen, Berufserfahrung, Ausbildung, ...)</mark></li></ol><ol type="1" id="dd297fb3-6d11-45db-9209-c519feabbcf2" class="numbered-list" start="3"><li>Bewerbungen einholen
+<mark class="highlight-gray">• Stellenausschreibung in einem geeigneten Medium</mark></li></ol><ol type="1" id="df1dbb9c-9ea8-4722-b467-ea8a96023783" class="numbered-list" start="4"><li>Auswertung der Bewerbungen</li></ol><ol type="1" id="2692460c-6caa-4836-89ad-55705f62f49a" class="numbered-list" start="5"><li>Auswahl der Mitarbeiter</li></ol><p id="e8a07a42-00dc-469d-86fe-33da90d94b08" class="">
+</p><p id="25c7b5b2-b8af-4b45-8ee2-ca23540d7bce" class=""><span style="border-bottom:0.05em solid">Wege zur Auswahl von Mitarbeitern</span><div class="indented"><ul id="69d53a0d-6dc9-4c98-ad9e-31387effd045" class="bulleted-list"><li style="list-style-type:disc">Portfolio von Bewerbern<p id="9517e22e-a819-468f-890a-505ea69296d3" class=""><mark class="highlight-gray">Auswahl von Produkten ihrer bisherigen Tätigkeiten (e.g. Entwürfe, Implementierungen, ...)</mark></p></li></ul><ul id="138a7626-436d-4cec-8197-de0103a0b950" class="bulleted-list"><li style="list-style-type:disc">Eignungstests<p id="16b45c3f-b5f5-4aa1-b0c5-ba7b28a17727" class=""><mark class="highlight-gray">Fähigkeiten, die unmittelbar nach der Einstellung gefordert werden (e.g. statistische Analyse, Programmierung, ...)</mark></p></li></ul><ul id="475e5e92-4171-4dac-87e6-bb2a58908540" class="bulleted-list"><li style="list-style-type:disc">Anhörungen<p id="f093f705-bcc4-4600-92d1-6197948d876c" class=""><mark class="highlight-gray">Bewerber stellen sich vor, die zukünftigen Teampartner hören zu</mark></p><p id="c86b4e72-9f3b-4d93-b6c7-0f16a6e0acd4" class=""><mark class="highlight-gray">Projektleitung entscheidet, aber die Meinung der Teampartner ist wichtig</mark></p></li></ul><ul id="ac481441-e879-4610-a20c-2d9a2c685db9" class="bulleted-list"><li style="list-style-type:disc">Interview</li></ul></div></p><p id="12cf633f-bb27-4de1-b727-fe5ca6a41035" class="">
+</p><h2 id="d9cb467b-0741-4b01-86c5-76ac26187b1e" class="">Team Management</h2><p id="9dc9bb09-c9f6-4f07-9697-e3cf2c3990a7" class=""><span style="border-bottom:0.05em solid">Dinge die Teambuilding verhindern</span><div class="indented"><ol type="1" id="90124093-2a26-4aed-98ad-62572437444f" class="numbered-list" start="1"><li>Defensives Management, Teammitglieder werden entmündigt keine Entscheidungsmacht</li></ol><ol type="1" id="0bbb1ccb-9def-42fd-9419-30fc301fb0ca" class="numbered-list" start="2"><li>Sinnlose Bürokratie</li></ol><ol type="1" id="36405932-32ec-40fb-b482-29f27c2dade0" class="numbered-list" start="3"><li>Physikalische Trennung von Personen, die eigentlich zusammen arbeiten sollen</li></ol><ol type="1" id="617c1b84-3f92-43dc-aaf4-bd4e1340c4de" class="numbered-list" start="4"><li>Zersplitterung der Zeit der Mitarbeiter auf mehrere Projekte</li></ol><ol type="1" id="74e69dff-029f-4c83-994f-cc791f30c514" class="numbered-list" start="5"><li>Qualitätsreduktion der Produkte<p id="c4d52052-93e3-41ad-a4d2-3c09bddbe537" class="block-color-gray">Vorteil: Kostenreduktion</p><p id="6a0bee31-cb37-44fb-acc8-ba84f2ad5c40" class="block-color-gray">Nachteil: geringere Identifikation der Mitarbeiter mit dem Projekt</p></li></ol><ol type="1" id="c84a11d1-7e8f-4ce6-88a4-0260a9c7ba42" class="numbered-list" start="6"><li>unrealistische Termine → geringe Identifikation mit dem Projekt </li></ol><ol type="1" id="3e417f9c-e4e5-4fc1-b727-2a9b52601588" class="numbered-list" start="7"><li>Cliquenkontrolle, Ständige Veränderung der Teamstruktur</li></ol></div></p><p id="264c28e1-ab1f-4b6d-9694-ddbdd92d7ada" class="">
+</p><h2 id="da8ee9bd-6a15-4ec6-ae29-5f6c2ee3ea00" class="">Team-Organisation</h2><ol type="1" id="2dcdf52b-bf5f-44c4-a162-3f42dc3bf7a5" class="numbered-list" start="1"><li>Stab<p id="b4555cef-9197-4e62-9b6d-62cdd6b380a5" class="block-color-gray">Hierarchische, (organisatorische) Strukturen mit strikter Trennung der Rollenverteilung → langsam.</p></li></ol><ol type="1" id="64a7617f-1ef6-44fd-8bee-233ff59067df" class="numbered-list" start="2"><li>Matrix<p id="1a85195c-d11a-438e-b296-ed1c0d4e1a34" class="block-color-gray">Mischung aus &quot;stab&quot; und &quot;rein&quot; → Pro Team ein Leiter der aber dem Projektleiter unterworfen ist.</p></li></ol><ol type="1" id="690da54d-4723-44f6-aefd-44e1bfa4e85d" class="numbered-list" start="3"><li>Rein<p id="58dc6da4-07ff-4e04-a84a-1450a0ec82f2" class="block-color-gray">Ein Mitglied aus jedem Team ist gleichzeitig Projektleiter und teil einer Leiter-Versammlung.</p></li></ol><p id="0868c0c2-760b-4da2-9bcb-a04572736221" class="">
+</p><figure id="46cbc7fd-25d2-421d-b190-c161af33bd04" class="image"><a href="People%20Management%20c20b7b7ab6844e1f95bd4af1d69f97a4/Untitled%201.png"><img style="width:672px" src="People%20Management%20c20b7b7ab6844e1f95bd4af1d69f97a4/Untitled%201.png"/></a></figure><p id="84c23ffb-9c2e-40fb-9396-02d717a33d1b" class=""><span style="border-bottom:0.05em solid">Formen der Team-Organisation</span><div class="indented"><p id="3da89d57-a51b-4d57-8891-317d939933d6" class="">• die klassische hierarchische Organisation
+• die typische Matrix-Organisation
+• das “Chef-Programmierer”-Team
+• das offen strukturierte Team
+• das SWAT-Team
+• das XP-Team</p></div></p><p id="275f9c60-f025-47ec-910d-327786d2369a" class="">
+</p><p id="e8817809-c766-4d65-8162-743ac4c7f671" class=""><span style="border-bottom:0.05em solid">Verantwortlichkeiten</span><div class="indented"><p id="7cafbf78-e4c3-443d-ae40-40ca470550ec" class="">Horizontal	Zeitlich - Über Projekt-Verlauf</p><p id="2b413773-a304-4812-9a37-de10781ff039" class="">Vertikal		Arbeitspakete - explizite Zuständigkeiten</p></div></p><p id="8456ffe9-d17e-43f4-ae44-4772ca8aa1b7" class="">
+</p><p id="12cf011b-8b66-4254-bde4-d7a0f43b7655" class=""><span style="border-bottom:0.05em solid">Richtlinien zur Team-Organisation</span><div class="indented"><p id="0ca5d2f3-7561-4a28-a933-dac7df90f84e" class="">Hohe qualität, niedrige quantität</p><p id="37d87206-b2d6-4984-b5fb-8cc76771e4ac" class="">Nicht unterfordern, nicht überfordern</p><p id="1e526c6b-f1f4-4da2-ab3f-d57e12c9999e" class="">Aufgaben basierend auf Interessensgebiete der Arbeiter</p><p id="67b98f39-42f7-4bad-8ba5-9ea551aaad01" class="">Wertschätzung, Vielfalt → Mitarbeiter sind mehr als nur Ressourcen</p><p id="de3e32bc-d8b2-4388-88a2-f75328b4782b" class="">Auf die persönliche Entwicklung der Mitarbeiter achten</p><p id="eca2cac3-f0fd-42d4-8888-6626e2489b48" class="">
+</p></div></p></div></article></body></html>

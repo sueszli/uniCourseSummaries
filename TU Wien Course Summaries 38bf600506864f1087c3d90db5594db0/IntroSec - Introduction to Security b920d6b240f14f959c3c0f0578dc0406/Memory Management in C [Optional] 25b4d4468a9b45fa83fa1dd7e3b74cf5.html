@@ -1,0 +1,789 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Memory Management in C [Optional]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="25b4d446-8a9b-45fa-83fa-1dd7e3b74cf5" class="page sans"><header><h1 class="page-title">Memory Management in C [Optional]</h1></header><div class="page-body"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cff8b589-d27c-41ae-a97f-40d3c6868705"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">Not part of curriculum</div></figure><p id="234126e8-6f53-4527-9036-4081e69d0852" class=""><a href="https://www.cs.rochester.edu/u/ferguson/csc/c/c-for-java-programmers.pdf">https://www.cs.rochester.edu/u/ferguson/csc/c/c-for-java-programmers.pdf</a></p><p id="5ca64cc4-cff8-45a3-a91f-2df4e0e7c57a" class=""><a href="https://www.cs.cornell.edu/courses/cs414/2005sp/cforjava.pdf">https://www.cs.cornell.edu/courses/cs414/2005sp/cforjava.pdf</a></p><p id="2504414c-e5cf-4a3f-ac4e-f01497907cca" class=""><a href="https://en.m.wikipedia.org/wiki/C_data_types">https://en.m.wikipedia.org/wiki/C_data_types</a></p><p id="bae63c5f-f153-4206-84ed-e95a33b60994" class="">
+</p><nav id="ac88e906-ed09-4293-8d8f-4fc15b2c00bb" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b1661b80-30a1-4604-92cc-ef68f2cbec53">Buffer in C</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f65093e3-b93b-4c17-9081-1b4ddb344f0e">Pointers</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6147a4ac-828c-4ba9-b3ba-711f9c10bcdf">Memory Allocation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#86eba3a9-2ac3-4071-a388-9651a9de3bd4">Dynamic Data Structures</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#29316578-266e-48a8-80de-11c02604d226">Function Pointers</a></div></nav><h1 id="b1661b80-30a1-4604-92cc-ef68f2cbec53" class="">Buffer in C</h1><p id="750e9f57-9144-48d0-b04b-fecc7b901a06" class="">C uses a buffer to output or input variables.</p><p id="d01a3d29-3060-4277-8daf-e310bdf2add4" class="">Helper buffers (Software): You move data into/from such a buffer, because it is easier for your algorithm. The buffer can be a stack or a heap.</p><p id="1bfcdb15-8596-4a3a-95b9-b661d6424929" class="">
+</p><h1 id="f65093e3-b93b-4c17-9081-1b4ddb344f0e" class="">Pointers</h1><p id="fb32ef9c-8482-48ba-8de1-76512830ed26" class="">Places in memory associated with variables → one can assign values.</p><p id="21292986-9e04-4155-a152-065ea1cbb806" class="">In C one can access the location in memory where variable is stored <span style="border-bottom:0.05em solid">= pointer</span>.</p><p id="5b18919a-6d34-4dee-912f-3963ab4df49f" class="">
+</p><p id="64506d98-544a-4617-ba78-37849ca676d7" class=""><mark class="highlight-teal">address-of operator</mark></p><p id="864ae44f-e661-4805-ac36-73e8445fa47b" class="">Using <code>&amp;</code> to store pointer to a variable.</p><figure id="3e4dab19-180a-4e01-a91a-0ab66f31c4dc" class="image"><a href="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled.png"><img style="width:192px" src="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled.png"/></a></figure><p id="c85fc7b6-2135-47ed-8357-bcbe115575a2" class="">
+</p><p id="32ff0a28-9e6b-42fe-9c3e-a89918056ce7" class=""><mark class="highlight-teal">lvalue vs. rvalue</mark></p><p id="8d96db0f-d876-44ce-b9f3-97c8cd8e4b12" class="">An lvalue (locator value) represents an object that occupies some identifiable location in memory (i.e. has an address).<div class="indented"><p id="18bc6fa5-582a-4b28-a282-72d605bc1891" class="">When the &quot;*&quot; is used in an expression it is an lvalue → uses the memory address,</p></div></p><p id="0c810720-cbb8-4a0b-85a7-80c8c03becd5" class="">Everything that isn&#x27;t an lvalue is an rvalue.<div class="indented"><p id="282e3eb7-a6d6-44ba-a0e2-63082cc3b13e" class="">When the &quot;*&quot; is used in an expression it is an rvalue → dereferences and returns the value, not address.</p></div></p><p id="de54ab07-db23-4375-9cc9-36bdc64e79f3" class="">
+</p><p id="fbfe4f2f-c880-40f6-aace-5867cdee77f2" class=""><mark class="highlight-teal">causing side effects with pointers in functions</mark></p><ul id="441de8e4-7d47-4950-9af5-2d27475187f4" class="toggle"><li><details open=""><summary>Example 1</summary><pre id="5e386447-48f4-491b-896a-027bbfb1c721" class="code"><code>int test_and_dec(int* ip) { //parameter of type int* rather than int
+	if (*ip &gt;= 0) {
+		*ip -= 1;               //1 = true
+		return 1;
+	} else {
+		return 0;               //0 = false
+	}
+}</code></pre><p id="3ddcf837-76fe-4f16-9758-26c40a68d897" class="">Somewhere else in our program:</p><pre id="bb49ed41-a94b-4561-9de3-d00b1e50e116" class="code"><code>int i = 123;
+...
+if (test_and_dec(&amp;i)) {
+	// i is now one less than before, possibly 0
+} else {
+	// i was already &lt;= 0
+}</code></pre></details></li></ul><ul id="f2f4a048-65ef-4e42-b4ee-e3f750a60e9c" class="toggle"><li><details open=""><summary>Example 2</summary><pre id="b76a47cc-50ce-42d4-89bb-f6bbed84bf6b" class="code"><code>int i;
+float f;
+char name[50];
+scanf(&quot;%d %f %s&quot;, &amp;i, &amp;f, name);</code></pre><p id="761d7767-5916-4784-b097-5c0e898c6745" class="">Ints and floats are primitive types, we must pass a reference to scanf - arrays are reference types, so we can pass the array variable name directly.</p><p id="6f93f875-9f4c-4091-8df0-3bf432c96d5d" class="">scanf will read characters up to a newline when reading a %s value → if there are more than 50 characters (in this case) then “buffer overflow”</p></details></li></ul><p id="ae5d41b8-cc6d-46b9-9c27-27d2a7b4f99d" class="">
+</p><h1 id="6147a4ac-828c-4ba9-b3ba-711f9c10bcdf" class="">Memory Allocation</h1><p id="90428267-1d13-42bf-8b16-2a392dd41cb1" class="">Three ways to allocate memory to store values:</p><ol type="1" id="7fdea816-ec4c-41b9-97d9-142da61e2e96" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Automatic (compile time)</span><p id="d27ae29e-b9f5-4199-9f0c-77cefcfa0ad5" class="">memory allocated automatically by compiler for local variables / function parameters. </p><p id="319e5b62-83bd-4209-846f-874c17e49679" class="">Also called <mark class="highlight-yellow_background">&quot;allocating on the stack&quot;</mark> which is used for automatic variables where the memory is part of the <mark class="highlight-yellow_background">&quot;stack frames&quot;</mark> that are pushed and popped as functions are called and returned.</p></li></ol><ol type="1" id="7f118f5c-64b3-491c-ad7e-ef67fc76cb8b" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Static (compile time)</span><p id="fda032e1-db00-400c-bcda-efce4bee7fc8" class="">for global variables.</p><p id="45eec5d6-95fe-4c93-9ca3-0cac5571d39e" class="">memory for static variables is allocated once when the program starts (similar to class variables in Java but C is procedual and not OOP)</p><p id="057ac58a-9c03-4a76-813d-f488dd545da9" class="">Other variables can be marked as static to be global but its bad design.</p></li></ol><ol type="1" id="da904644-5474-43bc-9a27-d5efd5660342" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Dynamic (run time)</span><p id="9e3abe9e-8628-463b-8329-8241ea5a9312" class="">If you don’t know until run-time that you need to store something, or what or how many you need to store, then you need to use dynamic allocation to allocate memory on the fly.<div class="indented"><p id="902915e3-247b-4a0a-a086-f5740065ec42" class="">Has to be managed explicitly by the programmer.</p></div></p><p id="a53059c3-874d-4861-a34e-918bd58fb639" class="">This is also called <mark class="highlight-yellow_background">&quot;allocating from the heap&quot;</mark>, as opposed to &quot;allocating on the stack&quot;.</p></li></ol><p id="0bd6c15d-3b19-4701-8d48-139bd10c4bca" class="">
+</p><p id="0d1c740c-3d4d-4bd8-ac89-39ab21fee63a" class=""><mark class="highlight-teal">dynamic memory allocation in java</mark></p><p id="10be40e3-c43a-47ad-8761-489eaa85e76b" class="">after creating an object (instance of a class), memory is allocated in the JVM automatically and also removed automatically when it ist not needed anymore: <mark class="highlight-teal">garbage collection</mark></p><p id="fe0688aa-df50-452b-be21-16719965aee0" class="">
+</p><p id="f8f6ea1a-0228-4198-a5ea-40cd12e02b4d" class=""><mark class="highlight-teal">dynamic memory allocation in C</mark></p><p id="657296a1-ddd8-4e9d-962c-5eec24e70706" class=""><code>malloc</code> for memory allocation: You give it a size in bytes, and it returns a pointer to a chunk of memory of that size.</p><pre id="5d2345d1-2044-418e-a831-1b8fb5adfde7" class="code"><code>...
+void* p = malloc(100);     //void* -&gt; pointer to unknown type</code></pre><p id="98caef4d-54a3-4348-8e51-4c2cfd737edc" class="">If malloc fails, usually because your program’s memory space is exhausted, it returns NULL. Like an OutOfMemory execption in Java.</p><p id="2d4bb8d0-ffa1-4767-a0b5-0db3c24c0138" class="">
+</p><p id="f470716e-f40f-47ff-901a-ef239fa26f65" class="">The C compiler will not let you dereference a void pointer because it doesn’t know what type is on the other end of the pointer. → casting</p><pre id="d0cc7bff-e6f1-47d9-819a-dd7439c7e0b2" class="code"><code>void* p = malloc(sizeof(int)); 
+int* ip = (int*)p;         // &lt;- cast is here
+*ip = 98765;
+printf(&quot;%d\n&quot;, *ip);</code></pre><p id="6fc36e9e-aae3-4c16-a907-d1b5d5aae53d" class="">Alternatively</p><pre id="20a36f5f-7b94-40a8-b24a-9ab1a43e3627" class="code"><code>int* ip = (int*)malloc(sizeof(int));</code></pre><p id="36f21a79-e5fe-4d8e-bb1a-ce336066c264" class="">
+</p><p id="f89da475-9c25-4e75-a672-fa20390c6f46" class=""><mark class="highlight-teal">garbage collection</mark></p><pre id="a9f3e9f6-0cee-422d-9038-fd3504b7f134" class="code"><code>int* ip = (int*)malloc(sizeof(int));
+...
+free(ip);
+ip = NULL;</code></pre><p id="4966d7ca-481f-42f6-84bc-0fa829a89def" class="">The address of *ip is then available for reuse.</p><p id="12817ee7-6abe-4c80-aaeb-db32ba4418fe" class="">If you try to deference the pointer (access its value) after freeing it, one of three things will happen: (&quot;dangling pointer bugs&quot;)<div class="indented"><ol type="1" id="14b7ea37-cdbd-457b-bdca-bac3b17a252d" class="numbered-list" start="1"><li>Your program will crash</li></ol><ol type="1" id="60e5a18e-4347-4a7f-959c-f672ba98c8f4" class="numbered-list" start="2"><li>The dereference may find a value, but it isn’t the value you expected since the chunk of memory has been reused by a subsequent call to malloc</li></ol><ol type="1" id="42012510-c3f4-4e51-ba51-b666c0b57381" class="numbered-list" start="3"><li>Nothing funny will happen and you will happily get the value you expected to find on the other end of the pointer.</li></ol></div></p><p id="cb8cde7e-4333-45d9-b421-981b8b77dbae" class="">Solution: Set value of pointer to NULL immediately after freeing it.</p><p id="a0bf98ad-1463-43b9-82ad-1479458c2b8e" class="">
+</p><p id="53016762-a40a-4174-aeb2-febca8e5f0f6" class=""><mark class="highlight-teal">dynamic arrays</mark></p><p id="e03e26ce-f4fa-4246-85a3-d957d6e77f36" class="">In java you allocate storage with <code>new</code>: <code>letters = new char[5];</code></p><p id="a35a6caa-3016-4d61-9f42-0b8abfab4742" class="">In C, you use a variant of malloc called <code>calloc(array_length, malloc_size)</code> to allocate a chunk of memory for arrays.</p><p id="2704bcfa-e41a-4754-b648-6bb15864fe6e" class="">In C, the value of an array variable is the address of its first element:<div class="indented"><p id="328499bb-c583-49ba-94f1-b8bb3da20acf" class="">every <code>int[]</code> variable is a <code>int*</code> variable.</p></div></p><p id="f80c43e2-94b3-4084-b9dd-c77ce2c1ce37" class="">You can use an array-of-type variable anywhere that you can use a pointer-to-type variable.</p><pre id="8b55156f-1c12-4324-843a-b873509cf7a0" class="code"><code>int main(int argc, char* argv[]) {
+	int numbers[] = { 1, 2, 3 };
+	char* letters = (char*)calloc(5, sizeof(char));
+	letters[0] = ’x’;          //no pointer needed for side effect
+	foo(numbers);
+	bar(letters);
+}
+
+int foo(int* numbers) {      //parameter with type: int* xyz
+	return numbers[0];         //returns a single int
+}
+
+char bar(char letters[]) {   //parameter with type: char xyz[]
+	return letters[0];         //returns a single char
+}
+</code></pre><p id="b3ff9d5c-c9ba-43d4-ab2b-dfe26abc20b6" class="">
+</p><p id="2170244e-ec25-40df-a7d6-cf122cf70715" class=""><mark class="highlight-teal">strings</mark></p><p id="7ebc8fc6-9342-4725-8637-d7289ce78be6" class="">Allocating a string with</p><pre id="24e6140d-f0ff-4e02-9171-874e1109e52b" class="code"><code>char *str = (char*)calloc(length, sizeof(char));</code></pre><p id="b2b9d236-2d02-43b4-b409-5719ee54036b" class="">String must end with NUL (null character)<div class="indented"><p id="14aa7829-f436-443d-89ca-ddd876b35d9a" class=""><code>NUL</code> is the notation for an ASCII character code 0.</p><p id="596b01f1-13ff-4a59-b7bb-7de21b09c8f0" class=""><code>NULL</code> is a macro defined in <a href="http://www.cplusplus.com/reference/cstddef/"><code><strong>stddef</strong></code></a> for the null pointer.</p></div></p><p id="787ed164-0aec-4be2-a38f-410ec2a3be29" class="">
+</p><p id="a8fc0729-7f82-4229-9ba5-7eb1678abff7" class=""><mark class="highlight-teal">arrays of strings</mark></p><p id="0e14cee2-5fd4-4bb6-afe6-5ae34e6f7cd4" class="">Since arrays are themselves just pointers, an array of strings is type <code>char**</code>: pointer to pointer to char, or pointer to string.<div class="indented"><ol type="1" id="f593c724-18a8-4065-8e48-74dc4b6daa1b" class="numbered-list" start="1"><li>you have to allocate the array (sizeof(char*))</li></ol><ol type="1" id="b967d137-c853-4eb7-ac88-9828c518ae4d" class="numbered-list" start="2"><li>then the individual strings that are the contents of the array (sizeof(char))</li></ol></div></p><pre id="24c3ac0d-5cf1-4d77-9bde-38226ab4faee" class="code"><code>...
+char** s_array = (char**)calloc(array_len, sizeof(char*)); //1
+
+for (int i=0; i &lt; array_len; i++) {
+	s_array[i] = (char*)calloc(str_len, sizeof(char));       //2
+}</code></pre><p id="1a03d067-759c-4b0f-896d-1d5450cbad4c" class="">
+</p><p id="6e9c39b9-820d-4ff0-81ec-893a9407896a" class="">This &quot;pointer-to-pointer&quot; interpretation explains why you will often see the main function declared as:</p><pre id="2d3306d1-bb91-4485-9ae0-e5f298a2ae50" class="code"><code>int main(int argc, char **argv) //equivalent to char* argv[]</code></pre><p id="6a5e4f5c-654a-4426-844d-b6dbc9ab9d0d" class="">
+</p><h1 id="86eba3a9-2ac3-4071-a388-9651a9de3bd4" class="">Dynamic Data Structures</h1><p id="3de071fd-49a1-4edf-9753-6ebd9bca0e8a" class="">structured types are similar similar to objects</p><pre id="9b0031b5-4ba9-4efc-aeec-db29065110d0" class="code"><code>struct point {
+	int x;
+	int y;
+};
+
+struct point* p = (struct point*)malloc(sizeof(struct point));</code></pre><p id="c42fe5ab-a135-42f0-bdb1-dec08b912d53" class="">To access the members (also possible with syntactic sugar):</p><pre id="56fd66be-ff30-41d2-90ce-ae4502714a40" class="code"><code>(*p).x = 1;    //p-&gt;x = 1;
+(*p).y = 99;   //p-&gt;y = 99;</code></pre><p id="d287037e-c3f3-49b8-9c40-eef84ae43110" class="">
+</p><p id="6f1d9858-ef2a-46fe-b8dc-9f08c11e2158" class="">for recursive usage of structs</p><ul id="1f990839-0dda-4934-98cd-83ab45e3e83a" class="toggle"><li><details open=""><summary>Example 1</summary><pre id="31cd924a-7c6f-49b1-a8f0-13aa6dd88773" class="code"><code>struct line {
+	struct point start;
+	struct point end;
+}
+
+struct line* line1 = (struct line*)malloc(sizeof(struct line));</code></pre><pre id="842b2de4-f237-4ded-a95e-9f4423319adb" class="code"><code>line1-&gt;start.x = 667;
+line1-&gt;start.y = 668;
+line2-&gt;start.x = -123;
+line2-&gt;start.y = 0;</code></pre><figure id="43684b6f-8811-4ec4-b77c-43ab86355a06" class="image"><a href="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%201.png"><img style="width:132px" src="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%201.png"/></a></figure><p id="102b1578-8ae5-439f-8a6f-e8acfef4eff4" class="">
+</p></details></li></ul><ul id="7fa59fed-856a-4c11-ae6d-aeb374bb2a75" class="toggle"><li><details open=""><summary>Example 2</summary><p id="0cd61f50-4d39-42e8-a1eb-c5b720966df7" class="">Or we could change our definition of a struct line so that rather than having struct points as members, it has pointers to struct points as members:</p><p id="26834697-4ffd-4faf-b56f-97b73b285766" class="">Why would you do this? The lines are defined in terms of the points, but if a point changes location, all the lines that include that point ought to change also.</p><pre id="b22b485f-2e9a-44f2-a597-39cfbf0d1dcf" class="code"><code>struct line {
+	struct point *start;
+	struct point *end;
+}
+
+struct line* line1 = (struct line*)malloc(sizeof(struct line));
+line1-&gt;start = (struct point*)malloc(sizeof(struct point));
+line1-&gt;end = (struct point*)malloc(sizeof(struct point));</code></pre><pre id="ebdecc1c-b842-4a8e-8e48-625fb4f0a1ba" class="code"><code>line1-&gt;start-&gt;x = 667;
+line1-&gt;start-&gt;y = 668;
+line2-&gt;start-&gt;x = -123;
+line2-&gt;start-&gt;y = 0;
+
+free(line1-&gt;start);
+free(line1-&gt;end);
+free(line1);</code></pre><figure id="58787932-0871-400b-a58a-1f8ced7b7a00" class="image"><a href="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%202.png"><img style="width:144px" src="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%202.png"/></a></figure><p id="b0035dd2-9c53-4915-95a4-bfe0c78c65b7" class="">
+</p></details></li></ul><p id="921acf6b-5e05-43d1-84d9-e3dfa35b8b4a" class="">
+</p><p id="5c0a5aa3-a7ba-4936-bd32-69b3067627d1" class="">for getters and setters</p><ul id="7950805e-48c7-4703-b489-7d21ddfb53bd" class="toggle"><li><details open=""><summary>getter setter example</summary><pre id="fa8cb954-bdb5-49d1-afc0-631e0bd9e75c" class="code"><code>int point_get_x(struct point* p) {
+	return p-&gt;x;
+}
+void point_set_x(struct point* p, int x) {
+	p-&gt;x = x;
+}</code></pre></details></li></ul><p id="fb94801a-ebd4-4b35-87a3-7fd057432253" class="">
+</p><p id="b7fceb3f-439b-49d7-9915-373d34aeac75" class="">linked list</p><ul id="b74cc6ee-10eb-47c8-a50b-da1ecb110512" class="toggle"><li><details open=""><summary>example</summary><pre id="42fdebe4-f1db-4622-9479-693cb99ab211" class="code"><code>struct node {
+	int value;
+	struct node* next;
+};
+
+struct node* head = (struct node*)malloc(sizeof(struct node));
+head-&gt;value = 0;
+head-&gt;next = (struct node*)malloc(sizeof(struct node));
+head-&gt;next-&gt;value = 99;
+head-&gt;next-&gt;next = (struct node*)malloc(sizeof(struct node));
+head-&gt;next-&gt;next-&gt;value = -13;
+head-&gt;next-&gt;next-&gt;next = NULL;</code></pre><p id="f12aba76-b3c1-409b-b60a-64bd5a7e9177" class="">traversal:</p><pre id="7880f8c7-b953-423a-bec5-12d9db015ed3" class="code"><code>for (struct node *p=head; p != NULL; p=p-&gt;next) {
+	printf(&quot;%d\n&quot;, p-&gt;value);
+}</code></pre><figure id="8b53f60e-b4ef-4d1f-9091-394e38d204ec" class="image"><a href="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%203.png"><img style="width:192px" src="Memory%20Management%20in%20C%20%5BOptional%5D%2025b4d4468a9b45fa83fa1dd7e3b74cf5/Untitled%203.png"/></a></figure></details></li></ul><p id="fdbc718a-9f85-4ed0-b789-1cff5c9cf2bb" class="">
+</p><h1 id="29316578-266e-48a8-80de-11c02604d226" class="">Function Pointers</h1><p id="c1e1c3ed-ad33-4c99-abef-87de170bd31b" class="">C is interesting in that it also allows you to have pointers to functions, which are executable code, not data.</p><p id="77b2d5b9-4694-4f3d-b6c0-9ef393569ef0" class="">Since a function name that is not followed by parentheses and arguments is not a function call, the bare function name can be used without the &amp; operator.</p><pre id="e9b8fb77-4b35-4689-8dd2-3000d6ef794c" class="code"><code>int times2(int x) {
+	return x * 2;
+}
+
+int (*fp)(int) = times2;     //or &amp;times2</code></pre><p id="8de1cab7-6d8b-4710-8177-bac0912db538" class="">Usage:</p><pre id="d2a51c47-c5b5-45eb-8ee8-d11538dc6c86" class="code"><code>int i = 2;
+int j = (*fp)(i);            //4</code></pre><pre id="654e1e12-8052-437c-830a-5b2dae93917d" class="code"><code>void array_double(int a[], int alen) {
+	for (int i=0; i &lt; alen; i++) {
+		a[i] = times2(a[i]);
+	}
+}</code></pre><p id="b3f407f7-ccb5-4735-9911-00cefabc2cc8" class="">
+</p></div></article></body></html>

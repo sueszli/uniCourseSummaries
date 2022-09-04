@@ -1,0 +1,689 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Learning</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a47af54e-0eff-4eef-adbe-378bbe683f5f" class="page sans"><header><h1 class="page-title">Learning</h1></header><div class="page-body"><nav id="945f66f6-c476-45ba-a994-a144413e5e86" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#933502d9-663d-4827-9e27-143311a995c9">Learning Agent</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ae99c409-0473-4604-af2d-482c89ed1cf2">Components</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#760fff52-2241-4bb1-a1f3-9af982209eb3">_________________</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6071f79d-da23-423b-8f69-5b6921a5c5d3">Learning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0131efce-675a-4727-a2b2-bc86709f1058">Types of Representation (of states)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db2e6c42-bab4-4d0c-a088-7630943cde42">Types of learning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f402386c-70d7-4512-b197-002cd71b47c8">Types of feedback (&quot;Learning Modes&quot;)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6ec8a721-8646-41ba-b52a-cda48eb11c1b">Supervised Learning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4620c898-c650-4902-a75f-f971665599cc">Choosing hypotheses</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#220f6004-18de-4d1d-8613-c407dca99ab2">Choosing hypothesis spaces</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e1fe2359-61f2-4c71-abcc-c6f7489591df">Generalization and overfitting</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#005e89ea-1016-4d85-8585-d36a57a68fc1">Measuring Learning Performance</a></div></nav><h1 id="933502d9-663d-4827-9e27-143311a995c9" class="">Learning Agent</h1><p id="c437278b-c397-4881-96c5-e5b0ce141857" class="">Goal: making agents improve themselves by studying their own experiences</p><p id="b9c50e0d-5e91-4553-a2fe-6a46afbe2992" class="">Learning instead of programming because designers<div class="indented"><ol type="1" id="e171313c-1269-4d50-a60a-64c7027a7374" class="numbered-list" start="1"><li>can&#x27;t foresee all the situations the agent might be in</li></ol><ol type="1" id="dc95fa4b-381b-46f1-80e7-936881aef3af" class="numbered-list" start="2"><li>can&#x27;t foresee all the environment changes</li></ol><ol type="1" id="e73fe9f1-f871-491b-989b-1a05bc5efa33" class="numbered-list" start="3"><li>don&#x27;t know the solution</li></ol></div></p><p id="ce3bbab3-f482-4995-b6f2-f37acac7f785" class="">
+</p><p id="f1dd92ee-a892-4eaa-903a-6d5345ccfdce" class=""><mark class="highlight-teal">Utility Agent → Learning Agent</mark></p><p id="77654b9e-e621-4852-9b5a-ea5d074958f7" class="">Learning Agent = performance element + learning element</p><p id="6a2c103c-1ae9-4f1d-be89-eeaaa000e3d8" class="">Each component from the utility agent can be learned<div class="indented"><ul id="eb7f3153-2a57-4e4c-b4a7-fc013c559f87" class="bulleted-list"><li style="list-style-type:disc">actions <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> their causing conditions</li></ul><ul id="53d51635-73a8-4268-b114-7e17bdc565bd" class="bulleted-list"><li style="list-style-type:disc">percept sequence <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> relevant world properties </li></ul><ul id="a3611202-27c3-40ba-be34-5262bd529e2b" class="bulleted-list"><li style="list-style-type:disc">prior knowledge about world</li></ul><ul id="2e8ef6c7-f5d1-4c57-91e1-eea48babe1d1" class="bulleted-list"><li style="list-style-type:disc">Utility function: world states, actions <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span> their desirability</li></ul><ul id="53094a49-bdd5-4e58-b749-6c9e7606ebae" class="bulleted-list"><li style="list-style-type:disc">Goals that maximize the agents utility</li></ul></div></p><div id="2997d35b-32a0-43e5-9c6c-17f53e4bf468" class="column-list"><div id="4bf0d311-9d83-491a-a8e4-349330938dc9" style="width:31.25%" class="column"><figure id="b1bbbd27-91d6-40ae-82e2-4f4c3d0c8a8a" class="image"><a href="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled.png"><img style="width:192px" src="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled.png"/></a></figure></div><div id="8167c184-c9ba-4779-9cb7-10fc585692d9" style="width:68.75%" class="column"><figure id="00523148-250a-4b34-8877-73fff80f9563" class="image"><a href="Agents%20fcd63673e72f4e0fa619ba362bede3b4/Untitled%205.png"><img style="width:192px" src="Agents%20fcd63673e72f4e0fa619ba362bede3b4/Untitled%205.png"/></a></figure></div></div><ul id="8b7d4ee4-287f-48f2-9573-0efdd5809f0f" class="toggle"><li><details open=""><summary>Example: Taxi</summary><p id="294d453f-c6f7-4c09-ad34-f0ed500e1f3e" class="">Performance element	knowledge about driving</p><p id="1fd65b43-84ac-4bc3-9448-47470929e9f3" class="">Critic				reactions of customer / other drivers / pedestrians / bikers / police</p><p id="dd0006ad-70af-4bb4-b697-939f2dfe307b" class="">Learning element		create rules - ie. not to turn steering wheel to quickly, break softly etc.</p><p id="195d3735-b81f-4d71-b160-d9608a100039" class="">Problem generator		try brakes on slippery road, push back with side (wing) mirror only</p></details></li></ul><p id="7c1c1334-1cd1-498f-b674-1c1c3e91c761" class="">
+</p><p id="ff4e798a-5968-4a3c-a97e-fe7ad5d10413" class=""><mark class="highlight-teal">Designing a learning element</mark></p><p id="f3cd0f65-2916-4b48-9ea7-3efe6c8a4ca4" class="">Design is defined by:<div class="indented"><ul id="124cf483-f309-4081-a3b6-809054ba79c7" class="bulleted-list"><li style="list-style-type:disc">performance element type</li></ul><ul id="369ac73b-8d45-4de2-b4dd-dd42fe6872e9" class="bulleted-list"><li style="list-style-type:disc">functional component 		model that describes what actions do (we learn this)</li></ul><ul id="d591e2fa-58d5-4d2f-9217-ad841e4e2855" class="bulleted-list"><li style="list-style-type:disc">representation 			mathematical model for functional component</li></ul><ul id="1165ed08-d2b0-44be-99ba-f15234f30848" class="bulleted-list"><li style="list-style-type:disc">available feedback</li></ul></div></p><p id="4856aea1-7b1d-4c57-a7ab-42afe9caae82" class="">Examples:</p><figure id="0a4c0c68-aa66-4211-b151-b51962559645" class="image"><a href="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%201.png"><img style="width:384px" src="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%201.png"/></a></figure><p id="c2ea24a2-5e52-4274-9c97-4bd680ed10d9" class="">
+</p><h2 id="ae99c409-0473-4604-af2d-482c89ed1cf2" class="">Components</h2><p id="ab23f564-f3fb-4d83-ad36-9b1dfc3c7ed6" class=""><mark class="highlight-teal">Performance element</mark><div class="indented"><p id="a4858736-6827-4ab0-8de5-d4c86ebe4b5d" class="">Everything in between sensors (input) and actuators (output) abstracted away.</p><p id="e9c18d50-aeba-4c87-abb1-2055b1734f8a" class="">Takes in percepts and chooses actions.</p></div></p><p id="ca48c98b-fbcf-47ee-8582-6d97237ec86b" class=""><mark class="highlight-teal">Critic</mark><div class="indented"><p id="ddc31f43-5fe6-4f74-9e09-e881c38a515b" class="">Feedback on performance (based on a fixed performance standard).</p></div></p><p id="616d28d0-c3de-4869-b841-ea4c4d758aa6" class=""><mark class="highlight-teal">Learning element LE</mark><div class="indented"><p id="7a24b41b-063d-42d4-b3c3-b9047d9a1168" class="">Change performance element for improvement.</p><p id="b6c85a2d-54e2-46f7-8536-10203e8fa34e" class="">Change &quot;knowledge components&quot; of agent (problem generator and performance element - independent of agents architecture).</p></div></p><p id="9d5724ab-59e4-49a2-bf70-67ed3a099f83" class=""><mark class="highlight-teal">Problem generator</mark><div class="indented"><p id="235d4624-4dc8-4254-abf6-fefa3608bab8" class="">suggest actions for new experiences to learn from - based on learning goals</p></div></p><h1 id="760fff52-2241-4bb1-a1f3-9af982209eb3" class="">_________________</h1><h1 id="6071f79d-da23-423b-8f69-5b6921a5c5d3" class="">Learning</h1><h2 id="0131efce-675a-4727-a2b2-bc86709f1058" class="">Types of Representation (of states)</h2><p id="d8cc86b9-a9d5-4123-ab8f-fc278928eb92" class="block-color-gray">Different levels of granularity to represent states of the &quot;world&quot;.</p><p id="ecf85d26-521d-4c63-8c94-d2bd736762fe" class=""><mark class="highlight-teal">Structured	</mark>bayesian network (for decision-theoretic agent)</p><p id="4132a83e-66f7-4747-a348-cd4c1f8f2d90" class=""><mark class="highlight-teal">Atomic		</mark>states with labels like &quot;image&quot; - similar to blackbox.</p><p id="0057a78f-d6a4-4c09-98e6-18941b87fb32" class=""><mark class="highlight-teal">Factored 		</mark>A vector of attribute values and outputs, continuous, numerical or discrete</p><p id="296e5461-e7d0-4732-bc3d-d7dfb0e05eee" class="">			(focus of this lecture)</p><p id="bf9d9921-60e5-47fc-a78c-081ab5726298" class="">
+</p><h2 id="db2e6c42-bab4-4d0c-a088-7630943cde42" class="">Types of learning</h2><p id="72277ae8-57d8-44a1-a9ea-b9f36a5bf31d" class=""><mark class="highlight-teal">analytical / deductive learning</mark>: going from general rule to more specific and efficient rule</p><p id="100988dc-0a3d-4eba-a1ea-4cfefbf70036" class=""><mark class="highlight-teal">Inductive Learning</mark>: discovering the general rule from examples<div class="indented"><ul id="37c474cf-3936-45fe-9a60-16eff52c7899" class="bulleted-list"><li style="list-style-type:disc">Ignores prior knowledge</li></ul><ul id="39cba000-3db9-461e-a56f-0235489b31a9" class="bulleted-list"><li style="list-style-type:disc">Assumes a deterministic, observable &quot;environment&quot;</li></ul><ul id="14ad978d-0ea8-4e4c-bbde-717e02549129" class="bulleted-list"><li style="list-style-type:disc">Assumes examples are given (selection of examples for training set is challenging)</li></ul><ul id="790441c3-339a-4c2d-acea-add537c39f4b" class="bulleted-list"><li style="list-style-type:disc">In its simplest form: learning a function from examples</li></ul><ul id="98d3de07-afd9-432f-a53b-e438431f5faa" class="bulleted-list"><li style="list-style-type:disc">Assumes agent <em>wants</em> to learn</li></ul></div></p><p id="ce12260b-2b11-4c61-a1da-98d31b33154e" class="">
+</p><h2 id="f402386c-70d7-4512-b197-002cd71b47c8" class="">Types of feedback (&quot;Learning Modes&quot;)</h2><p id="fb4507c7-ce51-43f0-961f-32300414d2b1" class="">There are 3 <em>feedback types = 3 learning types</em></p><p id="20a0fe38-e87a-4e6c-83c0-1ce7d03c1a98" class=""><mark class="highlight-teal">unsupervised learning</mark><div class="indented"><p id="34fb68ca-b26d-406c-ad8d-7bf91cb44a65" class="">agent learns patterns in input, without feedback or labeled examples to learn from.</p><p id="87ca3eb4-88f9-49e9-98b8-8a5f5f0330ed" class="">ie. clustering - finding useful clusters in input examples, concept formation</p></div></p><p id="857de2ad-7e9d-4c6c-9d36-6955a936805e" class=""><mark class="highlight-teal">reinforcement learning</mark><div class="indented"><p id="82faed65-1394-4df2-856d-8b1bed11a646" class="">With rewards / punishment. - agents decides which actions were most responsible for it.</p></div></p><p id="739e94ad-f9f1-4c45-b1aa-bdf00d38efc3" class=""><mark class="highlight-teal">supervised learning</mark><div class="indented"><p id="b53689b2-3aae-4423-8429-75d3452b39af" class="">Input-output pairs that agent learns a function from.</p></div></p><p id="3e8c1fd0-1a23-4f53-9343-4696ec621bfc" class=""><mark class="highlight-teal">semi-supervised learning</mark><div class="indented"><p id="94d02cf0-5409-4292-8bf3-0125e369779c" class="">A back and forth between supervised and unsupervised learning - agent is given a few labeled examples that it must guess the unlabeled examples of a large collection from.</p><p id="9307d276-4feb-44ed-ac94-8cc8f1f8a0a9" class="">Mix of labeled and unlabeled examples but not all the given labels are correct - there is systematic noise in the data, that agent must detect and consider without supervision.</p></div></p><p id="7e07cb3c-94de-4e88-9ab6-aa18411f3ecc" class="">
+</p><h2 id="6ec8a721-8646-41ba-b52a-cda48eb11c1b" class="">Supervised Learning</h2><p id="8e3c0d36-1639-4226-9e3f-855b0f49d00a" class="">the aim is to find a simple hypothesis that is approximately consistent with training examples</p><p id="afce288b-fe9f-46df-8896-6e4ab631ac50" class="">
+</p><p id="9991112b-b26b-4a3f-8f98-6828f699015a" class=""><mark class="highlight-teal">Training set (of data points)</mark></p><p id="1a2c899a-00ac-4606-8ab7-c7ecc0e881ff" class="">Example input-output pairs: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mo stretchy="false">(</mo><msub><mi>x</mi><mi>n</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(x_1, y_1), (x_2,y_2), ..., (x_n,y_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="e6472c0b-4c09-4fda-a5dd-2e252c910eba" class="">Where each <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> was generated by an <mark class="highlight-teal">unknown function </mark><mark class="highlight-teal"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">f(x) = y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span></span><span>﻿</span></span></mark><div class="indented"><p id="6f49f410-75f1-4a84-a2c5-3801428885d1" class="">
+</p></div></p><p id="b9e57d75-ab48-4bc1-b30d-c46b83311bb7" class=""><mark class="highlight-teal">Task of agent</mark></p><p id="1f575b62-61e1-44be-b89d-328b46d8cd78" class="">Discover a function<mark class="highlight-teal"> </mark><mark class="highlight-teal"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">h</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-teal"> hypothesis </mark>that approximates the true function <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span>.</p><p id="4566adb3-d093-4db2-b5cb-9a23f882f618" class="">Learning: search through the <mark class="highlight-teal">hypothesis space </mark><mark class="highlight-teal"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="script">H</mi></mrow><annotation encoding="application/x-tex">\mathcal{H}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathcal" style="margin-right:0.00965em;">H</span></span></span></span></span><span>﻿</span></span></mark> for one that performs well even for examples beyond the training set.</p><p id="4e5f3ae7-8b5f-4203-a977-bfa16d0d0583" class="">We say a problem is <mark class="highlight-teal">realizable </mark>if the <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>∈</mo><mi mathvariant="script">H</mi></mrow><annotation encoding="application/x-tex">f\in \mathcal H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathcal" style="margin-right:0.00965em;">H</span></span></span></span></span><span>﻿</span></span>. (We dont always know because the true function is unknown).</p><p id="3338176d-6aac-45df-9cb0-823d166c5d3c" class=""><mark class="highlight-teal">Variations</mark><div class="indented"><ul id="4d8c5be9-318a-46d3-89ff-47554fa5a4e6" class="bulleted-list"><li style="list-style-type:disc">If function is stochastic we have to learn a <em>conditional probability distribution </em><em><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>Y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(Y|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">Y</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></em><em>.</em></li></ul><ul id="983639d7-ba24-4b4d-a78b-692426573b44" class="bulleted-list"><li style="list-style-type:disc">If output is out of a finite / discrete set of values then the problem is called <mark class="highlight-teal">boolean / binary classification.</mark></li></ul><ul id="e9ce1acc-ac93-4954-abf5-fc5d88e776bd" class="bulleted-list"><li style="list-style-type:disc">If output is a number the problem is called <mark class="highlight-teal">regression</mark>.<em> </em> </li></ul><p id="7512c253-d1f5-4ae5-881a-2174fe50e9e8" class="">
+</p></div></p><p id="b84aafec-32ad-45bf-8670-3d20c5b26e49" class=""><mark class="highlight-teal">Test set</mark></p><p id="bf462664-53d5-4f9e-8917-996351a410e5" class="">Measures the accuracy of the hypothesis.</p><p id="da0d2874-1490-4f4a-ab7a-d2dbfa5004da" class="">If it performed well one says it <em>generalized</em> well.</p><p id="eebc3027-62d1-4cdc-90fc-a1f32dadf7d1" class="">If the hypothesis agrees with all the data then it is called a <em>consistent hypothesis</em>.</p><p id="33e9e443-fd57-4d42-b9d2-ef2d4d76b47b" class="">
+</p><h2 id="4620c898-c650-4902-a75f-f971665599cc" class="">Choosing hypotheses</h2><p id="5c625076-f202-47a8-ad0a-8e07aa699d6d" class=""><mark class="highlight-teal">Curve fitting</mark></p><p id="c6401e5b-c05b-4578-bb35-a3b1d5be71d4" class="">Were searching a hypothesis function for this example.</p><ul id="ece7dd79-f154-4f9f-a419-2a03d27bc315" class="bulleted-list"><li style="list-style-type:disc">No consistent straight line for this data set.</li></ul><ul id="4a485112-e36b-4179-9f98-71687d0d766d" class="bulleted-list"><li style="list-style-type:disc">6 data points → 5th degree polynomial for exact fit but does not generalize well.</li></ul><figure id="abc655fe-e580-4b5e-bf72-a3dd5500552e" class="image"><a href="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%202.png"><img style="width:192px" src="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%202.png"/></a></figure><p id="9bcb30f7-6fb8-4164-bfbd-3fd2d1bea651" class="">
+</p><p id="f3235857-dc31-4c7d-8ca4-3b42e0a34c2a" class=""><mark class="highlight-teal">Ockham&#x27;s Razor: &quot;Maximize simplicity under consistency&quot; </mark></p><p id="457fb38e-93a5-4809-8a73-2623ee17cbf7" class="">How do we choose among all the consistent hypothesis in the hypothesis space? → We choose the most simple one.</p><p id="73b96c6f-29d3-48a2-8bd5-3a05b85b1719" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">h</span></span></span></span></span><span>﻿</span></span> is consistent if it agrees with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span> on all examples.</p><p id="6c3ed96b-57ca-4a32-ab9c-a0d780786482" class="">
+</p><p id="46129ddc-5719-4f66-b41f-18952da709ed" class=""><mark class="highlight-teal">Tradeoff between complexity and simplicity</mark></p><p id="f826d968-2c3b-4577-8c8f-2d769fe178e3" class="">precision, fitting training data <strong><mark class="highlight-teal">vs.</mark></strong><strong> </strong>generalizing, finding patterns </p><p id="455269a5-6818-4c75-bba9-9f8511848a80" class="">complex hypotheses - fit the data well<mark class="highlight-teal"><strong> vs. </strong></mark>simpler hypotheses- might generalize better</p><p id="44c5b22d-28f8-4cdc-b717-af4b2bada887" class="">
+</p><h2 id="220f6004-18de-4d1d-8613-c407dca99ab2" class="">Choosing hypothesis spaces</h2><p id="6fd1db08-f745-4e5a-a16e-a6591c081cbe" class="">Why not choose the space of all possible turing machine instructions? Then we would cover every possible computable function.</p><p id="bd3d0dff-902b-4748-9f2b-0f69aa82704c" class="">We want our hypothesis <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(x) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> to be useful and fast to compute.</p><p id="d74135ea-53d1-4cb0-b4e0-b06fad7496ca" class="">Fitting a straight line to data is an easy computation but fitting turing machines is impossible.</p><p id="f842e2ea-f6c4-4a37-8c86-a6de2dc14021" class="">
+</p><p id="f4bcf4d3-91cf-4b45-bb2c-f9fba55d3952" class=""><mark class="highlight-teal">Tradeoff between expressiveness and complexity</mark></p><p id="e4ad30b2-c9ae-494f-90e4-ab0fb4712054" class="">expressiveness of the hypothesis space (quanitity) <strong><mark class="highlight-teal">vs. </mark></strong>finding a good hypothesis in it (quality)</p><p id="2735108d-8208-4cc4-b6b9-4f4b8925ed00" class="">
+</p><h1 id="e1fe2359-61f2-4c71-abcc-c6f7489591df" class="">Generalization and overfitting</h1><p id="dff6f862-a78c-4c8c-ad1b-667f1d1408a6" class="">The DTL algorithm will use any pattern it finds in the examples even if they are not correlated.</p><p id="67e7f2fc-354b-4d53-99ca-57084c1e5b35" class=""> </p><p id="f2f15146-218c-4965-be8c-8e9059f070e4" class=""><mark class="highlight-teal">Overfitting</mark></p><p id="2be55c42-a411-45a0-89cf-cb408d27fd5d" class=""><mark class="highlight-gray">occurs when a function is too closely aligned to training set - then it does not generalize well. </mark></p><p id="f58bd389-4532-4710-bd0d-e2949ceb48cd" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> likelyhood of overfitting if  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> hypothesis space, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> number of inputs / attributes (hypothesis may consider irrelevant attributes ie. color of dices)</p><p id="43127325-bed4-47ba-b2a5-7e7bdb982c74" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span> likelyhood of overfitting if  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> examples.</p><hr id="3b92936e-9548-4ca2-a9b0-67c0c99f675e"/><p id="89c2ab3a-b271-4458-808e-a769a3ff7de8" class="">To lower likelyhood of overfitting:<div class="indented"><ul id="fa455f12-cd81-4b10-97ef-bcce76ed9dc3" class="bulleted-list"><li style="list-style-type:disc">Ockham&#x27;s Razor: &quot;Maximize simplicity under consistency&quot;<p id="776da568-7416-4730-962f-d52fe8001089" class="">We choose the most simple consistent hypothesis. - simpler hypotheses might generalize better</p></li></ul><ul id="6e45ad4f-6fe1-4df9-ae52-b69b11da587e" class="bulleted-list"><li style="list-style-type:disc">Choose hypothesis space with lower expressiveness</li></ul><ul id="b3af44a5-a8d2-4327-8bc4-621613b8b45d" class="bulleted-list"><li style="list-style-type:disc">remove unneccessary attributes from input</li></ul><ul id="cee8607c-1404-4102-a75f-5c9f883e57e7" class="bulleted-list"><li style="list-style-type:disc">use more examples</li></ul><ul id="23253633-263e-4a9f-b960-d321b62d1671" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Cross-Validation</mark>: Use part of the data for training, part for testing</li></ul></div></p><p id="22872333-13d5-4be5-9419-e8ac200af83b" class=""><mark class="highlight-teal">Overfitting</mark></p><p id="1b8a860d-fcf8-48b1-894e-a9961a9613d2" class=""><mark class="highlight-gray">occurs when a function is too closely aligned to training set - then it does not generalize well. </mark></p><p id="4f9c00b4-1720-4e34-876a-e6548269ecf9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> likelyhood of overfitting if  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> hypothesis space, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> number of inputs / attributes (hypothesis may consider irrelevant attributes ie. color of dices)</p><p id="cc6df0f6-f46b-4a37-80b6-c88e8f71c594" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span> likelyhood of overfitting if  <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\uparrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↑</span></span></span></span></span><span>﻿</span></span> examples.</p><hr id="3c0dac46-0d35-49f8-b876-3180026ae591"/><p id="c7088f20-79f4-4a1b-9486-92d577a8b516" class="">To lower likelyhood of overfitting:<div class="indented"><ul id="27ba88ed-4ee0-46bd-aebd-c1156ab66271" class="bulleted-list"><li style="list-style-type:disc">Ockham&#x27;s Razor: &quot;Maximize simplicity under consistency&quot;<p id="e44c5eef-9faf-4bce-9ac4-046d2b77cd27" class="">We choose the most simple consistent hypothesis. - simpler hypotheses might generalize better</p></li></ul><ul id="c2e6a78d-17ce-41ef-ad55-bc26de044ef3" class="bulleted-list"><li style="list-style-type:disc">Choose hypothesis space with lower expressiveness</li></ul><ul id="513d476a-11e3-4ca9-96ae-6dedb790d230" class="bulleted-list"><li style="list-style-type:disc">remove unneccessary attributes from input</li></ul><ul id="5b24a9bc-dfc9-483e-9afa-bf44425ce1e1" class="bulleted-list"><li style="list-style-type:disc">use more examples</li></ul><ul id="88dcdd77-bb68-4433-8bdb-283ab88c129e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal">Cross-Validation</mark>: Use part of the data for training, part for testing</li></ul></div></p><p id="19b18862-7fb9-4a30-b5f3-299d72931b73" class="">
+</p><p id="87a61fd0-3c30-405e-9943-2aa92c42e431" class="">
+</p><p id="5b7e5a3e-ce38-47dc-a02e-8bc4e234f907" class=""><mark class="highlight-teal">Decision tree pruning</mark></p><p id="93903b20-5c82-44d2-9252-d888948f9a5e" class="">Combats overfitting, eliminates nodes that are not clearly relevant after tree got generated.</p><ul id="01836d0d-87c6-43d5-80bc-312f6f64a8c0" class="toggle"><li><details open=""><summary>How do we detect nodes that is testing an irrelevant attribute? </summary><p id="37b65fdd-baeb-4e51-b08c-67f876035485" class="">Imagine being at a node with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">p_k </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> positive and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">n_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> negative examples, if the attribute is irrelevant we would expect it to split the examples into subsets that have roughly the same proportion of positive examples as the whole set.</p><figure id="2242212d-9f75-4126-8d81-0c2b19013f15" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><msub><mi>p</mi><mi>k</mi></msub><mrow><msub><mi>p</mi><mi>k</mi></msub><mo>+</mo><msub><mi>n</mi><mi>k</mi></msub></mrow></mfrac><mo>≈</mo><mfrac><mi>p</mi><mrow><mi>p</mi><mo>+</mo><mi>n</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{p_k}{p_k+n_k} \approx \frac{p}{p+n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.988em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1075599999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.988em;vertical-align:-0.8804400000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1075599999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804400000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure></details></li></ul><p id="5ce12078-5842-4aba-969c-fc77cf0535da" class="">
+</p><p id="ee8e6127-569e-4e9f-a41c-3b2076eeb263" class=""><mark class="highlight-teal">Splitting after sufficient information gain</mark></p><p id="85265dbf-5a14-4f7a-9d37-43a5dc670bb8" class="">Now we know what amount of gain is insufficient, but what information gain is suffucient for splitting on a particular attribute? → statistical <em>significance test</em>.</p><p id="c80bbc3b-6bea-4996-8f48-affbf6236dca" class="">
+</p><h2 id="005e89ea-1016-4d85-8585-d36a57a68fc1" class="">Measuring Learning Performance</h2><p id="f4a3d5fd-297b-4f6d-8e5b-c734b32580db" class="">How do we know that <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>≈</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">h ≈ f </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">h</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span>? (Hume’s Problem of Induction)</p><p id="c8c26295-742a-47a5-98ee-14374710583b" class=""><mark class="highlight-teal">Learning curve </mark>= % correct on test set when using <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">h</span></span></span></span></span><span>﻿</span></span></p><p id="8dc498bb-92e3-492d-8a97-554c6f98650c" class="">
+</p><p id="c132d80a-7e77-4d47-8961-fe4f8556cc98" class="">Learning curve depends on <mark class="highlight-teal">realizability </mark>of the target function.</p><p id="d1d53000-e9d4-4dac-81e3-61cc94f70631" class="">Non-realizability can be due to<div class="indented"><ul id="6fab9e4f-37c3-4476-91b4-15807d4f89c4" class="bulleted-list"><li style="list-style-type:disc">missing attributes</li></ul><ul id="8a4de52e-3771-43e1-acf1-cdef44c9f405" class="bulleted-list"><li style="list-style-type:disc">too restrictive hypothesis space (e.g.,linear function)</li></ul><ul id="d71b246b-a71f-4ce0-95f9-642537a23652" class="bulleted-list"><li style="list-style-type:disc">redundant expressiveness (e.g., loads of irrelevant attributes)</li></ul></div></p><figure id="f45e70d1-578d-440a-bff6-6fcc2deef5c7" class="image"><a href="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%203.png"><img style="width:288px" src="Learning%20a47af54e0eff4eefadbe378bbe683f5f/Untitled%203.png"/></a></figure></div></article></body></html>

@@ -1,0 +1,849 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CSS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19b3772d-1cdb-4495-887b-628985adb10a" class="page sans"><header><h1 class="page-title">CSS</h1></header><div class="page-body"><nav id="aaa90313-f431-46b3-bdb6-896c63b97c4b" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#43712272-0ef7-49a1-990f-878f1399b73e">CSS</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#02a84570-0138-4e0a-8071-e9af7ecf2881">Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2223bbd7-755a-47e4-8b55-0374e2f3c157">Sizes and Proportions</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d8fb4d36-e6fa-4d64-a3ae-95753adf4e25">The Box Model </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#14dca839-bd15-4cbf-bab3-af93570d8193">Layouting</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dc089eb0-7d58-471d-8cb7-789d7e4acb7e">&lt;display-outside&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#dbb18956-7a6a-47cb-b8a0-2c5ec75af682"><strong><code>block</code></strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3bc19699-d2aa-4f19-9b08-460888c4f972"><strong><code>inline</code></strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7acb61ef-b549-4739-91ea-7f534efdec2e">&lt;display-inside&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9e1945ec-57cd-4aa1-9ec5-83473f15970d"><code><strong>flow</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#dcaa2f7a-408b-4d7b-b28d-ef683cf2d619"><code><strong>flow-root</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#892ab072-3c70-40a5-85c6-ae24c8ba323c"><code><strong>table</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#39d50655-86c0-4b66-88b6-e1d0d24731bb"><code><strong>flex</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#213e8d66-1c6f-4009-aec5-6a312ccae320"><code><strong>grid</strong></code></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0239efa4-40d5-44a2-b6d8-ebf82a23f695"><code><strong>ruby</strong></code><strong></strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#66568d59-994a-42ea-9a37-84b5db058c86">Holy Grail Layout</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3ade7fdc-237a-4bca-8406-feddbebb6fd5">Responsive Design</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#26c9d14a-c142-4fe5-aa2c-00d9c9d0ab17">Media Queries</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e37c772b-c5e2-4efb-a795-764f9998c3ae">Sources</a></div></nav><p id="fd3efa98-99c7-4d57-8322-b9dde8c658ce" class="">
+</p><h1 id="43712272-0ef7-49a1-990f-878f1399b73e" class="">CSS</h1><p id="8fb50d49-5f1f-4f60-b520-adc3945cb0bf" class="">Cascading Style Sheets </p><ul id="953a2bff-88e5-4ceb-8c3c-35b4aead0a6e" class="toggle"><li><details open=""><summary>Integration into HTML</summary><p id="9ea0c777-c212-4af1-b1f5-7bc17f977036" class="">External (prefered)<div class="indented"><p id="abddad11-4d9f-4dc9-bd7e-f795226cce8b" class="">linking to an external CSS file in <code>&lt;head&gt;</code></p><p id="6ddb5998-84e2-44e3-b900-a771cd896ff9" class="">local link: <code>&lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</code></p><p id="35518815-cf2c-4385-83c6-8a45dc7d3703" class="">If semantics used correctly in HTML: <code>&lt;link&gt;</code> to external website</p></div></p><p id="c20c4fcb-00e1-4b4f-a83e-3e4290e4c1c3" class="">
+</p><p id="b09b67b8-a4b3-47bb-a9be-8b8f9facba8d" class="">Internal<div class="indented"><p id="5027bb0e-5eb4-43fa-836d-395e76d33a6e" class=""><code>&lt;style&gt;</code> in <code>&lt;head&gt;</code></p><p id="e99b4345-a0e5-4e1e-b12b-f85171063846" class="">overwrites any external CSS</p></div></p><p id="59d4b58d-31e4-4205-be18-81e23cd52a97" class="">
+</p><p id="d7cc7d5d-a496-4c42-9573-713f45f31aa8" class="">Inline<div class="indented"><p id="ee0aa303-f0db-4b7a-962e-455066b11ebb" class="">In HTML elements <code>&lt;tagname style=&quot;property:value;&quot;&gt;content&lt;/tagname&gt;</code></p></div></p></details></li></ul><p id="2e146c2a-c9c0-4ba8-8e4f-4d90ef4d5538" class="">Seperation of core concerns:<div class="indented"><ul id="fec7701d-42ec-4454-8499-7ce97b5f6b23" class="bulleted-list"><li style="list-style-type:disc">structure / content (markdown document, HTML)</li></ul><ul id="9dc77b44-98d9-4398-bfb3-2b6f94e7a6e7" class="bulleted-list"><li style="list-style-type:disc">style / design / layout</li></ul></div></p><p id="a9a3eb80-1f68-4d1c-be45-0af28fe21613" class=""> </p><h1 id="02a84570-0138-4e0a-8071-e9af7ecf2881" class="">Syntax</h1><ul id="3e1712c7-7427-4e77-99f7-51206230a401" class="toggle"><li><details open=""><summary>Selectors</summary><p id="abefb3b8-7031-44be-8690-1c101649fd8c" class="">select HTML elements that we change the attribute of <code>selector { property:value; }</code></p><p id="49d91f5d-cb4b-48bf-8ac9-76eca0cad980" class="">Selectors can be grouped by separating them via comma <code>&#x27;,&#x27;</code></p><p id="4e57735b-64b1-469f-8ba5-bef4afcebb5d" class=""><mark class="highlight-teal">Specificity </mark>determines style when multiple selectors match: <a href="https://specificity.keegan.st/">https://specificity.keegan.st/</a><div class="indented"><p id="2583f17e-93c0-4efe-b10d-6d2fde33ec29" class="">Most specific rules wins.</p></div></p><p id="b94e87f0-7b24-4d0e-afb8-ad117e9485b3" class="">
+</p><ol type="1" id="74fda2fc-a55d-419a-8bb6-1623eef64cec" class="numbered-list" start="1"><li>Type Selector		group via name<pre id="f2c15bd0-a5e2-425e-bf85-ccb380fcd222" class="code"><code>&lt;h1&gt;...&lt;/h1&gt;
+h1	{	font-size:	12pt; }</code></pre></li></ol><ol type="1" id="cfb48cb6-98ac-4ac5-8f8e-587a84a9bacc" class="numbered-list" start="2"><li>ID Selector		unique element via id <code>&#x27;#&#x27;</code><pre id="666d6d92-d531-4513-8d1f-3893db57fa42" class="code"><code>&lt;p id=&quot;first&quot;&gt;…&lt;/p&gt;
+#first {	color:	red; }</code></pre></li></ol><ol type="1" id="2aeb0d42-4cd3-4f00-b697-86f658ad93f5" class="numbered-list" start="3"><li>Class Selector		group via class <code>&#x27;.&#x27;</code><pre id="a80e5621-27bf-4025-a52d-45e7543430a9" class="code"><code>&lt;p class=&quot;small&quot;&gt;…&lt;/p&gt;
+&lt;h1	class=&quot;small&quot;&gt;…&lt;h1/&gt;
+.small {	font-size:	5pt; }</code></pre></li></ol><ol type="1" id="89c014c9-9036-41f1-bbd2-b900bf565f80" class="numbered-list" start="4"><li>Descendants		Separate using space <code>&#x27; &#x27;</code><pre id="30455c55-11ee-462e-8cf6-f8832216c5c7" class="code"><code>body	p	{ ...	}</code></pre></li></ol><ol type="1" id="69eff35e-a396-4808-a44e-2fba2c4281ae" class="numbered-list" start="5"><li>Children			Separate using <code>&#x27;&gt;&#x27;</code><pre id="2c199cbc-77af-442e-9ea3-d5b748496904" class="code"><code>body &gt; p { ...	}</code></pre></li></ol><ol type="1" id="ad1e1b2c-8a44-4bb6-9aa2-cfeec585d8b5" class="numbered-list" start="6"><li>Siblings			Separate using <code>&#x27;~&#x27;</code><pre id="81d110b6-7665-41dd-bc1a-d4c7f8f2a076" class="code"><code>span ~ em { ...	}</code></pre></li></ol><ol type="1" id="a1fe60c8-458e-404d-ac7b-ea0cc410e72f" class="numbered-list" start="7"><li>Adjacent Siblings	Separate using <code>&#x27;+&#x27;</code><pre id="1dd1457d-58ba-4fea-9af8-73ddc49c62a2" class="code"><code>p	+	div	{ ...	}</code></pre></li></ol><ol type="1" id="4db270a4-c8a1-4caf-b991-45f5fcfb149c" class="numbered-list" start="8"><li>Attribute	 		group via <code>[att=val]</code><pre id="42c10c84-c4cc-45f9-bb09-54bbbab278e2" class="code"><code>h1[title=&quot;a&quot;] { ...	}
+input[invalid] { ... }</code></pre></li></ol><ol type="1" id="e3f95385-f8f5-4a15-b91d-382373faaadf" class="numbered-list" start="9"><li>Pseudo Class<p id="4278244e-601b-49a6-af6d-c9c98cbec8ee" class="">Pseudo Class: i.e. when cursor hovers over a link <code>a:hover</code> selects <code>&lt;a&gt;</code>
+:nth-child, :first-of-type, [attribute*=value], …</p><pre id="4c20597b-6176-498f-9346-6c4059445111" class="code"><code>p:nth-child(2) {	...	}
+p:only-child { ... }</code></pre></li></ol><ol type="1" id="47acced4-44f2-411f-b688-bd897333ba23" class="numbered-list" start="10"><li>Negation			<code>[attribute*:value]</code><pre id="c10a3ea9-5cc2-4d3d-a21f-e147ddd3c942" class="code"><code>body *:not(p) { ... }</code></pre></li></ol><ol type="1" id="794d73f4-6f2b-432d-b64c-1bc24819ba64" class="numbered-list" start="11"><li>Every element		<code>*{ ... }</code></li></ol><p id="360f8eab-1b1d-41b5-970a-e0af0d412f97" class="">
+</p></details></li></ul><ul id="f2bdfe1e-56df-45b8-abd0-077f3d55b1e4" class="toggle"><li><details open=""><summary>Basic Properties</summary><p id="d9bead85-8b8a-48ba-a0a0-76af9867d201" class="">Formatting Text and Fonts<div class="indented"><pre id="3d30ae47-3011-47ef-ac8f-736dfda62483" class="code"><code>font-family:	  Arial, sans-serif;
+font-style:	    italic;
+font-size:	    1.2em;
+font-weight:	  bold;
+color:	        #00ff00;
+line-height:	  120%;
+text-alignment:	center;</code></pre></div></p><p id="adc14335-7f9e-418d-8ae5-34b36803acee" class="">
+</p><p id="91d8556e-c0f0-425b-8072-160f175ab74e" class="">Background<div class="indented"><pre id="6e666ef5-37d7-44cd-ad99-b1c35d209003" class="code"><code>background-color:	   rgb(250,20,16);
+background-image:	   url(&quot;bg.jpg&quot;);
+background-repeat:	 repeat-x;
+background-position: right	top;</code></pre></div></p><p id="bafc7a78-1595-4e7e-a7f3-cb62a5625329" class="">
+</p><p id="9b6b5385-c203-4fea-ac9d-41b70cdd91a3" class="">Lists<div class="indented"><pre id="436555b4-1991-48b1-83b4-29d94f736a71" class="code"><code>list-style-type:	circle;
+list-style-image:	url(&#x27;logo.gif&#x27;);</code></pre></div></p><p id="96263642-79dc-433f-8c1e-0ee3c6eb8f03" class="">
+</p><p id="5422ba55-ec10-4a8f-bf83-03d0a87d1233" class="">Borders<div class="indented"><pre id="3e9886a6-c71a-4042-9e75-15287f6bed70" class="code"><code>border:	        2px solid #A1A1A1;
+border-radius:  25px;
+box-shadow:     3px	3px	3px	#FF9900;</code></pre></div></p><p id="1ef9e229-6924-44c4-a5d3-7ddb94d43502" class="">
+</p></details></li></ul><ul id="b0fb55b6-0f9b-4f69-a7c2-2fb039858d27" class="toggle"><li><details open=""><summary>(Global) Variables</summary><p id="15065d43-78e8-4b60-877d-5f0f92921933" class="">Custom Property Syntax <code>--name: value</code> </p><p id="ea4b4ba3-7c53-42b3-ae02-178f77b1e0b4" class="">Has to defined in a certain scope (selector)</p><p id="9b0cb47f-fe18-4fb8-86db-49ee72987dea" class="">Selector that property is defined in determines scope of usage
+▪ <code>:root</code> Pseudo class is a common best practice</p><p id="ffec1657-2872-4c91-8f10-c07d3abd997b" class="">
+</p><p id="7aa3fd42-1055-4b04-a74e-45bcc31c108d" class="">Fallback values (if name does not exist): <code>var(--name, black)</code></p><pre id="8d6088c4-5d08-43cb-a459-1892f30c3884" class="code"><code>h2 {
+		--alarm-color:	darkred;
+}
+:root {
+		--alarm-color:	crimson;
+}</code></pre><p id="34495a55-6d34-4e11-94b2-7e89c04dcb87" class="">
+</p></details></li></ul><ul id="e03ca20a-7c90-453c-9d61-fd6d29c94d89" class="toggle"><li><details open=""><summary>Pseudo Classes</summary><p id="a7836f8d-c534-4aeb-8f02-5a644720a5f6" class="">Use information present outside the document tree based on: </p><ul id="027a5d84-12ae-47e2-a1b5-d19beaf5e04b" class="bulleted-list"><li style="list-style-type:disc">form status<p id="a51161fe-ef73-4d42-891e-7dcc9121655a" class=""><code>:hover, :focus</code> 		Element the user hovers the mouse over / has selected via tabbing</p><p id="694e5752-9493-4fd2-93c7-14ff3d68c618" class=""><code>:visited, :link</code> 		All visited/unvisited links</p></li></ul><ul id="c857327e-69cc-48a7-85b6-f4dd3c572321" class="bulleted-list"><li style="list-style-type:disc">user input<p id="d3ccf769-c459-4158-a4dd-dbf2ef0be9c3" class=""><code>:enabled, :disabled</code>	Whether input in an element is allowed or not</p><p id="42861f42-d5da-49d1-af6d-ec848a0b937b" class=""><code>:required, :optional</code>	Whether inputs are required or not</p><p id="a0144861-97d7-489d-b7be-3a66d04f577b" class=""><code>:valid, :invalid</code>		Whether form / input has valid input or not</p></li></ul><ul id="bb574775-3c2d-4ec3-a71f-2347a73d4c36" class="bulleted-list"><li style="list-style-type:disc">DOM position<p id="2a3eeaad-f8ce-4fd6-bfaa-9202c0d457e3" class=""><code>:nth-child(n), :nth-last-child</code>	If element is the n-th child of it&#x27;s parent</p><p id="f5fab4ee-e94b-4572-b8a8-60f25af87e9c" class=""><code>:nth-of-type(n)</code>				If element is the n-th child of the same type of it&#x27;s parent</p></li></ul></details></li></ul><ul id="4c755350-5c2c-48ed-88b2-97bfb85d3b52" class="toggle"><li><details open=""><summary>Pseudo Elements</summary><p id="99f4ea11-645c-4a14-a064-2238ab0719f9" class=""><code>::first-line, ::first-letter</code> 	First letter or line</p><p id="060671e7-aef6-47f3-9369-89f2fc4e0b1a" class=""><code>::selection</code>					Current selection</p><p id="b5ac0dff-f688-41b1-82ff-6e1976ba3f7c" class=""><code>::before, ::after</code>				Content inserted before or after the specified element</p></details></li></ul><p id="5ad4e324-3723-40d0-a3a9-bf731358f79a" class="">
+</p><h1 id="2223bbd7-755a-47e4-8b55-0374e2f3c157" class="">Sizes and Proportions</h1><ul id="42a3998a-a906-4e0a-af24-8783a8930b16" class="toggle"><li><details open=""><summary>Absolute values  - physical or pixel units</summary><p id="0337793f-dc2e-42f1-9e68-49c8707c5315" class="">For fixed sized rendering (printed pages, images)</p><p id="9743b235-e114-46b5-a538-a1709e90dfb0" class="">Inches (in), Centimeters (cm), Millimeters (mm), Points (pt), Picas (pc), Pixel (px)</p></details></li></ul><ul id="14e587d1-1179-4edf-8904-263a58c4fc93" class="toggle"><li><details open=""><summary>Relative values - relative to: parent, font or viewport size</summary><p id="36862b5f-c7f3-46b7-8205-4f1266bd3269" class=""><span style="border-bottom:0.05em solid">Parent Size</span><div class="indented"><p id="f2f6332a-32f7-4ad4-b45a-d469004071b8" class=""><code>%</code> (relative to parent)</p><p id="bb880b7d-8ef7-405d-91be-3b8d88c7c043" class="">
+</p></div></p><p id="ccfbcb19-dccb-4149-82c3-87c9823798e6" class=""><span style="border-bottom:0.05em solid">Font Sizes</span><div class="indented"><p id="61fa9147-7ce8-4c34-a3ac-8b7fb17e7ba7" class="">Can be used for anything but rely on font sizes</p><ul id="e4fe7713-99b3-44e0-ba8c-cf8b56b73690" class="bulleted-list"><li style="list-style-type:disc"><code>em</code>: relative to the parent element (which also could be the html)</li></ul><ul id="0f50d35f-cefd-44b1-92ff-92a099c5c771" class="bulleted-list"><li style="list-style-type:disc"><code>rem</code>: relative to root element (&lt;HTML&gt;) font size.<p id="ea8ebd0c-7944-4ead-a04c-eb50a42f6b80" class="block-color-gray">a) 16 px by default</p><p id="18b385a9-57f2-4b0a-a68f-0af0afd64f24" class="block-color-gray">b) set by the browser settings<div class="indented"><p id="7fb1fec4-a654-4259-980f-7ebe9efc84d7" class=""><mark class="highlight-gray">Good for accessibility because it is convenient for the user.</mark></p><figure id="2733ba69-bc67-43d4-8d85-72a97485db2d" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled.png"><img style="width:288px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled.png"/></a></figure><p id="95c6afe4-518a-4e0b-b7c4-f8da3d0a456a" class=""><mark class="highlight-gray">rem is more predictable than em and more useful for grids.</mark></p></div></p><p id="b31bdf4a-36cf-44db-bd80-1f38687e9f39" class="block-color-gray">c) sized by ourselves - like so:<div class="indented"><pre id="4eb18e21-3669-4d51-88d7-38f6736fea05" class="code"><code>html{
+	font-size: 10px;
+}</code></pre></div></p></li></ul><ul id="7478dcca-77a6-484c-a7b4-c8f6e231ae51" class="bulleted-list"><li style="list-style-type:disc"><code>ex</code> (Thex height): relies on font-family.<p id="0290ad8b-bfb8-4662-b22e-9f506d27d8aa" class="block-color-gray">The height of the lower-case x of that font.</p><p id="ab293012-a357-4874-b458-cd0ba0cb4cb1" class="block-color-gray">Often times, this is about at the middle mark of the font.</p></li></ul><ul id="cd90c8d7-533f-4c15-833e-f1c4280a1f79" class="bulleted-list"><li style="list-style-type:disc"><code>ch</code> (character unit): relies on font-family.<p id="eafec9b1-c352-4953-8ef0-774a01000f2d" class="block-color-gray">The width of the glyph for “0”.</p><p id="3952b72d-4c4f-44cf-9b39-552e806c88a3" class="block-color-gray">In other words, if I were to create a floated element with just a “0” and no whitespace between it, then would be precisely 1ch.</p><p id="d337c1de-fe48-4b73-8911-83bca9d1de90" class="block-color-gray">Therefore: width: 40ch; can always contain a string with 40 characters in that particular font.</p></li></ul></div></p><p id="5c6c8c4d-7b89-44d3-8303-7029057f419a" class="">
+</p><p id="17f10f11-3332-42bc-99bb-9ccd55a62970" class=""><span style="border-bottom:0.05em solid">Viewport Sizes</span><div class="indented"><p id="305caac1-91fe-4824-938a-8768c697eabd" class="block-color-gray">Viewport - The virtual “window” / Visible area of webpage.</p><p id="40cf0df2-d3e0-463c-8cff-5e65597c6b66" class=""><code>vw</code>: percent of browser window width</p><p id="d792250e-df58-4c6c-83b1-500b4fb4db1b" class=""><code>vh</code>: percent of browser window height</p><p id="82d735e3-4b98-48ff-9962-a90916d55fd8" class=""><code>vmin</code>: min(1vw, 1vh) → chooses smaller viewport length</p><p id="acb5f5f5-e529-4155-96de-091fdf393a7b" class=""><code>vmax</code>: max(1vw, 1vh) → chooses bigger viewport length</p></div></p><p id="0be3ce91-6e90-4028-bd70-5e7761cd9ccd" class="">
+</p><p id="2f2b1499-9b53-4ab8-8e25-604a46c3e707" class=""><span style="border-bottom:0.05em solid">calculated values</span><div class="indented"><p id="616f7306-37ce-4b79-8e3e-edcd99e6fdca" class=""><code>calc</code>: Calculates value (through addition or subtraction)</p><pre id="9c20cdc7-36c9-444f-bc47-aa016866dbc8" class="code"><code>width:	calc(2.5em	–	3px)</code></pre></div></p></details></li></ul><p id="3e543906-3916-4494-bcb6-03229cb66ff6" class="">
+</p><h1 id="d8fb4d36-e6fa-4d64-a3ae-95753adf4e25" class="">The Box Model </h1><p id="114e3391-7fcf-4b44-aa09-04ccaf3f2215" class="">Everything in CSS has a box around it.</p><figure id="4f27f7fc-6d82-4b58-ba3e-cf756e1af25a" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%201.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%201.png"/></a></figure><p id="1dd85573-a691-4052-9ef8-d9a7c115a447" class=""><span style="border-bottom:0.05em solid">Block Box</span><div class="indented"><p id="657c3e11-c7d7-4a0f-8173-e0dd776e1740" class="">Examples: Headings (e.g. <code>&lt;h1&gt;</code>), <code>&lt;p&gt;</code> all use <code>block</code> as their outer display type by default.</p><ul id="3f9ae4b9-4e4c-4cc8-b595-62f5bc511eb7" class="bulleted-list"><li style="list-style-type:disc">breaks new line</li></ul><ul id="d6c1e14e-1601-4a7b-a81a-087279c084d6" class="bulleted-list"><li style="list-style-type:disc">Fills up 100% of available space in container in the <em>inline </em>direction. </li></ul><ul id="c090ba7b-70a7-4888-8b27-3c529100dd6e" class="bulleted-list"><li style="list-style-type:disc">Respects the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width"><code>width</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height"><code>height</code></a> properties </li></ul><ul id="c18facb8-855c-47a6-82dd-07d190e4fdec" class="bulleted-list"><li style="list-style-type:disc">Padding, margin and border will push other elements away</li></ul><p id="96cf522a-e285-4aaf-bbce-7e129e67ee39" class="">
+</p></div></p><p id="9f5b7895-f3f2-4375-8f93-0d3aa82c652e" class=""><span style="border-bottom:0.05em solid">Inline Box</span><div class="indented"><p id="551c6864-4b9c-4d5a-ab9f-ce211e2f014a" class="">Examples: <code>&lt;a&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> - inline by default.</p><ul id="0697580d-b7f2-43dd-b28f-937403841b55" class="bulleted-list"><li style="list-style-type:disc">will not break onto a new line.</li></ul><ul id="f49156a6-37c3-47d2-a0eb-c58f07a989ce" class="bulleted-list"><li style="list-style-type:disc">The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/width"><code>width</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/height"><code>height</code></a> properties will be ignored.</li></ul><ul id="8c8852e3-05a0-4e5e-96ff-df578903bf5d" class="bulleted-list"><li style="list-style-type:disc">Vertical padding, margins, and borders will apply but will not cause other inline boxes to move away from the box.</li></ul><ul id="a434b247-4b7c-4789-8236-4298caca9813" class="bulleted-list"><li style="list-style-type:disc">Horizontal padding, margins, and borders will apply and will cause other inline boxes to move away from the box.</li></ul></div></p><p id="05e442e1-967a-4e64-a2f6-e6678bff5e62" class="">
+</p><h1 id="14dca839-bd15-4cbf-bab3-af93570d8193" class="">Layouting</h1><p id="9ceb6947-aae6-4f54-891c-673113669abf" class="">CSS page layout techniques allow us to control where elements on a web page are positioned:<div class="indented"><ul id="97f9eb70-0ed8-4b96-8e9a-10ecd71e3381" class="bulleted-list"><li style="list-style-type:disc">relative to their default position in normal layout flow</li></ul><ul id="8f6910ba-3b5c-41bb-93e2-57a19b55a5ec" class="bulleted-list"><li style="list-style-type:disc">the other elements around them</li></ul><ul id="6c7d707e-3743-4d60-ab7d-8f3876bbeb53" class="bulleted-list"><li style="list-style-type:disc">their parent container</li></ul><ul id="5192fe13-e8c7-4d77-814c-c54bf2520ad9" class="bulleted-list"><li style="list-style-type:disc">the main viewport/window.</li></ul></div></p><p id="c47d8fb9-1fac-44dc-aa12-ed91e5ecab3a" class="">
+</p><p id="0ad191ff-82c1-4b43-9c69-731453b607e4" class="">The display property <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display"><code>display: &lt;mode&gt;</code></a>  sets whether an element is treated<div class="indented"><ol type="1" id="3bbbf8aa-6354-47d0-8a10-ab9db84c3930" class="numbered-list" start="1"><li>as a block or inline element (<code>&lt;outer-display&gt;</code> type)</li></ol><ol type="1" id="ee1478eb-e45a-495a-a143-e333697d2cce" class="numbered-list" start="2"><li>and the layout used for its children (elements inside the box), such as flow layout, grid or flex (<code>&lt;inner-display&gt;</code> type)</li></ol></div></p><p id="f2b66333-aaa3-4e29-8ce1-e0160b238064" class="">
+</p><pre id="75d70f62-3427-43a2-b833-a96bdb2db9af" class="code"><code>/* legacy values */
+display: block;
+display: inline;
+display: inline-block;
+display: flex;
+display: inline-flex;
+display: grid;
+display: inline-grid;
+display: flow-root;
+
+/* box generation */
+display: none;
+display: contents;
+
+/* two-value syntax */
+display: block flow;
+display: inline flow;
+display: inline flow-root;
+display: block flex;
+display: inline flex;
+display: block grid;
+display: inline grid;
+display: block flow-root;
+
+/* other values */
+display: table;
+display: table-row; /* all table elements have an equivalent CSS display value */
+display: list-item;
+
+/* Global values */
+display: inherit;
+display: initial;
+display: unset;</code></pre><p id="8c462521-66ea-4bd0-a8f8-b7808a83734f" class="">
+</p><h2 id="dc089eb0-7d58-471d-8cb7-789d7e4acb7e" class="">&lt;display-outside&gt;</h2><p id="cb1dc7eb-4169-43a6-b7b4-e4e57a6c26ee" class="">These keywords specify the element’s outer display type, which is essentially its role in flow layout.</p><p id="95e0a915-dda7-4174-ba77-f64dc6d222b7" class="block-color-gray">The direction in which words are displayed in a sentence is according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Writing_Modes">Writing Mode</a> of the document.</p><p id="449a3934-8011-42f7-9010-46b71749e801" class="block-color-gray">In English therefore, inline elements display one after the other, starting on the left, and block elements start at the top and move down the page.</p><p id="dd81e2c6-7c37-4618-9d64-8b042ef5ed8a" class="">
+</p><h3 id="dbb18956-7a6a-47cb-b8a0-2c5ec75af682" class=""><strong><code>block</code></strong></h3><p id="8356058c-779e-44aa-a9dc-d277a644a4d7" class="">The element generates a block element box.<div class="indented"><p id="3a54573e-b3f5-4e64-83fd-9d7faf6f2234" class="">Line breaks before and after the element in the normal flow.</p></div></p><p id="3c872ba5-c32d-4a70-b6b3-46c931993301" class="">
+</p><h3 id="3bc19699-d2aa-4f19-9b08-460888c4f972" class=""><strong><code>inline</code></strong></h3><p id="84d30da3-1ce2-4b6d-a120-ea3bc0c6b557" class="">The element generates one or more inline element boxes.<div class="indented"><p id="b3137fc7-7e45-4abf-a3b1-9c9b682dd962" class="">The next element will be on the same line if there is space in normal flow.</p></div></p><p id="0bf73283-06dd-4cc0-b944-c9159b39b189" class="">
+</p><h2 id="7acb61ef-b549-4739-91ea-7f534efdec2e" class="">&lt;display-inside&gt;</h2><p id="0b46b009-ed02-44e3-a8f4-526fd5361232" class="">Defines the type of formatting context that its contents are laid out in.</p><p id="3cb76d44-57f7-40ec-803e-1dfa8079abe9" class="">
+</p><h3 id="9e1945ec-57cd-4aa1-9ec5-83473f15970d" class=""><code><strong>flow</strong></code></h3><p id="6dc1fb4a-c0b9-4dfc-b12f-f613be06ad60" class="">(default - without a display-inside parameter)<div class="indented"><p id="965e500c-a181-44ea-92ae-4e53933b692d" class="">flow layout = block-and-inline layout, normal flow.</p><p id="c38e1ef4-60a4-4296-9747-282a498099b5" class="">Depending on the value of other properties - such as:</p><ul id="3a836b0d-9455-4c5c-a5d3-27c29c6db6a7" class="toggle"><li><details open=""><summary><strong><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position"><code>position</code></a></strong></summary><p id="1223e8f9-c75b-466d-a1fd-58998a6f51dd" class="">Rather used for fine tuning, not for layouts.</p><ul id="d9de53a7-12e1-4eb7-8cf8-511bd3f37348" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>position: static</code></mark><mark class="highlight-gray">	</mark>	default, normal flow</li></ul><ul id="af603365-9b71-4978-b78b-f5ecda8cf1d0" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>position: relative</code></mark> 	moving relative to its position in normal flow</li></ul><ul id="0b178ac3-d8d1-4baa-9ff2-b6c197147758" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>position: absolute</code></mark> 	moving relative to the edges of its parent element</li></ul><ul id="0b43dd4c-d17c-4445-b481-661c0567950f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>position: fixed</code></mark>		relative to the browser viewport (not another element) </li></ul><ul id="5d05dd25-f396-48fd-af28-bba9909d4f4c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>position: sticky</code></mark> 		static, elements hits an offset from viewport, then like <mark class="highlight-gray"><code>fixed</code></mark></li></ul><p id="ee10a653-28ac-4b57-b713-42ebffc8430b" class="">
+</p></details></li></ul><ul id="93ff0f86-c6a7-477b-8df4-e956510f413a" class="toggle"><li><details open=""><summary><strong><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/float"><code>float</code></a></strong></summary><p id="45dfcede-cd79-4771-be30-26831b556139" class=""><mark class="highlight-gray"><code>clear</code></mark><mark class="highlight-gray"> to turn floating off</mark></p><p id="b68dcf52-1564-4e0f-ae2c-c9e3c06fec23" class="">has 4 possible values:<div class="indented"><ul id="6d824a81-57ca-4202-8e43-0c490ec979ae" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>left</code></mark><mark class="highlight-gray"> 		</mark>Floats the element to the left.</li></ul><ul id="0c4a68b2-a343-4211-9ac5-ba845be85ab1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>right</code></mark><mark class="highlight-gray"> 		</mark>Floats the element to the right.</li></ul><ul id="edfc58e8-1e27-49fc-87e4-18f9f8cdd07d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>none</code></mark><mark class="highlight-gray"> 		</mark>Specifies no floating at all. (default)</li></ul><ul id="79278ef3-50f7-42e4-ad0e-c9b5663f35ef" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-gray"><code>inherit</code></mark><mark class="highlight-gray"> 		</mark>property should be inherited from the parent element.</li></ul><p id="83ec4dc8-0af8-472c-ae7c-d9800c07a11f" class="">
+</p></div></p></details></li></ul><ul id="09b63c7d-5d57-4214-8bfc-48e91c387323" class="toggle"><li><details open=""><summary><strong><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow"><code>overflow</code></a></strong></summary><p id="441e201c-704c-43bf-a94d-544b566b4ef4" class="">Sets the desired behavior for an element&#x27;s overflow — i.e. when an element&#x27;s content is too big to fit in its block formatting context — in both directions.</p><pre id="8035bbab-4838-4608-8819-3f63ffa7f596" class="code"><code>/* Keyword values */
+overflow: visible;
+overflow: hidden;
+overflow: clip;
+overflow: scroll;
+overflow: auto;
+overflow: hidden visible;
+
+/* Global values */
+overflow: inherit;
+overflow: initial;
+overflow: unset;</code></pre><p id="ef1f458a-95ee-49ca-9117-773ff38b2476" class="">
+</p></details></li></ul><p id="12c33201-74cc-4f2c-ac93-032e163abe27" class=""><code>z-index</code> defines which elements should be placed in front.</p></div></p><p id="02038762-7b4f-4a06-918f-b3534d62469b" class="">
+</p><h3 id="dcaa2f7a-408b-4d7b-b28d-ef683cf2d619" class=""><code><strong>flow-root</strong></code></h3><p id="4e4dfb8f-60b5-4ed3-903c-fa1757db44c7" class="">generates a new <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context">block formatting context</a> → defining new formatting root</p><p id="bc325d7d-a925-47fa-b24c-2351857cf770" class="">
+</p><h3 id="892ab072-3c70-40a5-85c6-ae24c8ba323c" class=""><code><strong>table</strong></code></h3><p id="803b029e-9e85-4327-8a33-dde01067cca2" class="">like HTML <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><code>&lt;table&gt;</code></a> elements<div class="indented"><p id="0bb4271f-4ade-42b5-ba9e-e74babf98afe" class="">should be considered a legacy method at this point, for those situations where you have very old browsers without support for Flexbox or Grid.</p></div></p><p id="aea62a34-4e1f-48ad-a875-a71a73101595" class="">
+</p><h3 id="39d50655-86c0-4b66-88b6-e1d0d24731bb" class=""><code><strong>flex</strong></code></h3><p id="d2e05449-2490-47fd-bf80-a50518a2b2e0" class="">The element behaves like a block element and lays out its content according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">flexbox model</a>. Flexbox is the short name for the Flexible Box Layout Module.</p><p id="15aebbd5-c426-43c2-9496-80a1805f73ac" class=""><div class="indented"><p id="948d4767-fa27-46df-9b93-7a9116f8bf74" class="">CSS Properties: </p><ul id="f89149a4-8f87-4349-813a-5ada18cafed4" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex"><code>flex</code></a> → sizing</summary><p id="54a364a5-83d6-42ef-94e9-c4c7f96c252f" class=""><code>flex: 1;</code>  gives the element exactly one fraction unit</p><p id="d73428e2-6b2f-426f-acfc-dd696b107264" class=""><code>flex: 200px;</code> → means that each element must be at least 200px wide</p><p id="85da747b-e84a-4b35-98eb-8aadd26b0f87" class="">
+</p></details></li></ul><ul id="a900cf16-dca4-4509-951a-f7fd7de6b86c" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis"><code>flex-basis</code></a></summary><p id="ab944718-b989-48d3-8a6d-4ec9fd3623a0" class="">specifies the initial size of the item before CSS makes adjustments with flex-shrink or flex-grow.</p></details></li></ul><ul id="6a1396da-8e1b-4b9b-aa0c-9114828c9454" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink"><code>flex-shrink</code></a></summary><p id="8a7500ff-0f21-40a5-af5a-2a8d4f73f65a" class="">allows an item to shrink if the flex container is too small.</p><p id="3eb7de25-8618-44b1-b123-c2f0f6fcbf23" class="">Items shrink when the width of the parent container is smaller than the combined widths of all the flex items within it. → Takes numbers as values.</p><p id="d6e33605-7e3f-4396-ab21-f3008d617785" class="">The higher the number, the more it will shrink compared to other items - similar to fractional units.</p></details></li></ul><ul id="1ad9a6e2-4ef5-48ba-bed4-645bb819c7a7" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow"><code>flex-grow</code></a></summary><p id="9077a6cb-d31c-4e9f-a439-e4fabf2e48a4" class="">controls the size of items when the parent container expands.</p></details></li></ul><ul id="7b308c4f-9759-44b8-9f01-5255a74bae0b" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction"><code>flex-direction</code></a></summary><p id="bf412608-23a8-410d-841a-f9149305b048" class="">Initial value is <code>row</code>. Can be changed to <code>column</code>, <code>column-reverse</code>, <code>row-reverse</code> </p></details></li></ul><ul id="3682b34e-bb6f-4dbb-8a10-5526a15104ae" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow"><code>flex-flow</code></a></summary></details></li></ul><ul id="6ce1bd34-884f-4223-9898-0665621c57f2" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap"><code>flex-wrap</code></a> → overflow</summary><p id="5bca2c15-364a-4171-a336-df600369c637" class="">When you have a fixed amount of width or height in your layout eventually your flexbox children will overflow their container, breaking the layout.<div class="indented"><p id="26728f5f-10a3-4f2a-8c75-1046481ca072" class="block-color-gray">(<mark class="highlight-gray"><code>flex: 200px;</code></mark><mark class="highlight-gray"> </mark>→ means that each element must be at least 200px wide)</p></div></p><p id="451fc19c-b8d9-4f1e-aa72-1b662fd26c06" class="">This means extra items move into a new row or column.</p><p id="f8dcc3e8-e708-44f9-8621-af06f4d046e3" class="">The break point of where the wrapping happens depends on the size of the items and the size of the container.</p><ul id="a82e0675-e1a7-404e-8bf9-b09e5b43ade5" class="bulleted-list"><li style="list-style-type:disc"><code>nowrap</code>			(default) does not wrap items</li></ul><ul id="dd66e553-8c85-40bc-9fc0-d0562750af42" class="bulleted-list"><li style="list-style-type:disc"><code>wrap</code> 			wraps items onto multiple lines</li></ul><ul id="404f7921-d261-4592-8ab6-35188b4fb510" class="bulleted-list"><li style="list-style-type:disc"><code>wrap-reverse</code> 	wraps items onto multiple lines in reverse order</li></ul><p id="9a7766b5-69e8-4716-8d46-ad74a5389ee1" class="">
+</p></details></li></ul><ul id="f3fdb409-5d59-48c3-ae20-973a402e6057" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/order"><code>order</code></a></summary><p id="7903a689-9a3a-41ad-b039-5848d69e6f32" class="">used to tell CSS the order of how flex items appear in the flex container.</p><p id="37c09d1a-964b-485c-a9c0-b670de68a54e" class="">By default, items will appear in the same order they come in the source HTML.</p></details></li></ul><p id="7bdd1a7c-5232-466c-b387-b3b701164f17" class="">
+</p><p id="08b64c54-eaa7-4451-8b44-56642e465e68" class="">Alignment Properties:</p><p id="67ad80ed-4d82-481d-a36d-1893faf94344" class="">Aligns the items in the flex container</p><ul id="0e5f9e0a-a471-480e-86bb-344032298632" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content"><code>justify-content</code></a> → x-Axis (main axis)</summary><ul id="761280ad-e22b-446b-af68-5c78f026f575" class="bulleted-list"><li style="list-style-type:disc"><code>flex-start</code> 		(default) start </li></ul><ul id="81589b7c-701d-4487-ae45-831e920a6919" class="bulleted-list"><li style="list-style-type:disc"><code>flex-end</code> 		end </li></ul><ul id="698286a7-fa8e-4459-b61a-070414b8d472" class="bulleted-list"><li style="list-style-type:disc"><code>space-between</code> 	center, with space between items - first and last are locked to edges</li></ul><ul id="3aae8b68-00b9-4723-b63a-91b17f1b2815" class="bulleted-list"><li style="list-style-type:disc"><code>space-around</code> 	like <code>space-between</code> but first and last are not locked to edges</li></ul><ul id="9f7813d3-b015-43c1-b836-75bbf5ba2c2f" class="bulleted-list"><li style="list-style-type:disc"><code>space-evenly</code> 	Even space distribution with full space at bith ends </li></ul><ul id="602ba11e-1805-45d5-bba6-312e323c2856" class="bulleted-list"><li style="list-style-type:disc"><code>center</code> 			center</li></ul><p id="c6576c69-21a2-4218-b741-3c289d5de254" class="">
+</p></details></li></ul><ul id="51c43a97-7d9f-41fe-b663-f473f0d20090" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-content"><code>align-content</code></a> → y-Axis (cross axis)</summary><ul id="1bce9ae3-7060-4ec4-8cb9-30839048874e" class="bulleted-list"><li style="list-style-type:disc"><code>stretch</code> 			(default) stretch to fill entire container</li></ul><ul id="73991783-47f3-4b0d-9b1a-4a2e0171ba74" class="bulleted-list"><li style="list-style-type:disc"><code>flex-start</code> 		start</li></ul><ul id="72aed8f9-9a02-4c62-acac-dd75b1753af7" class="bulleted-list"><li style="list-style-type:disc"><code>flex-end</code> 		end</li></ul><ul id="3dda6b31-dc18-48f8-9af3-86279d882ce1" class="bulleted-list"><li style="list-style-type:disc"><code>center</code> 			center with equal space</li></ul><ul id="4c4f3437-3d48-4961-a352-670fa36b8857" class="bulleted-list"><li style="list-style-type:disc"><code>baseline</code> 		baselines (is a text concept <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≈</mo></mrow><annotation encoding="application/x-tex">\approx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.48312em;vertical-align:0em;"></span><span class="mrel">≈</span></span></span></span></span><span>﻿</span></span> the line that the letters sit on)</li></ul><p id="a26ecd37-a059-436a-a03a-50ab34b20f57" class="">
+</p></details></li></ul><ul id="5cb20d8b-451d-451b-9a2e-ca104b26d8eb" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items"><code>align-items</code></a></summary></details></li></ul><ul id="c94f7873-ed7e-4215-ba62-dedd5ef30359" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-self"><code>align-self</code></a> → individual</summary><p id="f7a75aec-10ea-4ccf-b5ba-9c378cbfe067" class="">accepts the same values as align-items and will override any value set by the align-items property.</p></details></li></ul><ul id="06293bb1-143a-4fb2-a69c-62c1eb680f36" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/place-content"><code>place-content</code></a></summary></details></li></ul><ul id="d6dae96b-51e6-40a2-b0b4-6771116941bb" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/place-items"><code>place-items</code></a></summary></details></li></ul><ul id="e73743b0-38c8-416d-b592-0dc9999d47a0" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/row-gap"><code>row-gap</code></a></summary></details></li></ul><ul id="2cb6a2fe-41c0-4743-83db-421a50e740b3" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/column-gap"><code>column-gap</code></a></summary></details></li></ul><ul id="e9b2c43c-6081-4dbc-8a5d-b9c926358ba9" class="toggle"><li><details open=""><summary><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap"><code>gap</code></a></summary></details></li></ul></div></p><figure id="cb2fe9e5-6b9d-450d-ad39-9d32a5fd9ca9" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%202.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%202.png"/></a></figure><figure id="31d06c09-259b-4e01-9c8f-e86595c63489" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%203.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%203.png"/></a></figure><p id="895e8d2b-3ee0-4b17-a70c-d9553e3e1327" class="">
+</p><h3 id="213e8d66-1c6f-4009-aec5-6a312ccae320" class=""><code><strong>grid</strong></code></h3><p id="0b9fac8a-098c-4955-a8fd-73850548452e" class="">The element behaves like a block element and lays out its content according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout">grid model</a>.<div class="indented"><p id="69ad9b29-be3c-44aa-9be1-581b39cb23bf" class="">Lining things up in rows and columns + gaps between them (<em>gutters</em>).</p><p id="7830cfd4-55e1-40ac-b89f-6923738e2016" class="">For designs where elements don’t jump around or change width as we move from page to page, providing greater consistency websites.</p><p id="492c0d25-e0a7-4c3d-b18c-083af1cf9ee4" class="">
+</p><p id="fdb86d1c-641e-4e52-8a22-cacae5dcd6d3" class="">Components:<div class="indented"><ul id="bf9352f8-e5b2-4e2a-a7ff-3e119a8de072" class="bulleted-list"><li style="list-style-type:disc">Grid Line		Horizontal and vertical dividing line within a grid</li></ul><ul id="59028e7a-664f-431c-a458-fd62d2f1bb24" class="bulleted-list"><li style="list-style-type:disc">Grid Track	Space between two adjacent grid lines — columns or rows of the grid</li></ul><ul id="2d9b7f44-03cb-4932-976b-f5992be3ee8b" class="bulleted-list"><li style="list-style-type:disc">Grid Cell		Single unit of the grid</li></ul><ul id="6378e3b7-3df6-490e-a671-4bd356bc4fd4" class="bulleted-list"><li style="list-style-type:disc">Grid Area		Adjacent grid cells that form a rectangle</li></ul></div></p><p id="d120e4d1-ba3c-4ee4-ba5a-2fb68bacda32" class="">
+</p><p id="a3453ccf-3145-450e-96df-b4fe8e9a5e34" class="">Properties:</p><ul id="6d1e43fa-d0ff-44e7-bf9d-78f7128485a4" class="toggle"><li><details open=""><summary>Grid Container properties</summary><p id="99298d36-b469-4d03-9bc6-4ecbbd5edf1f" class=""><span style="border-bottom:0.05em solid">Sizing</span></p><p id="da79a8a6-082a-46f5-9ae6-6124768dae35" class=""><code>grid-template-columns</code> and <code>grid-template-rows</code>: The number of parameters given indicates the number of <em>columns or rows </em>in the grid, and the value of each parameter indicates the width or height of each.</p><p id="b4231023-a70e-4fe6-9564-f0fd25df0077" class="">
+</p><p id="afdb9c24-670f-4efe-8550-f3a6809b4c21" class=""><span style="border-bottom:0.05em solid">Spacing</span></p><p id="6e961369-917c-44d9-8f80-92749858edc9" class=""><code>grid-column-gap</code> or <code>grid-row-gap</code>: sets spacing between cells</p><p id="dc06e56b-6929-4a95-9d65-1a7f6e9651d5" class="">
+</p><p id="42149f7d-43bd-427b-bd12-ddfd965e0dec" class=""><span style="border-bottom:0.05em solid">Units</span></p><p id="c1c6219d-9926-488c-9213-6c477737f675" class="">You can use absolute and relative units like <code>px</code> and <code>em</code> in CSS Grid to define the size of rows and columns. You can use these as well:</p><ul id="05ebd22f-c2ee-46d6-9333-2f71237d39b7" class="bulleted-list"><li style="list-style-type:disc"><code>fr</code>: sets the column or row to a fraction of the available space,</li></ul><ul id="b824c3f8-c7a4-4d8d-bfd7-fcf3f0068cdf" class="bulleted-list"><li style="list-style-type:disc"><code>auto</code>: sets the column or row to the width or height of its content automatically,</li></ul><ul id="e3553703-9c75-4f18-bd0c-f50a50503c7e" class="bulleted-list"><li style="list-style-type:disc"><code>%</code>: adjusts the column or row to the percent width of its container.</li></ul><ul id="a8406430-4363-4ef5-9ad4-fbb0842ee9d9" class="bulleted-list"><li style="list-style-type:disc"><code>repeat()</code>: can also use <code>auto-fill</code> or <code>auto-fit</code> as an input<pre id="cf2cbcb0-115d-4fb8-a26c-a62f54264f44" class="code code-wrap"><code>repeat(auto-fill, minmax(60px, 1fr));</code></pre><p id="8405e597-4d51-4b5e-93a3-3c1a19d42696" class="">When the container changes size, this setup keeps inserting 60px columns and stretching them until it can insert another one. - If your container can&#x27;t fit all your items on one row, it will move them down to a new one.</p></li></ul><ul id="b7fd8b6a-1e68-4289-b0e8-4fe10505551c" class="bulleted-list"><li style="list-style-type:disc"><code>minmax()</code>: defines a minimum and maximum value</li></ul><p id="58ee20af-c9bc-4c24-8ed6-fe94f007dc05" class="">
+</p></details></li></ul><ul id="1b30a016-2806-4411-ae1f-c514757cd667" class="toggle"><li><details open=""><summary>Grid Cell properties</summary><p id="7c03c2ef-091e-4d66-a152-ccd78fda43cf" class="">Indexing starts with 1.<div class="indented"><figure id="0d93b863-ca9e-432f-a4e0-0ecb44d7ad9a" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%204.png"><img style="width:144px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%204.png"/></a></figure></div></p><p id="0b3a33b3-1b08-4cc3-ad7d-62ed61069911" class="">
+</p><p id="84b3fd0f-57de-4a03-9cfa-4e74ef6ee187" class=""><span style="border-bottom:0.05em solid">Sizing</span></p><p id="393dda24-6a76-4edc-9beb-582ec08b893e" class=""><code>grid-column</code> / <code>grid-row</code>: To control the amount of columns / rows an item will consume: the line numbers you want the item to start at / stop at.</p><p id="cf1ac74b-19b7-4104-883e-005ba1ae7c0d" class="">
+</p><p id="e48de1d3-91dd-46c7-880e-db86f1cb08e5" class=""><span style="border-bottom:0.05em solid">Alignment (x-Axis)</span></p><p id="37724f17-2e86-435f-a85c-ce5b01f81712" class=""><code>justify-self</code>:<div class="indented"><ul id="c49675a7-e19a-4ef8-b951-a43d8c257804" class="bulleted-list"><li style="list-style-type:disc"><code>stretch</code>: (default) will make the content fill the whole width of the cell. </li></ul><ul id="a6ebc353-3cbb-4a60-93f7-5ae607661b77" class="bulleted-list"><li style="list-style-type:disc"><code>start</code>: aligns the content at the left of the cell.</li></ul><ul id="8839be0d-4764-4544-910f-14b5a2e7e1a7" class="bulleted-list"><li style="list-style-type:disc"><code>center</code>: aligns the content in the center of the cell,</li></ul><ul id="9a1a7724-6ab9-4363-9351-a4fd607c82a1" class="bulleted-list"><li style="list-style-type:disc"><code>end</code>: aligns the content at the right of the cell.</li></ul></div></p><p id="8ede981f-ac93-47c9-9112-d5b6a30e80ae" class="">
+</p><p id="1da6fffb-bdb6-44b4-845c-f39df18d913b" class=""><span style="border-bottom:0.05em solid">Alignment (y-Axis)</span></p><p id="70257923-c660-4ad0-829c-469e0362ddbb" class=""><code>align-self</code></p><p id="6a90db2a-14c5-4685-af31-43a73d7dffe6" class="">
+</p></details></li></ul><ul id="1ca89a97-3b10-44a8-a178-adc0b37067c9" class="toggle"><li><details open=""><summary>Grid Area properties</summary><p id="61e38854-1a41-4d5b-b49a-b5bdee6345a6" class=""><code>grid-template-areas</code>: group cells of your grid together into an area and give the area a custom name.<div class="indented"><pre id="e2bc8c04-e384-4203-99ea-0ed8d3677d51" class="code code-wrap"><code>grid-template-areas:
+  &quot;header header header&quot;
+  &quot;advert content content&quot;
+  &quot;footer footer footer&quot;;</code></pre><p id="02fbec8d-126b-4f29-b9ba-5931f554c1ab" class="">The code above merges the top three cells together into an area named header, the bottom three cells into a footer area, and it makes two areas in the middle row; advert and content. In addition to custom labels, you can use a period (.) to designate an empty cell in the grid.</p><p id="02eceaa6-e6f9-495c-a9ca-6698ce448c4a" class="">After creating an area&#x27;s template for your grid container, you can place an item in your custom area by referencing the name you gave it:</p><pre id="4305a8f1-751d-45b8-9865-1464d5e82c3c" class="code code-wrap"><code>.item1 {
+  grid-area: header;
+}</code></pre><p id="61046294-8522-4a58-8227-dfe62c3d6a50" class="">This lets the grid know that you want the <code>item1</code> class to go in the area named <code>header</code>. In this case, the item will use the entire top row because that whole row is named as the header area.</p><p id="efa33e0b-6d70-412c-9b44-482a6f07be17" class="">If your grid doesn&#x27;t have an areas template to reference, you can create an area on the fly for an item to be placed like this:</p><pre id="3cef2877-fc95-4d01-b91e-e421980a703f" class="code code-wrap"><code>item1 { grid-area: 1/1/2/4; }</code></pre><p id="0535139e-e788-42b3-ad89-06d07b281b30" class="">The numbers in the example above represent these values:</p><pre id="f4ab58c3-6c7a-482f-89c7-4a58117825ef" class="code code-wrap"><code>grid-area: horizontal line to start at / vertical line to start at / horizontal line to end at / vertical line to end at;</code></pre><p id="4caf6a15-f619-457d-8c91-1fd350d4fe9f" class="">So the item in the example will consume the rows between lines 1 and 2, and the columns between lines 1 and 4.</p><p id="64926ab5-fad7-441d-89e5-0fe1c4188646" class="">
+</p></div></p></details></li></ul></div></p><figure id="c58ef0e9-f442-4d9d-8105-d05241949e4c" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%205.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%205.png"/></a></figure><figure id="124d4788-a2da-4b4a-8c7a-a558fde41908" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%206.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%206.png"/></a></figure><p id="f22a2294-4191-498e-9209-8b2617c51118" class="">
+</p><p id="cc25d911-b365-4bde-907f-21d2a504e294" class=""><span style="border-bottom:0.05em solid">Flexbox vs. Grid</span><div class="indented"><p id="c005f61d-8ac3-47fa-b2b9-52e86e19e3b6" class="">Flexbox and Grid are not mutually exclusive within a page.</p><p id="0649fb25-4dc8-4dc2-9d96-56b89bb74380" class="">Flexbox (1D) - Content first
+▪ Enable existing content to align and adapt
+▪ Rules decided by children</p><p id="ef8ac185-958e-4411-85b6-6d69234161e2" class="">Grid (2D) - Layout first
+▪ Specific rigid layout in mind children are placed in
+▪ Declaratively control specifically where elements end up — Rules decided by parent</p></div></p><p id="1617fca1-4aff-4a00-a2b9-56332379ad10" class="">
+</p><h3 id="0239efa4-40d5-44a2-b6d8-ebf82a23f695" class=""><code><strong>ruby</strong></code><strong></strong></h3><p id="318e6ec4-d455-490f-b99e-26b66b5be755" class="">The element behaves like an inline element and lays out its content according to the ruby formatting model.</p><p id="a6561ccf-df27-4d63-8625-e00810e0175e" class="">
+</p><h1 id="66568d59-994a-42ea-9a37-84b5db058c86" class="">Holy Grail Layout</h1><p id="9bdc6790-84ac-4850-8e51-3e179ba3601d" class="">With Flexbox<div class="indented"><ul id="4ee82215-b999-4033-810a-44296abc499d" class="bulleted-list"><li style="list-style-type:disc">Header, Footer</li></ul><ul id="2924b1ce-3ce9-44df-a4f9-5f1ada5a6bb6" class="bulleted-list"><li style="list-style-type:disc">Fluid content, fixed sides</li></ul><ul id="63f41ac5-dcf2-43d4-b585-f0dd86832f58" class="bulleted-list"><li style="list-style-type:disc">&gt;2 equal height columns</li></ul><ul id="0afd4c68-71b9-48a8-8e19-699d50501ddb" class="bulleted-list"><li style="list-style-type:disc">Content before remaining columns</li></ul><ul id="a863abf9-9b0b-4462-9d00-fd0f3f14703f" class="bulleted-list"><li style="list-style-type:disc">“order” property only for visual ordering</li></ul></div></p><p id="04579e24-f2d2-442b-83ec-9897bf6bc8cd" class="">
+</p><pre id="e78b6e57-5bc6-492f-8b16-b59955b55e4c" class="code"><code>main	{	display:	flex; }
+main	&gt;	article	{	order:	2;	min-width:	12em;	flex:	1; }
+main	&gt;	nav			{	order:	1;	width:	200px; }
+main	&gt;	aside		{	order:	3;	width:	200px; }
+
+@media	all	and	(max-width:	600px)	{
+		main	{	flex-flow:	column; }
+		main	&gt;	article,	main	&gt;	nav,	main	&gt;	aside	{
+				order:	0;	width:	auto;
+		}
+}</code></pre><pre id="300c82b2-ff79-4aac-9978-2cce50083c94" class="code"><code>&lt;!DOCTYPE	html&gt;
+...
+&lt;header&gt;...&lt;/header&gt;
+&lt;main&gt;
+		&lt;article&gt;...&lt;/article&gt;
+		&lt;nav&gt;...&lt;/nav&gt;
+		&lt;aside&gt;...&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;</code></pre><div id="7b13aee7-7ccd-4a3c-9a59-4d010c921eb1" class="column-list"><div id="33e77fc7-948f-426f-be4f-fb3a37ea73d7" style="width:31.25%" class="column"><figure id="a45d2823-a8d7-4463-ba68-5d99aaca83e8" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%207.png"><img style="width:192px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%207.png"/></a></figure></div><div id="14bc54d6-133f-43ec-9bdb-d93143fa6fec" style="width:68.75%" class="column"><figure id="30588b8d-f896-47fb-925b-db73d0e867e6" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%208.png"><img style="width:72px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%208.png"/></a></figure></div></div><p id="26b28658-cd7d-4be9-8af8-c9f86db7922d" class="">
+</p><h1 id="3ade7fdc-237a-4bca-8406-feddbebb6fd5" class="">Responsive Design</h1><p id="b29344c9-4dfb-4e24-84b7-096a8c23765a" class="">The terms &quot;fluid layout&quot; and &quot;responsive web design&quot; are two different things.</p><p id="4d49240f-22db-4be6-b454-1bc18a46ff54" class="">Using them together is best practice.</p><ul id="67873618-dc2f-4401-830b-16a5ab7ffc06" class="toggle"><li><details open=""><summary>Fluid layout - Scaling based on viewport sizes</summary><p id="53076428-3f62-44bd-8e08-5daf8bcb11bd" class="">layout of the page resizes as the window size is changed → Using percentages instead of fixed pixel widths.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="fa139f1c-61ab-4160-9008-ce4757b2f77a"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Deals with the &quot;grey area&quot; between breakpoints in media queries for responsive design → Linear progression between fix-sized designs.</div></figure><p id="536ab09d-dd7c-461d-a3d8-fc01b86374e8" class="">
+</p></details></li></ul><ul id="ddce6657-8426-459c-8168-0c2301a883e5" class="toggle"><li><details open=""><summary>Responsive web design - Different stylesheets based on breakpoints</summary><p id="6a57005d-9c7e-4699-9dbd-387f79e2609d" class="">CSS <em>media queries</em>, which load different styles depending on the width of the window or the type of device used to access the page.</p><figure id="aaff3f97-7a45-4f6a-a163-40c4cf4af8c6" class="image"><a href="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%209.png"><img style="width:336px" src="CSS%2019b3772d1cdb4495887b628985adb10a/Untitled%209.png"/></a></figure><p id="8dff8b93-d304-40c9-95fc-14fa786fcee8" class="">
+</p></details></li></ul><p id="d3a85e23-b2de-4e22-adfb-811f2bf455dd" class="">
+</p><p id="1956a924-cb90-465d-bdbd-bc3e9922bc4d" class=""><span style="border-bottom:0.05em solid">Responsive Design Techniques</span><div class="indented"><ul id="ec3e24a6-8e1e-4f77-bd68-460f891d4d85" class="bulleted-list"><li style="list-style-type:disc">Media queries: Let content fill the container and define min/max constraints</li></ul><ul id="c4fa7136-7c68-4f9a-90e0-f619faf06274" class="bulleted-list"><li style="list-style-type:disc">Use relative units to specify position and size of text and media</li></ul><ul id="187c3001-a155-40ef-9923-1d8983e9da2a" class="bulleted-list"><li style="list-style-type:disc">Fluid, Grid-based Layout</li></ul><ul id="c5a5f78d-c8eb-4795-87f2-79bcaffa35ca" class="bulleted-list"><li style="list-style-type:disc">Resposive Images</li></ul><ul id="b33ad263-3fc0-46c6-b351-c8da21c473c8" class="bulleted-list"><li style="list-style-type:disc">Font Scaling</li></ul><ul id="29b12da1-031f-4d22-9cbd-8fe30c986360" class="bulleted-list"><li style="list-style-type:disc">...</li></ul></div></p><p id="73306d0d-1632-4008-bce9-4aca72878ce5" class="">
+</p><p id="5af69479-8ccf-4c64-8daf-796592c55ab8" class=""><span style="border-bottom:0.05em solid">Fluid Images</span><div class="indented"><p id="ea68e58b-90c7-4e00-a588-d47366587d8c" class="">Scale images like other content using relative values.<div class="indented"><p id="cda3b49e-99fa-4bb7-bf0c-8119e540ef3d" class="">Problems: Browser needs to scale, Large download sizes.</p><p id="e83a7824-1eeb-48c4-8e4d-36aba860a358" class="">Solution: Responsive and Adaptive Images</p></div></p><p id="34834abe-4a25-4aec-9155-6c4277e79d80" class="">
+</p></div></p><p id="66b2b00e-cede-4d82-b2ef-c98eb96e2bba" class=""><span style="border-bottom:0.05em solid">Responsive and Adaptive Images</span><div class="indented"><pre id="ccec7632-d9c3-4016-bd1a-a0a0f87cabff" class="code"><code>&lt;picture&gt;	
+		&lt;source	src=&quot;pic-mobile.jpg&quot;	media=&quot;(max-width: 720px)&quot;	/&gt;
+		&lt;source	src=&quot;pic-tablet.jpg&quot;	media=&quot;(max-width: 1280px)&quot;	/&gt;
+		&lt;source	src=&quot;pic-desktop.jpg&quot;	/&gt;
+		&lt;img	src=&quot;default.png&quot;	/&gt;	&lt;!–-	User	Agent	not	supporting	picture	element	--&gt;
+&lt;/picture&gt;</code></pre><p id="7aadccc5-1fb3-4ee2-a19e-2d9ce387591f" class="">Picture isn&#x27;t supported on every browser → Using &lt;img&gt; just in case problem occurs<div class="indented"><p id="6ceb1255-167a-434f-b84e-3174c2d8c57d" class="">Detect visitor screen size, resolution, and pixel density</p><p id="9c6ade77-7824-43b8-92c5-c6c4ffbe97db" class="">Fetch respective image, size or version (additional download!)</p><p id="25c4d1fd-7478-4a10-95d0-323519a4c8f5" class="">Use JavaScript, CSS media queries, and/or HTML5 markup</p></div></p></div></p><p id="dc7798d5-feef-45d6-91a2-170d92553442" class="">
+</p><p id="e1d8f031-067a-496d-be80-062a7d863b57" class=""><span style="border-bottom:0.05em solid">The Viewport</span> - The virtual “window”<div class="indented"><ul id="ab5754cc-e692-4b11-8b51-1ad847bb0e71" class="bulleted-list"><li style="list-style-type:disc">Visible area of webpage</li></ul><ul id="fd769dd1-b5c1-49a4-898b-cc4082ea0aca" class="bulleted-list"><li style="list-style-type:disc">Size content to viewport</li></ul><ul id="3ebd6c06-130b-4087-9bc3-1cef0437d9d8" class="bulleted-list"><li style="list-style-type:disc">Avoid horizontal scrolling</li></ul><ul id="470c7a45-9cbc-4f68-a2ab-c79ff3969c4b" class="bulleted-list"><li style="list-style-type:disc">Avoid necessity to zoom</li></ul><ul id="242df20f-9010-416f-a2c5-45336cfaa976" class="bulleted-list"><li style="list-style-type:disc">Control viewport in HTML5 through meta-element<pre id="7d6c3d69-f4e6-4f87-b1fb-5ebe1f150cc8" class="code"><code>&lt;meta name=&quot;viewport&quot;
+			content=
+      &quot;width=device-width,
+			initial-scale=1.0,
+			maximum-scale=3,
+			minimum-scale=0.5&quot; /&gt;</code></pre></li></ul><ul id="efa52606-bcf1-4a8c-8804-9c58b4434560" class="bulleted-list"><li style="list-style-type:disc">Consider mobile → Sometimes narrower/wider, default shrinking</li></ul></div></p><p id="351a5d0a-f9aa-4034-bae4-8c55422108d9" class="">
+</p><h1 id="26c9d14a-c142-4fe5-aa2c-00d9c9d0ab17" class="">Media Queries</h1><pre id="5684c9d9-43de-452f-919c-68832adb5323" class="code code-wrap"><code>@media media-type and (media-feature-rule) {
+  /* CSS rules */
+}</code></pre><p id="742abdc0-17b1-4612-9fa5-47c54787a2f7" class="">
+</p><p id="f3521bd6-3063-48cb-aefa-fae467beeed1" class="">Build complex queries using logical operators (not, and, only).</p><p id="06d8a6df-470e-4b75-a5f7-8162993e0e0d" class="">
+</p><p id="9224258e-7773-4e06-a70e-592064e6e858" class=""><mark class="highlight-teal">defining breakpoints and style switches:</mark><div class="indented"><pre id="0f263deb-7318-4dfd-866c-a9aacfbf7e6c" class="code"><code>@media	only	screen	and	(max-width:	500px)	{	…	}
+@media	tv	and	(min-width:	700px)	and	(orientation:	landscape)	{	…	}
+&lt;!--	comma	acts	as	&#x27;or&#x27;	--&gt;
+@media	(min-width:	700px),	handheld	and	(orientation:	landscape)	{	…	}</code></pre></div></p><p id="35b0394b-26ef-46d1-a7c6-a3ff914d188d" class="">
+</p><p id="704c0b38-3496-4503-9901-4f42a89aff34" class="">Many modern mobile devices have high-density screens that are difficult to read.</p><p id="d3af8d4b-9051-4ac2-b9ed-1f34478a6501" class="">Use media queries and relative values for your fonts:<div class="indented"><pre id="b6346dca-4b16-45ed-88f4-7ee510a47b34" class="code"><code>@media	screen	and	(min-width:	481px)	and	(max-width:	768px)	{
+		p	{	font-size:	0.9em; }
+}
+@media	screen	and	(max-width:	480px)	{
+		p	{	font-size:	0.7em; }
+}</code></pre></div></p><p id="8926a970-6c21-4922-a5f5-f837b301d26f" class="">
+</p><h1 id="e37c772b-c5e2-4efb-a795-764f9998c3ae" class="">Sources</h1><p id="50a0b103-3c37-4cc5-8abb-4fe33118595b" class="">Layouts:<div class="indented"><p id="1311aec5-a4a0-48ae-828c-0904ddd0c189" class=""><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout</a></p></div></p><p id="f6e4d47e-af6d-4d14-bf7d-f1879fefbc0d" class="">Practice CSS:<div class="indented"><p id="1e94c815-7901-41e2-9eee-d75fd7f0af93" class=""><a href="https://www.freecodecamp.org/learn/responsive-web-design">https://www.freecodecamp.org/learn/responsive-web-design</a></p><p id="f298c6a3-6847-4764-8819-7fc0814ae85f" class=""><a href="http://flexboxfroggy.com/#de">http://flexboxfroggy.com/#de</a></p></div></p><p id="416763d2-2834-464d-9222-3203eda34eba" class="">Useful tools:<div class="indented"><p id="e013235e-43e2-4912-8557-53d876e150d7" class=""><a href="https://hugogiraudel.github.io/selectors-explained/">CSS Selectors explained in plain English</a></p><p id="ebecbe02-8462-4086-9699-73e619dce687" class="">Some browsers still dont support newer layouts: <a href="http://caniuse.com/">http://caniuse.com</a></p></div></p><p id="9c2ee302-b4ee-47a3-8ca0-7f780ab31ed5" class="">Grid examples:<div class="indented"><p id="24991a1f-82ff-49c4-b19f-34e87b2e1f8e" class=""><a href="https://webkit.org/blog/7434/css-grid-layout-a-new-layout-module-for-the-web/">https://webkit.org/blog/7434/css-grid-layout-a-new-layout-module-for-the-web/</a></p><p id="e8d10e38-0c63-4b29-868a-7485601575e3" class=""><a href="https://gridbyexample.com/examples/">https://gridbyexample.com/examples/</a></p></div></p></div></article></body></html>

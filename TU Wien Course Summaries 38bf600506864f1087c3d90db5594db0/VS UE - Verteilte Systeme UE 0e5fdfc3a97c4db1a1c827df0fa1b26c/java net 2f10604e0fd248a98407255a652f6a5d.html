@@ -1,0 +1,1194 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>java.net</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2f10604e-0fd2-48a9-8407-255a652f6a5d" class="page sans"><header><h1 class="page-title">java.net</h1></header><div class="page-body"><p id="94c3766c-0f09-4595-9745-7f0b19d7499d" class=""><a href="https://docs.oracle.com/javase/tutorial/networking/overview/networking.html">https://docs.oracle.com/javase/tutorial/networking/overview/networking</a><div class="indented"><p id="0dae1379-df41-406e-adfd-e3e7f07be1fd" class=""><a href="https://docs.oracle.com/javase/tutorial/networking/sockets/index.html">https://docs.oracle.com/javase/tutorial/networking/sockets/index.html</a><div class="indented"><p id="3c437831-3fad-4873-a4ab-fc7df45d4db7" class=""><a href="https://docs.oracle.com/javase/tutorial/networking/sockets/readingWriting.html">https://docs.oracle.com/javase/tutorial/networking/sockets/readingWriting.html</a></p></div></p><p id="42d3bb85-386a-40ad-987a-07f3679ecdf6" class="">
+</p></div></p><nav id="768a21f8-f926-4d98-ad06-0df3eff28def" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8cf15708-3d8c-41ce-b438-ae3c9b5955d2">Networking</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36cd7e7c-431c-4f16-9295-1e2b1e1549a7">URL Connection</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3b2e8718-d64a-4766-8859-733aea0ef198">Sockets</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#74832544-9b2b-4e91-92d9-7ddc5845df38">Multiple Clients</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#09e62122-bc8a-4e13-be35-21e0451887dd">Datagrams</a></div></nav><p id="b51f2998-52ec-454a-9ac5-17a7ec556c5d" class="">
+</p><h1 id="8cf15708-3d8c-41ce-b438-ae3c9b5955d2" class="">Networking</h1><p id="a63f326d-6dd7-4101-a07b-a648d1ec6a60" class="">Protocols for the internet: TCP, UDP</p><p id="3a5cd4f2-5d98-49e8-9d08-6aeec4108b50" class=""><mark class="highlight-blue">Transmission Control Protocol TCP</mark><div class="indented"><p id="e2f282fc-5dba-4fba-b6b5-e35a540186ea" class=""><mark class="highlight-gray"><code>URL, URLConnection, Socket, ServerSocket</code></mark></p><p id="f6537b6f-20a9-490a-b459-bf5031dee48c" class="">Connection based.</p><p id="4d2bc4dd-7321-4bb4-aa4e-0d1101c2ed51" class="">Point 2 Point channel for applications like HTTP, FTP, ...</p></div></p><p id="28f646e8-6e46-441f-9317-b7e16b53c2cf" class=""><mark class="highlight-blue">User Datagram Protocol UDP</mark><div class="indented"><p id="d7fb5437-5488-46d4-96eb-69296b0f0f49" class=""><mark class="highlight-gray"><code>DatagramPacket, DatagramSocket, MulticastSocket</code></mark></p><p id="afda98e2-61e0-4079-9069-ca7ef8c0c7fc" class="">Not connection based.</p><p id="a9b85216-57cf-4685-bf64-8c6b9018133f" class="">Sends independent data packets (datagrams).<div class="indented"><p id="2eb15aff-1df8-446c-b428-24e4bddf2791" class="">No guarantees about arrival.</p><p id="c363b48c-980d-48e3-a2b6-959e99b53cc3" class="">Messages independent of eachother.</p><p id="7f11552e-8072-4460-a6d7-035e6242152c" class="">Contain port + data.</p></div></p></div></p><p id="a8a0439b-5935-492a-8f28-173ead7a2e0c" class="">
+</p><p id="6899ca15-348c-4037-9c9e-736d93d620ec" class=""><mark class="highlight-blue">Ports [0 - 65535]</mark><div class="indented"><p id="9e3dc9e7-767e-4609-9e69-40c505883e0e" class="">A computer has one physical connection to the network.</p><p id="b394bfe9-48a9-46cd-8e81-bbef2e3ed17c" class="">Computer identified by its IP address (32bit)<div class="indented"><p id="2d6ffe20-b3a7-4519-b84a-e3d4e59774cb" class="">IP protocol uses IP address to deliver data to right computer. </p></div></p><p id="15c98983-69ab-4e25-aeaa-662fe3f528be" class="">Ports (16bit) determine which process on the computer the data is meant for.</p><p id="823e92d4-2956-4f00-b76f-06e53bbd8ff1" class="">Port numbers [0 - 1023] are called &quot;well-known&quot; and are restricted for ie. HTTP, FTP.</p></div></p><p id="993915a4-3920-4721-9940-5bb9233b6d51" class="">
+</p><h1 id="36cd7e7c-431c-4f16-9295-1e2b1e1549a7" class="">URL Connection</h1><p id="5e644af3-9544-4713-ac31-67c2df9b474c" class=""><code>URL</code><div class="indented"><figure id="e67776c0-e92b-412a-94a3-1319f6ff0f91" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mstyle mathcolor="grey"><munder><munder><mstyle mathcolor="white"><mtext mathvariant="monospace">https</mtext></mstyle><mo stretchy="true">undefined</mo></munder><mtext mathvariant="sans-serif">Protocol</mtext></munder><mstyle mathcolor="white"><mtext mathvariant="monospace">://</mtext></mstyle><munder><munder><mstyle mathcolor="white"><mtext mathvariant="monospace">example.com</mtext></mstyle><mo stretchy="true">undefined</mo></munder><mrow><mtext mathvariant="sans-serif">Host</mtext><mtext> </mtext><mtext mathvariant="sans-serif">Name</mtext></mrow></munder><mtext> </mtext><mstyle mathcolor="white"><mtext mathvariant="monospace">:</mtext></mstyle><mtext> </mtext><munder><munder><mstyle mathcolor="white"><mstyle mathcolor="white"><mtext mathvariant="sans-serif">433</mtext></mstyle></mstyle><mo stretchy="true">undefined</mo></munder><mtext mathvariant="sans-serif">Port</mtext></munder><mtext> </mtext><mstyle mathcolor="white"><mtext mathvariant="monospace">/</mtext></mstyle><mtext> </mtext><munder><munder><mstyle mathcolor="white"><mtext mathvariant="monospace">people</mtext></mstyle><mo stretchy="true">undefined</mo></munder><mtext mathvariant="sans-serif">Path</mtext></munder><mtext> </mtext><mstyle mathcolor="white"><mtext mathvariant="monospace">?</mtext></mstyle><mtext> </mtext><munder><munder><mstyle mathcolor="white"><mrow><mtext mathvariant="monospace">name</mtext><mtext> </mtext><mtext mathvariant="monospace">=</mtext><mtext> </mtext><mtext mathvariant="monospace">mauro</mtext></mrow></mstyle><mo stretchy="true">undefined</mo></munder><mrow><mtext mathvariant="sans-serif">Query</mtext><mtext> </mtext><mtext mathvariant="sans-serif">String</mtext></mrow></munder><mtext> </mtext><mstyle mathcolor="white"><mtext mathvariant="monospace">#</mtext></mstyle><mtext> </mtext><munder><munder><mstyle mathcolor="white"><mtext mathvariant="monospace">about</mtext></mstyle><mo stretchy="true">undefined</mo></munder><mtext mathvariant="sans-serif">Fragment</mtext></munder></mstyle></mrow><annotation encoding="application/x-tex">\textcolor{grey}{
+
+\underbrace{\textcolor{white}{\texttt{https}}}_{\textsf{Protocol}}
+
+\textcolor{white}{\texttt{://}}
+\underbrace{\textcolor{white}{\texttt{example.com}}}_{\textsf{Host Name}}
+
+~\textcolor{white}{
+\texttt{:}}
+~
+
+\underbrace{\textcolor{white}{\textcolor{white}{\textsf{433}}}}_{\textsf{Port}} 
+~
+\textcolor{white}{
+\texttt{/}}
+~
+\underbrace{\textcolor{white}{\texttt{people}}}_{\textsf{Path}} 
+~
+
+\textcolor{white}{
+\texttt{?}}
+~
+
+\underbrace{\textcolor{white}{\texttt{name = mauro}}}_{\textsf{Query String}}
+~\textcolor{white}{
+\texttt{\#}}
+~
+\underbrace{\textcolor{white}{\texttt{about}}}_{\textsf{Fragment}}
+
+}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.250768em;vertical-align:-1.556328em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span style="top:-1.443672em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Protocol</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span class="svg-align" style="top:-2.1297800000000002em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">https</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.87022em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.556328em;"><span></span></span></span></span></span><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">://</span></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span style="top:-1.443672em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Host Name</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span class="svg-align" style="top:-2.1297800000000002em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">example.com</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.87022em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.556328em;"><span></span></span></span></span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">:</span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6555599999999999em;"><span style="top:-1.665892em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Port</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.65556em;"><span class="svg-align" style="top:-2.352em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord textsf" style="color:white;">433</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.648em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.334108em;"><span></span></span></span></span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">/</span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span style="top:-1.443672em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Path</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span class="svg-align" style="top:-2.1297800000000002em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">people</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.87022em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.556328em;"><span></span></span></span></span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">?</span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.43055999999999983em;"><span style="top:-1.665892em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Query String</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.43056000000000005em;"><span class="svg-align" style="top:-2.352em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">name = mauro</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.648em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.470216em;"><span></span></span></span></span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">#</span></span><span class="mspace nobreak" style="color:grey;"><span style="color:grey;"> </span></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span style="top:-1.665892em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight" style="color:grey;"><span class="mord mtight" style="color:grey;"><span class="mord text mtight" style="color:grey;"><span class="mord textsf mtight" style="color:grey;">Fragment</span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord munder" style="color:grey;"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.61111em;"><span class="svg-align" style="top:-2.352em;"><span class="pstrut" style="height:3em;"></span><span class="stretchy" style="color:grey;height:0.548em;min-width:1.6em;"><span class="brace-left" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMinYMin slice'><path d='M0 6l6-6h17c12.688 0 19.313.3 20 1 4 4 7.313 8.3 10 13
+ 35.313 51.3 80.813 93.8 136.5 127.5 55.688 33.7 117.188 55.8 184.5 66.5.688
+ 0 2 .3 4 1 18.688 2.7 76 4.3 172 5h399450v120H429l-6-1c-124.688-8-235-61.7
+-331-161C60.687 138.7 32.312 99.3 7 54L0 41V6z'/></svg></span><span class="brace-center" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMidYMin slice'><path d='M199572 214
+c100.7 8.3 195.3 44 280 108 55.3 42 101.7 93 139 153l9 14c2.7-4 5.7-8.7 9-14
+ 53.3-86.7 123.7-153 211-199 66.7-36 137.3-56.3 212-62h199568v120H200432c-178.3
+ 11.7-311.7 78.3-403 201-6 8-9.7 12-11 12-.7.7-6.7 1-18 1s-17.3-.3-18-1c-1.3 0
+-5-4-11-12-44.7-59.3-101.3-106.3-170-141s-145.3-54.3-229-60H0V214z'/></svg></span><span class="brace-right" style="color:grey;height:0.548em;"><svg width='400em' height='0.548em' viewBox='0 0 400000 548' preserveAspectRatio='xMaxYMin slice'><path d='M399994 0l6 6v35l-6 11c-56 104-135.3 181.3-238 232-57.3
+ 28.7-117 45-179 50H-300V214h399897c43.3-7 81-15 113-26 100.7-33 179.7-91 237
+-174 2.7-5 6-9 10-13 .7-1 7.3-1 20-1h17z'/></svg></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="color:grey;"><span class="mord text" style="color:white;"><span class="mord texttt" style="color:white;">about</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.648em;"><span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.470216em;"><span></span></span></span></span></span></span></span></span></span></div></figure><p id="708bd009-94d9-4ddf-bd94-7c33af115add" class="">use <mark class="highlight-gray"><code>URL</code></mark> Object to create URL<div class="indented"><p id="c616132a-ea95-49f8-bca9-0c2fdfb57276" class=""><mark class="highlight-gray"><code>URL myURL = new URL(&quot;http://example.com/&quot;);</code></mark></p></div></p><p id="73b964cd-53c1-4bd1-bc31-668fd242b8d4" class="">use <mark class="highlight-gray"><code>.openStream()</code></mark><mark class="highlight-gray"> </mark>to read content<div class="indented"><p id="2f0b8940-9939-4232-8b0d-696f7e764848" class="">returns an <mark class="highlight-gray"><code>InputStream</code></mark> object</p></div></p></div></p><p id="89acb712-e08a-4c43-bfbb-0befa356dad3" class="">
+</p><p id="4a700ac3-f878-4eab-aa29-13c359f7a1e4" class=""><code>URLConnection</code><div class="indented"><p id="3692cd0b-dcec-44f3-858e-2a681e0e7c2b" class="">use <mark class="highlight-gray"><code>.openConnection()</code></mark><mark class="highlight-gray"> </mark>on URL to create connection with chosen protocol<div class="indented"><p id="ec3049d3-56c9-4942-b276-c1d0dfad0880" class="">returns <mark class="highlight-gray"><code>java.net.HttpURLConnection</code></mark><mark class="highlight-gray"> (specific subclass for HTTP)</mark></p><p id="91f54946-0f28-493c-a69c-3c23785f7410" class="">you can then call <mark class="highlight-gray"><code>.connect()</code></mark><mark class="highlight-gray"> </mark>on that connection</p></div></p><p id="cf5e9367-021a-4ab4-b36b-89bb3dfd287c" class="">
+</p></div></p><p id="dc7790f5-4eac-47d1-8667-d338a7beb039" class="">Reading:</p><pre id="14b00bbf-1ce7-4638-a860-33298a2827fc" class="code"><code>import java.net.*;
+import java.io.*;
+
+public class URLConnectionReader {
+    public static void main(String[] args) throws Exception {
+        URL oracle = new URL(&quot;http://www.example.com/&quot;);
+        URLConnection yc = oracle.openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                    yc.getInputStream()));
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) 
+            System.out.println(inputLine);
+        in.close();
+    }
+}</code></pre><p id="3507f105-c906-458e-8608-8d68280ecb84" class="">
+</p><p id="0aeaf7f5-92f5-4bbc-a227-c9520abf6b9c" class="">Writing:</p><pre id="d784c675-1980-40b2-87d2-ad56bc0c93a1" class="code"><code>import java.io.*;
+import java.net.*;
+
+public class Reverse {
+    public static void main(String[] args) throws Exception {
+
+				//read args
+        URL url = new URL(args[0]);
+        String stringToReverse = URLEncoder.encode(args[1], &quot;UTF-8&quot;);
+
+        URLConnection connection = url.openConnection();
+        connection.setDoOutput(true);
+
+				//send string to server
+        OutputStreamWriter out = new OutputStreamWriter(
+                                         connection.getOutputStream());
+        out.write(&quot;string=&quot; + stringToReverse);
+        out.close();
+
+        BufferedReader in = new BufferedReader(
+                                    new InputStreamReader(
+                                    connection.getInputStream()));
+        String decodedString;
+
+				//read server response
+        while ((decodedString = in.readLine()) != null) {
+            System.out.println(&quot;server response: &quot; + decodedString);
+        }
+        in.close();
+    }
+}</code></pre><p id="193b2c10-65f3-4715-ab59-11ba640ec55a" class="">
+</p><h1 id="3b2e8718-d64a-4766-8859-733aea0ef198" class="">Sockets</h1><p id="e07354e6-a3c2-4342-bdbb-0f6ea6e5ca4e" class="">For TCP, a connection must first be established between client and server.<div class="indented"><p id="f0f5b52c-6309-4558-a5d6-a6a28b813979" class="">Server is listening for requests on specified port.</p><p id="a9e0b55b-03d7-4cd0-bbe2-b3102972094c" class="">Client requests connection (to hostname and port).</p><p id="8b490114-3d28-4f44-b173-8f935fd2162e" class="">Server accepts connection, opens a new socket for that port (for other clients).</p><p id="a35c5f36-62e6-4c29-bb0a-029f1cfb1f89" class="">Server sets its own remote endpoint to port of client (client doesnt decline).</p><p id="5e6f3d28-53bb-43a1-9ab9-a23d7614bcaf" class="">Connection established.</p></div></p><p id="5d9a33f4-1fd7-4d46-a10c-b1a74c594831" class="">
+</p><figure id="ac0c1ad1-cbfd-4490-bb6b-8723dff59b89" class="image"><a href="java%20net%202f10604e0fd248a98407255a652f6a5d/Untitled.png"><img style="width:301px" src="java%20net%202f10604e0fd248a98407255a652f6a5d/Untitled.png"/></a></figure><figure id="41d1c216-1c74-4192-8767-e8284171062d" class="image"><a href="java%20net%202f10604e0fd248a98407255a652f6a5d/Untitled%201.png"><img style="width:301px" src="java%20net%202f10604e0fd248a98407255a652f6a5d/Untitled%201.png"/></a></figure><p id="2f42da81-648f-42ca-ada8-b6faa85816bf" class="">
+</p><p id="b36e9861-28d9-4648-9970-9fb2fe65ade6" class=""><mark class="highlight-blue">Endpoint</mark><div class="indented"><p id="52e73ab2-5acf-448b-a684-c364a8eead26" class="">IP address + port number</p></div></p><p id="d910d8c1-f870-4471-9741-3b2d6318224e" class="">
+</p><p id="e97f923c-06c8-4390-8d81-92af8c4af381" class=""><mark class="highlight-blue">Socket</mark><div class="indented"><p id="5d4da3d6-29b7-41a5-a757-296c8c44bdd5" class="">A <em>socket</em> is one endpoint of a two-way communication link between two programs running on the network.</p><p id="eb998154-85d8-40db-8e2b-13b1d8fd51fd" class="">A socket is bound to a port number so that the TCP layer can identify the application that data is destined to be sent to.</p></div></p><p id="baf0578b-2077-442b-a660-6368eed87888" class="">
+</p><p id="fd5c4ada-9378-45fb-9d93-943fba2641ce" class=""><code>java.net.Socket</code><div class="indented"><p id="6198f4a5-2304-4d68-bc36-0f71bb6a08d4" class="">Socket for Cient program.</p></div></p><p id="20c77552-123c-4b67-9c59-d6b60bf49a99" class="">
+</p><p id="006ff0b1-50bc-4a3e-b6c4-6df811c3f51e" class="">Example: Echo Server<div class="indented"><p id="08d4bffb-8648-4041-9b48-1aa3336d53f3" class="">Connects to an echo server.</p><p id="2815eb15-422b-4548-90e3-eb59a467089f" class="">Server receives data and echoes it back.</p></div></p><pre id="17fac0b3-ae6a-4030-b3d6-54148b913f7f" class="code"><code>import java.io.*;
+import java.net.*;
+
+public class EchoClient {
+    public static void main(String[] args) throws IOException {
+        
+        if (args.length != 2) {
+            System.err.println(
+                &quot;Usage: java EchoClient &lt;host name&gt; &lt;port number&gt;&quot;);
+            System.exit(1);
+        }
+
+				//read input
+        String hostName = args[0];
+        int portNumber = Integer.parseInt(args[1]);
+
+        try ( //try-with-resources -&gt; automatically closes streams
+            Socket echoSocket = new Socket(hostName, portNumber);
+            
+						//Server
+						PrintWriter out =
+                new PrintWriter(echoSocket.getOutputStream(), true); //autoflush
+            BufferedReader in =
+                new BufferedReader(
+                    new InputStreamReader(echoSocket.getInputStream()));
+
+            //System
+						BufferedReader stdIn =
+                new BufferedReader(
+                    new InputStreamReader(System.in))
+        ) {
+            String userInput;
+            while ((userInput = stdIn.readLine()) != null) { //read from terminal
+                out.println(userInput); //send to server
+                System.out.println(&quot;echo: &quot; + in.readLine()); //show response
+            }
+
+        } catch (UnknownHostException e) {
+            System.err.println(&quot;Don&#x27;t know about host &quot; + hostName);
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println(&quot;Couldn&#x27;t get I/O for the connection to &quot; +
+                hostName);
+            System.exit(1);
+        } 
+    }
+}</code></pre><p id="c20d4851-d93c-4eea-8308-9cec0d7ea699" class="">
+</p><p id="ad300518-d103-4de3-af63-f2c083dc36c0" class=""><code>java.net.ServerSocket</code><div class="indented"><p id="dba1bb4c-32b7-4842-ac16-b8dea102b851" class="">Socket for Server program </p><p id="3efab2bf-0072-4f95-88b3-aa31241b44d9" class="">Server runs has a socket with a port number and listens for requests.</p></div></p><p id="184da249-08ae-41c7-a352-26ddec1171f2" class="">
+</p><p id="a191e793-7607-4f7c-b7b2-d6e2088c8808" class="">Example: KnockKnock Client + Server</p><pre id="1c1230b8-9d6f-4e93-9200-7af83757c9bb" class="code"><code>import java.io.*;
+import java.net.*;
+
+public class KnockKnockClient {
+    public static void main(String[] args) throws IOException {
+        
+        if (args.length != 2) {
+            System.err.println(
+                &quot;Usage: java EchoClient &lt;host name&gt; &lt;port number&gt;&quot;);
+            System.exit(1);
+        }
+
+        String hostName = args[0];
+        int portNumber = Integer.parseInt(args[1]);
+
+        try (
+            Socket kkSocket = new Socket(hostName, portNumber);
+            PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(kkSocket.getInputStream()));
+        ) {
+            BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+            String fromServer;
+            String fromUser;
+
+						//wait for server response
+            while ((fromServer = in.readLine()) != null) {
+                System.out.println(&quot;Server: &quot; + fromServer);
+                if (fromServer.equals(&quot;Bye.&quot;))
+                    break;
+                
+								//wait for user input
+                fromUser = stdIn.readLine();
+                if (fromUser != null) {
+                    System.out.println(&quot;Client: &quot; + fromUser);
+                    out.println(fromUser); //send input to server
+                }
+            }
+        } catch (UnknownHostException e) {
+            System.err.println(&quot;Don&#x27;t know about host &quot; + hostName);
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println(&quot;Couldn&#x27;t get I/O for the connection to &quot; +
+                hostName);
+            System.exit(1);
+        }
+    }
+}</code></pre><pre id="05e98ebd-16f8-40fe-b232-f464e5766ff8" class="code"><code>import java.net.*;
+import java.io.*;
+
+public class KnockKnockServer {
+    public static void main(String[] args) throws IOException {
+        
+        if (args.length != 1) {
+            System.err.println(&quot;Usage: java KnockKnockServer &lt;port number&gt;&quot;);
+            System.exit(1);
+        }
+
+        int portNumber = Integer.parseInt(args[0]);
+
+        try ( 
+            ServerSocket serverSocket = new ServerSocket(portNumber);
+            Socket clientSocket = serverSocket.accept();
+            PrintWriter out =
+                new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+        ) {
+        
+            String inputLine, outputLine;
+            
+            // Initiate conversation with client
+            KnockKnockProtocol kkp = new KnockKnockProtocol();
+            outputLine = kkp.processInput(null);
+            out.println(outputLine);
+
+						//repeat until output is Bye
+            while ((inputLine = in.readLine()) != null) {
+                outputLine = kkp.processInput(inputLine);
+                out.println(outputLine);
+                if (outputLine.equals(&quot;Bye.&quot;))
+                    break;
+            }
+        } catch (IOException e) {
+            System.out.println(&quot;Exception caught when trying to listen on port &quot;
+                + portNumber + &quot; or listening for a connection&quot;);
+            System.out.println(e.getMessage());
+        }
+    }
+}</code></pre><pre id="cb2dbd09-a1c7-453a-a5a7-71b79bc8bd46" class="code"><code>import java.net.*;
+import java.io.*;
+
+public class KnockKnockProtocol {
+    private static final int WAITING = 0;
+    private static final int SENTKNOCKKNOCK = 1;
+    private static final int SENTCLUE = 2;
+    private static final int ANOTHER = 3;
+
+    private static final int NUMJOKES = 5;
+
+    private int state = WAITING;
+    private int currentJoke = 0;
+
+    private String[] clues = { &quot;Turnip&quot;, &quot;Little Old Lady&quot;, &quot;Atch&quot;, &quot;Who&quot;, &quot;Who&quot; };
+    private String[] answers = { &quot;Turnip the heat, it&#x27;s cold in here!&quot;,
+                                 &quot;I didn&#x27;t know you could yodel!&quot;,
+                                 &quot;Bless you!&quot;,
+                                 &quot;Is there an owl in here?&quot;,
+                                 &quot;Is there an echo in here?&quot; };
+
+		//returns output for given input
+    public String processInput(String theInput) {
+        String theOutput = null;
+
+        if (state == WAITING) {
+            theOutput = &quot;Knock! Knock!&quot;;
+            state = SENTKNOCKKNOCK;
+        } else if (state == SENTKNOCKKNOCK) {
+            if (theInput.equalsIgnoreCase(&quot;Who&#x27;s there?&quot;)) {
+                theOutput = clues[currentJoke];
+                state = SENTCLUE;
+            } else {
+                theOutput = &quot;You&#x27;re supposed to say \&quot;Who&#x27;s there?\&quot;! &quot; +
+			    &quot;Try again. Knock! Knock!&quot;;
+            }
+        } else if (state == SENTCLUE) {
+            if (theInput.equalsIgnoreCase(clues[currentJoke] + &quot; who?&quot;)) {
+                theOutput = answers[currentJoke] + &quot; Want another? (y/n)&quot;;
+                state = ANOTHER;
+            } else {
+                theOutput = &quot;You&#x27;re supposed to say \&quot;&quot; + 
+			    clues[currentJoke] + 
+			    &quot; who?\&quot;&quot; + 
+			    &quot;! Try again. Knock! Knock!&quot;;
+                state = SENTKNOCKKNOCK;
+            }
+        } else if (state == ANOTHER) {
+            if (theInput.equalsIgnoreCase(&quot;y&quot;)) {
+                theOutput = &quot;Knock! Knock!&quot;;
+                if (currentJoke == (NUMJOKES - 1))
+                    currentJoke = 0;
+                else
+                    currentJoke++;
+                state = SENTKNOCKKNOCK;
+            } else {
+                theOutput = &quot;Bye.&quot;;
+                state = WAITING;
+            }
+        }
+        return theOutput;
+    }
+}</code></pre><p id="7cd0c4df-d781-48fd-a5b3-5d167d724377" class="">
+</p><h1 id="74832544-9b2b-4e91-92d9-7ddc5845df38" class="">Multiple Clients</h1><p id="bc3720be-da37-4fab-96f7-bc5e7a9802d0" class="">In the previous example - the server socket gets binded to the client socket and other clients wont get accepted.</p><p id="ea06a26e-0963-48ec-9be7-fbd2119eb811" class="">We want multiple clients to come into the same port, queue them there and use multithreading.</p><p id="1ddb7d2c-9039-4987-b5b1-bebe92d8b649" class="">
+</p><p id="d38e1285-9cc3-42d6-a2a4-1b1c80be37ce" class=""><mark class="highlight-gray"><code>KKMultiServer</code></mark><mark class="highlight-gray"> </mark>loops forever:</p><pre id="9959481a-50a1-4aef-8623-cd226fdbbcf3" class="code"><code>while (true) {
+		listen for requests;
+    accept a connection;
+    create a new KKMultiServerThread thread to deal with the client;
+}</code></pre><p id="5d5c9562-8b20-413f-bb11-316a689cd403" class="">
+</p><pre id="9377641b-49d6-40dc-9f1a-c6a93fd59d58" class="code"><code>import java.net.*;
+import java.io.*;
+
+public class KKMultiServer {
+    public static void main(String[] args) throws IOException {
+
+        if (args.length != 1) {
+            System.err.println(&quot;Usage: java KKMultiServer &lt;port number&gt;&quot;);
+            System.exit(1);
+        }
+
+        int portNumber = Integer.parseInt(args[0]);
+        boolean listening = true;
+
+        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+            while (listening) {
+                new KKMultiServerThread(serverSocket.accept()).start(); //start thread
+            }
+        } catch (IOException e) {
+            System.err.println(&quot;Could not listen on port &quot; + portNumber);
+            System.exit(-1);
+        }
+    }
+}</code></pre><pre id="e98b657e-c63e-43fb-8d7d-043d856abdee" class="code"><code>import java.net.*;
+import java.io.*;
+
+public class KKMultiServerThread extends Thread {
+    private Socket socket = null;
+
+    public KKMultiServerThread(Socket socket) {
+        super(&quot;KKMultiServerThread&quot;); //call constructor of parent
+        this.socket = socket;
+    }
+    
+    public void run() {
+
+        try (
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(
+                    socket.getInputStream()));
+        ) {
+            String inputLine, outputLine;
+            KnockKnockProtocol kkp = new KnockKnockProtocol();
+            outputLine = kkp.processInput(null);
+            out.println(outputLine);
+
+            while ((inputLine = in.readLine()) != null) {
+                outputLine = kkp.processInput(inputLine);
+                out.println(outputLine);
+                if (outputLine.equals(&quot;Bye&quot;))
+                    break;
+            }
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre><p id="62d3c9bc-280d-4165-943a-2eb8c9caaaeb" class="">
+</p><p id="14f33929-7d39-4371-9684-4580ebb5bd1c" class="">
+</p><h1 id="09e62122-bc8a-4e13-be35-21e0451887dd" class="">Datagrams</h1><p id="b0a81885-862b-4b2a-bf38-2a84b51c627a" class="">Packages are sent without a connection.<div class="indented"><p id="58023794-0d25-4582-965a-29af7e76d90b" class="">No guarantee for arrival.</p><p id="9ee36cc1-5dad-49cd-b113-db28bae63559" class="">No order of arrival.</p></div></p><p id="2be3d0e2-8798-419d-932f-65beffde8455" class="">
+</p><p id="3fac6d56-f57c-49f2-a0f1-528e5c0f9b91" class=""><code>DatagramPacket</code></p><p id="0d684b10-33e2-4810-9582-8c6d2215e7e5" class="">
+</p><p id="da937d78-4ea2-4da9-9376-822f8c3705c4" class=""><code>DatagramSocket</code><div class="indented"><p id="1c4164f1-1f14-4a35-ac6d-56bc9e50519f" class="">Receives Packets.</p></div></p><p id="0ae6af27-fa1f-4295-832e-3db7051f2bec" class="">
+</p><p id="f0c7f1fe-71c3-4631-afb2-e9ded2a4b153" class=""><code>MulticastSocket</code><div class="indented"><p id="bc338fb3-0f0a-4335-9891-a670483377eb" class=""><code><mark class="highlight-gray">DatagramPacket</mark></code><mark class="highlight-gray"><mark class="highlight-gray"> </mark></mark>can be broadcasted to multiple recipients with MulticastSockets.</p></div></p><p id="bec9c38f-6d14-4245-a63d-611289936ee7" class="">
+</p><pre id="7a8b5ff7-b3df-44c1-b4c3-8085fe5bfc80" class="code"><code>import java.io.*;
+
+public class QuoteServer {
+    public static void main(String[] args) throws IOException {
+        new QuoteServerThread().start();
+    }
+}</code></pre><pre id="4b394db5-ec1b-4f40-a804-a81d43170290" class="code"><code>import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class QuoteClient {
+    public static void main(String[] args) throws IOException {
+
+        if (args.length != 1) {
+             System.out.println(&quot;Usage: java QuoteClient &lt;hostname&gt;&quot;);
+             return;
+        }
+
+        DatagramSocket socket = new DatagramSocket();
+
+        // send request
+        byte[] buf = new byte[256];
+        InetAddress address = InetAddress.getByName(args[0]);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4445);
+        socket.send(packet);
+    
+        // get response
+        packet = new DatagramPacket(buf, buf.length);
+        socket.receive(packet);
+
+	      // display response
+        String received = new String(packet.getData(), 0, packet.getLength());
+        System.out.println(&quot;Quote of the Moment: &quot; + received);
+    
+        socket.close();
+    }
+}</code></pre><p id="58514f78-a485-4508-8363-dbe9acc1c746" class="">
+</p><p id="6cdd33a5-3ed9-4b72-8719-73a1b601ab46" class="">When a client sends a DataPacket to the Server, that means its requesting a quote.</p><pre id="bfa7cc25-3a14-42a0-9042-151c57440526" class="code"><code>import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Date;
+
+public class QuoteServerThread extends Thread {
+
+    protected DatagramSocket socket = null; //quotes to send
+    protected BufferedReader in = null; //quotes from file
+    protected boolean moreQuotes = true;
+
+    public QuoteServerThread() throws IOException {
+        this(&quot;QuoteServerThread&quot;);
+    }
+
+    public QuoteServerThread(String name) throws IOException {
+        super(name);
+        socket = new DatagramSocket(4445);
+
+        try {
+            in = new BufferedReader(new FileReader(&quot;one-liners.txt&quot;));
+        } catch (FileNotFoundException e) {
+            System.err.println(&quot;Could not open quote file. Serving time instead.&quot;);
+        }
+    }
+
+    public void run() {
+
+        while (moreQuotes) {
+            try {
+                byte[] buf = new byte[256];
+
+                // receive request
+                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                socket.receive(packet); //content not read
+
+                // figure out response
+                String dString = null;
+                if (in == null) {
+                    dString = new Date().toString();
+                } else {
+                    dString = getNextQuote();
+								}
+
+                buf = dString.getBytes();
+
+                // send the response to the client at &quot;address&quot; and &quot;port&quot;
+                InetAddress address = packet.getAddress();
+                int port = packet.getPort();
+                packet = new DatagramPacket(buf, buf.length, address, port);
+                socket.send(packet);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                moreQuotes = false;
+            }
+        }
+        socket.close();
+    }
+
+    protected String getNextQuote() {
+        String returnValue = null;
+        try {
+            if ((returnValue = in.readLine()) == null) {
+                in.close();
+                moreQuotes = false;
+                returnValue = &quot;No more quotes. Goodbye.&quot;;
+            }
+        } catch (IOException e) {
+            returnValue = &quot;IOException occurred in server.&quot;;
+        }
+        return returnValue;
+    }
+}</code></pre></div></article></body></html>

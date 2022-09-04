@@ -1,0 +1,980 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>pthreads</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="02f4abab-5629-41f6-a4a9-be012892dcbc" class="page sans"><header><h1 class="page-title">pthreads</h1></header><div class="page-body"><p id="09a9e02e-9a04-41e9-a240-0aff586622c7" class="">
+</p><nav id="83cfde76-2b3c-4c53-88f3-d69187598b03" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4aa22aef-c9a9-4582-987c-a9978cf45ccf">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c23c1b24-85c7-49eb-9c6b-999230a2c95c">Programming model</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e7f54104-50a8-4862-829b-df4f3fb1840a">Synchronization</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a6e64e75-0d94-4950-9683-cf3feae61abd">Safety</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b7b8924f-8b73-40d4-809a-179171425fe6">Wait free vs. lock free</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0847d0e5-aa58-42b7-9367-b640bf2a3ddd">Synchronization constructs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a74734ca-df21-40ad-9587-af20b144d261">Locks</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0861d076-6866-4323-9c67-1cd6daf8ecb5">Condition variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#90285ded-dbdc-4cc5-b152-da95b1e05701">Barriers</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b6b67a92-70cc-40b9-9162-c00c2065c97d">Semaphores</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#10842a37-d3ad-45ab-a165-f76d722f1cb5">Atomic operation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e3307869-1a15-4d8d-8b90-71ecedfb5b57">Work-pools (master-worker pattern)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#414da696-7a8a-4206-bfb0-795c49e5c641">Centralized work-pool</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d7c02882-b29c-4fd0-b9b5-7ce0ee4b5042">Decentralized work-pool</a></div></nav><p id="9c3f3cda-468b-4dd5-bd7a-9f5e0f3ef0b6" class="">
+</p><h1 id="4aa22aef-c9a9-4582-987c-a9978cf45ccf" class="">Definition</h1><p id="964cfc86-5a72-48fb-af8e-39fa013ef9a9" class=""><mark class="highlight-blue">Process</mark><div class="indented"><p id="507044e3-5416-4412-9abc-56d5b7e66668" class="">Program in execution</p></div></p><p id="fb365110-9c42-495e-aeb1-098841b846dc" class="">
+</p><p id="4c127307-d293-49ea-9fdd-b760c903810c" class=""><mark class="highlight-blue">Thread</mark><div class="indented"><p id="b76146e0-eb08-4d20-812f-24b96c413ee6" class=""><mark class="highlight-gray"><em>Used for thread parallel programming.</em></mark></p><p id="e07c5f5a-f46a-445b-a0d2-1119572376f0" class="">Smallest independent stream of instructions that can be scheduled by OS.<div class="indented"><p id="1b10ca02-9973-47cb-80b9-936e4b1e88f3" class=""><mark class="highlight-gray">Each contain local variable stack, registers, thread local storage.</mark></p></div></p><p id="6f8cc9dd-1ad3-4089-907e-b49797c2d04f" class="">If scheduled by OS, then OS thread = lives inside an OS-process and shares global information (file pointers, global variables, static variables, heap storage).</p></div></p><p id="c0224c3d-9ca7-4075-b596-2377e6e34f7c" class="">
+</p><p id="7e30f005-4e3f-4315-a18a-84b8a4b0f3cf" class=""><mark class="highlight-blue">POSIX threads, pthreads</mark><div class="indented"><p id="057e950b-96de-4863-ae06-d4da917b6ffe" class="">POSIX = Portable Operating System Interface for uniX</p><p id="980f965c-cc3f-4514-a354-cee59eebfb36" class="">Low level interface for thread programming in C/Unix</p><p id="50af3adf-206e-439c-9543-776ee92b6bd2" class=""><em>Have no cost model, no memory model, ...</em></p></div></p><p id="60d6a79c-5a9d-4f77-bb7c-f79a64ff4145" class="">
+</p><p id="d10d4184-23b2-4420-8f30-98ce9eb7ddc2" class="">
+</p><h1 id="c23c1b24-85c7-49eb-9c6b-999230a2c95c" class="">Programming model</h1><p id="324479ef-0546-409e-8257-114948e0fd10" class=""><mark class="highlight-blue">(p)threads programming model</mark><div class="indented"><ol type="1" id="3c1f81a5-350b-4f47-a25f-43bf365afcb2" class="numbered-list" start="1"><li>Fork-join parallelism<p id="6a9486de-61f3-4f80-b576-d2a7f8d588b2" class="">A thread can spawn (start) any number of new threads and wait for them to terminate.</p></li></ol><ol type="1" id="32ab312a-7cac-4111-af3d-48930fd3d834" class="numbered-list" start="2"><li>Master thread<p id="17c67f65-e323-4a62-9c18-9ddb02fd1aa5" class="">There is initially only one active main thread.</p><p id="2e1d1c9a-8c77-400a-b5bd-bdd071332f38" class="">Code for threads are functions. All threads execute within the same program (SPMD) but can be different functions.</p></li></ol><ol type="1" id="38c16f6b-226e-42b6-b6f2-8f8ff7f3a49e" class="numbered-list" start="3"><li>Peer threads<p id="035ec8f8-1785-4697-9982-f5f236dc6b97" class="">A thread can wait for another “peer thread” to terminate.</p></li></ol><ol type="1" id="2cfb4284-2f38-4c2b-9df5-e1400757e13b" class="numbered-list" start="4"><li>Parallelism<p id="49757c94-8b0f-42ab-a041-e8465b3aad53" class="">Threads are scheduled by the underlying system and may or may not run simultaneously on different processors.</p></li></ol><ol type="1" id="6a16f546-8034-49d8-b55d-e574bc608151" class="numbered-list" start="5"><li>Synchronization between threads<p id="affb54f6-5c09-450d-81c5-49fe9ea406fd" class="">There is no implicit synchronization between threasd - the progress independently and asynchronously.</p></li></ol><ol type="1" id="c3cc2e86-7c3d-4f8b-b685-ccdfacd8ac2f" class="numbered-list" start="6"><li>Threads share process global data</li></ol><ol type="1" id="d2b8b27e-5dc6-4957-bff7-4d485fe4eded" class="numbered-list" start="7"><li>Coordination mechanisms<p id="aea24b78-d632-409b-979f-4b77bed78726" class="">for protecting access to shared variables (locks, condition variables).</p><p id="8a4859c6-97e6-40d1-9fd7-3397fce3a613" class="">All concurrent updates must be protected otherwise: illegal program with undefined outcome.</p></li></ol><ol type="1" id="76fb51f4-09f5-4c9b-b5a0-45420a695853" class="numbered-list" start="8"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>…</mo></mrow><annotation encoding="application/x-tex">\dots</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.12em;vertical-align:0em;"></span><span class="minner">…</span></span></span></span></span><span>﻿</span></span></li></ol></div></p><figure id="17803148-386c-418c-abe3-99c3e78873ed" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled.png"><img style="width:144px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled.png"/></a></figure><p id="ed591df6-b4e9-496e-af11-9aa9edcab1bd" class="">
+</p><p id="5c046d44-5c0b-4716-9040-ba892ff1af31" class=""><mark class="highlight-blue">Pragmatics for parallel computing</mark><div class="indented"><p id="47b7c49c-50ac-4632-b2e2-aefffabae231" class="">Threads get scheduled and bound specified cores (non-standard).</p></div></p><p id="2788d63e-427f-4138-9daf-6b8e883e7fe7" class=""><mark class="highlight-blue">Symmetric Multi-Processor SMP</mark><div class="indented"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="83f24387-000e-4361-a336-7713818d63c9"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Don’t confuse symmetric multi-processor SMP with symmetric multi-processing SMP.</div></figure><ul id="f4c33d59-421a-43ec-86fa-74177abf5c82" class="bulleted-list"><li style="list-style-type:disc">Single OS</li></ul><ul id="1e62d1e4-a82b-407b-b9fd-dd47da7bd464" class="bulleted-list"><li style="list-style-type:disc">all cores treated equally</li></ul><ul id="4d83e92b-264f-460f-bd5e-f715cac35cff" class="bulleted-list"><li style="list-style-type:disc">threads not bound to cores</li></ul><ul id="a2daa01a-e092-49e0-9a58-d23ea9a13c71" class="bulleted-list"><li style="list-style-type:disc">there can be more threads than cores </li></ul></div></p><figure id="57d5218c-6bc2-4b88-815b-eca964028037" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%201.png"><img style="width:144px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%201.png"/></a></figure><p id="30a78d4d-a897-4b84-8f50-479d297b3516" class="">
+</p><p id="56ac75dd-b85f-462b-9e61-96b282ab0334" class=""><mark class="highlight-blue">Explicit parallelization of data parallel loop</mark><div class="indented"><p id="1095fa1f-d317-4c41-a3df-f8757120cb28" class="">Increased performance by spawning threads recursively instead of using loops.</p><pre id="93868ef7-ed78-411f-be8b-5f8ca379f4ee" class="code"><code>start = rank*n/p
+end = (rank+1)*n/p
+
+for (i=start; i&lt;end; i++) {
+	a[i] = f(i);
+}</code></pre><p id="0408a353-96bf-43eb-a91b-a21c849a44e8" class=""><mark class="highlight-gray"><code>rank</code></mark><mark class="highlight-gray"> </mark>is the virtual thread id and is set by the spawning thread.</p><ul id="0028ac51-1da2-437c-a53e-1b68b48ed445" class="toggle"><li><details open=""><summary>implementation (in depth)</summary><p id="3800d399-ba65-4aba-bfb0-b44ead4abb6d" class="">Using the argument struct</p><pre id="fe4efe0c-e504-4f83-96db-7450e784702e" class="code"><code>typedef struct {
+	int *array;
+	int n;
+	int rank;
+	int size;
+} array_t;</code></pre><pre id="f132ce31-15a5-4e47-abd0-86d710e73564" class="code"><code>loopblock(void *what) {
+	array_t *ix = (array_t*)what;
+	int *a = ix-&gt;array;
+	int i;
+	int n = ix-&gt;n;
+	int p = ix-&gt;size; // no. of threads
+	int start = ix-&gt;rank*(n/p);
+	int end = start+n/p;
+	
+	for (i=start; i&lt;end; i++) {
+		a[i] = f(i);
+	}
+}</code></pre><p id="c72ad476-f881-4a0a-9ef9-47f2865c1caa" class="">
+</p></details></li></ul><ul id="94502376-8664-4abf-849d-87c734c5756f" class="toggle"><li><details open=""><summary>example: matrix-vector product</summary><p id="c6066549-4e9f-49f9-bd92-31818d35123e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mover accent="true"><mi>y</mi><mo>⃗</mo></mover><mo>=</mo><mi>X</mi><mo>⋅</mo><mover accent="true"><mi>a</mi><mo>⃗</mo></mover></mstyle></mrow><annotation encoding="application/x-tex">\small \vec y = X \cdot \vec a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.817596em;vertical-align:-0.174996em;"></span><span class="mord accent sizing reset-size6 size5"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.614997em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.6426em;vertical-align:0em;"></span><span class="mord accent sizing reset-size6 size5"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="mord mathnormal">a</span></span><span style="top:-2.9em;"><span class="pstrut" style="height:2.9em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="680c8085-aaff-4163-aa5b-9154a15276ef" class="">Sequential solution<div class="indented"><pre id="609ca868-febc-45d2-8f2d-10af00d6048c" class="code"><code>for (i=0; i&lt;n; i++) {
+	y[i] = 0;
+	for (j=0; j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre></div></p><p id="53346006-62af-46c8-9961-a9f5f065b7e0" class="">Parallel solution<div class="indented"><ul id="28befa58-7897-4cfe-9149-e45b9bad3a78" class="toggle"><li><details open=""><summary>using cache ineffectively</summary><p id="c9eb6fb2-8782-4db4-8656-47117c524d6a" class="">Thread with <mark class="highlight-gray"><code>id</code></mark> rank rank handles every <mark class="highlight-gray"><code>p</code></mark>‘th index of matrix <mark class="highlight-gray"><code>x</code></mark><div class="indented"><pre id="d3294975-9f7e-4060-91da-2c9aab54fe15" class="code"><code>for (i=rank; i&lt;n; i+=p) {
+	y[i] = 0;
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*A[j];
+	}
+}</code></pre><figure id="7934fffd-5a7d-4f3e-bd5f-dfc35a8ec55b" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%202.png"><img style="width:240px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%202.png"/></a></figure></div></p><p id="a604b2f3-1b6e-4efa-b6d9-ae02e3164232" class="">But this way we use the cache ineffectively and each thread writes and reads into <mark class="highlight-gray"><code>y</code></mark><mark class="highlight-gray"> </mark>at the same time.</p><p id="e8d57669-207b-4ca9-936c-6065dfc0b02a" class="">
+</p></details></li></ul><pre id="08aa3936-ed74-43e7-8cb4-ac1c1d39feda" class="code"><code>for (i=rank*n/p; i&lt;(rank+1)*n/p; i++) {
+	y[i] = 0;
+	for (j=0;j&lt;m; j++) {
+		y[i] += x[i][j]*a[j];
+	}
+}</code></pre><figure id="7e1a00fa-0a72-43e3-81e9-2228f77f9282" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%203.png"><img style="width:192px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%203.png"/></a></figure></div></p></details></li></ul><p id="89c46884-b056-4bc3-935d-88dc8c2f7688" class="">
+</p><p id="18694382-0276-4ede-9886-89ce98e4064f" class="">
+</p></div></p><h1 id="e7f54104-50a8-4862-829b-df4f3fb1840a" class="">Synchronization</h1><p id="e88e7f88-1a54-4735-9a65-0aa294b8a3b5" class="">Synchronization / coordination constructs (from concurrent computing) prevent malicious non-determinism (ie. race conditions).<div class="indented"><p id="76c2ce88-76f0-40fe-b284-e262e9e8b0d4" class="">Allow solving algorithms under weak memory consistency assumptions.</p></div></p><p id="7c89765b-5536-4523-b568-ad3bed9bae55" class="">
+</p><p id="1c3235f9-5a91-4dbe-b991-3baf5e572e06" class=""><mark class="highlight-blue">Race condition</mark><div class="indented"><p id="9b60d40b-691f-4a16-851f-330f2844c353" class="">Outcome of parallel program execution depends on the relative timing of the updates by processors/threads (in an undesired way).</p></div></p><p id="3aec0079-0d48-451a-9d6a-e076a1424216" class=""><mark class="highlight-blue">Data race</mark><div class="indented"><p id="44921fe2-4a51-4515-8bb5-a5d0b69774c3" class="">Several threads (or cores, processes, …) compete for updating a shared variable.</p><p id="c07c9fb9-bf39-4066-8d31-06cb3622d87e" class="">Outcome depends on relative timing.</p></div></p><p id="a7a92302-a030-42db-acd3-f2323ede79ab" class=""><mark class="highlight-blue">Deadlock</mark><div class="indented"><p id="a9403ef8-cbf2-4b0b-abc1-d86f3f4d392f" class="">Two or more threads in situation where they depend on eachother and can’t progress.</p><p id="bb5f8723-00c0-4a49-83d0-1be754603c54" class="">Deadlocks spread to all threads and eventually the program can not terminate.</p><ul id="38eb28d7-4f78-4ce5-bb9f-1cdf7fc19009" class="toggle"><li><details open=""><summary>example</summary><pre id="a6c90a0a-7f59-45d6-a1e1-45a89f94681d" class="code"><code>pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;</code></pre><div id="6a2996a8-54f9-4710-9c7e-5cfbb2377e89" class="column-list"><div id="77b959b5-f3b7-403f-b596-73a6f756e8ca" style="width:50%" class="column"><pre id="be02d3a4-9651-4b9f-a54b-bc9c5c3befbc" class="code"><code>…
+pthread_mutex_lock(&amp;lock1);
+pthread_mutex_lock(&amp;lock2);
+…</code></pre></div><div id="ca339d9a-d241-417c-a89b-f56fce2819fe" style="width:50%" class="column"><pre id="cd1104b9-f3a0-4dbe-bebe-1a2965117623" class="code"><code>…
+pthread_mutex_lock(&amp;lock2);
+pthread_mutex_lock(&amp;lock1);
+…</code></pre></div></div></details></li></ul></div></p><p id="b1f57bdc-d70e-4ab0-b875-51d5c41f421d" class="">
+</p><p id="b4d9d6a4-85b1-44dd-b962-eebd37fbaa2b" class=""><mark class="highlight-blue">Shared resources</mark><div class="indented"><p id="89b405e9-aeac-459d-9975-3423977b7bff" class="">Simple variables, data structures, devices, ... accessible by multiple threads</p></div></p><p id="f0444636-9090-482f-aa90-64ada3939253" class=""><mark class="highlight-blue">Critical section</mark><div class="indented"><p id="0654f0e0-2fa3-4f27-8bf5-9ea1709192d8" class="">The manipulated shared resources by code, are not allowed to be manipulated by other entities (threads, processes, ...) concurrently.</p></div></p><p id="578f50ee-7d67-44ce-9468-267ac149b07d" class=""><mark class="highlight-blue">Mutual exclusion property</mark><div class="indented"><p id="311bc0c5-a8b6-4da0-a26b-a92e621d51de" class="">There is at most one thread in critical section at any fiven time.</p></div></p><p id="0a1b940d-ad91-43ac-bfb8-50682144e7bf" class="">
+</p><h2 id="a6e64e75-0d94-4950-9683-cf3feae61abd" class="">Safety</h2><p id="a7e8f7eb-0bf7-4c86-9b0a-34e8e45d98a3" class=""><mark class="highlight-blue">pthreads memory model for “safe” programs</mark><div class="indented"><p id="e80a3327-fbd3-46b1-82cc-b281c4a05cd6" class="">Thread not allowed to update variables outside of critical sections.</p><p id="09bffcf3-caa8-4052-866d-86f9e5fc1035" class=""><mark class="highlight-gray">(Lock constructs used to ensure consistent memory views)</mark></p></div></p><p id="3b356e98-4f00-4e95-8075-c9fd8cf82128" class=""><mark class="highlight-blue">Thread safe functions</mark><div class="indented"><p id="87a673f4-00d8-4974-a64a-ea82c15316c7" class="">Function can be executed concurrently by any number of threads and will always produce the correct result.</p><ul id="fa442426-d194-49dd-b7b4-aebe5b668e54" class="toggle"><li><details open=""><summary>Non-thread safe functions have side effects</summary><ul id="911c9eed-3634-4b84-b6e9-f9abcda49502" class="bulleted-list"><li style="list-style-type:disc">Don’t protect (write access) to shared (ie. static) variables</li></ul><ul id="a51d04fd-0ab3-45f7-8760-46ebaa21bf91" class="bulleted-list"><li style="list-style-type:disc">Keep a state over successive invocations</li></ul><ul id="e6996890-77e0-4c15-a779-f5f477d80c9a" class="bulleted-list"><li style="list-style-type:disc">Return pointers to static variables</li></ul><ul id="7f2f2f63-bb18-4731-bdbb-221c1d5fe5b2" class="bulleted-list"><li style="list-style-type:disc">call thread-unsafe functions<p id="3f8f50b7-64f3-4b20-830d-5188893cfc12" class=""><mark class="highlight-gray">these unsafe functions can also be system functions:</mark><div class="indented"><p id="db8b1a98-54d3-4450-bce3-12416f4dec18" class="block-color-gray">ie. <mark class="highlight-gray"><code>rand()</code></mark>, <mark class="highlight-gray"><code>random()</code></mark><mark class="highlight-gray"> </mark>keep internal state in static variables</p><p id="9f428f6d-05fc-454d-9bca-400f5bc84279" class="block-color-gray">solution: using <code><mark class="highlight-gray">random_r()</mark></code> with an explicit state, locking, ...</p><p id="a2983576-f8b6-4ed0-ba3b-469f6db46fc6" class="block-color-gray">problem: serialization can lead to slowdown, deadlocks, ...</p></div></p></li></ul></details></li></ul><ul id="fd6a776f-d134-4982-8144-10a0b188e0ca" class="toggle"><li><details open=""><summary>Example: concurrent read and thread-safety</summary><p id="0b44c062-f0c9-467c-b7ba-1c998e628c43" class="">Where <mark class="highlight-gray"><code>x</code></mark><mark class="highlight-gray"> </mark>is the input.</p><div id="6a64f1ca-9d38-49dc-81c4-f1af8add38cf" class="column-list"><div id="31bb0e7d-9f3f-4231-a18b-ec4a2037a355" style="width:33.333333333333336%" class="column"><pre id="b4e43a15-c39c-4a23-ba6e-06aaffdbe3b9" class="code"><code>a = f(x);</code></pre></div><div id="6f841012-0014-4846-aefa-5d90f98c85f7" style="width:33.333333333333336%" class="column"><pre id="71f28753-2c27-466c-bfdc-c8e464839d85" class="code"><code>b = f(x);</code></pre></div><div id="cd716fad-0d8e-4538-8407-7f4e883fbc2c" style="width:33.33333333333333%" class="column"><pre id="a8e02d8c-238a-408e-ae0d-e545d76db78f" class="code"><code>c = f(y);</code></pre></div></div><p id="afa6c0fb-155d-45f9-b15d-82742e5dfc89" class="">Conclusion: There is a concurrent read of <mark class="highlight-gray"><code>x</code></mark>.<div class="indented"><p id="8fda1412-c61c-49df-8208-a44ad9cdbcfa" class="">This program is only safe for concurrent execution, if <mark class="highlight-gray"><code>f</code></mark><mark class="highlight-gray"> </mark>has no side effects (is <em>thread safe</em>).</p></div></p></details></li></ul></div></p><p id="48736d55-f5d5-4771-a32b-c168546a5822" class="">
+</p><h2 id="b7b8924f-8b73-40d4-809a-179171425fe6" class="">Wait free vs. lock free</h2><p id="d0bb5780-dd6c-4e04-b544-606bb8b63f85" class="">Wait-freedom <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">⇒</span></span></span></span></span><span>﻿</span></span> lock-freedom<div class="indented"><p id="d4243ad1-8c82-43b0-92ec-3685095294d2" class=""><mark class="highlight-gray">(but lock-freedom </mark><mark class="highlight-gray"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇏</mo></mrow><annotation encoding="application/x-tex">\not \Rarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">⇒</span></span></span></span></span><span>﻿</span></span></mark><mark class="highlight-gray"> wait-freedom)  </mark></p><p id="9f4527ea-2584-487e-83a5-3d653fd5b476" class="">Both require hardware support (ie. atomic counter).</p></div></p><p id="90e3ca3f-351e-4fb6-ae08-00dd82791e71" class="">
+</p><p id="f96be43b-7355-4934-8f2e-7f8649a9f55f" class=""><mark class="highlight-blue">Wait free </mark><mark class="highlight-gray">algorithm on concurrent data</mark><div class="indented"><p id="3942d7bc-7f52-439a-84d3-908e7fa94f7d" class="">Each thread can always do progress no matter what other threads are doing.</p><p id="f980af6a-d339-45d9-8947-2db60e126187" class="">If thread tries to execute the operation, <span style="border-bottom:0.05em solid">progress is guaranteed and does not depend on other threads</span> or their attempt to execute the same operation.</p></div></p><p id="f22ad097-4602-4674-81fe-bd5929d1a4fa" class=""><mark class="highlight-blue">Lock free </mark><mark class="highlight-gray">algorithm on concurrent data</mark><div class="indented"><p id="909a4d4a-d246-4347-af25-c038949c2df9" class="">If several threads are attempting to execute the operation,<mark class="highlight-teal"> </mark><span style="border-bottom:0.05em solid">at least one of the threads can make
+progress</span> on the operation.</p></div></p><p id="5c974229-f51d-4fb6-8f24-e2c246dae97f" class="">
+</p><p id="3348a6f9-1957-487a-b177-054fbd3be988" class="">
+</p><h1 id="0847d0e5-aa58-42b7-9367-b640bf2a3ddd" class="">Synchronization constructs</h1><p id="c35b0b81-4360-417b-af11-52a055f9fcfe" class=""><mark class="highlight-gray">Slow implementation</mark><div class="indented"><p id="5cc4ae99-5456-4cf5-b13d-548816a53ef5" class=""><mark class="highlight-gray">These constructs were developed for small numbers of concurrent tasks, not scalable HPC (many threads on many cores).</mark></p><p id="308b8c98-e6d1-41a3-9fcb-9d0b482143db" class=""><mark class="highlight-gray">Most of them have sequential parts that slow down (Amdahl).</mark></p></div></p><p id="3c3722b9-d95f-47ca-b305-c4a799e5c0cd" class="">
+</p><h2 id="a74734ca-df21-40ad-9587-af20b144d261" class="">Locks</h2><p id="ce352f42-26b4-4a99-b1cc-c4037351c0e2" class=""><mark class="highlight-blue">Locks</mark><div class="indented"><p id="2f0944ad-fb52-4c8d-80e4-bc1d6f896d61" class="">= shared object between threads, guarantee mutual exclusion</p><p id="de7b3ad1-78ff-4db7-829a-a7578b537198" class="">called “mutex” in pthreads</p></div></p><p id="6abbc98d-e377-4ff4-bb74-d1e2feed2066" class="">
+</p><p id="cccb4995-8783-42df-a96d-8e5c175c7618" class=""><mark class="highlight-blue">States of locks</mark><div class="indented"><p id="159dc0a8-3cc0-4203-a7c4-f8baf913e51b" class="">2 possible states:<div class="indented"><ul id="a3a93c8c-a03e-49c1-9c2d-5adbd0e67505" class="bulleted-list"><li style="list-style-type:disc">acquired (locked)</li></ul><ul id="e034613a-ee74-4875-824f-b46675eb0177" class="bulleted-list"><li style="list-style-type:disc">released (unlocked)</li></ul></div></p><p id="b8217d43-15df-46b5-9c2d-a8f30a08402c" class="">Only one thread can acquire lock and must release it after use.</p><p id="ffd27026-9207-499a-b2c3-588303994418" class="">If another thread tries to acquire the locked lock, it is <em>blocked</em> and must wait until its release.</p></div></p><p id="3ae78218-e9a3-4527-bec0-80d6ca106c5a" class="">
+</p><p id="4fcb336d-9da7-4076-a64b-a9db03028d85" class=""><mark class="highlight-blue">Properties of locks</mark><div class="indented"><p id="6325d79f-1e53-4595-aeac-d84f9c2931a8" class="">Deadlock freedom		Some thread will always succeed in acquiring the lock</p><p id="7b25502d-2d53-46c6-b220-d36edf817079" class="">Starvation freedom		If a thread is trying to acquire the lock it will eventually succeed</p><p id="66bf34e6-46c3-4cd0-abfc-22ede16d9034" class="">Fairness				First come first serve: thread that acquired first will get the lock first</p><p id="18c37c5f-25e5-42e8-b23b-aa5925d697d8" class="">Bounded waiting		Bounded time / steps after which a thread must succeed in</p><p id="e45a7081-8ac9-4108-8e18-73e977f29959" class="">					acquiring the lock it is trying to acquire.</p><hr id="bba481f4-83da-4eb5-825f-2b5b3a48318c"/><p id="ea32b414-fb79-4a41-8ba3-5081cbde1d15" class="">By definition, locks are not lock-free, not wait-free.<div class="indented"><p id="a28605e2-d800-4d10-847e-839802f90b75" class="">A thread that acquired the lock can keep it indefinitely while no other thread makes progress.</p></div></p></div></p><p id="4af6fb2a-a818-48e8-be8f-a5a4c4955cdf" class="">
+</p><p id="a5a8c0ad-cb68-49c6-9dc5-2d57e9c68fd7" class=""><mark class="highlight-blue">pthreads rule</mark><div class="indented"><p id="6cab31c8-4933-4059-88d1-d79b99560d60" class="">Whatever thread <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mn>1</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small T_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> can view in memory when releasing the lock,</p><p id="d87fc1b2-504e-46e7-8b98-7f39306aeb77" class="">thread <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><msub><mi>T</mi><mn>2</mn></msub></mstyle></mrow><annotation encoding="application/x-tex">\small T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2796266666666667em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> can view when acquiring the lock.</p></div></p><p id="06fd1b69-155c-4ea6-9f49-be91d4b27c0d" class=""><mark class="highlight-blue">Properties of pthread locks</mark><div class="indented"><p id="bd8f7b52-6e74-4432-8250-5e7e17309ef1" class="">Not fair, not starvation free, no bounded waiting - pthread locks are deadlock free but not starvation free.</p><p id="c38928f1-5912-4852-a297-0827f3ad7c8a" class="">Threads can starve eachother by never allowing the others to enter the critical section.</p><p id="9aeac5d4-ad02-40c7-a9ea-a9ccd4751c1e" class="">There is no guarantee that a thread will eventually acquire the lock it wants.</p></div></p><p id="d4eb590d-2b0f-4eb6-b237-2b5d109656fe" class="">
+</p><p id="0c3ed68f-c74d-4129-808d-7e95c2b9c393" class=""><mark class="highlight-blue">Lock pattern</mark><div class="indented"><pre id="aa3033ee-cd4a-498b-9de8-a05e6436e695" class="code"><code>flag = 1; x = … ;</code></pre><div id="dfde93fb-fde5-4031-8648-8db600319bcd" class="column-list"><div id="2282afc6-e062-43db-b92f-8764f5601ecb" style="width:33.333333333333336%" class="column"><pre id="4230b780-5747-46d2-a611-d2486300f025" class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre></div><div id="be95ba00-8e83-4a62-bcfe-e23d33daadc2" style="width:33.333333333333336%" class="column"><pre id="7f8e4108-3ae7-4803-9024-41dbec7a980c" class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre></div><div id="d472d3b1-56c0-415b-bb31-3becb967f30f" style="width:33.33333333333333%" class="column"><pre id="30a5339d-e31a-4f78-b662-dffe99678154" class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre></div></div></div></p><p id="6b5eb487-c154-4ce9-8cf6-1414f6a489dd" class="">
+</p><p id="3e380a37-5ca2-4ff1-bc5b-5ca10278f4ea" class=""><mark class="highlight-blue">Example: using locks</mark><div class="indented"><ul id="c2e04cdc-51c9-4c09-b998-588c539c751d" class="toggle"><li><details open=""><summary>unsafe program: race condition</summary><p id="fed82691-6a43-43b7-aafe-3fc027955fb2" class="">initial value: <mark class="highlight-gray"><code>x = 0;</code></mark></p><div id="10eeeaf5-dca3-4b68-bbfe-2e85f1f2e0d4" class="column-list"><div id="539bad30-0fc9-4161-8769-42afa421450d" style="width:33.333333333333336%" class="column"><pre id="7f09feb5-e3e0-402e-9579-02c4aa8e45fe" class="code"><code>if (flag) {
+	a = x;
+	flag = 0;
+}</code></pre></div><div id="f7e46881-5567-417d-bdb4-042c25add453" style="width:33.333333333333336%" class="column"><pre id="8cd3b86b-4ad6-4104-912e-ee4628156fb6" class="code"><code>if (flag) {
+	a = x;
+	flag = 0;
+}</code></pre></div><div id="241362a0-df8e-482f-aa10-9b7f9c40c3fc" style="width:33.33333333333333%" class="column"><pre id="c4cff81b-e0cb-455b-8582-a6640da5b805" class="code"><code>flag = 1;
+x = 27;</code></pre></div></div><p id="03924e06-0f34-42ef-bdd9-090d2da3d0d8" class=""><em>Conclusion: race condition - </em>What happens depends on relative timing.<div class="indented"><ul id="59625e2c-e198-49f2-996f-2738c893ee2a" class="bulleted-list"><li style="list-style-type:disc">Either <mark class="highlight-gray"><code>a</code></mark><mark class="highlight-gray"> </mark>is some unintended value of <mark class="highlight-gray"><code>x</code></mark><mark class="highlight-gray"> </mark>(before it was initialized) or 27.</li></ul><ul id="0dadd44b-b681-4bc4-aaf5-dfd6748d7866" class="bulleted-list"><li style="list-style-type:disc">Both threads might enter critical secion</li></ul></div></p><p id="8a649f6f-a6bd-45b4-bd26-b1b0edd2eee9" class="">
+</p></details></li></ul><ul id="645cc719-0672-4ec2-80dd-29957eb793d6" class="toggle"><li><details open=""><summary>safe program (implements pattern)</summary><p id="e0e722c3-fd53-4929-87a8-640455f69481" class="">what is the intended value of <mark class="highlight-gray"><code>a</code></mark><mark class="highlight-gray"> </mark>for thread0, thread1?</p><pre id="3ba269df-98ff-4918-853e-f5a9b9ecdd68" class="code"><code>pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+x = 0;</code></pre><div id="ea258a01-6cdf-4977-8c8e-0a99f5863364" class="column-list"><div id="6fa7d859-e4a1-4aba-a29f-d41c0a1344c1" style="width:33.333333333333336%" class="column"><pre id="6440ea02-cf90-41b4-88d8-5ba66f015cd2" class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre></div><div id="7e595e0b-dee2-48b9-975a-21e4bf91e809" style="width:33.333333333333336%" class="column"><pre id="302358e9-0811-4d05-93f7-201ab38825df" class="code"><code>lock(&amp;lock);
+if (flag) {
+	a = x;
+	flag = 0;
+}
+unlock(&amp;lock);</code></pre></div><div id="126c8d40-58b7-4ab8-b68e-705485acec36" style="width:33.33333333333333%" class="column"><pre id="8c802180-615d-4a6e-bdeb-04631baa2273" class="code"><code>lock(&amp;lock);
+flag = 1;
+x = 27;
+unlock(&amp;lock);</code></pre></div></div><p id="fcd3ade1-4067-46a2-9e0c-17b83a2d7157" class="">Conclusion:<div class="indented"><p id="17cf8194-927d-4089-be79-e6a73f74fc60" class="">Both read and write accesses to <mark class="highlight-gray"><code>x</code></mark><mark class="highlight-gray"> </mark>now protected by lock (mutex). </p><p id="0d6ddd9b-e9de-4c36-a3a9-c53833d1fad4" class="">Mutual exclusion, consistent memory ensured by locking.</p></div></p><p id="ba54660f-a43a-44dc-8899-97655e77bbc1" class="">
+</p></details></li></ul><ul id="f7e03bd8-d0b8-4d35-89a6-73e954af4d3e" class="toggle"><li><details open=""><summary>unsafe program: deadlock</summary><p id="6afc55b0-aee3-4641-aa73-541908ba4439" class="">what is the intended value of <mark class="highlight-gray"><code>a</code></mark><mark class="highlight-gray"> </mark>for thread0, thread1?</p><pre id="2b8d5b2e-0bc7-42b3-b9a0-2327a32ebea4" class="code"><code>pthread_mutex_t lock1 = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t lock2 = PTHREAD_MUTEX_INITIALIZER;
+x = 0;</code></pre><pre id="fa5e89a1-be92-4bfc-b886-ad091f273b6f" class="code"><code>lock(&amp;lock1); // executed
+lock(&amp;lock2); // &lt;-- needs unlock of lock2 from thread1 to progress 
+if (…)
+unlock(&amp;lock2);
+unlock(&amp;lock1);</code></pre><pre id="4ac601f1-e741-4060-9896-9a65204a1f34" class="code"><code>lock(&amp;lock2); // executed
+lock(&amp;lock1); // &lt;-- needs unlock of lock1 from thread0 to progress
+if (…)
+unlock(&amp;lock1);
+unlock(&amp;lock2);</code></pre><pre id="83f8b1f5-d39c-4a60-83e4-95b2bc1cb627" class="code"><code>lock(&amp;lock1);
+flag = 1;
+x = 27;
+unlock(&amp;lock1);</code></pre><hr id="04a5d26e-311c-42db-a26d-696ce6049463"/><p id="6ddabd34-92c0-48c1-9416-36b513b2c117" class="">Conclusion: Deadlock<div class="indented"><p id="75acfa58-4213-4e1b-a240-05ede213ea7f" class="">Deadlock occurs if thread0 and thread1 try to progress “simultaniously” by each alternately executing one instruction</p></div></p><p id="8ecf5986-ea56-46c5-baa2-e5c091df9e25" class="">
+</p></details></li></ul></div></p><p id="d0f47e77-6bca-4516-9983-39e2841fe596" class=""><mark class="highlight-blue">Example: using global locks</mark><div class="indented"><ul id="246eb0c5-f53c-4d42-85c3-745e594f332d" class="toggle"><li><details open=""><summary>List procesing: locking entire list</summary><p id="90497425-72b7-4827-aeb4-b6e4a5e39eeb" class=""><mark class="highlight-gray"><code>delete(e)</code></mark> operation:<div class="indented"><ol type="1" id="ccd5727b-529e-4550-ac71-eed1583f5d5c" class="numbered-list" start="1"><li><mark class="highlight-gray"><code>lock(listlock)</code></mark></li></ol><ol type="1" id="00075779-5797-41a3-8eae-9cf09b255c6d" class="numbered-list" start="2"><li>scan sequentially until element <mark class="highlight-gray"><code>e</code></mark><mark class="highlight-gray"> </mark>is found</li></ol><ol type="1" id="378b17ac-ce2a-44ac-ac69-72befa9b3eab" class="numbered-list" start="3"><li>dereference / free <mark class="highlight-gray"><code>e</code></mark><mark class="highlight-gray"> </mark>from list via its predecessor</li></ol><ol type="1" id="837d4061-3132-4da2-bbd0-2b733823605a" class="numbered-list" start="4"><li><mark class="highlight-gray"><code>unlock(listlock)</code></mark></li></ol></div></p><hr id="08e7dcdd-188b-451b-a918-e691d6990b9a"/><p id="5f1116f5-d8df-4f41-9067-ec7b82238d61" class=""><em>This is inefficient: Thread using list blocks all other threads for </em><em><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></em><em> steps for list of size </em><em><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>n</mi></mstyle></mrow><annotation encoding="application/x-tex">\small n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.387504em;vertical-align:0em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span></span></span></span></span><span>﻿</span></span></em><em>.</em></p><p id="bd2efb8c-47dc-4638-8904-122f25d92eb2" class="">
+</p></details></li></ul><ul id="86c06a6d-e704-4e8f-a566-ac841f884408" class="toggle"><li><details open=""><summary>List procesing: locking each element individually</summary><p id="ff823368-6efb-4234-a0a7-f82d89a85722" class=""><mark class="highlight-gray"><code>insert(e)</code></mark> operation:<div class="indented"><p id="5a872924-e51c-4f5d-80d5-1838a5746992" class="">We want to insert element <mark class="highlight-gray"><code>e</code></mark><mark class="highlight-gray"> </mark>between <mark class="highlight-gray"><code>e1</code></mark> and <mark class="highlight-gray"><code>e2</code></mark>. </p><p id="49e6dd5b-e27b-4e31-a2b4-ff85795a5464" class="">We will need to lock <mark class="highlight-gray"><code>e1</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>e2</code></mark><mark class="highlight-gray"> </mark>for this.</p></div></p><hr id="3e4998bb-ad16-47a1-a83e-8f6eb294eb5c"/><p id="78b16bb7-909b-468a-b6bf-62e964bff5f2" class=""><mark class="highlight-gray"><code>delete(e)</code></mark> operation:<div class="indented"><p id="e9ab099c-d26f-4465-84e5-3b57a9619f69" class="">We want to delete element <mark class="highlight-gray"><code>e</code></mark><mark class="highlight-gray"> </mark>between <mark class="highlight-gray"><code>e1</code></mark> and <mark class="highlight-gray"><code>e2</code></mark>. </p><p id="82d11793-a25f-41cf-9dbb-632b492d5c6e" class="">We will need to lock <mark class="highlight-gray"><code>e1</code></mark><mark class="highlight-gray"> </mark>and <mark class="highlight-gray"><code>e2</code></mark><mark class="highlight-gray"> </mark>for this.</p></div></p><hr id="8dc756db-8a22-48e1-b365-07cfaa12a53c"/><p id="9b001874-abe9-42c5-8855-a6be6cfc6199" class=""><em>This is solution is expensive (needs a lot of space).</em></p><p id="78a8a539-73d9-43a4-b07f-708ea51f67b7" class=""><em>Deadlocks can still occur - </em>We don’t know how the code for every thread is written → locks are not composable.<div class="indented"><p id="1ccafe8c-d630-4a27-9113-4df9239bfdad" class="">Assume the operations are written by 2 different programmers.<div class="indented"><ul id="fee5b14e-b7cf-4009-b43a-ff4fffcb648d" class="bulleted-list"><li style="list-style-type:disc">Insert: first lock <mark class="highlight-gray"><code>e1</code></mark>, then <mark class="highlight-gray"><code>e2</code></mark></li></ul><ul id="56a5c4f8-6cb9-4ce8-8f22-034351c40b94" class="bulleted-list"><li style="list-style-type:disc">Delete: first lock <mark class="highlight-gray"><code>e2</code></mark>, then <mark class="highlight-gray"><code>e1</code></mark></li></ul></div></p><p id="990143c6-5952-4fc2-9910-6c87a0b32e35" class="">Then by executing them both a deadlock occurs</p></div></p><p id="9f19957f-759d-4e44-aef0-b34246b7c13a" class="">
+</p></details></li></ul></div></p><p id="656892ff-f590-4790-8a6a-1f7707799f83" class=""><mark class="highlight-blue">Example: using read/write locks</mark><div class="indented"><ul id="cb42d062-ea89-457c-963d-af8ba8f07d29" class="toggle"><li><details open=""><summary>Reading arbitrary value</summary><pre id="de32aa02-db98-4d3f-a9ff-3d2111541d2d" class="code"><code>pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
+flag = false;</code></pre><div id="adc2e14c-f19e-45b1-986e-f5fea1f94ee2" class="column-list"><div id="aafe8294-4536-4953-816d-b8dc720ea207" style="width:33.333333333333336%" class="column"><pre id="c6a54684-902a-40ad-aa76-4e71456a9d79" class="code"><code>rdlock(&amp;lock);
+if (flag) { 
+	a = x;
+}
+unlock(&amp;lock);</code></pre></div><div id="9bde9e21-3390-4374-8057-dc1640874471" style="width:33.333333333333336%" class="column"><pre id="e968f7ed-950f-46d2-baa7-7ef8ae30b4a6" class="code"><code>rdlock(&amp;lock);
+if (flag) {
+	b = x;
+}
+unlock(&amp;lock);</code></pre></div><div id="b9e76247-eba8-4674-aecf-8413116f573a" style="width:33.33333333333333%" class="column"><pre id="97648ac1-2aa9-4697-b080-5ce6b306c7c5" class="code"><code>wrlock(&amp;lock);
+x = c;
+flag = true;
+unlock(&amp;lock);</code></pre></div></div><p id="5db6e93c-b284-404f-9711-1a6f72ce3a1b" class="">Conclusion<div class="indented"><p id="1c5a1743-ee7b-4209-8675-da816147341e" class="">Thread0, thread1 can both enter their critical section simultaneously (read lock).</p><p id="3215ab3e-4f8c-489e-97cf-88bc3d39042d" class="">Thread2 is always alone in its critical section (write lock).</p><p id="b9182884-f178-4d1c-a7fc-3a7a20779412" class="">Therefore the thread0, thread1 either read the old <mark class="highlight-gray"><code>x</code></mark><mark class="highlight-gray"> </mark>value (<mark class="highlight-gray"><code>== 0</code></mark>) or new value set by thread2.</p></div></p><p id="1561893b-1e46-4021-9c05-18b747595ea5" class="">
+</p></details></li></ul><ul id="0925fd52-5568-47cb-a0a3-34ac3465a61e" class="toggle"><li><details open=""><summary>Reading newly assigned value (deadlock possible) → can be solved with <mark class="highlight-teal">condiction variables</mark></summary><pre id="c36fc444-85f5-45e5-a069-5eccf8f6c77a" class="code"><code>pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
+flag = false;</code></pre><div id="15a89a0e-8e71-4cb7-91e7-cf5ebdfbfbee" class="column-list"><div id="ae690b88-f707-4147-aeca-9c6ae1e2d672" style="width:33.333333333333336%" class="column"><pre id="d13286d1-f423-4990-95a0-5c66c8a9c22d" class="code"><code>rdlock(&amp;lock);
+while(!flag) {}
+a = x;
+unlock(&amp;lock);</code></pre></div><div id="afa8048a-f0af-434b-98e3-e7334580d427" style="width:33.333333333333336%" class="column"><pre id="2e6d787c-0b9a-4f80-b9f7-015a86f0e83c" class="code"><code>rdlock(&amp;lock);
+while (!flag) {}
+b = x;
+unlock(&amp;lock);</code></pre></div><div id="bde8eee1-98ea-4e85-9712-4dc2332ce7ba" style="width:33.33333333333333%" class="column"><pre id="d6b99c89-12aa-406a-92e9-468d6cf89908" class="code"><code>wrlock(&amp;lock);
+x = c;
+flag = true;
+unlock(&amp;lock);</code></pre></div></div><p id="576c20ab-98bf-4e14-9c92-1bfc940aecd3" class="">Same as above but threads wait until condition is met before continuing (because of the while loop).</p><p id="efc936fd-34be-4ad7-9b78-823dd7937407" class="">Problem<div class="indented"><p id="29c6b10d-7f53-4d2c-9755-3b1aa3b3249f" class="">Active wait is inefficient.</p><p id="2029b77a-bd30-46ac-99a3-c8c0e06434a3" class="">Deadlock is possible.</p></div></p><p id="fa0559ca-c0b0-47cb-933b-80d5e03ef525" class="">Solution<div class="indented"><p id="991cde35-0f13-4475-9bd7-34fe3eac7aa0" class="">Condition variables</p></div></p><p id="00f55e67-e1bb-498f-82d0-2068ae658487" class="">
+</p></details></li></ul></div></p><p id="0de45e44-a0ae-4a10-b864-4cf7f87c15cd" class="">
+</p><p id="d92b422a-836f-4126-8e08-3388f18f562f" class=""><mark class="highlight-blue">Using locks to avoid deadlocks</mark><div class="indented"><p id="9fd2309f-f919-417c-9fd4-18578989ceb8" class="">The best solution is avoiding locks altogether by replicating shared information.</p><ul id="9aa9b452-5263-4892-89a8-de911b51e883" class="bulleted-list"><li style="list-style-type:disc">Use one lock at a time</li></ul><ul id="99981126-f766-4034-b632-32ddc6bdd98a" class="bulleted-list"><li style="list-style-type:disc">If not possible: always acquire and release in the same order <mark class="highlight-gray">(this is difficult to do with libraries, because we don’t know how they are implemented)</mark><p id="7264e686-5ddd-4ac9-80d5-51f6f603e097" class="">Can be done by assigning a level to each lock, sorting them via their IDs, using “trylocks” (if a lock can’t be aquired, release all locks, wait, try again) </p></li></ul></div></p><p id="7f284620-461c-44d6-8fb4-efb45dfd56f8" class="">
+</p><h2 id="0861d076-6866-4323-9c67-1cd6daf8ecb5" class="">Condition variables</h2><p id="439b6016-5f5a-49dc-adf7-84e579d7b87b" class=""><mark class="highlight-gray">See above for use-case example</mark></p><p id="1277ab48-7d0a-4b57-9765-0d2607b631e3" class="">
+</p><p id="1181e0dd-77c7-41a6-b7e8-a4295474e21c" class=""><mark class="highlight-blue">Condition variables / Monitor</mark><div class="indented"><p id="c8df5d24-c7a4-4047-af5c-8950d3ee6bd0" class="">Allows thread to temporarily release lock and wait (suspend) for <em>condition-signal </em>with a <em>condition variable</em>.<div class="indented"><p id="33754d10-691e-4ff0-a4bd-ec86f15da2c9" class="">Different from semaphore object <mark class="highlight-gray">(which is not part of standard pthreads)</mark></p></div></p><p id="c8db52cd-1ed0-4943-a946-4cca34e430f8" class="">Waiting for signal inside critical section on condition variable:<div class="indented"><ol type="1" id="bc74da76-3ea8-4ab5-aced-588f2de6e1e2" class="numbered-list" start="1"><li>Thread acquires lock and enters critical section.</li></ol><ol type="1" id="244b9ac3-f12d-40c2-813e-612f7de63001" class="numbered-list" start="2"><li>Thread suspends itself, relinquishes (temporarily releases) lock but stays suspended - and waits in critical section until the condition is met.</li></ol><ol type="1" id="b0bff47d-cfe4-408f-81f7-cd8c06ff3ede" class="numbered-list" start="3"><li>Thread is resumed (woken up) later by a signal from some other signaling thread.<p id="e07b4f30-5733-40c6-bfbd-0bbd5c376c63" class="">It has again acquired the lock.</p></li></ol></div></p></div></p><p id="155e0619-37e2-469e-a425-402128d0f213" class="">
+</p><p id="b2b7b971-e3f3-4859-a0ae-623a869af31b" class=""><mark class="highlight-blue">Mutual exclusion</mark><div class="indented"><p id="868848cb-2ab7-4009-a54d-21c5403b7e8a" class="">Mutual exclusion still guaranteed.</p><p id="d05a3820-8b16-403c-8c60-b851320b1874" class="">Suspended thread is only resumed when signaling thread left critical section.</p></div></p><p id="f2e5bb26-f1fd-4e1b-b1e2-ea8a27863dc1" class=""><mark class="highlight-blue">Risk of deadlock</mark><div class="indented"><p id="cd4da6c8-0e70-4067-b283-5a1fdfb6bc3d" class="">if threads mutually wait on some condition but there are no signal-threads.</p><p id="eb6f47e7-7a57-4e54-a171-9a0f81d5eb2a" class="">
+</p></div></p><p id="edf3fb0c-a7eb-4bf3-bccf-d76c2d696d6f" class=""><mark class="highlight-blue">weird bug in pthreads</mark><div class="indented"><p id="9a07c00d-6591-4221-be0c-c9815d6cefd2" class="">There can be unwanted wakeups by signals from the runtime-system without explicit wakeup from other thread.</p><p id="370798cc-3852-45ec-995a-7208f8cd1cc2" class="">Good practice: rechecking whether wait-condition is fulfilled - even after waking up.</p></div></p><p id="fa0f5528-f4e4-41b2-9a65-197b494c5333" class="">
+</p><p id="1054349d-ee82-4b1b-ba51-c7a41aef165e" class=""><mark class="highlight-blue">Standard pattern</mark><div class="indented"><p id="c096d83f-b344-4387-82ae-7eb4257a1f04" class="">Thread waiting for condition (signalled thread)<div class="indented"><pre id="0c6d02a4-1817-4764-b65e-c492f6496ce2" class="code"><code>lock(&amp;lock);
+// critical section ::
+
+while (!condition()) {
+	pthread_cond_wait(&amp;cond, &amp;lock); // wait and release lock temporarily
+}
+// thread has been signaled, condition holds, lock is acquired again
+
+// :: critical section
+unlock(&amp;lock);</code></pre></div></p><p id="342e8478-4d60-4b0f-a05b-a00c104a2aa3" class="">Thread broadcasting signal (signaling thread)<mark class="highlight-gray">— can be done inside or outside the critical section</mark><div class="indented"><ul id="53dc60b2-edc6-4fdb-8689-b7144e431f35" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><em>Inside</em></mark></summary><pre id="a331102f-a58e-44f3-885a-498ea6d0b030" class="code"><code>lock(&amp;lock);
+// critical section ::
+
+... // establishing condition
+cond_signal(&amp;cond); // signal if condition holds
+
+// :: critical section
+unlock(&amp;lock);</code></pre><ul id="f33827ec-2617-4cb5-9ba1-b44d9f574365" class="bulleted-list"><li style="list-style-type:disc">Advantage: Establishing condition in critical section → therefore it should hold when suspended thread is resumed.</li></ul><ul id="dab46316-6363-4160-be86-d00a82b7a964" class="bulleted-list"><li style="list-style-type:disc">Disadvantage: Suspended thread will block on mutex again - until signaling thread leaves the section.</li></ul></details></li></ul><ul id="81701852-07f6-48bc-99e4-2c04074de098" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><em>Outside</em></mark></summary><pre id="89d47dcf-ef2c-430b-bfa1-c1e43acdf4eb" class="code"><code>lock(&amp;lock);
+... // establishing condition (in critical section)
+unlock(&amp;lock);
+
+cond_signal(&amp;cond); // signal</code></pre><ul id="ec4b3ca2-71ab-47f0-b7c9-ab0d5eeb0a01" class="bulleted-list"><li style="list-style-type:disc">Advantage: Suspended thread can immediately continue without blocking.</li></ul></details></li></ul></div></p></div></p><p id="33973696-1ae6-403f-9144-1cf9980d6fe3" class="">
+</p><p id="9f6ab03c-5ae6-4e13-8a9c-0a41f2423fcc" class=""><mark class="highlight-blue">Example</mark><div class="indented"><ul id="5cefd77c-0256-412f-b241-acf135cf7bf2" class="toggle"><li><details open=""><summary>Readers-writers lock (with condition variables and locks) → unfair</summary><pre id="5fd0d50e-4282-4979-b0c4-7edd774575d9" class="code"><code>typedef struct {
+	int readers; // actice readers
+	int writer;	// (boolean) active writer
+	int waiting; // pending writes (writers in queue) 
+	pthread_cond_t read_ok; // condition: reading allowed
+	pthread_cond_t write_ok; // condition: writing allowed
+	pthread_mutex_t gateway; // lock
+
+} rwlock_t;</code></pre><pre id="afbddcfa-7dbe-4465-a5d9-fc9e13c7a8b0" class="code"><code>void rwlock_rlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+
+	while (rwlock-&gt;waiting &gt; 0 || rwlock-&gt;writer) {
+		// writers exist or wait - release gateway lock and wait for read_ok signal
+		pthread_cond_wait(rwlock-&gt;read_ok, &amp;rwlock-&gt;gateway);
+	}
+
+	rwlock-&gt;readers++; // increment readers
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre><pre id="1d041aba-da12-43d6-b4ce-6d4866a77ad8" class="code"><code>void rwlock_wlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+	rwlock-&gt;waiting++; // pending write
+	
+	while (rwlock-&gt;readers &gt; 0 || rwlock-&gt;writer ) {
+		// readers, writers exist - release gateway lock and wait for read_ok signal
+		pthread_cond_wait(&amp;rwlock-&gt;writer_ok,	&amp;rwlock-&gt;gateway);
+	}
+	
+	rwlock-&gt;waiting--; // remove writer from queue
+	rwlock-&gt;writer = 1; // active writer == true 
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre><pre id="625498d9-f5f3-473a-b396-2e6443383a3c" class="code"><code>void rwlock_unlock(rwlock_t *rwlock) {
+	pthread_mutex_lock(&amp;rwlock-&gt;gateway); // acquire gateway lock
+
+	// remove active writer or reader
+	if (rwlock-&gt;writer) {
+		rwlock-&gt;writer = 0;
+	} else {
+		rwlock-&gt;readers--;
+	}
+
+	// send signal: resume threads waiting to acquire
+	if (rwlock-&gt;readers == 0 &amp;&amp; rwlock-&gt;waiting &gt; 0) {
+		pthread_cond_signal(&amp;rwlock-&gt;writer_ok); // no readers, waiting writer
+	} else {
+		pthread_cond_broadcast(&amp;rwlock-&gt;reader_ok); // reader || no waiting writer
+	}
+
+	pthread_mutex_unlock(&amp;rwlock-&gt;gateway); // release gateway lock
+}</code></pre><p id="dee64495-5a33-40d3-83ba-3b629c227b9a" class="">The signal in the release function could also be sent outside the critical section, but it would change up the semantics (readers/writers can be changed by other threads after unlock).</p><p id="4bc44e92-ae52-4e0b-83fd-e2217482ccfb" class="">This way, we release the signal but keep the lock - therefore the signalled threads get blocked when they wake up.</p><p id="92740f6d-3d2c-4188-972e-f744f4006162" class="">Correctness can be proven using invariants.</p><p id="75560ab2-2f2f-4852-a231-7575f256a429" class="">
+</p><p id="6dccd3b8-8ebf-4526-a23f-3259e6cf9261" class=""><mark class="highlight-teal">Problem: Unfairness</mark><div class="indented"><p id="0ca5621b-4969-4a2b-8982-3daf4bff7c1a" class="">Threads acquiring write can starve threads wanting to acquire read.<div class="indented"><ul id="535e8377-afb0-4f5a-ae8a-cd215a8f8276" class="bulleted-list"><li style="list-style-type:disc">Newer writer can starve older writer</li></ul><ul id="b4f2ba78-d555-45b2-96f7-57981ca43c4b" class="bulleted-list"><li style="list-style-type:disc">Newer reader can acquire lock before older reader or writer</li></ul></div></p></div></p><p id="8292e5d1-ff86-49ee-9ae1-513e04cf27f5" class="">
+</p></details></li></ul><ul id="553f8057-a567-4238-a309-e3e411430b08" class="toggle"><li><details open=""><summary>Barrier synchronization (with condition variables and locks) → inefficient</summary><p id="27da2bda-f611-49ba-a236-47409fbbba1f" class="">Each thread executing <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark> must wait until all or some number of threads have also executed <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>.</p><pre id="9e00c9bd-04ec-48ab-af90-198b31c57163" class="code"><code>typedef struct {
+	int tc; // thread count
+	pthread_cond_t barrier_ok;
+	pthread_mutex_t barwait;
+
+} barrier_t;</code></pre><pre id="13f632ad-7a69-41de-8443-20f473a60120" class="code"><code>void barrier(barrier_t *b, int total_tc) {
+	pthread_mutex_lock(&amp;b-&gt;barwait); // acquire barwait lock
+
+	b-&gt;tc++;
+	if (b-&gt;tc == total_tc) { // threshold reached
+		b-&gt;tc = 0;
+		pthread_cond_broadcast(&amp;b-&gt;barrier_ok);
+	} else { // wait until barrier_ok signal (acquire and immediately release barwait)
+		pthread_cond_wait(&amp;b-&gt;barrier_ok, &amp;b-&gt;barwait);
+	}
+
+	pthread_mutex_unlock(&amp;b-&gt;barwait); // release barwait lock
+}</code></pre><hr id="fe92d6e1-1bab-4026-a3dd-af9ca7522e0c"/><p id="3f6f04ec-9bfb-4e8b-9498-9793f4e37980" class="">Problems<div class="indented"><ul id="c0956313-32a7-41a1-8035-02511f41e31d" class="bulleted-list"><li style="list-style-type:disc">Not scalable <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mi>O</mi><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small O(p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="f007b116-c784-41d0-9b29-fa9933dafa60" class="bulleted-list"><li style="list-style-type:disc">Probably not safe on spurious (unexpected) wake ups</li></ul></div></p><p id="a9c0da48-6fc0-4dc2-a8fc-7acf0067f9ee" class="">Solution: Tree structured barrier with an extra flag</p></details></li></ul></div></p><p id="5eadc8fd-6e31-41a2-902b-6add6c4037f5" class="">
+</p><h2 id="90285ded-dbdc-4cc5-b152-da95b1e05701" class="">Barriers</h2><p id="828a646b-99ac-4423-87bf-840462fb7b16" class=""><mark class="highlight-blue">Barriers</mark><div class="indented"><p id="fb24fa55-c7f5-415a-818a-de541c7747db" class="">Each thread executing <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark> must wait until all or some number of threads have also executed <mark class="highlight-gray"><code>&lt;barrier&gt;</code></mark>.</p></div></p><p id="078ecb86-f1c4-47d5-a53b-136e4b02e89f" class="">
+</p><h2 id="b6b67a92-70cc-40b9-9162-c00c2065c97d" class="">Semaphores</h2><p id="637939f1-d325-4518-a7e4-957802b40fdc" class=""><mark class="highlight-blue">Semaphore (by dijkstra)</mark><div class="indented"><p id="8ab7e492-72ed-468f-86f4-d7b6a5d6b9c7" class="">concurrenct counter object with operations.<div class="indented"><p id="79eac0ea-8612-4748-ab8b-72c92fec93ca" class=""><mark class="highlight-gray"><code>up(x)</code></mark>		atomic increment → wakes <mark class="highlight-gray"><code>x</code></mark> up if it was negative <mark class="highlight-gray">(signal, post, V)</mark></p><p id="e0718223-afd6-44d1-834b-f36fbbcde001" class=""><mark class="highlight-gray"><code>down(x)</code></mark>		atomic decrement → blocks <mark class="highlight-gray"><code>x</code></mark><mark class="highlight-gray"> </mark>if it turned negative <mark class="highlight-gray">(wait, P)</mark></p></div></p><p id="db8b2edb-f6b6-4d1d-bfd6-626e0ac8a0c7" class="">If there is no thread in queue, the signals are not lost (contrary to condition variables).</p><p id="aa160f45-c2ad-45c5-bab7-735e8d823723" class="">
+</p></div></p><h2 id="10842a37-d3ad-45ab-a165-f76d722f1cb5" class="">Atomic operation</h2><p id="43d3eb32-026f-4ae1-853c-9f1647285c59" class=""><mark class="highlight-blue">Atomic operation</mark><div class="indented"><p id="81ecca7c-1133-4b07-af59-b1398853d78a" class="">Update to memory location or complex object that is atomic (can not be delayed, in one, uninterrupted):<div class="indented"><ul id="6dc16996-21a3-4367-8ab7-2f0263e94ab0" class="bulleted-list"><li style="list-style-type:disc">Indivisible		either the whole result or nothing is seen by other threads</li></ul><ul id="818952b1-49f2-4ca4-8798-6a73377e25fa" class="bulleted-list"><li style="list-style-type:disc">Time bounded		completed in finite time (wait-free, independent of other threads)</li></ul></div></p><p id="bf847b4c-29cd-4e96-a66b-a7c0ae06c2f5" class="">Usually done by hardware:<div class="indented"><p id="996659a1-e42c-47b2-ad34-db457959000e" class="">Require expensive hardware support and complex interaction with memory system (ie. cache-line invalidation).</p><ul id="4a879a83-b510-4bd0-aac4-20e6e2ea4cb3" class="bulleted-list"><li style="list-style-type:disc">load/stores			atomic loads and stores (can be ordered in program)</li></ul><ul id="d21ad220-7cb7-4697-9b16-c2e06cf16d21" class="bulleted-list"><li style="list-style-type:disc">ready-modify-write		read, update, store</li></ul><ul id="f8038138-5309-4244-b1cc-78d0cba82bcf" class="bulleted-list"><li style="list-style-type:disc">Swap				swap two memory locations (based on condition)</li></ul></div></p></div></p><p id="147d05c2-f28a-403e-ab5d-2d83170166e9" class="">
+</p><p id="79111a0a-a5a8-4853-87df-b03c087bc575" class=""><mark class="highlight-blue">Example: finding all primes in interval</mark><div class="indented"><ul id="8d8b6a94-64f5-4233-8787-d5820b639894" class="toggle"><li><details open=""><summary>Finding all primes in interval with atomic operation</summary><p id="56eba548-4ca1-4fef-a603-38c74646787d" class="">Find all primes between <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>2</mn></mstyle></mrow><annotation encoding="application/x-tex">\small 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5799960000000001em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">2</span></span></span></span></span><span>﻿</span></span> and <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mstyle></mrow><annotation encoding="application/x-tex">\small 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.713364em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mord sizing reset-size6 size5"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>.<div class="indented"><pre id="9d92cbb0-6398-4eee-8c4d-f30c5694454b" class="code"><code>for (i=2; i&lt;1000000000; i++) {
+	if (isPrime(i)) printf(&quot;Found %d\n&quot;,i);
+}</code></pre></div></p><p id="190ce655-9b11-4970-ac06-565de8fe850d" class=""><mark class="highlight-teal">Solution 1) Statically scheduled data parallel loop</mark><div class="indented"><p id="d67f6ff4-576d-4487-b375-8e05d6f03f2d" class="">Each thread executes block of size <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup><mi mathvariant="normal">/</mi><mi>p</mi></mstyle></mrow><annotation encoding="application/x-tex">\small 10^9/p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.938364em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5">1</span><span class="mord sizing reset-size6 size5"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7926266666666666em;"><span style="top:-2.963em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span></span></span></span></span><span>﻿</span></span> → load imbalance, only few processors perform expensive <mark class="highlight-gray"><code>isPrime()</code></mark><mark class="highlight-gray"> </mark>checks.</p><p id="6c42d737-20c9-4ce6-9479-ca962d726663" class="">Problem:<div class="indented"><ul id="69c12f86-3873-429f-820f-9799516b295d" class="bulleted-list"><li style="list-style-type:disc">Almost no speedup.</li></ul><ul id="9cf72821-fdb5-4001-91e5-daa4f96f7b43" class="bulleted-list"><li style="list-style-type:disc">Array compaction cannot help since we dont know where primes are in advance.</li></ul></div></p></div></p><p id="5e79425b-b476-455a-9246-3219726fef41" class=""><mark class="highlight-teal">Solution 2) Shared global counter with global variable</mark><div class="indented"><pre id="f56722be-59cf-4479-b84b-d9a9d1d177ad" class="code"><code>int i = 0; // shared globally</code></pre><pre id="c417bce5-d349-4ec7-95a1-8fe868fa09a8" class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j = i; // thread gets next value of i 
+	i++; // illegal concurrent update -&gt; race condition 
+	if (isPrime(j)) printf(&quot;Found %d\n&quot;,j);
+}</code></pre><p id="7edfd371-13c2-49ef-8b04-0c0258486cf8" class="">Problem:<div class="indented"><p id="0da958c8-b720-485f-adfb-5374857a9d7e" class="">Unsafe because of multiple threads update <mark class="highlight-gray"><code>i</code></mark><mark class="highlight-gray"> </mark>at the same time.</p><ul id="2960036c-160b-432c-a4c0-fca805c32a58" class="toggle"><li><details open=""><summary><mark class="highlight-gray"><code>i++</code></mark><mark class="highlight-gray"> </mark>is not atomic</summary><p id="638103a9-e3ee-403b-a3cf-800cf6ccb043" class=""><mark class="highlight-gray"><code>i++</code></mark> actually translates to:</p><pre id="3ae0b1cf-475f-4db5-8908-331fba24f2a2" class="code"><code>tmp = i;
+tmp = tmp+1;
+i = tmp;</code></pre><p id="5d3cb5ec-bf12-4a14-bd56-3433e945d3da" class="">This way we can have an unwanted interleaving where <mark class="highlight-gray"><code>i</code></mark><mark class="highlight-gray"> </mark>is only incremented by 1 between two threads:</p><pre id="6541fab4-8d13-4e94-9500-7f0285828d11" class="code"><code>										tmp = i;
+tmp = i;
+										tmp = tmp+1;
+tmp = tmp+1;
+i = tmp;
+										i = tmp;</code></pre></details></li></ul></div></p></div></p><p id="75e9f2d4-b94b-40ae-a137-a42d13269322" class=""><mark class="highlight-teal">Solution 3) Shared global counter with mutex</mark><div class="indented"><pre id="c8c3ca90-e133-4672-80e5-af939c706058" class="code"><code>int i = 0; // shared global. init once
+pthread_mutex_t count_lock = …;</code></pre><pre id="d70a0e9c-4e50-4b95-9849-4b88f5117eea" class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j;
+	pthread_mutex_lock(&amp;count_lock); // critical section ::
+	j = i;
+	i++;
+	if (isPrime(j)) printf(&quot;Found %d\n&quot;,j);
+	pthread_mutex_unlock(&amp;count_lock); // :: critical section
+}</code></pre><ul id="241cd9d9-c670-4dee-94d4-41656d5874b9" class="toggle"><li><details open=""><summary>Alternative: putting <mark class="highlight-gray"><code>isPrime()</code></mark><mark class="highlight-gray"> </mark>out of the critical section</summary><pre id="9972db48-e52f-4651-8880-ed26739107e1" class="code"><code>int i = 0; // shared global. init once
+pthread_mutex_t count_lock = …;</code></pre><pre id="39fe79db-8c1f-4738-afb9-e21c260bb9b9" class="code"><code>// thread code (function)
+while (i&lt;1000000000) {
+	int j;
+	pthread_mutex_lock(&amp;count_lock); // critical section ::
+	j = i;
+	i++; // thread could just stop here somewhere arbitrarily
+	pthread_mutex_unlock(&amp;count_lock); // :: critical section
+	if (isPrime(j)) printf(&quot;Found %d\n&quot;,j);
+}</code></pre><p id="6857afbd-5feb-458f-84e1-247be8d73e14" class="">Problem: thread can sleep arbitrarily and make no progress <em>after</em> acquiring the lock, while other threads just wait.</p><p id="389f77ce-c05b-4949-832b-85758271198b" class="">
+</p></details></li></ul><p id="e05b4623-22da-4d53-80c4-b1976713f67d" class="">Problem:<div class="indented"><p id="adee1693-49c5-4574-b923-2279cb7db6c1" class="">No speedup → all the other threads can’t make any progress when  <mark class="highlight-gray"><code>isPrime()</code></mark><mark class="highlight-gray"> </mark>checks are in the critical section</p></div></p></div></p><p id="4ee02025-4085-4a32-8868-a8db97671b0e" class=""><mark class="highlight-teal">Solution 4) Atomic increment</mark><div class="indented"><pre id="b2bc3163-b868-43f7-8748-1dc4eeaf6f96" class="code"><code>int i = 0; // shared global</code></pre><pre id="2e582895-1008-495b-9673-bfc1a23351cc" class="code"><code>// thread code (function)
+int done = 0;
+do {
+	int j = fetch_and_inc(&amp;i); // return i, increment O(1) 
+	if (j==1000000000) done = 1;
+	else if (isPrime(j)) printf(&quot;Found %d\n&quot;,j);
+} while (!done);</code></pre><p id="2217b42c-862f-406f-8940-b5800acedddc" class="">Wait-free algorithm</p></div></p></details></li></ul></div></p><p id="24e874fb-af6a-4a3c-a177-61ce07a4de97" class="">
+</p><p id="db378148-4298-4fa9-8734-0857cf6c7a3c" class="">
+</p><h1 id="e3307869-1a15-4d8d-8b90-71ecedfb5b57" class="">Work-pools (master-worker pattern)</h1><p id="380f5bf2-284a-45a8-8751-b75ff4958582" class="">Useful implementation of higher-level parallel paradigm.</p><p id="9b5f9e67-b811-4475-9d9b-79e69303773a" class="">
+</p><p id="a5c7612e-bd6d-4854-9548-a4a043d6e8f8" class=""><mark class="highlight-blue">Master</mark>		Maintains pool of work</p><p id="a393e2b1-485d-4531-83d6-f486beac1949" class=""><mark class="highlight-blue">Workers</mark>		ask for work, execute, return new results to master (until done)</p><p id="ca1339d2-e7ee-40c1-9f22-1f56299f6398" class="">
+</p><h2 id="414da696-7a8a-4206-bfb0-795c49e5c641" class="">Centralized work-pool</h2><p id="fa62288c-99ca-4e70-a374-0491a2d22418" class=""><mark class="highlight-blue">Work-pool</mark>	distributed pool of work nodes (function and arguments)</p><figure id="4d991e2b-5046-444e-b6ad-80390de9ad49" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%204.png"><img style="width:192px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%204.png"/></a></figure><p id="6c4a090b-8e1e-4e39-ad38-d0eb16427829" class="">
+</p><p id="d580f4c4-6149-49da-b10c-4b07656ba965" class=""><mark class="highlight-blue">Scalability bottleneck</mark><div class="indented"><p id="a7083cd4-0503-4b5a-9191-5c8db3bb9c15" class="">Getting work = explicitly asking master or accessing shared data structure</p><p id="1476b604-a8f0-4463-bafa-0dc4c4b40118" class="">There is a competition for the work in the work-pool.</p></div></p><figure id="406116ae-b3ed-402a-aef8-c2769957eaf2" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%205.png"><img style="width:192px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%205.png"/></a></figure><p id="0b658786-f2da-4127-b0d6-fe6d7d6714cd" class="">
+</p><p id="598f4983-f362-4810-b434-d0b1c054d150" class=""><mark class="highlight-blue">Implementation</mark><div class="indented"><p id="30d543a3-1af0-4ec8-a0bc-4bb8c23935a3" class="">Assume that work is executed in the order it was generated in (use deque data-structure as work-pool).</p><p id="c037e619-16ba-4a54-9b59-0ae31e4d9ca5" class="">Each thread repeats until termination:<div class="indented"><ol type="1" id="c293bd5f-65c8-4b49-9dbe-8968343f310f" class="numbered-list" start="1"><li>Acquire mutex, check queue, if non-empty, take from front (else wait for condition variable).</li></ol><ol type="1" id="114bf860-86c9-448f-af54-6f321047a817" class="numbered-list" start="2"><li>Execute work</li></ol><ol type="1" id="8a9dad09-b8ab-496d-9468-d3482f7f2c14" class="numbered-list" start="3"><li>If new work generated: acquire mutex, insert at end of deque, wake up waiting threads</li></ol></div></p><p id="6165c6b7-d562-4878-b558-74fa9e1a8cbf" class="">Work task as linked list:<div class="indented"><pre id="f7635172-2c20-4a7e-bc7a-ccbd85fae222" class="code"><code>typedef struct work {
+	void (*routine)(void *args); // function
+	void *args; // args
+	struct work *next; // next node in list
+} work_t;</code></pre></div></p></div></p><p id="0e9607fc-79b3-416a-bb01-bc5e449ce253" class="">
+</p><p id="66252a8b-3fec-486a-bab4-f80102489235" class=""><mark class="highlight-blue">Problems with centralized work pool</mark><div class="indented"><ul id="c45dafe6-da75-46a2-8d62-811d6f72d115" class="bulleted-list"><li style="list-style-type:disc">Centralized resource<p id="c35c9641-74fc-44d5-898c-62e8420e4b64" class="">Bad for scalability</p></li></ul><ul id="0b72de6d-4a39-403b-8184-204926cbc021" class="bulleted-list"><li style="list-style-type:disc">Locks<p id="1325f15d-af20-4cf9-8829-25e30a6f7b2d" class="">Thread updating shared resource can lock out all other threads indefinitely</p></li></ul></div></p><p id="6d620a6b-9c73-4f1b-8aac-ad9716123736" class=""><mark class="highlight-blue">Solutions</mark><div class="indented"><ul id="61bf415f-df01-4a02-a619-653c7046c544" class="bulleted-list"><li style="list-style-type:disc">Local task queues<p id="b66b9fbc-bd0d-4916-9809-a969c6b09c48" class="">thread primarily uses local queue → work stealing from other thread’s, when it’s empty</p></li></ul><ul id="0e3ac025-4218-4754-8101-c3aea2208068" class="bulleted-list"><li style="list-style-type:disc">Lock-free/wait-free data structures<p id="eaabac4a-f123-44c9-81e9-e74831a0164e" class="">Enabling a thread always to either make progress by itself or to ensure that others are also making progress.</p><p id="28844f32-613b-4fad-b8cf-c62cc78350af" class="">Make extensive use of strong atomic operations of type “compare and swap CAS”.</p></li></ul></div></p><p id="ddac4fd2-93bf-4582-96ef-011fb3fe666f" class="">
+</p><h2 id="d7c02882-b29c-4fd0-b9b5-7ce0ee4b5042" class="">Decentralized work-pool</h2><p id="0685e680-319f-4f6b-bd07-8c80ae7ead3d" class="">Each thread maintains local pool of work and executes work from own pool.</p><figure id="6814688e-ac02-4bfd-9a11-5533f08ebc03" class="image"><a href="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%206.png"><img style="width:240px" src="pthreads%2002f4abab562941f6a4a9be012892dcbc/Untitled%206.png"/></a></figure><p id="7bc64e5f-8113-49bd-9482-dab2d4c08a77" class="">
+</p><p id="cdbaa61f-4564-47f9-bbeb-233e759f55ae" class=""><mark class="highlight-blue">Work stealing		</mark>local pool empty → steal work from other pools</p><p id="d3f2a609-fc62-4803-b9c8-4a3a89218f95" class=""><mark class="highlight-blue">Work dealing		</mark>local pool full → distribute work to other pools<div class="indented"><p id="4e56b9b1-8581-44e0-964e-f046817ac787" class="">
+</p></div></p><p id="38be05fe-0a7e-43a2-92fa-fb44b9b1657f" class=""><mark class="highlight-blue">Randomized stealing</mark><div class="indented"><p id="d3aa2eb0-0185-45e6-859a-9a6fa449fd8f" class="">has good theoretical properties.</p><p id="6fcbf7f6-7e3b-4a35-b02f-b5d0203ce794" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Tpar</mtext><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Tpar}(p,n) = T_\infin</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Tpar</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.749997em;vertical-align:-0.135em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="db00ae82-73f8-4b9a-a7dc-6debd113e037" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathsize="0.9em"><mtext>Wpar</mtext><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msub><mi>T</mi><mi mathvariant="normal">∞</mi></msub><mo>+</mo><mi>n</mi><mi mathvariant="normal">/</mi><mi>p</mi><mo stretchy="false">)</mo></mstyle></mrow><annotation encoding="application/x-tex">\small \text{Wpar}(p,n) = O(T_\infin + n/p)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord text sizing reset-size6 size5"><span class="mord">Wpar</span></span><span class="mopen sizing reset-size6 size5">(</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mpunct sizing reset-size6 size5">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mclose sizing reset-size6 size5">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel sizing reset-size6 size5">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5" style="margin-right:0.02778em;">O</span><span class="mopen sizing reset-size6 size5">(</span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.13703999999999997em;"><span style="top:-2.45em;margin-left:-0.13889em;margin-right:0.05555555555555556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin sizing reset-size6 size5">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9em;vertical-align:-0.225em;"></span><span class="mord mathnormal sizing reset-size6 size5">n</span><span class="mord sizing reset-size6 size5">/</span><span class="mord mathnormal sizing reset-size6 size5">p</span><span class="mclose sizing reset-size6 size5">)</span></span></span></span></span><span>﻿</span></span> </p></div></p><p id="8c4a1545-050c-4359-9a5b-c55048ef1cf0" class=""><mark class="highlight-blue">Deterministic stealing</mark><div class="indented"><p id="e375b610-3515-4f7e-aa96-9e980f5f293e" class="">Stealing from top of non-local queue.</p><p id="55398c02-ec8b-4a21-a58d-c4d1e573f2c5" class="">Can provide good locality (cache) properties.</p></div></p></div></article></body></html>

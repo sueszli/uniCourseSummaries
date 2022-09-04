@@ -1,0 +1,783 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>XSLT</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="de888a08-7781-49cf-9928-b49f0c5abd79" class="page sans"><header><h1 class="page-title">XSLT</h1></header><div class="page-body"><p id="39fed00f-67a2-453f-8a50-74da56c01074" class="">
+</p><nav id="78594fca-145c-4f42-9468-05e3dab88ee9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3c2f3988-43ae-4d38-b374-552d151b47f1">Definition</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4e044674-3a45-4c0f-a836-3fef064a6440">XSLT Templates</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ec5cf800-784d-4745-aadb-ca36d5885c8a">Creating output</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a5fa63d5-5906-49b7-a77e-3b640b96c357">Other Features</a></div></nav><p id="2565dd75-0502-48e9-8ff8-dc30b1c39e99" class="">
+</p><h1 id="3c2f3988-43ae-4d38-b374-552d151b47f1" class="">Definition</h1><p id="ce26bbd1-225b-45a7-9b90-6e348fdd7f6b" class=""><mark class="highlight-blue">XSLT</mark><div class="indented"><p id="5be07676-7f41-4472-99ac-f1cbbbb1871d" class="">XSL = eXtensible Stylesheet Language for XML <mark class="highlight-gray">(like CSS for HTML)</mark></p><p id="a1cc6a23-e409-4880-bb00-77b16ba2c7d6" class="">XSLT = XSL Transformations / templates</p><p id="4da621fa-de27-44ac-99dd-5cf42e9155ee" class="">XML documents that match the input document and define the output:<div class="indented"><p id="00d6b3b4-08f0-4e2e-be25-0479e5e8c9ad" class=""><em>XML document </em><em><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↦</mo></mrow><annotation encoding="application/x-tex">\mapsto</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.522em;vertical-align:-0.011em;"></span><span class="mrel">↦</span></span></span></span></span><span>﻿</span></span></em><em> XML/HTML/txt document</em></p></div></p></div></p><figure id="afc2e76c-776f-423b-85dc-fe0e897257e9" class="image"><a href="XSLT%20de888a08778149cf9928b49f0c5abd79/Untitled.png"><img style="width:192px" src="XSLT%20de888a08778149cf9928b49f0c5abd79/Untitled.png"/></a></figure><ul id="1ec86c89-4dbc-4997-a0c4-bab7a5712e23" class="toggle"><li><details open=""><summary>Example</summary><pre id="39829c17-3098-4918-9d38-4ca9e874290e" class="code"><code>&lt;courses&gt;
+	&lt;course semester=&quot;Summer&quot;&gt;
+		&lt;title&gt; SSD &lt;/title&gt;
+		&lt;day&gt; Thursday &lt;/day&gt;
+		&lt;time&gt; 09:15 &lt;/time&gt;
+		&lt;location&gt; HS8 &lt;/location&gt;
+	&lt;/course&gt;
+	&lt;course semester=&quot;Winter&quot;&gt;
+		&lt;title&gt; Databases &lt;/title&gt;
+		&lt;day&gt; Tuesday &lt;/day&gt;
+		&lt;time&gt; 09:15 &lt;/time&gt;
+		&lt;location&gt; HS8 &lt;/location&gt;
+	&lt;/course&gt;
+&lt;/courses&gt;</code></pre><p id="b2340a13-f4b5-4afd-ad33-d9e3c6fa6f87" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span></p><pre id="918cf2f1-de4a-4e7d-8cf2-c67f19c3e861" class="code"><code>&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Lectures Overview&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;DBAI Lectures&lt;/h1&gt;
+	&lt;table&gt;
+		&lt;tr&gt;&lt;th&gt;Semester&lt;/th&gt;&lt;th&gt;Title&lt;/th&gt;&lt;th&gt;Date / Time&lt;/th&gt;&lt;th&gt;Location&lt;/th&gt;&lt;/tr&gt;
+		&lt;tr&gt;&lt;td&gt;Summer&lt;/td&gt;&lt;td&gt;SSD&lt;/td&gt;&lt;td&gt;Thursday, 09:15&lt;/td&gt;&lt;td&gt;HS8&lt;/td&gt;&lt;/tr&gt;
+		&lt;tr&gt;&lt;td&gt;Winter&lt;/td&gt;&lt;td&gt;Databases&lt;/td&gt;&lt;td&gt;Thursday, 09:15&lt;/td&gt;&lt;td&gt;HS8&lt;/td&gt;&lt;/tr&gt;
+	&lt;/table&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="b9797cf3-fa7e-402b-bfce-1e510f15d8dc" class="">Through the XSLT document that matches nodes:</p><pre id="bf0db18c-1e39-4d53-a8b0-14163b867a9c" class="code"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;xsl:stylesheet version=&quot;1.0&quot; xmlns:xsl=“http://www.w3.org/1999/XSL/Transform”&gt;
+&lt;xsl:output version=&quot;html&quot;/&gt;
+
+	&lt;xsl:template match=&quot;courses&quot;&gt;
+		&lt;html&gt;
+			&lt;head&gt;
+				&lt;title&gt;Lectures Overview&lt;/title&gt;
+			&lt;/head&gt;
+			&lt;body&gt;
+				&lt;h1&gt;DBAI Lectures&lt;/h1&gt;
+				&lt;table&gt;
+					&lt;tr&gt;&lt;th&gt;Semester&lt;/th&gt;&lt;th&gt;Title&lt;/th&gt;&lt;th&gt;Date / Time&lt;/th&gt;&lt;th&gt;Location&lt;/th&gt;&lt;/tr&gt;
+					&lt;xsl:apply-templates select=&quot;course&quot;/&gt;
+				&lt;/table&gt;
+			&lt;/body&gt;
+		&lt;/html&gt;
+	&lt;/xsl:template&gt;
+	
+	&lt;xsl:template match=&quot;course&quot;&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;xsl:value-of select=&quot;@semester&quot;/&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;xsl:value-of select=&quot;title&quot;/&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;xsl:value-of select=&quot;day&quot;/&gt;, &lt;xsl:value-of select=&quot;time&quot;/&gt;&lt;/td&gt;
+			&lt;td&gt;&lt;xsl:value-of select=&quot;location&quot;/&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+</code></pre></details></li></ul><p id="98fd36ba-fb94-4443-8baa-7b544288371b" class="">
+</p><p id="917af1d0-987f-4b5a-b5af-4b20d2fed018" class="">
+</p><h1 id="4e044674-3a45-4c0f-a836-3fef064a6440" class="">XSLT Templates</h1><p id="d016e386-8aa4-4d0c-8a80-e2ce6277561e" class=""><mark class="highlight-blue">Template</mark><div class="indented"><p id="cdb25bad-6a2f-4af9-9066-f6b1f8ab0ced" class=""><mark class="highlight-gray"><code>&lt;xsl:</code></mark><code>template </code><mark class="highlight-gray"><code>match=&quot;</code></mark><mark class="highlight-gray"><em><code><code>pattern</code></code></em></mark><mark class="highlight-gray"><code>&quot;&gt;</code></mark></p><p id="ea2524a6-e06e-4d3d-bd6e-834135b3a65b" class="">match element nodes, replace with content</p><p id="55e5f79f-bdf4-4dd7-aadb-0e784960a6a6" class="">does not apply pattern to children of the node - must be done explicitly:<div class="indented"><p id="17c1c7b9-28cf-4572-8735-9dd41d5898de" class=""><mark class="highlight-gray"><code>&lt;xsl:</code></mark><code>apply-templates </code><mark class="highlight-gray"><code>select=&quot;</code></mark><mark class="highlight-gray"><em><code>xPath expression</code></em></mark><mark class="highlight-gray"><code>&quot;&gt;</code></mark></p></div></p></div></p><p id="52eb7390-6091-49e9-943e-278076bfd3e4" class="">
+</p><p id="d06bac59-ec7f-48b2-ab20-3ea2d8f19647" class=""><mark class="highlight-blue">Default template</mark><div class="indented"><p id="d8347c3b-54da-405f-bd4e-8721038c9e4b" class="">When template matches element without any instructions, then the default template (which is always present) gets applied:<div class="indented"><p id="d9257415-39e0-441f-b977-71807ee13c66" class="">elements 	apply childrens template to parents</p><p id="7821ad4e-3c72-4766-b630-7f541d8c6ffc" class="">text			copy content to the output</p><p id="ac279c67-b000-4105-b65c-35e13277be40" class="">attributes		copy value to the output</p></div></p></div></p><p id="5533920b-4400-469d-b986-6ffba08d2efd" class="">
+</p><p id="a7068bed-cc7c-46de-8bc2-e13822ca2f10" class=""><mark class="highlight-blue">Priorisation of templates</mark><div class="indented"><p id="1535584d-c00d-4572-b87d-b3d341d716e9" class="">Only 1 template is applied based on its priority value (defined by the specificity of XPath expression)</p><p id="a2c7332e-1d4a-499b-b45d-61e221d2f086" class="">If ambiguious (two templates get matched for the same element) then this causes an error.</p><p id="27012311-e966-4adf-9822-22e924354462" class="">
+</p></div></p><p id="becb8ea9-351f-4fcc-8225-9ea5967b2dd1" class=""><mark class="highlight-blue">Named templates</mark><div class="indented"><p id="fbbea6cb-84d2-4d4d-9556-9c3c3353286c" class=""><mark class="highlight-gray"><code>&lt;xsl:</code></mark><code>call-template</code><mark class="highlight-gray"><code> name=&quot;...&quot;&gt;</code></mark></p><p id="50c031ac-5c7b-4a86-8faa-e1fb501f99ef" class="">used to avoid writing the same template for multiple elements</p><pre id="319025d0-38c0-4946-915f-96afd213ada9" class="code"><code>&lt;xsl:template match=&quot;name | email&quot;&gt;
+	&lt;xsl:call-template name=&quot;output&quot;/&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template name=&quot;output&quot;&gt;
+	Below you&#x27;ll see either a name or mail:
+	&lt;xsl:value-of select=&quot;.&quot;/&gt;
+&lt;/xsl:template&gt;</code></pre></div></p><p id="20fa3a4a-9f63-44b9-bb98-6ee84c23ed26" class="">
+</p><p id="bd42ee0c-fdd3-4e6e-935c-360ee5cb06ba" class="">
+</p><h1 id="ec5cf800-784d-4745-aadb-ca36d5885c8a" class="">Creating output</h1><p id="bd39ccd2-2aed-4c5f-b2c3-ccbd917c4935" class=""><mark class="highlight-gray"><code>&lt;xsl:element name=&quot;...&quot;&gt;</code></mark>		create an element</p><p id="0ec31774-7f13-49a2-be21-1401429c4c77" class=""><mark class="highlight-gray"><code>&lt;xsl:attribute name=&quot;...&quot;&gt;</code></mark>		create an attribute</p><p id="84373f64-bab0-42ac-af9f-d93660eb1749" class=""><mark class="highlight-gray"><code>&lt;xsl:text name=&quot;...&quot;&gt;</code></mark>			create a text</p><p id="70defb36-cf55-4584-be1a-2f5a3865d021" class=""><mark class="highlight-gray"><code>&lt;xsl:comment name=&quot;...&quot;&gt;</code></mark>		add a comment</p><p id="3fe130dd-4bfb-4937-8872-b3172b296e5d" class="">
+</p><ul id="98de0e8f-f2cd-4f7a-8066-dd263dcf520f" class="toggle"><li><details open=""><summary>Example using all</summary><pre id="602541e1-ba39-4518-ba80-663dabbed35c" class="code"><code>&lt;courses&gt;
+	&lt;course&gt;
+		&lt;title&gt; SSD &lt;/title&gt;
+		&lt;day&gt; Thursday &lt;/day&gt;
+		&lt;time&gt; 09:15 &lt;/time&gt;
+	&lt;/course&gt;
+	&lt;course&gt;
+		&lt;title&gt; Databases &lt;/title&gt;
+		&lt;day&gt; Tuesday &lt;/day&gt;
+		&lt;time&gt; 09:15 &lt;/time&gt;
+	&lt;/course&gt;
+&lt;/courses&gt;</code></pre><p id="0edc4dcb-f92a-4b4c-896d-1955079568bb" class="">	<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↓</mo></mrow><annotation encoding="application/x-tex">\downarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mrel">↓</span></span></span></span></span><span>﻿</span></span></p><pre id="4daa16fb-4a84-4023-ab22-3ca54871f6cc" class="code"><code>&lt;courses&gt;
+	&lt;!-- Course Description --&gt;
+	&lt;SSD day=&quot;Thu&quot;&gt;
+		Starts at 09:15
+	&lt;/SSD&gt;
+	&lt;Databases day=&quot;Tue&quot;&gt;
+		Starts at 09:15
+	&lt;/Databases&gt;
+&lt;/courses&gt;</code></pre><p id="f4059282-4fbb-48ed-8d91-827575eea8b2" class="">Template:</p><pre id="e2cfee9a-8da2-4db7-a139-a644b459ecd6" class="code"><code>&lt;xsl:template match=&quot;courses&quot;&gt;
+	&lt;courses&gt;
+		&lt;xsl:comment&gt; Course Description &lt;/xsl:comment&gt;
+		&lt;xsl:apply-templates select=&quot;course&quot;/&gt;
+	&lt;/courses&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match=&quot;course&quot;&gt;
+
+		&lt;xsl:element name=&quot;{title/text()}&quot;&gt;
+			
+			&lt;xsl:attribute name=&quot;day&quot;&gt;
+				&lt;xsl:value-of select=&quot;day&quot;/&gt;
+			&lt;/xsl:attribute&gt;
+
+			&lt;xsl:text&gt;
+				Starts at &lt;xsl:value-of select=&quot;time&quot;/&gt;
+			&lt;/xsl:text&gt;
+
+		&lt;/xsl:element&gt;
+
+&lt;/xsl:template&gt;</code></pre></details></li></ul><p id="a5f62050-9dcf-446a-9788-fa2e801802ff" class="">
+</p><p id="32522d6f-91f3-43d0-bbaa-330f37aa7141" class="">
+</p><h1 id="a5fa63d5-5906-49b7-a77e-3b640b96c357" class="">Other Features</h1><p id="ec8ac3e6-f8ab-4409-b1e0-7528679d9fff" class=""><mark class="highlight-gray"><code>&lt;xsl:for-each select=&quot;...&quot;&gt;</code></mark>		select and iterate</p><p id="500aab3f-9914-4a09-81d3-3ff9a2614107" class=""><mark class="highlight-gray"><code>&lt;xsl:copy-of select=&quot;...&quot;&gt;</code></mark>			creates a deep-copy of the selected node</p><p id="b56049c9-f383-466c-9003-70abafc3680e" class=""><mark class="highlight-gray"><code>&lt;xsl:sort select=&quot;..&quot; order=&quot;..&quot;&gt;</code></mark>	sorts ascending / descending (used in <mark class="highlight-gray"><code>for-each</code></mark> loop)	</p><p id="967953f4-6ffb-4ed5-bdb6-3e1bb037090a" class=""><mark class="highlight-gray"><code>&lt;xsl:if test=&quot;...&quot;&gt;</code></mark>				applies content if <em>test</em> is evaluated to true</p><p id="b7aa922b-6b4d-4eec-ac2f-4c6dcc9e8d76" class=""><mark class="highlight-gray"><code>&lt;xsl:choose select=&quot;...&quot;&gt;</code></mark>			uses <mark class="highlight-gray"><code>&lt;xsl:when test=&quot;...&quot;&gt;</code></mark> and <mark class="highlight-gray"><code>&lt;xsl:otherwise&gt;</code></mark></p><p id="6e975f38-cee6-49df-bdc6-ac76cb4fb115" class=""><mark class="highlight-gray"><code>&lt;xsl:variable select=&quot;...&quot;&gt;</code></mark>		used to bypass restrictions with complex XPath expressions</p><p id="7fa6680e-f9aa-44f1-a97c-5a2608f4408f" class="">
+</p><figure id="0dfdb445-7397-41be-a908-d22ef18d0ebf"><div class="source"><a href="XSLT%20de888a08778149cf9928b49f0c5abd79/7-XSLT_(1)-35-46.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ebac6e6c-2368-4bb7-8631-35894e24a335/7-XSLT_(1)-35-46.pdf</a></div></figure></div></article></body></html>

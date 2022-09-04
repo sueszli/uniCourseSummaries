@@ -1,0 +1,822 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Werkzeuge</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="04712d2e-0819-40df-b451-ee7a9e5a6d6d" class="page sans"><header><h1 class="page-title">Werkzeuge</h1></header><div class="page-body"><nav id="d79d1e95-d6a9-46c7-abe4-c86905536127" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#eaa69a4f-44cb-43c4-b0a3-e95c65b2d734">Kommunikation im Team</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0d1ed62a-72a8-4f55-ad5b-0157112c0bd1">Developement Pipeline: Commit → Deployment</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b61580e-ce12-4efe-b1fc-a66014d2b07a">Source Code Management Systeme SCM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#99b0789d-2fc8-4d9c-8083-b12f406fa328">Umgang mit Konflikten (SCM)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fe9ea288-b979-4804-8711-65dfcf73e9b8">Code Reviews / Pull Requests (SCM) </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#97d6309e-09b6-4333-91d2-4b9fcde61181">Build Management System</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5fda3a79-08e9-4555-bc4f-c58781a7bf82">Continuous Integration CI</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#80118838-6787-4a4f-8716-917df2521883">Continuous Delivery + Continuous Deployment</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fdcaa3c5-9d3d-4538-8def-ee69226a16c1">Komponentenorientierte Software-Entwicklung</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ceeb1d3e-de3a-4011-8ba6-fe90b5331ea4">Aufrufarten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a762096a-ce41-4aec-9bee-6910a7ea29ed">Inversion of Control IoC (Design Pattern)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#406e94f4-98b5-424c-b154-d3fa3ce719b8">Dependency injection DI</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a097034b-99be-47c1-98cb-53a036548666">Artefakte die in der Pipeline erstehen</a></div></nav><p id="a774a3f1-15ca-4b1d-9ab0-7b1c9122ee8d" class="">
+</p><h1 id="eaa69a4f-44cb-43c4-b0a3-e95c65b2d734" class="">Kommunikation im Team</h1><p id="dbb6ccd5-3bfa-4ef5-8b3e-5756c4f0a5f2" class=""><span style="border-bottom:0.05em solid">Synchron</span><div class="indented"><p id="d857b72c-21c9-44df-9fac-975a4014a064" class="">In Person, Telefongespräch, Messenger</p></div></p><p id="9a010505-6c16-4d2e-a151-e58ddde02b7c" class="">
+</p><p id="df1b44c1-f1e9-4a25-aba9-071a8edded9a" class=""><span style="border-bottom:0.05em solid">Asynchron</span><div class="indented"><p id="546ca19d-3e9f-47e8-bea5-81ce88f17e06" class="">Email, Wiki, CMS, Mailingliste / Forum</p><p id="35425d0e-d260-49a5-b9ab-10cc810f0d78" class="">Issue-Tracker (Bug tracker, Project tracker)<div class="indented"><p id="ad1abb68-f10d-4cdd-9896-283df3719fb6" class="">Erfassung von Bugs, Änderungswünsche</p><p id="d06162ca-7f2a-4d29-b22b-1df860fb1bda" class="">Ist in Github integriert, ansonsten auch Externe Programme die es tun</p></div></p></div></p><p id="017d4d36-8753-487d-a047-7c3a40b5a52e" class="">
+</p><p id="6385b92a-5f52-42cd-abdd-4321748e6ac0" class=""><span style="border-bottom:0.05em solid">Kulturen</span><div class="indented"><p id="7e37392e-9651-45a1-b29d-d0498f35eff4" class="">Linux: „Benevolent dictator governance model“</p><p id="c2941dd8-91e0-4418-9e8f-099dc4347b72" class="">Apache: „Meritocratic governance model“</p><p id="07ef9a78-137f-4a2c-b6ef-8d3e00cdbbb6" class="">OPS4J (Open Participation for Java): „Open Contribution“</p></div></p><p id="bd7fc05f-6faa-4b82-86b5-652f4d5e3129" class="">
+</p><h1 id="0d1ed62a-72a8-4f55-ad5b-0157112c0bd1" class="">Developement Pipeline: Commit → Deployment</h1><p id="5654ae98-d472-4ba2-8272-9c42439d923c" class="">Früher hat man shell scripts geschrieben, heute leichter.</p><figure id="1d68fd3d-f689-4537-82df-4a7b866cab45" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled.png"><img style="width:576px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled.png"/></a></figure><p id="f45f4f9b-6d08-4883-8958-a2ad85cb11b5" class="">Ziel: Automatisierung von<div class="indented"><ul id="ae9c0d07-515f-42c4-bfc3-1b78babe5593" class="bulleted-list"><li style="list-style-type:disc">Code quality checks (macht die IDE automatisch indem sie dinge markiert)</li></ul><ul id="75f86219-13b2-48ad-baa5-3413603b52b2" class="bulleted-list"><li style="list-style-type:disc">Überprüfung von sourcecode</li></ul><ul id="0771693e-ff99-4502-b34f-9109fee9a663" class="bulleted-list"><li style="list-style-type:disc">Code generation (kann die IDE auch machen)</li></ul><ul id="fd7d7fe0-5f49-4c8e-b19c-3d964f931573" class="bulleted-list"><li style="list-style-type:disc">Kompilierung (macht Maven und installiert dazu alle dependencies)</li></ul><ul id="df7507a4-e1a8-46dd-8738-437667c7f122" class="bulleted-list"><li style="list-style-type:disc">Testausführung</li></ul><ul id="91f6941b-241e-43f3-b58c-c321ce01dbda" class="bulleted-list"><li style="list-style-type:disc">Daten Sammeln für Reports, Artefakten</li></ul><ul id="e4719768-c2a7-4f0f-9283-c37d78202f73" class="bulleted-list"><li style="list-style-type:disc">Packaging</li></ul><ul id="72791585-f572-400c-8f91-f432f2873d0a" class="bulleted-list"><li style="list-style-type:disc">Deployment</li></ul><ul id="ac0a127a-09e9-4e00-b9a1-28ca8e9ea7f5" class="bulleted-list"><li style="list-style-type:disc">Dependency Management</li></ul></div></p><p id="44e1fb22-bf96-40fb-a9e5-c588eca87289" class="">
+</p><h2 id="3b61580e-ce12-4efe-b1fc-a66014d2b07a" class="">Source Code Management Systeme SCM</h2><p id="a4c0ccc0-eaff-4013-a5cf-f8ac29bd99f4" class="">Feature:<div class="indented"><ul id="c36b4960-5f47-4860-859d-cd91946b7390" class="bulleted-list"><li style="list-style-type:disc">Versionierung</li></ul><ul id="3662e3ad-e7e7-46b0-8f87-456699e7af8d" class="bulleted-list"><li style="list-style-type:disc">Parallele Entwicklung mit Branches</li></ul><ul id="8496dd2a-c2ef-4226-88bb-e1fa74b4b19e" class="bulleted-list"><li style="list-style-type:disc">Kollaboration (locking oder merging)</li></ul></div></p><figure id="81ee1ff0-4781-43ce-b351-dc1ffe54c473" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%201.png"><img style="width:432px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%201.png"/></a></figure><p id="5f2c405a-ab99-4da4-b471-f1ae0e997161" class="">
+</p><p id="ed6bc490-9584-4bef-aa4e-11b2ab027cb3" class=""><span style="border-bottom:0.05em solid">Versionierungssysteme</span><div class="indented"><p id="46ee3193-f0f1-4aaf-a842-ce119ef93bc5" class="">Für parallele Projektentwicklung (auf mehreren Zweigen), Zugriff auf ältere Versionen</p><p id="c791be93-c92c-4f8b-8ff5-2023246e4b65" class="">Eignen sich auch zur Verwaltung von Dokumenten, nicht nur sourcecode.<div class="indented"><p id="aac4b916-b381-418d-82e5-2000eb878dbe" class="">Verwaltung von <em>Artefakten </em>(Source-Code, Dokumentation, Diagramme) </p></div></p></div></p><p id="0051a643-95fc-4e54-9000-a803929bf5d3" class="">
+</p><p id="db1782b0-63b3-436a-80f0-e1bbf57a837d" class=""><span style="border-bottom:0.05em solid">Terminologie</span><div class="indented"><ul id="e0fe647e-e5f8-497b-b27d-ad792b0241f2" class="bulleted-list"><li style="list-style-type:disc">Check-out (clone): Lokale Kopie von einer Version anlegen</li></ul><ul id="052ad30f-942b-4146-b796-ebe8078012da" class="bulleted-list"><li style="list-style-type:disc">Check-in (commit): Änderungen seit dem letzten Update (changeset) in das
+Repository übernehmen mit commit message</li></ul><ul id="392bf70d-d2fe-42a5-be73-3204124811fb" class="bulleted-list"><li style="list-style-type:disc">Tagging: Markieren eines bestimmten Zustandes</li></ul><ul id="dfb58c4c-7c42-440a-9c04-2e11434c265d" class="bulleted-list"><li style="list-style-type:disc">Merging: Änderungen aus einem Branch in einen anderen
+übernehmen</li></ul><ul id="5d258abf-58ef-4c9d-9b19-eda4f5e864ee" class="bulleted-list"><li style="list-style-type:disc">Branching: eigener Strang</li></ul><ul id="f693b36e-4a1b-43ac-aa8e-c77b4dc5b11e" class="bulleted-list"><li style="list-style-type:disc">Pull: Requesting main branch to pull your commit </li></ul><ul id="39859adc-0160-4736-8771-3859c8295bf5" class="bulleted-list"><li style="list-style-type:disc">Push: Pushing your commit onto your branch</li></ul></div></p><p id="ed4f7706-b3e0-4e07-8b82-3fb96704abdf" class="">
+</p><p id="c8ddff93-b7ad-41d5-baa8-f6f0ab616ecd" class=""><span style="border-bottom:0.05em solid">Zentrale SCM Systeme</span><div class="indented"><p id="8bba4775-252f-468d-ab5f-2eb59fe4276a" class="">Server speichert Versionen → Bottleneck</p><p id="9f28645c-658d-44b8-845e-c64cdf186faa" class="">Beispiele: concurrent version system CVS, Subversion SVN</p><p id="7e760825-7ba8-4435-b61e-d82ac8d7ee6f" class="">
+</p><p id="8cfcb5ec-905a-4c40-afcb-cf4b4f2da35a" class="block-color-gray">Ablauf auf SVN:<div class="indented"><ol type="1" id="3338669e-d1e7-4ccb-9a5c-fee8638fadd1" class="numbered-list" start="1"><li>Update (Wie ein fetch)</li></ol><ol type="1" id="c10b48d5-9714-4acb-9217-328e6006ab07" class="numbered-list" start="2"><li>Lokal Dinge ändern</li></ol><ol type="1" id="233c1b6a-4dac-4193-ae24-e21a41ce5966" class="numbered-list" start="3"><li>Update (Vor dem Hochladen muss man nochmals fetchen)<p id="3c868758-d46e-4588-984e-f08f25164428" class="">Lokal merge konflikte lösen (die Person die hochlädt ist verantwortlich → commiten viel anstrengender)</p></li></ol><ol type="1" id="f326212c-1365-41b4-9422-bd6776f1d399" class="numbered-list" start="4"><li>Commit</li></ol></div></p></div></p><p id="a5eb29a3-6cae-4f4c-8ddf-d635826ee01d" class="">
+</p><p id="0521d496-cc1c-45c4-80ee-ddbf0cd50a15" class=""><span style="border-bottom:0.05em solid">Verteilte SCM Systeme</span><div class="indented"><p id="82171605-0c26-495e-a013-550fb80b9a8a" class="">Lokale Operationen, offline Arbeiten möglich</p><p id="0c54e21c-00c6-42ba-987e-c1c05b676168" class="">Projektmanager mit main-repository</p><p id="8ae87552-83c3-4ef4-997d-c511e5adc26c" class="">Jede Komponente in eigener repository (Anzahl der Repos hat vor und nachteile)</p><p id="13f05965-8de2-463f-b1e1-bde376847212" class="">Beispiele: git, mercurial, bitkeeper</p></div></p><p id="0153abc0-bc57-4187-b7d0-5bedbae9191e" class=""><div class="indented"><p id="45109e6d-aa14-4d20-921e-9d71265ae7a0" class="block-color-gray">Ablauf auf Git:<div class="indented"><ol type="1" id="9a341d47-9eef-4f14-88df-91898cc12298" class="numbered-list" start="1"><li>Clone Repository</li></ol><ol type="1" id="9cfb4a31-a7aa-4920-a8ea-fa6aef6f8987" class="numbered-list" start="2"><li>Lokal Dinge ändern</li></ol><ol type="1" id="9f821465-43e8-46fa-9755-aae2edc33abd" class="numbered-list" start="3"><li>Lokal commiten</li></ol><ol type="1" id="3158e6a9-9c70-4840-a1ca-d805d50a5dfb" class="numbered-list" start="4"><li>Merge: Push + Pull request (öffnet eine Diskussion über Code und ob es geeignet ist, Merge erst nach Code Review)</li></ol></div></p></div></p><p id="8110bb09-d497-4384-bbad-644308d7faa9" class="">
+</p><h2 id="99b0789d-2fc8-4d9c-8083-b12f406fa328" class="">Umgang mit Konflikten (SCM)</h2><figure id="f27004e8-bad6-4d27-90bd-2debe726bca0" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%202.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%202.png"/></a></figure><figure id="1d7b676a-3eee-4d97-867e-2e1367b2e138" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%203.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%203.png"/></a></figure><ol type="1" id="7a1321cf-9cd3-4ea5-b79c-499ff9b432e1" class="numbered-list" start="1"><li>Locking<p id="4bc59171-d5a1-4466-8b54-a24de6174d42" class="block-color-gray">Zugang zur Branch während man daran arbeitet für alle anderen sperren</p></li></ol><ol type="1" id="90547a41-17c2-4978-ba43-839546c61fc4" class="numbered-list" start="2"><li>Merging<p id="660ef820-fa88-4437-9ed9-24149ab9d577" class="block-color-gray">Vereinen und Konflikte einzeln beheben</p></li></ol><p id="b55479d8-b27f-4d77-a9ed-fb4d70dc5da2" class="">
+</p><h2 id="fe9ea288-b979-4804-8711-65dfcf73e9b8" class="">Code Reviews / Pull Requests (SCM) </h2><p id="0d3be5d3-d59f-4ca0-b66f-baf57a3fbf57" class="">Festgelegte Workflows in Versionierungssystemen (SCM)<div class="indented"><p id="91ff7ee9-697c-401b-9e06-2c984b2ff40f" class="">manche Branching-Modelle erzwingen Code Reviews</p><ul id="8da82adc-ec11-4070-9417-8dc568c38929" class="bulleted-list"><li style="list-style-type:disc">Erstellung von Pull-Requests, Merge nach Review<p id="8f2fe32d-f27c-41b7-9b7d-328820a16dcb" class="">Vorteil: Qualitätssichernde Maßnahme, Wissenstransfer</p></li></ul></div></p><figure id="9e5ee4db-68be-4924-a428-20e7b0f82d9f" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%204.png"><img style="width:192px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%204.png"/></a></figure><p id="e2614f60-56b7-4939-947d-4f4024e59665" class="">
+</p><h2 id="97d6309e-09b6-4333-91d2-4b9fcde61181" class="">Build Management System</h2><p id="0d613825-3d84-4386-bb5d-6afb08e02104" class="">Ist ein Teil der Continuous Integration.</p><figure id="8035b950-eb72-48a3-b487-c45bc0e09656" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%205.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%205.png"/></a></figure><p id="61862f57-df07-45fe-849d-432ca1ace2ff" class="">
+</p><p id="727fa216-4cf4-4cf9-ac56-41af3ed03e18" class=""><span style="border-bottom:0.05em solid">Maven (Build Management System)</span><div class="indented"><p id="71494251-acdd-4a84-833f-6d3b0843341d" class="">Compiled code aber hat viele Zusatzfeature </p><ul id="f5ade9a3-7c7d-4162-ba65-9d4f1bd0c9ed" class="bulleted-list"><li style="list-style-type:disc">dependency management (auch transitive Abhängigkeiten, Versions-Konflikte)</li></ul><ul id="339a779d-adcf-4b8c-8b4f-ce820c975812" class="bulleted-list"><li style="list-style-type:disc">deployment</li></ul><ul id="e9f913f6-d59b-4a53-954b-2d86a8d313ee" class="bulleted-list"><li style="list-style-type:disc">dokumentationen aus javadoc erstellen + code quality reports</li></ul><ul id="2fb2d346-027e-483f-89a0-239b72c26115" class="bulleted-list"><li style="list-style-type:disc">testen - reporting</li></ul><ul id="35df141d-cee2-4efd-9a80-b7b2d9df7d5a" class="bulleted-list"><li style="list-style-type:disc">reporten</li></ul><ul id="34322088-0554-42a8-90fc-f3fa45777883" class="bulleted-list"><li style="list-style-type:disc">...</li></ul><p id="36bba55d-9d36-43c7-8226-235014579efb" class="">
+</p></div></p><p id="a1c96143-fc8d-4578-a1d7-08d8cd76577d" class=""><span style="border-bottom:0.05em solid">Ant</span><div class="indented"><p id="8fecc7c7-f01f-4eb0-8163-dc21d37be50e" class="">Ähnlich wie Maven</p></div></p><p id="d88e926d-7c71-4f67-8308-8b355eeac9ca" class="">
+</p><p id="4596e3b3-e0fc-4a55-8f60-c0a425659911" class=""><span style="border-bottom:0.05em solid">Convention over Configuration in Maven</span><div class="indented"><p id="4a180555-82ca-43e9-968e-2410cd2a3948" class="">Convention over configuration → Man hält sich an Konventionen und muss dafür nichts mehr konfigurieren außer Dinge in der <code>pom.xml</code> Datei (project object model).<div class="indented"><figure id="73bd7804-a94a-47bf-9451-19c77421e6b8" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%206.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%206.png"/></a></figure></div></p><p id="8cb1bdd9-d769-4379-a43c-1bddeff5303a" class="">legt Bibliotheken aller Projekte in einem zentralen Verzeichnis ab.</p><p id="dd599d85-88b7-4105-8e20-5940b756032b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Archetypen zum schnellen Einstellen</p></div></p><p id="8cb616b4-3f0b-4fb8-99e9-67978dd8c8bf" class="">
+</p><h2 id="5fda3a79-08e9-4555-bc4f-c58781a7bf82" class="">Continuous Integration CI</h2><p id="c8cb5b84-39db-4c3e-ba04-03fc8179b672" class="">= eine Reihe von Best-Practices, die empfohlen werden für build management:<div class="indented"><p id="c1b879f3-2a5e-455f-bd36-505a570895ca" class="">Automatisiertes: Builden, Testen, Integration, Deployment</p><ul id="f875c6a5-370a-423a-b5b2-4f08cadcac00" class="bulleted-list"><li style="list-style-type:disc">nur ein einziges Sourcecode-Repository verfügen, mit dem alle Entwickler arbeiten.</li></ul><ul id="e7c3b4c8-eb84-4f2d-b986-45e42b10ef4d" class="bulleted-list"><li style="list-style-type:disc">Ablauf möglichst schnell</li></ul><ul id="e45c6342-12a0-4d27-89e5-6e7cb6921f44" class="bulleted-list"><li style="list-style-type:disc">Mindestens 1x täglich committen auf neutralem Rechner → &quot;daily builds&quot;<p id="9e1d0b55-a4eb-4b65-9dce-964702abe891" class="block-color-gray">„neutraler“ CI-Server automatisiert Build und Tests bei jeder Änderung im SCM-System<div class="indented"><p id="86bdb149-0ca3-4c73-8414-821fde0e8b46" class="">Build-Automatisierungswerkzeuge:<div class="indented"><p id="f22cabc1-70d6-41e2-a717-bd5a03f390d8" class="">Entwicklerorientiert: Maven</p><p id="d010f793-8e37-4d35-bc51-4db10fe8a54f" class="">Server-basierte Integration: Apache Continuum, Hudson, OpenCIT</p><p id="b25fe55d-f98e-4705-8ad9-a6afea70e8cb" class="">CI Server mit: Apache Continuum oder Hudso</p></div></p></div></p></li></ul><ul id="3f2ce6dd-caba-4156-88a8-fbe5bb03e2a7" class="bulleted-list"><li style="list-style-type:disc">Danach Berichte erstellen und verschicken</li></ul></div></p><p id="3ce64edc-e4dd-4242-a531-5741425e542c" class="">
+</p><figure id="c19ad094-a804-47a4-bd57-1cef24ce17b2" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%207.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%207.png"/></a></figure><figure id="2f578235-a047-488c-8a62-34acccb65545" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%208.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%208.png"/></a></figure><p id="e8ce8f3d-ee4a-4263-973c-352e826d844f" class="">
+</p><p id="44dc7055-e593-4a67-ba29-3bffec596bab" class="">Arbeitsablauf:<div class="indented"><ol type="1" id="a6ee1268-a302-4b24-b74f-0e5616f734ae" class="numbered-list" start="1"><li> Entwickler erstellt neue Version im SCM (Commit, Pull-Request...).</li></ol><ol type="1" id="d670ddc6-4cb9-45a3-9bb9-e4cf4e1c9cab" class="numbered-list" start="2"><li>CI Werkzeug reagiert auf dieses Ereignis, lädt die entsprechende Version.</li></ol><ol type="1" id="d46c3f32-620a-43b3-8d0a-8663a3e19252" class="numbered-list" start="3"><li>Build Tool wird gestartet, compilierter Code wird mit einem Test-System automatisiert getestet.</li></ol><ol type="1" id="a26844c1-b7c5-4670-8c06-832a11b039ab" class="numbered-list" start="4"><li>Entwickler wird mit Bericht verständigt.</li></ol></div></p><p id="24000f4d-251d-4e2b-8d49-d1007cb37a8f" class="">
+</p><h2 id="80118838-6787-4a4f-8716-917df2521883" class="">Continuous Delivery + Continuous Deployment</h2><p id="184f4a9c-3562-41c5-a6cf-48be563bea88" class="block-color-gray"><span style="border-bottom:0.05em solid">Definitionen</span><div class="indented"><p id="f967711e-02c6-4d61-b608-482218c8e1a2" class=""><strong>Build</strong> means to <em>compile</em> the project.</p><p id="83bacd84-8936-4597-a462-9f0d82ba2c3c" class=""><strong>Deploy</strong> means to:</p><ol type="1" id="a7aed04c-a21a-4b05-a34d-022bd5dd1500" class="numbered-list" start="1"><li>Compile the project</li></ol><ol type="1" id="85826354-78af-4d28-bd49-a59d42aa020d" class="numbered-list" start="2"><li><em>Publish</em> the output, meaning copy it to a target directory, upload it to an FTP server etc</li></ol><p id="c3f87c59-7439-4cf8-8075-06a7154650f3" class="">
+</p></div></p><figure id="9474090e-c4a0-42f6-8579-c5bd0b8832f2" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%209.png"><img style="width:240px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%209.png"/></a></figure><p id="78a2f730-5984-4179-bee1-46b9c10e4a63" class="">
+</p><p id="4ba2b148-32fd-4bee-90ea-1d621c53739d" class=""><span style="border-bottom:0.05em solid">Zusammengefasst:</span><div class="indented"><ol type="1" id="7f593356-a5cb-4bef-af62-fb7ca4cace90" class="numbered-list" start="1"><li>Continuous Integration<ul id="3b6c46aa-c2a4-4d99-9984-69665bcad095" class="bulleted-list"><li style="list-style-type:disc">Build</li></ul><ul id="5f75cc32-c4e1-4a2d-a63c-2e8c00500bb5" class="bulleted-list"><li style="list-style-type:disc">Test</li></ul><ul id="f3455033-3758-48b4-be44-0004b79ff9ef" class="bulleted-list"><li style="list-style-type:disc">Merge</li></ul></li></ol><ol type="1" id="e65d4891-8247-4496-8835-044bcab556c9" class="numbered-list" start="2"><li>Continuous Delivery<ul id="754aca06-f430-4f05-95b5-c47c62df4365" class="bulleted-list"><li style="list-style-type:disc">Automatisierter Release in ein Repository</li></ul><ul id="ebeaf6eb-fa18-4782-a742-e9640cb10a98" class="bulleted-list"><li style="list-style-type:disc">Deployment nach manueller Freigabe</li></ul></li></ol><ol type="1" id="13f55897-23ec-4386-809b-db9bd150eb1e" class="numbered-list" start="3"><li>Continuous Deployment<ul id="234fc0de-acb6-428f-88ea-11c2d126a317" class="bulleted-list"><li style="list-style-type:disc">Automatisches Deployment in einer Produktivumgebung</li></ul></li></ol></div></p><p id="4ae2c6dd-a690-4614-840b-640747f152ec" class="">
+</p><h1 id="fdcaa3c5-9d3d-4538-8def-ee69226a16c1" class="">Komponentenorientierte Software-Entwicklung</h1><p id="1f87d8d5-5617-4c63-aa70-3e485258ae79" class=""><span style="border-bottom:0.05em solid">Komponente</span><div class="indented"><p id="cce8cbf2-481b-41af-900e-341224a73862" class="">Eine Gruppe an Objekten die einer bestimmten Funktion gewidmet sind.<div class="indented"><ul id="bee88e60-69f1-4ba8-8c5d-44c6136deba3" class="bulleted-list"><li style="list-style-type:disc">Grad der Entkopplung</li></ul><ul id="455b14e5-87c8-4449-8121-31d6d344ba34" class="bulleted-list"><li style="list-style-type:disc">Komplexität</li></ul></div></p></div></p><p id="96c36117-bcfc-4b57-9c99-fbff88b519e3" class="">
+</p><p id="9377632a-75f5-4876-bb82-1b41055db01d" class=""><span style="border-bottom:0.05em solid">Service</span><div class="indented"><p id="a722cc22-1b33-48f3-a536-5eb4779bfc8f" class="">Komponente die über ein Netzwerk angeboten wird</p></div></p><p id="1e0be581-f995-44cd-8312-b6ceb76d7712" class="">
+</p><p id="11bd77c5-5096-4a8b-80f6-e5c7dfdee80a" class=""><span style="border-bottom:0.05em solid">Framework</span><div class="indented"><p id="e6827831-2627-48d8-8520-54c7022fa3d1" class="">Rahmenbedingungen für Komponenten (Persistenz-Framework)</p></div></p><p id="bc8f7ff9-93c8-4796-9b67-430cdbedf15e" class="">
+</p><h2 id="ceeb1d3e-de3a-4011-8ba6-fe90b5331ea4" class="">Aufrufarten</h2><p id="28ff7cc8-4baf-487c-a7f1-0ba27e5e9e6c" class="">indirekter =<div class="indented"><p id="617f868d-70a0-48c2-ad67-e5401bbe4957" class="">komplexer, mehr &quot;overhead&quot;</p><p id="9fb69ba8-5bc0-4781-b106-a5b73d06bc1c" class="">weniger die Kopplung, bessere Widerverwendbarkeit</p></div></p><figure id="ae1cdb1c-a7c3-4efa-999d-b180945f061c" class="image"><a href="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%2010.png"><img style="width:432px" src="Werkzeuge%2004712d2e081940dfb451ee7a9e5a6d6d/Untitled%2010.png"/></a></figure><p id="660a0a89-7368-4302-b4cc-12125d5702f1" class="">
+</p><ol type="1" id="4dee6224-8e2b-44a2-b87d-1bb0a76c037b" class="numbered-list" start="1"><li><span style="border-bottom:0.05em solid">Direkter Aufruf</span><p id="63b5803c-3bde-45c8-b5b0-d0aaa5c5553a" class="">leichte Implementierung aber starke Kopplung</p><p id="deec52b3-1be0-430b-bcf1-6c63f44154fb" class="">binding bei compiling</p><pre id="515b5566-c6eb-4660-a667-7619f6db19f0" class="code"><code>public class Main {
+	public static void main (String[] args) {
+		Handler handler = new Handler();
+		handler.notify():
+	}
+}</code></pre></li></ol><ol type="1" id="6ebdacad-a377-46f3-8a0c-29529eb57a10" class="numbered-list" start="2"><li><span style="border-bottom:0.05em solid">Interface (Indirektion)</span><p id="7a173bc8-32e2-4506-8e7e-2149ced595cc" class="">Vorteil: leichtere Austauschbarkeit, contract (schnittstelle lässt sich beschreiben)</p><p id="b2124901-f09d-4b20-aba5-c424763ec8db" class="">binding bei compiling</p><pre id="7b63212e-3ec7-421b-b5b6-2f7ea7578046" class="code"><code>public interface TextImport {
+	public Document read(String filename);
+}
+
+class A {
+	TextImport ti = new HtmlImport();
+	
+	public processDocument(String filename){
+		Document doc = ti.read(filename);
+	}
+}</code></pre></li></ol><ol type="1" id="d7ebac5c-89f1-4efe-b8d5-532b4f8ce907" class="numbered-list" start="3"><li><span style="border-bottom:0.05em solid">Komponenten-Frameworks</span><p id="06e7b56f-9195-43b9-bf5d-fdfa76995a65" class="">Kommunikation ist plattform-spezifisch (&quot;remoting&quot;) → Austauschen der Implementierung ohne Änderung im Sourcecode</p><pre id="eefa89c9-ecd7-4242-af3a-0c20336f27cd" class="code"><code>class KlasseA {
+	TextImport ti;
+}
+public KlasseA () {
+	// pseudocode:
+	ti = componentFramework.Component(&quot;htmlimport&quot;);
+	
+	public processDocument (String filename){
+		Document doc = ti.read(filename)
+	}
+}</code></pre></li></ol><ol type="1" id="d734ec26-ab9b-4680-a149-e52a6e632f3e" class="numbered-list" start="4"><li><span style="border-bottom:0.05em solid">Service-Frameworks</span><p id="76f9b7c9-50c7-48fd-937c-f5f317abb700" class="">Benutzt Webservices um auf Komponenten zuzugreifen</p><p id="43754c4b-eca8-47bc-91f5-6978c3bc15f1" class="">Remoting mit WSDL/SOAP, XML/REST</p></li></ol><p id="da8f3ca5-96c4-4d42-a4bb-6e2da2430f54" class="">
+</p><h1 id="a762096a-ce41-4aec-9bee-6910a7ea29ed" class="">Inversion of Control IoC (Design Pattern)</h1><p id="5803e2ab-7805-4bc5-ad43-74544cdd135c" class="">Umkehrung des Kontrollflusses mit einem <em>Hook</em>.<div class="indented"><p id="6b30e646-3926-4f48-b33b-de978b5315b2" class="">Viele Varianten.</p><p id="2f3d4a22-335b-45e1-b03d-45793fba70dc" class="">Hollywood Prinzip: &quot;Dont call us, well call you&quot;</p></div></p><p id="c3207590-4bff-4fda-b3d3-faaae68846bc" class="">
+</p><p id="34168e19-d06e-404a-9bef-62d89898f44f" class="">Hohe Wiederverwendbarkeit durch zentrale Verwaltung, Einfaches Austauschen einer Implementierung.</p><p id="0450b77e-4281-4cf5-a8ab-bd221d996c53" class="">Verwaltung zb im <em>IoC Container </em>möglich.</p><p id="81137fe3-3067-4a1c-b7d5-576e5471fde2" class="">
+</p><p id="514f0e34-3419-421f-a1b6-d0314238dd1f" class="block-color-gray"><span style="border-bottom:0.05em solid">IoC Container Implementierungen</span><div class="indented"><p id="881de7b8-72a0-43e9-a239-2516757d3782" class="">Java<div class="indented"><ul id="0af50070-b643-417f-8946-09306ce818b8" class="bulleted-list"><li style="list-style-type:disc">Spring-Framework</li></ul><ul id="15e13d6b-1f0c-4be0-ab12-50ab53a2cd25" class="bulleted-list"><li style="list-style-type:disc">Google Guice</li></ul><ul id="5ad115e9-771b-4ef4-b0bc-2828ec54db67" class="bulleted-list"><li style="list-style-type:disc">Pico-Container</li></ul><ul id="b6cc201d-6ab8-4bef-b18f-a760756a4a55" class="bulleted-list"><li style="list-style-type:disc">Apache Aries Blueprint</li></ul></div></p><p id="564f201b-ccbb-4b09-92ac-0d241c2429e6" class="">.NET<div class="indented"><ul id="d912cb21-45ac-497c-bbe7-0e7eb9b358f6" class="bulleted-list"><li style="list-style-type:disc">Unity Framework</li></ul><ul id="d423250f-81ce-425a-837d-05afe8e323e1" class="bulleted-list"><li style="list-style-type:disc">Spring.NET</li></ul></div></p></div></p><p id="6e8e3eb8-2848-4261-892a-5eb94d032b43" class="">
+</p><p id="b07f88df-aab0-474a-91b8-458280d989d1" class=""><span style="border-bottom:0.05em solid">Direkter Aufruf der Komponenten ohne DI</span><div class="indented"><pre id="8ddda88b-4c53-400e-8519-d80fe6a48fc0" class="code"><code>public class MyPersistence {
+	private MyBusinessLogic businessLogic = new MyBusinessLogic();
+}
+public class MyPresentation {
+	private MyBusinessLogic businessLogic = new MyBusinessLogic ();
+}
+public class MyBusinessLogic {
+	private MyPersistence persiistence = new MyPersistence (&quot;path/to/db&quot;);
+	private MyPresentation presentation = new MyPresentation (300, 200);
+}</code></pre><pre id="e418785d-91d3-4900-98b2-a4a64dc42245" class="code"><code>public static void main (String[] args){
+	IPersistence persistence = new MyPersistence ( &quot;path/to/db&quot;);
+	IPresentation presentation = new MyP resentation (300, 200);
+	IBusinessLogic businessLogic = new MyBusinessLogic (persistence, presentation);
+	persistence.setBusinessLogic(businessLogic);
+	presentation.setBusinessLogic(businessLogic);</code></pre></div></p><p id="d197745f-008d-4a2b-b012-12a79fabe5eb" class="">
+</p><h3 id="406e94f4-98b5-424c-b154-d3fa3ce719b8" class="">Dependency injection DI</h3><p id="4fae1558-a253-4f17-8abe-431adbf479d4" class="">Abhängigkeiten werden von einem Container verwaltet, die Komponenten wissen nichts
+darüber → Die Abhängigkeiten werden injiziert.</p><p id="45056491-8b88-44e3-a019-8f4a53f5e4ce" class="">Eine der vielen Arten von IoC.</p><p id="0082bcf3-66d4-4ffc-8146-4eee7bebd5e8" class="">
+</p><p id="2c012d86-db54-4c92-abfe-fe5e435cb5ad" class=""><span style="border-bottom:0.05em solid">Konzept</span><div class="indented"><p id="bbd329e4-6132-4a37-a610-7ee384ae627b" class="">Die Verantwortung für das Erzeugen und Initialisieren von Objekten wird an eine zentrale Stelle (z.B. eine Klasse) delegiert.</p><p id="25080a35-8be8-40a5-bef9-13254abbd416" class="">Von der zentralen Stelle kann man die Abhängigkeiten zwischen den Objekten leichter überblicken und steuern.</p></div></p><p id="c9bb2e74-7c14-45e4-9ac1-bf188e6e6ff9" class="">
+</p><p id="e39dc5e2-7dc8-4bcf-bb99-77098a177b6e" class=""><span style="border-bottom:0.05em solid">Implementierung</span><div class="indented"><p id="54257d03-66b3-491c-b4cb-36d2465bb151" class="">Eine Komponente wird über einem Pointer / einer Referenz aufgerufen die urprünglich nicht initialisiert ist.</p><p id="c032fd21-2969-47b5-bf9e-e91d662c78b4" class="">Kann mit Konstruktor, Setter, Annotation initialisiert werden.</p></div></p><p id="e57924c7-fd9a-42cf-ab47-214c76d6b471" class="">
+</p><p id="ab132461-18fd-4f2b-90d0-b3ce315244e1" class=""><span style="border-bottom:0.05em solid">Vorteile</span><div class="indented"><ul id="4d1c4e77-40bb-4967-86c6-04469670057c" class="bulleted-list"><li style="list-style-type:disc">Hohe Wiederverwendbarkeit</li></ul><ul id="feba6dc2-e350-4f06-8507-d725aaaabff3" class="bulleted-list"><li style="list-style-type:disc">Einfaches Austauschen einer Implementierung</li></ul><ul id="76ea6ad5-3a82-4df0-86b4-3b9523ff1e8b" class="bulleted-list"><li style="list-style-type:disc">Verwalten von verschiedenen Konfigurationen (dev vs. prod)</li></ul><ul id="dd6fe98d-6841-4713-825a-778de7dc10fb" class="bulleted-list"><li style="list-style-type:disc">Automatisiertes „verdrahten“, weniger Boilerplate-Code benötigt.</li></ul><ul id="6ea010ab-f7f9-46f5-af28-df1ed02c19fd" class="bulleted-list"><li style="list-style-type:disc">Verteilung von Aufgaben</li></ul></div></p><p id="3590b6fc-f611-44cf-96c2-b9b2ee8d9900" class="">
+</p><p id="6b258a4d-c84e-45a2-8153-8d7505d6bd6c" class=""><span style="border-bottom:0.05em solid">Setter Injection</span><div class="indented"><p id="ab5d5038-2ab3-431e-af7b-02b434a86ec5" class="">Abhängigkeiten durch &quot;setter&quot;-Methode gesetzt oder Annotationen</p><pre id="18072a9f-c243-4ea6-b940-6182108018fe" class="code"><code>public static void main(String[] args) {
+	Factory factory = Factory.create();
+
+	IPersistence myPersistence = (IPersistence) factory.getComp(&quot;persistence&quot;);
+	IPresentation myPresentation = (IPresentation) factory.getComp(&quot;presentation&quot;);
+	MyBusinessLogic myBusinessLogic = new MyBusinessLogic(myPersistence, myPresentation);
+	myPersistence.setBusinessLogic(myBusinessLogic);
+	myPresentation.set BusinessLogic(myBusinessLogic);
+}</code></pre><p id="41b8c470-1c22-4978-bf28-1a92e5037ce8" class="">Bzw.</p><pre id="ab870953-1f6f-4f6d-bbea-325686775065" class="code"><code>public static void main(String [] args) {
+	Resource res = new FileSystemResource(&quot;beans.xml&quot;);
+	XmlBeanFactory factory = new XmlBeanFactory(res);
+	IPresentation ui = factory.getBean(&quot;presentation&quot;, IPresentation.class);
+	ui.show();
+}</code></pre><ul id="d288c629-d758-49a6-a7ec-c2296d8ceb98" class="toggle"><li><details open=""><summary>Konfigurationsdatei (In Spring boot: beans = komponenten)</summary><pre id="f1d16e2d-6f00-4ef3-be55-a80473b48496" class="code"><code>&lt;? xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans&gt;
+
+	&lt;bean class=&quot;MyPersistence&quot; id=&quot;persistence&quot;&gt;
+		&lt;property name=&quot;path&quot;&gt;path/to/db&lt;/property&gt;
+		&lt;property name=&quot;businessLogic&quot; ref=&quot;businessLogic&quot; /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean class=&quot;MyPresentation &quot; id=&quot;presentation &quot;&gt;
+		&lt;property name=&quot;width &quot;&gt;300&lt;/property&gt;
+		&lt;property name=&quot;height&quot;&gt;200&lt;/property&gt;
+		&lt;property name=&quot;businessLogic&quot; ref=&quot;businessLogic&quot; /&gt;
+	&lt;/bean&gt;
+
+	&lt;bean class=&quot;MyBusinessLogic&quot; id=&quot;businessLogic&quot;&gt;
+		&lt;property name=&quot;persistence&quot; ref=&quot;persistence&quot; /&gt;
+		&lt;property name=&quot;presentation&quot; ref=&quot;presentation&quot; /&gt;
+	&lt;/bean&gt;
+
+&lt;/beans&gt;</code></pre><p id="de0a495c-cf9c-4d30-9843-d26dba7be6c1" class="">Bzw. mit Java Code</p><pre id="40a255eb-872a-49ab-b223-9ce229d1064f" class="code"><code>@Configuration
+public class AppConfig {
+	@Bean
+	public IPersistence persistence () {
+		MyPersistence myPersistence = new MyPersistence(&quot;path/to/db&quot;) ;
+		myPersistence. setBusinessLogic(businessLogic());
+		return myPersistence;
+	}	
+
+	@Bean
+	public IPresentation presentation () {
+		MyPresentation myPresentation = new MyPresentation (300, 200);
+		myPresentation.setBusinessLogic(businessLogic());
+		return myPresentation;
+	}	
+
+	@Bean
+	public IBusinessLogic businessLogic() {
+		return new MyBusinessLogic (persistence(), presentation());
+	}
+}</code></pre></details></li></ul></div></p><p id="33444945-e064-4987-b1d9-57ab30626d47" class="">
+</p><p id="06e14345-50d2-42d8-ab7e-f84b2d790b43" class=""><span style="border-bottom:0.05em solid">Constructor Injection</span><div class="indented"><p id="8045d4aa-97f6-44c3-b2c5-bf28936b1de8" class="">Abhängigkeiten über Konstruktor definieren → Problematisch, gleiche Signatur<div class="indented"><p id="f7b85835-3dfd-4690-a26f-033bf186e9f6" class="">Beispiele: Pico, Guice, (Spring, Aries)</p></div></p><pre id="2189df0a-36f7-4f4e-9ed7-15be8b816582" class="code"><code>public class TestBean{
+	String id;
+	String internalLocation ;
+	String externalLocation;
+	
+	public TestBean (String id, String internalLocation) { 
+		this.id = id;
+		this.internalLocation = String internalLocation;
+	}
+	
+	public TestBean (String id, String externalLocation) { -&gt; gleiche Methoden-Signatur
+		this.id = id;
+		this.externalLocation = externalLocation;
+	}
+}</code></pre></div></p><p id="bd6b3397-1ec3-48a1-b5fd-d270bca972c9" class="">
+</p><h1 id="a097034b-99be-47c1-98cb-53a036548666" class="">Artefakte die in der Pipeline erstehen</h1><p id="65208bd4-4176-40a9-b528-5c07587c4307" class=""><span style="border-bottom:0.05em solid">Dokumente die im Deploy</span><div class="indented"><p id="2f1c0117-77bc-4db0-9fc9-0f82b5bebf58" class="">Generelle Projektinformationen<div class="indented"><p id="89014da5-ed04-41bd-9561-f7417abad4df" class="">– Version, Name, Beschreibung
+– Beitragende
+– Lizenz
+– Entwicklungswerkzeuge</p></div></p><p id="eeb6ee92-121c-4e58-b81c-a78f4db5c93a" class="">Source Code (javadoc)</p><p id="7139eb76-a745-4730-b3ae-9705c03b2993" class="">Code Quality Reports<div class="indented"><p id="41393d49-f136-4e38-9442-1b592592a811" class="">– Test Reports
+– Checkstyle
+– Component Dependency Reports</p></div></p><p id="287bab78-2058-4338-826e-fd864e8f5b7f" class="">Dokumente<div class="indented"><p id="c91ab60b-0c14-4223-96e8-c22254b30d7a" class="">– Architekturbeschreibung
+– Anwenderhandbuch
+– Website</p></div></p></div></p></div></article></body></html>

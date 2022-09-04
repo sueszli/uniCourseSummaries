@@ -1,0 +1,730 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Vorgehensmodelle (Prozesse)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5e0308d8-6495-425e-a5c1-659183ae48bd" class="page sans"><header><h1 class="page-title">Vorgehensmodelle (Prozesse)</h1></header><div class="page-body"><nav id="8dad517a-74f5-4e59-9de9-a250332dfb23" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36ec9c61-e92a-4ab1-a2e0-07cdcb22b8f8">Vorgehensmodelle / Prozessmodelle</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#faed7d99-f3a3-4998-8daa-0acae0beba85">Klassisch / Sequentiell (traditionell)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#31dcbfe9-9f7b-46a9-b2bd-b8b5caff2642">Wasserfallmodell</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9f476177-fd4b-4f67-9c87-87019c49866d">V-Modell (Grundkonzept)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7ad7e54e-3e01-4b6d-83df-2d1cb566a8b8">V-Modell XT</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e3ce66e9-cade-42b9-95cd-3bdb1ebc8578">Iterativ / Inkrementell (traditionell)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d86f618a-9a25-4bd8-826d-6fd788cfd6a5">Spiralmodell</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f6888fbf-21a8-472c-a141-07ee29dbb7b3">Rational Unified Process RUP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e0d6b4c-60e7-45a3-9f09-571d8bd4de09">Agil </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bb265324-7811-41ad-8faa-ac2aef0fbe04">SCRUM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#00648ac9-04e5-4c8c-8082-8b11e1ff665b">eXtreme Programming XP</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#568eb98b-4199-4868-a118-cad4ccdbae71">Prozess-Tailoring / Customization: Anpassung der Modelle</a></div></nav><p id="03554a33-b438-4674-8b38-fcd30436d52b" class="">
+</p><h1 id="36ec9c61-e92a-4ab1-a2e0-07cdcb22b8f8" class="">Vorgehensmodelle / Prozessmodelle</h1><p id="a4331618-e548-4909-b7e3-e42d70585bd5" class=""><span style="border-bottom:0.05em solid">Software Life-Cycle → Vorgehensmodell</span> </p><p id="79f0075f-b67b-472c-992f-6ee97640046f" class="">Fokus von Vorgehensmodellen der technischen Seite<div class="indented"><p id="708a54f3-55b8-488e-8935-cb832dc3ef70" class=""><em>Beginn</em>: Definition von Anforderungen</p><p id="c0b346a9-5f02-49f1-b06f-d6e6c57f9508" class=""><em>Ende</em>: Inbetriebnahme bei Kunden</p><p id="19357490-4036-4c5c-b32b-41ebf02eada4" class="">
+</p></div></p><p id="c80d1f2e-9f87-4d7f-bab4-ed3e27e8d563" class=""><span style="border-bottom:0.05em solid">Vorgehensmodelle (Softwareprozesse)</span><div class="indented"><p id="81cad1f2-92f8-409d-bdd2-e5e68a27db85" class="">Strategien für Schritte in Life-Cycle. (Basieren auf Software Life-Cycle Prozess)</p><p id="029e42fe-c019-4b6c-b759-d49daa085842" class="">Rahmenprozess für Projektablauf<div class="indented"><p id="4b8af407-30cb-4168-9a5b-740b8e8e2ec1" class="">Bestimmt wann welches Produkt von wem in welchem Fertigstellungsgrad und auf welchem Qualitätsniveau vorliegen muss.</p></div></p><p id="2f41af5c-8576-49b9-bb19-aa130c8c4bec" class="">konkrete standardisierte Strategie, kann abgeändert werden (tailoring)<div class="indented"><p id="8e07eb55-818c-48fb-bf5d-75d276c23c52" class="">
+</p></div></p></div></p><p id="e235f74a-6e93-48b6-acf6-7f4916db799d" class=""><span style="border-bottom:0.05em solid">Entscheidungspunkte</span><div class="indented"><p id="69761d0c-54ba-412d-9103-9c77638697a2" class="">(zb Meilensteine) = Zeitpunkt an dem eine Entscheidung getroffen wird.</p><p id="d5e6ef2f-3834-4747-b4d4-fa2dc760683c" class="">An Entscheidungspunkten müssen definierte Produkte vorliegen.</p></div></p><p id="c5bd9d4a-b3c6-4fb4-9c9b-09090c4ca2d2" class="">
+</p><p id="10bc3a17-2a1f-4213-8350-078d6b2ba1b6" class=""><span style="border-bottom:0.05em solid">Projektdurchführungsstrategie</span><div class="indented"><p id="e00757d9-2dc6-4a72-a367-94babc04e033" class="">eine definierte Abfolge von Entscheidungspunkten.</p><p id="e21f40f2-53c6-45e8-9184-7e32bd838b30" class="block-color-gray">Sie definieren die Reihenfolge der im Projekt zu erreichenden Projektfortschrittsstufen.</p></div></p><p id="96a799d9-098f-473e-b029-2bcd9b984c6e" class="block-color-gray">
+</p><figure id="e3240c09-7bd6-43ba-bdf8-720896ef51a5" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled.png"><img style="width:624px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled.png"/></a></figure><h1 id="faed7d99-f3a3-4998-8daa-0acae0beba85" class="">Klassisch / Sequentiell (traditionell)</h1><h2 id="31dcbfe9-9f7b-46a9-b2bd-b8b5caff2642" class="">Wasserfallmodell</h2><p id="b710bea0-ecb1-4650-bffe-3a32a5f3352d" class="">Umsetzung des Life-Cycles</p><p id="325ae18d-c709-40fe-9a52-6f16d2e263e0" class="">Fokus auf Dokumentation</p><p id="65b7f4d3-ca88-4af6-8c16-d6fd19f3fb93" class="">Strikt sequenzieller Projektablauf.<div class="indented"><p id="2c0d38ce-02a9-403d-855f-f82d83e9c3e6" class="">Vorherige Phase muss vollständig abgeschlossen und freigegeben (Validierung und Verifikation) sein. → Wenn nicht erreicht, zurückspringen.</p></div></p><figure id="9c7047b6-3fe0-4b01-9d52-c4b3c0b49ffe" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%201.png"><img style="width:432px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%201.png"/></a></figure><p id="68283763-2ce8-4598-a55d-61f7bac675a9" class=""><span style="border-bottom:0.05em solid">Vorteile</span><div class="indented"><p id="4d6cbc9b-ec6d-4fc1-9d80-2128559168a7" class="">Backtracking zu früheren Entwicklungsphasen.</p><p id="64b944ed-fbd5-4085-bcdc-6f1e629531d3" class="">Weite Verbreitung und hoher Bekanntheitsgrad.</p></div></p><p id="1e3293f3-8217-4ad7-b43a-9c6003f6b13a" class="">
+</p><p id="690a5b24-825d-4baa-a6e4-bd70e4263526" class=""><span style="border-bottom:0.05em solid">Nachteile</span><div class="indented"><p id="3778f25d-066b-4932-87e1-c14c0dd165b9" class="">Reaktion auf spätere Änderungen schwer</p><p id="a482a0e3-91e4-4fe6-bae8-de705eede05f" class="">Software und Prototyp für Kunden steht spät zu verfügung</p><p id="8f2b2c28-c8b6-4280-b733-ef9db4aa3377" class="">keine parallele Entwicklung.</p><p id="afc04524-78b3-4dea-b4ea-90430b21598c" class="">Starke Auswirkung von Fehlern aus frühen Phasen.</p></div></p><p id="9b8e13e6-5f85-4ee4-a976-96921e0ed9db" class="">
+</p><p id="ad0cee92-b518-4f68-b69d-04b4e4f2f993" class=""><span style="border-bottom:0.05em solid">Anwendung</span><div class="indented"><p id="8adabf0d-7b40-482d-bcf1-b770e77d18ad" class="">Für vollständige, stabile Anforderungen, kleinen Projekten.</p><p id="8d49c0b5-9057-40e9-a3e3-25d2d54918a8" class="">kleine Entwicklungsteams</p><p id="9f96782f-c57d-404d-ba7c-d904fa12d8b9" class="">Gute Kenntnis erforderlich (No-Surprise Software)</p><p id="4cc79d6a-c75b-4e97-9f54-f0c890695add" class="">Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p></div></p><p id="18980011-47c1-4f10-8720-f394eab1d85d" class="">
+</p><h2 id="9f476177-fd4b-4f67-9c87-87019c49866d" class="">V-Modell (Grundkonzept)</h2><p id="2ec6c782-5642-41db-a324-10c05579e478" class="">Für vollständige, stabile Anforderungen.</p><p id="94c6aea6-bd41-45eb-a87e-0d8197b73108" class="">Im öffentlichen Bereich.</p><p id="f48988d3-1b00-4685-bb67-35f63bd65a0a" class="">4 Submodelle: Systemerstellung, Qualitätssicherung, Konfigurationsmanagement, Projektmanagement</p><p id="6c571e7c-0462-4c20-a2fb-ec5fe9d1a085" class="">
+</p><p id="bacdf7a3-4afd-47c7-a4f1-fc88e63e1b19" class="">Ziel:<div class="indented"><ul id="5f5cbbf9-0b2a-4184-8571-ea329aef99ea" class="bulleted-list"><li style="list-style-type:disc">Gesamtaufwand / Kostenreduktion</li></ul><ul id="4e6d6353-2c15-4995-8906-950798af199d" class="bulleted-list"><li style="list-style-type:disc">Kürzere Einarbeitungszeiten für neue Mitarbeiter im Projekt</li></ul><ul id="3964279d-0917-41ea-abd4-0c6f6f369d10" class="bulleted-list"><li style="list-style-type:disc">Einfachere Kontrolle / vergleich des Projektfortschritts (auch für den Auftraggeber)</li></ul></div></p><p id="c48ad9fa-17aa-450f-a455-1241adec61ae" class="">
+</p><p id="ee974cd2-406b-404c-b25e-7973afd11e98" class="">Teilt auf in Realisierungs und Test-Phase.<div class="indented"><ol type="1" id="a356e7f7-960d-4e63-9412-bb7f0847a114" class="numbered-list" start="1"><li>Analytische Phasen<p id="1ee29b54-04eb-482e-9f2e-ead6aa3dee3b" class=""><mark class="highlight-gray">Immer detailiertere Spezifikation</mark></p></li></ol><ol type="1" id="a7d8d6fe-5724-4704-b432-af5ad7c6372e" class="numbered-list" start="2"><li>Synthetische Phasen<p id="9146be01-661d-4289-a145-2091e3287819" class=""><mark class="highlight-gray">Immer weiter Implementiert und getestet</mark></p><p id="eac435f9-2e09-4f6a-b520-2a87e9e582a6" class="">
+</p></li></ol></div></p><p id="04644c4b-55b5-45fb-b163-67fdcd2fc6d2" class=""><span style="border-bottom:0.05em solid">Sichten in analytischen und synthetischen Phasen</span></p><p id="b5c5d165-cbcc-49f2-b739-ebe72770f410" class="">Anwendersicht		<mark class="highlight-gray">Kundensicht, Geschäftsprozesse, Akzeptanz und Abnahmetests</mark></p><p id="f1f9599f-520c-450d-82a5-6786325e13d6" class="">Architektursicht		<mark class="highlight-gray">Grundlegendes Architektur Design + Realisierug, Integrationstests</mark></p><p id="1b38b310-5f73-4665-a191-4ee8cc1cb4bc" class="">Implementierungssicht	<mark class="highlight-gray">konkret spezifizierte Komponenten, oft Test-Driven-Developement</mark></p><p id="2425a813-1082-482b-9494-b38f1dd731b4" class="">
+</p><p id="6060542d-5ccf-4b1b-ae16-d27ca8b0c5bd" class=""><span style="border-bottom:0.05em solid">Qualitätssicherung</span><div class="indented"><p id="413488cb-5a7a-46ae-803f-a44aedbf76e2" class="">Ist integriert nach jeder Phase</p><p id="f243a2d5-9bf4-4185-9baf-990a80e51b63" class="">Reviews, Inspektionen</p><p id="13199746-19a0-4dd1-86fd-9913ce14b017" class="">
+</p></div></p><p id="5ec927ff-d736-45f4-97e4-61785019e1c1" class=""><span style="border-bottom:0.05em solid">Vorteile</span><div class="indented"><p id="76233037-5c50-4d1b-96b7-e66d80650fba" class="">Spezifikationsphase <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>↔</mo></mrow><annotation encoding="application/x-tex">\lrarr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">↔</span></span></span></span></span><span>﻿</span></span> Realisierung und Testen.</p><p id="138bdf78-2991-496d-a8c5-807328044355" class="">Verschiedene Abstraktionslevels.</p><p id="3fe4deee-a99e-47ed-b43b-6b0e6545d5aa" class="">Fehlerbehandlung in frühen Phasen mit Reviews<div class="indented"><p id="8987ad2d-ca10-4cf0-bb0a-29532774ab3b" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Frühe Fehlererkennung in analytischen Phasen</p><p id="cb17c1a5-895f-4105-a18a-bef1cc58e29e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Gute Planung</p></div></p><p id="1b92e87d-c968-4c02-846d-c1f7a6649dca" class="">Basiskonzept für V-Modell 97 und V-Modell XT.</p><p id="69398505-7bf8-4f1e-9052-e5ab57eecca0" class="">
+</p></div></p><p id="b3f42f9f-25ef-4707-9c55-9c49b1a7070e" class=""><span style="border-bottom:0.05em solid">Nachteile</span><div class="indented"><p id="881e63a2-bf7f-4514-8f23-d002af163b1f" class="">Wie Wasserfallmodell<div class="indented"><p id="029561c3-93a0-487b-8f24-c52ee947c4fa" class="">Klare System-Anforderungen von Anfang an verlangt</p><p id="cc29bb1c-e613-47f1-bcdb-72b308e3e2df" class="">Alle Anforderungen / Erwartungen müssen von Anfang an komplett klar sein</p></div></p><p id="dfacff6e-5282-4d3b-be6c-a1e21b416180" class="">Viel Aufwand für Dokumentationen</p><p id="c546eff7-f987-4291-8d5c-ec0dadcaf69b" class="">
+</p></div></p><p id="06662bde-2df7-4905-8f1e-6fb267b28591" class=""><span style="border-bottom:0.05em solid">Anwendungsbereich</span><div class="indented"><p id="a55e28d1-f050-4bcb-ac64-150cf0289f4f" class="">für kleine Projekte zu detailliert, für große Projekte mit hohem Qualitätsanspruch geeignet (speziell Embedded Systems) an die man mehrere Jahre entwickelt</p><p id="75df9ded-8b62-4c64-9628-af6e05f9eb15" class="">Große Projekte im öffentlichen Bereich</p></div></p><figure id="e38e88ed-a29c-4a91-a4a7-f791dc78aab9" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%202.png"><img style="width:528px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%202.png"/></a></figure><p id="3de83508-6fd7-4e74-a82f-10c16bd26d9e" class="">
+</p><h2 id="7ad7e54e-3e01-4b6d-83df-2d1cb566a8b8" class="">V-Modell XT</h2><p id="be87bcf9-f3d0-43c1-92a4-4d600d63cc19" class="">Baut auf V-Modell und V-Modell 97 auf.</p><p id="480c007f-8649-4f7d-828b-b8c8ae695b05" class="">In DE im öffentlichen Bereich verpflichtend.</p><p id="6dbea517-effa-40aa-a82b-407538afa6a9" class="">Modular, flexibel (kann angepasst werden durch <em>Tailoring</em>).</p><p id="8f7b21ee-fe6c-4b0c-86be-6f3d8f1b0eb9" class="">Für unklare, sich ändernde Anforderungen auch geeignet.</p><p id="8881a732-332a-45ed-b3a3-a4449bdcd5b5" class="">Ziel: Projektrisiko minimieren, Anpassbarkeit, Anwendbarkeit, Skalierbarkeit und Änder- und Erweiterbarkeit des V-Modells.</p><p id="aa6acb09-3143-4675-b4b5-78d01b7839d1" class="">
+</p><p id="f1adab24-7c45-47e2-aaab-466da18b060c" class=""><span style="border-bottom:0.05em solid">21 verschiedene Elemente / </span><em><span style="border-bottom:0.05em solid"><span style="border-bottom:0.05em solid">Vorgehensbausteine</span></span></em><div class="indented"><p id="5ab42f21-614d-43e2-96db-b68a004860c7" class="">a) Kernelemente</p><p id="2256f909-2bb6-425d-906f-88c749fac949" class="">b) Optionale Elemente</p><p id="7e5cf2c0-2e51-4079-b0be-89496129a977" class="">
+</p><p id="d3ac30bf-7b97-49c5-82df-e28294711bac" class="">Kapseln mit Schnittstellen:<div class="indented"><p id="c59e599f-cb7a-4cc0-82be-11b7662a02c9" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Produkte<div class="indented"><p id="191a2c36-1b0d-4b45-a195-ce8b82cd0bb8" class="block-color-gray">Ein Produkt kann aus vielen Subprodukten stehen die voneinander abhängig sein können (dependency).</p></div></p><p id="4d6ee3d3-584f-40cb-9c20-105bf8221170" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Produktergebnisse</p><p id="4313da0b-884e-44cc-b1f2-2d460942d781" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> zugeordnete Aktivitäten<div class="indented"><p id="7e29a0a9-ebe3-4782-afea-a8ed5fca9c76" class="block-color-gray">Für einen Produkt gibt es genau eine Aktivität (die widerum aus anderen Subaktivitäten bestehen kann)</p></div></p><p id="5d562e02-54f7-41da-afc4-e11bfa57292f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> verantwortliche Rollen<div class="indented"><p id="b198ffe4-ad20-4f43-be8d-6bc79cb73797" class="block-color-gray">Für einen Produkt gibt es genau einen Verantwortlichen.</p></div></p></div></p><p id="baaa1c5f-0536-49cd-b37f-5a01ebb959ec" class="">Produkt und Aktivität können von anderen Produkte und Aktivitäten abhängig sein.</p><p id="3161ec1a-c671-458d-acea-bac03c16e37f" class="">Es gibt Abhängigkeiten zwischen den Bausteinen (steht in der V-Modell XT Dokumentation).</p></div></p><figure id="bfcd181a-5f8f-4ff6-b4c7-4f3ce06854c6" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%203.png"><img style="width:384px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%203.png"/></a></figure><p id="aebf33c4-0bf2-4ab0-8b94-55f165c3c5f6" class=""><span style="border-bottom:0.05em solid">Projektgegenstand</span><div class="indented"><p id="ba0ebf5a-e4e6-4faf-93fc-458c51d3cc9f" class="">Inhalt des Projektes (bspws Hardware-Systeme, Software-Systeme, komplexe Systeme, eingebettete Systeme und Systemintegration im V-Modell XT)</p></div></p><p id="31e3998e-7a0a-4e21-9c5a-49bdb42584ec" class="">
+</p><p id="b986983a-c1c4-4daf-88ca-a2f5f1169715" class=""><span style="border-bottom:0.05em solid">Projekttypen</span><div class="indented"><ol type="1" id="3592b3d6-6f85-4a65-99ec-865099d2f3ea" class="numbered-list" start="1"><li>Systementwicklungsprojekt des Auftraggebers AG<p id="30d90c5c-4d40-4250-84d1-23b233677c2d" class="">	Auftraggeber-Sicht</p></li></ol><ol type="1" id="4c602925-b20d-4e0a-b004-681aafbe89ab" class="numbered-list" start="2"><li>Systementwicklungsprojekt des Auftragnehmers AN<p id="4fe810e4-c24f-4988-9c77-23929c97426d" class="">	Auftragnehmer-Sicht</p></li></ol><ol type="1" id="69c93f24-73c2-4a50-9bec-3e876f426847" class="numbered-list" start="3"><li>Systementwicklungsprojekt des AN mit AG in derstelben Organisation<p id="dd088c33-1c3e-44f3-90c4-6baefb5e6253" class="">	<em>InHouse-Projekt</em>, keine externe Kommunikation</p></li></ol><ol type="1" id="3bc0ce37-8d26-4762-a67e-0ee8c05d2e0f" class="numbered-list" start="4"><li>Einführung und Pflege eines organisationsspezifischen Vorgehensmodells<p id="82925774-3b48-4b1b-bccb-8b5981238bc4" class="">	Warten und Verbessern</p></li></ol></div></p><p id="6c3a6280-ebdd-41cc-b959-a6e70a3e78fb" class="">
+</p><p id="b065d9f3-aee9-4e86-934c-e3ba3aeeb364" class=""><span style="border-bottom:0.05em solid">Kern und optionale Bausteine nach Projekttyp</span></p><figure id="73fdd27f-e870-41b9-b7c2-314a1df9f1d1" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%204.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%204.png"/></a></figure><figure id="c7bae1bd-2283-4ad7-9acc-16e07f1bc5a2" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%205.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%205.png"/></a></figure><figure id="b2ad111a-81c3-45dd-a404-eece6f990e85" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%206.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%206.png"/></a></figure><p id="f9105964-7c80-409a-93ba-177a31ddc1d6" class="">
+</p><p id="84c09e81-ff04-41ba-abda-9cf655e96eef" class="block-color-gray"><span style="border-bottom:0.05em solid">Projekttypen vs. Projektgegenstand</span></p><p id="aa5e1ada-c11e-4408-bd26-c4af9384933b" class="block-color-gray">Projekttypen eingeteilt nach:<div class="indented"><ol type="1" id="aca779d8-7caa-4750-a281-bd4219279a36" class="numbered-list" start="1"><li>Gegenstand: z.B. Hardwaresystem, Softwaresystem, Komplexes System</li></ol><ol type="1" id="5f0cab9a-22d7-4fb5-8553-00bc0daf316a" class="numbered-list" start="2"><li>Rollen: z.B. Auftraggeber / Auftragnehmerprojekte</li></ol></div></p><figure id="0d8c83f8-341a-4d25-b7d1-f55a20c1bc12" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%207.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%207.png"/></a></figure><p id="6f0c779d-ec02-4283-b8b7-f5ac8f0d49ab" class="">
+</p><p id="dcf2473b-738f-4201-870a-e4c9c134df75" class="">
+</p><p id="7c64a0cf-754e-42b9-9aa1-252e103fae4b" class=""><span style="border-bottom:0.05em solid">Gesamte Strategie inkl. Entscheidungspunkte (Projektdurchführung)</span><div class="indented"><p id="c9f6da20-40ba-4414-812f-4e097d40142a" class="">Projektdurchführungsstrategie: Aneinander-Reihung der Bausteine → Definiert Ablauf.</p><p id="c9d4957b-5686-4994-8851-7d35f920d11d" class="">Unterschiedliche Arten an Strategien möglich (auch inkrementell und agil).</p><p id="c92eea0f-1fa2-4abe-a26a-54e794969fca" class="">Beispiel:</p></div></p><figure id="00ea1c4a-9ee0-4c5a-a595-4d1a70048453" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%208.png"><img style="width:576px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%208.png"/></a></figure><p id="ac363195-dc8d-4662-9cf8-e4ddb13138b1" class="">
+</p><p id="f854779b-55de-4d54-850d-8a76d689ab91" class=""><span style="border-bottom:0.05em solid">Tools</span><div class="indented"><p id="347fe04a-5c30-4cd9-afd3-38f866bd1da9" class="">Kann man an unterschiedliche Projektgegebenheiten mit Open Source tools anpassen:<div class="indented"><ul id="5524cb40-1717-42a4-ab10-a65fe14031ed" class="bulleted-list"><li style="list-style-type:disc">Auswahl von benötigten Vorgehensbausteinen</li></ul><ul id="098a082a-5f95-4067-931b-ba88d819a4f3" class="bulleted-list"><li style="list-style-type:disc">passende Projektdurchführungsstrategie</li></ul><ul id="aac48b39-b3be-433b-9dd6-44a0afa8ea7d" class="bulleted-list"><li style="list-style-type:disc">Ergebnis: maßgefertigte Vorgehensweise + Templates für die Projektdokumentation.</li></ul></div></p></div></p><p id="f272cde1-ff3c-43ff-89df-deecb19159a9" class="">
+</p><h1 id="e3ce66e9-cade-42b9-95cd-3bdb1ebc8578" class="">Iterativ / Inkrementell (traditionell)</h1><p id="52f2d6ab-0414-4a03-b1ca-d1369e4b3674" class="">Schrittweises Vorgehen.</p><p id="2bd2d25b-c319-43ca-bacb-c0e982552cc5" class="">Sehr lange, sehr große, Komplexe Systeme, unklare / ändernde Anforderungen, schnell erste verwendbare Protoypen verlangt.<div class="indented"><p id="3d1671ed-cd76-4175-8db9-357f7b1eadfc" class=""><mark class="highlight-gray">wenn man schnell schon etwas &quot;greifbares&quot; haben möchte</mark></p></div></p><p id="9fa4d720-af5f-4c83-ad55-c9c440dbdc79" class="">Integration findet kontinuierlich statt</p><p id="f9a974e4-9289-471f-a7bd-c30273b38e2f" class="">kleine Etappen / Meilensteine die gemeinsam geplant werden, Planung einfacher</p><p id="e07ae438-7914-4ed4-bcfc-acc2227c5b41" class="">Kontinuierlich hohe Qualität</p><figure id="38fd9796-fea6-482a-8f1d-00db0e804750" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%209.png"><img style="width:432px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%209.png"/></a></figure><p id="412e5e44-b28f-4ed3-8731-3be0d3bc349c" class="">Ziel:<div class="indented"><p id="f1d1a22a-4240-42bd-9d94-16ac3752284e" class="">Rasch mit Teillösung auf den Markt kommen - dann ausbauen.</p><p id="534e9fa7-1be0-4ec1-af72-664c183cf0fb" class="">Gleichzeitig kann an darauf folgenden Versionen (von mehreren Teams) geplant / gearbeitet werden.</p><p id="86ac5ff5-4aec-47ad-8754-677cf184b391" class="">Architektur muss stabil sein</p><p id="9534cabc-f5c6-4908-9e03-d506599b3c88" class="">Prioritisierung, Anordnung nach Relevanz für Kunde.</p></div></p><p id="6bf7d0d9-f1e8-458b-84d4-7ca8deb4d021" class="">
+</p><h2 id="d86f618a-9a25-4bd8-826d-6fd788cfd6a5" class="">Spiralmodell</h2><p id="2bbb37da-33a2-4182-94a7-418a3130673e" class="">Inkrementelles Vorgehen.</p><p id="a0aead78-57c8-4a5b-b377-cf92588865a8" class="">Schritte in jeder Iteration:<div class="indented"><ol type="1" id="ea82e284-84cd-47ff-a7b2-5a51ca88e809" class="numbered-list" start="1"><li>Definition: Ziele, Alternativen</li></ol><ol type="1" id="485a0198-cb5f-46b3-a111-580c21605a49" class="numbered-list" start="2"><li>Risiko Einschätzung</li></ol><ol type="1" id="78e005bb-d35e-4708-887d-0fac511779ab" class="numbered-list" start="3"><li>Entwicklung, Testen</li></ol><ol type="1" id="39298792-9af7-4f20-8cb6-4eb78ca7ac10" class="numbered-list" start="4"><li>Feedback zur aktuellen Lösung (Review) </li></ol><ol type="1" id="6c7e2edc-f057-4c8f-9ec7-56f47a91d510" class="block-color-gray numbered-list" start="5"><li><mark class="highlight-gray">Planung von nächster Iteration</mark></li></ol></div></p><figure id="369be551-4ffd-4f52-85c4-e52de051d1f9" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2010.png"><img style="width:432px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2010.png"/></a></figure><p id="3598a76e-8e69-40ff-a688-31b777c0fbc9" class="">
+</p><h2 id="f6888fbf-21a8-472c-a141-07ee29dbb7b3" class="">Rational Unified Process RUP</h2><p id="dcb919ce-2cbe-44a5-b31b-b89b416d5f58" class="">Inkrementell, iterativ, phasenorientiert.</p><p id="1a127f42-7a19-42ca-bdd4-af3329d5dbfe" class="">Im kommerziellen Umfeld.</p><p id="b9f9ac79-4c0a-4c99-b7dc-1666252f65bd" class="">UML in jeder Phase.</p><p id="20b1f56c-3b42-498c-9818-f44ef970597e" class="">Integriertes Anforderungsmanagement und Änderungsmanagement (supporting workflow).</p><p id="7312c217-97c2-4e9e-9363-25c497c1852b" class="">
+</p><p id="a7819a08-ee27-423c-b0f6-b370e1ba44dd" class=""><span style="border-bottom:0.05em solid">Phasen mit Meilensteinen</span><div class="indented"><p id="a1bacdf7-a653-4ffe-be49-dd28dbbe8b9c" class="">Eine Phase kann mehrere Iterationen haben (Von Projektmanager festgelegt).</p><p id="47896691-1b7c-4b8b-a58c-d4ee670a908f" class="">Aktivität + Verantwortlicher = Artifakt<div class="indented"><p id="a4d53712-bf40-48c9-a1f5-f7bcc9535e39" class="">Jede Phase / <em>Aktivität </em>von einem <em>Verantwortlichen </em>erzeugt ein Produkt / <em>Artefakt </em>→ überprüft, freigegeben.</p><p id="19db23cc-6505-433d-8f34-9d22bae810c9" class="">Wenn Überprüfung nicht bestanden, weitere Iteration.</p></div></p><p id="168e9790-0a5a-4bff-9821-7fb2692eb708" class="">
+</p><ol type="1" id="aa940f9c-e8d0-4dbb-bc1d-42791c825144" class="numbered-list" start="1"><li>Inception (Beginn)<p id="103c1422-26b4-44ef-9822-91390660617d" class="block-color-gray">Anforderungen (Geschäftsfälle / Business Cases), Rahmenbedingungen definiert.</p></li></ol><ol type="1" id="1c0400dd-d0f4-4af2-ac91-ef9225c67222" class="numbered-list" start="2"><li>Elaboration (Entwurf + Design)<p id="c66d0573-d3cd-4921-a713-81ae4edf1fef" class="block-color-gray">Spezifikation aus Anforderungen.</p></li></ol><ol type="1" id="d1dc4783-8206-4e14-9a9c-4b6bb5bb69f9" class="numbered-list" start="3"><li>Construction (Implementierung)<p id="c1155a5b-6b75-441c-bd29-44f5c9e23ba6" class="block-color-gray">Komponenten umgesetzt.</p></li></ol><ol type="1" id="b6d2c17d-a7ed-40ad-9020-cb7ee12f64d6" class="numbered-list" start="4"><li>Transition (Auslieferung)<p id="e5d3f818-47cc-4062-9803-01ecf856864e" class="block-color-gray">Auslieferung an Kunden, Product release.</p></li></ol></div></p><figure id="8240ae15-8a12-4366-96b7-b86ddc2299fd" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2011.png"><img style="width:480px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2011.png"/></a></figure><p id="428e0b59-49bd-42ec-a7fd-adfd6b083539" class="">
+</p><p id="0615245f-61b1-430b-ae7a-9d8c98943482" class=""><span style="border-bottom:0.05em solid">Disziplinen und Workflows</span><div class="indented"><p id="c282e16e-d78a-435c-be47-65e7445e2f9d" class="">9 Disziplinen die durch alle Phasen geführt werden<div class="indented"><p id="d5d3022b-f821-4e3d-a455-b44fd3998cd6" class="">6 Engineering Workflows</p><p id="7594e0af-a531-4cac-8758-89964740a15a" class="">3 Supporting Workflows</p><p id="f13b129f-e8b1-458a-9370-d63a641849d0" class="">
+</p></div></p><p id="e9300b49-1859-42b1-acc7-8966d2c49068" class="">Engineering Workflows<div class="indented"><ol type="1" id="79025d6a-ce37-4101-98c7-39a4c61b0cfd" class="numbered-list" start="1"><li>Business Modeling: <mark class="highlight-gray">Geschäftsfallmodellierung mit UML</mark></li></ol><ol type="1" id="5a0ca470-d956-461a-b513-1750d89e36ba" class="numbered-list" start="2"><li>Requirements: <mark class="highlight-gray">Anforderungen genau erheben, Verfeinerung der Use-Cases</mark></li></ol><ol type="1" id="3c4d79ba-7652-40e8-aa06-9cfe7c4462ef" class="numbered-list" start="3"><li>Analysis &amp; Design: <mark class="highlight-gray">Erstellen wichtige Dokumente / Artefakte: Architektur, Design, Test-Dokumente</mark></li></ol><ol type="1" id="e2688040-3dc9-49d6-aeed-1793c288d5b5" class="numbered-list" start="4"><li>Implementation</li></ol><ol type="1" id="62dec10b-04d3-4394-8b81-fc65e4fdd972" class="numbered-list" start="5"><li>Test</li></ol><ol type="1" id="94699103-1b93-4c91-8896-36396107474a" class="numbered-list" start="6"><li>Deployment: <mark class="highlight-gray">Fertigstellung, Auslieferung</mark></li></ol></div></p><p id="ef56408e-a666-479c-be12-c2198c02efbc" class="">
+</p><p id="7a7e35cf-afbd-4f15-9b70-bdf46dd08a88" class="">Supporting Workflows<div class="indented"><ol type="1" id="562afdcd-16e2-4e3f-97ce-4ca760591887" class="numbered-list" start="1"><li> Configuration and Change Management: <mark class="highlight-gray">Dokumentenversionierung mit Version Control System</mark></li></ol><ol type="1" id="38c830f3-0142-4b21-9c3f-6ccfb8be364a" class="numbered-list" start="2"><li>Project Management </li></ol><ol type="1" id="85b1b091-0af1-4367-a637-123c8ce15988" class="numbered-list" start="3"><li>Environment: <mark class="highlight-gray">Definiert Ressourcen, Budget und Werkzeuge für Entwickler</mark></li></ol></div></p></div></p><p id="b1d99a5b-9cad-4094-a2e6-a253c5a6d309" class="">
+</p><p id="45b3d024-29cd-4c3a-9e44-0967f375da9d" class=""><span style="border-bottom:0.05em solid">Vorteile</span><div class="indented"><p id="59f493ca-eb81-463e-9c77-6e289a712b0e" class="">Real-world Szenarien.</p><p id="d348294c-fc7f-43e2-86bf-dff137bb61ac" class="">Werkzeugunterstützung (Rational XDE, IBM).</p><p id="318fdd44-1188-4593-85f3-8d3a50d9f913" class="">Vordefinierte Liste mit erforderlichen Artefakten.
+</p></div></p><p id="4132ec63-a868-4656-ab33-2e88dc5cd529" class=""><span style="border-bottom:0.05em solid">Nachteile</span><div class="indented"><p id="b61b7b4c-348c-4f29-ae86-f0e8b57fe433" class="">Komplexität, Dokumentationsaufwand</p></div></p><p id="cd395e44-3adf-455a-8801-f3ec1f39d5c2" class="">
+</p><p id="7b309bbd-c0ae-4b0e-9743-e38ab30a24a2" class=""><span style="border-bottom:0.05em solid">Anwendungsbereich</span><div class="indented"><p id="da404f8b-355e-4285-82a9-3d41b1904ada" class="">Grosse Projekte die einen Überblick brauchen (inkl. Deployment).</p></div></p><p id="9e8a9991-f2d8-48e5-b55d-eb31b9a16aad" class="">
+</p><h1 id="9e0d6b4c-60e7-45a3-9f09-571d8bd4de09" class="">Agil </h1><p id="8c46ba68-8364-4911-815c-017deb00aeb8" class="">Bisher mangelhafte Flexibilität, unnötig hoher Dokumentationsaufwand, fehlende Nähe zum Kunden, Kunde nicht mit in Entwicklung einbezogen.</p><ul id="38593231-05a4-491e-a41b-15fa16c17971" class="block-color-gray toggle"><li><details open=""><summary>Agiles Manifest → 12 Agile Principles</summary><p id="19ac238c-cab6-4a87-bd1e-e01817632c17" class="">Entstand aus Kritik an „schwergewichtigen“ Ansätzen.<div class="indented"><p id="f7a2bf20-2ac0-4ad4-a2dc-ec7499417a86" class=""><em>&quot;Individuals and interactions over processes and tools;
+Working software over comprehensive documentation;
+Customer collaboration over contract negotiation;
+Responding to change over following a plan&quot;</em></p><p id="221e7573-ab29-4317-8131-6857500818dc" class="">
+</p></div></p><ol type="1" id="559c516e-000f-4f07-bc2e-119190f82b18" class="numbered-list" start="1"><li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li></ol><ol type="1" id="4daa4414-2f04-4d7f-bc2c-706ecba94fda" class="numbered-list" start="2"><li>Welcome changing requirements, even late in development. Agile processes harness change for the customer&#x27;s competitive advantage.</li></ol><ol type="1" id="8e00bf40-ce78-4518-880d-c76564dc617b" class="numbered-list" start="3"><li>Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.</li></ol><ol type="1" id="25db511c-729e-4821-8427-b1f7fba24f11" class="numbered-list" start="4"><li>Business people and developers must work together daily throughout the project.</li></ol><ol type="1" id="b0ba8668-8075-40d3-b565-c87834d0e4d9" class="numbered-list" start="5"><li>Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done.</li></ol><ol type="1" id="15c8a5b9-535e-4ec7-871d-1a09d95211d5" class="numbered-list" start="6"><li>The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.</li></ol><ol type="1" id="a2932da5-561d-424f-bda7-11a7a74d0377" class="numbered-list" start="7"><li>Working software is the primary measure of progress.</li></ol><ol type="1" id="e0daed9e-ff71-48eb-854f-8cebacfd4b62" class="numbered-list" start="8"><li>Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.</li></ol><ol type="1" id="bd560423-4cd4-4957-9f0d-7da65ea1ad62" class="numbered-list" start="9"><li>Continuous attention to technical excellence and good design enhances agility.</li></ol><ol type="1" id="4012c298-dea1-47f7-9ac9-027a57c98b53" class="numbered-list" start="10"><li>Simplicity--the art of maximizing the amount of work not done--is essential.</li></ol><ol type="1" id="d8e9b91a-736a-452b-8603-7eeaac91b4ce" class="numbered-list" start="11"><li>The best architectures, requirements, and designs emerge from self-organizing teams.</li></ol><ol type="1" id="6b8480fb-a35a-4554-9f86-4c7bca62cae8" class="numbered-list" start="12"><li>At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.</li></ol></details></li></ul><p id="e25ed012-a1ef-4e09-a64e-0e6a814dac9f" class="">
+</p><h2 id="bb265324-7811-41ad-8faa-ac2aef0fbe04" class="">SCRUM</h2><p id="c9383200-8a31-419e-aabd-78a500f4db1d" class="">Art von agiler Entwicklung.</p><p id="96034054-8048-41e7-8716-ffb7c6d72798" class="">Ziel: kleine effiziente Teams bilden.<div class="indented"><p id="518921bd-ce42-49dc-a4ac-77ca7c5e9826" class="">Gesamte Dauer meistens 2-4 Wochen</p><p id="d8781b60-7dce-49fa-8f4e-9dfa0be62a6b" class="">Sprint meistens 1 Tag → Keine Unterbrechungen, keine Änderungen zugelassen</p><p id="ecb07ffb-8d30-41d1-addc-a4153337f2bb" class="">Kurze tägliche Besprechungen <em>Daily Scrums</em>, 15 Minuten:<div class="indented"><ol type="1" id="6985e5c8-0813-4b4c-b652-10cbbed9c0a1" class="numbered-list" start="1"><li>Was wurde seit dem letzten meeting erledigt</li></ol><ol type="1" id="f352b598-648d-4f14-9491-2e939be4a0d1" class="numbered-list" start="2"><li>Welche Probleme sind aufgetreten während der Entwicklung</li></ol><ol type="1" id="fbfc973c-2b97-4a01-86d4-86e68b68b46a" class="numbered-list" start="3"><li>Was ist das Ziel bis zum nächsten Meeting</li></ol></div></p></div></p><p id="f98a9702-02e9-490f-8823-c4d069c900ca" class="">
+</p><p id="541c5ac9-3a5f-44d3-8d61-fb8c189fd7ce" class="">Reagiert auf andauernd ändernde Anforderungen im Projektablauf. Teil-Produkte stehen dem Kunden frühzeitig zur Verfügung.</p><p id="fec85716-8b3e-4cdd-8a94-4976a70ca1ce" class="">Ein Team zuständig für Einheit / Produkt / Teilprodukt.</p><p id="071e40ca-4ad3-473a-8ba4-53059884bbc7" class="">
+</p><p id="c79f439e-c9c9-4644-8857-6e2987f05e17" class=""><span style="border-bottom:0.05em solid">Begriffe</span><div class="indented"><p id="525d92bd-5a4d-46e4-95b3-27e59d8c641e" class="block-color-gray">Temporal structure = daily Scrum Meeting + Review + Retrospective.</p><p id="88c0e6c9-9911-45e8-abc3-d7da1d4a3594" class="">Backlog: alle Arbeitspakete, die in nächster Zeit umgesetzt werden müssen (sowohl klar definierte als auch vage Anforderungen): Produkt vs. Sprint Backlog.<div class="indented"><p id="8df924b8-b761-4260-87be-17871457bf08" class="block-color-gray"><em>Priorisierte </em>Projektergebnisse (Backlog Items).</p></div></p><p id="791ab508-312b-4889-8f02-87da0992274d" class="">Daily-Scrum: Täglicher Arbeitsauftrag<div class="indented"><p id="06fc00be-2243-4d51-b394-93b7ff40de3e" class="block-color-gray">Das Sprint-Team darf beim Arbeiten nicht gestört werden.</p></div></p><p id="102a488e-5efb-4ab5-8b6c-198d8a1f16ff" class="">Scrum Team: Funktionsübergreifendes Team, zuständig für den Sprint Backlog.</p><p id="cc1761cb-6161-4525-a7ba-6671308b8448" class="">Burndown Chart: Visuelle Darstellung des Projektfortschritts.</p></div></p><p id="54e10b1a-28f1-4fd2-b9a8-2fce43fff9d3" class="">
+</p><p id="a6b91432-165b-4b25-b8d0-a0219a840b39" class=""><span style="border-bottom:0.05em solid">Phasen</span><div class="indented"><ol type="1" id="777bdd7b-6ed3-43a8-914e-ea2bb6af6c17" class="numbered-list" start="1"><li>Pregame<p id="1a70b8b2-7d33-4f7a-a63c-7a9531b89cee" class="block-color-gray">Anforderungen → Architektur und Planung</p><p id="7212e2db-d4c5-4532-af75-1040991c728b" class="block-color-gray">Alle Eigenschaften und Features <em>gemeinsam mit Kunden</em> → Product Backlog → Prioritisieren</p><p id="2b0b3cd7-6c5a-4c1b-8f4e-de61e0aae818" class="block-color-gray">(alle zukünftigen Änderungen passieren im Product Backlog)</p></li></ol><ol type="1" id="d78b9994-ac6d-43f7-b8d0-2a4f2d651728" class="numbered-list" start="2"><li>Sprint<p id="a10f01ff-15e7-47a7-9b79-3c802b5349c2" class="block-color-gray">Kleine Menge an features aus product backlog → spring backlog (machbare Menge)</p></li></ol><ol type="1" id="71e7b178-95de-47d1-bdfd-2221cd4b64af" class="numbered-list" start="3"><li>Postgame<p id="0c8829a8-e8ca-4996-82e7-7ef52bbe50df" class="block-color-gray">Auslieferung</p></li></ol></div></p><p id="f9816241-2466-409f-b1ca-287241d1cee1" class="">
+</p><p id="1b7d64e4-a5d9-4801-8859-88f9f84a92fb" class=""><span style="border-bottom:0.05em solid">Sprint</span><div class="indented"><p id="7b203aa0-2335-4ee3-9210-3fd85481cd8a" class="">Team darf nicht gestört werden.</p><p id="2f8a1409-562c-4f64-8a31-d8b4de37f8fd" class="">Wiederholung von:</p><ol type="1" id="740341c0-b465-4157-bfcf-6c70f5fd5579" class="numbered-list" start="1"><li>Develop and Test	<mark class="highlight-gray">Implementierung von neuer Software</mark></li></ol><ol type="1" id="d2051f2e-5008-49f6-9631-ed8eebef80ea" class="numbered-list" start="2"><li>Wrap			<mark class="highlight-gray">Integration</mark></li></ol><ol type="1" id="f46c4bda-411e-415d-b511-7b7f9ced8826" class="numbered-list" start="3"><li>Review			<mark class="highlight-gray">Review des integrierten Produkts</mark></li></ol><ol type="1" id="8cf255a6-b340-40b9-afcb-de60f96ce925" class="numbered-list" start="4"><li>Adjust			<mark class="highlight-gray">Anpassung, Verbesserung</mark></li></ol></div></p><figure id="4e8163c4-552a-477d-8338-1be0e91653b1" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2012.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2012.png"/></a></figure><figure id="69311947-6497-4059-9c67-73cf2ebe6262" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2013.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2013.png"/></a></figure><figure id="259dbb39-7843-469b-9b66-bf632564a54d" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2014.png"><img style="width:240px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2014.png"/></a></figure><p id="fb2540fc-d31b-4b1b-982b-8afb4469a093" class=""><span style="border-bottom:0.05em solid">Methoden / Tools</span><div class="indented"><p id="3715c2f0-4ccd-4b1d-b68e-100fc2a7bd64" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Burndown charts</p><p id="0cfa72bd-c3f4-4028-8c0f-1a85d09e0ed1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Test-Driven Developement</p><p id="3786e198-7040-44eb-a3e8-f9dff4526765" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Pair Programming</p><p id="e88fe0e1-b4d3-414b-a6d8-998be7e7a370" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Reviews</p></div></p><p id="8af97cd2-116f-44e2-b42a-c015eb81fe05" class="">
+</p><p id="340cd4c2-6c54-49bd-9460-6b389d567a91" class="">Vorteile:<div class="indented"><p id="ae49d44b-5e5e-4442-8939-f8651c9a1287" class="">• Wenige Regeln, leicht verständlich.
+• Hohe Effektivität durch Selbstorganisation.
+• Adaptiv/Tolerant gegenüber Anforderungsänderungen und neu Priorisierung.
+• Hohe Transparenz durch regelmäßige Meetings und Backlogs.
+• Geringer Administrations- und Dokumentationsaufwand.</p></div></p><p id="dcd2a9c5-0f53-4c85-999b-55a3149d2cff" class="">
+</p><p id="b204d0f9-a230-4961-a9a8-99bd808eb405" class="">Nachteile:<div class="indented"><p id="7dee0014-9ba0-4b9b-a6c3-9f318c2081d1" class="">• Kein Gesamtüberblick über die komplette Projektstrecke.
+• Hoher Kommunikations- und Abstimmungsaufwand.
+• Erschwerte Koordination mehrerer Entwicklungsteam bei Großprojekten.
+• Potentielle Verunsicherungen aufgrund fehlender Zuständigkeiten und Hierarchien.
+• Potentielle Unvereinbarkeit mit bestehenden Unternehmensstrukturen.</p></div></p><p id="6716d5be-378d-42a9-b8f0-9b062b889e16" class="">
+</p><h2 id="00648ac9-04e5-4c8c-8082-8b11e1ff665b" class="">eXtreme Programming XP</h2><ul id="a3ad2146-c5d6-45fe-a9f0-5af18a759f7d" class="bulleted-list"><li style="list-style-type:disc">Coding: kontinuierliche Integration, Programmieren in Paaren (der eine programmiert, der andere testet, Rollen können wechseln)</li></ul><ul id="7bf95ec8-8d65-4f5b-b4b2-66928b50a759" class="bulleted-list"><li style="list-style-type:disc">Design: einfache Dinge nur einmal tun</li></ul><ul id="dd6ce755-6127-430c-8a52-36b43cfe50c8" class="bulleted-list"><li style="list-style-type:disc">Dokumentation: kommentare im source code</li></ul><ul id="0480a367-db00-4e04-8a6f-a6418fbc0104" class="bulleted-list"><li style="list-style-type:disc">Test: Unit-Tests</li></ul><ul id="9a893c59-07c9-4863-ba43-b6912f3ac922" class="bulleted-list"><li style="list-style-type:disc">Integration: mehrmals täglich in Code-Basis einfügen und testen</li></ul><p id="2711d1da-4030-4ef5-91b1-53d49ae31eef" class="">Anwendung: Projekte mit schnell wechselnden oder vagen Anforderungen, mit kleinen Entwicklergruppen (bis 12 Personen), zeitkritische Projekte</p><p id="0e200037-ef72-435d-82e5-1e8d7f7dbf15" class="">Eher explorativer Ansatz</p><p id="3007960b-6cde-434d-8f87-d5951975b8e0" class="">
+</p><h1 id="568eb98b-4199-4868-a118-cad4ccdbae71" class="">Prozess-Tailoring / Customization: Anpassung der Modelle</h1><p id="55e20bd9-6200-4be8-b1a9-b9fcc1488e8b" class="">Modelle müssen dem Projekt angepasst werden.</p><p id="43452e73-3c2a-4ebf-bd87-76ae053b517f" class="">Nicht alle Schritte aus dem Life-Cycle können ausgeführt werden.<div class="indented"><p id="3e4e32b2-2c7d-4b14-87c8-b99acca56d97" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋅</mo></mrow><annotation encoding="application/x-tex">\cdot</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44445em;vertical-align:0em;"></span><span class="mord">⋅</span></span></span></span></span><span>﻿</span></span> Schritte Zusammenlegen oder auslassen</p></div></p><p id="0c261d26-40da-4456-b1fb-3929a4d73e3d" class="">
+</p><p id="4df562bf-e3a2-4f8e-b702-1f94c342533c" class="">Anpassung an<div class="indented"><ul id="3e5db9e6-e8e8-4243-aae1-c56b231bd576" class="bulleted-list"><li style="list-style-type:disc">Organisation mit eigener Domäne (= Fachgebiet)<p id="c0923980-2213-47d9-81dd-3adfcce09fe2" class="">zb Wenn eine Organisation öfter Web Applikationen macht.</p><p id="6e6b6a8f-c648-4cf2-a224-651a52312f0d" class="">Kann Best-Practices in der Domäne nutzen - <em>Process Pattern</em></p></li></ul><ul id="fa294f85-3ed7-4985-a47e-79db78dc3ee1" class="bulleted-list"><li style="list-style-type:disc">Projekt</li></ul></div></p><p id="b83c10fe-027a-465b-8df7-878a2948a7a9" class=""> </p><p id="21155b07-24f2-469a-b5b7-81cf6ea2f263" class=""><span style="border-bottom:0.05em solid">Reihenfolge</span><div class="indented"><ol type="1" id="f5ee603c-5a0d-4116-a43a-4f556347f762" class="numbered-list" start="1"><li>Process Customization: <mark class="highlight-gray">Organisation + Domäne</mark></li></ol><ol type="1" id="0e598022-9284-4a79-b991-9b377a7ceef4" class="numbered-list" start="2"><li>Process Tailoring: <mark class="highlight-gray">Projekt</mark></li></ol></div></p><figure id="7d40ba6f-609f-4a66-a778-0281f48ada81" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2015.png"><img style="width:336px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2015.png"/></a></figure><figure id="8bf61428-c2c7-4169-a419-1aff949f841a" class="image"><a href="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2016.png"><img style="width:336px" src="Vorgehensmodelle%20(Prozesse)%205e0308d86495425ea5c1659183ae48bd/Untitled%2016.png"/></a></figure><p id="f292b74d-b973-4fd5-b596-171fd2cb3569" class="">
+</p><p id="2d5417a3-638d-4710-becd-fcf915f57745" class=""><span style="border-bottom:0.05em solid">Prozess Customization (Standardisierung)</span><div class="indented"><p id="301ed384-7ab9-4111-a387-56c01508ae1a" class="">Verallgemeinerte Form des „Tailorings“.</p><ul id="9f1b9c6f-fd74-4445-9a7d-89bb7e2b937f" class="bulleted-list"><li style="list-style-type:disc">unternehmensspezifische Standards (für eher große Unternehmen) → Domänenabhängige Anpassungen, z.B. für Produktionsautomatisierung.</li></ul><ul id="33d8d1c4-d801-4606-b68d-9dc21001b2f8" class="bulleted-list"><li style="list-style-type:disc">ähnliche Projekte (z.B. Webapplikationen).</li></ul><p id="cbd540b3-9805-492d-8b1f-101d706947e8" class="">Dient dann als Grundlage für Projektspezifisches Tailoring.</p><p id="bd9e299b-533c-4fa4-a03e-71f26f60eb32" class="">
+</p></div></p><p id="b9831aa3-487f-46cf-9c98-b913ba0dfe8f" class=""><span style="border-bottom:0.05em solid">Prozess Tailoring (Prozess auf das jeweilige Projekt anpassen</span><div class="indented"><p id="5366dc9b-0c1e-468e-b5bf-dbc67a036fbb" class="">Angepasst an konkrete Projekte (Projektgröße, Projekttyp und Anwendungsdomäne)</p><p id="e2a6a68b-a2a6-4d23-aba3-22be6cba5792" class="">Braucht erfahrene Projektleiter und Toolunterstützung (z.B. V-Modell XT Projektassistent).</p><p id="1828e870-e334-45d8-9bcd-f96929646c76" class="">
+</p></div></p></div></article></body></html>

@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>TU Wien Course Summaries</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="38bf6005-0686-4f10-87c3-d90db5594db0" class="page sans"><header><h1 class="page-title">TU Wien Course Summaries</h1></header><div class="page-body"><blockquote id="96080762-6529-4971-83d5-22473032ef07" class="">Hello friend! 🌱<p id="521828e2-061a-46b3-820b-e4936de17533" class="">This website contains all my self-written summaries that accompanied me through my bachelor studies in “Software &amp; Information Engineering” at the Vienna University of Technology.</p><p id="8edbe54f-ec00-49fa-8332-2351bf8aa8d9" class="">I hope they help you with your studies or just remind you of the good’ol times.</p><p id="dd67043a-f949-4af5-9bd4-54712c1923d7" class="">
+</p><p id="ccbf4205-b96b-4a49-a3ff-84ce49c7ee0e" class="">The courses I passed were based on the curriculum from 2015 to 2022 but most of them are still taught (maybe with slight modifications).</p><p id="8f1d0127-676e-4f54-98ac-ceb3a4b95ee8" class="">Here&#x27;s my curriculum so you can compare it with your current one more easily:</p><figure id="ff18ca80-5554-4609-b44f-c4281bfa1d49" class="image"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/Untitled.png"><img style="width:1646px" src="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/Untitled.png"/></a></figure><p id="ebdd19a2-c8b2-4312-b0fd-3dc400e3d4f5" class="">
+</p><p id="ff517428-a8d8-4b2d-a2c1-df960fbbf5d1" class="">If what I created added value to your life and brought you joy I welcome any reciprocation in form of a small donation with open arms.</p><p id="770cb23b-a617-4b70-9afb-89fa9e5dbd51" class=""><em>You could for instance </em><em><a href="https://paypal.me/YahyaJabary?country.x=AT&amp;locale.x=de_DE">💳 donate via payPal</a></em><em>. It would mean a lot to me, since I put in a lot of love into this project.</em></p><p id="cfcea4ea-60ac-45a9-998e-e376ac82f8cd" class=""><em>Alternatively you could also </em><em><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/contribute%20and%20improve%20this%20page%20with%20me%205db501870c3249edbb0f60718f60e063.html"><span class="icon">🛠️</span>contribute and improve this page with me</a></em><em>.</em></p></blockquote><p id="c63b6eba-8978-40bf-8994-64b9bf846350" class="">
+</p><h2 id="7e330503-557d-4410-8738-b306a8fd6440" class="">Semester 1</h2><figure id="7a3450a8-4388-4acd-8603-a15d4d4fc47d" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/TGI%20-%20Technische%20Grundlagen%20der%20Informatik%207a3450a843884acd8603a15d4d4fc47d.html"><span class="icon">🤖</span>TGI - Technische Grundlagen der Informatik</a></figure><p id="bd99f299-8afc-417b-b6a0-1ef9ffa16203" class="">
+</p><h2 id="5587cca1-128c-4c48-b812-3fc0fd8cf497" class="">Semester 2</h2><figure id="652dfa69-611a-4f60-87a2-f0467e1de6d9" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/EP2%20-%20Einfu%CC%88hrung%20in%20die%20Programmierung%202%20652dfa69611a4f6087a2f0467e1de6d9.html"><span class="icon">🕹️</span>EP2 - Einführung in die Programmierung 2</a></figure><figure id="7c0a3d83-53d2-4006-ac2f-6c910eb25664" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/EVC%20-%20Einfu%CC%88hrung%20in%20Visual%20Computing%207c0a3d8353d24006ac2f6c910eb25664.html"><span class="icon">📷</span>EVC - Einführung in Visual Computing</a></figure><figure id="1d4af1d6-6b2b-4a91-aa0a-a167e633277f" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/FMod%20-%20Formale%20Modellierung%201d4af1d66b2b4a91aa0aa167e633277f.html"><span class="icon">🧿</span>FMod - Formale Modellierung</a></figure><p id="47812b4b-f5f1-4417-bd71-546fc4c900c5" class="">
+</p><h2 id="3cf14430-4fa4-40fd-a546-4c3c34ea7e0e" class="">Semester 3</h2><figure id="0b03952f-412c-4988-ac4d-08159aa60e86" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/FP%20-%20Funktionale%20Programmierung%200b03952f412c4988ac4d08159aa60e86.html"><span class="icon">🐍</span>FP - Funktionale Programmierung</a></figure><figure id="87197fa0-1f50-4829-8ffc-ea0db29fd088" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/OOP%20-%20Objektorientierte%20Programmierung%2087197fa01f5048298ffcea0db29fd088.html"><span class="icon">👷</span>OOP - Objektorientierte Programmierung</a></figure><figure id="04d37c4b-caae-4ce3-a2a3-84f033ccd16e" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/DBS%20-%20Datenbanksysteme%2004d37c4bcaae4ce3a2a384f033ccd16e.html"><span class="icon">💾</span>DBS - Datenbanksysteme</a></figure><figure id="1b7b78bf-be8f-4cf1-a3f5-859f86e5a2a6" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/TIL%20-%20Theoretische%20Informatik%20und%20Logik%201b7b78bfbe8f4cf1a3f5859f86e5a2a6.html"><span class="icon">⚡</span>TIL - Theoretische Informatik und Logik</a></figure><figure id="2a54f7a4-a7cf-4db8-bf95-47a22ebbff4b" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/OS%20VO%20-%20Betrieebssysteme%20VO%202a54f7a4a7cf4db8bf9547a22ebbff4b.html"><span class="icon">🎣</span>OS VO - Betrieebssysteme VO</a></figure><p id="668a5741-6d63-43b5-ac19-2045a193da60" class="">
+</p><h2 id="11d162c5-ec77-4ddb-8f70-e2bbb67adcf3" class="">Semester 4</h2><figure id="ee39fe88-1ed2-47a3-aa70-b1a7cb5cd3c6" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/ParComp%20-%20Parallel%20Computing%20ee39fe881ed247a3aa70b1a7cb5cd3c6.html"><span class="icon">👾</span>ParComp - Parallel Computing</a></figure><figure id="9937b7d6-29ef-415b-a2f3-73825d94d5b9" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/SEPM%20VO%20-%20Software%20Engineering%20und%20Projekt%20Managem%209937b7d629ef415ba2f373825d94d5b9.html"><span class="icon">🧢</span>SEPM VO - Software Engineering und Projekt Management</a></figure><figure id="c9d77e14-771c-4a46-8c62-7f1fab449f3d" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/EKI%20-%20Einfu%CC%88hrung%20in%20die%20ku%CC%88nstliche%20Intelligenz%20c9d77e14771c4a468c627f1fab449f3d.html"><span class="icon">🧠</span>EKI - Einführung in die künstliche Intelligenz</a></figure><p id="27e01b6c-b0bc-45dc-89a0-432600708110" class="">
+</p><h2 id="54a94577-2674-47a1-8816-016a4d982247" class="">Semester 5</h2><figure id="0e5fdfc3-a97c-4db1-a1c8-27df0fa1b26c" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/VS%20UE%20-%20Verteilte%20Systeme%20UE%200e5fdfc3a97c4db1a1c827df0fa1b26c.html"><span class="icon">🪢</span>VS UE - Verteilte Systeme UE</a></figure><figure id="b920d6b2-40f1-4f95-9c3c-0f0578dc0406" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/IntroSec%20-%20Introduction%20to%20Security%20b920d6b240f14f959c3c0f0578dc0406.html"><span class="icon">🔒</span>IntroSec - Introduction to Security</a></figure><figure id="fbe70786-9ec3-4a65-a03e-57653d9f7785" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/GWG%20-%20Gesellschaftswissenschaftliche%20Grundlagen%20de%20fbe707869ec34a65a03e57653d9f7785.html"><span class="icon">👥</span>GWG - Gesellschaftswissenschaftliche Grundlagen der Informatik</a></figure><figure id="10336f09-7bd4-4c1d-a7cd-8badad765887" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/WA%20-%20Wissenschaftliches%20Arbeiten%2010336f097bd44c1da7cd8badad765887.html"><span class="icon">🥼</span>WA - Wissenschaftliches Arbeiten</a></figure><p id="1ae9006e-2d54-4e00-b69f-26db426408f8" class="">
+</p><h2 id="096a1a0f-ccce-4412-8bc1-3ec242cc1ae7" class="">Wahlmodule</h2><figure id="030a4b12-e40e-4e08-ba03-7dbf27e5a978" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/WEB%20-%20Web%20Engineering%20030a4b12e40e4e08ba037dbf27e5a978.html"><span class="icon">📟</span>WEB - Web Engineering</a></figure><figure id="72120745-a808-4a01-aca1-d9906fdc1196" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/SSD%20-%20Semistrukturierte%20Daten%2072120745a8084a01aca1d9906fdc1196.html"><span class="icon">💽</span>SSD - Semistrukturierte Daten</a></figure><figure id="4e970370-fcbd-4dbc-8675-0208cc6a24a3" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/SQS%20-%20Software%20Qualita%CC%88tssicherung%204e970370fcbd4dbc86750208cc6a24a3.html"><span class="icon">⌨️</span>SQS - Software Qualitätssicherung</a></figure><p id="41e5c7e3-c813-4c2b-9a9d-f9dd648f67d7" class="">
+</p><h2 id="d0843f9c-be1b-407b-8635-5dcd38044cd5" class="">Transferable Skills</h2><figure id="52f60a0a-2dab-4a78-8c0d-16980c83fc88" class="link-to-page"><a href="TU%20Wien%20Course%20Summaries%2038bf600506864f1087c3d90db5594db0/Soft%20-%20Softskills%20fu%CC%88r%20TechnikerInnen%2052f60a0a2dab4a788c0d16980c83fc88.html"><span class="icon">🗣️</span>Soft - Softskills für TechnikerInnen</a></figure></div></article></body></html>
